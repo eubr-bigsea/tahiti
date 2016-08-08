@@ -26,7 +26,6 @@ def requires_auth(f):
         token = (request.json and request.json.get('token')) or \
                 request.args.get('token') or \
                 request.headers.get('X-Auth-Token')
-        print dir(request)
         if not (token and check_auth(token)):
             return authenticate()
         setattr(g, 'user', User(id=1, login="walter", name="Walter SF"))
