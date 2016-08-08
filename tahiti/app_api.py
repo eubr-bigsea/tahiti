@@ -10,7 +10,10 @@ from data_source_api import DataSourceListApi, DataSourceDetailApi
 from models import db
 from operation_api import OperationDetailApi, OperationListApi
 from storage_api import StorageListApi
+from tahiti.execution_api import ExecutionListApi, ExecutionDetailApi
 from workflow_api import WorkflowExecuteListApi
+
+import json
 
 app = Flask(__name__)
 api = Api(app)
@@ -20,6 +23,9 @@ mappings = {
     '/operations/<int:operation_id>': OperationDetailApi,
     '/datasources': DataSourceListApi,
     '/datasources/<int:data_source_id>': DataSourceDetailApi,
+    '/executions': ExecutionListApi,
+    '/executions/<int:execution_id>': ExecutionDetailApi,
+
     '/storages': StorageListApi,
     '/workflows/execute': WorkflowExecuteListApi,
 }
@@ -33,31 +39,22 @@ def main():
 
     args = parser.parse_args()
     if args.config:
-        parser = ConfigParser.ConfigParser()
-        parser.read(args.config)
+        with open(args.config) as f:
+            config = json.load(f)
 
         app.config["RESTFUL_JSON"] = {"cls": app.json_encoder}
 
-        app.config['SQLALCHEMY_DATABASE_URI'] = parser.get(
-            'Servers', 'database')
+        server_config = config.get('servers', {})
+        app.config['SQLALCHEMY_DATABASE_URI'] = server_config.get(
+            'database_url')
+        app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
         db.init_app(app)
         with app.app_context():
             db.create_all()
 
-            '''
-            # Create the Flask-Restless API manager.
-            manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
-
-            # Create API endpoints, which will be available at /api/<tablename> by
-            # default. Allowed HTTP methods can be specified as well.
-            prefix = '/api/v1'
-            manager.create_api(Operation, methods=['GET', 'POST', 'DELETE'],
-                               url_prefix=prefix)
-            manager.create_api(Execution, methods=['GET'], url_prefix=prefix)
-            '''
-
-        app.run(debug=True)
+        if server_config.get('environment', 'dev') == 'dev':
+            app.run(debug=True)
     else:
         parser.print_usage()
 

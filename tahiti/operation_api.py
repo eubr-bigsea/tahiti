@@ -63,7 +63,7 @@ class OperationDetailApi(Resource):
             return dict(status="OK", message="Deleted")
         else:
             return dict(status="ERROR", message="Not found"), 404
-    
+
     @staticmethod
     @requires_auth
     def patch(operation_id):

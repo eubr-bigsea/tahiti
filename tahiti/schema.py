@@ -24,7 +24,7 @@ class AttributeListResponseSchema(Schema):
     size = fields.Integer()
     precision = fields.Integer()
     enumeration = fields.Boolean(required=True)
-    data_source = fields.Nested('DataSourceListResponseSchema',
+    data_source = fields.Nested('schema.DataSourceListResponseSchema',
                                 required=True)
 
 
@@ -37,7 +37,7 @@ class AttributeItemResponseSchema(Schema):
     size = fields.Integer()
     precision = fields.Integer()
     enumeration = fields.Boolean(required=True)
-    data_source = fields.Nested('DataSourceItemResponseSchema',
+    data_source = fields.Nested('schema.DataSourceItemResponseSchema',
                                 required=True)
 
 
@@ -67,10 +67,10 @@ class DataSourceListResponseSchema(Schema):
     user_login = fields.String()
     user_name = fields.String()
     tags = fields.String()
-    attributes = fields.Nested('AttributeListResponseSchema',
+    attributes = fields.Nested('schema.AttributeListResponseSchema',
                                required=True,
                                many=True)
-    storage = fields.Nested('StorageListResponseSchema',
+    storage = fields.Nested('schema.StorageListResponseSchema',
                             required=True)
 
 
@@ -94,10 +94,10 @@ class DataSourceCreateRequestSchema(Schema):
     user_login = fields.String()
     user_name = fields.String()
     tags = fields.String()
-    attributes = fields.Nested('AttributeCreateRequestSchema',
+    attributes = fields.Nested('schema.AttributeCreateRequestSchema',
                                required=True,
                                many=True)
-    storage = fields.Nested('StorageCreateRequestSchema',
+    storage = fields.Nested('schema.StorageCreateRequestSchema',
                             required=True)
 
 
@@ -121,10 +121,10 @@ class DataSourceItemResponseSchema(Schema):
     user_login = fields.String()
     user_name = fields.String()
     tags = fields.String()
-    attributes = fields.Nested('AttributeItemResponseSchema',
+    attributes = fields.Nested('schema.AttributeItemResponseSchema',
                                required=True,
                                many=True)
-    storage = fields.Nested('StorageItemResponseSchema',
+    storage = fields.Nested('schema.StorageItemResponseSchema',
                             required=True)
 
 
@@ -144,21 +144,6 @@ class ExecutionStatusRequestSchema(Schema):
     token = fields.String()
 
 
-class ExecutionStatusResponseSchema(Schema):
-    """ JSON schema for response """
-    id = fields.Integer(required=True)
-    created = fields.DateTime(required=True)
-    started = fields.DateTime()
-    finished = fields.DateTime()
-    status = fields.String(required=True)
-    workflow_id = fields.Integer(required=True)
-    message = fields.String()
-    status_url = fields.Url(required=True)
-    tasks_execution = fields.Nested('TaskExecutionStatusResponseSchema',
-                                    required=True,
-                                    many=True)
-
-
 class ExecutionItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
@@ -171,7 +156,38 @@ class ExecutionItemResponseSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
-    tasks_execution = fields.Nested('TaskExecutionItemResponseSchema',
+    tasks_execution = fields.Nested('schema.TaskExecutionItemResponseSchema',
+                                    required=True,
+                                    many=True)
+
+
+class ExecutionListResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    created = fields.DateTime(required=True)
+    started = fields.DateTime()
+    finished = fields.DateTime()
+    status = fields.String(required=True)
+    workflow_id = fields.Integer(required=True)
+    workflow_name = fields.String(required=True)
+    workflow_definition = fields.String(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    tasks_execution = fields.Nested('schema.TaskExecutionListResponseSchema',
+                                    required=True,
+                                    many=True)
+
+
+class ExecutionCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    started = fields.DateTime()
+    finished = fields.DateTime()
+    status = fields.String(required=True)
+    workflow_id = fields.Integer(required=True)
+    workflow_name = fields.String(required=True)
+    workflow_definition = fields.String(required=True)
+    tasks_execution = fields.Nested('schema.TaskExecutionCreateRequestSchema',
                                     required=True,
                                     many=True)
 
@@ -188,7 +204,7 @@ class OperationListResponseSchema(Schema):
     allow_multiple_inputs = fields.Boolean(required=True)
     allow_multiple_outputs = fields.Boolean(required=True)
     icon = fields.String(required=True)
-    categories = fields.Nested('OperationCategoryListResponseSchema',
+    categories = fields.Nested('schema.OperationCategoryListResponseSchema',
                                required=True,
                                many=True)
 
@@ -205,7 +221,7 @@ class OperationCreateRequestSchema(Schema):
     allow_multiple_inputs = fields.Boolean(required=True)
     allow_multiple_outputs = fields.Boolean(required=True)
     icon = fields.String(required=True)
-    categories = fields.Nested('OperationCategoryCreateRequestSchema',
+    categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
                                required=True,
                                many=True)
 
@@ -222,7 +238,7 @@ class OperationItemResponseSchema(Schema):
     allow_multiple_inputs = fields.Boolean(required=True)
     allow_multiple_outputs = fields.Boolean(required=True)
     icon = fields.String(required=True)
-    categories = fields.Nested('OperationCategoryItemResponseSchema',
+    categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
                                required=True,
                                many=True)
 
@@ -238,7 +254,7 @@ class OperationUpdateRequestSchema(Schema):
     allow_multiple_inputs = fields.Boolean()
     allow_multiple_outputs = fields.Boolean()
     icon = fields.String()
-    categories = fields.Nested('OperationCategoryUpdateRequestSchema',
+    categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
                                many=True)
 
 
@@ -279,17 +295,15 @@ class TaskExecuteRequestSchema(Schema):
     operation_id = fields.Integer(required=True)
     operation_name = fields.String(required=True)
     next_task_id = fields.Integer()
-    parameters = fields.Nested('KeyValuePairExecuteRequestSchema',
+    parameters = fields.Nested('schema.KeyValuePairExecuteRequestSchema',
                                many=True)
 
 
-class TaskExecutionStatusResponseSchema(Schema):
-    """ JSON schema for executing tasks """
-    id = fields.Integer(required=True)
+class TaskExecutionItemResponseSchema(Schema):
+    """ JSON serialization schema """
     date = fields.DateTime(required=True)
     status = fields.String(required=True)
     task_id = fields.Integer(required=True)
-    task_name = fields.String(required=True)
     operation_id = fields.Integer(required=True)
     operation_name = fields.String(required=True)
     message = fields.String()
@@ -306,6 +320,6 @@ class WorkflowExecuteRequestSchema(Schema):
     user_login = fields.String()
     user_name = fields.String()
     token = fields.String()
-    tasks = fields.Nested('TaskExecuteRequestSchema',
+    tasks = fields.Nested('schema.TaskExecuteRequestSchema',
                           required=True,
                           many=True)

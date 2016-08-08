@@ -165,7 +165,7 @@ class Execution(db.Model):
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
     # Associations
-    task_executions = relationship("TaskExecution", back_populates="execution")
+    tasks_execution = relationship("TaskExecution", back_populates="execution")
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -181,7 +181,6 @@ class TaskExecution(db.Model):
     status = Column(Enum(*StatusExecution.__dict__.keys(), 
                          name='StatusExecutionEnumType'), nullable=False)
     task_id = Column(Integer, nullable=False)
-    task_name = Column(String(200), nullable=False)
     operation_id = Column(Integer, nullable=False)
     operation_name = Column(String(200), nullable=False)
     # Associations

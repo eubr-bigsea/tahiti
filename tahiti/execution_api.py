@@ -27,6 +27,7 @@ class ExecutionDetailApi(Resource):
     @requires_auth
     def get(execution_id):
         execution = Execution.query.get(execution_id)
+
         if execution is not None:
             return ExecutionItemResponseSchema().dump(execution).data
         else:
