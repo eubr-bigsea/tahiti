@@ -131,7 +131,8 @@ class DataSourceItemResponseSchema(Schema):
 class ExecutionExecuteResponseSchema(Schema):
     """ JSON schema for response """
     id = fields.Integer(required=True)
-    started = fields.DateTime(required=True)
+    created = fields.DateTime(required=True)
+    started = fields.DateTime()
     status = fields.String(required=True)
     workflow_id = fields.Integer(required=True)
     message = fields.String()
@@ -140,19 +141,37 @@ class ExecutionExecuteResponseSchema(Schema):
 
 class ExecutionStatusRequestSchema(Schema):
     """ JSON schema for executing tasks """
-    token = fields.String(required=True)
+    token = fields.String()
 
 
 class ExecutionStatusResponseSchema(Schema):
     """ JSON schema for response """
     id = fields.Integer(required=True)
-    started = fields.DateTime(required=True)
-    finished = fields.DateTime(required=True)
+    created = fields.DateTime(required=True)
+    started = fields.DateTime()
+    finished = fields.DateTime()
     status = fields.String(required=True)
     workflow_id = fields.Integer(required=True)
     message = fields.String()
     status_url = fields.Url(required=True)
     tasks_execution = fields.Nested('TaskExecutionStatusResponseSchema',
+                                    required=True,
+                                    many=True)
+
+
+class ExecutionItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    created = fields.DateTime(required=True)
+    started = fields.DateTime()
+    finished = fields.DateTime()
+    status = fields.String(required=True)
+    workflow_id = fields.Integer(required=True)
+    workflow_name = fields.String(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    tasks_execution = fields.Nested('TaskExecutionItemResponseSchema',
                                     required=True,
                                     many=True)
 
@@ -261,7 +280,6 @@ class TaskExecuteRequestSchema(Schema):
     operation_name = fields.String(required=True)
     next_task_id = fields.Integer()
     parameters = fields.Nested('KeyValuePairExecuteRequestSchema',
-                               required=True,
                                many=True)
 
 
@@ -287,7 +305,7 @@ class WorkflowExecuteRequestSchema(Schema):
     user_id = fields.Integer()
     user_login = fields.String()
     user_name = fields.String()
-    token = fields.String(required=True)
+    token = fields.String()
     tasks = fields.Nested('TaskExecuteRequestSchema',
                           required=True,
                           many=True)

@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-}
+from collections import namedtuple
 from functools import wraps
 
-from flask import request, Response
+from flask import request, Response, g
+
+User = namedtuple("User", "id, login, name")
 
 
 def check_auth(token):
@@ -23,8 +26,10 @@ def requires_auth(f):
         token = (request.json and request.json.get('token')) or \
                 request.args.get('token') or \
                 request.headers.get('X-Auth-Token')
+        print dir(request)
         if not (token and check_auth(token)):
             return authenticate()
+        setattr(g, 'user', User(id=1, login="walter", name="Walter SF"))
         return f(*_args, **kwargs)
 
     return decorated

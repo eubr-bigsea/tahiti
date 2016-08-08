@@ -5,6 +5,7 @@ import argparse
 from flask import Flask
 from flask_restful import Api
 
+from workflow_api import WorkflowExecuteListApi
 from data_source_api import DataSourceListApi, DataSourceDetailApi
 from models import db
 from operation_api import OperationDetailApi, OperationListApi
@@ -19,6 +20,7 @@ mappings = {
     '/datasources': DataSourceListApi,
     '/datasources/<int:data_source_id>': DataSourceDetailApi,
     '/storages': StorageListApi,
+    '/workflows/execute': WorkflowExecuteListApi,
 }
 for path, view in mappings.iteritems():
     api.add_resource(view, path)

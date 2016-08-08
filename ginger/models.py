@@ -153,8 +153,9 @@ class Execution(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    started = Column(DateTime, nullable=False)
-    finished = Column(DateTime, nullable=False)
+    created = Column(DateTime, nullable=False)
+    started = Column(DateTime)
+    finished = Column(DateTime)
     status = Column(Enum(*StatusExecution.__dict__.keys(), 
                          name='StatusExecutionEnumType'), nullable=False)
     workflow_id = Column(Integer, nullable=False)

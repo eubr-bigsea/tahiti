@@ -6,6 +6,9 @@ from app_auth import requires_auth
 from models import db, DataSource
 from schema import *
 
+# region Protected
+# endregion
+
 
 class DataSourceListApi(Resource):
     """ REST API for listing class DataSource """
@@ -20,18 +23,22 @@ class DataSourceListApi(Resource):
     @requires_auth
     def post():
         json = request.json
-        request_schema = DataSourceCreateRequestSchema()
-        response_schema = DataSourceItemResponseSchema()
-        validation_errors = request_schema.validate(json)
-        if validation_errors:
-            return dict(status="ERROR", message="Validation error",
-                        errors=validation_errors)
+        if json is not None:
+            request_schema = DataSourceCreateRequestSchema()
+            response_schema = DataSourceItemResponseSchema()
+            form = request_schema.load(request.json)
+            if form.errors:
+                return dict(status="ERROR", message="Validation error",
+                            errors=form.errors,), 401
+            else:
+                data_source = DataSource(**form.data)
+                db.session.add(data_source)
+                db.session.commit()
+                return response_schema.dump(
+                    dict(status="OK", message="", data=data_source)).data
         else:
-            data_source = DataSource(**json)
-            db.session.add(data_source)
-            db.session.commit()
-            return response_schema.dump(
-                dict(status="OK", message="", data=data_source)).data
+            return dict(status="ERROR",
+                        message="Missing json in the request body"), 401
 
 
 class DataSourceDetailApi(Resource):
@@ -56,7 +63,7 @@ class DataSourceDetailApi(Resource):
             return dict(status="OK", message="Deleted")
         else:
             return dict(status="ERROR", message="Not found"), 404
-
+    
     @staticmethod
     @requires_auth
     def patch(data_source_id):

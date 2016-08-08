@@ -6,6 +6,9 @@ from app_auth import requires_auth
 from models import db, Operation
 from schema import *
 
+# region Protected
+# endregion
+
 
 class OperationListApi(Resource):
     """ REST API for listing class Operation """
@@ -20,18 +23,22 @@ class OperationListApi(Resource):
     @requires_auth
     def post():
         json = request.json
-        request_schema = OperationCreateRequestSchema()
-        response_schema = OperationItemResponseSchema()
-        validation_errors = request_schema.validate(json)
-        if validation_errors:
-            return dict(status="ERROR", message="Validation error",
-                        errors=validation_errors)
+        if json is not None:
+            request_schema = OperationCreateRequestSchema()
+            response_schema = OperationItemResponseSchema()
+            form = request_schema.load(request.json)
+            if form.errors:
+                return dict(status="ERROR", message="Validation error",
+                            errors=form.errors,), 401
+            else:
+                operation = Operation(**form.data)
+                db.session.add(operation)
+                db.session.commit()
+                return response_schema.dump(
+                    dict(status="OK", message="", data=operation)).data
         else:
-            operation = Operation(**json)
-            db.session.add(operation)
-            db.session.commit()
-            return response_schema.dump(
-                dict(status="OK", message="", data=operation)).data
+            return dict(status="ERROR",
+                        message="Missing json in the request body"), 401
 
 
 class OperationDetailApi(Resource):
@@ -56,7 +63,7 @@ class OperationDetailApi(Resource):
             return dict(status="OK", message="Deleted")
         else:
             return dict(status="ERROR", message="Not found"), 404
-
+    
     @staticmethod
     @requires_auth
     def patch(operation_id):
