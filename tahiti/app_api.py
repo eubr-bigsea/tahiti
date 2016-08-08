@@ -26,7 +26,8 @@ mappings = {
 for path, view in mappings.iteritems():
     api.add_resource(view, path)
 
-if __name__ == '__main__':
+
+def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", help="Config file")
 
@@ -59,3 +60,6 @@ if __name__ == '__main__':
         app.run(debug=True)
     else:
         parser.print_usage()
+
+
+main()
