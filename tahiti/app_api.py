@@ -3,6 +3,7 @@
 import ConfigParser
 import argparse
 
+from flask_cors import CORS, cross_origin
 from flask import Flask
 from flask_restful import Api
 
@@ -13,6 +14,7 @@ from storage_api import StorageListApi
 from workflow_api import WorkflowExecuteListApi
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
 mappings = {
@@ -56,8 +58,8 @@ def main():
                                url_prefix=prefix)
             manager.create_api(Execution, methods=['GET'], url_prefix=prefix)
             '''
-
-        app.run(debug=True)
+        if parser.get('Servers', 'environment') == 'dev':
+            app.run(debug=False)
     else:
         parser.print_usage()
 
