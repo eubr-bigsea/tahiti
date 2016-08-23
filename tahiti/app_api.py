@@ -3,6 +3,7 @@
 import ConfigParser
 import argparse
 
+from flask_cors import CORS, cross_origin
 from flask import Flask
 from flask_restful import Api
 
@@ -16,6 +17,7 @@ from workflow_api import WorkflowExecuteListApi
 import json
 
 app = Flask(__name__)
+CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
 mappings = {
@@ -55,8 +57,19 @@ def main():
 
         if server_config.get('environment', 'dev') == 'dev':
             app.run(debug=True)
+            '''
+            # Create the Flask-Restless API manager.
+            manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
+
+            # Create API endpoints, which will be available at /api/<tablename> by
+            # default. Allowed HTTP methods can be specified as well.
+            prefix = '/api/v1'
+            manager.create_api(Operation, methods=['GET', 'POST', 'DELETE'],
+                               url_prefix=prefix)
+            manager.create_api(Execution, methods=['GET'], url_prefix=prefix)
+            '''
+        if parser.get('Servers', 'environment') == 'dev':
+            app.run(debug=False)
     else:
         parser.print_usage()
-
-
 main()
