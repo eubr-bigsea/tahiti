@@ -207,6 +207,9 @@ class OperationListResponseSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
                                required=True,
                                many=True)
+    ports = fields.Nested('schema.OperationPortListResponseSchema',
+                          required=True,
+                          many=True)
 
 
 class OperationCreateRequestSchema(Schema):
@@ -224,6 +227,9 @@ class OperationCreateRequestSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
                                required=True,
                                many=True)
+    ports = fields.Nested('schema.OperationPortCreateRequestSchema',
+                          required=True,
+                          many=True)
 
 
 class OperationItemResponseSchema(Schema):
@@ -241,6 +247,9 @@ class OperationItemResponseSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
                                required=True,
                                many=True)
+    ports = fields.Nested('schema.OperationPortItemResponseSchema',
+                          required=True,
+                          many=True)
 
 
 class OperationUpdateRequestSchema(Schema):
@@ -256,6 +265,8 @@ class OperationUpdateRequestSchema(Schema):
     icon = fields.String()
     categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
                                many=True)
+    ports = fields.Nested('schema.OperationPortUpdateRequestSchema',
+                          many=True)
 
 
 class OperationCategoryCreateRequestSchema(Schema):
@@ -269,6 +280,33 @@ class OperationCategoryListResponseSchema(Schema):
     """ JSON schema for response """
     name = fields.String(required=True)
     type = fields.String(required=True)
+
+
+class OperationPortListResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    type = fields.String(required=True)
+    description = fields.String(required=True)
+    tags = fields.String()
+
+
+class OperationPortCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    type = fields.String(required=True)
+    description = fields.String(required=True)
+    tags = fields.String()
+
+
+class OperationPortItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    type = fields.String(required=True)
+    description = fields.String(required=True)
+    tags = fields.String()
 
 
 class StorageListResponseSchema(Schema):
@@ -310,6 +348,15 @@ class TaskExecutionItemResponseSchema(Schema):
     std_out = fields.String()
     std_err = fields.String()
     exit_code = fields.Integer()
+
+
+class TaskExecutionListResponseSchema(Schema):
+    """ JSON serialization schema """
+    date = fields.DateTime(required=True)
+    status = fields.String(required=True)
+    task_id = fields.Integer(required=True)
+    operation_id = fields.Integer(required=True)
+    operation_name = fields.String(required=True)
 
 
 class WorkflowExecuteRequestSchema(Schema):

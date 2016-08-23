@@ -28,6 +28,12 @@ class StatusExecution:
 
 
 # noinspection PyClassHasNoInit
+class OperationPortType:
+    INPUT = 'INPUT'
+    OUTPUT = 'OUTPUT'
+
+
+# noinspection PyClassHasNoInit
 class DataSourceFormat:
     XML_FILE = 'XML_FILE'
     NETCDF4 = 'NETCDF4'
@@ -90,6 +96,27 @@ class Operation(db.Model):
         Column('operation_category_id', Integer, ForeignKey('operation_category.id')))
     categories = relationship("OperationCategory",
                               secondary=operation_category_operation)
+    ports = relationship("OperationPort", back_populates="operation")
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationPort(db.Model):
+    """ An input or output port for operation """
+    __tablename__ = 'operation_port'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    type = Column(Enum(*OperationPortType.__dict__.keys(), 
+                       name='OperationPortTypeEnumType'), nullable=False)
+    description = Column(String(200), nullable=False)
+    tags = Column(Text)
+    # Associations
+    operation_id = Column(Integer, 
+                          ForeignKey("operation.id"), nullable=False)
+    operation = relationship("Operation", foreign_keys=[operation_id])
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
