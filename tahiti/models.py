@@ -113,6 +113,7 @@ class OperationPort(db.Model):
                        name='OperationPortTypeEnumType'), nullable=False)
     description = Column(String(200), nullable=False)
     tags = Column(Text)
+    order = Column(Integer)
     # Associations
     operation_id = Column(Integer, 
                           ForeignKey("operation.id"), nullable=False)
