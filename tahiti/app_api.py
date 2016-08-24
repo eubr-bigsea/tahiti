@@ -10,7 +10,7 @@ from data_source_api import DataSourceListApi, DataSourceDetailApi
 from models import db
 from operation_api import OperationDetailApi, OperationListApi
 from storage_api import StorageListApi
-from tahiti.execution_api import ExecutionListApi, ExecutionDetailApi
+from execution_api import ExecutionListApi, ExecutionDetailApi
 from workflow_api import WorkflowExecuteListApi
 
 import json
