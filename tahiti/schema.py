@@ -201,8 +201,6 @@ class OperationListResponseSchema(Schema):
     command = fields.String(required=True)
     type = fields.String(required=True)
     input_form = fields.String(required=True)
-    allow_multiple_inputs = fields.Boolean(required=True)
-    allow_multiple_outputs = fields.Boolean(required=True)
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
                                required=True,
@@ -221,8 +219,6 @@ class OperationCreateRequestSchema(Schema):
     command = fields.String(required=True)
     type = fields.String(required=True)
     input_form = fields.String(required=True)
-    allow_multiple_inputs = fields.Boolean(required=True)
-    allow_multiple_outputs = fields.Boolean(required=True)
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
                                required=True,
@@ -241,8 +237,6 @@ class OperationItemResponseSchema(Schema):
     command = fields.String(required=True)
     type = fields.String(required=True)
     input_form = fields.String(required=True)
-    allow_multiple_inputs = fields.Boolean(required=True)
-    allow_multiple_outputs = fields.Boolean(required=True)
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
                                required=True,
@@ -260,8 +254,6 @@ class OperationUpdateRequestSchema(Schema):
     command = fields.String()
     type = fields.String()
     input_form = fields.String()
-    allow_multiple_inputs = fields.Boolean()
-    allow_multiple_outputs = fields.Boolean()
     icon = fields.String()
     categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
                                many=True)
@@ -290,7 +282,7 @@ class OperationPortListResponseSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String()
     order = fields.Integer()
-    multiplicity = fields.Integer(required=True)
+    multiplicity = fields.String(required=True)
 
 
 class OperationPortCreateRequestSchema(Schema):
@@ -301,7 +293,7 @@ class OperationPortCreateRequestSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String()
     order = fields.Integer()
-    multiplicity = fields.Integer(required=True)
+    multiplicity = fields.String(required=True)
 
 
 class OperationPortItemResponseSchema(Schema):
@@ -312,7 +304,7 @@ class OperationPortItemResponseSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String()
     order = fields.Integer()
-    multiplicity = fields.Integer(required=True)
+    multiplicity = fields.String(required=True)
 
 
 class StorageListResponseSchema(Schema):

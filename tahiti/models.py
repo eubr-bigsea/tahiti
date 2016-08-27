@@ -34,6 +34,12 @@ class OperationPortType:
 
 
 # noinspection PyClassHasNoInit
+class OperationPortMultiplicity:
+    MANY = 'MANY'
+    ONE = 'ONE'
+
+
+# noinspection PyClassHasNoInit
 class DataSourceFormat:
     XML_FILE = 'XML_FILE'
     NETCDF4 = 'NETCDF4'
@@ -85,8 +91,6 @@ class Operation(db.Model):
     type = Column(Enum(*OperationType.__dict__.keys(), 
                        name='OperationTypeEnumType'), nullable=False)
     input_form = Column(Text, nullable=False)
-    allow_multiple_inputs = Column(Boolean, nullable=False, default=False)
-    allow_multiple_outputs = Column(Boolean, nullable=False, default=False)
     icon = Column(String(200), nullable=False)
     # Associations
     # noinspection PyUnresolvedReferences
@@ -114,7 +118,8 @@ class OperationPort(db.Model):
     description = Column(String(200), nullable=False)
     tags = Column(Text)
     order = Column(Integer)
-    multiplicity = Column(Integer, nullable=False, default=1)
+    multiplicity = Column(Enum(*OperationPortMultiplicity.__dict__.keys(), 
+                               name='OperationPortMultiplicityEnumType'), nullable=False, default=1)
     # Associations
     operation_id = Column(Integer, 
                           ForeignKey("operation.id"), nullable=False)
