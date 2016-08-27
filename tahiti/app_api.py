@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import ConfigParser
 import argparse
 
 from flask_cors import CORS, cross_origin
@@ -11,7 +10,7 @@ from data_source_api import DataSourceListApi, DataSourceDetailApi
 from models import db
 from operation_api import OperationDetailApi, OperationListApi
 from storage_api import StorageListApi
-from tahiti.execution_api import ExecutionListApi, ExecutionDetailApi
+from execution_api import ExecutionListApi, ExecutionDetailApi
 from workflow_api import WorkflowExecuteListApi
 
 import json
@@ -68,8 +67,6 @@ def main():
                                url_prefix=prefix)
             manager.create_api(Execution, methods=['GET'], url_prefix=prefix)
             '''
-        if parser.get('Servers', 'environment') == 'dev':
-            app.run(debug=False)
     else:
         parser.print_usage()
 main()
