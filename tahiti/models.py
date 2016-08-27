@@ -114,6 +114,7 @@ class OperationPort(db.Model):
     description = Column(String(200), nullable=False)
     tags = Column(Text)
     order = Column(Integer)
+    multiplicity = Column(Integer, nullable=False, default=1)
     # Associations
     operation_id = Column(Integer, 
                           ForeignKey("operation.id"), nullable=False)

@@ -290,6 +290,7 @@ class OperationPortListResponseSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String()
     order = fields.Integer()
+    multiplicity = fields.Integer(required=True)
 
 
 class OperationPortCreateRequestSchema(Schema):
@@ -300,6 +301,7 @@ class OperationPortCreateRequestSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String()
     order = fields.Integer()
+    multiplicity = fields.Integer(required=True)
 
 
 class OperationPortItemResponseSchema(Schema):
@@ -310,6 +312,7 @@ class OperationPortItemResponseSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String()
     order = fields.Integer()
+    multiplicity = fields.Integer(required=True)
 
 
 class StorageListResponseSchema(Schema):
