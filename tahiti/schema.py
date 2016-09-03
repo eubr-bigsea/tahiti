@@ -283,6 +283,9 @@ class OperationPortListResponseSchema(Schema):
     tags = fields.String()
     order = fields.Integer()
     multiplicity = fields.String(required=True)
+    interfaces = fields.Nested('schema.OperationPortInterfaceListResponseSchema',
+                               required=True,
+                               many=True)
 
 
 class OperationPortCreateRequestSchema(Schema):
@@ -294,6 +297,9 @@ class OperationPortCreateRequestSchema(Schema):
     tags = fields.String()
     order = fields.Integer()
     multiplicity = fields.String(required=True)
+    interfaces = fields.Nested('schema.OperationPortInterfaceCreateRequestSchema',
+                               required=True,
+                               many=True)
 
 
 class OperationPortItemResponseSchema(Schema):
@@ -305,6 +311,20 @@ class OperationPortItemResponseSchema(Schema):
     tags = fields.String()
     order = fields.Integer()
     multiplicity = fields.String(required=True)
+    interfaces = fields.Nested('schema.OperationPortInterfaceItemResponseSchema',
+                               required=True,
+                               many=True)
+
+
+class OperationPortInterfaceCreateRequestSchema(Schema):
+    """ JSON schema for request """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+
+
+class OperationPortInterfaceListResponseSchema(Schema):
+    """ JSON schema for response """
+    name = fields.String(required=True)
 
 
 class StorageListResponseSchema(Schema):

@@ -106,6 +106,18 @@ class Operation(db.Model):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
+class OperationPortInterface(db.Model):
+    """ An interface that a operation port supports """
+    __tablename__ = 'operation_port_interface'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
 class OperationPort(db.Model):
     """ An input or output port for operation """
     __tablename__ = 'operation_port'
@@ -121,6 +133,13 @@ class OperationPort(db.Model):
     multiplicity = Column(Enum(*OperationPortMultiplicity.__dict__.keys(), 
                                name='OperationPortMultiplicityEnumType'), nullable=False, default=1)
     # Associations
+    # noinspection PyUnresolvedReferences
+    operation_port_interface_operation_port = db.Table(
+        'operation_port_interface_operation_port',
+        Column('operation_port_id', Integer, ForeignKey('operation_port.id')),
+        Column('operation_port_interface_id', Integer, ForeignKey('operation_port_interface.id')))
+    interfaces = relationship("OperationPortInterface",
+                                    secondary=operation_port_interface_operation_port)
     operation_id = Column(Integer, 
                           ForeignKey("operation.id"), nullable=False)
     operation = relationship("Operation", foreign_keys=[operation_id])
