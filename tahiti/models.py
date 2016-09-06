@@ -86,6 +86,7 @@ class Operation(db.Model):
     id = Column(Integer, primary_key=True)
     enabled = Column(Boolean, nullable=False)
     name = Column(String(200), nullable=False)
+    slug = Column(String(200), nullable=False)
     description = Column(String(200), nullable=False)
     command = Column(String(200), nullable=False)
     type = Column(Enum(*OperationType.__dict__.keys(), 
