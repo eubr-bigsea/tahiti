@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-}
+# -*- coding: utf-8 }
 from flask import request
 from flask_restful import Resource
 
@@ -17,6 +17,7 @@ class OperationListApi(Resource):
     @requires_auth
     def get():
         operations = Operation.query.order_by('name')
+        db.session.close()
         return OperationListResponseSchema(many=True).dump(operations).data
 
     @staticmethod
