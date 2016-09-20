@@ -23,9 +23,19 @@ class AttributeListResponseSchema(Schema):
     type = fields.String(required=True)
     size = fields.Integer()
     precision = fields.Integer()
+    nullable = fields.Boolean(required=True)
     enumeration = fields.Boolean(required=True)
-    data_source = fields.Nested('schema.DataSourceListResponseSchema',
-                                required=True)
+    missing_representation = fields.String(required=True)
+    feature = fields.Boolean(required=True)
+    label = fields.Boolean(required=True)
+    distinct_values = fields.Integer()
+    mean_value = fields.Float()
+    median_value = fields.String()
+    max_value = fields.String()
+    min_value = fields.String()
+    std_deviation = fields.Float()
+    missing_total = fields.String()
+    deciles = fields.String()
 
 
 class AttributeItemResponseSchema(Schema):
@@ -36,9 +46,19 @@ class AttributeItemResponseSchema(Schema):
     type = fields.String(required=True)
     size = fields.Integer()
     precision = fields.Integer()
+    nullable = fields.Boolean(required=True)
     enumeration = fields.Boolean(required=True)
-    data_source = fields.Nested('schema.DataSourceItemResponseSchema',
-                                required=True)
+    missing_representation = fields.String(required=True)
+    feature = fields.Boolean(required=True)
+    label = fields.Boolean(required=True)
+    distinct_values = fields.Integer()
+    mean_value = fields.Float()
+    median_value = fields.String()
+    max_value = fields.String()
+    min_value = fields.String()
+    std_deviation = fields.Float()
+    missing_total = fields.String()
+    deciles = fields.String()
 
 
 class DataSourceExecuteRequestSchema(Schema):
@@ -60,8 +80,6 @@ class DataSourceListResponseSchema(Schema):
     provenience = fields.String()
     estimated_rows = fields.Integer(required=True)
     estimated_size_in_mega_bytes = fields.Decimal(required=True)
-    selection = fields.String()
-    projection = fields.String()
     expiration = fields.String()
     user_id = fields.Integer()
     user_login = fields.String()
@@ -87,8 +105,6 @@ class DataSourceCreateRequestSchema(Schema):
     provenience = fields.String()
     estimated_rows = fields.Integer(required=True)
     estimated_size_in_mega_bytes = fields.Decimal(required=True)
-    selection = fields.String()
-    projection = fields.String()
     expiration = fields.String()
     user_id = fields.Integer()
     user_login = fields.String()
@@ -114,8 +130,6 @@ class DataSourceItemResponseSchema(Schema):
     provenience = fields.String()
     estimated_rows = fields.Integer(required=True)
     estimated_size_in_mega_bytes = fields.Decimal(required=True)
-    selection = fields.String()
-    projection = fields.String()
     expiration = fields.String()
     user_id = fields.Integer()
     user_login = fields.String()
@@ -195,9 +209,8 @@ class ExecutionCreateRequestSchema(Schema):
 class OperationListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
-    enabled = fields.Boolean(required=True)
     name = fields.String(required=True)
-    slug = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     command = fields.String(required=True)
     type = fields.String(required=True)
@@ -206,6 +219,9 @@ class OperationListResponseSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
                                required=True,
                                many=True)
+    forms = fields.Nested('schema.OperationFormListResponseSchema',
+                          required=True,
+                          many=True)
     ports = fields.Nested('schema.OperationPortListResponseSchema',
                           required=True,
                           many=True)
@@ -214,9 +230,8 @@ class OperationListResponseSchema(Schema):
 class OperationCreateRequestSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
-    enabled = fields.Boolean(required=True)
     name = fields.String(required=True)
-    slug = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     command = fields.String(required=True)
     type = fields.String(required=True)
@@ -225,6 +240,9 @@ class OperationCreateRequestSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
                                required=True,
                                many=True)
+    forms = fields.Nested('schema.OperationFormCreateRequestSchema',
+                          required=True,
+                          many=True)
     ports = fields.Nested('schema.OperationPortCreateRequestSchema',
                           required=True,
                           many=True)
@@ -233,9 +251,8 @@ class OperationCreateRequestSchema(Schema):
 class OperationItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
-    enabled = fields.Boolean(required=True)
     name = fields.String(required=True)
-    slug = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     command = fields.String(required=True)
     type = fields.String(required=True)
@@ -244,6 +261,9 @@ class OperationItemResponseSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
                                required=True,
                                many=True)
+    forms = fields.Nested('schema.OperationFormItemResponseSchema',
+                          required=True,
+                          many=True)
     ports = fields.Nested('schema.OperationPortItemResponseSchema',
                           required=True,
                           many=True)
@@ -251,9 +271,8 @@ class OperationItemResponseSchema(Schema):
 
 class OperationUpdateRequestSchema(Schema):
     """ JSON serialization schema """
-    enabled = fields.Boolean()
     name = fields.String()
-    slug = fields.String()
+    enabled = fields.Boolean()
     description = fields.String()
     command = fields.String()
     type = fields.String()
@@ -261,6 +280,8 @@ class OperationUpdateRequestSchema(Schema):
     icon = fields.String()
     categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
                                many=True)
+    forms = fields.Nested('schema.OperationFormUpdateRequestSchema',
+                          many=True)
     ports = fields.Nested('schema.OperationPortUpdateRequestSchema',
                           many=True)
 
@@ -276,6 +297,66 @@ class OperationCategoryListResponseSchema(Schema):
     """ JSON schema for response """
     name = fields.String(required=True)
     type = fields.String(required=True)
+
+
+class OperationFormListResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    fields = fields.Nested('schema.OperationFormFieldListResponseSchema',
+                           required=True,
+                           many=True)
+
+
+class OperationFormCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    fields = fields.Nested('schema.OperationFormFieldCreateRequestSchema',
+                           required=True,
+                           many=True)
+
+
+class OperationFormItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    fields = fields.Nested('schema.OperationFormFieldItemResponseSchema',
+                           required=True,
+                           many=True)
+
+
+class OperationFormFieldListResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    label = fields.String(required=True)
+    help = fields.String(required=True)
+    type = fields.String(required=True)
+    required = fields.Boolean(required=True)
+    suggested_widget = fields.String()
+    values_url = fields.String()
+    values = fields.String()
+
+
+class OperationFormFieldCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    label = fields.String(required=True)
+    help = fields.String(required=True)
+    type = fields.String(required=True)
+    required = fields.Boolean(required=True)
+    suggested_widget = fields.String()
+    values_url = fields.String()
+    values = fields.String()
+
+
+class OperationFormFieldItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    label = fields.String(required=True)
+    help = fields.String(required=True)
+    type = fields.String(required=True)
+    required = fields.Boolean(required=True)
+    suggested_widget = fields.String()
+    values_url = fields.String()
+    values = fields.String()
 
 
 class OperationPortListResponseSchema(Schema):

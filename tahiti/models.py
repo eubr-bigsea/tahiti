@@ -2,7 +2,7 @@
 import json
 
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, \
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
     Enum, DateTime, Numeric, Text
 from sqlalchemy.orm import relationship
 
@@ -84,9 +84,8 @@ class Operation(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    enabled = Column(Boolean, nullable=False)
     name = Column(String(200), nullable=False)
-    slug = Column(String(200), nullable=False)
+    enabled = Column(Boolean, nullable=False)
     description = Column(String(200), nullable=False)
     command = Column(String(200), nullable=False)
     type = Column(Enum(*OperationType.__dict__.keys(), 
@@ -101,7 +100,11 @@ class Operation(db.Model):
         Column('operation_category_id', Integer, ForeignKey('operation_category.id')))
     categories = relationship("OperationCategory",
                               secondary=operation_category_operation)
+    forms = relationship("OperationForm", back_populates="operation")
     ports = relationship("OperationPort", back_populates="operation")
+
+    def __unicode__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -114,6 +117,9 @@ class OperationPortInterface(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
+
+    def __unicode__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -145,6 +151,9 @@ class OperationPort(db.Model):
                           ForeignKey("operation.id"), nullable=False)
     operation = relationship("Operation", foreign_keys=[operation_id])
 
+    def __unicode__(self):
+        return self.name
+
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
@@ -157,6 +166,56 @@ class OperationCategory(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
     type = Column(String(200), nullable=False)
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationForm(db.Model):
+    """ A form used to fill parameters to the operations """
+    __tablename__ = 'operation_form'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    # Associations
+    fields = relationship("OperationFormField")
+    operation_id = Column(Integer, 
+                          ForeignKey("operation.id"), nullable=False)
+    operation = relationship("Operation", foreign_keys=[operation_id])
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationFormField(db.Model):
+    """ A field used to fill one parameter of a form for an operations """
+    __tablename__ = 'operation_form_field'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    label = Column(String(200), nullable=False)
+    help = Column(Text, nullable=False)
+    type = Column(Enum(*DataType.__dict__.keys(), 
+                       name='DataTypeEnumType'), nullable=False)
+    required = Column(Boolean, nullable=False)
+    suggested_widget = Column(String(200))
+    values_url = Column(String(200))
+    values = Column(String(200))
+    # Associations
+    form_id = Column(Integer, 
+                     ForeignKey("operation_form.id"), nullable=False)
+    form = relationship("OperationForm", foreign_keys=[form_id])
+
+    def __unicode__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -174,6 +233,9 @@ class Workflow(db.Model):
     user_name = Column(String(200))
     # Associations
     tasks = relationship("Task", back_populates="workflow")
+
+    def __unicode__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -196,6 +258,9 @@ class Task(db.Model):
                          ForeignKey("workflow.id"), nullable=False)
     workflow = relationship("Workflow", foreign_keys=[workflow_id], 
                             back_populates="tasks")
+
+    def __unicode__(self):
+        return self.order
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -221,6 +286,9 @@ class Execution(db.Model):
     # Associations
     tasks_execution = relationship("TaskExecution", back_populates="execution")
 
+    def __unicode__(self):
+        return self.created
+
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
@@ -241,6 +309,9 @@ class TaskExecution(db.Model):
     execution_id = Column(Integer, 
                           ForeignKey("execution.id"), nullable=False)
     execution = relationship("Execution", foreign_keys=[execution_id])
+
+    def __unicode__(self):
+        return self.date
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -263,8 +334,6 @@ class DataSource(db.Model):
     provenience = Column(Text)
     estimated_rows = Column(Integer, nullable=False)
     estimated_size_in_mega_bytes = Column(Numeric(10, 2), nullable=False)
-    selection = Column(String(200))
-    projection = Column(String(200))
     expiration = Column(String(200))
     user_id = Column(Integer)
     user_login = Column(String(50))
@@ -275,6 +344,9 @@ class DataSource(db.Model):
     storage_id = Column(Integer, 
                         ForeignKey("storage.id"), nullable=False)
     storage = relationship("Storage", foreign_keys=[storage_id])
+
+    def __unicode__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -292,12 +364,27 @@ class Attribute(db.Model):
                        name='DataTypeEnumType'), nullable=False)
     size = Column(Integer)
     precision = Column(Integer)
+    nullable = Column(Boolean, nullable=False)
     enumeration = Column(Boolean, nullable=False)
+    missingRepresentation = Column(String(200), nullable=False)
+    feature = Column(Boolean, nullable=False, default=True)
+    label = Column(Boolean, nullable=False, default=True)
+    distinctValues = Column(Integer)
+    meanValue = Column(Float)
+    medianValue = Column(String(200))
+    maxValue = Column(String(200))
+    minValue = Column(String(200))
+    stdDeviation = Column(Float)
+    missingTotal = Column(String(200))
+    deciles = Column(Text)
     # Associations
     data_source_id = Column(Integer, 
                             ForeignKey("data_source.id"), nullable=False)
     data_source = relationship("DataSource", foreign_keys=[data_source_id], 
                                back_populates="attributes")
+
+    def __unicode__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -312,6 +399,9 @@ class Storage(db.Model):
     name = Column(String(100), nullable=False)
     type = Column(Enum(*StorageType.__dict__.keys(), 
                        name='StorageTypeEnumType'), nullable=False)
+
+    def __unicode__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)

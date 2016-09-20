@@ -16,14 +16,15 @@ class DataSourceListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
+        only = ('id', 'name') \
+            if request.args.get('simple', 'false') == 'true' else None
         data_sources = DataSource.query.all()
-        return DataSourceListResponseSchema(many=True).dump(data_sources).data
+        return DataSourceListResponseSchema(many=True, only=only).dump(data_sources).data
 
     @staticmethod
     @requires_auth
     def post():
-        json = request.json
-        if json is not None:
+        if request.json is not None:
             request_schema = DataSourceCreateRequestSchema()
             response_schema = DataSourceItemResponseSchema()
             form = request_schema.load(request.json)

@@ -1,4 +1,4 @@
-# -*- coding: utf-8 }
+# -*- coding: utf-8 -*-}
 from flask import request
 from flask_restful import Resource
 
@@ -16,15 +16,15 @@ class OperationListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
+        only = ('id', 'name') \
+            if request.args.get('simple', 'false') == 'true' else None
         operations = Operation.query.order_by('name')
-        db.session.close()
-        return OperationListResponseSchema(many=True).dump(operations).data
+        return OperationListResponseSchema(many=True, only=only).dump(operations).data
 
     @staticmethod
     @requires_auth
     def post():
-        json = request.json
-        if json is not None:
+        if request.json is not None:
             request_schema = OperationCreateRequestSchema()
             response_schema = OperationItemResponseSchema()
             form = request_schema.load(request.json)

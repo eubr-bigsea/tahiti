@@ -16,5 +16,7 @@ class StorageListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
+        only = ('id', 'name') \
+            if request.args.get('simple', 'false') == 'true' else None
         storages = Storage.query.all()
-        return StorageListResponseSchema(many=True).dump(storages).data
+        return StorageListResponseSchema(many=True, only=only).dump(storages).data

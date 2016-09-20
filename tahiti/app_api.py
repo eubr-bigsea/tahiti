@@ -3,11 +3,13 @@
 import argparse
 
 from flask_cors import CORS, cross_origin
-from flask import Flask
+from flask import Flask, session
 from flask_restful import Api
+from flask_admin.contrib.sqla import ModelView
+from flask_admin import Admin
 
 from data_source_api import DataSourceListApi, DataSourceDetailApi
-from models import db
+from models import db, Operation, OperationForm, OperationFormField
 from operation_api import OperationDetailApi, OperationListApi
 from storage_api import StorageListApi
 from execution_api import ExecutionListApi, ExecutionDetailApi
@@ -16,6 +18,11 @@ from workflow_api import WorkflowExecuteListApi
 import json
 
 app = Flask(__name__)
+app.secret_key = 'l3m0n4d1'
+# Flask Admin 
+admin = Admin(app, name='Lemonade', template_mode='bootstrap3')
+
+# CORS
 CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
@@ -55,6 +62,10 @@ def main():
             db.create_all()
 
         if server_config.get('environment', 'dev') == 'dev':
+
+            admin.add_view(ModelView(Operation, db.session))
+            admin.add_view(ModelView(OperationForm, db.session))
+            admin.add_view(ModelView(OperationFormField, db.session))
             app.run(debug=True)
             '''
             # Create the Flask-Restless API manager.

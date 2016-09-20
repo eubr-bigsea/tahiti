@@ -16,8 +16,10 @@ class ExecutionListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
+        only = ('id', 'name') \
+            if request.args.get('simple', 'false') == 'true' else None
         executions = Execution.query.all()
-        return ExecutionListResponseSchema(many=True).dump(executions).data
+        return ExecutionListResponseSchema(many=True, only=only).dump(executions).data
 
 
 class ExecutionDetailApi(Resource):
@@ -27,7 +29,6 @@ class ExecutionDetailApi(Resource):
     @requires_auth
     def get(execution_id):
         execution = Execution.query.get(execution_id)
-
         if execution is not None:
             return ExecutionItemResponseSchema().dump(execution).data
         else:
