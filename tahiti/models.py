@@ -5,7 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
     Enum, DateTime, Numeric, Text
 from sqlalchemy.sql import func
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 
 db = SQLAlchemy()
 
@@ -148,6 +148,7 @@ class OperationPort(db.Model):
         Column('operation_port_interface_id', Integer, ForeignKey('operation_port_interface.id')))
     interfaces = relationship("OperationPortInterface",
                                     secondary=operation_port_interface_operation_port)
+
     operation_id = Column(Integer, 
                           ForeignKey("operation.id"), nullable=False)
     operation = relationship("Operation", foreign_keys=[operation_id])
@@ -184,6 +185,7 @@ class OperationForm(db.Model):
     name = Column(String(200), nullable=False)
     # Associations
     fields = relationship("OperationFormField")
+
     operation_id = Column(Integer, 
                           ForeignKey("operation.id"), nullable=False)
     operation = relationship("Operation", foreign_keys=[operation_id])
@@ -211,6 +213,7 @@ class OperationFormField(db.Model):
     values_url = Column(String(200))
     values = Column(String(200))
     # Associations
+
     form_id = Column(Integer, 
                      ForeignKey("operation_form.id"), nullable=False)
     form = relationship("OperationForm", foreign_keys=[form_id])
@@ -255,10 +258,12 @@ class Task(db.Model):
     operation_id = Column(Integer, nullable=False)
     operation_name = Column(String(200), nullable=False)
     # Associations
+
     workflow_id = Column(Integer, 
                          ForeignKey("workflow.id"), nullable=False)
     workflow = relationship("Workflow", foreign_keys=[workflow_id], 
-                            back_populates="tasks")
+                            back_populates="tasks"
+    )
 
     def __unicode__(self):
         return self.order
@@ -307,6 +312,7 @@ class TaskExecution(db.Model):
     operation_id = Column(Integer, nullable=False)
     operation_name = Column(String(200), nullable=False)
     # Associations
+
     execution_id = Column(Integer, 
                           ForeignKey("execution.id"), nullable=False)
     execution = relationship("Execution", foreign_keys=[execution_id])
@@ -341,7 +347,7 @@ class DataSource(db.Model):
     user_name = Column(String(200))
     tags = Column(String(100))
     # Associations
-    attributes = relationship("Attribute", back_populates="data_source")
+
     storage_id = Column(Integer, 
                         ForeignKey("storage.id"), nullable=False)
     storage = relationship("Storage", foreign_keys=[storage_id])
@@ -379,10 +385,13 @@ class Attribute(db.Model):
     missing_total = Column(String(200))
     deciles = Column(Text)
     # Associations
+
     data_source_id = Column(Integer, 
                             ForeignKey("data_source.id"), nullable=False)
     data_source = relationship("DataSource", foreign_keys=[data_source_id], 
-                               back_populates="attributes")
+                               backref=backref(
+                                   "attributes",
+                                   cascade="all, delete-orphan"))
 
     def __unicode__(self):
         return self.name
