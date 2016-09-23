@@ -4,6 +4,7 @@ import json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
     Enum, DateTime, Numeric, Text
+from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship
 
 db = SQLAlchemy()
@@ -328,12 +329,12 @@ class DataSource(db.Model):
     enabled = Column(Boolean, nullable=False)
     read_only = Column(Boolean, nullable=False)
     url = Column(String(200), nullable=False)
-    created = Column(DateTime, nullable=False)
+    created = Column(DateTime, nullable=False, default=func.now())
     format = Column(Enum(*DataSourceFormat.__dict__.keys(), 
                          name='DataSourceFormatEnumType'), nullable=False)
     provenience = Column(Text)
-    estimated_rows = Column(Integer, nullable=False)
-    estimated_size_in_mega_bytes = Column(Numeric(10, 2), nullable=False)
+    estimated_rows = Column(Integer)
+    estimated_size_in_mega_bytes = Column(Numeric(10, 2))
     expiration = Column(String(200))
     user_id = Column(Integer)
     user_login = Column(String(50))
@@ -366,16 +367,16 @@ class Attribute(db.Model):
     precision = Column(Integer)
     nullable = Column(Boolean, nullable=False)
     enumeration = Column(Boolean, nullable=False)
-    missingRepresentation = Column(String(200), nullable=False)
+    missing_representation = Column(String(200))
     feature = Column(Boolean, nullable=False, default=True)
     label = Column(Boolean, nullable=False, default=True)
-    distinctValues = Column(Integer)
-    meanValue = Column(Float)
-    medianValue = Column(String(200))
-    maxValue = Column(String(200))
-    minValue = Column(String(200))
-    stdDeviation = Column(Float)
-    missingTotal = Column(String(200))
+    distinct_values = Column(Integer)
+    mean_value = Column(Float)
+    median_value = Column(String(200))
+    max_value = Column(String(200))
+    min_value = Column(String(200))
+    std_deviation = Column(Float)
+    missing_total = Column(String(200))
     deciles = Column(Text)
     # Associations
     data_source_id = Column(Integer, 

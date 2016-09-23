@@ -32,11 +32,10 @@ class DataSourceListApi(Resource):
                 return dict(status="ERROR", message="Validation error",
                             errors=form.errors,), 401
             else:
-                data_source = DataSource(**form.data)
+                data_source = form.data
                 db.session.add(data_source)
                 db.session.commit()
-                return response_schema.dump(
-                    dict(status="OK", message="", data=data_source)).data
+                return dict(status="OK", message="", data=response_schema.dump(data_source).data)
         else:
             return dict(status="ERROR",
                         message="Missing json in the request body"), 401
