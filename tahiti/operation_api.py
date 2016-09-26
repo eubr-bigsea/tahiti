@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-}
-from flask import request
+from flask import request, current_app
 from flask_restful import Resource
 
 from app_auth import requires_auth
@@ -24,22 +24,32 @@ class OperationListApi(Resource):
     @staticmethod
     @requires_auth
     def post():
+        result, result_code = dict(
+            status="ERROR", message="Missing json in the request body"), 401
         if request.json is not None:
             request_schema = OperationCreateRequestSchema()
             response_schema = OperationItemResponseSchema()
             form = request_schema.load(request.json)
             if form.errors:
-                return dict(status="ERROR", message="Validation error",
-                            errors=form.errors,), 401
+                result, result_code = dict(
+                    status="ERROR", message="Validation error",
+                    errors=form.errors,), 401
             else:
-                operation = Operation(**form.data)
-                db.session.add(operation)
-                db.session.commit()
-                return response_schema.dump(
-                    dict(status="OK", message="", data=operation)).data
-        else:
-            return dict(status="ERROR",
-                        message="Missing json in the request body"), 401
+                try:
+                    operation = form.data
+                    db.session.add(operation)
+                    db.session.commit()
+                    result, result_code = dict(
+                        status="OK", message="",
+                        data=response_schema.dump(operation).data), 200
+                except Exception, e:
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug:
+                        result['debug_detail'] = e.message
+                    db.session.rollback()
+
+        return result, result_code
 
 
 class OperationDetailApi(Resource):
@@ -57,30 +67,52 @@ class OperationDetailApi(Resource):
     @staticmethod
     @requires_auth
     def delete(operation_id):
+        result, result_code = dict(status="ERROR", message="Not found"), 404
+
         operation = Operation.query.get(operation_id)
         if operation is not None:
-            db.session.delete(operation)
-            db.session.commit()
-            return dict(status="OK", message="Deleted")
+            try:
+                db.session.delete(operation)
+                db.session.commit()
+                result, result_code = dict(status="OK", message="Deleted"), 200
+            except Exception, e:
+                result, result_code = dict(status="ERROR",
+                                           message="Internal error"), 500
+                if current_app.debug:
+                    result['debug_detail'] = e.message
+                db.session.rollback()
         else:
-            return dict(status="ERROR", message="Not found"), 404
+            return result, result_code
 
     @staticmethod
     @requires_auth
     def patch(operation_id):
+        result = dict(status="ERROR", message="Insufficient data")
+        result_code = 404
+
         if request.json:
-            request_schema = OperationCreateRequestSchema(partial=True)
+            request_schema = PartialSchemaFactory(OperationCreateRequestSchema)
             form = request_schema.load(request.json)
+            response_schema = OperationItemResponseSchema()
             if not form.errors:
-                Operation.query.filter_by(id=operation_id).update(**form.data)
-                db.session.commit()
-                operation = Operation.query.get(operation_id)
-                if operation is not None:
-                    return dict(status="OK", message="Updated")
-                else:
-                    return dict(status="ERROR", message="Not found"), 404
+                try:
+                    form.data.id = operation_id
+                    operation = db.session.merge(form.data)
+                    db.session.commit()
+
+                    if operation is not None:
+                        result, result_code = dict(
+                            status="OK", message="Updated",
+                            data=response_schema.dump(operation).data), 200
+                    else:
+                        result = dict(status="ERROR", message="Not found")
+                except Exception, e:
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug:
+                        result['debug_detail'] = e.message
+                    db.session.rollback()
             else:
-                return dict(status="ERROR", message="Invalid data",
-                            erros=form.errors), 404
-        else:
-            return dict(status="ERROR", message="Insufficient data"), 404
+                result = dict(status="ERROR", message="Invalid data",
+                            erros=form.errors)
+        return result, result_code

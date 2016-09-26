@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-}
-from flask import request
+from flask import request, current_app
 from flask_restful import Resource
 
 from app_auth import requires_auth

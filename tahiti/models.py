@@ -346,6 +346,9 @@ class DataSource(db.Model):
     user_login = Column(String(50))
     user_name = Column(String(200))
     tags = Column(String(100))
+    temporary = Column(Boolean, nullable=False)
+    workflow_id = Column(Integer)
+    task_id = Column(Integer)
     # Associations
 
     storage_id = Column(Integer, 

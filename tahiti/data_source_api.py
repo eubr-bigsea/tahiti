@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-}
-from flask import request
+from flask import request, current_app
 from flask_restful import Resource
 
 from app_auth import requires_auth
@@ -24,21 +24,32 @@ class DataSourceListApi(Resource):
     @staticmethod
     @requires_auth
     def post():
+        result, result_code = dict(
+            status="ERROR", message="Missing json in the request body"), 401
         if request.json is not None:
             request_schema = DataSourceCreateRequestSchema()
             response_schema = DataSourceItemResponseSchema()
             form = request_schema.load(request.json)
             if form.errors:
-                return dict(status="ERROR", message="Validation error",
-                            errors=form.errors,), 401
+                result, result_code = dict(
+                    status="ERROR", message="Validation error",
+                    errors=form.errors,), 401
             else:
-                data_source = form.data
-                db.session.add(data_source)
-                db.session.commit()
-                return dict(status="OK", message="", data=response_schema.dump(data_source).data)
-        else:
-            return dict(status="ERROR",
-                        message="Missing json in the request body"), 401
+                try:
+                    data_source = form.data
+                    db.session.add(data_source)
+                    db.session.commit()
+                    result, result_code = dict(
+                        status="OK", message="",
+                        data=response_schema.dump(data_source).data), 200
+                except Exception, e:
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug:
+                        result['debug_detail'] = e.message
+                    db.session.rollback()
+
+        return result, result_code
 
 
 class DataSourceDetailApi(Resource):
@@ -56,30 +67,52 @@ class DataSourceDetailApi(Resource):
     @staticmethod
     @requires_auth
     def delete(data_source_id):
+        result, result_code = dict(status="ERROR", message="Not found"), 404
+
         data_source = DataSource.query.get(data_source_id)
         if data_source is not None:
-            db.session.delete(data_source)
-            db.session.commit()
-            return dict(status="OK", message="Deleted")
+            try:
+                db.session.delete(data_source)
+                db.session.commit()
+                result, result_code = dict(status="OK", message="Deleted"), 200
+            except Exception, e:
+                result, result_code = dict(status="ERROR",
+                                           message="Internal error"), 500
+                if current_app.debug:
+                    result['debug_detail'] = e.message
+                db.session.rollback()
         else:
-            return dict(status="ERROR", message="Not found"), 404
+            return result, result_code
 
     @staticmethod
     @requires_auth
     def patch(data_source_id):
+        result = dict(status="ERROR", message="Insufficient data")
+        result_code = 404
+
         if request.json:
-            request_schema = DataSourceCreateRequestSchema(partial=True)
+            request_schema = PartialSchemaFactory(DataSourceCreateRequestSchema)
             form = request_schema.load(request.json)
+            response_schema = DataSourceItemResponseSchema()
             if not form.errors:
-                DataSource.query.filter_by(id=data_source_id).update(**form.data)
-                db.session.commit()
-                data_source = DataSource.query.get(data_source_id)
-                if data_source is not None:
-                    return dict(status="OK", message="Updated")
-                else:
-                    return dict(status="ERROR", message="Not found"), 404
+                try:
+                    form.data.id = data_source_id
+                    data_source = db.session.merge(form.data)
+                    db.session.commit()
+
+                    if data_source is not None:
+                        result, result_code = dict(
+                            status="OK", message="Updated",
+                            data=response_schema.dump(data_source).data), 200
+                    else:
+                        result = dict(status="ERROR", message="Not found")
+                except Exception, e:
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug:
+                        result['debug_detail'] = e.message
+                    db.session.rollback()
             else:
-                return dict(status="ERROR", message="Invalid data",
-                            erros=form.errors), 404
-        else:
-            return dict(status="ERROR", message="Insufficient data"), 404
+                result = dict(status="ERROR", message="Invalid data",
+                            erros=form.errors)
+        return result, result_code

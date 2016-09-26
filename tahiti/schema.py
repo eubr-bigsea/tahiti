@@ -1,7 +1,19 @@
 # -*- coding: utf-8 -*-
+
+from copy import deepcopy
 from marshmallow import Schema, fields, post_load
 from marshmallow.validate import OneOf
 from models import *
+
+
+def PartialSchemaFactory(schema_cls):
+    schema = schema_cls(partial=True)
+    for field_name, field in schema.fields.items():
+        if isinstance(field, fields.Nested):
+            new_field = deepcopy(field)
+            new_field.schema.partial = True
+            schema.fields[field_name] = new_field
+    return schema
 
 # region Protected
 class KeyValueSchema(Schema):
@@ -28,8 +40,10 @@ class AttributeListResponseSchema(Schema):
     nullable = fields.Boolean(required=True)
     enumeration = fields.Boolean(required=True)
     missing_representation = fields.String(False)
-    feature = fields.Boolean(required=True)
-    label = fields.Boolean(required=True)
+    feature = fields.Boolean(required=True, missing=True,
+                             default=True)
+    label = fields.Boolean(required=True, missing=True,
+                           default=True)
     distinct_values = fields.Integer(False)
     mean_value = fields.Float(False)
     median_value = fields.String(False)
@@ -57,8 +71,10 @@ class AttributeItemResponseSchema(Schema):
     nullable = fields.Boolean(required=True)
     enumeration = fields.Boolean(required=True)
     missing_representation = fields.String(False)
-    feature = fields.Boolean(required=True)
-    label = fields.Boolean(required=True)
+    feature = fields.Boolean(required=True, missing=True,
+                             default=True)
+    label = fields.Boolean(required=True, missing=True,
+                           default=True)
     distinct_values = fields.Integer(False)
     mean_value = fields.Float(False)
     median_value = fields.String(False)
@@ -76,6 +92,7 @@ class AttributeItemResponseSchema(Schema):
 
 class AttributeCreateRequestSchema(Schema):
     """ JSON serialization schema """
+    id = fields.Integer()
     name = fields.String(required=True)
     description = fields.String(False)
     type = fields.String(required=True,
@@ -85,8 +102,10 @@ class AttributeCreateRequestSchema(Schema):
     nullable = fields.Boolean(required=True)
     enumeration = fields.Boolean(required=True)
     missing_representation = fields.String(False)
-    feature = fields.Boolean(required=True)
-    label = fields.Boolean(required=True)
+    feature = fields.Boolean(required=True, missing=True,
+                             default=True)
+    label = fields.Boolean(required=True, missing=True,
+                           default=True)
     distinct_values = fields.Integer(False)
     mean_value = fields.Float(False)
     median_value = fields.String(False)
@@ -118,10 +137,13 @@ class DataSourceListResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(False)
-    enabled = fields.Boolean(required=True)
-    read_only = fields.Boolean(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
+    read_only = fields.Boolean(required=True, missing=True,
+                               default=True)
     url = fields.String(required=True)
-    created = fields.DateTime(required=True)
+    created = fields.DateTime(required=True, missing=func.now(),
+                             default=func.now())
     format = fields.String(required=True,
                            validate=[OneOf(DataSourceFormat.__dict__.keys())])
     provenience = fields.String(False)
@@ -132,6 +154,10 @@ class DataSourceListResponseSchema(Schema):
     user_login = fields.String(False)
     user_name = fields.String(False)
     tags = fields.String(False)
+    temporary = fields.Boolean(required=True, missing=False,
+                               default=False)
+    workflow_id = fields.Integer(False)
+    task_id = fields.Integer(False)
     attributes = fields.Nested('schema.AttributeListResponseSchema',
                                required=True,
                                many=True)
@@ -148,8 +174,10 @@ class DataSourceCreateRequestSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     description = fields.String(False)
-    enabled = fields.Boolean(required=True)
-    read_only = fields.Boolean(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
+    read_only = fields.Boolean(required=True, missing=True,
+                               default=True)
     url = fields.String(required=True)
     format = fields.String(required=True,
                            validate=[OneOf(DataSourceFormat.__dict__.keys())])
@@ -159,6 +187,10 @@ class DataSourceCreateRequestSchema(Schema):
     user_login = fields.String(False)
     user_name = fields.String(False)
     tags = fields.String(False)
+    temporary = fields.Boolean(required=True, missing=False,
+                               default=False)
+    workflow_id = fields.Integer(False)
+    task_id = fields.Integer(False)
     attributes = fields.Nested('schema.AttributeCreateRequestSchema',
                                required=True,
                                many=True)
@@ -175,10 +207,13 @@ class DataSourceItemResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(False)
-    enabled = fields.Boolean(required=True)
-    read_only = fields.Boolean(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
+    read_only = fields.Boolean(required=True, missing=True,
+                               default=True)
     url = fields.String(required=True)
-    created = fields.DateTime(required=True)
+    created = fields.DateTime(required=True, missing=func.now(),
+                             default=func.now())
     format = fields.String(required=True,
                            validate=[OneOf(DataSourceFormat.__dict__.keys())])
     provenience = fields.String(False)
@@ -189,6 +224,10 @@ class DataSourceItemResponseSchema(Schema):
     user_login = fields.String(False)
     user_name = fields.String(False)
     tags = fields.String(False)
+    temporary = fields.Boolean(required=True, missing=False,
+                               default=False)
+    workflow_id = fields.Integer(False)
+    task_id = fields.Integer(False)
     attributes = fields.Nested('schema.AttributeItemResponseSchema',
                                required=True,
                                many=True)
@@ -523,7 +562,8 @@ class OperationPortListResponseSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String(False)
     order = fields.Integer(False)
-    multiplicity = fields.String(required=True,
+    multiplicity = fields.String(required=True, missing=1,
+                                  default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceListResponseSchema',
                                required=True,
@@ -544,7 +584,8 @@ class OperationPortCreateRequestSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String(False)
     order = fields.Integer(False)
-    multiplicity = fields.String(required=True,
+    multiplicity = fields.String(required=True, missing=1,
+                                  default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceCreateRequestSchema',
                                required=True,
@@ -565,7 +606,8 @@ class OperationPortItemResponseSchema(Schema):
     description = fields.String(required=True)
     tags = fields.String(False)
     order = fields.Integer(False)
-    multiplicity = fields.String(required=True,
+    multiplicity = fields.String(required=True, missing=1,
+                                  default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceItemResponseSchema',
                                required=True,
@@ -639,8 +681,10 @@ class TaskExecuteRequestSchema(Schema):
     id = fields.Integer(required=True)
     order = fields.Integer(required=True)
     log_level = fields.String(required=True)
-    is_start = fields.Boolean(required=True)
-    is_end = fields.Boolean(required=True)
+    is_start = fields.Boolean(required=True, missing=False,
+                              default=False)
+    is_end = fields.Boolean(required=True, missing=False,
+                            default=False)
     operation_id = fields.Integer(required=True)
     operation_name = fields.String(required=True)
     next_task_id = fields.Integer()

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-}
-from flask import request
+from flask import request, current_app
 from flask_restful import Resource
 
 from app_auth import requires_auth
@@ -37,19 +37,32 @@ class ExecutionDetailApi(Resource):
     @staticmethod
     @requires_auth
     def patch(execution_id):
+        result = dict(status="ERROR", message="Insufficient data")
+        result_code = 404
+
         if request.json:
-            request_schema = ExecutionCreateRequestSchema(partial=True)
+            request_schema = PartialSchemaFactory(ExecutionCreateRequestSchema)
             form = request_schema.load(request.json)
+            response_schema = ExecutionItemResponseSchema()
             if not form.errors:
-                Execution.query.filter_by(id=execution_id).update(**form.data)
-                db.session.commit()
-                execution = Execution.query.get(execution_id)
-                if execution is not None:
-                    return dict(status="OK", message="Updated")
-                else:
-                    return dict(status="ERROR", message="Not found"), 404
+                try:
+                    form.data.id = execution_id
+                    execution = db.session.merge(form.data)
+                    db.session.commit()
+
+                    if execution is not None:
+                        result, result_code = dict(
+                            status="OK", message="Updated",
+                            data=response_schema.dump(execution).data), 200
+                    else:
+                        result = dict(status="ERROR", message="Not found")
+                except Exception, e:
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug:
+                        result['debug_detail'] = e.message
+                    db.session.rollback()
             else:
-                return dict(status="ERROR", message="Invalid data",
-                            erros=form.errors), 404
-        else:
-            return dict(status="ERROR", message="Insufficient data"), 404
+                result = dict(status="ERROR", message="Invalid data",
+                            erros=form.errors)
+        return result, result_code
