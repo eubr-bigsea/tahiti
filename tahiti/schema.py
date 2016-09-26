@@ -337,6 +337,7 @@ class OperationListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    slug = fields.String(required=True)
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     command = fields.String(required=True)
@@ -364,6 +365,7 @@ class OperationCreateRequestSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    slug = fields.String(required=True)
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     command = fields.String(required=True)
@@ -391,6 +393,7 @@ class OperationItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    slug = fields.String(required=True)
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     command = fields.String(required=True)
@@ -417,6 +420,7 @@ class OperationItemResponseSchema(Schema):
 class OperationUpdateRequestSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(False)
+    slug = fields.String(False)
     enabled = fields.Boolean(False)
     description = fields.String(False)
     command = fields.String(False)

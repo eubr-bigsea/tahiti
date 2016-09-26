@@ -86,6 +86,7 @@ class Operation(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
+    slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
     description = Column(String(200), nullable=False)
     command = Column(String(200), nullable=False)
@@ -332,8 +333,8 @@ class DataSource(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False)
     description = Column(String(500))
-    enabled = Column(Boolean, nullable=False)
-    read_only = Column(Boolean, nullable=False)
+    enabled = Column(Boolean, nullable=False, default=True)
+    read_only = Column(Boolean, nullable=False, default=True)
     url = Column(String(200), nullable=False)
     created = Column(DateTime, nullable=False, default=func.now())
     format = Column(Enum(*DataSourceFormat.__dict__.keys(), 
@@ -346,7 +347,7 @@ class DataSource(db.Model):
     user_login = Column(String(50))
     user_name = Column(String(200))
     tags = Column(String(100))
-    temporary = Column(Boolean, nullable=False)
+    temporary = Column(Boolean, nullable=False, default=False)
     workflow_id = Column(Integer)
     task_id = Column(Integer)
     # Associations
