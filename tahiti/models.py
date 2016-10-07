@@ -18,17 +18,6 @@ class OperationType:
 
 
 # noinspection PyClassHasNoInit
-class StatusExecution:
-    COMPLETED = 'COMPLETED'
-    WAITING = 'WAITING'
-    INTERRUPTED = 'INTERRUPTED'
-    CANCELED = 'CANCELED'
-    RUNNING = 'RUNNING'
-    ERROR = 'ERROR'
-    PENDING = 'PENDING'
-
-
-# noinspection PyClassHasNoInit
 class OperationPortType:
     INPUT = 'INPUT'
     OUTPUT = 'OUTPUT'
@@ -38,29 +27,6 @@ class OperationPortType:
 class OperationPortMultiplicity:
     MANY = 'MANY'
     ONE = 'ONE'
-
-
-# noinspection PyClassHasNoInit
-class DataSourceFormat:
-    XML_FILE = 'XML_FILE'
-    NETCDF4 = 'NETCDF4'
-    HDF5 = 'HDF5'
-    CSV_FILE = 'CSV_FILE'
-    CUSTOM = 'CUSTOM'
-    JSON = 'JSON'
-    TEXT = 'TEXT'
-    PICKLE = 'PICKLE'
-
-
-# noinspection PyClassHasNoInit
-class StorageType:
-    HDFS = 'HDFS'
-    OPHIDIA = 'OPHIDIA'
-    ELASTIC_SEARCH = 'ELASTIC_SEARCH'
-    MONGODB = 'MONGODB'
-    POSTGIS = 'POSTGIS'
-    HBASE = 'HBASE'
-    CASSANDRA = 'CASSANDRA'
 
 
 # noinspection PyClassHasNoInit
@@ -102,7 +68,13 @@ class Operation(db.Model):
         Column('operation_category_id', Integer, ForeignKey('operation_category.id')))
     categories = relationship("OperationCategory",
                               secondary=operation_category_operation)
-    forms = relationship("OperationForm", back_populates="operation")
+    # noinspection PyUnresolvedReferences
+    operation_operation_form = db.Table(
+        'operation_operation_form',
+        Column('operation_id', Integer, ForeignKey('operation.id')),
+        Column('operation_form_id', Integer, ForeignKey('operation_form.id')))
+    forms = relationship("OperationForm",
+                          secondary=operation_operation_form)
     ports = relationship("OperationPort", back_populates="operation")
 
     def __unicode__(self):
@@ -183,16 +155,14 @@ class OperationForm(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
+    enabled = Column(Boolean, nullable=False, default=True)
     name = Column(String(200), nullable=False)
     # Associations
-    fields = relationship("OperationFormField")
-
-    operation_id = Column(Integer, 
-                          ForeignKey("operation.id"), nullable=False)
-    operation = relationship("Operation", foreign_keys=[operation_id])
+    fields = relationship("OperationFormField", 
+                          order_by="OperationFormField.order")
 
     def __unicode__(self):
-        return self.name
+        return self.enabled
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -210,209 +180,16 @@ class OperationFormField(db.Model):
     type = Column(Enum(*DataType.__dict__.keys(), 
                        name='DataTypeEnumType'), nullable=False)
     required = Column(Boolean, nullable=False)
+    order = Column(Integer, nullable=False)
+    default = Column(Text, nullable=False)
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
-    values = Column(String(200))
+    values = Column(Text)
     # Associations
 
     form_id = Column(Integer, 
                      ForeignKey("operation_form.id"), nullable=False)
     form = relationship("OperationForm", foreign_keys=[form_id])
-
-    def __unicode__(self):
-        return self.name
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class Workflow(db.Model):
-    """ Workflow in Lemonade. It's a set of tasks """
-    __tablename__ = 'workflow'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    user_id = Column(Integer)
-    user_login = Column(String(50))
-    user_name = Column(String(200))
-    # Associations
-    tasks = relationship("Task", back_populates="workflow")
-
-    def __unicode__(self):
-        return self.name
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class Task(db.Model):
-    """ Task executed in Lemonade """
-    __tablename__ = 'task'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    order = Column(Integer, nullable=False)
-    log_level = Column(String(200), nullable=False)
-    is_start = Column(Boolean, nullable=False, default=False)
-    is_end = Column(Boolean, nullable=False, default=False)
-    operation_id = Column(Integer, nullable=False)
-    operation_name = Column(String(200), nullable=False)
-    # Associations
-
-    workflow_id = Column(Integer, 
-                         ForeignKey("workflow.id"), nullable=False)
-    workflow = relationship("Workflow", foreign_keys=[workflow_id], 
-                            back_populates="tasks"
-    )
-
-    def __unicode__(self):
-        return self.order
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class Execution(db.Model):
-    """ Records a workflow execution """
-    __tablename__ = 'execution'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    created = Column(DateTime, nullable=False)
-    started = Column(DateTime)
-    finished = Column(DateTime)
-    status = Column(Enum(*StatusExecution.__dict__.keys(), 
-                         name='StatusExecutionEnumType'), nullable=False)
-    workflow_id = Column(Integer, nullable=False)
-    workflow_name = Column(String(200), nullable=False)
-    workflow_definition = Column(Text, nullable=False)
-    user_id = Column(Integer, nullable=False)
-    user_login = Column(String(50), nullable=False)
-    user_name = Column(String(200), nullable=False)
-    # Associations
-    tasks_execution = relationship("TaskExecution", back_populates="execution")
-
-    def __unicode__(self):
-        return self.created
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class TaskExecution(db.Model):
-    """ Records a task execution """
-    __tablename__ = 'task_execution'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    date = Column(DateTime, nullable=False)
-    status = Column(Enum(*StatusExecution.__dict__.keys(), 
-                         name='StatusExecutionEnumType'), nullable=False)
-    task_id = Column(Integer, nullable=False)
-    operation_id = Column(Integer, nullable=False)
-    operation_name = Column(String(200), nullable=False)
-    # Associations
-
-    execution_id = Column(Integer, 
-                          ForeignKey("execution.id"), nullable=False)
-    execution = relationship("Execution", foreign_keys=[execution_id])
-
-    def __unicode__(self):
-        return self.date
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class DataSource(db.Model):
-    """ Data source in Lemonade system (anything that stores data. """
-    __tablename__ = 'data_source'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
-    description = Column(String(500))
-    enabled = Column(Boolean, nullable=False, default=True)
-    read_only = Column(Boolean, nullable=False, default=True)
-    url = Column(String(200), nullable=False)
-    created = Column(DateTime, nullable=False, default=func.now())
-    format = Column(Enum(*DataSourceFormat.__dict__.keys(), 
-                         name='DataSourceFormatEnumType'), nullable=False)
-    provenience = Column(Text)
-    estimated_rows = Column(Integer)
-    estimated_size_in_mega_bytes = Column(Numeric(10, 2))
-    expiration = Column(String(200))
-    user_id = Column(Integer)
-    user_login = Column(String(50))
-    user_name = Column(String(200))
-    tags = Column(String(100))
-    temporary = Column(Boolean, nullable=False, default=False)
-    workflow_id = Column(Integer)
-    task_id = Column(Integer)
-    # Associations
-
-    storage_id = Column(Integer, 
-                        ForeignKey("storage.id"), nullable=False)
-    storage = relationship("Storage", foreign_keys=[storage_id])
-
-    def __unicode__(self):
-        return self.name
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class Attribute(db.Model):
-    """ Data source attribute. """
-    __tablename__ = 'attribute'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
-    description = Column(String(500))
-    type = Column(Enum(*DataType.__dict__.keys(), 
-                       name='DataTypeEnumType'), nullable=False)
-    size = Column(Integer)
-    precision = Column(Integer)
-    nullable = Column(Boolean, nullable=False)
-    enumeration = Column(Boolean, nullable=False)
-    missing_representation = Column(String(200))
-    feature = Column(Boolean, nullable=False, default=True)
-    label = Column(Boolean, nullable=False, default=True)
-    distinct_values = Column(Integer)
-    mean_value = Column(Float)
-    median_value = Column(String(200))
-    max_value = Column(String(200))
-    min_value = Column(String(200))
-    std_deviation = Column(Float)
-    missing_total = Column(String(200))
-    deciles = Column(Text)
-    # Associations
-
-    data_source_id = Column(Integer, 
-                            ForeignKey("data_source.id"), nullable=False)
-    data_source = relationship("DataSource", foreign_keys=[data_source_id], 
-                               backref=backref(
-                                   "attributes",
-                                   cascade="all, delete-orphan"))
-
-    def __unicode__(self):
-        return self.name
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class Storage(db.Model):
-    """ Type of storage used by data sources """
-    __tablename__ = 'storage'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(100), nullable=False)
-    type = Column(Enum(*StorageType.__dict__.keys(), 
-                       name='StorageTypeEnumType'), nullable=False)
 
     def __unicode__(self):
         return self.name

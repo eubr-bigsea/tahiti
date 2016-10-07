@@ -39,9 +39,7 @@ class OperationListApi(Resource):
                     operation = form.data
                     db.session.add(operation)
                     db.session.commit()
-                    result, result_code = dict(
-                        status="OK", message="",
-                        data=response_schema.dump(operation).data), 200
+                    result, result_code = response_schema.dump(operation).data, 200
                 except Exception, e:
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500

@@ -8,12 +8,8 @@ from flask_restful import Api
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin
 
-from data_source_api import DataSourceListApi, DataSourceDetailApi
 from models import db, Operation, OperationForm, OperationFormField
 from operation_api import OperationDetailApi, OperationListApi
-from storage_api import StorageListApi
-from execution_api import ExecutionListApi, ExecutionDetailApi
-from workflow_api import WorkflowExecuteListApi
 
 import json
 
@@ -29,13 +25,6 @@ api = Api(app)
 mappings = {
     '/operations': OperationListApi,
     '/operations/<int:operation_id>': OperationDetailApi,
-    '/datasources': DataSourceListApi,
-    '/datasources/<int:data_source_id>': DataSourceDetailApi,
-    '/executions': ExecutionListApi,
-    '/executions/<int:execution_id>': ExecutionDetailApi,
-
-    '/storages': StorageListApi,
-    '/workflows/execute': WorkflowExecuteListApi,
 }
 for path, view in mappings.iteritems():
     api.add_resource(view, path)

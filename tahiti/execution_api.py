@@ -21,6 +21,34 @@ class ExecutionListApi(Resource):
         executions = Execution.query.all()
         return ExecutionListResponseSchema(many=True, only=only).dump(executions).data
 
+    @staticmethod
+    @requires_auth
+    def post():
+        result, result_code = dict(
+            status="ERROR", message="Missing json in the request body"), 401
+        if request.json is not None:
+            request_schema = ExecutionCreateRequestSchema()
+            response_schema = ExecutionItemResponseSchema()
+            form = request_schema.load(request.json)
+            if form.errors:
+                result, result_code = dict(
+                    status="ERROR", message="Validation error",
+                    errors=form.errors,), 401
+            else:
+                try:
+                    execution = form.data
+                    db.session.add(execution)
+                    db.session.commit()
+                    result, result_code = response_schema.dump(execution).data, 200
+                except Exception, e:
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug:
+                        result['debug_detail'] = e.message
+                    db.session.rollback()
+
+        return result, result_code
+
 
 class ExecutionDetailApi(Resource):
     """ REST API for a single instance of class Execution """
