@@ -3,7 +3,7 @@
 import argparse
 
 from flask_cors import CORS, cross_origin
-from flask import Flask, session
+from flask import Flask, session, request
 from flask_restful import Api
 from flask_admin.contrib.sqla import ModelView
 from flask_admin import Admin
@@ -11,9 +11,14 @@ from flask_admin import Admin
 from models import db, Operation, OperationForm, OperationFormField
 from operation_api import OperationDetailApi, OperationListApi
 
-import json
+import sqlalchemy_utils
+from flask_babel import get_locale, Babel
+sqlalchemy_utils.i18n.get_locale = get_locale
 
+import json
 app = Flask(__name__)
+babel = Babel(app)
+
 app.secret_key = 'l3m0n4d1'
 # Flask Admin 
 admin = Admin(app, name='Lemonade', template_mode='bootstrap3')
@@ -29,6 +34,16 @@ mappings = {
 for path, view in mappings.iteritems():
     api.add_resource(view, path)
 
+#@app.before_request
+def before():
+    print request.args
+    if request.args and 'lang' in request.args:
+        if request.args['lang'] not in ('es', 'en'):
+            return abort(404)
+
+@babel.localeselector
+def get_locale():
+    return request.args.get('lang', 'en')
 
 def main():
     parser = argparse.ArgumentParser()

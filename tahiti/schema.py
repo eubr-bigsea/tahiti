@@ -159,6 +159,17 @@ class OperationCategoryListResponseSchema(Schema):
         return OperationCategory(**data)
 
 
+class OperationCategoryItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    type = fields.String(required=True)
+
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of OperationCategory"""
+        return OperationCategory(**data)
+
+
 class OperationFormListResponseSchema(Schema):
     """ JSON serialization schema """
     enabled = fields.Boolean(required=True, missing=True,
@@ -343,6 +354,16 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
 
 class OperationPortInterfaceListResponseSchema(Schema):
     """ JSON schema for response """
+    name = fields.String(required=True)
+
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of OperationPortInterface"""
+        return OperationPortInterface(**data)
+
+
+class OperationPortInterfaceItemResponseSchema(Schema):
+    """ JSON serialization schema """
     name = fields.String(required=True)
 
     @post_load

@@ -3,9 +3,14 @@ import json
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
-    Enum, DateTime, Numeric, Text
+    Enum, DateTime, Numeric, Text, Unicode
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy_i18n import make_translatable, translation_base, Translatable
+
+make_translatable(options={'locales': ['pt', 'en', 'es'],
+                           'auto_create_locales': True,
+                           'fallback_locale': 'en'})
 
 db = SQLAlchemy()
 
@@ -45,16 +50,15 @@ class DataType:
     INTEGER = 'INTEGER'
 
 
-class Operation(db.Model):
+class Operation(db.Model, Translatable):
     """ Operation executed in Lemonade """
     __tablename__ = 'operation'
+    __translatable__ = {'locales': ['pt', 'en', 'es']}
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
     slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    description = Column(String(200), nullable=False)
     command = Column(String(200), nullable=False)
     type = Column(Enum(*OperationType.__dict__.keys(), 
                        name='OperationTypeEnumType'), nullable=False)
@@ -82,6 +86,15 @@ class Operation(db.Model):
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationTranslation(translation_base(Operation)):
+    """ Translation table for Operation """
+    __tablename__ = 'operation_translation'
+
+    # Fields
+    name = Column(Unicode(200))
+    description = Column(Unicode(200))
 
 
 class OperationPortInterface(db.Model):
@@ -133,13 +146,13 @@ class OperationPort(db.Model):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
-class OperationCategory(db.Model):
+class OperationCategory(db.Model, Translatable):
     """ Allows categorize operations """
     __tablename__ = 'operation_category'
+    __translatable__ = {'locales': ['pt', 'en', 'es']}
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
     type = Column(String(200), nullable=False)
 
     def __unicode__(self):
@@ -147,6 +160,14 @@ class OperationCategory(db.Model):
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationCategoryTranslation(translation_base(OperationCategory)):
+    """ Translation table for OperationCategory """
+    __tablename__ = 'operation_category_translation'
+
+    # Fields
+    name = Column(Unicode(200))
 
 
 class OperationForm(db.Model):
