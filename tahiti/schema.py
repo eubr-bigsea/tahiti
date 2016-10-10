@@ -35,10 +35,8 @@ class OperationListResponseSchema(Schema):
     slug = fields.String(required=True)
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
-    command = fields.String(required=True)
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
-    input_form = fields.String(required=True)
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
                                required=True,
@@ -63,10 +61,8 @@ class OperationCreateRequestSchema(Schema):
     slug = fields.String(required=True)
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
-    command = fields.String(required=True)
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
-    input_form = fields.String(required=True)
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
                                required=True,
@@ -91,10 +87,8 @@ class OperationItemResponseSchema(Schema):
     slug = fields.String(required=True)
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
-    command = fields.String(required=True)
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
-    input_form = fields.String(required=True)
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
                                required=True,
@@ -118,10 +112,8 @@ class OperationUpdateRequestSchema(Schema):
     slug = fields.String(required=False)
     enabled = fields.Boolean(required=False)
     description = fields.String(required=False)
-    command = fields.String(required=False)
     type = fields.String(required=False,
                          validate=[OneOf(OperationType.__dict__.keys())])
-    input_form = fields.String(required=False)
     icon = fields.String(required=False)
     categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
                                many=True)

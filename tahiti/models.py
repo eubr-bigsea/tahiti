@@ -3,7 +3,7 @@ import json
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
-    Enum, DateTime, Numeric, Text, Unicode
+    Enum, DateTime, Numeric, Text, Unicode, UnicodeText
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
@@ -59,10 +59,8 @@ class Operation(db.Model, Translatable):
     id = Column(Integer, primary_key=True)
     slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    command = Column(String(200), nullable=False)
     type = Column(Enum(*OperationType.__dict__.keys(), 
                        name='OperationTypeEnumType'), nullable=False)
-    input_form = Column(Text, nullable=False)
     icon = Column(String(200), nullable=False)
     # Associations
     # noinspection PyUnresolvedReferences
@@ -97,13 +95,13 @@ class OperationTranslation(translation_base(Operation)):
     description = Column(Unicode(200))
 
 
-class OperationPortInterface(db.Model):
+class OperationPortInterface(db.Model, Translatable):
     """ An interface that a operation port supports """
     __tablename__ = 'operation_port_interface'
+    __translatable__ = {'locales': ['pt', 'en', 'es']}
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
 
     def __unicode__(self):
         return self.name
@@ -112,16 +110,23 @@ class OperationPortInterface(db.Model):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
-class OperationPort(db.Model):
+class OperationPortInterfaceTranslation(translation_base(OperationPortInterface)):
+    """ Translation table for OperationPortInterface """
+    __tablename__ = 'operation_port_interface_translation'
+
+    # Fields
+    name = Column(Unicode(200))
+
+
+class OperationPort(db.Model, Translatable):
     """ An input or output port for operation """
     __tablename__ = 'operation_port'
+    __translatable__ = {'locales': ['pt', 'en', 'es']}
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
     type = Column(Enum(*OperationPortType.__dict__.keys(), 
                        name='OperationPortTypeEnumType'), nullable=False)
-    description = Column(String(200), nullable=False)
     tags = Column(Text)
     order = Column(Integer)
     multiplicity = Column(Enum(*OperationPortMultiplicity.__dict__.keys(), 
@@ -144,6 +149,15 @@ class OperationPort(db.Model):
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationPortTranslation(translation_base(OperationPort)):
+    """ Translation table for OperationPort """
+    __tablename__ = 'operation_port_translation'
+
+    # Fields
+    name = Column(Unicode(200))
+    description = Column(Unicode(200))
 
 
 class OperationCategory(db.Model, Translatable):
@@ -170,14 +184,14 @@ class OperationCategoryTranslation(translation_base(OperationCategory)):
     name = Column(Unicode(200))
 
 
-class OperationForm(db.Model):
+class OperationForm(db.Model, Translatable):
     """ A form used to fill parameters to the operations """
     __tablename__ = 'operation_form'
+    __translatable__ = {'locales': ['pt', 'en', 'es']}
 
     # Fields
     id = Column(Integer, primary_key=True)
     enabled = Column(Boolean, nullable=False, default=True)
-    name = Column(String(200), nullable=False)
     # Associations
     fields = relationship("OperationFormField", 
                           order_by="OperationFormField.order")
@@ -189,15 +203,22 @@ class OperationForm(db.Model):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
-class OperationFormField(db.Model):
+class OperationFormTranslation(translation_base(OperationForm)):
+    """ Translation table for OperationForm """
+    __tablename__ = 'operation_form_translation'
+
+    # Fields
+    name = Column(Unicode(200))
+
+
+class OperationFormField(db.Model, Translatable):
     """ A field used to fill one parameter of a form for an operations """
     __tablename__ = 'operation_form_field'
+    __translatable__ = {'locales': ['pt', 'en', 'es']}
 
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    label = Column(String(200), nullable=False)
-    help = Column(Text, nullable=False)
     type = Column(Enum(*DataType.__dict__.keys(), 
                        name='DataTypeEnumType'), nullable=False)
     required = Column(Boolean, nullable=False)
@@ -217,3 +238,12 @@ class OperationFormField(db.Model):
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationFormFieldTranslation(translation_base(OperationFormField)):
+    """ Translation table for OperationFormField """
+    __tablename__ = 'operation_form_field_translation'
+
+    # Fields
+    label = Column(Unicode(200))
+    help = Column(UnicodeText())
