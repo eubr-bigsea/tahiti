@@ -27,6 +27,10 @@ admin = Admin(app, name='Lemonade', template_mode='bootstrap3')
 CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
+import logging
+logging.basicConfig()
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+
 mappings = {
     '/operations': OperationListApi,
     '/operations/<int:operation_id>': OperationDetailApi,
@@ -70,7 +74,7 @@ def main():
             admin.add_view(ModelView(Operation, db.session))
             admin.add_view(ModelView(OperationForm, db.session))
             admin.add_view(ModelView(OperationFormField, db.session))
-            app.run(debug=True)
+            app.run(debug=True, host='0.0.0.0')
             '''
             # Create the Flask-Restless API manager.
             manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)

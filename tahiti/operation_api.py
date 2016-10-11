@@ -5,7 +5,7 @@ from flask_restful import Resource
 from app_auth import requires_auth
 from models import db, Operation
 from schema import *
-
+from sqlalchemy.orm import joinedload
 # region Protected
 # endregion
 
@@ -18,7 +18,18 @@ class OperationListApi(Resource):
     def get():
         only = ('id', 'name') \
             if request.args.get('simple', 'false') == 'true' else None
-        operations = Operation.query.order_by('name')
+        operations = Operation.query.order_by('operation.name')\
+            .options(joinedload(Operation.current_translation))\
+            .options(joinedload('forms.current_translation'))\
+            .options(joinedload('ports.current_translation'))\
+            .options(joinedload('ports.interfaces.current_translation'))\
+            .options(joinedload('forms.fields.current_translation'))\
+            .options(joinedload('categories.current_translation'))\
+            .options(joinedload('forms'))\
+            .options(joinedload('ports'))\
+            .options(joinedload('ports.interfaces'))\
+            .options(joinedload('forms.fields'))\
+            .options(joinedload('categories'))
         return OperationListResponseSchema(many=True, only=only).dump(operations).data
 
     @staticmethod
@@ -56,7 +67,12 @@ class OperationDetailApi(Resource):
     @staticmethod
     @requires_auth
     def get(operation_id):
-        operation = Operation.query.get(operation_id)
+        operation = Operation.query.filter_by(id=operation_id)\
+            .options(joinedload(Operation.current_translation))\
+            .options(joinedload('forms'))\
+            .options(joinedload('ports'))\
+            .options(joinedload('categories'))\
+            .first()
         if operation is not None:
             return OperationItemResponseSchema().dump(operation).data
         else:
