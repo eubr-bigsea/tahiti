@@ -10,6 +10,7 @@ from flask_admin import Admin
 
 from models import db, Operation, OperationForm, OperationFormField
 from operation_api import OperationDetailApi, OperationListApi
+from workflow_api import WorkflowDetailApi, WorkflowListApi
 
 import sqlalchemy_utils
 from flask_babel import get_locale, Babel
@@ -34,6 +35,8 @@ logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 mappings = {
     '/operations': OperationListApi,
     '/operations/<int:operation_id>': OperationDetailApi,
+    '/workflows': WorkflowListApi,
+    '/workflows/<int:workflow_id>': WorkflowDetailApi,
 }
 for path, view in mappings.iteritems():
     api.add_resource(view, path)

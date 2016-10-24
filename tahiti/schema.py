@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+import json
 from copy import deepcopy
 from marshmallow import Schema, fields, post_load
 from marshmallow.validate import OneOf
@@ -15,6 +16,13 @@ def PartialSchemaFactory(schema_cls):
             schema.fields[field_name] = new_field
     return schema
 
+def load_json(str):
+    print ">>>>>>>>>>", str
+    try:
+        return json.loads(str)
+    except:
+        return "Error loading JSON"
+
 # region Protected
 class KeyValueSchema(Schema):
     name = fields.String(required=True)
@@ -28,6 +36,53 @@ class KeyValuePairExecuteRequestSchema(KeyValueSchema):
 # endregion
 
 
+class FlowListResponseSchema(Schema):
+    """ JSON schema for listing """
+    source_port = fields.Integer(required=True)
+    target_port = fields.Integer(required=True)
+    source_id = fields.String(required=True)
+    target_id = fields.String(required=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Flow"""
+        return Flow(**data)
+
+
+class FlowItemResponseSchema(Schema):
+    """ JSON schema for listing """
+    source_port = fields.Integer(required=True)
+    target_port = fields.Integer(required=True)
+    source_id = fields.String(required=True)
+    target_id = fields.String(required=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Flow"""
+        return Flow(**data)
+
+
+class FlowCreateRequestSchema(Schema):
+    """ JSON schema for new instance """
+    source_port = fields.Integer(required=True)
+    target_port = fields.Integer(required=True)
+    source_id = fields.String(required=True)
+    target_id = fields.String(required=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Flow"""
+        return Flow(**data)
+
+
+class OperationSimpleListResponseSchema(Schema):
+    """ JSON simple """
+    id = fields.Integer()
+    name = fields.String(required=False)
+    slug = fields.String(required=False)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Operation"""
+        return Operation(**data)
+
+
 class OperationListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
@@ -39,15 +94,11 @@ class OperationListResponseSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
-                               required=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormListResponseSchema',
-                          required=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortListResponseSchema',
-                          required=True,
                           many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -65,15 +116,11 @@ class OperationCreateRequestSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
-                               required=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormCreateRequestSchema',
-                          required=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortCreateRequestSchema',
-                          required=True,
                           many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -91,15 +138,11 @@ class OperationItemResponseSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
-                               required=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormItemResponseSchema',
-                          required=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortItemResponseSchema',
-                          required=True,
                           many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -116,12 +159,14 @@ class OperationUpdateRequestSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=False)
     categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
+                               required=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormUpdateRequestSchema',
+                          required=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortUpdateRequestSchema',
+                          required=True,
                           many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -133,7 +178,6 @@ class OperationCategoryCreateRequestSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     type = fields.String(required=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -144,7 +188,6 @@ class OperationCategoryListResponseSchema(Schema):
     """ JSON schema for response """
     name = fields.String(required=True)
     type = fields.String(required=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -155,7 +198,6 @@ class OperationCategoryItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -168,9 +210,7 @@ class OperationFormListResponseSchema(Schema):
                              default=True)
     name = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldListResponseSchema',
-                           required=True,
                            many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -183,9 +223,7 @@ class OperationFormCreateRequestSchema(Schema):
                              default=True)
     name = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldCreateRequestSchema',
-                           required=True,
                            many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -198,9 +236,7 @@ class OperationFormItemResponseSchema(Schema):
                              default=True)
     name = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldItemResponseSchema',
-                           required=True,
                            many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -220,7 +256,6 @@ class OperationFormFieldListResponseSchema(Schema):
     suggested_widget = fields.String(required=False)
     values_url = fields.String(required=False)
     values = fields.String(required=False)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -240,7 +275,6 @@ class OperationFormFieldCreateRequestSchema(Schema):
     suggested_widget = fields.String(required=False)
     values_url = fields.String(required=False)
     values = fields.String(required=False)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -260,7 +294,6 @@ class OperationFormFieldItemResponseSchema(Schema):
     suggested_widget = fields.String(required=False)
     values_url = fields.String(required=False)
     values = fields.String(required=False)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -280,9 +313,7 @@ class OperationPortListResponseSchema(Schema):
                                   default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceListResponseSchema',
-                               required=True,
                                many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -302,9 +333,7 @@ class OperationPortCreateRequestSchema(Schema):
                                   default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceCreateRequestSchema',
-                               required=True,
                                many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -324,9 +353,7 @@ class OperationPortItemResponseSchema(Schema):
                                   default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceItemResponseSchema',
-                               required=True,
                                many=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -337,7 +364,6 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
     """ JSON schema for request """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -347,7 +373,6 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
 class OperationPortInterfaceListResponseSchema(Schema):
     """ JSON schema for response """
     name = fields.String(required=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -357,8 +382,134 @@ class OperationPortInterfaceListResponseSchema(Schema):
 class OperationPortInterfaceItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
-
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
         return OperationPortInterface(**data)
+
+
+class TaskListResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.String(required=True)
+    left = fields.Integer(required=True)
+    top = fields.Integer(required=True)
+    z_index = fields.Integer(required=True)
+    forms = fields.String(required=True)
+    operation = fields.Nested('schema.OperationSimpleListResponseSchema')
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Task"""
+        return Task(**data)
+
+
+class TaskCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.String(required=True)
+    left = fields.Integer(required=True)
+    top = fields.Integer(required=True)
+    z_index = fields.Integer(required=True)
+    forms = fields.Dict(required=True)
+    operation_id = fields.Integer(required=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Task"""
+        data['forms'] = json.dumps(data['forms'])
+        return Task(**data)
+
+
+class TaskItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.String(required=True)
+    left = fields.Integer(required=True)
+    top = fields.Integer(required=True)
+    z_index = fields.Integer(required=True)
+    forms = fields.Function(lambda x: load_json(x.forms))
+    operation = fields.Nested('schema.OperationSimpleListResponseSchema')
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Task"""
+        return Task(**data)
+
+
+class TaskExecuteRequestSchema(Schema):
+    """ JSON schema for executing tasks """
+    id = fields.String(required=True)
+    left = fields.Integer(required=True)
+    top = fields.Integer(required=True)
+    z_index = fields.Integer(required=True)
+    forms = fields.String(required=True)
+    next_task_id = fields.Integer()
+    operation = fields.Nested('schema.OperationExecuteRequestSchema')
+    parameters = fields.Nested('schema.KeyValuePairExecuteRequestSchema',
+                               many=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Task"""
+        return Task(**data)
+
+
+class WorkflowExecuteRequestSchema(Schema):
+    """ JSON schema for executing workflow """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    tasks = fields.Nested('schema.TaskExecuteRequestSchema',
+                          many=True)
+    flows = fields.Nested('schema.FlowExecuteRequestSchema',
+                          many=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Workflow"""
+        return Workflow(**data)
+
+
+class WorkflowListResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    tasks = fields.Nested('schema.TaskListResponseSchema',
+                          many=True)
+    flows = fields.Nested('schema.FlowListResponseSchema',
+                          many=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Workflow"""
+        return Workflow(**data)
+
+
+class WorkflowCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    tasks = fields.Nested('schema.TaskCreateRequestSchema',
+                          many=True)
+    flows = fields.Nested('schema.FlowCreateRequestSchema',
+                          many=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Workflow"""
+        return Workflow(**data)
+
+
+class WorkflowItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    tasks = fields.Nested('schema.TaskItemResponseSchema',
+                          many=True)
+    flows = fields.Nested('schema.FlowItemResponseSchema',
+                          many=True)
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Workflow"""
+        return Workflow(**data)

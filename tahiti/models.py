@@ -62,6 +62,7 @@ class Operation(db.Model, Translatable):
     type = Column(Enum(*OperationType.__dict__.keys(), 
                        name='OperationTypeEnumType'), nullable=False)
     icon = Column(String(200), nullable=False)
+
     # Associations
     # noinspection PyUnresolvedReferences
     operation_category_operation = db.Table(
@@ -131,6 +132,7 @@ class OperationPort(db.Model, Translatable):
     order = Column(Integer)
     multiplicity = Column(Enum(*OperationPortMultiplicity.__dict__.keys(), 
                                name='OperationPortMultiplicityEnumType'), nullable=False, default=1)
+
     # Associations
     # noinspection PyUnresolvedReferences
     operation_port_interface_operation_port = db.Table(
@@ -139,7 +141,6 @@ class OperationPort(db.Model, Translatable):
         Column('operation_port_interface_id', Integer, ForeignKey('operation_port_interface.id')))
     interfaces = relationship("OperationPortInterface",
                                     secondary=operation_port_interface_operation_port)
-
     operation_id = Column(Integer, 
                           ForeignKey("operation.id"), nullable=False)
     operation = relationship("Operation", foreign_keys=[operation_id])
@@ -192,6 +193,7 @@ class OperationForm(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     enabled = Column(Boolean, nullable=False, default=True)
+
     # Associations
     fields = relationship("OperationFormField", 
                           order_by="OperationFormField.order")
@@ -227,8 +229,8 @@ class OperationFormField(db.Model, Translatable):
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
     values = Column(Text)
-    # Associations
 
+    # Associations
     form_id = Column(Integer, 
                      ForeignKey("operation_form.id"), nullable=False)
     form = relationship("OperationForm", foreign_keys=[form_id])
@@ -247,3 +249,86 @@ class OperationFormFieldTranslation(translation_base(OperationFormField)):
     # Fields
     label = Column(Unicode(200))
     help = Column(UnicodeText())
+
+
+class Workflow(db.Model):
+    """ Workflow in Lemonade. It's a set of tasks """
+    __tablename__ = 'workflow'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(50), nullable=False)
+    user_name = Column(String(200), nullable=False)
+
+    # Associations
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class Flow(db.Model):
+    """ Flow of data between two tasks in Lemonade """
+    __tablename__ = 'flow'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    source_port = Column(Integer, nullable=False)
+    target_port = Column(Integer, nullable=False)
+
+    # Associations
+    source_id = Column(String(250), 
+                       ForeignKey("task.id"), nullable=False)
+    source = relationship("Task", foreign_keys=[source_id], 
+                          backref=backref(
+                              "flows",
+                              cascade="all, delete-orphan"))
+    target_id = Column(String(250), 
+                       ForeignKey("task.id"), nullable=False)
+    target = relationship("Task", foreign_keys=[target_id])
+    workflow_id = Column(Integer, 
+                         ForeignKey("workflow.id"), nullable=False)
+    workflow = relationship("Workflow", foreign_keys=[workflow_id], 
+                            backref=backref(
+                                "flows",
+                                cascade="all, delete-orphan"))
+
+    def __unicode__(self):
+        return self.source_port
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class Task(db.Model):
+    """ Task executed in Lemonade """
+    __tablename__ = 'task'
+
+    # Fields
+    id = Column(String(250), primary_key=True,
+                autoincrement=False)
+    left = Column(Integer, nullable=False)
+    top = Column(Integer, nullable=False)
+    z_index = Column(Integer, nullable=False)
+    forms = Column(Text, nullable=False)
+
+    # Associations
+    workflow_id = Column(Integer, 
+                         ForeignKey("workflow.id"), nullable=False)
+    workflow = relationship("Workflow", foreign_keys=[workflow_id], 
+                            backref=backref(
+                                "tasks",
+                                cascade="all, delete-orphan"))
+    operation_id = Column(Integer, 
+                          ForeignKey("operation.id"), nullable=False)
+    operation = relationship("Operation", foreign_keys=[operation_id])
+
+    def __unicode__(self):
+        return self.left
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
