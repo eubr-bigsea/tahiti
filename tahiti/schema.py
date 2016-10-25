@@ -394,7 +394,7 @@ class TaskListResponseSchema(Schema):
     left = fields.Integer(required=True)
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
-    forms = fields.String(required=True)
+    forms = fields.Function(lambda x: load_json(x.forms))
     operation = fields.Nested('schema.OperationSimpleListResponseSchema')
     @post_load
     def make_object(self, data):

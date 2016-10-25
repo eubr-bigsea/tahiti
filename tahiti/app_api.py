@@ -1,22 +1,25 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import argparse
+import json
+import logging
 
-from flask_cors import CORS, cross_origin
-from flask import Flask, session, request
-from flask_restful import Api
-from flask_admin.contrib.sqla import ModelView
+import sqlalchemy_utils
+from flask import Flask, request
+
 from flask_admin import Admin
+from flask_admin.contrib.sqla import ModelView
+from flask_babel import get_locale, Babel
+from flask_cors import CORS
+from flask_restful import Api
+from cache import cache
 
 from models import db, Operation, OperationForm, OperationFormField
 from operation_api import OperationDetailApi, OperationListApi
 from workflow_api import WorkflowDetailApi, WorkflowListApi
 
-import sqlalchemy_utils
-from flask_babel import get_locale, Babel
 sqlalchemy_utils.i18n.get_locale = get_locale
 
-import json
 app = Flask(__name__)
 babel = Babel(app)
 
@@ -28,7 +31,10 @@ admin = Admin(app, name='Lemonade', template_mode='bootstrap3')
 CORS(app, resources={r"/*": {"origins": "*"}})
 api = Api(app)
 
-import logging
+# Cache
+app.config['CACHE_TYPE'] = 'simple'
+cache.init_app(app)
+
 logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
@@ -41,16 +47,19 @@ mappings = {
 for path, view in mappings.iteritems():
     api.add_resource(view, path)
 
-#@app.before_request
+
+# @app.before_request
 def before():
     print request.args
     if request.args and 'lang' in request.args:
         if request.args['lang'] not in ('es', 'en'):
             return abort(404)
 
+
 @babel.localeselector
 def get_locale():
     return request.args.get('lang', 'en')
+
 
 def main():
     parser = argparse.ArgumentParser()
@@ -73,7 +82,6 @@ def main():
             db.create_all()
 
         if server_config.get('environment', 'dev') == 'dev':
-
             admin.add_view(ModelView(Operation, db.session))
             admin.add_view(ModelView(OperationForm, db.session))
             admin.add_view(ModelView(OperationFormField, db.session))
@@ -91,4 +99,6 @@ def main():
             '''
     else:
         parser.print_usage()
+
+
 main()
