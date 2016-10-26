@@ -70,7 +70,11 @@ def main():
         with open(args.config) as f:
             config = json.load(f)
 
-        app.config["RESTFUL_JSON"] = {"cls": app.json_encoder}
+        app.config["RESTFUL_JSON"] = {
+            'cls': app.json_encoder, 
+            'indent': 0,
+            'sort_keys': False, 
+        }
 
         server_config = config.get('servers', {})
         app.config['SQLALCHEMY_DATABASE_URI'] = server_config.get(

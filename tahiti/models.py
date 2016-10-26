@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import json
+import datetime
 
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
@@ -261,6 +262,12 @@ class Workflow(db.Model):
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
+    created = Column(DateTime, nullable=False, default=datetime.datetime.now())
+    updated = Column(DateTime, nullable=False, default=datetime.datetime.now(), onupdate=datetime.datetime.now())
+    version = Column(Integer, nullable=False)
+    __mapper_args__ = {
+        "version_id_col": version
+    }
 
     # Associations
 

@@ -47,6 +47,9 @@ class FlowListResponseSchema(Schema):
         """ Deserializes data into an instance of Flow"""
         return Flow(**data)
 
+    class Meta:
+        ordered = True
+
 
 class FlowItemResponseSchema(Schema):
     """ JSON schema for listing """
@@ -58,6 +61,9 @@ class FlowItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of Flow"""
         return Flow(**data)
+
+    class Meta:
+        ordered = True
 
 
 class FlowCreateRequestSchema(Schema):
@@ -71,6 +77,9 @@ class FlowCreateRequestSchema(Schema):
         """ Deserializes data into an instance of Flow"""
         return Flow(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationSimpleListResponseSchema(Schema):
     """ JSON simple """
@@ -81,6 +90,9 @@ class OperationSimpleListResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
         return Operation(**data)
+
+    class Meta:
+        ordered = True
 
 
 class OperationListResponseSchema(Schema):
@@ -104,6 +116,9 @@ class OperationListResponseSchema(Schema):
         """ Deserializes data into an instance of Operation"""
         return Operation(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationCreateRequestSchema(Schema):
     """ JSON serialization schema """
@@ -126,6 +141,9 @@ class OperationCreateRequestSchema(Schema):
         """ Deserializes data into an instance of Operation"""
         return Operation(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationItemResponseSchema(Schema):
     """ JSON serialization schema """
@@ -147,6 +165,9 @@ class OperationItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
         return Operation(**data)
+
+    class Meta:
+        ordered = True
 
 
 class OperationUpdateRequestSchema(Schema):
@@ -172,6 +193,9 @@ class OperationUpdateRequestSchema(Schema):
         """ Deserializes data into an instance of Operation"""
         return Operation(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationCategoryCreateRequestSchema(Schema):
     """ JSON schema for request """
@@ -183,6 +207,9 @@ class OperationCategoryCreateRequestSchema(Schema):
         """ Deserializes data into an instance of OperationCategory"""
         return OperationCategory(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationCategoryListResponseSchema(Schema):
     """ JSON schema for response """
@@ -193,6 +220,9 @@ class OperationCategoryListResponseSchema(Schema):
         """ Deserializes data into an instance of OperationCategory"""
         return OperationCategory(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationCategoryItemResponseSchema(Schema):
     """ JSON serialization schema """
@@ -202,6 +232,9 @@ class OperationCategoryItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
         return OperationCategory(**data)
+
+    class Meta:
+        ordered = True
 
 
 class OperationFormListResponseSchema(Schema):
@@ -216,6 +249,9 @@ class OperationFormListResponseSchema(Schema):
         """ Deserializes data into an instance of OperationForm"""
         return OperationForm(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationFormCreateRequestSchema(Schema):
     """ JSON serialization schema """
@@ -229,6 +265,9 @@ class OperationFormCreateRequestSchema(Schema):
         """ Deserializes data into an instance of OperationForm"""
         return OperationForm(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationFormItemResponseSchema(Schema):
     """ JSON serialization schema """
@@ -241,6 +280,9 @@ class OperationFormItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
         return OperationForm(**data)
+
+    class Meta:
+        ordered = True
 
 
 class OperationFormFieldListResponseSchema(Schema):
@@ -261,6 +303,9 @@ class OperationFormFieldListResponseSchema(Schema):
         """ Deserializes data into an instance of OperationFormField"""
         return OperationFormField(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationFormFieldCreateRequestSchema(Schema):
     """ JSON serialization schema """
@@ -280,6 +325,9 @@ class OperationFormFieldCreateRequestSchema(Schema):
         """ Deserializes data into an instance of OperationFormField"""
         return OperationFormField(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationFormFieldItemResponseSchema(Schema):
     """ JSON serialization schema """
@@ -298,6 +346,9 @@ class OperationFormFieldItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
         return OperationFormField(**data)
+
+    class Meta:
+        ordered = True
 
 
 class OperationPortListResponseSchema(Schema):
@@ -319,6 +370,9 @@ class OperationPortListResponseSchema(Schema):
         """ Deserializes data into an instance of OperationPort"""
         return OperationPort(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationPortCreateRequestSchema(Schema):
     """ JSON serialization schema """
@@ -338,6 +392,9 @@ class OperationPortCreateRequestSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
         return OperationPort(**data)
+
+    class Meta:
+        ordered = True
 
 
 class OperationPortItemResponseSchema(Schema):
@@ -359,6 +416,9 @@ class OperationPortItemResponseSchema(Schema):
         """ Deserializes data into an instance of OperationPort"""
         return OperationPort(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationPortInterfaceCreateRequestSchema(Schema):
     """ JSON schema for request """
@@ -369,6 +429,9 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
         """ Deserializes data into an instance of OperationPortInterface"""
         return OperationPortInterface(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationPortInterfaceListResponseSchema(Schema):
     """ JSON schema for response """
@@ -378,6 +441,9 @@ class OperationPortInterfaceListResponseSchema(Schema):
         """ Deserializes data into an instance of OperationPortInterface"""
         return OperationPortInterface(**data)
 
+    class Meta:
+        ordered = True
+
 
 class OperationPortInterfaceItemResponseSchema(Schema):
     """ JSON serialization schema """
@@ -386,6 +452,9 @@ class OperationPortInterfaceItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
         return OperationPortInterface(**data)
+
+    class Meta:
+        ordered = True
 
 
 class TaskListResponseSchema(Schema):
@@ -400,6 +469,9 @@ class TaskListResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
         return Task(**data)
+
+    class Meta:
+        ordered = True
 
 
 class TaskCreateRequestSchema(Schema):
@@ -416,6 +488,9 @@ class TaskCreateRequestSchema(Schema):
         data['forms'] = json.dumps(data['forms'])
         return Task(**data)
 
+    class Meta:
+        ordered = True
+
 
 class TaskItemResponseSchema(Schema):
     """ JSON serialization schema """
@@ -429,6 +504,9 @@ class TaskItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
         return Task(**data)
+
+    class Meta:
+        ordered = True
 
 
 class TaskExecuteRequestSchema(Schema):
@@ -447,6 +525,9 @@ class TaskExecuteRequestSchema(Schema):
         """ Deserializes data into an instance of Task"""
         return Task(**data)
 
+    class Meta:
+        ordered = True
+
 
 class WorkflowExecuteRequestSchema(Schema):
     """ JSON schema for executing workflow """
@@ -455,6 +536,10 @@ class WorkflowExecuteRequestSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
+    created = fields.DateTime(required=True, missing=datetime.datetime.now(),
+                             default=datetime.datetime.now())
+    updated = fields.DateTime(required=True)
+    version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskExecuteRequestSchema',
                           many=True)
     flows = fields.Nested('schema.FlowExecuteRequestSchema',
@@ -464,6 +549,9 @@ class WorkflowExecuteRequestSchema(Schema):
         """ Deserializes data into an instance of Workflow"""
         return Workflow(**data)
 
+    class Meta:
+        ordered = True
+
 
 class WorkflowListResponseSchema(Schema):
     """ JSON serialization schema """
@@ -472,6 +560,10 @@ class WorkflowListResponseSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
+    created = fields.DateTime(required=True, missing=datetime.datetime.now(),
+                             default=datetime.datetime.now())
+    updated = fields.DateTime(required=True)
+    version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskListResponseSchema',
                           many=True)
     flows = fields.Nested('schema.FlowListResponseSchema',
@@ -480,6 +572,9 @@ class WorkflowListResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
         return Workflow(**data)
+
+    class Meta:
+        ordered = True
 
 
 class WorkflowCreateRequestSchema(Schema):
@@ -497,6 +592,9 @@ class WorkflowCreateRequestSchema(Schema):
         """ Deserializes data into an instance of Workflow"""
         return Workflow(**data)
 
+    class Meta:
+        ordered = True
+
 
 class WorkflowItemResponseSchema(Schema):
     """ JSON serialization schema """
@@ -505,6 +603,10 @@ class WorkflowItemResponseSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
+    created = fields.DateTime(required=True, missing=datetime.datetime.now(),
+                             default=datetime.datetime.now())
+    updated = fields.DateTime(required=True)
+    version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskItemResponseSchema',
                           many=True)
     flows = fields.Nested('schema.FlowItemResponseSchema',
@@ -513,3 +615,7 @@ class WorkflowItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
         return Workflow(**data)
+
+    class Meta:
+        ordered = True
+
