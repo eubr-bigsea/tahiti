@@ -69,6 +69,9 @@ class Operation(db.Model, Translatable):
     type = Column(Enum(*OperationType.__dict__.keys(), 
                        name='OperationTypeEnumType'), nullable=False)
     icon = Column(String(200), nullable=False)
+    __mapper_args__ = {
+        "order_by": 'name'
+    }
 
     # Associations
     # noinspection PyUnresolvedReferences
@@ -139,6 +142,9 @@ class OperationPort(db.Model, Translatable):
     order = Column(Integer)
     multiplicity = Column(Enum(*OperationPortMultiplicity.__dict__.keys(), 
                                name='OperationPortMultiplicityEnumType'), nullable=False, default=1)
+    __mapper_args__ = {
+        "order_by": 'order'
+    }
 
     # Associations
     # noinspection PyUnresolvedReferences
@@ -232,6 +238,9 @@ class Application(db.Model):
     type = Column(Enum(*ApplicationType.__dict__.keys(), 
                        name='ApplicationTypeEnumType'), nullable=False)
     execution_parameters = Column(Text)
+    __mapper_args__ = {
+        "order_by": 'name'
+    }
 
     def __unicode__(self):
         return self.name
@@ -292,7 +301,7 @@ class Workflow(db.Model):
     updated = Column(DateTime, nullable=False, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
     version = Column(Integer, nullable=False)
     __mapper_args__ = {
-        "version_id_col": version
+        "version_id_col": version,"order_by": 'name'
     }
 
     # Associations
