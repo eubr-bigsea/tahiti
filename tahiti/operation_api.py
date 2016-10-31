@@ -1,10 +1,26 @@
 # -*- coding: utf-8 -*-}
 from flask import request, current_app
 from flask_restful import Resource
+from sqlalchemy.orm import joinedload
 
 from app_auth import requires_auth
-from models import db, Operation
+from cache import cache
 from schema import *
+
+
+def optimize_operation_query(operations):
+    return operations \
+        .options(joinedload(Operation.current_translation)) \
+        .options(joinedload('forms.current_translation')) \
+        .options(joinedload('ports.current_translation')) \
+        .options(joinedload('ports.interfaces.current_translation')) \
+        .options(joinedload('forms.fields.current_translation')) \
+        .options(joinedload('categories.current_translation')) \
+        .options(joinedload('forms')) \
+        .options(joinedload('ports')) \
+        .options(joinedload('ports.interfaces')) \
+        .options(joinedload('forms.fields')) \
+        .options(joinedload('categories'))
 
 
 class OperationListApi(Resource):
@@ -13,10 +29,16 @@ class OperationListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
-        only = ('id', 'name') \
-            if request.args.get('simple', 'false') == 'true' else None
-        operations = Operation.query.order_by('name')
-        return OperationListResponseSchema(many=True, only=only).dump(operations).data
+        @cache.memoize(600, make_name=lambda f: request.url)
+        def result():
+            only = ('id', 'name') \
+                if request.args.get('simple', 'false') == 'true' else None
+            operations = optimize_operation_query(
+                Operation.query.order_by('operation.name'))
+            return OperationListResponseSchema(many=True, only=only).dump(
+                operations).data
+
+        return result()
 
     @staticmethod
     @requires_auth
@@ -30,13 +52,14 @@ class OperationListApi(Resource):
             if form.errors:
                 result, result_code = dict(
                     status="ERROR", message="Validation error",
-                    errors=form.errors,), 401
+                    errors=form.errors, ), 401
             else:
                 try:
                     operation = form.data
                     db.session.add(operation)
                     db.session.commit()
-                    result, result_code = response_schema.dump(operation).data, 200
+                    result, result_code = response_schema.dump(
+                        operation).data, 200
                 except Exception, e:
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
@@ -53,11 +76,17 @@ class OperationDetailApi(Resource):
     @staticmethod
     @requires_auth
     def get(operation_id):
-        operation = Operation.query.get(operation_id)
-        if operation is not None:
-            return OperationItemResponseSchema().dump(operation).data
-        else:
-            return dict(status="ERROR", message="Not found"), 404
+        @cache.memoize(600, make_name=lambda f: request.url)
+        def result():
+            print request.url
+            operation = optimize_operation_query(
+                Operation.query.filter_by(id=operation_id)).first()
+            if operation is not None:
+                return OperationItemResponseSchema().dump(operation).data
+            else:
+                return dict(status="ERROR", message="Not found"), 404
+
+        return result()
 
     @staticmethod
     @requires_auth
@@ -108,5 +137,5 @@ class OperationDetailApi(Resource):
                     db.session.rollback()
             else:
                 result = dict(status="ERROR", message="Invalid data",
-                            errors=form.errors)
+                              errors=form.errors)
         return result, result_code
