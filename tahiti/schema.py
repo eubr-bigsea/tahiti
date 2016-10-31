@@ -600,6 +600,7 @@ class WorkflowExecuteRequestSchema(Schema):
     """ JSON schema for executing workflow """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    description = fields.String(required=False)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -626,6 +627,7 @@ class WorkflowListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    description = fields.String(required=False)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -651,6 +653,7 @@ class WorkflowListResponseSchema(Schema):
 class WorkflowCreateRequestSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
+    description = fields.String(required=False)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -672,6 +675,7 @@ class WorkflowItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    description = fields.String(required=False)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
