@@ -76,8 +76,7 @@ class WorkflowDetailApi(Resource):
                 if current_app.debug:
                     result['debug_detail'] = e.message
                 db.session.rollback()
-        else:
-            return result, result_code
+        return result, result_code
 
     @staticmethod
     @requires_auth
