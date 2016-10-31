@@ -36,12 +36,53 @@ class KeyValuePairExecuteRequestSchema(KeyValueSchema):
 # endregion
 
 
+class ApplicationListResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(ApplicationType.__dict__.keys())])
+    execution_parameters = fields.Function(lambda x: load_json(x.execution_parameters))
+
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Application"""
+        return Application(**data)
+
+    class Meta:
+        ordered = True
+
+
+class ApplicationItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(ApplicationType.__dict__.keys())])
+    execution_parameters = fields.Function(lambda x: load_json(x.execution_parameters))
+
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Application"""
+        return Application(**data)
+
+    class Meta:
+        ordered = True
+
+
 class FlowListResponseSchema(Schema):
     """ JSON schema for listing """
     source_port = fields.Integer(required=True)
     target_port = fields.Integer(required=True)
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Flow"""
@@ -57,6 +98,7 @@ class FlowItemResponseSchema(Schema):
     target_port = fields.Integer(required=True)
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Flow"""
@@ -72,6 +114,7 @@ class FlowCreateRequestSchema(Schema):
     target_port = fields.Integer(required=True)
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Flow"""
@@ -86,6 +129,7 @@ class OperationSimpleListResponseSchema(Schema):
     id = fields.Integer()
     name = fields.String(required=False)
     slug = fields.String(required=False)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -111,6 +155,7 @@ class OperationListResponseSchema(Schema):
                           many=True)
     ports = fields.Nested('schema.OperationPortListResponseSchema',
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -136,6 +181,7 @@ class OperationCreateRequestSchema(Schema):
                           many=True)
     ports = fields.Nested('schema.OperationPortCreateRequestSchema',
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -161,6 +207,7 @@ class OperationItemResponseSchema(Schema):
                           many=True)
     ports = fields.Nested('schema.OperationPortItemResponseSchema',
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -188,6 +235,7 @@ class OperationUpdateRequestSchema(Schema):
     ports = fields.Nested('schema.OperationPortUpdateRequestSchema',
                           required=True,
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -202,6 +250,7 @@ class OperationCategoryCreateRequestSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     type = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -215,6 +264,7 @@ class OperationCategoryListResponseSchema(Schema):
     """ JSON schema for response """
     name = fields.String(required=True)
     type = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -228,6 +278,7 @@ class OperationCategoryItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -239,11 +290,12 @@ class OperationCategoryItemResponseSchema(Schema):
 
 class OperationFormListResponseSchema(Schema):
     """ JSON serialization schema """
+    name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
                              default=True)
-    name = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldListResponseSchema',
                            many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -255,11 +307,12 @@ class OperationFormListResponseSchema(Schema):
 
 class OperationFormCreateRequestSchema(Schema):
     """ JSON serialization schema """
+    name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
                              default=True)
-    name = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldCreateRequestSchema',
                            many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -271,11 +324,12 @@ class OperationFormCreateRequestSchema(Schema):
 
 class OperationFormItemResponseSchema(Schema):
     """ JSON serialization schema """
+    name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
                              default=True)
-    name = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldItemResponseSchema',
                            many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -298,6 +352,7 @@ class OperationFormFieldListResponseSchema(Schema):
     suggested_widget = fields.String(required=False)
     values_url = fields.String(required=False)
     values = fields.String(required=False)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -320,6 +375,7 @@ class OperationFormFieldCreateRequestSchema(Schema):
     suggested_widget = fields.String(required=False)
     values_url = fields.String(required=False)
     values = fields.String(required=False)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -342,6 +398,7 @@ class OperationFormFieldItemResponseSchema(Schema):
     suggested_widget = fields.String(required=False)
     values_url = fields.String(required=False)
     values = fields.String(required=False)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -365,6 +422,7 @@ class OperationPortListResponseSchema(Schema):
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceListResponseSchema',
                                many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -388,6 +446,7 @@ class OperationPortCreateRequestSchema(Schema):
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceCreateRequestSchema',
                                many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -411,6 +470,7 @@ class OperationPortItemResponseSchema(Schema):
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceItemResponseSchema',
                                many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -424,6 +484,7 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
     """ JSON schema for request """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -436,6 +497,7 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
 class OperationPortInterfaceListResponseSchema(Schema):
     """ JSON schema for response """
     name = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -448,6 +510,7 @@ class OperationPortInterfaceListResponseSchema(Schema):
 class OperationPortInterfaceItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -465,6 +528,7 @@ class TaskListResponseSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     operation = fields.Nested('schema.OperationSimpleListResponseSchema')
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -482,6 +546,7 @@ class TaskCreateRequestSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Dict(required=True)
     operation_id = fields.Integer(required=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -500,6 +565,7 @@ class TaskItemResponseSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     operation = fields.Nested('schema.OperationSimpleListResponseSchema')
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -520,6 +586,7 @@ class TaskExecuteRequestSchema(Schema):
     operation = fields.Nested('schema.OperationExecuteRequestSchema')
     parameters = fields.Nested('schema.KeyValuePairExecuteRequestSchema',
                                many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -536,14 +603,16 @@ class WorkflowExecuteRequestSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
-    created = fields.DateTime(required=True, missing=datetime.datetime.now(),
-                             default=datetime.datetime.now())
-    updated = fields.DateTime(required=True)
+    created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                             default=datetime.datetime.utcnow)
+    updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                             default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskExecuteRequestSchema',
                           many=True)
     flows = fields.Nested('schema.FlowExecuteRequestSchema',
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
@@ -560,14 +629,16 @@ class WorkflowListResponseSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
-    created = fields.DateTime(required=True, missing=datetime.datetime.now(),
-                             default=datetime.datetime.now())
-    updated = fields.DateTime(required=True)
+    created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                             default=datetime.datetime.utcnow)
+    updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                             default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskListResponseSchema',
                           many=True)
     flows = fields.Nested('schema.FlowListResponseSchema',
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
@@ -587,6 +658,7 @@ class WorkflowCreateRequestSchema(Schema):
                           many=True)
     flows = fields.Nested('schema.FlowCreateRequestSchema',
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
@@ -603,14 +675,16 @@ class WorkflowItemResponseSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
-    created = fields.DateTime(required=True, missing=datetime.datetime.now(),
-                             default=datetime.datetime.now())
-    updated = fields.DateTime(required=True)
+    created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                             default=datetime.datetime.utcnow)
+    updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                             default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskItemResponseSchema',
                           many=True)
     flows = fields.Nested('schema.FlowItemResponseSchema',
                           many=True)
+
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""

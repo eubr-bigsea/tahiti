@@ -36,6 +36,12 @@ class OperationPortMultiplicity:
 
 
 # noinspection PyClassHasNoInit
+class ApplicationType:
+    SPARK_APPLICATION = 'SPARK_APPLICATION'
+    SPARK_CODE_FUNCTION = 'SPARK_CODE_FUNCTION'
+
+
+# noinspection PyClassHasNoInit
 class DataType:
     FLOAT = 'FLOAT'
     LAT_LONG = 'LAT_LONG'
@@ -200,7 +206,7 @@ class OperationForm(db.Model, Translatable):
                           order_by="OperationFormField.order")
 
     def __unicode__(self):
-        return self.enabled
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -212,6 +218,26 @@ class OperationFormTranslation(translation_base(OperationForm)):
 
     # Fields
     name = Column(Unicode(200))
+
+
+class Application(db.Model):
+    """ Any external application that can be ran by Juicer """
+    __tablename__ = 'application'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200), nullable=False)
+    enabled = Column(Boolean, nullable=False, default=True)
+    type = Column(Enum(*ApplicationType.__dict__.keys(), 
+                       name='ApplicationTypeEnumType'), nullable=False)
+    execution_parameters = Column(Text)
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
 class OperationFormField(db.Model, Translatable):
@@ -262,8 +288,8 @@ class Workflow(db.Model):
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
-    created = Column(DateTime, nullable=False, default=datetime.datetime.now())
-    updated = Column(DateTime, nullable=False, default=datetime.datetime.now(), onupdate=datetime.datetime.now())
+    created = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
+    updated = Column(DateTime, nullable=False, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
     version = Column(Integer, nullable=False)
     __mapper_args__ = {
         "version_id_col": version

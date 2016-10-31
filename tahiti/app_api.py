@@ -15,6 +15,7 @@ from flask_restful import Api
 from cache import cache
 
 from models import db, Operation, OperationForm, OperationFormField
+from application_api import ApplicationDetailApi, ApplicationListApi
 from operation_api import OperationDetailApi, OperationListApi
 from workflow_api import WorkflowDetailApi, WorkflowListApi
 
@@ -39,6 +40,8 @@ logging.basicConfig()
 logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
 
 mappings = {
+    '/applications': ApplicationListApi,
+    '/applications/<int:application_id>': ApplicationDetailApi,
     '/operations': OperationListApi,
     '/operations/<int:operation_id>': OperationDetailApi,
     '/workflows': WorkflowListApi,
@@ -72,7 +75,7 @@ def main():
 
         app.config["RESTFUL_JSON"] = {
             'cls': app.json_encoder, 
-            'indent': 0,
+            'indent': 2,
             'sort_keys': False, 
         }
 

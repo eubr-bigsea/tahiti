@@ -3,20 +3,20 @@ from flask import request, current_app
 from flask_restful import Resource
 
 from app_auth import requires_auth
-from models import db, Operation
+from models import db, Application
 from schema import *
 
 
-class OperationListApi(Resource):
-    """ REST API for listing class Operation """
+class ApplicationListApi(Resource):
+    """ REST API for listing class Application """
 
     @staticmethod
     @requires_auth
     def get():
         only = ('id', 'name') \
             if request.args.get('simple', 'false') == 'true' else None
-        operations = Operation.query.order_by('name')
-        return OperationListResponseSchema(many=True, only=only).dump(operations).data
+        applications = Application.query.all()
+        return ApplicationListResponseSchema(many=True, only=only).dump(applications).data
 
     @staticmethod
     @requires_auth
@@ -24,8 +24,8 @@ class OperationListApi(Resource):
         result, result_code = dict(
             status="ERROR", message="Missing json in the request body"), 401
         if request.json is not None:
-            request_schema = OperationCreateRequestSchema()
-            response_schema = OperationItemResponseSchema()
+            request_schema = ApplicationCreateRequestSchema()
+            response_schema = ApplicationItemResponseSchema()
             form = request_schema.load(request.json)
             if form.errors:
                 result, result_code = dict(
@@ -33,10 +33,10 @@ class OperationListApi(Resource):
                     errors=form.errors,), 401
             else:
                 try:
-                    operation = form.data
-                    db.session.add(operation)
+                    application = form.data
+                    db.session.add(application)
                     db.session.commit()
-                    result, result_code = response_schema.dump(operation).data, 200
+                    result, result_code = response_schema.dump(application).data, 200
                 except Exception, e:
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
@@ -47,27 +47,27 @@ class OperationListApi(Resource):
         return result, result_code
 
 
-class OperationDetailApi(Resource):
-    """ REST API for a single instance of class Operation """
+class ApplicationDetailApi(Resource):
+    """ REST API for a single instance of class Application """
 
     @staticmethod
     @requires_auth
-    def get(operation_id):
-        operation = Operation.query.get(operation_id)
-        if operation is not None:
-            return OperationItemResponseSchema().dump(operation).data
+    def get(application_id):
+        application = Application.query.get(application_id)
+        if application is not None:
+            return ApplicationItemResponseSchema().dump(application).data
         else:
             return dict(status="ERROR", message="Not found"), 404
 
     @staticmethod
     @requires_auth
-    def delete(operation_id):
+    def delete(application_id):
         result, result_code = dict(status="ERROR", message="Not found"), 404
 
-        operation = Operation.query.get(operation_id)
-        if operation is not None:
+        application = Application.query.get(application_id)
+        if application is not None:
             try:
-                db.session.delete(operation)
+                db.session.delete(application)
                 db.session.commit()
                 result, result_code = dict(status="OK", message="Deleted"), 200
             except Exception, e:
@@ -81,24 +81,24 @@ class OperationDetailApi(Resource):
 
     @staticmethod
     @requires_auth
-    def patch(operation_id):
+    def patch(application_id):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 404
 
         if request.json:
-            request_schema = PartialSchemaFactory(OperationCreateRequestSchema)
+            request_schema = PartialSchemaFactory(ApplicationCreateRequestSchema)
             form = request_schema.load(request.json)
-            response_schema = OperationItemResponseSchema()
+            response_schema = ApplicationItemResponseSchema()
             if not form.errors:
                 try:
-                    form.data.id = operation_id
-                    operation = db.session.merge(form.data)
+                    form.data.id = application_id
+                    application = db.session.merge(form.data)
                     db.session.commit()
 
-                    if operation is not None:
+                    if application is not None:
                         result, result_code = dict(
                             status="OK", message="Updated",
-                            data=response_schema.dump(operation).data), 200
+                            data=response_schema.dump(application).data), 200
                     else:
                         result = dict(status="ERROR", message="Not found")
                 except Exception, e:
