@@ -293,6 +293,7 @@ class OperationFormListResponseSchema(Schema):
     name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
                              default=True)
+    order = fields.Integer(required=True)
     fields = fields.Nested('schema.OperationFormFieldListResponseSchema',
                            many=True)
 
@@ -310,6 +311,7 @@ class OperationFormCreateRequestSchema(Schema):
     name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
                              default=True)
+    order = fields.Integer(required=True)
     fields = fields.Nested('schema.OperationFormFieldCreateRequestSchema',
                            many=True)
 
@@ -327,6 +329,7 @@ class OperationFormItemResponseSchema(Schema):
     name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
                              default=True)
+    order = fields.Integer(required=True)
     fields = fields.Nested('schema.OperationFormFieldItemResponseSchema',
                            many=True)
 

@@ -15,7 +15,7 @@ class ApplicationListApi(Resource):
     def get():
         only = ('id', 'name') \
             if request.args.get('simple', 'false') == 'true' else None
-        applications = Application.query.all()
+        applications = Application.query.order_by('name')
         return ApplicationListResponseSchema(many=True, only=only).dump(applications).data
 
     @staticmethod
@@ -86,7 +86,8 @@ class ApplicationDetailApi(Resource):
 
         if request.json:
             request_schema = PartialSchemaFactory(ApplicationCreateRequestSchema)
-            form = request_schema.load(request.json)
+            # Ignore missing fields to allow partial updates
+            form = request_schema.load(request.json, partial=True)
             response_schema = ApplicationItemResponseSchema()
             if not form.errors:
                 try:

@@ -15,7 +15,7 @@ class WorkflowListApi(Resource):
     def get():
         only = ('id', 'name') \
             if request.args.get('simple', 'false') == 'true' else None
-        workflows = Workflow.query.all()
+        workflows = Workflow.query.order_by('name')
         return WorkflowListResponseSchema(many=True, only=only).dump(workflows).data
 
     @staticmethod
@@ -86,7 +86,8 @@ class WorkflowDetailApi(Resource):
 
         if request.json:
             request_schema = PartialSchemaFactory(WorkflowCreateRequestSchema)
-            form = request_schema.load(request.json)
+            # Ignore missing fields to allow partial updates
+            form = request_schema.load(request.json, partial=True)
             response_schema = WorkflowItemResponseSchema()
             if not form.errors:
                 try:

@@ -78,9 +78,8 @@ class OperationDetailApi(Resource):
     def get(operation_id):
         @cache.memoize(600, make_name=lambda f: request.url)
         def result():
-            print request.url
             operation = optimize_operation_query(
-                Operation.query.filter_by(id=operation_id)).first()
+                Operation.query.filter_by(id=operation_id).order_by('1')).first()
             if operation is not None:
                 return OperationItemResponseSchema().dump(operation).data
             else:
