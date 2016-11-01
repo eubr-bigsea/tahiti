@@ -17,7 +17,6 @@ def PartialSchemaFactory(schema_cls):
     return schema
 
 def load_json(str):
-    print ">>>>>>>>>>", str
     try:
         return json.loads(str)
     except:
@@ -126,9 +125,9 @@ class FlowCreateRequestSchema(Schema):
 
 class OperationSimpleListResponseSchema(Schema):
     """ JSON simple """
-    id = fields.Integer()
-    name = fields.String(required=False)
-    slug = fields.String(required=False)
+    id = fields.Integer(allow_none=True)
+    name = fields.String(required=False, allow_none=True)
+    slug = fields.String(required=False, allow_none=True)
 
     @post_load
     def make_object(self, data):
@@ -150,10 +149,13 @@ class OperationListResponseSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
+                               allow_none=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormListResponseSchema',
+                          allow_none=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortListResponseSchema',
+                          allow_none=True,
                           many=True)
 
     @post_load
@@ -176,10 +178,13 @@ class OperationCreateRequestSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
+                               allow_none=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormCreateRequestSchema',
+                          allow_none=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortCreateRequestSchema',
+                          allow_none=True,
                           many=True)
 
     @post_load
@@ -202,10 +207,13 @@ class OperationItemResponseSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
+                               allow_none=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormItemResponseSchema',
+                          allow_none=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortItemResponseSchema',
+                          allow_none=True,
                           many=True)
 
     @post_load
@@ -219,13 +227,13 @@ class OperationItemResponseSchema(Schema):
 
 class OperationUpdateRequestSchema(Schema):
     """ JSON serialization schema """
-    name = fields.String(required=False)
-    slug = fields.String(required=False)
-    enabled = fields.Boolean(required=False)
-    description = fields.String(required=False)
-    type = fields.String(required=False,
+    name = fields.String(required=False, allow_none=True)
+    slug = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=False, allow_none=True)
+    description = fields.String(required=False, allow_none=True)
+    type = fields.String(required=False, allow_none=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
-    icon = fields.String(required=False)
+    icon = fields.String(required=False, allow_none=True)
     categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
                                required=True,
                                many=True)
@@ -295,6 +303,7 @@ class OperationFormListResponseSchema(Schema):
                              default=True)
     order = fields.Integer(required=True)
     fields = fields.Nested('schema.OperationFormFieldListResponseSchema',
+                           allow_none=True,
                            many=True)
 
     @post_load
@@ -313,6 +322,7 @@ class OperationFormCreateRequestSchema(Schema):
                              default=True)
     order = fields.Integer(required=True)
     fields = fields.Nested('schema.OperationFormFieldCreateRequestSchema',
+                           allow_none=True,
                            many=True)
 
     @post_load
@@ -331,6 +341,7 @@ class OperationFormItemResponseSchema(Schema):
                              default=True)
     order = fields.Integer(required=True)
     fields = fields.Nested('schema.OperationFormFieldItemResponseSchema',
+                           allow_none=True,
                            many=True)
 
     @post_load
@@ -352,9 +363,9 @@ class OperationFormFieldListResponseSchema(Schema):
     required = fields.Boolean(required=True)
     order = fields.Integer(required=True)
     default = fields.String(required=True)
-    suggested_widget = fields.String(required=False)
-    values_url = fields.String(required=False)
-    values = fields.String(required=False)
+    suggested_widget = fields.String(required=False, allow_none=True)
+    values_url = fields.String(required=False, allow_none=True)
+    values = fields.String(required=False, allow_none=True)
 
     @post_load
     def make_object(self, data):
@@ -375,9 +386,9 @@ class OperationFormFieldCreateRequestSchema(Schema):
     required = fields.Boolean(required=True)
     order = fields.Integer(required=True)
     default = fields.String(required=True)
-    suggested_widget = fields.String(required=False)
-    values_url = fields.String(required=False)
-    values = fields.String(required=False)
+    suggested_widget = fields.String(required=False, allow_none=True)
+    values_url = fields.String(required=False, allow_none=True)
+    values = fields.String(required=False, allow_none=True)
 
     @post_load
     def make_object(self, data):
@@ -398,9 +409,9 @@ class OperationFormFieldItemResponseSchema(Schema):
     required = fields.Boolean(required=True)
     order = fields.Integer(required=True)
     default = fields.String(required=True)
-    suggested_widget = fields.String(required=False)
-    values_url = fields.String(required=False)
-    values = fields.String(required=False)
+    suggested_widget = fields.String(required=False, allow_none=True)
+    values_url = fields.String(required=False, allow_none=True)
+    values = fields.String(required=False, allow_none=True)
 
     @post_load
     def make_object(self, data):
@@ -418,12 +429,13 @@ class OperationPortListResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationPortType.__dict__.keys())])
     description = fields.String(required=True)
-    tags = fields.String(required=False)
-    order = fields.Integer(required=False)
+    tags = fields.String(required=False, allow_none=True)
+    order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
                                   default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceListResponseSchema',
+                               allow_none=True,
                                many=True)
 
     @post_load
@@ -442,12 +454,13 @@ class OperationPortCreateRequestSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationPortType.__dict__.keys())])
     description = fields.String(required=True)
-    tags = fields.String(required=False)
-    order = fields.Integer(required=False)
+    tags = fields.String(required=False, allow_none=True)
+    order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
                                   default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceCreateRequestSchema',
+                               allow_none=True,
                                many=True)
 
     @post_load
@@ -466,12 +479,13 @@ class OperationPortItemResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationPortType.__dict__.keys())])
     description = fields.String(required=True)
-    tags = fields.String(required=False)
-    order = fields.Integer(required=False)
+    tags = fields.String(required=False, allow_none=True)
+    order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
                                   default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceItemResponseSchema',
+                               allow_none=True,
                                many=True)
 
     @post_load
@@ -530,7 +544,8 @@ class TaskListResponseSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
-    operation = fields.Nested('schema.OperationSimpleListResponseSchema')
+    operation = fields.Nested('schema.OperationSimpleListResponseSchema',
+                              allow_none=True)
 
     @post_load
     def make_object(self, data):
@@ -567,7 +582,8 @@ class TaskItemResponseSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
-    operation = fields.Nested('schema.OperationSimpleListResponseSchema')
+    operation = fields.Nested('schema.OperationSimpleListResponseSchema',
+                              allow_none=True)
 
     @post_load
     def make_object(self, data):
@@ -585,9 +601,11 @@ class TaskExecuteRequestSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.String(required=True)
-    next_task_id = fields.Integer()
-    operation = fields.Nested('schema.OperationExecuteRequestSchema')
+    next_task_id = fields.Integer(allow_none=True)
+    operation = fields.Nested('schema.OperationExecuteRequestSchema',
+                              allow_none=True)
     parameters = fields.Nested('schema.KeyValuePairExecuteRequestSchema',
+                               allow_none=True,
                                many=True)
 
     @post_load
@@ -603,7 +621,7 @@ class WorkflowExecuteRequestSchema(Schema):
     """ JSON schema for executing workflow """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
-    description = fields.String(required=False)
+    description = fields.String(required=False, allow_none=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -613,8 +631,10 @@ class WorkflowExecuteRequestSchema(Schema):
                              default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskExecuteRequestSchema',
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowExecuteRequestSchema',
+                          allow_none=True,
                           many=True)
 
     @post_load
@@ -630,7 +650,7 @@ class WorkflowListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
-    description = fields.String(required=False)
+    description = fields.String(required=False, allow_none=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -640,8 +660,10 @@ class WorkflowListResponseSchema(Schema):
                              default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskListResponseSchema',
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowListResponseSchema',
+                          allow_none=True,
                           many=True)
 
     @post_load
@@ -656,13 +678,15 @@ class WorkflowListResponseSchema(Schema):
 class WorkflowCreateRequestSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
-    description = fields.String(required=False)
+    description = fields.String(required=False, allow_none=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
     tasks = fields.Nested('schema.TaskCreateRequestSchema',
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowCreateRequestSchema',
+                          allow_none=True,
                           many=True)
 
     @post_load
@@ -678,7 +702,7 @@ class WorkflowItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
-    description = fields.String(required=False)
+    description = fields.String(required=False, allow_none=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -688,8 +712,10 @@ class WorkflowItemResponseSchema(Schema):
                              default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskItemResponseSchema',
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowItemResponseSchema',
+                          allow_none=True,
                           many=True)
 
     @post_load
