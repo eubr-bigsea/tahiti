@@ -33,3 +33,17 @@ Edit `tahiti.json` according to your database config
 ```
 python tahiti/app_api.py -c tahiti.json
 ```
+
+#### Using docker
+Build the container
+```
+docker build -t bigsea/tahiti .
+```
+
+Repeat [config](#config) stop and run using config file
+```
+docker run \
+  -v $PWD/tahiti.json:/usr/src/app/tahiti.json \
+  -p 5000:5000 \
+  bigsea/tahiti
+```
