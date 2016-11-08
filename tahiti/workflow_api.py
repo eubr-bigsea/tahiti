@@ -3,7 +3,6 @@ from flask import request, current_app
 from flask_restful import Resource
 
 from app_auth import requires_auth
-from models import db, Workflow
 from schema import *
 
 
@@ -15,8 +14,22 @@ class WorkflowListApi(Resource):
     def get():
         only = ('id', 'name') \
             if request.args.get('simple', 'false') == 'true' else None
-        workflows = Workflow.query.order_by('name')
-        return WorkflowListResponseSchema(many=True, only=only).dump(workflows).data
+
+        workflows = Workflow.query
+
+        enabled_filter = request.args.get('enabled')
+        if enabled_filter:
+            workflows = workflows.filter(
+                Workflow.enabled == (enabled_filter != 'false'))
+
+        name_filter = request.args.get('name')
+        if name_filter:
+            workflows = workflows.filter(
+                Workflow.name.like('%%{}%%'.format(name_filter)))
+        workflows = workflows.order_by('name')
+
+        return WorkflowListResponseSchema(many=True, only=only).dump(
+            workflows).data
 
     @staticmethod
     @requires_auth
@@ -30,13 +43,14 @@ class WorkflowListApi(Resource):
             if form.errors:
                 result, result_code = dict(
                     status="ERROR", message="Validation error",
-                    errors=form.errors,), 401
+                    errors=form.errors), 401
             else:
                 try:
                     workflow = form.data
                     db.session.add(workflow)
                     db.session.commit()
-                    result, result_code = response_schema.dump(workflow).data, 200
+                    result, result_code = response_schema.dump(
+                        workflow).data, 200
                 except Exception, e:
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
@@ -109,5 +123,5 @@ class WorkflowDetailApi(Resource):
                     db.session.rollback()
             else:
                 result = dict(status="ERROR", message="Invalid data",
-                            errors=form.errors)
+                              errors=form.errors)
         return result, result_code

@@ -5,7 +5,7 @@ import json
 import logging
 
 import sqlalchemy_utils
-from flask import Flask, request
+from flask import Flask, request, g
 
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
@@ -61,8 +61,13 @@ def before():
 
 
 @babel.localeselector
-def get_locale():
+def get_locale_from_query():
     return request.args.get('lang', 'en')
+
+
+@app.before_request
+def func():
+    g.locale = get_locale()
 
 
 def main():
@@ -75,9 +80,9 @@ def main():
             config = json.load(f)
 
         app.config["RESTFUL_JSON"] = {
-            'cls': app.json_encoder, 
+            'cls': app.json_encoder,
             'indent': 2,
-            'sort_keys': False, 
+            'sort_keys': False,
         }
 
         server_config = config.get('servers', {})
