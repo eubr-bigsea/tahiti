@@ -5,6 +5,7 @@ import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
     Enum, DateTime, Numeric, Text, Unicode, UnicodeText
+from sqlalchemy import event
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
@@ -302,6 +303,7 @@ class Workflow(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
     description = Column(Text)
+    enabled = Column(Boolean, nullable=False, default=True)
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
@@ -365,6 +367,10 @@ class Task(db.Model):
     top = Column(Integer, nullable=False)
     z_index = Column(Integer, nullable=False)
     forms = Column(Text, nullable=False)
+    version = Column(Integer, nullable=False)
+    __mapper_args__ = {
+        'version_id_col': version,
+    }
 
     # Associations
     workflow_id = Column(Integer, 

@@ -544,6 +544,7 @@ class TaskListResponseSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
+    version = fields.Integer(required=True)
     operation = fields.Nested('schema.OperationSimpleListResponseSchema',
                               allow_none=True)
 
@@ -563,12 +564,13 @@ class TaskCreateRequestSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Dict(required=True)
+    version = fields.Integer(required=True)
     operation_id = fields.Integer(required=True)
 
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
-        data['forms'] = json.dumps(data['forms'])
+        data['forms'] = json.dumps(data.get('forms', []))
         return Task(**data)
 
     class Meta:
@@ -582,6 +584,7 @@ class TaskItemResponseSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
+    version = fields.Integer(required=True)
     operation = fields.Nested('schema.OperationSimpleListResponseSchema',
                               allow_none=True)
 
@@ -601,6 +604,7 @@ class TaskExecuteRequestSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.String(required=True)
+    version = fields.Integer(required=True)
     next_task_id = fields.Integer(allow_none=True)
     operation = fields.Nested('schema.OperationExecuteRequestSchema',
                               allow_none=True)
@@ -622,6 +626,8 @@ class WorkflowExecuteRequestSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -651,6 +657,8 @@ class WorkflowListResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -679,6 +687,8 @@ class WorkflowCreateRequestSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -703,6 +713,8 @@ class WorkflowItemResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
