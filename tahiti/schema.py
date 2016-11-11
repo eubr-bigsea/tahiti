@@ -7,7 +7,7 @@ from marshmallow.validate import OneOf
 from models import *
 
 
-def PartialSchemaFactory(schema_cls):
+def partial_schema_factory(schema_cls):
     schema = schema_cls(partial=True)
     for field_name, field in schema.fields.items():
         if isinstance(field, fields.Nested):
@@ -16,9 +16,10 @@ def PartialSchemaFactory(schema_cls):
             schema.fields[field_name] = new_field
     return schema
 
-def load_json(str):
+
+def load_json(str_value):
     try:
-        return json.loads(str)
+        return json.loads(str_value)
     except:
         return "Error loading JSON"
 
@@ -41,7 +42,7 @@ class ApplicationListResponseSchema(Schema):
     name = fields.String(required=True)
     description = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     type = fields.String(required=True,
                          validate=[OneOf(ApplicationType.__dict__.keys())])
     execution_parameters = fields.Function(lambda x: load_json(x.execution_parameters))
@@ -61,7 +62,7 @@ class ApplicationItemResponseSchema(Schema):
     name = fields.String(required=True)
     description = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     type = fields.String(required=True,
                          validate=[OneOf(ApplicationType.__dict__.keys())])
     execution_parameters = fields.Function(lambda x: load_json(x.execution_parameters))
@@ -149,13 +150,13 @@ class OperationListResponseSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
-                               allow_none=True,
+                               required=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormListResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortListResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
 
     @post_load
@@ -178,13 +179,13 @@ class OperationCreateRequestSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
-                               allow_none=True,
+                               required=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormCreateRequestSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortCreateRequestSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
 
     @post_load
@@ -207,13 +208,13 @@ class OperationItemResponseSchema(Schema):
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
-                               allow_none=True,
+                               required=True,
                                many=True)
     forms = fields.Nested('schema.OperationFormItemResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
     ports = fields.Nested('schema.OperationPortItemResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
 
     @post_load
@@ -300,10 +301,11 @@ class OperationFormListResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     order = fields.Integer(required=True)
+    category = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldListResponseSchema',
-                           allow_none=True,
+                           required=True,
                            many=True)
 
     @post_load
@@ -319,10 +321,11 @@ class OperationFormCreateRequestSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     order = fields.Integer(required=True)
+    category = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldCreateRequestSchema',
-                           allow_none=True,
+                           required=True,
                            many=True)
 
     @post_load
@@ -338,10 +341,11 @@ class OperationFormItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     order = fields.Integer(required=True)
+    category = fields.String(required=True)
     fields = fields.Nested('schema.OperationFormFieldItemResponseSchema',
-                           allow_none=True,
+                           required=True,
                            many=True)
 
     @post_load
@@ -432,10 +436,10 @@ class OperationPortListResponseSchema(Schema):
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
-                                  default=1,
+                                 default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceListResponseSchema',
-                               allow_none=True,
+                               required=True,
                                many=True)
 
     @post_load
@@ -457,10 +461,10 @@ class OperationPortCreateRequestSchema(Schema):
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
-                                  default=1,
+                                 default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceCreateRequestSchema',
-                               allow_none=True,
+                               required=True,
                                many=True)
 
     @post_load
@@ -482,10 +486,10 @@ class OperationPortItemResponseSchema(Schema):
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
-                                  default=1,
+                                 default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
     interfaces = fields.Nested('schema.OperationPortInterfaceItemResponseSchema',
-                               allow_none=True,
+                               required=True,
                                many=True)
 
     @post_load
@@ -607,7 +611,7 @@ class TaskExecuteRequestSchema(Schema):
     version = fields.Integer(required=True)
     next_task_id = fields.Integer(allow_none=True)
     operation = fields.Nested('schema.OperationExecuteRequestSchema',
-                              allow_none=True)
+                              required=True)
     parameters = fields.Nested('schema.KeyValuePairExecuteRequestSchema',
                                allow_none=True,
                                many=True)
@@ -627,20 +631,20 @@ class WorkflowExecuteRequestSchema(Schema):
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
     created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
-                             default=datetime.datetime.utcnow)
+                            default=datetime.datetime.utcnow)
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
-                             default=datetime.datetime.utcnow)
+                            default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskExecuteRequestSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
     flows = fields.Nested('schema.FlowExecuteRequestSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
 
     @post_load
@@ -658,20 +662,20 @@ class WorkflowListResponseSchema(Schema):
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
     created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
-                             default=datetime.datetime.utcnow)
+                            default=datetime.datetime.utcnow)
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
-                             default=datetime.datetime.utcnow)
+                            default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskListResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
     flows = fields.Nested('schema.FlowListResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
 
     @post_load
@@ -688,15 +692,15 @@ class WorkflowCreateRequestSchema(Schema):
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
     tasks = fields.Nested('schema.TaskCreateRequestSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
     flows = fields.Nested('schema.FlowCreateRequestSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
 
     @post_load
@@ -714,20 +718,20 @@ class WorkflowItemResponseSchema(Schema):
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True, missing=True,
-                             default=True)
+                            default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
     created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
-                             default=datetime.datetime.utcnow)
+                            default=datetime.datetime.utcnow)
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
-                             default=datetime.datetime.utcnow)
+                            default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     tasks = fields.Nested('schema.TaskItemResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
     flows = fields.Nested('schema.FlowItemResponseSchema',
-                          allow_none=True,
+                          required=True,
                           many=True)
 
     @post_load

@@ -56,6 +56,7 @@ class DataType:
     TEXT = 'TEXT'
     DATE = 'DATE'
     INTEGER = 'INTEGER'
+    TIMESTAMP = 'TIMESTAMP'
 
 
 class Operation(db.Model, Translatable):
@@ -208,6 +209,7 @@ class OperationForm(db.Model, Translatable):
     id = Column(Integer, primary_key=True)
     enabled = Column(Boolean, nullable=False, default=True)
     order = Column(Integer, nullable=False)
+    category = Column(String(200), nullable=False)
     __mapper_args__ = {
         'order_by': 'order'
     }
