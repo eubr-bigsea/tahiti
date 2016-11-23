@@ -2,9 +2,18 @@
 from flask import request, current_app
 from flask_restful import Resource
 
+from sqlalchemy.orm import joinedload
 from app_auth import requires_auth
 from schema import *
 
+def optimize_workflow_query(workflows):
+    return workflows \
+        .options(joinedload('tasks')) \
+        .options(joinedload('tasks.operation')) \
+        .options(joinedload('tasks.operation.current_translation')) \
+        .options(joinedload('platform')) \
+        .options(joinedload('platform.current_translation')) \
+        .options(joinedload('flows'))
 
 class WorkflowListApi(Resource):
     """ REST API for listing class Workflow """
@@ -16,6 +25,10 @@ class WorkflowListApi(Resource):
             if request.args.get('simple', 'false') == 'true' else None
 
         workflows = Workflow.query
+        
+        platform = request.args.get('platform', None)
+        if platform:
+            workflows = workflows.filter(Workflow.platform.has(slug=platform))
 
         enabled_filter = request.args.get('enabled')
         if enabled_filter:
@@ -26,7 +39,7 @@ class WorkflowListApi(Resource):
         if name_filter:
             workflows = workflows.filter(
                 Workflow.name.like('%%{}%%'.format(name_filter)))
-        workflows = workflows.order_by('name')
+        workflows = optimize_workflow_query(workflows.order_by('name'))
 
         return WorkflowListResponseSchema(many=True, only=only).dump(
             workflows).data
@@ -67,7 +80,9 @@ class WorkflowDetailApi(Resource):
     @staticmethod
     @requires_auth
     def get(workflow_id):
-        workflow = Workflow.query.get(workflow_id)
+        #workflow = optimize_workflow_query(Workflow.query.filter_by(id=workflow_id))
+        workflow = optimize_workflow_query(Workflow.query.filter_by(id=workflow_id)\
+            .order_by(Workflow.name)).first()
         if workflow is not None:
             return WorkflowItemResponseSchema().dump(workflow).data
         else:

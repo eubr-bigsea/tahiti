@@ -152,6 +152,9 @@ class OperationListResponseSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryListResponseSchema',
                                required=True,
                                many=True)
+    platforms = fields.Nested('schema.PlatformListResponseSchema',
+                              required=True,
+                              many=True)
     forms = fields.Nested('schema.OperationFormListResponseSchema',
                           required=True,
                           many=True)
@@ -181,6 +184,9 @@ class OperationCreateRequestSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
                                required=True,
                                many=True)
+    platforms = fields.Nested('schema.PlatformCreateRequestSchema',
+                              required=True,
+                              many=True)
     forms = fields.Nested('schema.OperationFormCreateRequestSchema',
                           required=True,
                           many=True)
@@ -210,6 +216,9 @@ class OperationItemResponseSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
                                required=True,
                                many=True)
+    platforms = fields.Nested('schema.PlatformItemResponseSchema',
+                              required=True,
+                              many=True)
     forms = fields.Nested('schema.OperationFormItemResponseSchema',
                           required=True,
                           many=True)
@@ -238,6 +247,9 @@ class OperationUpdateRequestSchema(Schema):
     categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
                                required=True,
                                many=True)
+    platforms = fields.Nested('schema.PlatformUpdateRequestSchema',
+                              required=True,
+                              many=True)
     forms = fields.Nested('schema.OperationFormUpdateRequestSchema',
                           required=True,
                           many=True)
@@ -370,6 +382,8 @@ class OperationFormFieldListResponseSchema(Schema):
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
+    scope = fields.String(required=True,
+                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
     @post_load
     def make_object(self, data):
@@ -393,6 +407,8 @@ class OperationFormFieldCreateRequestSchema(Schema):
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
+    scope = fields.String(required=True,
+                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
     @post_load
     def make_object(self, data):
@@ -416,6 +432,8 @@ class OperationFormFieldItemResponseSchema(Schema):
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
+    scope = fields.String(required=True,
+                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
     @post_load
     def make_object(self, data):
@@ -541,6 +559,54 @@ class OperationPortInterfaceItemResponseSchema(Schema):
         ordered = True
 
 
+class PlatformListResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    slug = fields.String(required=True)
+    description = fields.String(required=True)
+    icon = fields.String(required=True)
+
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Platform"""
+        return Platform(**data)
+
+    class Meta:
+        ordered = True
+
+
+class PlatformCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    slug = fields.String(required=True)
+    description = fields.String(required=True)
+    icon = fields.String(required=True)
+
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Platform"""
+        return Platform(**data)
+
+    class Meta:
+        ordered = True
+
+
+class PlatformItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    slug = fields.String(required=True)
+    description = fields.String(required=True)
+    icon = fields.String(required=True)
+
+    @post_load
+    def make_object(self, data):
+        """ Deserializes data into an instance of Platform"""
+        return Platform(**data)
+
+    class Meta:
+        ordered = True
+
+
 class TaskListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.String(required=True)
@@ -646,6 +712,8 @@ class WorkflowExecuteRequestSchema(Schema):
     flows = fields.Nested('schema.FlowExecuteRequestSchema',
                           required=True,
                           many=True)
+    platform = fields.Nested('schema.PlatformExecuteRequestSchema',
+                             required=True)
 
     @post_load
     def make_object(self, data):
@@ -677,6 +745,8 @@ class WorkflowListResponseSchema(Schema):
     flows = fields.Nested('schema.FlowListResponseSchema',
                           required=True,
                           many=True)
+    platform = fields.Nested('schema.PlatformListResponseSchema',
+                             required=True)
 
     @post_load
     def make_object(self, data):
@@ -702,6 +772,8 @@ class WorkflowCreateRequestSchema(Schema):
     flows = fields.Nested('schema.FlowCreateRequestSchema',
                           required=True,
                           many=True)
+    platform = fields.Nested('schema.PlatformCreateRequestSchema',
+                             required=True)
 
     @post_load
     def make_object(self, data):
@@ -733,6 +805,8 @@ class WorkflowItemResponseSchema(Schema):
     flows = fields.Nested('schema.FlowItemResponseSchema',
                           required=True,
                           many=True)
+    platform = fields.Nested('schema.PlatformItemResponseSchema',
+                             required=True)
 
     @post_load
     def make_object(self, data):

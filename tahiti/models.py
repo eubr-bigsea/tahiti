@@ -43,6 +43,13 @@ class ApplicationType:
 
 
 # noinspection PyClassHasNoInit
+class OperationFieldScope:
+    BOTH = 'BOTH'
+    EXECUTION = 'EXECUTION'
+    DESIGN = 'DESIGN'
+
+
+# noinspection PyClassHasNoInit
 class DataType:
     FLOAT = 'FLOAT'
     LAT_LONG = 'LAT_LONG'
@@ -57,6 +64,36 @@ class DataType:
     DATE = 'DATE'
     INTEGER = 'INTEGER'
     TIMESTAMP = 'TIMESTAMP'
+
+
+class Platform(db.Model, Translatable):
+    """ Execution platform """
+    __tablename__ = 'platform'
+    __translatable__ = {'locales': ['pt', 'en', 'es']}
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    slug = Column(String(200), nullable=False)
+    enabled = Column(Boolean, nullable=False)
+    icon = Column(String(200), nullable=False)
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PlatformTranslation(translation_base(Platform)):
+    """ Translation table for Platform """
+    __tablename__ = 'platform_translation'
+    __mapper_args__ = {
+        'order_by': 'name'
+    }
+
+    # Fields
+    name = Column(Unicode(200))
+    description = Column(Unicode(200))
 
 
 class Operation(db.Model, Translatable):
@@ -83,6 +120,13 @@ class Operation(db.Model, Translatable):
         Column('operation_category_id', Integer, ForeignKey('operation_category.id')))
     categories = relationship("OperationCategory",
                               secondary=operation_category_operation)
+    # noinspection PyUnresolvedReferences
+    operation_platform = db.Table(
+        'operation_platform',
+        Column('operation_id', Integer, ForeignKey('operation.id')),
+        Column('platform_id', Integer, ForeignKey('platform.id')))
+    platforms = relationship("Platform",
+                    secondary=operation_platform)
     # noinspection PyUnresolvedReferences
     operation_operation_form = db.Table(
         'operation_operation_form',
@@ -272,6 +316,8 @@ class OperationFormField(db.Model, Translatable):
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
     values = Column(Text)
+    scope = Column(Enum(*OperationFieldScope.__dict__.keys(), 
+                        name='OperationFieldScopeEnumType'), nullable=False)
     __mapper_args__ = {
         'order_by': 'order'
     }
@@ -317,6 +363,9 @@ class Workflow(db.Model):
     }
 
     # Associations
+    platform_id = Column(Integer, 
+                         ForeignKey("platform.id"), nullable=False)
+    platform = relationship("Platform", foreign_keys=[platform_id])
 
     def __unicode__(self):
         return self.name
