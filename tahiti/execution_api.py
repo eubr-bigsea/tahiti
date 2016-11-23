@@ -69,7 +69,7 @@ class ExecutionDetailApi(Resource):
         result_code = 404
 
         if request.json:
-            request_schema = PartialSchemaFactory(ExecutionCreateRequestSchema)
+            request_schema = partial_schema_factory(ExecutionCreateRequestSchema)
             form = request_schema.load(request.json)
             response_schema = ExecutionItemResponseSchema()
             if not form.errors:
