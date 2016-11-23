@@ -97,31 +97,35 @@ class WorkflowDetailApi(Resource):
     def patch(workflow_id):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 404
-
-        if request.json:
-            request_schema = PartialSchemaFactory(WorkflowCreateRequestSchema)
-            # Ignore missing fields to allow partial updates
-            form = request_schema.load(request.json, partial=True)
-            response_schema = WorkflowItemResponseSchema()
-            if not form.errors:
-                try:
-                    form.data.id = workflow_id
-                    workflow = db.session.merge(form.data)
-                    db.session.commit()
-
-                    if workflow is not None:
-                        result, result_code = dict(
-                            status="OK", message="Updated",
-                            data=response_schema.dump(workflow).data), 200
-                    else:
-                        result = dict(status="ERROR", message="Not found")
-                except Exception, e:
-                    result, result_code = dict(status="ERROR",
-                                               message="Internal error"), 500
-                    if current_app.debug:
-                        result['debug_detail'] = e.message
-                    db.session.rollback()
-            else:
-                result = dict(status="ERROR", message="Invalid data",
-                              errors=form.errors)
+        try:
+            if request.json:
+                request_schema = partial_schema_factory(WorkflowCreateRequestSchema)
+                # Ignore missing fields to allow partial updates
+                form = request_schema.load(request.json, partial=True)
+                response_schema = WorkflowItemResponseSchema()
+                if not form.errors:
+                    try:
+                        form.data.id = workflow_id
+                        workflow = db.session.merge(form.data)
+                        db.session.commit()
+    
+                        if workflow is not None:
+                            result, result_code = dict(
+                                status="OK", message="Updated",
+                                data=response_schema.dump(workflow).data), 200
+                        else:
+                            result = dict(status="ERROR", message="Not found")
+                    except Exception, e:
+                        result, result_code = dict(status="ERROR",
+                                                   message="Internal error"), 500
+                        if current_app.debug:
+                            result['debug_detail'] = e.message
+                        db.session.rollback()
+                else:
+                    result = dict(status="ERROR", message="Invalid data",
+                                  errors=form.errors)
+        except:
+            result_code = 500
+            import sys
+            result = {status:"ERROR", message:sys.exc_info()[1]}
         return result, result_code
