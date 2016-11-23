@@ -148,7 +148,7 @@ class OperationDetailApi(Resource):
         result_code = 404
 
         if request.json:
-            request_schema = PartialSchemaFactory(OperationCreateRequestSchema)
+            request_schema = partial_schema_factory(OperationCreateRequestSchema)
             form = request_schema.load(request.json)
             response_schema = OperationItemResponseSchema()
             if not form.errors:
