@@ -85,7 +85,7 @@ class ApplicationDetailApi(Resource):
         result_code = 404
 
         if request.json:
-            request_schema = PartialSchemaFactory(ApplicationCreateRequestSchema)
+            request_schema = partial_schema_factory(ApplicationCreateRequestSchema)
             # Ignore missing fields to allow partial updates
             form = request_schema.load(request.json, partial=True)
             response_schema = ApplicationItemResponseSchema()
