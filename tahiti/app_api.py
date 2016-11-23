@@ -16,6 +16,7 @@ from cache import cache
 
 from models import db, Operation, OperationForm, OperationFormField
 from application_api import ApplicationDetailApi, ApplicationListApi
+from platform_api import PlatformDetailApi, PlatformListApi
 from operation_api import OperationDetailApi, OperationListApi
 from workflow_api import WorkflowDetailApi, WorkflowListApi
 
@@ -45,6 +46,8 @@ mappings = {
     '/applications/<int:application_id>': ApplicationDetailApi,
     '/operations': OperationListApi,
     '/operations/<int:operation_id>': OperationDetailApi,
+    '/platforms': PlatformListApi,
+    '/platforms/<int:operation_id>': PlatformDetailApi,
     '/workflows': WorkflowListApi,
     '/workflows/<int:workflow_id>': WorkflowDetailApi,
 }

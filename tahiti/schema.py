@@ -563,6 +563,7 @@ class PlatformListResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     slug = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     icon = fields.String(required=True)
 
