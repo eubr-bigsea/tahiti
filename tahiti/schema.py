@@ -578,10 +578,7 @@ class PlatformListResponseSchema(Schema):
 
 class PlatformCreateRequestSchema(Schema):
     """ JSON serialization schema """
-    name = fields.String(required=True)
-    slug = fields.String(required=True)
-    description = fields.String(required=True)
-    icon = fields.String(required=True)
+    id = fields.Integer(required=True)
 
     @post_load
     def make_object(self, data):
@@ -635,7 +632,6 @@ class TaskCreateRequestSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Dict(required=True)
-    version = fields.Integer(required=True)
     operation_id = fields.Integer(required=True)
 
     @post_load
@@ -773,8 +769,7 @@ class WorkflowCreateRequestSchema(Schema):
     flows = fields.Nested('schema.FlowCreateRequestSchema',
                           required=True,
                           many=True)
-    platform = fields.Nested('schema.PlatformCreateRequestSchema',
-                             required=True)
+    platform_id = fields.Integer(required=True)
 
     @post_load
     def make_object(self, data):
