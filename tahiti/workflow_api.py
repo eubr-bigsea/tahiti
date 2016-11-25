@@ -56,7 +56,7 @@ class WorkflowListApi(Resource):
                                    'pages': pagination.total / page_size + 1}}
                 print result
             else:
-                result = {'data': workflows}
+                result = {'data': WorkflowListResponseSchema(many=True, only=only).dump(workflows).data}
         
             return result
         except Exception, e:
