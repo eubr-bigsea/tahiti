@@ -21,29 +21,50 @@ class WorkflowListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
-        only = ('id', 'name') \
-            if request.args.get('simple', 'false') == 'true' else None
+        try:
+            if request.args.get('fields'):
+                only = [x.strip() for x in request.args.get('fields').split(',')]
+            else:
+                only = ('id', 'name') \
+                    if request.args.get('simple', 'false') == 'true' else None
+    
+            workflows = Workflow.query
+            
+            platform = request.args.get('platform', None)
+            if platform:
+                workflows = workflows.filter(Workflow.platform.has(slug=platform))
+    
+            enabled_filter = request.args.get('enabled')
+            if enabled_filter:
+                workflows = workflows.filter(
+                    Workflow.enabled == (enabled_filter != 'false'))
+    
+            name_filter = request.args.get('name')
+            if name_filter:
+                workflows = workflows.filter(
+                    Workflow.name.like('%%{}%%'.format(name_filter)))
+            workflows = optimize_workflow_query(workflows.order_by(Workflow.name))
+            page = request.args.get('page')
 
-        workflows = Workflow.query
+            if page is not None and page.isdigit():
+                page_size = int(request.args.get('size', 20))
+                page = int(page)
+                pagination = workflows.paginate(page, page_size, True)
+                result = {
+                    'data': WorkflowListResponseSchema(many=True, only=only).dump(pagination.items).data, 
+                    'pagination': {'page': page, 'size': page_size, 'total': pagination.total, 
+                                   'pages': pagination.total / page_size + 1}}
+                print result
+            else:
+                result = {'data': workflows}
         
-        platform = request.args.get('platform', None)
-        if platform:
-            workflows = workflows.filter(Workflow.platform.has(slug=platform))
-
-        enabled_filter = request.args.get('enabled')
-        if enabled_filter:
-            workflows = workflows.filter(
-                Workflow.enabled == (enabled_filter != 'false'))
-
-        name_filter = request.args.get('name')
-        if name_filter:
-            workflows = workflows.filter(
-                Workflow.name.like('%%{}%%'.format(name_filter)))
-        workflows = optimize_workflow_query(workflows.order_by('name'))
-
-        return WorkflowListResponseSchema(many=True, only=only).dump(
-            workflows).data
-
+            return result
+        except Exception, e:
+            result = dict(status="ERROR", message="Internal error")
+            if current_app.debug:
+                result['debug_detail'] = e.message
+            return result, 500
+    
     @staticmethod
     @requires_auth
     def post():
