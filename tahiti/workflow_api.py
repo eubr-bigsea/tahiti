@@ -73,6 +73,9 @@ class WorkflowListApi(Resource):
         if request.json is not None:
             request_schema = WorkflowCreateRequestSchema()
             response_schema = WorkflowItemResponseSchema()
+            for task in request.json.get('tasks', {}):
+                task['forms'] = {k: v for k, v in task['forms'].iteritems()\
+                                    if v.get('value') is not None}
             form = request_schema.load(request.json)
             if form.errors:
                 result, result_code = dict(
@@ -136,6 +139,9 @@ class WorkflowDetailApi(Resource):
         try:
             if request.json:
                 request_schema = partial_schema_factory(WorkflowCreateRequestSchema)
+                for task in request.json.get('tasks', {}):
+                    task['forms'] = {k: v for k, v in task['forms'].iteritems()\
+                                        if v.get('value') is not None}
                 # Ignore missing fields to allow partial updates
                 form = request_schema.load(request.json, partial=True)
                 response_schema = WorkflowItemResponseSchema()
@@ -163,5 +169,5 @@ class WorkflowDetailApi(Resource):
         except:
             result_code = 500
             import sys
-            result = {status:"ERROR", message:sys.exc_info()[1]}
+            result = {'status': "ERROR", 'message': sys.exc_info()[1]}
         return result, result_code
