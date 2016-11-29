@@ -28,6 +28,10 @@ class KeyValueSchema(Schema):
     name = fields.String(required=True)
     value = fields.String(required=True)
 
+class UserCreateRequestSchema(Schema):
+    id = fields.Integer(required=True)
+    login = fields.String(required=True)
+    name = fields.String(required=True)
 
 class KeyValuePairExecuteRequestSchema(KeyValueSchema):
     pass
@@ -768,6 +772,8 @@ class WorkflowCreateRequestSchema(Schema):
                           required=True,
                           many=True)
     platform_id = fields.Integer(required=True)
+    user = fields.Nested('schema.UserCreateRequestSchema',
+                         allow_none=True)
 
     @post_load
     def make_object(self, data):

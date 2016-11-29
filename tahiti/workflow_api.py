@@ -76,7 +76,13 @@ class WorkflowListApi(Resource):
             for task in request.json.get('tasks', {}):
                 task['forms'] = {k: v for k, v in task['forms'].iteritems()\
                                     if v.get('value') is not None}
-            form = request_schema.load(request.json)
+            params = {}
+            params.update(request.json)
+            user = params.pop('user')
+            params['user_id'] = user['id']
+            params['user_login'] = user['login']
+            params['user_name'] = user['name']
+            form = request_schema.load(params)
             if form.errors:
                 result, result_code = dict(
                     status="ERROR", message="Validation error",
@@ -143,7 +149,14 @@ class WorkflowDetailApi(Resource):
                     task['forms'] = {k: v for k, v in task['forms'].iteritems()\
                                         if v.get('value') is not None}
                 # Ignore missing fields to allow partial updates
-                form = request_schema.load(request.json, partial=True)
+                params = {}
+                params.update(request.json)
+                user = params.pop('user')
+                params['user_id'] = user['id']
+                params['user_login'] = user['login']
+                params['user_name'] = user['name']
+ 
+                form = request_schema.load(params, partial=True)
                 response_schema = WorkflowItemResponseSchema()
                 if not form.errors:
                     try:
