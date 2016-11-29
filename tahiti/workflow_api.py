@@ -151,10 +151,11 @@ class WorkflowDetailApi(Resource):
                 # Ignore missing fields to allow partial updates
                 params = {}
                 params.update(request.json)
-                user = params.pop('user')
-                params['user_id'] = user['id']
-                params['user_login'] = user['login']
-                params['user_name'] = user['name']
+                if 'user' in params:
+                    user = params.pop('user')
+                    params['user_id'] = user['id']
+                    params['user_login'] = user['login']
+                    params['user_name'] = user['name']
  
                 form = request_schema.load(params, partial=True)
                 response_schema = WorkflowItemResponseSchema()
