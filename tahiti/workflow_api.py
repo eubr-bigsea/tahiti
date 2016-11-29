@@ -151,8 +151,8 @@ class WorkflowDetailApi(Resource):
                 # Ignore missing fields to allow partial updates
                 params = {}
                 params.update(request.json)
-				if 'platform_id' in params and params['platform_id'] is None:
-					params.pop('platform_id')
+                if 'platform_id' in params and params['platform_id'] is None:
+                    params.pop('platform_id')
                 if 'user' in params:
                     user = params.pop('user')
                     params['user_id'] = user['id']
