@@ -728,9 +728,6 @@ class WorkflowListResponseSchema(Schema):
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True, missing=True,
                             default=True)
-    user_id = fields.Integer(required=True)
-    user_login = fields.String(required=True)
-    user_name = fields.String(required=True)
     created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
                             default=datetime.datetime.utcnow)
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
@@ -744,6 +741,7 @@ class WorkflowListResponseSchema(Schema):
                           many=True)
     platform = fields.Nested('schema.PlatformListResponseSchema',
                              required=True)
+    user = fields.Function(lambda x: {"id": x.user_id, "name": x.user_name, "login": x.user_login})
 
     @post_load
     def make_object(self, data):
@@ -787,9 +785,6 @@ class WorkflowItemResponseSchema(Schema):
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True, missing=True,
                             default=True)
-    user_id = fields.Integer(required=True)
-    user_login = fields.String(required=True)
-    user_name = fields.String(required=True)
     created = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
                             default=datetime.datetime.utcnow)
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
@@ -803,6 +798,7 @@ class WorkflowItemResponseSchema(Schema):
                           many=True)
     platform = fields.Nested('schema.PlatformItemResponseSchema',
                              required=True)
+    user = fields.Function(lambda x: {"id": x.user_id, "name": x.user_name, "login": x.user_login})
 
     @post_load
     def make_object(self, data):
