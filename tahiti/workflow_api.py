@@ -38,7 +38,12 @@ class WorkflowListApi(Resource):
             if enabled_filter:
                 workflows = workflows.filter(
                     Workflow.enabled == (enabled_filter != 'false'))
-    
+
+            user_id_filter = request.args.get('user_id')
+            if user_id_filter:
+                workflows = workflows.filter(
+                    Workflow.user_id == user_id_filter)
+
             name_filter = request.args.get('name')
             if name_filter:
                 workflows = workflows.filter(
