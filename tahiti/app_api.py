@@ -38,8 +38,8 @@ app.config['CACHE_TYPE'] = 'simple'
 cache.init_app(app)
 
 logging.basicConfig()
-logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-logging.getLogger('werkzeug').setLevel(logging.DEBUG)
+#logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+#logging.getLogger('werkzeug').setLevel(logging.DEBUG)
 
 mappings = {
     '/applications': ApplicationListApi,
@@ -73,14 +73,18 @@ def func():
     g.locale = get_locale()
 
 
-def main():
+def main(config=None, manager_mode=False):
     parser = argparse.ArgumentParser()
     parser.add_argument("-c", "--config", help="Config file")
+    if config is None:
+        args = parser.parse_args()
+        config_path = args.config
+    else:
+        config_path = config
 
-    args = parser.parse_args()
-    if args.config:
-        with open(args.config) as f:
-            config = json.load(f)
+    if config_path:
+        with open(config_path) as f:
+            config_json = json.load(f)
 
         app.config["RESTFUL_JSON"] = {
             'cls': app.json_encoder,
@@ -88,7 +92,7 @@ def main():
             'sort_keys': False,
         }
 
-        server_config = config.get('servers', {})
+        server_config = config_json.get('servers', {})
         app.config['SQLALCHEMY_DATABASE_URI'] = server_config.get(
             'database_url')
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -103,7 +107,9 @@ def main():
             admin.add_view(ModelView(Operation, db.session))
             admin.add_view(ModelView(OperationForm, db.session))
             admin.add_view(ModelView(OperationFormField, db.session))
-            app.run(debug=True, host='0.0.0.0')
+
+            if not manager_mode:
+                app.run(debug=True, host='0.0.0.0')
             '''
             # Create the Flask-Restless API manager.
             manager = flask_restless.APIManager(app, flask_sqlalchemy_db=db)
@@ -119,4 +125,5 @@ def main():
         parser.print_usage()
 
 
-main()
+if __name__ == '__main__':
+    main()
