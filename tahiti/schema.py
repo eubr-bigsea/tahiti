@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import datetime
 import json
 from copy import deepcopy
 from marshmallow import Schema, fields, post_load
@@ -23,19 +23,21 @@ def load_json(str_value):
     except:
         return "Error loading JSON"
 
+
 # region Protected
 class KeyValueSchema(Schema):
     name = fields.String(required=True)
     value = fields.String(required=True)
+
 
 class UserCreateRequestSchema(Schema):
     id = fields.Integer(required=True)
     login = fields.String(required=True)
     name = fields.String(required=True)
 
+
 class KeyValuePairExecuteRequestSchema(KeyValueSchema):
     pass
-
 
 # endregion
 
@@ -527,6 +529,7 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
     """ JSON schema for request """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    color = fields.String(required=True)
 
     @post_load
     def make_object(self, data):
@@ -540,6 +543,7 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
 class OperationPortInterfaceListResponseSchema(Schema):
     """ JSON schema for response """
     name = fields.String(required=True)
+    color = fields.String(required=True)
 
     @post_load
     def make_object(self, data):
@@ -553,6 +557,7 @@ class OperationPortInterfaceListResponseSchema(Schema):
 class OperationPortInterfaceItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
+    color = fields.String(required=True)
 
     @post_load
     def make_object(self, data):
@@ -565,6 +570,7 @@ class OperationPortInterfaceItemResponseSchema(Schema):
 
 class PlatformListResponseSchema(Schema):
     """ JSON serialization schema """
+    id = fields.Integer(required=True)
     name = fields.String(required=True)
     slug = fields.String(required=True)
     enabled = fields.Boolean(required=True)
@@ -595,6 +601,7 @@ class PlatformCreateRequestSchema(Schema):
 
 class PlatformItemResponseSchema(Schema):
     """ JSON serialization schema """
+    id = fields.Integer(required=True)
     name = fields.String(required=True)
     slug = fields.String(required=True)
     description = fields.String(required=True)

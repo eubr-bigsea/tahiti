@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-}
+import uuid
+
 from flask import request, current_app
 from flask_restful import Resource
 
 from sqlalchemy.orm import joinedload
 from app_auth import requires_auth
 from schema import *
+
 
 def optimize_workflow_query(workflows):
     return workflows \
@@ -15,6 +18,7 @@ def optimize_workflow_query(workflows):
         .options(joinedload('platform.current_translation')) \
         .options(joinedload('flows'))
 
+
 class WorkflowListApi(Resource):
     """ REST API for listing class Workflow """
 
@@ -23,17 +27,19 @@ class WorkflowListApi(Resource):
     def get():
         try:
             if request.args.get('fields'):
-                only = [x.strip() for x in request.args.get('fields').split(',')]
+                only = [x.strip() for x in
+                        request.args.get('fields').split(',')]
             else:
                 only = ('id', 'name') \
                     if request.args.get('simple', 'false') == 'true' else None
-    
+
             workflows = Workflow.query
-            
+
             platform = request.args.get('platform', None)
             if platform:
-                workflows = workflows.filter(Workflow.platform.has(slug=platform))
-    
+                workflows = workflows.filter(
+                    Workflow.platform.has(slug=platform))
+
             enabled_filter = request.args.get('enabled')
             if enabled_filter:
                 workflows = workflows.filter(
@@ -48,7 +54,8 @@ class WorkflowListApi(Resource):
             if name_filter:
                 workflows = workflows.filter(
                     Workflow.name.like('%%{}%%'.format(name_filter)))
-            workflows = optimize_workflow_query(workflows.order_by(Workflow.name))
+            workflows = optimize_workflow_query(
+                workflows.order_by(Workflow.name))
             page = request.args.get('page')
 
             if page is not None and page.isdigit():
@@ -56,31 +63,53 @@ class WorkflowListApi(Resource):
                 page = int(page)
                 pagination = workflows.paginate(page, page_size, True)
                 result = {
-                    'data': WorkflowListResponseSchema(many=True, only=only).dump(pagination.items).data, 
-                    'pagination': {'page': page, 'size': page_size, 'total': pagination.total, 
+                    'data': WorkflowListResponseSchema(many=True,
+                                                       only=only).dump(
+                        pagination.items).data,
+                    'pagination': {'page': page, 'size': page_size,
+                                   'total': pagination.total,
                                    'pages': pagination.total / page_size + 1}}
                 print result
             else:
-                result = {'data': WorkflowListResponseSchema(many=True, only=only).dump(workflows).data}
-        
+                result = {'data': WorkflowListResponseSchema(many=True,
+                                                             only=only).dump(
+                    workflows).data}
+
             return result
         except Exception, e:
             result = dict(status="ERROR", message="Internal error")
             if current_app.debug:
                 result['debug_detail'] = e.message
             return result, 500
-    
+
     @staticmethod
     @requires_auth
     def post():
         result, result_code = dict(
             status="ERROR", message="Missing json in the request body"), 401
-        if request.json is not None:
+        if request.args.get('source'):
+            original = Workflow.query.get(int(request.args.get('source')))
+            response_schema = WorkflowItemResponseSchema()
+            cloned = response_schema.dump(original).data
+            # User field is not present in constructor
+            user = cloned.pop('user')
+            cloned['user_id'] = user['id']
+            cloned['user_login'] = user['login']
+            cloned['user_name'] = user['name']
+            for task in cloned['tasks']:
+                task['id'] = str(uuid.uuid1())
+                task['operation_id'] = task['operation']['id']
+            cloned['platform_id'] = cloned['platform']['id']
+            print '>>>>>>>>>>>>>>>>>>>>>>>>>', cloned['platform']
+
+            request_schema = WorkflowCreateRequestSchema()
+            form = request_schema.load(cloned)
+        elif request.json is not None:
             request_schema = WorkflowCreateRequestSchema()
             response_schema = WorkflowItemResponseSchema()
             for task in request.json.get('tasks', {}):
-                task['forms'] = {k: v for k, v in task['forms'].iteritems()\
-                                    if v.get('value') is not None}
+                task['forms'] = {k: v for k, v in task['forms'].iteritems()
+                                 if v.get('value') is not None}
             params = {}
             params.update(request.json)
             user = params.pop('user')
@@ -88,23 +117,26 @@ class WorkflowListApi(Resource):
             params['user_login'] = user['login']
             params['user_name'] = user['name']
             form = request_schema.load(params)
-            if form.errors:
-                result, result_code = dict(
-                    status="ERROR", message="Validation error",
-                    errors=form.errors), 401
-            else:
-                try:
-                    workflow = form.data
-                    db.session.add(workflow)
-                    db.session.commit()
-                    result, result_code = response_schema.dump(
-                        workflow).data, 200
-                except Exception, e:
-                    result, result_code = dict(status="ERROR",
-                                               message="Internal error"), 500
-                    if current_app.debug:
-                        result['debug_detail'] = e.message
-                    db.session.rollback()
+        else:
+            return result, result_code
+
+        if form.errors:
+            result, result_code = dict(
+                status="ERROR", message="Validation error",
+                errors=form.errors), 401
+        else:
+            try:
+                workflow = form.data
+                db.session.add(workflow)
+                db.session.commit()
+                result, result_code = response_schema.dump(
+                    workflow).data, 200
+            except Exception, e:
+                result, result_code = dict(status="ERROR",
+                                           message="Internal error"), 500
+                if current_app.debug:
+                    result['debug_detail'] = e.message
+                db.session.rollback()
 
         return result, result_code
 
@@ -115,9 +147,9 @@ class WorkflowDetailApi(Resource):
     @staticmethod
     @requires_auth
     def get(workflow_id):
-        #workflow = optimize_workflow_query(Workflow.query.filter_by(id=workflow_id))
-        workflow = optimize_workflow_query(Workflow.query.filter_by(id=workflow_id)\
-            .order_by(Workflow.name)).first()
+        workflow = optimize_workflow_query(
+            Workflow.query.filter_by(id=workflow_id).order_by(
+                Workflow.name)).first()
         if workflow is not None:
             return WorkflowItemResponseSchema().dump(workflow).data
         else:
@@ -149,10 +181,11 @@ class WorkflowDetailApi(Resource):
         result_code = 404
         try:
             if request.json:
-                request_schema = partial_schema_factory(WorkflowCreateRequestSchema)
+                request_schema = partial_schema_factory(
+                    WorkflowCreateRequestSchema)
                 for task in request.json.get('tasks', {}):
-                    task['forms'] = {k: v for k, v in task['forms'].iteritems()\
-                                        if v.get('value') is not None}
+                    task['forms'] = {k: v for k, v in task['forms'].iteritems() \
+                                     if v.get('value') is not None}
                 # Ignore missing fields to allow partial updates
                 params = {}
                 params.update(request.json)
@@ -163,7 +196,7 @@ class WorkflowDetailApi(Resource):
                     params['user_id'] = user['id']
                     params['user_login'] = user['login']
                     params['user_name'] = user['name']
- 
+
                 form = request_schema.load(params, partial=True)
                 response_schema = WorkflowItemResponseSchema()
                 if not form.errors:
@@ -171,7 +204,7 @@ class WorkflowDetailApi(Resource):
                         form.data.id = workflow_id
                         workflow = db.session.merge(form.data)
                         db.session.commit()
-    
+
                         if workflow is not None:
                             result, result_code = dict(
                                 status="OK", message="Updated",
@@ -179,8 +212,8 @@ class WorkflowDetailApi(Resource):
                         else:
                             result = dict(status="ERROR", message="Not found")
                     except Exception, e:
-                        result, result_code = dict(status="ERROR",
-                                                   message="Internal error"), 500
+                        result, result_code = dict(
+                            status="ERROR", message="Internal error"), 500
                         if current_app.debug:
                             result['debug_detail'] = e.message
                         db.session.rollback()
