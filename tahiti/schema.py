@@ -23,7 +23,6 @@ def load_json(str_value):
     except:
         return "Error loading JSON"
 
-
 # region Protected
 class KeyValueSchema(Schema):
     name = fields.String(required=True)

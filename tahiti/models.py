@@ -60,6 +60,7 @@ class DataType:
     CHARACTER = 'CHARACTER'
     LONG = 'LONG'
     DATETIME = 'DATETIME'
+    VECTOR = 'VECTOR'
     TEXT = 'TEXT'
     DATE = 'DATE'
     INTEGER = 'INTEGER'
@@ -76,6 +77,9 @@ class Platform(db.Model, Translatable):
     slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
     icon = Column(String(200), nullable=False)
+    __mapper_args__ = {
+        'order_by': 'name'
+    }
 
     def __unicode__(self):
         return self.name
@@ -87,9 +91,6 @@ class Platform(db.Model, Translatable):
 class PlatformTranslation(translation_base(Platform)):
     """ Translation table for Platform """
     __tablename__ = 'platform_translation'
-    __mapper_args__ = {
-        'order_by': 'name'
-    }
 
     # Fields
     name = Column(Unicode(200))
@@ -159,6 +160,7 @@ class OperationPortInterface(db.Model, Translatable):
 
     # Fields
     id = Column(Integer, primary_key=True)
+    color = Column(String(50), nullable=False)
 
     def __unicode__(self):
         return self.name
