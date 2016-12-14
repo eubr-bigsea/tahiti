@@ -20,9 +20,11 @@ def optimize_workflow_query(workflows):
 
 def update_port_name_in_flows(session, workflow_id):
     sql = """
-        UPDATE flow, operation_port s, operation_port t
-        SET source_port_name = s.name, target_port_name = t.name
+        UPDATE flow, operation_port s, operation_port t, 
+        operation_port_translation t1, operation_port_translation t2
+        SET source_port_name = t1.name, target_port_name = t2.name
         WHERE flow.source_port = s.id AND flow.target_port = t.id
+        AND s.id = t1.id AND t.id = t2.id
         AND workflow_id = :id""";
     session.execute(sql, {'id': workflow_id})
 
