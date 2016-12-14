@@ -18,6 +18,13 @@ def optimize_workflow_query(workflows):
         .options(joinedload('platform.current_translation')) \
         .options(joinedload('flows'))
 
+def update_port_name_in_flows(session, workflow_id):
+    sql = """
+        UPDATE flow, operation_port s, operation_port t
+        SET source_port_name = s.name, target_port_name = t.name
+        WHERE flow.source_port = s.id AND flow.target_port = t.id
+        AND workflow_id = :id""";
+    session.execute(sql, {'id': workflow_id})
 
 class WorkflowListApi(Resource):
     """ REST API for listing class Workflow """
@@ -100,7 +107,6 @@ class WorkflowListApi(Resource):
                 task['id'] = str(uuid.uuid1())
                 task['operation_id'] = task['operation']['id']
             cloned['platform_id'] = cloned['platform']['id']
-            print '>>>>>>>>>>>>>>>>>>>>>>>>>', cloned['platform']
 
             request_schema = WorkflowCreateRequestSchema()
             form = request_schema.load(cloned)
@@ -128,6 +134,8 @@ class WorkflowListApi(Resource):
             try:
                 workflow = form.data
                 db.session.add(workflow)
+                db.session.flush()
+                update_port_name_in_flows(db.session, workflow.id)
                 db.session.commit()
                 result, result_code = response_schema.dump(
                     workflow).data, 200
@@ -203,6 +211,8 @@ class WorkflowDetailApi(Resource):
                     try:
                         form.data.id = workflow_id
                         workflow = db.session.merge(form.data)
+                        db.session.flush()
+                        update_port_name_in_flows(db.session, workflow.id)
                         db.session.commit()
 
                         if workflow is not None:

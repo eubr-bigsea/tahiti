@@ -75,7 +75,7 @@ create_form_field_fields = [
      {'validation': in_list_ok,
       'values': ['LAT_LONG', 'DOUBLE', 'DECIMAL', 'FLOAT', 'CHARACTER', 'LONG',
                  'DATETIME', 'TEXT', 'TIME', 'DATE', 'INTEGER'],
-      'label': 'Field type:', 'default': 'STRING'}],
+      'label': 'Field type:', 'default': 'TEXT'}],
 
     ['suggested_widget', {'validation': in_list_ok,
                           'values': ['suggested_widget', 'attribute-function',
@@ -219,6 +219,9 @@ def define_form_field(config, op_id):
     operation = Operation.query.get(op_id)
     forms = filter(lambda f: f.category == 'execution', operation.forms)
     if len(forms) == 1:
+        print '-' * 40
+        print 'Adding fiels for operation {}- {}'.format(operation.id, operation.name)
+        print '-' * 40
         form = forms[0]
 
         counter = 1
@@ -279,6 +282,7 @@ def define_op_ports(config, op_id):
         print '-' * 40
         print 'Adding ports for operation {} - {}'.format(operation.id,
                                                           operation.name)
+        print '-' * 40
         result = {}
 
         while True:

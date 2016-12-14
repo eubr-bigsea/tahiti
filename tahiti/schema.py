@@ -85,6 +85,8 @@ class FlowListResponseSchema(Schema):
     """ JSON schema for listing """
     source_port = fields.Integer(required=True)
     target_port = fields.Integer(required=True)
+    source_port_name = fields.String(required=True)
+    target_port_name = fields.String(required=True)
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
@@ -101,6 +103,8 @@ class FlowItemResponseSchema(Schema):
     """ JSON schema for listing """
     source_port = fields.Integer(required=True)
     target_port = fields.Integer(required=True)
+    source_port_name = fields.String(required=True)
+    target_port_name = fields.String(required=True)
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
@@ -117,6 +121,8 @@ class FlowCreateRequestSchema(Schema):
     """ JSON schema for new instance """
     source_port = fields.Integer(required=True)
     target_port = fields.Integer(required=True)
+    source_port_name = fields.String(required=True)
+    target_port_name = fields.String(required=True)
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
