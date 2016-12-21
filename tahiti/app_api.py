@@ -128,3 +128,4 @@ def main(config=None, manager_mode=False):
 
 if __name__ == '__main__':
     main()
+main()
