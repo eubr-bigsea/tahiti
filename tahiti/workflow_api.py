@@ -192,15 +192,16 @@ class WorkflowDetailApi(Resource):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 404
         try:
-            if request.json:
+            if request.data:
+                data = json.loads(request.data)
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
-                for task in request.json.get('tasks', {}):
+                for task in data.get('tasks', {}):
                     task['forms'] = {k: v for k, v in task['forms'].iteritems() \
                                      if v.get('value') is not None}
                 # Ignore missing fields to allow partial updates
                 params = {}
-                params.update(request.json)
+                params.update(data)
                 if 'platform_id' in params and params['platform_id'] is None:
                     params.pop('platform_id')
                 if 'user' in params:
