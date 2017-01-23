@@ -103,6 +103,8 @@ class WorkflowListApi(Resource):
             cloned = response_schema.dump(original).data
             # User field is not present in constructor
             user = cloned.pop('user')
+            platform = cloned.pop('platform')
+            cloned['platform'] = Platform.query.get(platform['id'])
             cloned['user_id'] = user['id']
             cloned['user_login'] = user['login']
             cloned['user_name'] = user['name']
