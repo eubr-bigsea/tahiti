@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-}
 import uuid
+import json
 
 from flask import request, current_app
 from flask_restful import Resource
@@ -112,14 +113,15 @@ class WorkflowListApi(Resource):
 
             request_schema = WorkflowCreateRequestSchema()
             form = request_schema.load(cloned)
-        elif request.json is not None:
+        elif request.data is not None:
+            data = json.loads(request.data)
             request_schema = WorkflowCreateRequestSchema()
             response_schema = WorkflowItemResponseSchema()
-            for task in request.json.get('tasks', {}):
+            for task in data.get('tasks', {}):
                 task['forms'] = {k: v for k, v in task['forms'].iteritems()
                                  if v.get('value') is not None}
             params = {}
-            params.update(request.json)
+            params.update(data)
             user = params.pop('user')
             params['user_id'] = user['id']
             params['user_login'] = user['login']
@@ -144,7 +146,7 @@ class WorkflowListApi(Resource):
             except Exception, e:
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
-                if current_app.debug:
+                if current_app.debug or True:
                     result['debug_detail'] = e.message
                 db.session.rollback()
 
@@ -190,15 +192,16 @@ class WorkflowDetailApi(Resource):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 404
         try:
-            if request.json:
+            if request.data:
+                data = json.loads(request.data)
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
-                for task in request.json.get('tasks', {}):
+                for task in data.get('tasks', {}):
                     task['forms'] = {k: v for k, v in task['forms'].iteritems() \
                                      if v.get('value') is not None}
                 # Ignore missing fields to allow partial updates
                 params = {}
-                params.update(request.json)
+                params.update(data)
                 if 'platform_id' in params and params['platform_id'] is None:
                     params.pop('platform_id')
                 if 'user' in params:
