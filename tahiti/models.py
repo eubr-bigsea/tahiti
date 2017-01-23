@@ -360,6 +360,7 @@ class Workflow(db.Model):
     created = Column(DateTime, nullable=False, default=datetime.datetime.utcnow)
     updated = Column(DateTime, nullable=False, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
     version = Column(Integer, nullable=False)
+    image = Column(String(1000))
     __mapper_args__ = {
         'version_id_col': version,'order_by': 'name'
     }
