@@ -786,7 +786,8 @@ class WorkflowCreateRequestSchema(Schema):
     flows = fields.Nested('tahiti.schema.FlowCreateRequestSchema',
                           required=True,
                           many=True)
-    platform_id = fields.Integer(required=True)
+    platform = fields.Nested('tahiti.schema.PlatformCreateRequestSchema',
+                             required=True)
     user = fields.Nested('schema.UserCreateRequestSchema',
                          allow_none=True)
 
