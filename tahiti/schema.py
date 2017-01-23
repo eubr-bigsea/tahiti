@@ -160,16 +160,16 @@ class OperationListResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
-    categories = fields.Nested('schema.OperationCategoryListResponseSchema',
+    categories = fields.Nested('tahiti.schema.OperationCategoryListResponseSchema',
                                required=True,
                                many=True)
-    platforms = fields.Nested('schema.PlatformListResponseSchema',
+    platforms = fields.Nested('tahiti.schema.PlatformListResponseSchema',
                               required=True,
                               many=True)
-    forms = fields.Nested('schema.OperationFormListResponseSchema',
+    forms = fields.Nested('tahiti.schema.OperationFormListResponseSchema',
                           required=True,
                           many=True)
-    ports = fields.Nested('schema.OperationPortListResponseSchema',
+    ports = fields.Nested('tahiti.schema.OperationPortListResponseSchema',
                           required=True,
                           many=True)
 
@@ -192,16 +192,16 @@ class OperationCreateRequestSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
-    categories = fields.Nested('schema.OperationCategoryCreateRequestSchema',
+    categories = fields.Nested('tahiti.schema.OperationCategoryCreateRequestSchema',
                                required=True,
                                many=True)
-    platforms = fields.Nested('schema.PlatformCreateRequestSchema',
+    platforms = fields.Nested('tahiti.schema.PlatformCreateRequestSchema',
                               required=True,
                               many=True)
-    forms = fields.Nested('schema.OperationFormCreateRequestSchema',
+    forms = fields.Nested('tahiti.schema.OperationFormCreateRequestSchema',
                           required=True,
                           many=True)
-    ports = fields.Nested('schema.OperationPortCreateRequestSchema',
+    ports = fields.Nested('tahiti.schema.OperationPortCreateRequestSchema',
                           required=True,
                           many=True)
 
@@ -224,16 +224,16 @@ class OperationItemResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
-    categories = fields.Nested('schema.OperationCategoryItemResponseSchema',
+    categories = fields.Nested('tahiti.schema.OperationCategoryItemResponseSchema',
                                required=True,
                                many=True)
-    platforms = fields.Nested('schema.PlatformItemResponseSchema',
+    platforms = fields.Nested('tahiti.schema.PlatformItemResponseSchema',
                               required=True,
                               many=True)
-    forms = fields.Nested('schema.OperationFormItemResponseSchema',
+    forms = fields.Nested('tahiti.schema.OperationFormItemResponseSchema',
                           required=True,
                           many=True)
-    ports = fields.Nested('schema.OperationPortItemResponseSchema',
+    ports = fields.Nested('tahiti.schema.OperationPortItemResponseSchema',
                           required=True,
                           many=True)
 
@@ -255,16 +255,16 @@ class OperationUpdateRequestSchema(Schema):
     type = fields.String(required=False, allow_none=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=False, allow_none=True)
-    categories = fields.Nested('schema.OperationCategoryUpdateRequestSchema',
+    categories = fields.Nested('tahiti.schema.OperationCategoryUpdateRequestSchema',
                                required=True,
                                many=True)
-    platforms = fields.Nested('schema.PlatformUpdateRequestSchema',
+    platforms = fields.Nested('tahiti.schema.PlatformUpdateRequestSchema',
                               required=True,
                               many=True)
-    forms = fields.Nested('schema.OperationFormUpdateRequestSchema',
+    forms = fields.Nested('tahiti.schema.OperationFormUpdateRequestSchema',
                           required=True,
                           many=True)
-    ports = fields.Nested('schema.OperationPortUpdateRequestSchema',
+    ports = fields.Nested('tahiti.schema.OperationPortUpdateRequestSchema',
                           required=True,
                           many=True)
 
@@ -327,7 +327,7 @@ class OperationFormListResponseSchema(Schema):
                             default=True)
     order = fields.Integer(required=True)
     category = fields.String(required=True)
-    fields = fields.Nested('schema.OperationFormFieldListResponseSchema',
+    fields = fields.Nested('tahiti.schema.OperationFormFieldListResponseSchema',
                            required=True,
                            many=True)
 
@@ -347,7 +347,7 @@ class OperationFormCreateRequestSchema(Schema):
                             default=True)
     order = fields.Integer(required=True)
     category = fields.String(required=True)
-    fields = fields.Nested('schema.OperationFormFieldCreateRequestSchema',
+    fields = fields.Nested('tahiti.schema.OperationFormFieldCreateRequestSchema',
                            required=True,
                            many=True)
 
@@ -367,7 +367,7 @@ class OperationFormItemResponseSchema(Schema):
                             default=True)
     order = fields.Integer(required=True)
     category = fields.String(required=True)
-    fields = fields.Nested('schema.OperationFormFieldItemResponseSchema',
+    fields = fields.Nested('tahiti.schema.OperationFormFieldItemResponseSchema',
                            required=True,
                            many=True)
 
@@ -467,7 +467,7 @@ class OperationPortListResponseSchema(Schema):
     multiplicity = fields.String(required=True, missing=1,
                                  default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
-    interfaces = fields.Nested('schema.OperationPortInterfaceListResponseSchema',
+    interfaces = fields.Nested('tahiti.schema.OperationPortInterfaceListResponseSchema',
                                required=True,
                                many=True)
 
@@ -492,7 +492,7 @@ class OperationPortCreateRequestSchema(Schema):
     multiplicity = fields.String(required=True, missing=1,
                                  default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
-    interfaces = fields.Nested('schema.OperationPortInterfaceCreateRequestSchema',
+    interfaces = fields.Nested('tahiti.schema.OperationPortInterfaceCreateRequestSchema',
                                required=True,
                                many=True)
 
@@ -517,7 +517,7 @@ class OperationPortItemResponseSchema(Schema):
     multiplicity = fields.String(required=True, missing=1,
                                  default=1,
                                  validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
-    interfaces = fields.Nested('schema.OperationPortInterfaceItemResponseSchema',
+    interfaces = fields.Nested('tahiti.schema.OperationPortInterfaceItemResponseSchema',
                                required=True,
                                many=True)
 
@@ -689,9 +689,9 @@ class TaskExecuteRequestSchema(Schema):
     forms = fields.String(required=True)
     version = fields.Integer(required=True)
     next_task_id = fields.Integer(allow_none=True)
-    operation = fields.Nested('schema.OperationExecuteRequestSchema',
+    operation = fields.Nested('tahiti.schema.OperationExecuteRequestSchema',
                               required=True)
-    parameters = fields.Nested('schema.KeyValuePairExecuteRequestSchema',
+    parameters = fields.Nested('tahiti.schema.KeyValuePairExecuteRequestSchema',
                                allow_none=True,
                                many=True)
 
@@ -719,13 +719,14 @@ class WorkflowExecuteRequestSchema(Schema):
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
                             default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
-    tasks = fields.Nested('schema.TaskExecuteRequestSchema',
+    image = fields.String(required=False, allow_none=True)
+    tasks = fields.Nested('tahiti.schema.TaskExecuteRequestSchema',
                           required=True,
                           many=True)
-    flows = fields.Nested('schema.FlowExecuteRequestSchema',
+    flows = fields.Nested('tahiti.schema.FlowExecuteRequestSchema',
                           required=True,
                           many=True)
-    platform = fields.Nested('schema.PlatformExecuteRequestSchema',
+    platform = fields.Nested('tahiti.schema.PlatformExecuteRequestSchema',
                              required=True)
 
     @post_load
@@ -749,13 +750,14 @@ class WorkflowListResponseSchema(Schema):
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
                             default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
-    tasks = fields.Nested('schema.TaskListResponseSchema',
+    image = fields.String(required=False, allow_none=True)
+    tasks = fields.Nested('tahiti.schema.TaskListResponseSchema',
                           required=True,
                           many=True)
-    flows = fields.Nested('schema.FlowListResponseSchema',
+    flows = fields.Nested('tahiti.schema.FlowListResponseSchema',
                           required=True,
                           many=True)
-    platform = fields.Nested('schema.PlatformListResponseSchema',
+    platform = fields.Nested('tahiti.schema.PlatformListResponseSchema',
                              required=True)
     user = fields.Function(lambda x: {"id": x.user_id, "name": x.user_name, "login": x.user_login})
 
@@ -777,10 +779,11 @@ class WorkflowCreateRequestSchema(Schema):
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
-    tasks = fields.Nested('schema.TaskCreateRequestSchema',
+    image = fields.String(required=False, allow_none=True)
+    tasks = fields.Nested('tahiti.schema.TaskCreateRequestSchema',
                           required=True,
                           many=True)
-    flows = fields.Nested('schema.FlowCreateRequestSchema',
+    flows = fields.Nested('tahiti.schema.FlowCreateRequestSchema',
                           required=True,
                           many=True)
     platform_id = fields.Integer(required=True)
@@ -808,13 +811,14 @@ class WorkflowItemResponseSchema(Schema):
     updated = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
                             default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
-    tasks = fields.Nested('schema.TaskItemResponseSchema',
+    image = fields.String(required=False, allow_none=True)
+    tasks = fields.Nested('tahiti.schema.TaskItemResponseSchema',
                           required=True,
                           many=True)
-    flows = fields.Nested('schema.FlowItemResponseSchema',
+    flows = fields.Nested('tahiti.schema.FlowItemResponseSchema',
                           required=True,
                           many=True)
-    platform = fields.Nested('schema.PlatformItemResponseSchema',
+    platform = fields.Nested('tahiti.schema.PlatformItemResponseSchema',
                              required=True)
     user = fields.Function(lambda x: {"id": x.user_id, "name": x.user_name, "login": x.user_login})
 
