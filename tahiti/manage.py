@@ -44,22 +44,24 @@ create_op_fields = [
 ]
 
 create_port_fields = [
-    ['name', {'validation': required_ok, 'label': 'Port name (EN):',
-              'default': 'input data'}],
-    ['name_pt', {'validation': required_ok, 'label': 'Port name (PT):',
-                 'default': 'dados de entrada'}],
     ['type',
      {'validation': in_list_ok, 'values': ['OUTPUT', 'INPUT'],
       'label': 'Port type:',
       'default': 'INPUT'}],
-    ['description', {'validation': required_ok, 'label': 'Description (EN):'}],
+    ['name', {'validation': required_ok, 'label': 'Port name (EN):',
+              'default': lambda t: 'input data' if t == 'INPUT' else 'output data' }],
+    ['name_pt', {'validation': required_ok, 'label': 'Port name (PT):',
+                 'default': lambda t: 'dados de entrada' if t == 'INPUT' else 'dados de saída'}],
+    ['description', {'validation': required_ok, 'label': 'Description (EN):',
+                 'default': lambda t: 'Input data' if t == 'INPUT' else 'Output data'}],
     ['description_pt',
-     {'validation': required_ok, 'label': 'Description (PT):'}],
-    ['order', {'validation': required_ok, 'label': 'Order:'}],
+     {'validation': required_ok, 'label': 'Description (PT):',
+                 'default': lambda t: 'Dados de entrada' if t == 'INPUT' else 'Dados de saída'}],
+    ['order', {'validation': required_ok, 'label': 'Order:', 'default': '1'}],
     ['multiplicity',
      {'validation': in_list_ok, 'values': ['MANY', 'ONE'],
       'label': 'multiplicity',
-      'default': 'ONE'}],
+      'default': lambda t: 'ONE' if t == 'INPUT' else 'MANY'}],
 ]
 
 create_form_field_fields = [
@@ -213,11 +215,12 @@ def define_op_categ(config, op_id):
 
 @manager.option('-c', '--config', help='Config file')
 @manager.option('--op_id', help='Operation id')
-def define_form_field(config, op_id):
+@manager.option('--cat', help='Form category')
+def define_form_field(config, op_id, cat='execution'):
     main(config, True)
 
     operation = Operation.query.get(op_id)
-    forms = filter(lambda f: f.category == 'execution', operation.forms)
+    forms = filter(lambda f: f.category == cat, operation.forms)
     if len(forms) == 1:
         print '-' * 40
         print 'Adding fiels for operation {}- {}'.format(operation.id, operation.name)
@@ -253,13 +256,15 @@ def define_form_field(config, op_id):
                 lambda pair: pair[0] not in ['label_pt',
                                              'help_pt'], result.iteritems())
 
-            print 'Creating field {}'.format(result['name'])
-
             field = OperationFormField(**dict(constructor_params))
             field.scope = 'EXECUTION'
             field.order = counter
-            field.label = result['label']
-            field.help = result['help']
+            for lang in ['en', 'pt']:
+                field.translations['en'].label = result['label']
+                field.translations['en'].help = result['help']
+                field.translations['pt'].label = result['label_pt']
+                field.translations['pt'].help = result['help_pt']
+
             field.form = form
             counter += 1
             db.session.add(field)
@@ -288,14 +293,15 @@ def define_op_ports(config, op_id):
         while True:
             for name, options in create_port_fields:
                 while True:
+                    d = options.get('default')
+                    default = d(result['type']) if callable(d) else d
                     v = raw_input(
                         '{}\n({}) > '.format(options['label'],
-                                             options.get('default'))).decode(
+                                             default)).decode(
                         'utf8')
                     valid = options['validation'](options, v)
 
                     if not valid:
-                        default = options.get('default')
                         if all([any([v is None, v.strip() == '']),
                                 default is not None,
                                 default != ""]):
