@@ -129,7 +129,8 @@ class WorkflowListApi(Resource):
             params['user_id'] = user['id']
             params['user_login'] = user['login']
             params['user_name'] = user['name']
-            params['platform_id'] = params['platform']['id']
+            params['platform_id'] = params.get('platform', {}).get(
+                'id') or params.get('platform_id')
 
             form = request_schema.load(params)
         else:
