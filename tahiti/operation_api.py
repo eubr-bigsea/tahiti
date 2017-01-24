@@ -52,7 +52,12 @@ class OperationListApi(Resource):
             
             platform = request.args.get('platform', None)
             if platform:
-                operations = operations.filter(Operation.platforms.any(slug=platform))
+                if platform.isdigit():
+                    operations = operations.filter(
+                        Operation.platforms.any(id=int(platform)))
+                else:
+                    operations = operations.filter(
+                        Operation.platforms.any(slug=platform))
 
             name = request.args.get('name', '')
             # SqlAlchemy-i18n is not working when a filter
