@@ -47,7 +47,7 @@ mappings = {
     '/operations': OperationListApi,
     '/operations/<int:operation_id>': OperationDetailApi,
     '/platforms': PlatformListApi,
-    '/platforms/<int:operation_id>': PlatformDetailApi,
+    '/platforms/<int:platform_id>': PlatformDetailApi,
     '/workflows': WorkflowListApi,
     '/workflows/<int:workflow_id>': WorkflowDetailApi,
 }
