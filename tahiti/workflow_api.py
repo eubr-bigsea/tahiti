@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-}
 import uuid
-import json
 
 from flask import request, current_app
 from flask_restful import Resource
-
 from sqlalchemy.orm import joinedload
+
 from app_auth import requires_auth
 from schema import *
 
@@ -19,6 +18,7 @@ def optimize_workflow_query(workflows):
         .options(joinedload('platform.current_translation')) \
         .options(joinedload('flows'))
 
+
 def update_port_name_in_flows(session, workflow_id):
     sql = """
         UPDATE flow, operation_port s, operation_port t, 
@@ -26,8 +26,9 @@ def update_port_name_in_flows(session, workflow_id):
         SET source_port_name = t1.name, target_port_name = t2.name
         WHERE flow.source_port = s.id AND flow.target_port = t.id
         AND s.id = t1.id AND t.id = t2.id
-        AND workflow_id = :id""";
+        AND workflow_id = :id"""
     session.execute(sql, {'id': workflow_id})
+
 
 class WorkflowListApi(Resource):
     """ REST API for listing class Workflow """
@@ -128,6 +129,8 @@ class WorkflowListApi(Resource):
             params['user_id'] = user['id']
             params['user_login'] = user['login']
             params['user_name'] = user['name']
+            params['platform_id'] = params['platform']['id']
+
             form = request_schema.load(params)
         else:
             return result, result_code

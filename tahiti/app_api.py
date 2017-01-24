@@ -38,8 +38,8 @@ app.config['CACHE_TYPE'] = 'simple'
 cache.init_app(app)
 
 logging.basicConfig()
-#logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
-#logging.getLogger('werkzeug').setLevel(logging.DEBUG)
+logging.getLogger('sqlalchemy.engine').setLevel(logging.INFO)
+logging.getLogger('werkzeug').setLevel(logging.DEBUG)
 
 mappings = {
     '/applications': ApplicationListApi,
