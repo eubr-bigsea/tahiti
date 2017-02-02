@@ -23,6 +23,7 @@ def load_json(str_value):
     except:
         return "Error loading JSON"
 
+
 # region Protected
 class KeyValueSchema(Schema):
     name = fields.String(required=True)
@@ -52,6 +53,7 @@ class ApplicationListResponseSchema(Schema):
                          validate=[OneOf(ApplicationType.__dict__.keys())])
     execution_parameters = fields.Function(lambda x: load_json(x.execution_parameters))
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Application"""
@@ -72,6 +74,7 @@ class ApplicationItemResponseSchema(Schema):
                          validate=[OneOf(ApplicationType.__dict__.keys())])
     execution_parameters = fields.Function(lambda x: load_json(x.execution_parameters))
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Application"""
@@ -90,6 +93,7 @@ class FlowListResponseSchema(Schema):
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Flow"""
@@ -108,6 +112,7 @@ class FlowItemResponseSchema(Schema):
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Flow"""
@@ -126,6 +131,7 @@ class FlowCreateRequestSchema(Schema):
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Flow"""
@@ -141,6 +147,7 @@ class OperationSimpleListResponseSchema(Schema):
     name = fields.String(required=False, allow_none=True)
     slug = fields.String(required=False, allow_none=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -173,6 +180,7 @@ class OperationListResponseSchema(Schema):
                           required=True,
                           many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -205,6 +213,7 @@ class OperationCreateRequestSchema(Schema):
                           required=True,
                           many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -237,6 +246,7 @@ class OperationItemResponseSchema(Schema):
                           required=True,
                           many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -268,6 +278,7 @@ class OperationUpdateRequestSchema(Schema):
                           required=True,
                           many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Operation"""
@@ -283,6 +294,7 @@ class OperationCategoryCreateRequestSchema(Schema):
     name = fields.String(required=True)
     type = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -297,6 +309,7 @@ class OperationCategoryListResponseSchema(Schema):
     name = fields.String(required=True)
     type = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -311,6 +324,7 @@ class OperationCategoryItemResponseSchema(Schema):
     name = fields.String(required=True)
     type = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationCategory"""
@@ -331,6 +345,7 @@ class OperationFormListResponseSchema(Schema):
                            required=True,
                            many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -351,6 +366,7 @@ class OperationFormCreateRequestSchema(Schema):
                            required=True,
                            many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -371,6 +387,7 @@ class OperationFormItemResponseSchema(Schema):
                            required=True,
                            many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationForm"""
@@ -396,6 +413,7 @@ class OperationFormFieldListResponseSchema(Schema):
     scope = fields.String(required=True,
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -421,6 +439,7 @@ class OperationFormFieldCreateRequestSchema(Schema):
     scope = fields.String(required=True,
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -446,6 +465,7 @@ class OperationFormFieldItemResponseSchema(Schema):
     scope = fields.String(required=True,
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationFormField"""
@@ -471,6 +491,7 @@ class OperationPortListResponseSchema(Schema):
                                required=True,
                                many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -496,6 +517,7 @@ class OperationPortCreateRequestSchema(Schema):
                                required=True,
                                many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -521,6 +543,7 @@ class OperationPortItemResponseSchema(Schema):
                                required=True,
                                many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPort"""
@@ -536,6 +559,7 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
     name = fields.String(required=True)
     color = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -550,6 +574,7 @@ class OperationPortInterfaceListResponseSchema(Schema):
     name = fields.String(required=True)
     color = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -564,6 +589,7 @@ class OperationPortInterfaceItemResponseSchema(Schema):
     name = fields.String(required=True)
     color = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of OperationPortInterface"""
@@ -582,6 +608,7 @@ class PlatformListResponseSchema(Schema):
     description = fields.String(required=True)
     icon = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Platform"""
@@ -595,6 +622,7 @@ class PlatformCreateRequestSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Platform"""
@@ -612,6 +640,7 @@ class PlatformItemResponseSchema(Schema):
     description = fields.String(required=True)
     icon = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Platform"""
@@ -629,9 +658,11 @@ class TaskListResponseSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
-    operation = fields.Nested('schema.OperationSimpleListResponseSchema',
+    operation = fields.Nested(
+        'schema.OperationSimpleListResponseSchema',
                               allow_none=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -650,6 +681,7 @@ class TaskCreateRequestSchema(Schema):
     forms = fields.Dict(required=True)
     operation_id = fields.Integer(required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -668,9 +700,11 @@ class TaskItemResponseSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
-    operation = fields.Nested('schema.OperationSimpleListResponseSchema',
+    operation = fields.Nested(
+        'schema.OperationSimpleListResponseSchema',
                               allow_none=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -695,6 +729,7 @@ class TaskExecuteRequestSchema(Schema):
                                allow_none=True,
                                many=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Task"""
@@ -721,14 +756,15 @@ class WorkflowExecuteRequestSchema(Schema):
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
     tasks = fields.Nested('schema.TaskExecuteRequestSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowExecuteRequestSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     platform = fields.Nested('schema.PlatformExecuteRequestSchema',
                              required=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
@@ -752,15 +788,16 @@ class WorkflowListResponseSchema(Schema):
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
     tasks = fields.Nested('schema.TaskListResponseSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowListResponseSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     platform = fields.Nested('schema.PlatformListResponseSchema',
                              required=True)
     user = fields.Function(lambda x: {"id": x.user_id, "name": x.user_name, "login": x.user_login})
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
@@ -781,15 +818,17 @@ class WorkflowCreateRequestSchema(Schema):
     user_name = fields.String(required=True)
     image = fields.String(required=False, allow_none=True)
     tasks = fields.Nested('schema.TaskCreateRequestSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowCreateRequestSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     platform_id = fields.Integer(required=True)
-    user = fields.Nested('schema.UserCreateRequestSchema',
+    user = fields.Nested(
+        'schema.UserCreateRequestSchema',
                          allow_none=True)
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
@@ -813,15 +852,16 @@ class WorkflowItemResponseSchema(Schema):
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
     tasks = fields.Nested('schema.TaskItemResponseSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     flows = fields.Nested('schema.FlowItemResponseSchema',
-                          required=True,
+                          allow_none=True,
                           many=True)
     platform = fields.Nested('schema.PlatformItemResponseSchema',
                              required=True)
     user = fields.Function(lambda x: {"id": x.user_id, "name": x.user_name, "login": x.user_login})
 
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):
         """ Deserializes data into an instance of Workflow"""
