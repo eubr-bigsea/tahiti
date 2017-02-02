@@ -65,8 +65,14 @@ class WorkflowListApi(Resource):
             if name_filter:
                 workflows = workflows.filter(
                     Workflow.name.like('%%{}%%'.format(name_filter)))
+            sort = request.args.get('sort', 'name');
+            if sort not in ['name', 'id', 'user_name', 'updated']:
+                sort = 'name'
+            sort_option = getattr(Workflow, sort)
+            if request.args.get('asc', 'false') == 'false':
+                sort_option = sort_option.desc()
             workflows = optimize_workflow_query(
-                workflows.order_by(Workflow.name))
+                workflows.order_by(sort_option))
             page = request.args.get('page')
 
             if page is not None and page.isdigit():
