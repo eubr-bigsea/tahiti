@@ -69,7 +69,7 @@ class WorkflowListApi(Resource):
             if sort not in ['name', 'id', 'user_name', 'updated']:
                 sort = 'name'
             sort_option = getattr(Workflow, sort)
-            if request.args.get('asc', 'false') == 'false':
+            if request.args.get('asc', 'true') == 'false':
                 sort_option = sort_option.desc()
             workflows = optimize_workflow_query(
                 workflows.order_by(sort_option))
