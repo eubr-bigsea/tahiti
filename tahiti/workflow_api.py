@@ -187,7 +187,9 @@ class WorkflowDetailApi(Resource):
         workflow = Workflow.query.get(workflow_id)
         if workflow is not None:
             try:
-                db.session.delete(workflow)
+                # db.session.delete(workflow)
+                # soft delete
+                workflow.enabled = False
                 db.session.commit()
                 result, result_code = dict(status="OK", message="Deleted"), 200
             except Exception, e:
