@@ -397,7 +397,10 @@ class Flow(db.Model):
                               cascade="all, delete-orphan"))
     target_id = Column(String(250), 
                        ForeignKey("task.id"), nullable=False)
-    target = relationship("Task", foreign_keys=[target_id])
+    target = relationship("Task", foreign_keys=[target_id], 
+                          backref=backref(
+                              "flows",
+                              cascade="all, delete-orphan"))
     workflow_id = Column(Integer, 
                          ForeignKey("workflow.id"), nullable=False)
     workflow = relationship("Workflow", foreign_keys=[workflow_id], 
