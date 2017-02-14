@@ -391,16 +391,10 @@ class Flow(db.Model):
     # Associations
     source_id = Column(String(250), 
                        ForeignKey("task.id"), nullable=False)
-    source = relationship("Task", foreign_keys=[source_id], 
-                          backref=backref(
-                              "flows",
-                              cascade="all, delete-orphan"))
+    source = relationship("Task", foreign_keys=[source_id])
     target_id = Column(String(250), 
                        ForeignKey("task.id"), nullable=False)
-    target = relationship("Task", foreign_keys=[target_id], 
-                          backref=backref(
-                              "flows",
-                              cascade="all, delete-orphan"))
+    target = relationship("Task", foreign_keys=[target_id])
     workflow_id = Column(Integer, 
                          ForeignKey("workflow.id"), nullable=False)
     workflow = relationship("Workflow", foreign_keys=[workflow_id], 
