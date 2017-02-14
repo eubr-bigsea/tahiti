@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-}
 import uuid
 
+import datetime
 from flask import request, current_app
 from flask_restful import Resource
 from sqlalchemy.orm import joinedload
@@ -65,7 +66,7 @@ class WorkflowListApi(Resource):
             if name_filter:
                 workflows = workflows.filter(
                     Workflow.name.like('%%{}%%'.format(name_filter)))
-            sort = request.args.get('sort', 'name');
+            sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated']:
                 sort = 'name'
             sort_option = getattr(Workflow, sort)
@@ -229,6 +230,7 @@ class WorkflowDetailApi(Resource):
                 if not form.errors:
                     try:
                         form.data.id = workflow_id
+                        form.data.updated = datetime.datetime.utcnow()
                         workflow = db.session.merge(form.data)
                         db.session.flush()
                         update_port_name_in_flows(db.session, workflow.id)
