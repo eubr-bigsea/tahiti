@@ -39,8 +39,12 @@ class OperationListApi(Resource):
     def get():
         # @cache.memoize(600, make_name=lambda f: request.url)
         def result():
-            only = ('id', 'name') \
-                if request.args.get('simple', 'false') == 'true' else None
+            if request.args.get('fields'):
+                only = [x.strip() for x in
+                        request.args.get('fields').split(',')]
+            else:
+                only = ('id', 'name') \
+                    if request.args.get('simple', 'false') == 'true' else None
 
             operations = optimize_operation_query(
                 Operation.query.order_by('operation_translation_1.name'))

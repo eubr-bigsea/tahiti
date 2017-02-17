@@ -1,16 +1,24 @@
 # -*- coding: utf-8 -*-
+import logging
 import signal
 import sys
 
+from flask_migrate import MigrateCommand, Migrate
 from flask_script import Manager
 
-from tahiti.app_api import app, main, db
+from tahiti.factory import create_app, create_babel_i18n
 from tahiti.models import Operation, OperationTranslation, OperationCategory, \
     OperationForm, OperationFormTranslation, OperationPort, \
-    OperationPortInterface, OperationPortTranslation, OperationFormField
+    OperationPortInterface, OperationPortTranslation, OperationFormField, db, \
+    Platform
 
+app = create_app(log_level=logging.WARNING)
 manager = Manager(app)
+migrate = Migrate(app, db)
+manager.add_command('db', MigrateCommand)
 
+
+babel = create_babel_i18n(app)
 
 def signal_handler(s, frame):
     print('You pressed Ctrl+C! Exiting')
@@ -49,14 +57,18 @@ create_port_fields = [
       'label': 'Port type:',
       'default': 'INPUT'}],
     ['name', {'validation': required_ok, 'label': 'Port name (EN):',
-              'default': lambda t: 'input data' if t == 'INPUT' else 'output data' }],
+              'default': lambda
+                  t: 'input data' if t == 'INPUT' else 'output data'}],
     ['name_pt', {'validation': required_ok, 'label': 'Port name (PT):',
-                 'default': lambda t: 'dados de entrada' if t == 'INPUT' else 'dados de saída'}],
+                 'default': lambda
+                     t: 'dados de entrada' if t == 'INPUT' else 'dados de saída'}],
     ['description', {'validation': required_ok, 'label': 'Description (EN):',
-                 'default': lambda t: 'Input data' if t == 'INPUT' else 'Output data'}],
+                     'default': lambda
+                         t: 'Input data' if t == 'INPUT' else 'Output data'}],
     ['description_pt',
      {'validation': required_ok, 'label': 'Description (PT):',
-                 'default': lambda t: 'Dados de entrada' if t == 'INPUT' else 'Dados de saída'}],
+      'default': lambda
+          t: 'Dados de entrada' if t == 'INPUT' else 'Dados de saída'}],
     ['order', {'validation': required_ok, 'label': 'Order:', 'default': '1'}],
     ['multiplicity',
      {'validation': in_list_ok, 'values': ['MANY', 'ONE'],
@@ -92,8 +104,6 @@ create_form_field_fields = [
 
 @manager.option('-c', '--config', help='Config file')
 def create_op(config):
-    main(config, True)
-
     # Appearance form
     appearance_form = OperationForm.query.filter_by(category='appearance')
     qos_form = OperationForm.query.filter_by(category='infrastructure')
@@ -181,13 +191,44 @@ def create_op(config):
     db.session.flush()
 
     db.session.commit()
+    define_op_platform(None, operation.id)
+    define_op_categ(None, operation.id)
+    if raw_input('Would you like to add ports? \n (y, N) >').lower() == 'y':
+        define_op_ports(None, operation.id)
+
     print 'DONE!'
 
 
 @manager.option('-c', '--config', help='Config file')
 @manager.option('--op_id', help='Operation id')
+def define_op_platform(config, op_id):
+    operation = Operation.query.get(op_id)
+    platforms = Platform.query.all()
+    if operation:
+        print '-' * 40
+        print 'Platforms'
+        all_platforms = {}
+        for c in platforms:
+            all_platforms[c.id] = c
+            print '{} - {}'.format(c.id, c.name)
+        print '-' * 40
+        c = raw_input('Inform ids separated by comma and press ENTER\n> ')
+        ids = [x.strip() for x in c.split(',')]
+        for _id in ids:
+            if _id.isdigit():
+                plat_id = int(_id)
+                if plat_id in all_platforms:
+                    operation.platforms.append(all_platforms[plat_id])
+
+        db.session.add(operation)
+        db.session.commit()
+        print 'DONE!'
+    else:
+        print "Operation {} does not exist".format(op_id)
+
+@manager.option('-c', '--config', help='Config file')
+@manager.option('--op_id', help='Operation id')
 def define_op_categ(config, op_id):
-    main(config, True)
     operation = Operation.query.get(op_id)
     categories = OperationCategory.query.all()
     if operation:
@@ -217,13 +258,12 @@ def define_op_categ(config, op_id):
 @manager.option('--op_id', help='Operation id')
 @manager.option('--cat', help='Form category')
 def define_form_field(config, op_id, cat='execution'):
-    main(config, True)
-
     operation = Operation.query.get(op_id)
     forms = filter(lambda f: f.category == cat, operation.forms)
     if len(forms) == 1:
         print '-' * 40
-        print 'Adding fiels for operation {}- {}'.format(operation.id, operation.name)
+        print 'Adding fiels for operation {}- {}'.format(operation.id,
+                                                         operation.name)
         print '-' * 40
         form = forms[0]
 
@@ -271,7 +311,7 @@ def define_form_field(config, op_id, cat='execution'):
             db.session.flush()
             db.session.commit()
 
-            if raw_input('Add another?\n (Y,n)> ') in ['n', 'N']:
+            if raw_input('Add another field?\n (Y,n)> ') in ['n', 'N']:
                 break
     else:
         print "Form for operation {} execution is not configured correctly".format(
@@ -281,7 +321,6 @@ def define_form_field(config, op_id, cat='execution'):
 @manager.option('-c', '--config', help='Config file')
 @manager.option('--op_id', help='Operation id')
 def define_op_ports(config, op_id):
-    main(config, True)
     operation = Operation.query.get(op_id)
     if operation:
         print '-' * 40
@@ -362,7 +401,7 @@ def define_op_ports(config, op_id):
             db.session.add(port)
             db.session.flush()
             db.session.commit()
-            if raw_input('Add another?\n (Y,n)> ') in ['n', 'N']:
+            if raw_input('Add another port?\n (Y,n)> ') in ['n', 'N']:
                 break
     else:
         print "Operation {} does not exist".format(op_id)

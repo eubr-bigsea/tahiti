@@ -314,7 +314,7 @@ class OperationFormField(db.Model, Translatable):
                        name='DataTypeEnumType'), nullable=False)
     required = Column(Boolean, nullable=False)
     order = Column(Integer, nullable=False)
-    default = Column(Text, nullable=False)
+    default = Column(Text, nullable=True)
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
     values = Column(Text)
@@ -391,10 +391,16 @@ class Flow(db.Model):
     # Associations
     source_id = Column(String(250), 
                        ForeignKey("task.id"), nullable=False)
-    source = relationship("Task", foreign_keys=[source_id])
+    source = relationship("Task", foreign_keys=[source_id], 
+                          backref=backref(
+                              "sources",
+                              cascade="all, delete-orphan"))
     target_id = Column(String(250), 
                        ForeignKey("task.id"), nullable=False)
-    target = relationship("Task", foreign_keys=[target_id])
+    target = relationship("Task", foreign_keys=[target_id], 
+                          backref=backref(
+                              "targets",
+                              cascade="all, delete-orphan"))
     workflow_id = Column(Integer, 
                          ForeignKey("workflow.id"), nullable=False)
     workflow = relationship("Workflow", foreign_keys=[workflow_id], 
@@ -426,7 +432,7 @@ class Task(db.Model):
     }
 
     # Associations
-    workflow_id = Column(Integer, 
+    workflow_id = Column(Integer,
                          ForeignKey("workflow.id"), nullable=False)
     workflow = relationship("Workflow", foreign_keys=[workflow_id], 
                             backref=backref(
