@@ -1,0 +1,19 @@
+{% extends 'admin/base.html' %}
+{% block head_tail %}
+{{ super() }}
+{% if admin_view.extra_css %}
+{% for css in admin_view.extra_css %}
+<link href="{{css}}" rel="stylesheet">
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% block tail_js %}
+{{ super() }}
+{% if admin_view.extra_js %}
+{% for js in admin_view.extra_js %}
+<script src="{{js}}"></script>
+{% endfor %}
+{% endif %}
+{% endblock %}
