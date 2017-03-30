@@ -56,8 +56,8 @@ docker build -t bigsea/tahiti .
 Repeat [config](#config) stop and run using config file
 ```
 docker run \
-  -v $PWD/tahiti.yaml:/usr/src/app/tahiti.yaml \
-  -p 3322:3322\
+  -v $PWD/conf/tahiti-config.yaml:/usr/local/tahiti/conf/tahiti-config.yaml \
+  -p 3322:5000 \
   bigsea/tahiti
 ```
 

@@ -53,8 +53,15 @@ case $cmd_option in
 
    (startf)
       trap "$0 stop" SIGINT SIGTERM
-      $0 start
-      sleep infinity &
+      # set python path
+      PYTHONPATH=$TAHITI_HOME:$PYTHONPATH python $TAHITI_HOME/tahiti/runner/tahiti_server.py \
+         -c $TAHITI_HOME/conf/tahiti-config.yaml &
+      tahiti_server_pid=$!
+
+      # persist the pid
+      echo $tahiti_server_pid > $pid
+
+      echo "Tahiti server started, logging to $log (pid=$tahiti_server_pid)"
       wait
       ;;
 
