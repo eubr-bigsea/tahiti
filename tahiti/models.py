@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import datetime
-import enum
 import json
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
@@ -18,39 +17,65 @@ db = SQLAlchemy()
 
 
 # noinspection PyClassHasNoInit
-class OperationType(enum.Enum):
+class OperationType:
     ACTION = 'ACTION'
+    VISUALIZATION = 'VISUALIZATION'
     SHUFFLE = 'SHUFFLE'
     TRANSFORMATION = 'TRANSFORMATION'
 
+    @staticmethod
+    def values():
+        return [n for n in OperationType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
 
 # noinspection PyClassHasNoInit
-class OperationPortType(enum.Enum):
+class OperationPortType:
     INPUT = 'INPUT'
     OUTPUT = 'OUTPUT'
 
+    @staticmethod
+    def values():
+        return [n for n in OperationPortType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
 
 # noinspection PyClassHasNoInit
-class OperationPortMultiplicity(enum.Enum):
+class OperationPortMultiplicity:
     MANY = 'MANY'
     ONE = 'ONE'
 
+    @staticmethod
+    def values():
+        return [n for n in OperationPortMultiplicity.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
 
 # noinspection PyClassHasNoInit
-class ApplicationType(enum.Enum):
+class ApplicationType:
     SPARK_APPLICATION = 'SPARK_APPLICATION'
     SPARK_CODE_FUNCTION = 'SPARK_CODE_FUNCTION'
 
+    @staticmethod
+    def values():
+        return [n for n in ApplicationType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
 
 # noinspection PyClassHasNoInit
-class OperationFieldScope(enum.Enum):
+class OperationFieldScope:
     BOTH = 'BOTH'
     EXECUTION = 'EXECUTION'
     DESIGN = 'DESIGN'
 
+    @staticmethod
+    def values():
+        return [n for n in OperationFieldScope.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
 
 # noinspection PyClassHasNoInit
-class DataType(enum.Enum):
+class DataType:
     FLOAT = 'FLOAT'
     LAT_LONG = 'LAT_LONG'
     TIME = 'TIME'
@@ -66,6 +91,21 @@ class DataType(enum.Enum):
     INTEGER = 'INTEGER'
     TIMESTAMP = 'TIMESTAMP'
 
+    @staticmethod
+    def values():
+        return [n for n in DataType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
+class OperationUiCodeType:
+    ATTRIBUTE_LIST = 'ATTRIBUTE_LIST'
+
+    @staticmethod
+    def values():
+        return [n for n in OperationUiCodeType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
 
 class Application(db.Model):
     """ Any external application that can be ran by Juicer """
@@ -75,8 +115,9 @@ class Application(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
     description = Column(String(200), nullable=False)
-    enabled = Column(Boolean, nullable=False, default=True)
-    type = Column(Enum(*ApplicationType.__members__.keys(),
+    enabled = Column(Boolean,
+                     default=True, nullable=False)
+    type = Column(Enum(*ApplicationType.values(),
                        name='ApplicationTypeEnumType'), nullable=False)
     execution_parameters = Column(Text)
     __mapper_args__ = {
@@ -137,7 +178,7 @@ class Operation(db.Model, Translatable):
     id = Column(Integer, primary_key=True)
     slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    type = Column(Enum(*OperationType.__members__.keys(),
+    type = Column(Enum(*OperationType.values(),
                        name='OperationTypeEnumType'), nullable=False)
     icon = Column(String(200), nullable=False)
 
@@ -147,22 +188,27 @@ class Operation(db.Model, Translatable):
         'operation_category_operation',
         Column('operation_id', Integer, ForeignKey('operation.id')),
         Column('operation_category_id', Integer, ForeignKey('operation_category.id')))
-    categories = relationship("OperationCategory",
-                              secondary=operation_category_operation)
+    categories = relationship(
+        "OperationCategory",
+        secondary=operation_category_operation)
     # noinspection PyUnresolvedReferences
     operation_platform = db.Table(
         'operation_platform',
         Column('operation_id', Integer, ForeignKey('operation.id')),
         Column('platform_id', Integer, ForeignKey('platform.id')))
-    platforms = relationship("Platform",
-                             secondary=operation_platform)
+    platforms = relationship(
+        "Platform",
+        secondary=operation_platform),
+        secondaryjoin = "and_(Platform.id==operation_platform.platform_id, Platform.enabled==1)"
     # noinspection PyUnresolvedReferences
     operation_operation_form = db.Table(
         'operation_operation_form',
         Column('operation_id', Integer, ForeignKey('operation.id')),
         Column('operation_form_id', Integer, ForeignKey('operation_form.id')))
-    forms = relationship("OperationForm",
-                         secondary=operation_operation_form)
+    forms = relationship(
+        "OperationForm",
+        secondary=operation_operation_form),
+        secondaryjoin = "and_(OperationForm.id==operation_operation_form.operation_form_id, OperationForm.enabled==1)"
     ports = relationship("OperationPort", back_populates="operation")
 
     def __unicode__(self):
@@ -212,7 +258,8 @@ class OperationForm(db.Model, Translatable):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    enabled = Column(Boolean, nullable=False, default=True)
+    enabled = Column(Boolean,
+                     default=True, nullable=False)
     order = Column(Integer, nullable=False)
     category = Column(String(200), nullable=False)
     __mapper_args__ = {
@@ -246,7 +293,7 @@ class OperationFormField(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    type = Column(Enum(*DataType.__members__.keys(),
+    type = Column(Enum(*DataType.values(),
                        name='DataTypeEnumType'), nullable=False)
     required = Column(Boolean, nullable=False)
     order = Column(Integer, nullable=False)
@@ -254,7 +301,7 @@ class OperationFormField(db.Model, Translatable):
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
     values = Column(Text)
-    scope = Column(Enum(*OperationFieldScope.__members__.keys(),
+    scope = Column(Enum(*OperationFieldScope.values(),
                         name='OperationFieldScopeEnumType'), nullable=False)
     __mapper_args__ = {
         'order_by': 'order'
@@ -288,12 +335,13 @@ class OperationPort(db.Model, Translatable):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    type = Column(Enum(*OperationPortType.__members__.keys(),
+    type = Column(Enum(*OperationPortType.values(),
                        name='OperationPortTypeEnumType'), nullable=False)
     tags = Column(Text)
     order = Column(Integer)
-    multiplicity = Column(Enum(*OperationPortMultiplicity.__members__.keys(),
-                               name='OperationPortMultiplicityEnumType'), nullable=False, default=1)
+    multiplicity = Column(Enum(*OperationPortMultiplicity.values(),
+                               name='OperationPortMultiplicityEnumType'),
+                          default=1, nullable=False)
     __mapper_args__ = {
         'order_by': 'order'
     }
@@ -304,8 +352,9 @@ class OperationPort(db.Model, Translatable):
         'operation_port_interface_operation_port',
         Column('operation_port_id', Integer, ForeignKey('operation_port.id')),
         Column('operation_port_interface_id', Integer, ForeignKey('operation_port_interface.id')))
-    interfaces = relationship("OperationPortInterface",
-                              secondary=operation_port_interface_operation_port)
+    interfaces = relationship(
+        "OperationPortInterface",
+        secondary=operation_port_interface_operation_port)
     operation_id = Column(Integer,
                           ForeignKey("operation.id"), nullable=False)
     operation = relationship("Operation", foreign_keys=[operation_id])
@@ -349,6 +398,28 @@ class OperationPortInterfaceTranslation(
 
     # Fields
     name = Column(Unicode(200))
+
+
+class OperationUiCode(db.Model):
+    """ Associated UI code """
+    __tablename__ = 'operation_ui_code'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    type = Column(Enum(*OperationUiCodeType.values(),
+                       name='OperationUiCodeTypeEnumType'), nullable=False)
+    value = Column(Text, nullable=False)
+
+    # Associations
+    operation_id = Column(Integer,
+                          ForeignKey("operation.id"), nullable=False)
+    operation = relationship("Operation", foreign_keys=[operation_id])
+
+    def __unicode__(self):
+        return self.type
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
 class Platform(db.Model, Translatable):
@@ -420,19 +491,15 @@ class Workflow(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
     description = Column(Text)
-    enabled = Column(Boolean, nullable=False, default=True)
+    enabled = Column(Boolean,
+                     default=True, nullable=False)
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
-    created = Column(
-        DateTime,
-        nullable=False,
-        default=datetime.datetime.utcnow)
-    updated = Column(
-        DateTime,
-        nullable=False,
-        default=datetime.datetime.utcnow,
-        onupdate=datetime.datetime.utcnow)
+    created = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False)
+    updated = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False, onupdate=datetime.datetime.utcnow)
     version = Column(Integer, nullable=False)
     image = Column(String(1000))
     __mapper_args__ = {
