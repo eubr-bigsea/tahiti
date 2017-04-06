@@ -26,7 +26,7 @@ class OperationType:
     @staticmethod
     def values():
         return [n for n in OperationType.__dict__.keys()
-                if n[0] != '_' and n != 'values']
+            if n[0] != '_' and n != 'values']
 
 
 # noinspection PyClassHasNoInit
@@ -37,7 +37,7 @@ class OperationPortType:
     @staticmethod
     def values():
         return [n for n in OperationPortType.__dict__.keys()
-                if n[0] != '_' and n != 'values']
+            if n[0] != '_' and n != 'values']
 
 
 # noinspection PyClassHasNoInit
@@ -48,7 +48,7 @@ class OperationPortMultiplicity:
     @staticmethod
     def values():
         return [n for n in OperationPortMultiplicity.__dict__.keys()
-                if n[0] != '_' and n != 'values']
+            if n[0] != '_' and n != 'values']
 
 
 # noinspection PyClassHasNoInit
@@ -59,7 +59,7 @@ class ApplicationType:
     @staticmethod
     def values():
         return [n for n in ApplicationType.__dict__.keys()
-                if n[0] != '_' and n != 'values']
+            if n[0] != '_' and n != 'values']
 
 
 # noinspection PyClassHasNoInit
@@ -71,7 +71,7 @@ class OperationFieldScope:
     @staticmethod
     def values():
         return [n for n in OperationFieldScope.__dict__.keys()
-                if n[0] != '_' and n != 'values']
+            if n[0] != '_' and n != 'values']
 
 
 # noinspection PyClassHasNoInit
@@ -94,7 +94,7 @@ class DataType:
     @staticmethod
     def values():
         return [n for n in DataType.__dict__.keys()
-                if n[0] != '_' and n != 'values']
+            if n[0] != '_' and n != 'values']
 
 
 # noinspection PyClassHasNoInit
@@ -104,7 +104,7 @@ class OperationUiCodeType:
     @staticmethod
     def values():
         return [n for n in OperationUiCodeType.__dict__.keys()
-                if n[0] != '_' and n != 'values']
+            if n[0] != '_' and n != 'values']
 
 
 class Application(db.Model):
@@ -116,7 +116,7 @@ class Application(db.Model):
     name = Column(String(200), nullable=False)
     description = Column(String(200), nullable=False)
     enabled = Column(Boolean,
-                     default=True, nullable=False)
+            default=True, nullable=False)
     type = Column(Enum(*ApplicationType.values(),
                        name='ApplicationTypeEnumType'), nullable=False)
     execution_parameters = Column(Text)
@@ -148,19 +148,19 @@ class Flow(db.Model):
     source = relationship("Task", foreign_keys=[source_id],
                           backref=backref(
                               "sources",
-                              cascade="all, delete-orphan"))
-    target_id = Column(String(250),
-                       ForeignKey("task.id"), nullable=False)
-    target = relationship("Task", foreign_keys=[target_id],
-                          backref=backref(
+                              cascade="all, delete-orphan")))
+    target_id=Column(String(250),
+                       ForeignKey("task.id"), nullable = False)
+    target=relationship("Task", foreign_keys = [target_id],
+                          backref = backref(
                               "targets",
-                              cascade="all, delete-orphan"))
-    workflow_id = Column(Integer,
+                              cascade="all, delete-orphan")))
+    workflow_id=Column(Integer,
                          ForeignKey("workflow.id"), nullable=False)
-    workflow = relationship("Workflow", foreign_keys=[workflow_id],
+    workflow=relationship("Workflow", foreign_keys=[workflow_id],
                             backref=backref(
                                 "flows",
-                                cascade="all, delete-orphan"))
+                                cascade = "all, delete-orphan")))
 
     def __unicode__(self):
         return self.source_port
@@ -171,45 +171,45 @@ class Flow(db.Model):
 
 class Operation(db.Model, Translatable):
     """ Operation executed in Lemonade """
-    __tablename__ = 'operation'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __tablename__='operation'
+    __translatable__={'locales': ['pt', 'en', 'es']}
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    slug = Column(String(200), nullable=False)
-    enabled = Column(Boolean, nullable=False)
-    type = Column(Enum(*OperationType.values(),
+    id=Column(Integer, primary_key=True)
+    slug=Column(String(200), nullable=False)
+    enabled=Column(Boolean, nullable=False)
+    type=Column(Enum(*OperationType.values(),
                        name='OperationTypeEnumType'), nullable=False)
-    icon = Column(String(200), nullable=False)
+    icon=Column(String(200), nullable=False)
 
     # Associations
     # noinspection PyUnresolvedReferences
-    operation_category_operation = db.Table(
+    operation_category_operation=db.Table(
         'operation_category_operation',
         Column('operation_id', Integer, ForeignKey('operation.id')),
         Column('operation_category_id', Integer, ForeignKey('operation_category.id')))
-    categories = relationship(
+    categories=relationship(
         "OperationCategory",
         secondary=operation_category_operation)
     # noinspection PyUnresolvedReferences
-    operation_platform = db.Table(
+    operation_platform=db.Table(
         'operation_platform',
         Column('operation_id', Integer, ForeignKey('operation.id')),
         Column('platform_id', Integer, ForeignKey('platform.id')))
-    platforms = relationship(
+    platforms=relationship(
         "Platform",
-        secondary=operation_platform),
-        secondaryjoin = "and_(Platform.id==operation_platform.platform_id, Platform.enabled==1)"
+        secondary=operation_platform,
+        secondaryjoin="and_(Platform.id==operation_platform.platform_id, Platform.enabled==1)")
     # noinspection PyUnresolvedReferences
-    operation_operation_form = db.Table(
+    operation_operation_form=db.Table(
         'operation_operation_form',
         Column('operation_id', Integer, ForeignKey('operation.id')),
         Column('operation_form_id', Integer, ForeignKey('operation_form.id')))
-    forms = relationship(
+    forms=relationship(
         "OperationForm",
-        secondary=operation_operation_form),
-        secondaryjoin = "and_(OperationForm.id==operation_operation_form.operation_form_id, OperationForm.enabled==1)"
-    ports = relationship("OperationPort", back_populates="operation")
+        secondary=operation_operation_form,
+        secondaryjoin="and_(OperationForm.id==operation_operation_form.operation_form_id, OperationForm.enabled==1)")
+    ports=relationship("OperationPort", back_populates="operation"))
 
     def __unicode__(self):
         return self.name
@@ -220,21 +220,21 @@ class Operation(db.Model, Translatable):
 
 class OperationTranslation(translation_base(Operation)):
     """ Translation table for Operation """
-    __tablename__ = 'operation_translation'
+    __tablename__='operation_translation'
 
     # Fields
-    name = Column(Unicode(200))
-    description = Column(Unicode(200))
+    name=Column(Unicode(200))
+    description=Column(Unicode(200))
 
 
 class OperationCategory(db.Model, Translatable):
     """ Allows categorize operations """
-    __tablename__ = 'operation_category'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __tablename__='operation_category'
+    __translatable__={'locales': ['pt', 'en', 'es']}
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    type = Column(String(200), nullable=False)
+    id=Column(Integer, primary_key=True)
+    type=Column(String(200), nullable=False)
 
     def __unicode__(self):
         return self.name
@@ -245,30 +245,30 @@ class OperationCategory(db.Model, Translatable):
 
 class OperationCategoryTranslation(translation_base(OperationCategory)):
     """ Translation table for OperationCategory """
-    __tablename__ = 'operation_category_translation'
+    __tablename__='operation_category_translation'
 
     # Fields
-    name = Column(Unicode(200))
+    name=Column(Unicode(200))
 
 
 class OperationForm(db.Model, Translatable):
     """ A form used to fill parameters to the operations """
-    __tablename__ = 'operation_form'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __tablename__='operation_form'
+    __translatable__={'locales': ['pt', 'en', 'es']}
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    enabled = Column(Boolean,
-                     default=True, nullable=False)
-    order = Column(Integer, nullable=False)
-    category = Column(String(200), nullable=False)
-    __mapper_args__ = {
+    id=Column(Integer, primary_key=True)
+    enabled=Column(Boolean,
+            default=True, nullable=False)
+    order=Column(Integer, nullable=False)
+    category=Column(String(200), nullable=False)
+    __mapper_args__={
         'order_by': 'order'
     }
 
     # Associations
-    fields = relationship("OperationFormField",
-                          order_by="OperationFormField.order")
+    fields=relationship("OperationFormField",
+                          order_by="OperationFormField.order"))
 
     def __unicode__(self):
         return self.name
@@ -279,38 +279,38 @@ class OperationForm(db.Model, Translatable):
 
 class OperationFormTranslation(translation_base(OperationForm)):
     """ Translation table for OperationForm """
-    __tablename__ = 'operation_form_translation'
+    __tablename__='operation_form_translation'
 
     # Fields
-    name = Column(Unicode(200))
+    name=Column(Unicode(200))
 
 
 class OperationFormField(db.Model, Translatable):
     """ A field used to fill one parameter of a form for an operations """
-    __tablename__ = 'operation_form_field'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __tablename__='operation_form_field'
+    __translatable__={'locales': ['pt', 'en', 'es']}
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    type = Column(Enum(*DataType.values(),
+    id=Column(Integer, primary_key=True)
+    name=Column(String(200), nullable=False)
+    type=Column(Enum(*DataType.values(),
                        name='DataTypeEnumType'), nullable=False)
-    required = Column(Boolean, nullable=False)
-    order = Column(Integer, nullable=False)
-    default = Column(Text)
-    suggested_widget = Column(String(200))
-    values_url = Column(String(200))
-    values = Column(Text)
-    scope = Column(Enum(*OperationFieldScope.values(),
+    required=Column(Boolean, nullable=False)
+    order=Column(Integer, nullable=False)
+    default=Column(Text)
+    suggested_widget=Column(String(200))
+    values_url=Column(String(200))
+    values=Column(Text)
+    scope=Column(Enum(*OperationFieldScope.values(),
                         name='OperationFieldScopeEnumType'), nullable=False)
-    __mapper_args__ = {
+    __mapper_args__={
         'order_by': 'order'
     }
 
     # Associations
-    form_id = Column(Integer,
+    form_id=Column(Integer,
                      ForeignKey("operation_form.id"), nullable=False)
-    form = relationship("OperationForm", foreign_keys=[form_id])
+    form=relationship("OperationForm", foreign_keys=[form_id]))
 
     def __unicode__(self):
         return self.name
@@ -321,43 +321,43 @@ class OperationFormField(db.Model, Translatable):
 
 class OperationFormFieldTranslation(translation_base(OperationFormField)):
     """ Translation table for OperationFormField """
-    __tablename__ = 'operation_form_field_translation'
+    __tablename__='operation_form_field_translation'
 
     # Fields
-    label = Column(Unicode(200))
-    help = Column(UnicodeText())
+    label=Column(Unicode(200))
+    help=Column(UnicodeText())
 
 
 class OperationPort(db.Model, Translatable):
     """ An input or output port for operation """
-    __tablename__ = 'operation_port'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __tablename__='operation_port'
+    __translatable__={'locales': ['pt', 'en', 'es']}
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    type = Column(Enum(*OperationPortType.values(),
+    id=Column(Integer, primary_key=True)
+    type=Column(Enum(*OperationPortType.values(),
                        name='OperationPortTypeEnumType'), nullable=False)
-    tags = Column(Text)
-    order = Column(Integer)
-    multiplicity = Column(Enum(*OperationPortMultiplicity.values(),
+    tags=Column(Text)
+    order=Column(Integer)
+    multiplicity=Column(Enum(*OperationPortMultiplicity.values(),
                                name='OperationPortMultiplicityEnumType'),
-                          default=1, nullable=False)
-    __mapper_args__ = {
+            default=1, nullable=False)
+    __mapper_args__={
         'order_by': 'order'
     }
 
     # Associations
     # noinspection PyUnresolvedReferences
-    operation_port_interface_operation_port = db.Table(
+    operation_port_interface_operation_port=db.Table(
         'operation_port_interface_operation_port',
         Column('operation_port_id', Integer, ForeignKey('operation_port.id')),
         Column('operation_port_interface_id', Integer, ForeignKey('operation_port_interface.id')))
-    interfaces = relationship(
+    interfaces=relationship(
         "OperationPortInterface",
         secondary=operation_port_interface_operation_port)
-    operation_id = Column(Integer,
+    operation_id=Column(Integer,
                           ForeignKey("operation.id"), nullable=False)
-    operation = relationship("Operation", foreign_keys=[operation_id])
+    operation=relationship("Operation", foreign_keys=[operation_id]))
 
     def __unicode__(self):
         return self.name
@@ -368,21 +368,21 @@ class OperationPort(db.Model, Translatable):
 
 class OperationPortTranslation(translation_base(OperationPort)):
     """ Translation table for OperationPort """
-    __tablename__ = 'operation_port_translation'
+    __tablename__='operation_port_translation'
 
     # Fields
-    name = Column(Unicode(200))
-    description = Column(Unicode(200))
+    name=Column(Unicode(200))
+    description=Column(Unicode(200))
 
 
 class OperationPortInterface(db.Model, Translatable):
     """ An interface that a operation port supports """
-    __tablename__ = 'operation_port_interface'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __tablename__='operation_port_interface'
+    __translatable__={'locales': ['pt', 'en', 'es']}
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    color = Column(String(50), nullable=False)
+    id=Column(Integer, primary_key=True)
+    color=Column(String(50), nullable=False)
 
     def __unicode__(self):
         return self.name
@@ -392,28 +392,28 @@ class OperationPortInterface(db.Model, Translatable):
 
 
 class OperationPortInterfaceTranslation(
-        translation_base(OperationPortInterface)):
+    translation_base(OperationPortInterface)):
     """ Translation table for OperationPortInterface """
-    __tablename__ = 'operation_port_interface_translation'
+    __tablename__='operation_port_interface_translation'
 
     # Fields
-    name = Column(Unicode(200))
+    name=Column(Unicode(200))
 
 
 class OperationUiCode(db.Model):
     """ Associated UI code """
-    __tablename__ = 'operation_ui_code'
+    __tablename__='operation_ui_code'
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    type = Column(Enum(*OperationUiCodeType.values(),
+    id=Column(Integer, primary_key=True)
+    type=Column(Enum(*OperationUiCodeType.values(),
                        name='OperationUiCodeTypeEnumType'), nullable=False)
-    value = Column(Text, nullable=False)
+    value=Column(Text, nullable=False)
 
     # Associations
-    operation_id = Column(Integer,
+    operation_id=Column(Integer,
                           ForeignKey("operation.id"), nullable=False)
-    operation = relationship("Operation", foreign_keys=[operation_id])
+    operation=relationship("Operation", foreign_keys=[operation_id]))
 
     def __unicode__(self):
         return self.type
@@ -424,14 +424,14 @@ class OperationUiCode(db.Model):
 
 class Platform(db.Model, Translatable):
     """ Execution platform """
-    __tablename__ = 'platform'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __tablename__='platform'
+    __translatable__={'locales': ['pt', 'en', 'es']}
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    slug = Column(String(200), nullable=False)
-    enabled = Column(Boolean, nullable=False)
-    icon = Column(String(200), nullable=False)
+    id=Column(Integer, primary_key=True)
+    slug=Column(String(200), nullable=False)
+    enabled=Column(Boolean, nullable=False)
+    icon=Column(String(200), nullable=False)
 
     def __unicode__(self):
         return self.name
@@ -442,39 +442,39 @@ class Platform(db.Model, Translatable):
 
 class PlatformTranslation(translation_base(Platform)):
     """ Translation table for Platform """
-    __tablename__ = 'platform_translation'
+    __tablename__='platform_translation'
 
     # Fields
-    name = Column(Unicode(200))
-    description = Column(Unicode(200))
+    name=Column(Unicode(200))
+    description=Column(Unicode(200))
 
 
 class Task(db.Model):
     """ Task executed in Lemonade """
-    __tablename__ = 'task'
+    __tablename__='task'
 
     # Fields
-    id = Column(String(250), primary_key=True,
+    id=Column(String(250), primary_key=True,
                 autoincrement=False)
-    left = Column(Integer, nullable=False)
-    top = Column(Integer, nullable=False)
-    z_index = Column(Integer, nullable=False)
-    forms = Column(Text, nullable=False)
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
+    left=Column(Integer, nullable=False)
+    top=Column(Integer, nullable=False)
+    z_index=Column(Integer, nullable=False)
+    forms=Column(Text, nullable=False)
+    version=Column(Integer, nullable=False)
+    __mapper_args__={
         'version_id_col': version,
     }
 
     # Associations
-    workflow_id = Column(Integer,
+    workflow_id=Column(Integer,
                          ForeignKey("workflow.id"), nullable=False)
-    workflow = relationship("Workflow", foreign_keys=[workflow_id],
+    workflow=relationship("Workflow", foreign_keys=[workflow_id],
                             backref=backref(
                                 "tasks",
-                                cascade="all, delete-orphan"))
-    operation_id = Column(Integer,
+                                cascade="all, delete-orphan")))
+    operation_id=Column(Integer,
                           ForeignKey("operation.id"), nullable=False)
-    operation = relationship("Operation", foreign_keys=[operation_id])
+    operation=relationship("Operation", foreign_keys=[operation_id]))
 
     def __unicode__(self):
         return self.left
@@ -485,31 +485,31 @@ class Task(db.Model):
 
 class Workflow(db.Model):
     """ Workflow in Lemonade. It's a set of tasks """
-    __tablename__ = 'workflow'
+    __tablename__='workflow'
 
     # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    description = Column(Text)
-    enabled = Column(Boolean,
-                     default=True, nullable=False)
-    user_id = Column(Integer, nullable=False)
-    user_login = Column(String(50), nullable=False)
-    user_name = Column(String(200), nullable=False)
-    created = Column(DateTime,
-                     default=datetime.datetime.utcnow, nullable=False)
-    updated = Column(DateTime,
-                     default=datetime.datetime.utcnow, nullable=False, onupdate=datetime.datetime.utcnow)
-    version = Column(Integer, nullable=False)
-    image = Column(String(1000))
-    __mapper_args__ = {
+    id=Column(Integer, primary_key=True)
+    name=Column(String(200), nullable=False)
+    description=Column(Text)
+    enabled=Column(Boolean,
+            default=True, nullable=False)
+    user_id=Column(Integer, nullable=False)
+    user_login=Column(String(50), nullable=False)
+    user_name=Column(String(200), nullable=False)
+    created=Column(DateTime,
+            default=datetime.datetime.utcnow, nullable=False)
+    updated=Column(DateTime,
+            default=datetime.datetime.utcnow, nullable=False, onupdate=datetime.datetime.utcnow)
+    version=Column(Integer, nullable=False)
+    image=Column(String(1000))
+    __mapper_args__={
         'version_id_col': version, 'order_by': 'name'
     }
 
-    # Associations
-    platform_id = Column(Integer,
+    # Associations))
+    platform_id=Column(Integer,
                          ForeignKey("platform.id"), nullable=False)
-    platform = relationship("Platform", foreign_keys=[platform_id])
+    platform=relationship("Platform", foreign_keys=[platform_id]))
 
     def __unicode__(self):
         return self.name
