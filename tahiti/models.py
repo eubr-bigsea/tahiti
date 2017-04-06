@@ -200,7 +200,7 @@ class Operation(db.Model, Translatable):
         "Platform",
         secondary=operation_platform,
         secondaryjoin=("and_("
-                       "Platform.id==operation_platform.platform_id,"
+                       "Platform.id==operation_platform.c.platform_id,"
                        "Platform.enabled==1)"))
     # noinspection PyUnresolvedReferences
     operation_operation_form = db.Table(
@@ -211,7 +211,7 @@ class Operation(db.Model, Translatable):
         "OperationForm",
         secondary=operation_operation_form,
         secondaryjoin=("and_("
-                       "OperationForm.id==operation_operation_form.operation_form_id,"
+                       "OperationForm.id==operation_operation_form.c.operation_form_id,"
                        "OperationForm.enabled==1)"))
     ports = relationship("OperationPort", back_populates="operation")
 
