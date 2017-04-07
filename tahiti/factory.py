@@ -1,6 +1,7 @@
 import logging
 
 import sqlalchemy_utils
+import os
 from flask import Flask
 from flask_admin import Admin
 from flask_babel import Babel
@@ -11,7 +12,6 @@ from flask_restful import Api
 
 from tahiti.admin import OperationModelView, OperationCategoryModelView
 from tahiti.application_api import ApplicationListApi, ApplicationDetailApi
-from tahiti.configuration import tahiti_configuration
 from tahiti.models import db, Operation, OperationCategory
 from tahiti.operation_api import OperationDetailApi
 from tahiti.operation_api import OperationListApi
@@ -19,8 +19,12 @@ from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.workflow_api import WorkflowDetailApi
 from tahiti.workflow_api import WorkflowListApi
 
+def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
+    if config_file:
+        os.environ['TAHITI_CONFIG'] = config_file
 
-def create_app(settings_override=None, log_level=logging.DEBUG):
+    from tahiti.configuration import tahiti_configuration
+
     app = Flask(__name__, static_url_path='')
     sqlalchemy_utils.i18n.get_locale = get_locale
 
