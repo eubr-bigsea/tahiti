@@ -41,6 +41,8 @@ case $cmd_option in
 
    (start)
       # set python path
+      PYTHONPATH=$TAHITI_HOME:$PYTHONPATH python $TAHITI_HOME/tahiti/manage.py \
+         db upgrade || true
       PYTHONPATH=$TAHITI_HOME:$PYTHONPATH nohup -- python $TAHITI_HOME/tahiti/runner/tahiti_server.py \
          -c $TAHITI_HOME/conf/tahiti-config.yaml >> $log 2>&1 < /dev/null &
       tahiti_server_pid=$!
@@ -54,6 +56,8 @@ case $cmd_option in
    (startf)
       trap "$0 stop" SIGINT SIGTERM
       # set python path
+      PYTHONPATH=$TAHITI_HOME:$PYTHONPATH python $TAHITI_HOME/tahiti/manage.py \
+         db upgrade || true
       PYTHONPATH=$TAHITI_HOME:$PYTHONPATH python $TAHITI_HOME/tahiti/runner/tahiti_server.py \
          -c $TAHITI_HOME/conf/tahiti-config.yaml &
       tahiti_server_pid=$!
