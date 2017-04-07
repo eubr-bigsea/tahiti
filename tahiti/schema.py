@@ -54,6 +54,12 @@ class ApplicationListResponseSchema(Schema):
     execution_parameters = fields.Function(
         lambda x: load_json(x.execution_parameters))
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Application"""
+        return Application(**data)
+
     class Meta:
         ordered = True
 
@@ -70,6 +76,12 @@ class ApplicationItemResponseSchema(Schema):
     execution_parameters = fields.Function(
         lambda x: load_json(x.execution_parameters))
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Application"""
+        return Application(**data)
+
     class Meta:
         ordered = True
 
@@ -82,6 +94,12 @@ class FlowListResponseSchema(Schema):
     target_port_name = fields.String(required=True)
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Flow"""
+        return Flow(**data)
 
     class Meta:
         ordered = True
@@ -96,6 +114,12 @@ class FlowItemResponseSchema(Schema):
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Flow"""
+        return Flow(**data)
+
     class Meta:
         ordered = True
 
@@ -109,6 +133,12 @@ class FlowCreateRequestSchema(Schema):
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Flow"""
+        return Flow(**data)
+
     class Meta:
         ordered = True
 
@@ -118,6 +148,12 @@ class OperationSimpleListResponseSchema(Schema):
     id = fields.Integer(allow_none=True)
     name = fields.String(required=False, allow_none=True)
     slug = fields.String(required=False, allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Operation"""
+        return Operation(**data)
 
     class Meta:
         ordered = True
@@ -150,6 +186,12 @@ class OperationListResponseSchema(Schema):
         required=True,
         many=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Operation"""
+        return Operation(**data)
+
     class Meta:
         ordered = True
 
@@ -180,6 +222,12 @@ class OperationCreateRequestSchema(Schema):
         'tahiti.schema.OperationPortCreateRequestSchema',
         required=True,
         many=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Operation"""
+        return Operation(**data)
 
     class Meta:
         ordered = True
@@ -212,6 +260,12 @@ class OperationItemResponseSchema(Schema):
         required=True,
         many=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Operation"""
+        return Operation(**data)
+
     class Meta:
         ordered = True
 
@@ -242,6 +296,12 @@ class OperationUpdateRequestSchema(Schema):
         required=True,
         many=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Operation"""
+        return Operation(**data)
+
     class Meta:
         ordered = True
 
@@ -252,6 +312,12 @@ class OperationCategoryCreateRequestSchema(Schema):
     name = fields.String(required=True)
     type = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationCategory"""
+        return OperationCategory(**data)
+
     class Meta:
         ordered = True
 
@@ -261,6 +327,12 @@ class OperationCategoryListResponseSchema(Schema):
     name = fields.String(required=True)
     type = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationCategory"""
+        return OperationCategory(**data)
+
     class Meta:
         ordered = True
 
@@ -269,6 +341,12 @@ class OperationCategoryItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationCategory"""
+        return OperationCategory(**data)
 
     class Meta:
         ordered = True
@@ -286,6 +364,12 @@ class OperationFormListResponseSchema(Schema):
         required=True,
         many=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationForm"""
+        return OperationForm(**data)
+
     class Meta:
         ordered = True
 
@@ -302,6 +386,12 @@ class OperationFormCreateRequestSchema(Schema):
         required=True,
         many=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationForm"""
+        return OperationForm(**data)
+
     class Meta:
         ordered = True
 
@@ -317,6 +407,12 @@ class OperationFormItemResponseSchema(Schema):
         'tahiti.schema.OperationFormFieldItemResponseSchema',
         required=True,
         many=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationForm"""
+        return OperationForm(**data)
 
     class Meta:
         ordered = True
@@ -338,6 +434,12 @@ class OperationFormFieldListResponseSchema(Schema):
     scope = fields.String(required=True,
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationFormField"""
+        return OperationFormField(**data)
+
     class Meta:
         ordered = True
 
@@ -358,6 +460,12 @@ class OperationFormFieldCreateRequestSchema(Schema):
     scope = fields.String(required=True,
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationFormField"""
+        return OperationFormField(**data)
+
     class Meta:
         ordered = True
 
@@ -377,6 +485,12 @@ class OperationFormFieldItemResponseSchema(Schema):
     values = fields.String(required=False, allow_none=True)
     scope = fields.String(required=True,
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationFormField"""
+        return OperationFormField(**data)
 
     class Meta:
         ordered = True
@@ -399,6 +513,12 @@ class OperationPortListResponseSchema(Schema):
         required=True,
         many=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationPort"""
+        return OperationPort(**data)
+
     class Meta:
         ordered = True
 
@@ -419,6 +539,12 @@ class OperationPortCreateRequestSchema(Schema):
         'tahiti.schema.OperationPortInterfaceCreateRequestSchema',
         required=True,
         many=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationPort"""
+        return OperationPort(**data)
 
     class Meta:
         ordered = True
@@ -441,6 +567,12 @@ class OperationPortItemResponseSchema(Schema):
         required=True,
         many=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationPort"""
+        return OperationPort(**data)
+
     class Meta:
         ordered = True
 
@@ -451,6 +583,12 @@ class OperationPortInterfaceCreateRequestSchema(Schema):
     name = fields.String(required=True)
     color = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationPortInterface"""
+        return OperationPortInterface(**data)
+
     class Meta:
         ordered = True
 
@@ -460,6 +598,12 @@ class OperationPortInterfaceListResponseSchema(Schema):
     name = fields.String(required=True)
     color = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationPortInterface"""
+        return OperationPortInterface(**data)
+
     class Meta:
         ordered = True
 
@@ -468,6 +612,12 @@ class OperationPortInterfaceItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     color = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationPortInterface"""
+        return OperationPortInterface(**data)
 
     class Meta:
         ordered = True
@@ -482,6 +632,12 @@ class PlatformListResponseSchema(Schema):
     description = fields.String(required=True)
     icon = fields.String(required=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Platform"""
+        return Platform(**data)
+
     class Meta:
         ordered = True
 
@@ -489,6 +645,12 @@ class PlatformListResponseSchema(Schema):
 class PlatformCreateRequestSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Platform"""
+        return Platform(**data)
 
     class Meta:
         ordered = True
@@ -501,6 +663,12 @@ class PlatformItemResponseSchema(Schema):
     slug = fields.String(required=True)
     description = fields.String(required=True)
     icon = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Platform"""
+        return Platform(**data)
 
     class Meta:
         ordered = True
@@ -518,6 +686,12 @@ class TaskListResponseSchema(Schema):
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Task"""
+        return Task(**data)
+
     class Meta:
         ordered = True
 
@@ -530,6 +704,13 @@ class TaskCreateRequestSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Dict(required=True)
     operation_id = fields.Integer(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Task"""
+        data['forms'] = json.dumps(data.get('forms', []))
+        return Task(**data)
 
     class Meta:
         ordered = True
@@ -546,6 +727,12 @@ class TaskItemResponseSchema(Schema):
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Task"""
+        return Task(**data)
 
     class Meta:
         ordered = True
@@ -567,6 +754,12 @@ class TaskExecuteRequestSchema(Schema):
         'tahiti.schema.KeyValuePairExecuteRequestSchema',
         allow_none=True,
         many=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Task"""
+        return Task(**data)
 
     class Meta:
         ordered = True
@@ -599,6 +792,12 @@ class WorkflowExecuteRequestSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformExecuteRequestSchema',
         required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Workflow"""
+        return Workflow(**data)
 
     class Meta:
         ordered = True
@@ -634,6 +833,12 @@ class WorkflowListResponseSchema(Schema):
             "name": x.user_name,
             "login": x.user_login})
 
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Workflow"""
+        return Workflow(**data)
+
     class Meta:
         ordered = True
 
@@ -660,6 +865,12 @@ class WorkflowCreateRequestSchema(Schema):
     user = fields.Nested(
         'tahiti.schema.UserCreateRequestSchema',
         allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Workflow"""
+        return Workflow(**data)
 
     class Meta:
         ordered = True
@@ -694,6 +905,12 @@ class WorkflowItemResponseSchema(Schema):
             "id": x.user_id,
             "name": x.user_name,
             "login": x.user_login})
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of Workflow"""
+        return Workflow(**data)
 
     class Meta:
         ordered = True
