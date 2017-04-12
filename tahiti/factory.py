@@ -25,6 +25,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
 
     from tahiti.configuration import tahiti_configuration
 
+    os.chdir(os.environ.get('TAHITI_HOME', '.'))
     app = Flask(__name__, static_url_path='')
     sqlalchemy_utils.i18n.get_locale = get_locale
 

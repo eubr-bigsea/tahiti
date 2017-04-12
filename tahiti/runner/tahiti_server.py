@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import argparse
+import eventlet
+import eventlet.wsgi
 from flask import request, g
 from flask_babel import get_locale
 
@@ -14,6 +16,8 @@ if __name__ == '__main__':
 
     app = create_app(config_file=args.config)
     babel = create_babel_i18n(app)
+    config = app.config['TAHITI_CONFIG']
+    port = int(config.get('port', 5000))
 
     @babel.localeselector
     def get_locale_from_query():
@@ -29,3 +33,5 @@ if __name__ == '__main__':
 
     if app.debug:
         app.run(debug=True)
+    else:
+        eventlet.wsgi.server(eventlet.listen(('', port)), app)

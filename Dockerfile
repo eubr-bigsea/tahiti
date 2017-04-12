@@ -7,13 +7,16 @@ RUN apt-get update \
 
 # Install juicer
 ENV TAHITI_HOME /usr/local/tahiti
+ENV TAHITI_CONFIG $TAHITI_HOME/conf/tahiti-config.yaml
 RUN mkdir -p $TAHITI_HOME/conf
 RUN mkdir -p $TAHITI_HOME/sbin
 RUN mkdir -p $TAHITI_HOME/tahiti
 ADD sbin $TAHITI_HOME/sbin
 ADD tahiti $TAHITI_HOME/tahiti
+ADD migrations $TAHITI_HOME/migrations
+ADD logging_config.ini $TAHITI_HOME/logging_config.ini
 
-# Install juicer requirements and entrypoint
+# Install tahiti requirements and entrypoint
 ADD requirements.txt $TAHITI_HOME
 RUN pip install -r $TAHITI_HOME/requirements.txt
 EXPOSE 5000
