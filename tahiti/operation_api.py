@@ -72,7 +72,7 @@ class OperationListApi(Resource):
             param_name = bindparam('param_name',
                                    '%%{}%%'.format(name.encode('utf8')),
                                    Unicode)
-            param_locale = bindparam('param_locale', g.locale,
+            param_locale = bindparam('param_locale', str(g.locale)[:2],
                                      Unicode)
 
             operations = operations.filter(text(
