@@ -139,8 +139,8 @@ class Flow(db.Model):
     id = Column(Integer, primary_key=True)
     source_port = Column(Integer, nullable=False)
     target_port = Column(Integer, nullable=False)
-    source_port_name = Column(String(200), nullable=False)
-    target_port_name = Column(String(200), nullable=False)
+    source_port_name = Column(String(200))
+    target_port_name = Column(String(200))
 
     # Associations
     source_id = Column(String(250),
