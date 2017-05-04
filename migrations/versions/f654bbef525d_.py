@@ -23,7 +23,7 @@ def upgrade():
     sa.Column('name', sa.String(length=200), nullable=False),
     sa.Column('description', sa.String(length=200), nullable=False),
     sa.Column('enabled', sa.Boolean(), nullable=False),
-    sa.Column('type', sa.Enum('__module__', '__doc__', 'SPARK_APPLICATION', 'SPARK_CODE_FUNCTION', name='ApplicationTypeEnumType'), nullable=False),
+    sa.Column('type', sa.Enum('SPARK_APPLICATION', 'SPARK_CODE_FUNCTION', name='ApplicationTypeEnumType'), nullable=False),
     sa.Column('execution_parameters', sa.Text(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
@@ -31,7 +31,7 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('slug', sa.String(length=200), nullable=False),
     sa.Column('enabled', sa.Boolean(), nullable=False),
-    sa.Column('type', sa.Enum('ACTION', '__module__', 'SHUFFLE', 'TRANSFORMATION', '__doc__', name='OperationTypeEnumType'), nullable=False),
+    sa.Column('type', sa.Enum('ACTION', 'SHUFFLE', 'TRANSFORMATION', 'VISUALIZATION', name='OperationTypeEnumType'), nullable=False),
     sa.Column('icon', sa.String(length=200), nullable=False),
     sa.PrimaryKeyConstraint('id')
     )
@@ -60,8 +60,8 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('operation_category_operation',
-    sa.Column('operation_id', sa.Integer(), nullable=True),
-    sa.Column('operation_category_id', sa.Integer(), nullable=True),
+    sa.Column('operation_id', sa.Integer(), nullable=False),
+    sa.Column('operation_category_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['operation_category_id'], ['operation_category.id'], ),
     sa.ForeignKeyConstraint(['operation_id'], ['operation.id'], )
     )
@@ -75,14 +75,14 @@ def upgrade():
     op.create_table('operation_form_field',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('name', sa.String(length=200), nullable=False),
-    sa.Column('type', sa.Enum('__module__', 'ENUM', 'LAT_LONG', 'DOUBLE', 'DECIMAL', 'FLOAT', 'CHARACTER', 'LONG', 'DATETIME', 'VECTOR', 'TEXT', 'TIME', 'DATE', 'INTEGER', 'TIMESTAMP', '__doc__', name='DataTypeEnumType'), nullable=False),
+    sa.Column('type', sa.Enum('ENUM', 'LAT_LONG', 'DOUBLE', 'DECIMAL', 'FLOAT', 'CHARACTER', 'LONG', 'DATETIME', 'VECTOR', 'TEXT', 'TIME', 'DATE', 'INTEGER', 'TIMESTAMP', name='DataTypeEnumType'), nullable=False),
     sa.Column('required', sa.Boolean(), nullable=False),
     sa.Column('order', sa.Integer(), nullable=False),
     sa.Column('default', sa.Text(), nullable=False),
     sa.Column('suggested_widget', sa.String(length=200), nullable=True),
     sa.Column('values_url', sa.String(length=200), nullable=True),
     sa.Column('values', sa.Text(), nullable=True),
-    sa.Column('scope', sa.Enum('BOTH', '__module__', 'EXECUTION', 'DESIGN', '__doc__', name='OperationFieldScopeEnumType'), nullable=False),
+    sa.Column('scope', sa.Enum('BOTH', 'EXECUTION', 'DESIGN', name='OperationFieldScopeEnumType'), nullable=False),
     sa.Column('form_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['form_id'], ['operation_form.id'], ),
     sa.PrimaryKeyConstraint('id')
@@ -108,10 +108,10 @@ def upgrade():
     )
     op.create_table('operation_port',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('type', sa.Enum('INPUT', '__module__', '__doc__', 'OUTPUT', name='OperationPortTypeEnumType'), nullable=False),
+    sa.Column('type', sa.Enum('INPUT', 'OUTPUT', name='OperationPortTypeEnumType'), nullable=False),
     sa.Column('tags', sa.Text(), nullable=True),
     sa.Column('order', sa.Integer(), nullable=True),
-    sa.Column('multiplicity', sa.Enum('MANY', '__module__', '__doc__', 'ONE', name='OperationPortMultiplicityEnumType'), nullable=False),
+    sa.Column('multiplicity', sa.Enum('MANY', 'ONE', name='OperationPortMultiplicityEnumType'), nullable=False),
     sa.Column('operation_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['operation_id'], ['operation.id'], ),
     sa.PrimaryKeyConstraint('id')
