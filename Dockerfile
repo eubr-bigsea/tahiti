@@ -14,7 +14,7 @@ RUN mkdir -p $TAHITI_HOME/tahiti
 ADD sbin $TAHITI_HOME/sbin
 ADD tahiti $TAHITI_HOME/tahiti
 ADD migrations $TAHITI_HOME/migrations
-ADD logging_config.ini $TAHITI_HOME/logging_config.ini
+ADD logging_config.ini $TAHITI_HOME/
 
 # Install tahiti requirements and entrypoint
 ADD requirements.txt $TAHITI_HOME
