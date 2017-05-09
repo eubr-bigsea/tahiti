@@ -8,6 +8,9 @@ from sqlalchemy.orm import joinedload
 
 from app_auth import requires_auth
 from schema import *
+import logging
+
+log = logging.getLogger(__name__)
 
 
 def optimize_workflow_query(workflows):
@@ -95,6 +98,7 @@ class WorkflowListApi(Resource):
 
             return result
         except Exception, e:
+            log.exception("Error in GET")
             result = dict(status="ERROR", message="Internal error")
             if current_app.debug:
                 result['debug_detail'] = e.message
@@ -157,6 +161,7 @@ class WorkflowListApi(Resource):
                 result, result_code = response_schema.dump(
                     workflow).data, 200
             except Exception, e:
+                log.exception('Error in POST')
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
                 if current_app.debug or True:
@@ -194,6 +199,7 @@ class WorkflowDetailApi(Resource):
                 db.session.commit()
                 result, result_code = dict(status="OK", message="Deleted"), 200
             except Exception, e:
+                log.exception('Error in DELETE')
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
                 if current_app.debug:
@@ -243,6 +249,7 @@ class WorkflowDetailApi(Resource):
                         else:
                             result = dict(status="ERROR", message="Not found")
                     except Exception, e:
+                        log.exception('Error in PATCH')
                         result, result_code = dict(
                             status="ERROR", message="Internal error"), 500
                         if current_app.debug:
@@ -251,7 +258,8 @@ class WorkflowDetailApi(Resource):
                 else:
                     result = dict(status="ERROR", message="Invalid data",
                                   errors=form.errors)
-        except:
+        except Exception as e:
+            log.exception('Error in PATCH')
             result_code = 500
             import sys
             result = {'status': "ERROR", 'message': sys.exc_info()[1]}

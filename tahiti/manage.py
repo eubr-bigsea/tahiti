@@ -17,8 +17,8 @@ manager = Manager(app)
 migrate = Migrate(app, db)
 manager.add_command('db', MigrateCommand)
 
-
 babel = create_babel_i18n(app)
+
 
 def signal_handler(s, frame):
     print('You pressed Ctrl+C! Exiting')
@@ -225,6 +225,7 @@ def define_op_platform(config, op_id):
         print 'DONE!'
     else:
         print "Operation {} does not exist".format(op_id)
+
 
 @manager.option('-c', '--config', help='Config file')
 @manager.option('--op_id', help='Operation id')
