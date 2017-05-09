@@ -1,13 +1,16 @@
 # -*- coding: utf-8 -*-}
+import logging
+
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import bindparam, text
-from sqlalchemy.types import Unicode
 
 from app_auth import requires_auth
 from cache import cache
 from schema import *
+
+log = logging.getLogger(__name__)
 
 
 def optimize_operation_query(operations):
@@ -53,7 +56,7 @@ class OperationListApi(Resource):
             if enabled_filter:
                 operations = operations.filter(
                     Operation.enabled == (enabled_filter != 'false'))
-            
+
             platform = request.args.get('platform', None)
             if platform:
                 if platform.isdigit():
@@ -109,6 +112,7 @@ class OperationListApi(Resource):
                     result, result_code = response_schema.dump(
                         operation).data, 200
                 except Exception, e:
+                    log.exception('Error in POST')
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
                     if current_app.debug:
@@ -148,6 +152,7 @@ class OperationDetailApi(Resource):
                 db.session.commit()
                 result, result_code = dict(status="OK", message="Deleted"), 200
             except Exception, e:
+                log.exception('Error in DELETE')
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
                 if current_app.debug:
@@ -162,7 +167,8 @@ class OperationDetailApi(Resource):
         result_code = 404
 
         if request.json:
-            request_schema = partial_schema_factory(OperationCreateRequestSchema)
+            request_schema = partial_schema_factory(
+                OperationCreateRequestSchema)
             form = request_schema.load(request.json)
             response_schema = OperationItemResponseSchema()
             if not form.errors:
@@ -178,6 +184,7 @@ class OperationDetailApi(Resource):
                     else:
                         result = dict(status="ERROR", message="Not found")
                 except Exception, e:
+                    log.exception('Error in PATCH')
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
                     if current_app.debug:

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-}
+import logging
+
 from flask import request, current_app
 from flask_restful import Resource
 
 from app_auth import requires_auth
-from models import db, Application
 from schema import *
+
+log = logging.getLogger(__name__)
 
 
 class ApplicationListApi(Resource):
@@ -16,7 +19,8 @@ class ApplicationListApi(Resource):
         only = ('id', 'name') \
             if request.args.get('simple', 'false') == 'true' else None
         applications = Application.query.order_by('name')
-        return ApplicationListResponseSchema(many=True, only=only).dump(applications).data
+        return ApplicationListResponseSchema(many=True, only=only).dump(
+            applications).data
 
     @staticmethod
     @requires_auth
@@ -30,14 +34,16 @@ class ApplicationListApi(Resource):
             if form.errors:
                 result, result_code = dict(
                     status="ERROR", message="Validation error",
-                    errors=form.errors,), 401
+                    errors=form.errors, ), 401
             else:
                 try:
                     application = form.data
                     db.session.add(application)
                     db.session.commit()
-                    result, result_code = response_schema.dump(application).data, 200
+                    result, result_code = response_schema.dump(
+                        application).data, 200
                 except Exception, e:
+                    log.exception('Error in POST')
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
                     if current_app.debug:
@@ -71,6 +77,7 @@ class ApplicationDetailApi(Resource):
                 db.session.commit()
                 result, result_code = dict(status="OK", message="Deleted"), 200
             except Exception, e:
+                log.exception('Error in DELETE')
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
                 if current_app.debug:
@@ -85,7 +92,8 @@ class ApplicationDetailApi(Resource):
         result_code = 404
 
         if request.json:
-            request_schema = partial_schema_factory(ApplicationCreateRequestSchema)
+            request_schema = partial_schema_factory(
+                ApplicationCreateRequestSchema)
             # Ignore missing fields to allow partial updates
             form = request_schema.load(request.json, partial=True)
             response_schema = ApplicationItemResponseSchema()
@@ -102,6 +110,7 @@ class ApplicationDetailApi(Resource):
                     else:
                         result = dict(status="ERROR", message="Not found")
                 except Exception, e:
+                    log.exception('Error in PATCH')
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
                     if current_app.debug:
@@ -109,5 +118,5 @@ class ApplicationDetailApi(Resource):
                     db.session.rollback()
             else:
                 result = dict(status="ERROR", message="Invalid data",
-                            errors=form.errors)
+                              errors=form.errors)
         return result, result_code
