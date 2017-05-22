@@ -9,7 +9,9 @@ RUN apt-get update && apt-get install -y  \
    && rm -rf /var/lib/apt/lists/*
 
 WORKDIR $TAHITI_HOME
-COPY . $TAHITI_HOME
+COPY requirements.txt $TAHITI_HOME/requirements.txt
 RUN pip install -r $TAHITI_HOME/requirements.txt
+
+COPY . $TAHITI_HOME
 
 CMD ["/usr/local/tahiti/sbin/tahiti-daemon.sh", "startf"]
