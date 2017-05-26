@@ -36,6 +36,14 @@ def upgrade():
         SELECT operation_id, 8 FROM operation_category_operation
         WHERE operation_category_id BETWEEN 18 AND 26
     """))
+    op.execute(text("""
+        insert into operation_category_operation
+        (operation_id, operation_category_id) values (39, 26)"""))
+    op.execute(text("""update operation_category_operation
+        set operation_category_id = 8 where operation_category_id = 1
+            and operation_id = 39"""))
+    op.execute(text("""update operation set enabled = 0 where id = 54;"""))
+
     # ### end Alembic commands ###
 
 
@@ -52,5 +60,11 @@ def downgrade():
         DELETE FROM operation_category_operation
         WHERE operation_category_id = 8
     """))
+    op.execute(text("""DELETE FROM operation_category_operation
+        WHERE operation_id = 39 AND operation_category_id = 26"""))
+    op.execute(text("""update operation_category_operation
+        set operation_category_id = 1 where operation_category_id = 1
+            and operation_id = 39"""))
+    op.execute(text("""update operation set enabled = 1 where id = 54;"""))
 
     # ### end Alembic commands ###

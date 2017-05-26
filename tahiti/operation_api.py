@@ -40,7 +40,7 @@ class OperationListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
-        # @cache.memoize(600, make_name=lambda f: request.url)
+        @cache.memoize(600, make_name=lambda f: request.url)
         def result():
             if request.args.get('fields'):
                 only = [x.strip() for x in
@@ -194,3 +194,10 @@ class OperationDetailApi(Resource):
                 result = dict(status="ERROR", message="Invalid data",
                               errors=form.errors)
         return result, result_code
+
+
+class OperationClearCacheApi(Resource):
+    # noinspection PyMethodMayBeStatic
+    def post(self):
+        cache.clear()
+        return '{"msg": "Cache cleaned"}', 200
