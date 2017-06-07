@@ -30,6 +30,17 @@ class OperationType:
 
 
 # noinspection PyClassHasNoInit
+class ScriptType:
+    PY_SERVER = 'PY_SERVER'
+    JS_CLIENT = 'JS_CLIENT'
+
+    @staticmethod
+    def values():
+        return [n for n in ScriptType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
 class OperationPortType:
     INPUT = 'INPUT'
     OUTPUT = 'OUTPUT'
@@ -94,16 +105,6 @@ class DataType:
     @staticmethod
     def values():
         return [n for n in DataType.__dict__.keys()
-                if n[0] != '_' and n != 'values']
-
-
-# noinspection PyClassHasNoInit
-class OperationUiCodeType:
-    ATTRIBUTE_LIST = 'ATTRIBUTE_LIST'
-
-    @staticmethod
-    def values():
-        return [n for n in OperationUiCodeType.__dict__.keys()
                 if n[0] != '_' and n != 'values']
 
 
@@ -222,6 +223,7 @@ class Operation(db.Model, Translatable):
             "OperationForm.id==operation_operation_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
     ports = relationship("OperationPort", back_populates="operation")
+    scripts = relationship("OperationScript", back_populates="operation")
 
     def __unicode__(self):
         return self.name
@@ -414,15 +416,16 @@ class OperationPortInterfaceTranslation(
     name = Column(Unicode(200))
 
 
-class OperationUiCode(db.Model):
-    """ Associated UI code """
-    __tablename__ = 'operation_ui_code'
+class OperationScript(db.Model):
+    """ A script used in the context of the operation """
+    __tablename__ = 'operation_script'
 
     # Fields
     id = Column(Integer, primary_key=True)
-    type = Column(Enum(*OperationUiCodeType.values(),
-                       name='OperationUiCodeTypeEnumType'), nullable=False)
-    value = Column(Text, nullable=False)
+    type = Column(Enum(*ScriptType.values(),
+                       name='ScriptTypeEnumType'), nullable=False)
+    enabled = Column(Boolean, nullable=False)
+    body = Column(Text, nullable=False)
 
     # Associations
     operation_id = Column(Integer,
@@ -430,7 +433,7 @@ class OperationUiCode(db.Model):
     operation = relationship("Operation", foreign_keys=[operation_id])
 
     def __unicode__(self):
-        return self.type
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)

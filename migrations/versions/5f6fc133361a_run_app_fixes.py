@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Run app fixes
 
 Revision ID: 5f6fc133361a
@@ -26,18 +27,32 @@ def upgrade():
                     WHERE operation_id IN (61));""",
             """DELETE FROM operation_port WHERE operation_id IN (61);""",
             """DELETE FROM operation_form_field_translation
-                WHERE form_id IN(
-                    SELECT form_id FROM operation_operation_form
-                        WHERE operation_id IN (61));""",
+                WHERE id IN (SELECT off1.id FROM operation_form_field off1
+                WHERE off1.form_id NOT IN (41) AND off1.form_id IN (
+                SELECT oof.operation_form_id FROM operation_operation_form oof
+                WHERE oof.operation_id IN (61)));""",
             """DELETE FROM operation_form_field
-                WHERE form_id IN(
-                    SELECT form_id FROM operation_operation_form
-                        WHERE operation_id IN (61));""",
+                WHERE form_id NOT IN (41) AND form_id IN (
+                SELECT oof.operation_form_id FROM operation_operation_form oof
+                WHERE oof.operation_id IN (61));""",
             """DELETE FROM operation_operation_form
                 WHERE operation_id IN (61);""",
             """DELETE FROM operation WHERE id IN (61);"""
         ]
         all_commands = [
+            """ INSERT INTO operation_operation_form(operation_id,
+                    operation_form_id) VALUES(81, 41)
+            """,
+            """ INSERT INTO operation_platform(operation_id, platform_id)
+                VALUES(81, 1)
+            """,
+            """ INSERT INTO operation_translation(id, locale, name, description)
+                VALUES(81, 'en', 'Summary statistics', 'Summary statistics')
+            """,
+            """"""
+            u""" INSERT INTO operation_translation(id, locale, name, description)
+                VALUES(81, 'pt', 'Sumário estatístico', 'Sumário estatístico')
+            """,
             """
             UPDATE operation_form_field
                 SET values_url = '{{LIMONERO_URL}}/datasources'
@@ -56,9 +71,11 @@ def upgrade():
             "DELETE FROM operation_form_field_translation WHERE id IN (175)",
             "DELETE FROM operation_form_field WHERE id IN (175)",
         ]
+        all_commands.extend(unreversible_data)
+
         op.execute(text('START TRANSACTION'))
-        for cmd in unreversible_data + all_commands:
-            op.execute(text(cmd[1]))
+        for cmd in all_commands:
+            op.execute(text(cmd))
         op.execute(text('COMMIT'))
     except:
         op.execute(text('ROLLBACK'))
@@ -68,6 +85,9 @@ def upgrade():
 def downgrade():
     try:
         all_commands = [
+            """DELETE FROM operation_operation_form WHERE operation_id = 81""",
+            """DELETE FROM operation_platform WHERE operation_id = 81""",
+            """DELETE FROM operation_translation WHERE id = 81""",
             """
             UPDATE operation_form_field
             SET values_url =
@@ -89,7 +109,7 @@ def downgrade():
         ]
         op.execute(text('START TRANSACTION'))
         for cmd in reversed(all_commands):
-            op.execute(text(cmd[1]))
+            op.execute(text(cmd))
         op.execute(text('COMMIT'))
     except:
         op.execute(text('ROLLBACK'))

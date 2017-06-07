@@ -17,13 +17,20 @@ branch_labels = None
 depends_on = None
 
 
+# noinspection PyBroadException
 def upgrade():
-    insert_operation()
-    insert_operation_category()
-    insert_operation_category_translation()
-    insert_operation_category_operation()
-    insert_operation_form()
-    insert_operation_form_field()
+    try:
+        op.execute(text("START TRANSACTION"))
+        insert_operation()
+        insert_operation_category()
+        insert_operation_category_translation()
+        insert_operation_category_operation()
+        insert_operation_form()
+        insert_operation_form_field()
+        op.execute(text("COMMIT"))
+    except Exception as e:
+        op.execute(text("ROLLBACK"))
+        raise
 
 
 def insert_operation_category_translation():
@@ -1019,21 +1026,27 @@ def insert_operation_form_field():
     op.bulk_insert(operation_form_field_table, rows)
 
 
-
+# noinspection PyBroadException
 def downgrade():
-    op.execute(text(
-        'DELETE FROM operation_form_field WHERE form_id BETWEEN 1 AND 96'))
+    try:
+        op.execute(text('START TRANSACTION'))
+        op.execute(text(
+            'DELETE FROM operation_form_field WHERE form_id BETWEEN 1 AND 96'))
 
-    op.execute(text(
-        'DELETE FROM operation_form WHERE id BETWEEN 1 AND 96'))
-    op.execute(
-        text('DELETE FROM operation_category_translation '
-             'WHERE id BETWEEN 1 AND 26;'))
+        op.execute(text(
+            'DELETE FROM operation_form WHERE id BETWEEN 1 AND 96'))
+        op.execute(
+            text('DELETE FROM operation_category_translation '
+                 'WHERE id BETWEEN 1 AND 26;'))
 
-    op.execute(
-        text('DELETE FROM operation_category_operation '
-             'WHERE operation_category_id BETWEEN 1 AND 26 '
-             'AND operation_id BETWEEN 1 AND 81 ;'))
-    op.execute(
-        text('DELETE FROM operation_category WHERE id BETWEEN 1 AND 26;'))
-    op.execute(text('DELETE FROM operation WHERE id BETWEEN 1 AND 81;'))
+        op.execute(
+            text('DELETE FROM operation_category_operation '
+                 'WHERE operation_category_id BETWEEN 1 AND 26 '
+                 'AND operation_id BETWEEN 1 AND 81 ;'))
+        op.execute(
+            text('DELETE FROM operation_category WHERE id BETWEEN 1 AND 26;'))
+        op.execute(text('DELETE FROM operation WHERE id BETWEEN 1 AND 81;'))
+        op.execute(text('COMMIT'))
+    except:
+        op.execute(text('ROLLBACK'))
+        raise

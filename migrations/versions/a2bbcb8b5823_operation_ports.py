@@ -18,11 +18,16 @@ depends_on = None
 
 
 def upgrade():
-    insert_operation_operation_port()
-    insert_operation_port_interface()
-    insert_operation_port_interface_operation_port()
-    insert_operation_port_interface_translation()
-    insert_operation_port_translation()
+    try:
+        op.execute(text('START TRANSACTION'))
+        insert_operation_operation_port()
+        insert_operation_port_interface()
+        insert_operation_port_interface_operation_port()
+        insert_operation_port_interface_translation()
+        insert_operation_port_translation()
+    except:
+        op.execute(text('ROLLBACK'))
+        raise
 
 
 def insert_operation_operation_port():
@@ -795,13 +800,18 @@ def insert_operation_port_translation():
 
 
 def downgrade():
-    op.execute(text('DELETE FROM operation_port_translation '
-                    'WHERE id BETWEEN 1 AND 176'))
-    op.execute(text('DELETE FROM operation_port_interface_translation '
-                    'WHERE id BETWEEN 1 AND 18'))
-    op.execute(text('DELETE FROM operation_port_interface_operation_port '
-                    'WHERE operation_port_id BETWEEN 1 AND 176'))
-    op.execute(text(
-        'DELETE FROM operation_port WHERE id BETWEEN 1 AND 176'))
-    op.execute(text(
-        'DELETE FROM operation_port_interface WHERE id BETWEEN 1 AND 18'))
+    try:
+        op.execute(text('START TRANSACTION'))
+        op.execute(text('DELETE FROM operation_port_translation '
+                        'WHERE id BETWEEN 1 AND 176'))
+        op.execute(text('DELETE FROM operation_port_interface_translation '
+                        'WHERE id BETWEEN 1 AND 18'))
+        op.execute(text('DELETE FROM operation_port_interface_operation_port '
+                        'WHERE operation_port_id BETWEEN 1 AND 176'))
+        op.execute(text(
+            'DELETE FROM operation_port WHERE id BETWEEN 1 AND 176'))
+        op.execute(text(
+            'DELETE FROM operation_port_interface WHERE id BETWEEN 1 AND 18'))
+    except:
+        op.execute(text('ROLLBACK'))
+        raise

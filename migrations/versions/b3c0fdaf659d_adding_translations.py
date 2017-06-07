@@ -18,7 +18,12 @@ depends_on = None
 
 
 def upgrade():
-    insert_operation_form_field_translation()
+    try:
+        op.execute(text('START TRANSACTION'))
+        insert_operation_form_field_translation()
+    except:
+        op.execute(text('ROLLBACK'))
+        raise
 
 
 def insert_operation_form_field_translation():
@@ -162,5 +167,10 @@ def insert_operation_form_field_translation():
 
 
 def downgrade():
-    op.execute(text('DELETE FROM operation_form_field_translation '
-                    'WHERE id BETWEEN 193 AND 228'))
+    try:
+        op.execute(text('START TRANSACTION'))
+        op.execute(text('DELETE FROM operation_form_field_translation '
+                        'WHERE id BETWEEN 193 AND 228'))
+    except:
+        op.execute(text('ROLLBACK'))
+        raise
