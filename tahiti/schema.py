@@ -565,6 +565,7 @@ class OperationPortListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    slug = fields.String(required=True)
     type = fields.String(required=True,
                          validate=[OneOf(OperationPortType.__dict__.keys())])
     description = fields.String(required=True)
@@ -592,6 +593,7 @@ class OperationPortCreateRequestSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    slug = fields.String(required=True)
     type = fields.String(required=True,
                          validate=[OneOf(OperationPortType.__dict__.keys())])
     description = fields.String(required=True)
@@ -619,6 +621,7 @@ class OperationPortItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
+    slug = fields.String(required=True)
     type = fields.String(required=True,
                          validate=[OneOf(OperationPortType.__dict__.keys())])
     description = fields.String(required=True)

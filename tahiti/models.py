@@ -349,6 +349,7 @@ class OperationPort(db.Model, Translatable):
 
     # Fields
     id = Column(Integer, primary_key=True)
+    slug = Column(String(50), nullable=False)
     type = Column(Enum(*OperationPortType.values(),
                        name='OperationPortTypeEnumType'), nullable=False)
     tags = Column(Text)
