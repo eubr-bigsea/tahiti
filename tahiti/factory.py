@@ -1,24 +1,26 @@
 import logging
 import logging.config
+import os
 
 import sqlalchemy_utils
-import os
 from flask import Flask
 from flask_admin import Admin
 from flask_babel import Babel
 from flask_babel import get_locale
-from flask_caching import Cache
 from flask_cors import CORS
 from flask_restful import Api
 
+from cache import cache
 from tahiti.admin import OperationModelView, OperationCategoryModelView
 from tahiti.application_api import ApplicationListApi, ApplicationDetailApi
 from tahiti.models import db, Operation, OperationCategory
-from tahiti.operation_api import OperationDetailApi
+from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.workflow_api import WorkflowDetailApi
 from tahiti.workflow_api import WorkflowListApi
+from tahiti.cache import cache
+
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     if config_file:
@@ -64,6 +66,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/applications': ApplicationListApi,
         '/applications/<int:application_id>': ApplicationDetailApi,
         '/operations': OperationListApi,
+        '/operations/clear-cache': OperationClearCacheApi,
         '/operations/<int:operation_id>': OperationDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
@@ -75,12 +78,12 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
 
     # Cache configuration for API
     app.config['CACHE_TYPE'] = 'simple'
-    cache = Cache(config={'CACHE_TYPE': 'simple'})
     cache.init_app(app)
 
     if config.get('environment', 'dev') == 'dev':
         admin.add_view(OperationModelView(Operation, db.session))
-        admin.add_view(OperationCategoryModelView(OperationCategory, db.session))
+        admin.add_view(
+            OperationCategoryModelView(OperationCategory, db.session))
 
     return app
 

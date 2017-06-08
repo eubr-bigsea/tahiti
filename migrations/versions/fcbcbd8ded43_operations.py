@@ -21,13 +21,18 @@ depends_on = None
 
 
 def upgrade():
-    insert_operation_form_field_translation()
-    insert_operation_form_translation()
-    insert_operation_operation_form()
-    insert_platform()
-    insert_operation_platform()
-    insert_operation_translation()
-    insert_platform_translation()
+    try:
+        op.execute(text('START TRANSACTION'))
+        insert_operation_form_field_translation()
+        insert_operation_form_translation()
+        insert_operation_operation_form()
+        insert_platform()
+        insert_operation_platform()
+        insert_operation_translation()
+        insert_platform_translation()
+    except:
+        op.execute(text('ROLLBACK'))
+        raise
 
 
 def insert_operation_form_field_translation():
@@ -1343,25 +1348,30 @@ def insert_platform_translation():
 
 
 def downgrade():
-    op.execute(text(
-        'DELETE FROM operation_form_field_translation '
-        'WHERE id BETWEEN 1 AND 192'))
+    try:
+        op.execute(text('START TRANSACTION'))
+        op.execute(text(
+            'DELETE FROM operation_form_field_translation '
+            'WHERE id BETWEEN 1 AND 192'))
 
-    op.execute(text(
-        'DELETE FROM operation_form_translation '
-        'WHERE id BETWEEN 1 AND 86'))
+        op.execute(text(
+            'DELETE FROM operation_form_translation '
+            'WHERE id BETWEEN 1 AND 86'))
 
-    op.execute(text(
-        'DELETE FROM operation_operation_form '
-        'WHERE operation_id BETWEEN 1 AND 96'))
+        op.execute(text(
+            'DELETE FROM operation_operation_form '
+            'WHERE operation_id BETWEEN 1 AND 96'))
 
-    op.execute(text(
-        'DELETE FROM operation_platform '
-        'WHERE operation_id BETWEEN 1 AND 96'))
+        op.execute(text(
+            'DELETE FROM operation_platform '
+            'WHERE operation_id BETWEEN 1 AND 96'))
 
-    op.execute(text('DELETE FROM platform_translation '
-                    'WHERE id BETWEEN 1 AND 3'))
-    op.execute(text('DELETE FROM platform WHERE id BETWEEN 1 AND 3'))
+        op.execute(text('DELETE FROM platform_translation '
+                        'WHERE id BETWEEN 1 AND 3'))
+        op.execute(text('DELETE FROM platform WHERE id BETWEEN 1 AND 3'))
 
-    op.execute(text('DELETE FROM operation_translation '
-                    'WHERE id BETWEEN 1 AND 96'))
+        op.execute(text('DELETE FROM operation_translation '
+                        'WHERE id BETWEEN 1 AND 96'))
+    except:
+        op.execute(text('ROLLBACK'))
+        raise

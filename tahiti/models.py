@@ -30,6 +30,17 @@ class OperationType:
 
 
 # noinspection PyClassHasNoInit
+class ScriptType:
+    PY_SERVER = 'PY_SERVER'
+    JS_CLIENT = 'JS_CLIENT'
+
+    @staticmethod
+    def values():
+        return [n for n in ScriptType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
 class OperationPortType:
     INPUT = 'INPUT'
     OUTPUT = 'OUTPUT'
@@ -94,16 +105,6 @@ class DataType:
     @staticmethod
     def values():
         return [n for n in DataType.__dict__.keys()
-                if n[0] != '_' and n != 'values']
-
-
-# noinspection PyClassHasNoInit
-class OperationUiCodeType:
-    ATTRIBUTE_LIST = 'ATTRIBUTE_LIST'
-
-    @staticmethod
-    def values():
-        return [n for n in OperationUiCodeType.__dict__.keys()
                 if n[0] != '_' and n != 'values']
 
 
@@ -186,34 +187,43 @@ class Operation(db.Model, Translatable):
     # noinspection PyUnresolvedReferences
     operation_category_operation = db.Table(
         'operation_category_operation',
-        Column('operation_id', Integer, ForeignKey('operation.id')),
-        Column('operation_category_id', Integer, ForeignKey('operation_category.id')))
+        Column('operation_id', Integer,
+               ForeignKey('operation.id'), nullable=False),
+        Column('operation_category_id', Integer,
+               ForeignKey('operation_category.id'), nullable=False))
     categories = relationship(
         "OperationCategory",
         secondary=operation_category_operation)
     # noinspection PyUnresolvedReferences
     operation_platform = db.Table(
         'operation_platform',
-        Column('operation_id', Integer, ForeignKey('operation.id')),
-        Column('platform_id', Integer, ForeignKey('platform.id')))
+        Column('operation_id', Integer,
+               ForeignKey('operation.id'), nullable=False),
+        Column('platform_id', Integer,
+               ForeignKey('platform.id'), nullable=False))
     platforms = relationship(
         "Platform",
         secondary=operation_platform,
-        secondaryjoin=("and_("
-                       "Platform.id==operation_platform.c.platform_id,"
-                       "Platform.enabled==1)"))
+        secondaryjoin=(
+            "and_("
+            "Platform.id==operation_platform.c.platform_id,"
+            "Platform.enabled==1)"))
     # noinspection PyUnresolvedReferences
     operation_operation_form = db.Table(
         'operation_operation_form',
-        Column('operation_id', Integer, ForeignKey('operation.id')),
-        Column('operation_form_id', Integer, ForeignKey('operation_form.id')))
+        Column('operation_id', Integer,
+               ForeignKey('operation.id'), nullable=False),
+        Column('operation_form_id', Integer,
+               ForeignKey('operation_form.id'), nullable=False))
     forms = relationship(
         "OperationForm",
         secondary=operation_operation_form,
-        secondaryjoin=("and_("
-                       "OperationForm.id==operation_operation_form.c.operation_form_id,"
-                       "OperationForm.enabled==1)"))
+        secondaryjoin=(
+            "and_("
+            "OperationForm.id==operation_operation_form.c.operation_form_id,"
+            "OperationForm.enabled==1)"))
     ports = relationship("OperationPort", back_populates="operation")
+    scripts = relationship("OperationScript", back_populates="operation")
 
     def __unicode__(self):
         return self.name
@@ -339,6 +349,7 @@ class OperationPort(db.Model, Translatable):
 
     # Fields
     id = Column(Integer, primary_key=True)
+    slug = Column(String(50), nullable=False)
     type = Column(Enum(*OperationPortType.values(),
                        name='OperationPortTypeEnumType'), nullable=False)
     tags = Column(Text)
@@ -354,8 +365,10 @@ class OperationPort(db.Model, Translatable):
     # noinspection PyUnresolvedReferences
     operation_port_interface_operation_port = db.Table(
         'operation_port_interface_operation_port',
-        Column('operation_port_id', Integer, ForeignKey('operation_port.id')),
-        Column('operation_port_interface_id', Integer, ForeignKey('operation_port_interface.id')))
+        Column('operation_port_id', Integer,
+               ForeignKey('operation_port.id'), nullable=False),
+        Column('operation_port_interface_id', Integer,
+               ForeignKey('operation_port_interface.id'), nullable=False))
     interfaces = relationship(
         "OperationPortInterface",
         secondary=operation_port_interface_operation_port)
@@ -404,15 +417,16 @@ class OperationPortInterfaceTranslation(
     name = Column(Unicode(200))
 
 
-class OperationUiCode(db.Model):
-    """ Associated UI code """
-    __tablename__ = 'operation_ui_code'
+class OperationScript(db.Model):
+    """ A script used in the context of the operation """
+    __tablename__ = 'operation_script'
 
     # Fields
     id = Column(Integer, primary_key=True)
-    type = Column(Enum(*OperationUiCodeType.values(),
-                       name='OperationUiCodeTypeEnumType'), nullable=False)
-    value = Column(Text, nullable=False)
+    type = Column(Enum(*ScriptType.values(),
+                       name='ScriptTypeEnumType'), nullable=False)
+    enabled = Column(Boolean, nullable=False)
+    body = Column(Text, nullable=False)
 
     # Associations
     operation_id = Column(Integer,
@@ -420,7 +434,7 @@ class OperationUiCode(db.Model):
     operation = relationship("Operation", foreign_keys=[operation_id])
 
     def __unicode__(self):
-        return self.type
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -503,7 +517,8 @@ class Workflow(db.Model):
     created = Column(DateTime,
                      default=datetime.datetime.utcnow, nullable=False)
     updated = Column(DateTime,
-                     default=datetime.datetime.utcnow, nullable=False, onupdate=datetime.datetime.utcnow)
+                     default=datetime.datetime.utcnow, nullable=False,
+                     onupdate=datetime.datetime.utcnow)
     version = Column(Integer, nullable=False)
     image = Column(String(1000))
     __mapper_args__ = {

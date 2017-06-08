@@ -25,4 +25,4 @@ def static_file(path):
 
 if __name__ == '__main__':
     if app.debug:
-        app.run(debug=True)
+        app.run(debug=True, host='0.0.0.0')
