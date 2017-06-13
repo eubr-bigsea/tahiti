@@ -30,7 +30,7 @@ def upgrade():
         UPDATE `operation_translation`
         SET description =
             'Splits dataset into 2 different data sets using weights'
-        WHERE id = 17 """))
+        WHERE id = 17 and locale = 'en'"""))
 
 
 def downgrade():
@@ -48,4 +48,4 @@ def downgrade():
         UPDATE `operation_translation`
         SET description =
             'Splits dataset in 2 different data sets using weights'
-        WHERE id = 17 """))
+        WHERE id = 17 and locale = 'en' """))
