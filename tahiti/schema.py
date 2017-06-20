@@ -509,58 +509,6 @@ class OperationFormFieldItemResponseSchema(Schema):
         ordered = True
 
 
-class OperationFormFieldCreateRequestSchema(Schema):
-    """ JSON serialization schema """
-    name = fields.String(required=True)
-    label = fields.String(required=True)
-    help = fields.String(required=True)
-    type = fields.String(required=True,
-                         validate=[OneOf(DataType.__dict__.keys())])
-    required = fields.Boolean(required=True)
-    order = fields.Integer(required=True)
-    default = fields.String(required=False, allow_none=True)
-    suggested_widget = fields.String(required=False, allow_none=True)
-    values_url = fields.String(required=False, allow_none=True)
-    values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=True,
-                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
-
-    # noinspection PyUnresolvedReferences
-    @post_load
-    def make_object(self, data):
-        """ Deserialize data into an instance of OperationFormField"""
-        return OperationFormField(**data)
-
-    class Meta:
-        ordered = True
-
-
-class OperationFormFieldItemResponseSchema(Schema):
-    """ JSON serialization schema """
-    name = fields.String(required=True)
-    label = fields.String(required=True)
-    help = fields.String(required=True)
-    type = fields.String(required=True,
-                         validate=[OneOf(DataType.__dict__.keys())])
-    required = fields.Boolean(required=True)
-    order = fields.Integer(required=True)
-    default = fields.String(required=False, allow_none=True)
-    suggested_widget = fields.String(required=False, allow_none=True)
-    values_url = fields.String(required=False, allow_none=True)
-    values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=True,
-                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
-
-    # noinspection PyUnresolvedReferences
-    @post_load
-    def make_object(self, data):
-        """ Deserialize data into an instance of OperationFormField"""
-        return OperationFormField(**data)
-
-    class Meta:
-        ordered = True
-
-
 class OperationPortListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
@@ -701,6 +649,50 @@ class OperationScriptListResponseSchema(Schema):
     body = fields.String(required=True)
     operation = fields.Nested(
         'tahiti.schema.OperationListResponseSchema',
+        required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationScript"""
+        return OperationScript(**data)
+
+    class Meta:
+        ordered = True
+
+
+class OperationScriptCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(ScriptType.__dict__.keys())])
+    enabled = fields.Boolean(required=True)
+    description = fields.String(required=True)
+    body = fields.String(required=True)
+    operation = fields.Nested(
+        'tahiti.schema.OperationCreateRequestSchema',
+        required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of OperationScript"""
+        return OperationScript(**data)
+
+    class Meta:
+        ordered = True
+
+
+class OperationScriptItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(ScriptType.__dict__.keys())])
+    enabled = fields.Boolean(required=True)
+    description = fields.String(required=True)
+    body = fields.String(required=True)
+    operation = fields.Nested(
+        'tahiti.schema.OperationItemResponseSchema',
         required=True)
 
     # noinspection PyUnresolvedReferences
