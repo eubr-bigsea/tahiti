@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""save_model
+"""save_model and voting classifier
 
 Revision ID: 7ee8fa9b8dc4
 Revises: 0228939b09d1
@@ -18,8 +18,59 @@ down_revision = '0228939b09d1'
 branch_labels = None
 depends_on = None
 
-OPERATION_ID = 39
-FORM_ID = 100
+SAVE_MODEL_ID = 39
+SAVE_MODEL_FORM_ID = 100
+
+VOTING_CLASS_ID = 84
+VOTING_CLASS_FORM_ID = 101
+
+
+def _insert_operation():
+    tb = table('operation',
+               column("id", Integer),
+               column("slug", String),
+               column('enabled', Integer),
+               column('type', String),
+               column('icon', String), )
+    columns = [c.name for c in tb.columns]
+    data = [
+        (VOTING_CLASS_ID, 'voting-classifier', 1, 'TRANSFORMATION',
+         'fa-hand-peace-o'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_translation():
+    tb = table(
+        'operation_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String),
+        column('description', String), )
+    columns = [c.name for c in tb.columns]
+    data = [
+        (VOTING_CLASS_ID, 'en', 'Voting classifier', 'Voting classifier'),
+        (VOTING_CLASS_ID, 'pt', 'Classificador por votos',
+         'Classificador por votos'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_platform():
+    tb = table(
+        'operation_platform',
+        column('operation_id', Integer),
+        column('platform_id', Integer))
+    columns = [c.name for c in tb.columns]
+    data = [
+        (VOTING_CLASS_ID, 1),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(tb, rows)
 
 
 def _insert_operation_form():
@@ -32,7 +83,8 @@ def _insert_operation_form():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (FORM_ID, 1, 1, 'execution'),
+        (SAVE_MODEL_FORM_ID, 1, 1, 'execution'),
+        (VOTING_CLASS_FORM_ID, 1, 1, 'execution'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -47,7 +99,8 @@ def _insert_operation_operation_form():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (OPERATION_ID, FORM_ID),
+        (SAVE_MODEL_ID, SAVE_MODEL_FORM_ID),
+        (VOTING_CLASS_ID, VOTING_CLASS_FORM_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -64,8 +117,11 @@ def _insert_operation_form_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (FORM_ID, 'en', 'Execution'),
-        (FORM_ID, 'pt', 'Execução'),
+        (SAVE_MODEL_FORM_ID, 'en', 'Execution'),
+        (SAVE_MODEL_FORM_ID, 'pt', 'Execução'),
+
+        (VOTING_CLASS_FORM_ID, 'en', 'Execution'),
+        (VOTING_CLASS_FORM_ID, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -90,20 +146,22 @@ def _insert_operation_form_field():
     columns = [c.name for c in tb.columns]
 
     options = [{"key": "BEST", "value": "Save best model"},
-               {"key": "WORST", "value": "Save worst model"},
                {"key": "ALL",
                 "value": "Save all (names will be suffixed with model rank)"},
                ]
 
     data = [
         (233, 'storage', 'INTEGER', 1, 1, None, 'lookup',
-         '{{LIMONERO_URL}}/models', None, 'EXECUTION', FORM_ID),
+         '{{LIMONERO_URL}}/models', None, 'EXECUTION', SAVE_MODEL_FORM_ID),
 
         (234, 'name', 'TEXT', 1, 2, None, 'text',
-         None, None, 'EXECUTION', FORM_ID),
+         None, None, 'EXECUTION', SAVE_MODEL_FORM_ID),
 
         (235, 'save_criteria', 'TEXT', 1, 3, 'BEST', 'dropdown',
-         None, json.dumps(options), 'EXECUTION', FORM_ID),
+         None, json.dumps(options), 'EXECUTION', SAVE_MODEL_FORM_ID),
+
+        (236, 'weights', 'TEXT', 0, 3, None, 'text',
+         None, None, 'EXECUTION', VOTING_CLASS_FORM_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -135,7 +193,8 @@ def _fix_port_interface():
     op.execute("UPDATE operation_port_interface_translation "
                "SET name = 'IListOfMachineLearningModels' WHERE id = 8")
 
-    op.execute("UPDATE operation_port SET multiplicity = 'MANY' WHERE id = 83")
+    op.execute("UPDATE operation_port SET multiplicity = 'MANY' "
+               "WHERE id = 83")
 
 
 def undo_fix_port_interface():
@@ -182,28 +241,137 @@ def _insert_operation_form_field_translation():
          'Which model to save.'),
         (235, 'pt', 'Qual modelo salvar? (obrigatório se vários modelos)',
          'Qual modelo salvar.'),
+
+        (236, 'en', 'Weights (comma-separated, '
+                    'if empty, all estimators will have same weight)',
+         'Weights (if empty, all estimators will have same weight, otherwise, '
+         'implies "soft" voting)'),
+        (236, 'pt', 'Pesos (separados por vírgula, '
+                    'se vazio, os estimadores terão o mesmo peso)',
+         'Pesos (se vazio, os estimadores terão o mesmo peso).'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
+def _insert_operation_category_operation():
+    tb = table(
+        'operation_category_operation',
+        column('operation_id', Integer),
+        column('operation_category_id', Integer))
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (VOTING_CLASS_ID, 1),
+        (VOTING_CLASS_ID, 8),
+        (VOTING_CLASS_ID, 18),
+    ]
+    rows = [dict(zip(columns, cat)) for cat in data]
+
+    op.bulk_insert(tb, rows)
+
+
+#
+def _insert_operation_port():
+    tb = table(
+        'operation_port',
+        column('id', Integer),
+        column('type', String),
+        column('tags', String),
+        column('operation_id', Integer),
+        column('order', Integer),
+        column('multiplicity', String),
+        column('slug', String), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (184, 'OUTPUT', None, VOTING_CLASS_ID, 1, 'MANY', 'output data'),
+        (185, 'INPUT', None, VOTING_CLASS_ID, 2, 'MANY', 'models'),
+        (186, 'INPUT', None, VOTING_CLASS_ID, 1, 'ONE', 'input data')
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_port_translation():
+    tb = table(
+        'operation_port_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String),
+        column('description', String), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (184, 'en', 'output data', 'Output data'),
+        (184, 'pt', 'dados de saída', 'Dados de saída'),
+        (185, 'en', 'models', 'Input models'),
+        (185, 'pt', 'models', 'Modelos de entrada'),
+        (186, 'en', 'input data', 'Input data'),
+        (186, 'pt', 'dados de entrada', 'Dados de entrada'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_port_interface_operation_port():
+    tb = table(
+        'operation_port_interface_operation_port',
+        column('operation_port_id', Integer),
+        column('operation_port_interface_id', Integer), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (184, 1),
+        (185, 2),
+        (186, 1),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
 all_commands = [
+    (_insert_operation,
+     'DELETE FROM operation WHERE id = {}'.format(VOTING_CLASS_ID)),
+
+    (_insert_operation_translation,
+     'DELETE FROM operation_translation WHERE id = {}'.format(VOTING_CLASS_ID)),
+    (_insert_operation_platform,
+     'DELETE FROM operation_platform '
+     'WHERE platform_id = 1 AND operation_id = {}'.format(VOTING_CLASS_ID)),
+    (_insert_operation_category_operation,
+     'DELETE from operation_category_operation WHERE operation_id = {}'.format(
+         VOTING_CLASS_ID)),
+    (_insert_operation_port,
+     "DELETE FROM operation_port WHERE id in (184, 185, 186)"),
+    (_insert_operation_port_translation,
+     "DELETE FROM operation_port_translation WHERE id in (184, 185, 186)"),
+
+    (_insert_operation_port_interface_operation_port,
+     "DELETE FROM operation_port_interface_operation_port "
+     "WHERE operation_port_id in (184, 185, 186)"),
+
     (_fix_port_interface, undo_fix_port_interface),
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN {0} AND {0}'.format(FORM_ID)),
+     'DELETE FROM operation_form WHERE id IN ({0}, {1})'.format(
+         SAVE_MODEL_FORM_ID, VOTING_CLASS_FORM_ID)),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form '
-     'WHERE operation_id BETWEEN {0} AND {0}'.format(OPERATION_ID)),
+     'WHERE operation_id IN ({0}, {1})'.format(SAVE_MODEL_ID, VOTING_CLASS_ID)),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation '
-     '  WHERE id BETWEEN {0} AND {0}'.format(FORM_ID)),
+     'DELETE FROM operation_form_translation  WHERE id IN ({0}, {1})'.format(
+         SAVE_MODEL_FORM_ID, VOTING_CLASS_FORM_ID)),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field '
-     'WHERE form_id BETWEEN {0} AND {0}'.format(FORM_ID)),
+     'DELETE FROM operation_form_field WHERE form_id IN ({0}, {1})'.format(
+         SAVE_MODEL_FORM_ID, VOTING_CLASS_FORM_ID)),
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation '
      'WHERE id IN (SELECT id FROM operation_form_field '
-     '   WHERE form_id BETWEEN {0} AND {0})'.format(FORM_ID)),
+     '   WHERE form_id IN ({0}, {1}))'.format(SAVE_MODEL_FORM_ID,
+                                              VOTING_CLASS_FORM_ID)),
 ]
 
 

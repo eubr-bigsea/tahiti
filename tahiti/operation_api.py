@@ -52,10 +52,9 @@ class OperationListApi(Resource):
             operations = optimize_operation_query(
                 Operation.query.order_by('operation_translation_1.name'))
 
-            enabled_filter = request.args.get('enabled')
-            if enabled_filter:
-                operations = operations.filter(
-                    Operation.enabled == (enabled_filter != 'false'))
+            disabled_filter = request.args.get('disabled')
+            if not disabled_filter:
+                operations = operations.filter(Operation.enabled)
 
             platform = request.args.get('platform', None)
             if platform:
