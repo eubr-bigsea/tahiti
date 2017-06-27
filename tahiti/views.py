@@ -24,8 +24,6 @@ class AttributeSuggestionView(MethodView):
             .options(Load(Operation).load_only('id'))\
             .filter(OperationCategory.type == 'data source')
 
-        print '>>>>>>>>>>>>>>>>>>>>', data_sources.all()
-
         context = {'operations': operations}
         response = make_response(render_template('/js/attribute-suggestion.js',
                                                  **context))
