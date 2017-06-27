@@ -101,6 +101,7 @@ def _insert_operation_operation_form():
     data = [
         (SAVE_MODEL_ID, SAVE_MODEL_FORM_ID),
         (VOTING_CLASS_ID, VOTING_CLASS_FORM_ID),
+        (VOTING_CLASS_ID, 41),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -326,6 +327,7 @@ def _insert_operation_port_interface_operation_port():
     data = [
         (184, 1),
         (185, 2),
+        (185, 7),
         (186, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
