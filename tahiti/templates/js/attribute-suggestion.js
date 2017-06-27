@@ -177,10 +177,10 @@ var TahitiAttributeSuggester = (function () {
             {%- endfor -%}
             };
 
-            var result = [];
+            var result = {};
             topological.order.forEach(function(k){
                 var task = topological.info[k].task;
-                result.push(task);
+                result[task.id] = task;
                 switch(idToSlug[task.operation.id]){
                     {%- for op, script in operations %}
                     case '{{op.slug}}':
