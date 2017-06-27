@@ -2,6 +2,7 @@ import logging
 import logging.config
 import os
 
+import jinja2
 import sqlalchemy_utils
 from flask import Flask
 from flask_admin import Admin
@@ -10,16 +11,16 @@ from flask_babel import get_locale
 from flask_cors import CORS
 from flask_restful import Api
 
-from cache import cache
 from tahiti.admin import OperationModelView, OperationCategoryModelView
 from tahiti.application_api import ApplicationListApi, ApplicationDetailApi
+from tahiti.cache import cache
 from tahiti.models import db, Operation, OperationCategory
 from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
+from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi
 from tahiti.workflow_api import WorkflowListApi
-from tahiti.cache import cache
 
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
@@ -29,7 +30,14 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     from tahiti.configuration import tahiti_configuration
 
     os.chdir(os.environ.get('TAHITI_HOME', '.'))
-    app = Flask(__name__, static_url_path='')
+
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    static_folder = os.path.join(base_dir, 'public')
+    tmpl_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                               'templates')
+    app = Flask(__name__, static_url_path='/public',
+                static_folder=static_folder, template_folder=tmpl_folder)
+
     sqlalchemy_utils.i18n.get_locale = get_locale
 
     app.config["RESTFUL_JSON"] = {
@@ -72,6 +80,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/platforms/<int:platform_id>': PlatformDetailApi,
         '/workflows': WorkflowListApi,
         '/workflows/<int:workflow_id>': WorkflowDetailApi,
+        '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in mappings.iteritems():
         api.add_resource(view, path)

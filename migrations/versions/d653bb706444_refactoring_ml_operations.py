@@ -88,8 +88,8 @@ all_commands = [
      "DELETE FROM operation_category_translation WHERE locale = 'pt' AND "
      "id BETWEEN 18 AND 26"),
     # Disable score model operation
-    ('UPDATE operation SET enabled = 0 WHERE id IN (14, 22) ',
-     'UPDATE operation SET enabled = 1 WHERE id IN (14, 22) '),
+    ('UPDATE operation SET enabled = 0 WHERE id IN (14, 22, 2, 54) ',
+     'UPDATE operation SET enabled = 1 WHERE id IN (14, 22, 2, 54) '),
 
     ("UPDATE operation_form_field SET values_url = '{{LIMONERO_URL}}/storages' "
      "WHERE id IN (233) ",
@@ -201,7 +201,17 @@ all_commands = [
      "DELETE FROM operation_port_interface_operation_port "
      "WHERE operation_port_interface_id = 18 AND `operation_port_id` = 93;"),
     ("UPDATE operation_form_field SET `default` = 'ALL' WHERE id = 235",
-     "UPDATE operation_form_field SET `default` = 'BEST' WHERE id = 235")
+     "UPDATE operation_form_field SET `default` = 'BEST' WHERE id = 235"),
+
+    ("INSERT operation_category_operation(operation_id, operation_category_id) "
+     "  VALUES (39, 8);",
+     "DELETE FROM operation_category_operation "
+     "WHERE operation_id = 39 AND operation_category_id = 8"),
+
+    ("INSERT operation_category_operation(operation_id, operation_category_id) "
+     "  VALUES (39, 26);",
+     "DELETE FROM operation_category_operation "
+     "WHERE operation_id = 39 AND operation_category_id = 26"),
 ]
 
 
