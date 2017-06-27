@@ -111,7 +111,7 @@ var TahitiAttributeSuggester = (function () {
     };
     var joinSuffixDuplicatedAttributes = function(task) {
         /* Group attributes by name */
-        let groupedFields = flatArrayOfArrays(task.uiPorts.inputs).reduce((acc, val) => {
+        let groupedFields = flatArrayOfArrays(task.uiPorts.inputs).reduce(function(acc, val){
             (acc[val] = acc[val] || []).push(val);
             return acc;
         }, {});
@@ -135,7 +135,7 @@ var TahitiAttributeSuggester = (function () {
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
         var aliases = [];
         if (task.forms[alias] && task.forms[alias].value){
-                aliases = task.forms[alias].value.split(',').map((v) => {return v.trim()});
+                aliases = task.forms[alias].value.split(',').map(function(v){return v.trim()});
         } else {
             aliases = [];
         }
@@ -189,7 +189,7 @@ var TahitiAttributeSuggester = (function () {
                     {%- endfor %}
                 }
                 // Update next tasks' inputs with current output
-                topological.info[k].targets.forEach((follow) => {
+                topological.info[k].targets.forEach(function(follow){
                     topological.info[follow.target].task.uiPorts.inputs.push(
                         {targetPortId: follow.targetPortId,
                             attributes: task.uiPorts.output});
