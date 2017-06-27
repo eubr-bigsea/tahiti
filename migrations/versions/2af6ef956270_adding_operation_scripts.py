@@ -47,7 +47,7 @@ def _insert_scripts():
         (14, 1, "JS_CLIENT", dedent("""
             task.uiPorts.output = task.forms.attributes.value.slice()
             Array.prototype.push.apply(task.uiPorts.output,
-                task.forms.function.value.map((v) = > {
+                task.forms.function.value.map(function(v){
                     return v.alias}));"""), 15),
         (15, 1, "JS_CLIENT",
          "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias');", 40),
