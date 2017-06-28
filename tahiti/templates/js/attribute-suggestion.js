@@ -90,24 +90,39 @@ var TahitiAttributeSuggester = (function () {
         if (many === undefined || !many ) {
             Array.prototype.push.apply(task.uiPorts.output,
                 task.forms[field].value.split(', ').map(function(attr){return attr.trim() }));
-        } else {
+        } else if (task.forms[field]) {
             Array.prototype.push.apply(task.uiPorts.output, task.forms[field].value);
         }
+        task.uiPorts.output.sort();
     }
-    var copyInputAddField = function(task, field, many){
+    var copyInputAddField = function(task, field, many, defaultValue){
         if (many === undefined || !many ) {
             task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
             if (task.forms[field] && task.forms[field].value) {
                 task.uiPorts.output.push(task.forms[field].value);
+            } else if (defaultValue) {
+                task.uiPorts.output.push(defaultValue);
             }
-        }
-         else if (task.forms[field] && task.forms[field].value.length) {
+        } else {
             task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
-            Array.prototype.push.apply(task.uiPorts.output, task.forms[field].value);
+            if (task.forms[field] && task.forms[field].value.length) {
+                Array.prototype.push.apply(task.uiPorts.output, task.forms[field].value);
+            } else if (defaultValue) {
+                task.uiPorts.output.push(defaultValue);
+            }
          }
+         task.uiPorts.output.sort();
     }
+    var copyAllInputsRemoveDuplicated = function(task) {
+        var attrs = flatArrayOfArrays(task.uiPorts.inputs).sort();
+        task.uiPorts.output = attrs.filter(
+            function(item, index, inputArray ) {
+                return inputArray.indexOf(item) === index;
+             }
+        );
+    };
     var copyInput = function(task) {
-        task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
+        task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs).sort();
     };
     var joinSuffixDuplicatedAttributes = function(task) {
         /* Group attributes by name */
@@ -129,26 +144,27 @@ var TahitiAttributeSuggester = (function () {
             }
         }
         //task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
-        task.uiPorts.output = result;
+        task.uiPorts.output = result.sort();
     }
-    var copyInputAddAttributesSplitAlias = function(task, attributes, alias){
+    var copyInputAddAttributesSplitAlias = function(task, attributes, alias, suffix){
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
         var aliases = [];
         if (task.forms[alias] && task.forms[alias].value){
-                aliases = task.forms[alias].value.split(',').map(function(v){return v.trim()});
+            aliases = task.forms[alias].value.split(',').map(function(v){return v.trim()});
         } else {
             aliases = [];
         }
-        if (task.forms[attributes].value){
+        if (task.forms[attributes] && task.forms[attributes].value){
             while(task.forms[attributes].value.length > aliases.length){
                 var attr = task.forms[attributes].value[aliases.length];
-                aliases.push(attr + '_indexed');
+                aliases.push(attr + suffix);
             }
         } else {
             console.error('Alias ' + alias + ' does not exist for task ' +
                 task.id + '(' + task.operation.slug + ')');
         }
         Array.prototype.push.apply(task.uiPorts.output, aliases);
+        task.uiPorts.output.sort();
     }
 
     var copyFromOnlyOneInput = function(task, id) {
@@ -156,7 +172,7 @@ var TahitiAttributeSuggester = (function () {
             function(input) {
                 return parseInt(input.targetPortId) === parseInt(id);
             }) || [];
-        task.uiPorts.output = flatArrayOfArrays(inputs);
+        task.uiPorts.output = flatArrayOfArrays(inputs).sort();
     }
     /* Public methods */
     suggester.compute = function(workflow, dataSourceLoader, uiCallback) {
