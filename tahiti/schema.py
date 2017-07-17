@@ -4,7 +4,7 @@ import json
 from copy import deepcopy
 from marshmallow import Schema, fields, post_load
 from marshmallow.validate import OneOf
-from models import *
+from tahiti.models import *
 
 
 def partial_schema_factory(schema_cls):
@@ -647,9 +647,6 @@ class OperationScriptListResponseSchema(Schema):
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     body = fields.String(required=True)
-    operation = fields.Nested(
-        'tahiti.schema.OperationListResponseSchema',
-        required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -669,9 +666,6 @@ class OperationScriptCreateRequestSchema(Schema):
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     body = fields.String(required=True)
-    operation = fields.Nested(
-        'tahiti.schema.OperationCreateRequestSchema',
-        required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -691,9 +685,6 @@ class OperationScriptItemResponseSchema(Schema):
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     body = fields.String(required=True)
-    operation = fields.Nested(
-        'tahiti.schema.OperationItemResponseSchema',
-        required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
