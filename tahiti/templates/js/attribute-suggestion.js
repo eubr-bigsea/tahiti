@@ -2,6 +2,13 @@
 * Attribute suggestion for Citron from Tahiti (both Lemonade Project modules).
 * (c) 2017 Speed Labs - Departamento de Ciência da Computação - UFMG (Brazil).
 *****************************************************************************/
+function caseInsensitiveComparator(a, b){
+    if (! a || ! b) {
+        return -1;
+    } else {
+        return a.toLowerCase().localeCompare(b.toLowerCase());
+    }
+}
 var TahitiAttributeSuggester = (function () {
     var suggester = {};
 
@@ -93,7 +100,7 @@ var TahitiAttributeSuggester = (function () {
         } else if (task.forms[field]) {
             Array.prototype.push.apply(task.uiPorts.output, task.forms[field].value);
         }
-        task.uiPorts.output.sort();
+        task.uiPorts.output.sort(caseInsensitiveComparator);
     }
     var copyInputAddField = function(task, field, many, defaultValue){
         if (many === undefined || !many ) {
@@ -111,10 +118,10 @@ var TahitiAttributeSuggester = (function () {
                 task.uiPorts.output.push(defaultValue);
             }
          }
-         task.uiPorts.output.sort();
+         task.uiPorts.output.sort(caseInsensitiveComparator);
     }
     var copyAllInputsRemoveDuplicated = function(task) {
-        var attrs = flatArrayOfArrays(task.uiPorts.inputs).sort();
+        var attrs = flatArrayOfArrays(task.uiPorts.inputs).sort(caseInsensitiveComparator);
         task.uiPorts.output = attrs.filter(
             function(item, index, inputArray ) {
                 return inputArray.indexOf(item) === index;
@@ -122,7 +129,7 @@ var TahitiAttributeSuggester = (function () {
         );
     };
     var copyInput = function(task) {
-        task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs).sort();
+        task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs).sort(caseInsensitiveComparator);
     };
     var joinSuffixDuplicatedAttributes = function(task) {
         /* Group attributes by name */
@@ -144,7 +151,7 @@ var TahitiAttributeSuggester = (function () {
             }
         }
         //task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
-        task.uiPorts.output = result.sort();
+        task.uiPorts.output = result.sort(caseInsensitiveComparator);
     }
     var copyInputAddAttributesSplitAlias = function(task, attributes, alias, suffix){
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
@@ -164,7 +171,7 @@ var TahitiAttributeSuggester = (function () {
                 task.id + '(' + task.operation.slug + ')');
         }
         Array.prototype.push.apply(task.uiPorts.output, aliases);
-        task.uiPorts.output.sort();
+        task.uiPorts.output.sort(caseInsensitiveComparator);
     }
 
     var copyFromOnlyOneInput = function(task, id) {
@@ -172,7 +179,7 @@ var TahitiAttributeSuggester = (function () {
             function(input) {
                 return parseInt(input.targetPortId) === parseInt(id);
             }) || [];
-        task.uiPorts.output = flatArrayOfArrays(inputs).sort();
+        task.uiPorts.output = flatArrayOfArrays(inputs).sort(caseInsensitiveComparator);
     }
     /* Public methods */
     suggester.compute = function(workflow, dataSourceLoader, uiCallback) {
@@ -208,7 +215,7 @@ var TahitiAttributeSuggester = (function () {
                 topological.info[k].targets.forEach(function(follow){
                     topological.info[follow.target].task.uiPorts.inputs.push(
                         {targetPortId: follow.targetPortId,
-                            attributes: task.uiPorts.output});
+                            attributes: (task.uiPorts.output)});
                 });
             });
             uiCallback(result);

@@ -109,6 +109,85 @@ def _insert_operation_form_translation():
     op.bulk_insert(tb, rows)
 
 
+def _fix_linear_regression_fields():
+    op.execute('DELETE FROM operation_form_field_translation '
+               'WHERE id IN (208, 212, 213)')
+    op.execute('DELETE FROM operation_form_field '
+               'WHERE id IN (208, 212, 213)')
+    op.execute("UPDATE operation_form_field_translation "
+               "SET label = 'Weight attribute (optional)', "
+               "help = 'Weight attribute (optional)' "
+               "WHERE id = 207 AND locale = 'en' ")
+
+    op.execute(
+        "UPDATE operation_form_field SET `values` = '{}' WHERE id = 210".format(
+            json.dumps([
+                {"key": "auto", "value": "Auto (selected automatically)"},
+                {"key": "normal", "value": "Normal Equation"},
+                {"key": "l-bfgs", "value": "Limited-memory BFGS"}
+            ])
+        ))
+
+
+def _revert_fix_linear_regression_fields():
+    tb = table(
+        'operation_form_field',
+        column('id', Integer),
+        column('name', String),
+        column('type', String),
+        column('required', Integer),
+        column('order', Integer),
+        column('default', Text),
+        column('suggested_widget', String),
+        column('values_url', String),
+        column('values', String),
+        column('scope', String),
+        column('form_id', Integer), )
+
+    columns = [c.name for c in tb.columns]
+
+    data = [
+        [212, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
+         'EXECUTION', 8],
+        [213, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
+         'EXECUTION', 8],
+        [208, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+         8]]
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(tb, rows)
+
+    tb = table(
+        'operation_form_field_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('label', String),
+        column('help', String), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        [212, 'en', 'Features', 'Features'],
+        [213, 'en', 'Label', 'Label'],
+        [208, 'en', 'Prediction', 'Prediction'],
+        [212, 'pt', 'Features', 'Features'],
+        [213, 'pt', 'Label', 'Label'],
+        [208, 'pt', 'Prediction', 'Prediction'], ]
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(tb, rows)
+
+    op.execute("UPDATE operation_form_field_translation "
+               "SET label = 'Weigth attribute (optional)', "
+               "help = 'Weigth attribute (optional)' "
+               "WHERE id = 207 AND locale = 'en' ")
+
+    op.execute(
+        "UPDATE operation_form_field SET `values` = '{}' WHERE id = 210".format(
+            json.dumps([
+                {"key": "auto", "value": "Auto"},
+                {"key": "normal", "value": "Normal"}
+            ])
+        ))
+
+
 def _insert_operation_form_field():
     tb = table(
         'operation_form_field',
@@ -131,23 +210,23 @@ def _insert_operation_form_field():
          'EXECUTION', 102],
         [243, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
          'EXECUTION', 102],
-        [244, 'max_iter', 'INTEGER', 0, 3, None, 'integer', None, None,
-         'EXECUTION', 102],
-        [245, 'weight', 'TEXT', 0, 4, None, 'attribute-selector', None, None,
-         'EXECUTION', 102],
-        [246, 'prediction', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION',
+        [244, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
          102],
+        [245, 'max_iter', 'INTEGER', 0, 4, None, 'integer', None, None,
+         'EXECUTION', 102],
+        [246, 'weight', 'TEXT', 0, 5, None, 'attribute-selector', None, None,
+         'EXECUTION', 102],
         [247, 'reg_param', 'DECIMAL', 0, 6, None, 'decimal', None, None,
          'EXECUTION', 102],
         [248, 'elastic_net', 'DECIMAL', 0, 7, None, 'decimal', None, None,
          'EXECUTION', 102],
 
-        [250, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
-         'EXECUTION', 103],
-        [251, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
-         'EXECUTION', 103],
-        [252, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
-         103],
+        # [250, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 103],
+        # [251, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 103],
+        # [252, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+        #  103],
         [253, 'weight', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION',
          103],
         [254, 'isotonic', 'TEXT', 0, 5, None, 'dropdown', None,
@@ -155,12 +234,12 @@ def _insert_operation_form_field():
                      {"key": False, "value": "Orantitonic/decreasing"}, ]),
          'EXECUTION', 103],
 
-        [255, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
-         'EXECUTION', 104],
-        [256, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
-         'EXECUTION', 104],
-        [257, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
-         104],
+        # [255, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 104],
+        # [256, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 104],
+        # [257, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+        #  104],
         [258, 'weight', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION',
          104],
         [260, 'max_iter', 'INTEGER', 0, 6, None, 'integer', None, None,
@@ -178,12 +257,12 @@ def _insert_operation_form_field():
          None,
          'EXECUTION', 104],
 
-        [266, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
-         'EXECUTION', 105],
-        [267, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
-         'EXECUTION', 105],
-        [268, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
-         105],
+        # [266, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 105],
+        # [267, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 105],
+        # [268, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+        #  105],
         [269, 'max_iter', 'INTEGER', 0, 4, None, 'integer', None, None,
          'EXECUTION', 105],
         [270, 'max_depth', 'INTEGER', 0, 5, None, 'integer', None, None,
@@ -195,29 +274,46 @@ def _insert_operation_form_field():
         [273, 'seed', 'INTEGER', 0, 8, None, 'integer', None, None,
          'EXECUTION', 105],
 
-        [274, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
-         'EXECUTION', 106],
-        [275, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
-         'EXECUTION', 106],
-        [276, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
-         106],
+        # [274, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 106],
+        # [275, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 106],
+        # [276, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+        #  106],
 
-        [277, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
-         'EXECUTION', 107],
-        [278, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
-         'EXECUTION', 107],
-        [279, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+        # [277, 'features', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 107],
+        # [278, 'label', 'TEXT', 0, 2, None, 'attribute-selector', None, None,
+        #  'EXECUTION', 107],
+        # [279, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+        #  107],
+        [280, 'weight', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
          107],
-        [280, 'weight', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION',
-         107],
-        [281, 'max_iter', 'INTEGER', 0, 5, None, 'integer', None, None,
+        [281, 'max_iter', 'INTEGER', 0, 2, None, 'integer', None, None,
          'EXECUTION', 107],
-        [282, 'reg_param', 'TEXT', 0, 6, None, 'attribute-selector', None, None,
+        [282, 'family', 'TEXT', 0, 4, None, 'dropdown', None,
+         json.dumps([{"key": "gaussian", "value": "Gaussian"},
+                     {"key": "binomial", "value": "Binomial"},
+                     {"key": "poisson", "value": "Poisson"},
+                     {"key": "gamma", "value": "Gamma"},]),
          'EXECUTION', 107],
-        [283, 'link_prediction_col', 'TEXT', 0, 7, None, 'text', None, None,
-         'EXECUTION',
-         107],
-        [284, 'solver', 'TEXT', 0, 8, None, 'dropdown', None,
+        [283, 'link_prediction', 'TEXT', 0, 1, None, 'dropdown', None,
+         json.dumps([{"key": "identity", "value": "Identity (Gaussian)"},
+                     {"key": "log", "value": "log (Gaussian)"},
+                     {"key": "inverse", "value": "inverse(Gaussian)"},
+                     {"key": "logit", "value": "logit (Binomial)"},
+                     {"key": "probit", "value": "probit (Binomial)"},
+                     {"key": "cloglog", "value": "cloglog (Binomial)"},
+                     {"key": "log", "value": "log (Poisson)"},
+                     {"key": "identity", "value": "identity (Poisson)"},
+                     {"key": "sqrt", "value": "sqrt (Poisson)"},
+                     {"key": "inverse", "value": "inverse (Gamma)"},
+                     {"key": "identity", "value": "identity (Gamma)"},
+                     {"key": "log", "value": "log (Gamma)"}, ]),
+         'EXECUTION', 107],
+        [284, 'reg_param', 'DECIMAL', 0, 2, None, 'decimal', None, None,
+         'EXECUTION', 107],
+        [285, 'solver', 'TEXT', 0, 6, None, 'dropdown', None,
          json.dumps([{"key": "auto", "value": "Auto"},
                      {"key": "irls", "value": "irls"}]), 'EXECUTION',
          107],
@@ -239,21 +335,21 @@ def _insert_operation_form_field_translation():
     data = [
         [242, 'en', 'Features', 'Features'],
         [243, 'en', 'Label', 'Label'],
-        [244, 'en', 'Max. iterations', 'Max. iterations'],
-        [245, 'en', 'Weight', 'Weight'],
-        [246, 'en', 'Prediction', 'Prediction'],
+        [244, 'en', 'Prediction', 'Prediction'],
+        [245, 'en', 'Max. iterations', 'Max. iterations'],
+        [246, 'en', 'Weight', 'Weight'],
         [247, 'en', 'Regularization', 'Regularization'],
         [248, 'en', 'ElasticNet mixing', 'ElasticNet mixing'],
 
-        [250, 'en', 'Features', 'Features'],
-        [251, 'en', 'Label', 'Label'],
-        [252, 'en', 'Prediction', 'Prediction'],
+        # [250, 'en', 'Features', 'Features'],
+        # [251, 'en', 'Label', 'Label'],
+        # [252, 'en', 'Prediction', 'Prediction'],
         [253, 'en', 'Weight', 'Weight'],
         [254, 'en', 'Isotonic', 'Isotonic'],
 
-        [255, 'en', 'Features', 'Features'],
-        [256, 'en', 'Label', 'Label'],
-        [257, 'en', 'Prediction', 'Prediction'],
+        # [255, 'en', 'Features', 'Features'],
+        # [256, 'en', 'Label', 'Label'],
+        # [257, 'en', 'Prediction', 'Prediction'],
         [258, 'en', 'Weight', 'Weight'],
         [260, 'en', 'Max. iterations', 'Maximum number of iterations'],
         [261, 'en', 'Aggregation depth', 'Aggregation depth'],
@@ -262,45 +358,46 @@ def _insert_operation_form_field_translation():
         [264, 'en', 'Quantile probabilities', 'Quantile probabilities'],
         [265, 'en', 'Quantiles attribute', 'Quantiles attribute'],
 
-        [266, 'en', 'Features', 'Features'],
-        [267, 'en', 'Label', 'Label'],
-        [268, 'en', 'Prediction', 'Prediction'],
+        # [266, 'en', 'Features', 'Features'],
+        # [267, 'en', 'Label', 'Label'],
+        # [268, 'en', 'Prediction', 'Prediction'],
         [269, 'en', 'Max. iterations', 'Maximum number of iterations'],
         [270, 'en', 'Max. depth', 'Max. depth'],
         [271, 'en', 'Min. instance', 'Min. instance'],
         [272, 'en', 'Min. info gain', 'Min. info gain'],
         [273, 'en', 'Seed', 'Seed'],
 
-        [274, 'en', 'Features', 'Features'],
-        [275, 'en', 'Label', 'Label'],
-        [276, 'en', 'Prediction', 'Prediction'],
+        # [274, 'en', 'Features', 'Features'],
+        # [275, 'en', 'Label', 'Label'],
+        # [276, 'en', 'Prediction', 'Prediction'],
 
-        [277, 'en', 'Features', 'Features'],
-        [278, 'en', 'Label', 'Label'],
-        [279, 'en', 'Prediction', 'Prediction'],
+        # [277, 'en', 'Features', 'Features'],
+        # [278, 'en', 'Label', 'Label'],
+        # [279, 'en', 'Prediction', 'Prediction'],
         [280, 'en', 'Weight', 'Weight'],
         [281, 'en', 'Max. iterations', 'Maximum number of iterations'],
-        [282, 'en', 'Regularization', 'Regularization'],
+        [282, 'en', 'Family', 'Family'],
         [283, 'en', 'Link prediction', 'Link prediction'],
-        [284, 'en', 'Solver', 'Solver'],
+        [284, 'en', 'Regularization', 'Regularization'],
+        [285, 'en', 'Solver', 'Solver'],
 
-        [242, 'pt', 'Features', 'Features'],
-        [243, 'pt', 'Label', 'Label'],
-        [244, 'pt', 'Max. iterations', 'Max. iterations'],
-        [245, 'pt', 'Weight', 'Weight'],
-        [246, 'pt', 'Prediction', 'Prediction'],
+        # [242, 'pt', 'Features', 'Features'],
+        # [243, 'pt', 'Label', 'Label'],
+        # [244, 'pt', 'Prediction', 'Prediction'],
+        [245, 'pt', 'Max. iterations', 'Max. iterations'],
+        [246, 'pt', 'Weight', 'Weight'],
         [247, 'pt', 'Regularization', 'Regularization'],
         [248, 'pt', 'ElasticNet mixing', 'ElasticNet mixing'],
 
-        [250, 'pt', 'Features', 'Features'],
-        [251, 'pt', 'Label', 'Label'],
-        [252, 'pt', 'Prediction', 'Prediction'],
+        # [250, 'pt', 'Features', 'Features'],
+        # [251, 'pt', 'Label', 'Label'],
+        # [252, 'pt', 'Prediction', 'Prediction'],
         [253, 'pt', 'Weight', 'Weight'],
         [254, 'pt', 'Isotonic', 'Isotonic'],
 
-        [255, 'pt', 'Features', 'Features'],
-        [256, 'pt', 'Label', 'Label'],
-        [257, 'pt', 'Prediction', 'Prediction'],
+        # [255, 'pt', 'Features', 'Features'],
+        # [256, 'pt', 'Label', 'Label'],
+        # [257, 'pt', 'Prediction', 'Prediction'],
         [258, 'pt', 'Weight', 'Weight'],
         [260, 'pt', 'Max. iterations', 'Maximum number of iterations'],
         [261, 'pt', 'Aggregation depth', 'Aggregation depth'],
@@ -309,27 +406,28 @@ def _insert_operation_form_field_translation():
         [264, 'pt', 'Quantile probabilities', 'Quantile probabilities'],
         [265, 'pt', 'Quantiles attribute', 'Quantiles attribute'],
 
-        [266, 'pt', 'Features', 'Features'],
-        [267, 'pt', 'Label', 'Label'],
-        [268, 'pt', 'Prediction', 'Prediction'],
+        # [266, 'pt', 'Features', 'Features'],
+        # [267, 'pt', 'Label', 'Label'],
+        # [268, 'pt', 'Prediction', 'Prediction'],
         [269, 'pt', 'Max. iterations', 'Maximum number of iterations'],
         [270, 'pt', 'Max. depth', 'Max. depth'],
         [271, 'pt', 'Min. instance', 'Min. instance'],
         [272, 'pt', 'Min. info gain', 'Min. info gain'],
         [273, 'pt', 'Seed', 'Seed'],
 
-        [274, 'pt', 'Features', 'Features'],
-        [275, 'pt', 'Label', 'Label'],
-        [276, 'pt', 'Prediction', 'Prediction'],
+        # [274, 'pt', 'Features', 'Features'],
+        # [275, 'pt', 'Label', 'Label'],
+        # [276, 'pt', 'Prediction', 'Prediction'],
 
-        [277, 'pt', 'Features', 'Features'],
-        [278, 'pt', 'Label', 'Label'],
-        [279, 'pt', 'Prediction', 'Prediction'],
+        # [277, 'pt', 'Features', 'Features'],
+        # [278, 'pt', 'Label', 'Label'],
+        # [279, 'pt', 'Prediction', 'Prediction'],
         [280, 'pt', 'Weight', 'Weight'],
         [281, 'pt', 'Max. iterations', 'Maximum number of iterations'],
-        [282, 'pt', 'Regularization', 'Regularization'],
+        [282, 'pt', u'Família', u'Família'],
         [283, 'pt', 'Link prediction', 'Link prediction'],
-        [284, 'pt', 'Solver', 'Solver'],
+        [284, 'pt', 'Regularization', 'Regularization'],
+        [285, 'pt', 'Solver', 'Solver'],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -337,12 +435,16 @@ def _insert_operation_form_field_translation():
 
 
 all_commands = [
+    ("INSERT INTO operation_script "
+     "VALUES (28, 'JS_CLIENT', '1', 'copyInputAddField(task, \\'prediction\\', "
+     "false, null);', '8'); ", "DELETE FROM operation_script WHERE id = 28"),
+    (_fix_linear_regression_fields, _revert_fix_linear_regression_fields),
     ("UPDATE operation_port_interface_operation_port "
      "SET operation_port_interface_id = 17 WHERE operation_port_id = 14",
      "UPDATE operation_port_interface_operation_port "
      "SET operation_port_interface_id = 1 WHERE operation_port_id = 14"),
     ("UPDATE operation_port_interface SET color = '#808000' WHERE id = 17",
-     "UPDATE operation_port_interface SET color = 'pink' WHERE id = 17", ),
+     "UPDATE operation_port_interface SET color = 'pink' WHERE id = 17",),
     ("INSERT INTO operation_form_translation VALUES(41, 'en', 'Appearance');",
      'DELETE FROM operation_form_translation  WHERE id = 41'),
     (u"INSERT INTO operation_form_translation VALUES(41, 'pt', 'Aparência');",
