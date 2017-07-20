@@ -62,7 +62,7 @@ var TahitiAttributeSuggester = (function () {
           topological.info[flow.source_id].targets.push(
           {
               target: flow.target_id,
-              targetPortId: flow.target_port
+              targetPortId: flow.target_port,
           });
       });
       // 2. topological sort
@@ -186,7 +186,7 @@ var TahitiAttributeSuggester = (function () {
 
         var dataSources = [];
         workflow.tasks.forEach(function(task){
-            task.uiPorts = {inputs: [], output: []}
+            task.uiPorts = {inputs: [], output: [], refs: []}
             var isDataSource = [18, 53].indexOf(parseInt(task.operation.id)) > -1;
             if (isDataSource) {
                 dataSources.push(task);
@@ -216,7 +216,22 @@ var TahitiAttributeSuggester = (function () {
                     topological.info[follow.target].task.uiPorts.inputs.push(
                         {targetPortId: follow.targetPortId,
                             attributes: (task.uiPorts.output)});
+                    // Some operations requires access attribute information
+                    // from their subsequent tasks. For example, all operations
+                    // that are algorithms don't have information about attributes
+                    // and must query such information from model producers operations
+                    topological.info[k].task.uiPorts.refs.push(topological.info[follow.target].task);
                 });
+            });
+            // Updates operations with no suggestion defined in input. See the case for algorithms
+            topological.order.forEach(function(k){
+                var task = topological.info[k].task;
+                if (task.uiPorts.inputs.length === 0 && task.uiPorts.refs.length > 0){
+                    task.uiPorts.refs.forEach(function(ref) {
+                        Array.prototype.push.apply(task.uiPorts.inputs,
+                            ref.uiPorts.inputs);
+                    });
+                }
             });
             uiCallback(result);
         }
