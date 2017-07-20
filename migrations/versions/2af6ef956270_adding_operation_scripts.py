@@ -56,10 +56,6 @@ def _insert_fields():
     data = [
         (239, 'prediction', 'TEXT', 0, 3, None, 'text', None, None,
          'EXECUTION', 1),
-        (240, 'prediction', 'TEXT', 0, 3, None, 'text', None, None,
-         'EXECUTION', 1),
-        (241, 'prediction', 'TEXT', 0, 3, None, 'text', None, None,
-         'EXECUTION', 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
