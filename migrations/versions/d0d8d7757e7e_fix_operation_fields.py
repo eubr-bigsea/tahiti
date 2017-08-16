@@ -7,9 +7,10 @@ Create Date: 2017-08-01 14:36:52.541609
 
 """
 
-from alembic import op
+from alembic import op, context
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.sql import table, column
+from sqlalchemy.orm import sessionmaker
 
 # revision identifiers, used by Alembic.
 revision = 'd0d8d7757e7e'
@@ -20,16 +21,20 @@ depends_on = None
 
 def upgrade():
 
-    op.execute("""
+    cntxt = context.get_context()
+    session = sessionmaker(bind=cntxt.bind)()
+    connection = session.connection()
+
+    connection.execute("""
         UPDATE operation_form_field
             SET type = 'TEXT',
             suggested_widget = 'text'
         WHERE id = 264
         """)
 
-    op.execute("""UPDATE operation_form_field
+    connection.execute("""UPDATE operation_form_field
         SET suggested_widget = 'attribute-selector' WHERE id = 194""")
-    op.execute(u"""
+    connection.execute(u"""
         UPDATE operation_form_field_translation
         SET label =
             'Atributos (vazio significa todos os atributos da fonte de dados)',
@@ -37,7 +42,7 @@ def upgrade():
             'Atributos (vazio significa todos os atributos da fonte de dados)'
         WHERE locale = 'pt' AND id = 194
         """)
-    op.execute(u"""
+    connection.execute(u"""
         UPDATE operation_form_field_translation
         SET label =
             'Attributes (empty = all attributes from data source)',
@@ -46,42 +51,42 @@ def upgrade():
         WHERE locale = 'en' AND id = 194
         """)
 
-    op.execute("""
+    connection.execute("""
         INSERT INTO operation_form_field_translation(id, locale, label, help)
             VALUES(21, 'en', 'Comment', 'Comment')
         """)
-    op.execute(u"""
+    connection.execute(u"""
         INSERT INTO operation_form_field_translation(id, locale, label, help)
             VALUES(21, 'pt', 'Comentário', 'Comentário')
         """)
-    op.execute("""
+    connection.execute("""
         INSERT INTO operation_form_field_translation(id, locale, label, help)
             VALUES(25, 'en', 'Color', 'Color')
         """)
-    op.execute(u"""
+    connection.execute(u"""
         INSERT INTO operation_form_field_translation(id, locale, label, help)
             VALUES(25, 'pt', 'Cor', 'Cor')
         """)
 
-    op.execute(u"""
+    connection.execute(u"""
         DELETE FROM operation_form_field_translation
         WHERE id in (207, 253, 258, 280, 246)
         """)
-    op.execute(u"""
+    connection.execute(u"""
         DELETE FROM operation_form_field
         WHERE id in (207, 253, 258, 280, 246)
         """)
 
     # Forms
-    op.execute("""
+    connection.execute("""
         INSERT INTO operation_form(id, enabled, `order`, category)
             VALUES(110, 1, 4, 'reports')
         """)
-    op.execute("""
+    connection.execute("""
         INSERT INTO operation_form_translation(id, locale, name)
             VALUES(110, 'en', 'Results')
         """)
-    op.execute(u"""
+    connection.execute(u"""
         INSERT INTO operation_form_translation(id, locale, name)
             VALUES(110, 'pt', 'Resultados')
         """)
@@ -91,7 +96,7 @@ def upgrade():
            32, 33, 37, 40, 41, 42, 43, 49, 50, 51, 52, 53, 55, 57, 59, 73, 75,
            82, 83, 84, 85, 86]
     for op_id in ops:
-        op.execute("""
+        connection.execute("""
             INSERT INTO
                 operation_operation_form(operation_id, operation_form_id)
             VALUES({}, 110)""".format(op_id))
@@ -155,11 +160,15 @@ def upgrade():
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
+    session.commit()
 
 
 def downgrade():
+    cntxt = context.get_context()
+    session = sessionmaker(bind=cntxt.bind)()
+    connection = session.connection()
 
-    op.execute(u"""
+    connection.execute(u"""
         UPDATE operation_form_field_translation
         SET label =
             'Nomes das colunas, separadas por vírgula (vazio = usar nomes da fonte de dados)',
@@ -167,7 +176,7 @@ def downgrade():
             'Nomes das colunas, separadas por vírgula (vazio = usar nomes da fonte de dados)'
         WHERE locale = 'pt' AND id = 194
         """)
-    op.execute(u"""
+    connection.execute(u"""
         UPDATE operation_form_field_translation
         SET label =
             'Column names, comma separated (empty = use data source names)',
@@ -176,21 +185,21 @@ def downgrade():
         WHERE locale = 'en' AND id = 194
         """)
 
-    op.execute("""UPDATE operation_form_field
+    connection.execute("""UPDATE operation_form_field
         SET suggested_widget = 'text' WHERE id = 194""")
 
-    op.execute('''DELETE FROM operation_form_field_translation
+    connection.execute('''DELETE FROM operation_form_field_translation
             WHERE id IN (292, 293, 294, 295)''')
-    op.execute('''DELETE FROM operation_form_field
+    connection.execute('''DELETE FROM operation_form_field
             WHERE id IN (292, 293, 294, 295)''')
-    op.execute('DELETE FROM operation_operation_form WHERE '
+    connection.execute('DELETE FROM operation_operation_form WHERE '
                'operation_form_id = 110')
-    op.execute('DELETE FROM operation_form_translation WHERE id = 110')
-    op.execute('DELETE FROM operation_form WHERE id = 110')
+    connection.execute('DELETE FROM operation_form_translation WHERE id = 110')
+    connection.execute('DELETE FROM operation_form WHERE id = 110')
 
-    op.execute('DELETE FROM operation_form_field_translation WHERE id = 21')
-    op.execute('DELETE FROM operation_form_field_translation WHERE id = 25')
-    op.execute("""
+    connection.execute('DELETE FROM operation_form_field_translation WHERE id = 21')
+    connection.execute('DELETE FROM operation_form_field_translation WHERE id = 25')
+    connection.execute("""
         UPDATE operation_form_field
             SET type = 'INTEGER',
             suggested_widget = 'integer'
@@ -249,3 +258,4 @@ def downgrade():
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
+    session.commit()

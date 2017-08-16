@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-}
+import itertools
 import logging
 
 from flask import request, current_app, g
@@ -11,6 +12,30 @@ from cache import cache
 from schema import *
 
 log = logging.getLogger(__name__)
+
+
+def handle_conflicts(v1, v2):
+    result = v2
+    if isinstance(v1, list) and isinstance(v2, list):
+        result = []
+        result.extend(v1)
+        result.extend(v2)
+
+    return result
+
+
+def deep_merge(d1, d2, in_conflict=lambda v1, v2: v2):
+    """ merge d2 into d1. using inconflict function to
+    resolve the leaf conflicts """
+    for k in d2:
+        if k in d1:
+            if isinstance(d1[k], dict) and isinstance(d2[k], dict):
+                deep_merge(d1[k], d2[k], in_conflict)
+            elif d1[k] != d2[k]:
+                d1[k] = in_conflict(d1[k], d2[k])
+        else:
+            d1[k] = d2[k]
+    return d1
 
 
 def optimize_operation_query(operations):
@@ -85,8 +110,20 @@ class OperationListApi(Resource):
                 'operation_translation_1.locale = :param_locale',
                 bindparams=[param_locale]))
 
-            return OperationListResponseSchema(many=True, only=only).dump(
+            data = OperationListResponseSchema(many=True, only=only).dump(
                 operations).data
+            # Group forms with same type
+            for op in data:
+                groups = itertools.groupby(op['forms'], lambda f: f['category'])
+                op['forms'] = []
+
+                for key, group in groups:
+                    merged = reduce(
+                        lambda v1, v2: deep_merge(v1, v2, handle_conflicts),
+                        group, {})
+                    op['forms'].append(merged)
+
+            return data
 
         return result()
 

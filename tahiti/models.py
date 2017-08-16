@@ -7,6 +7,7 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
 from sqlalchemy import event
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
+from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
 make_translatable(options={'locales': ['pt', 'en', 'es'],
@@ -146,22 +147,25 @@ class Flow(db.Model):
     # Associations
     source_id = Column(String(250),
                        ForeignKey("task.id"), nullable=False)
-    source = relationship("Task", foreign_keys=[source_id],
-                          backref=backref(
-                              "sources",
-                              cascade="all, delete-orphan"))
+    source = relationship(
+        "Task",
+        foreign_keys=[source_id],
+        backref=backref("sources",
+                        cascade="all, delete-orphan"))
     target_id = Column(String(250),
                        ForeignKey("task.id"), nullable=False)
-    target = relationship("Task", foreign_keys=[target_id],
-                          backref=backref(
-                              "targets",
-                              cascade="all, delete-orphan"))
+    target = relationship(
+        "Task",
+        foreign_keys=[target_id],
+        backref=backref("targets",
+                        cascade="all, delete-orphan"))
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id"), nullable=False)
-    workflow = relationship("Workflow", foreign_keys=[workflow_id],
-                            backref=backref(
-                                "flows",
-                                cascade="all, delete-orphan"))
+    workflow = relationship(
+        "Workflow",
+        foreign_keys=[workflow_id],
+        backref=backref("flows",
+                        cascade="all, delete-orphan"))
 
     def __unicode__(self):
         return self.source_port
@@ -310,7 +314,8 @@ class OperationFormField(db.Model, Translatable):
     type = Column(Enum(*DataType.values(),
                        name='DataTypeEnumType'), nullable=False)
     required = Column(Boolean, nullable=False)
-    order = Column(Integer, nullable=False)
+    order = Column(Integer,
+                   default=0, nullable=False)
     default = Column(Text)
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
@@ -324,7 +329,9 @@ class OperationFormField(db.Model, Translatable):
     # Associations
     form_id = Column(Integer,
                      ForeignKey("operation_form.id"), nullable=False)
-    form = relationship("OperationForm", foreign_keys=[form_id])
+    form = relationship(
+        "OperationForm",
+        foreign_keys=[form_id])
 
     def __unicode__(self):
         return self.name
@@ -374,7 +381,9 @@ class OperationPort(db.Model, Translatable):
         secondary=operation_port_interface_operation_port)
     operation_id = Column(Integer,
                           ForeignKey("operation.id"), nullable=False)
-    operation = relationship("Operation", foreign_keys=[operation_id])
+    operation = relationship(
+        "Operation",
+        foreign_keys=[operation_id])
 
     def __unicode__(self):
         return self.name
@@ -431,7 +440,9 @@ class OperationScript(db.Model):
     # Associations
     operation_id = Column(Integer,
                           ForeignKey("operation.id"), nullable=False)
-    operation = relationship("Operation", foreign_keys=[operation_id])
+    operation = relationship(
+        "Operation",
+        foreign_keys=[operation_id])
 
     def __unicode__(self):
         return self.name
@@ -486,13 +497,16 @@ class Task(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id"), nullable=False)
-    workflow = relationship("Workflow", foreign_keys=[workflow_id],
-                            backref=backref(
-                                "tasks",
-                                cascade="all, delete-orphan"))
+    workflow = relationship(
+        "Workflow",
+        foreign_keys=[workflow_id],
+        backref=backref("tasks",
+                        cascade="all, delete-orphan"))
     operation_id = Column(Integer,
                           ForeignKey("operation.id"), nullable=False)
-    operation = relationship("Operation", foreign_keys=[operation_id])
+    operation = relationship(
+        "Operation",
+        foreign_keys=[operation_id])
 
     def __unicode__(self):
         return self.left
@@ -528,7 +542,9 @@ class Workflow(db.Model):
     # Associations
     platform_id = Column(Integer,
                          ForeignKey("platform.id"), nullable=False)
-    platform = relationship("Platform", foreign_keys=[platform_id])
+    platform = relationship(
+        "Platform",
+        foreign_keys=[platform_id])
 
     def __unicode__(self):
         return self.name
