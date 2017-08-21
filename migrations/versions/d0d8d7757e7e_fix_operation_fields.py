@@ -9,8 +9,8 @@ Create Date: 2017-08-01 14:36:52.541609
 
 from alembic import op, context
 from sqlalchemy import Integer, String, Text
-from sqlalchemy.sql import table, column
 from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = 'd0d8d7757e7e'
@@ -51,22 +51,22 @@ def upgrade():
         WHERE locale = 'en' AND id = 194
         """)
 
-    connection.execute("""
-        INSERT INTO operation_form_field_translation(id, locale, label, help)
-            VALUES(21, 'en', 'Comment', 'Comment')
-        """)
-    connection.execute(u"""
-        INSERT INTO operation_form_field_translation(id, locale, label, help)
-            VALUES(21, 'pt', 'Comentário', 'Comentário')
-        """)
-    connection.execute("""
-        INSERT INTO operation_form_field_translation(id, locale, label, help)
-            VALUES(25, 'en', 'Color', 'Color')
-        """)
-    connection.execute(u"""
-        INSERT INTO operation_form_field_translation(id, locale, label, help)
-            VALUES(25, 'pt', 'Cor', 'Cor')
-        """)
+    # connection.execute("""
+    #     INSERT INTO operation_form_field_translation(id, locale, label, help)
+    #         VALUES(21, 'en', 'Comment', 'Comment')
+    #     """)
+    # connection.execute(u"""
+    #     INSERT INTO operation_form_field_translation(id, locale, label, help)
+    #         VALUES(21, 'pt', 'Comentário', 'Comentário')
+    #     """)
+    # connection.execute("""
+    #     INSERT INTO operation_form_field_translation(id, locale, label, help)
+    #         VALUES(25, 'en', 'Color', 'Color')
+    #     """)
+    # connection.execute(u"""
+    #     INSERT INTO operation_form_field_translation(id, locale, label, help)
+    #         VALUES(25, 'pt', 'Cor', 'Cor')
+    #     """)
 
     connection.execute(u"""
         DELETE FROM operation_form_field_translation
@@ -197,8 +197,8 @@ def downgrade():
     connection.execute('DELETE FROM operation_form_translation WHERE id = 110')
     connection.execute('DELETE FROM operation_form WHERE id = 110')
 
-    connection.execute('DELETE FROM operation_form_field_translation WHERE id = 21')
-    connection.execute('DELETE FROM operation_form_field_translation WHERE id = 25')
+    # connection.execute('DELETE FROM operation_form_field_translation WHERE id = 21')
+    # connection.execute('DELETE FROM operation_form_field_translation WHERE id = 25')
     connection.execute("""
         UPDATE operation_form_field
             SET type = 'INTEGER',
@@ -222,7 +222,7 @@ def downgrade():
     columns = [c.name for c in tb.columns]
     data = [
         [207, 'weight', 'TEXT', 0, 4, None, 'attribute-selector', None, None,
-         'EXECUTION', 104],
+         'EXECUTION', 8],
         [253, 'weight', 'TEXT', 0, 4, None, 'attribute-selector', None, None,
          'EXECUTION', 104],
         [258, 'weight', 'TEXT', 0, 4, None, 'attribute-selector', None, None,
