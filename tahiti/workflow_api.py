@@ -272,12 +272,15 @@ class WorkflowImportApi(Resource):
     def post():
         url = request.form.get('url')
         token = request.form.get('token')
-        if not all([url, token]):
-            return {'error': 'Missing url or token parameter',
-                    'status': 'ERROR'}, 401
+        contents = request.formt('source')
 
-        r = urllib2.Request(url, headers={"X-Auth-Token": token})
-        contents = urllib2.urlopen(r).read()
+        if not contents:
+            if not all([url, token]):
+                return {'error': 'Missing url or token parameter',
+                        'status': 'ERROR'}, 401
+
+            r = urllib2.Request(url, headers={"X-Auth-Token": token})
+            contents = urllib2.urlopen(r).read()
         # noinspection PyBroadException
         try:
             original = json.loads(contents)
