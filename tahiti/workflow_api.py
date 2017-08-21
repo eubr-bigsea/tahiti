@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-}
+import logging
+import urllib2
 import uuid
 
-import datetime
-from flask import request, current_app
+from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy.orm import joinedload
 
 from app_auth import requires_auth
 from schema import *
-import logging
 
 log = logging.getLogger(__name__)
 
@@ -264,3 +264,74 @@ class WorkflowDetailApi(Resource):
             import sys
             result = {'status': "ERROR", 'message': sys.exc_info()[1]}
         return result, result_code
+
+
+class WorkflowImportApi(Resource):
+    @staticmethod
+    @requires_auth
+    def post():
+        url = request.form.get('url')
+        token = request.form.get('token')
+        if not all([url, token]):
+            return {'error': 'Missing url or token parameter',
+                    'status': 'ERROR'}, 401
+
+        r = urllib2.Request(url, headers={"X-Auth-Token": token})
+        contents = urllib2.urlopen(r).read()
+        # noinspection PyBroadException
+        try:
+            original = json.loads(contents)
+            platform = original.pop('platform')
+
+            user = g.user
+            original.pop('user')
+            original['platform'] = Platform.query.get(platform['id'])
+            original['user_id'] = user.id
+            original['user_login'] = user.login
+            original['user_name'] = user.name
+            original['platform_id'] = platform['id']
+
+            original_task_ids = {}
+            for task in original['tasks']:
+                task['operation_id'] = task['operation']['id']
+                new_id = str(uuid.uuid1())
+                original_task_ids[task['id']] = new_id
+                task['id'] = new_id
+
+            # updates flows
+            for flow in original['flows']:
+                flow['source_id'] = original_task_ids[flow['source_id']]
+                flow['target_id'] = original_task_ids[flow['target_id']]
+
+            response_schema = WorkflowItemResponseSchema()
+            request_schema = WorkflowCreateRequestSchema()
+
+            form = request_schema.load(original)
+
+            if form.errors:
+                result, result_code = dict(
+                    status="ERROR", message="Validation error",
+                    errors=form.errors), 401
+            else:
+                try:
+                    workflow = form.data
+                    db.session.add(workflow)
+                    db.session.flush()
+                    update_port_name_in_flows(db.session, workflow.id)
+                    db.session.commit()
+                    result, result_code = response_schema.dump(
+                        workflow).data, 200
+                except Exception, e:
+                    log.exception('Error in POST')
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug or True:
+                        result['debug_detail'] = e.message
+                    db.session.rollback()
+
+            return {'status': 'OK', 'message': '',
+                    'workflow': result}, result_code
+
+        except Exception as e:
+            log.exception(e)
+            return 'Invalid workflow', 401
