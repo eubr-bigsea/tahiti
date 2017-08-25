@@ -97,17 +97,10 @@ def upgrade():
         {"key": "p", "value": "p"},
         {"key": "d", "value": "d"}
     ]
-    pie_types = [
-        {"key": "pie",
-         "value": "Pie"},
-        {"key": "donut", "value": "Donut"},
-    ]
     columns = [c.name for c in tb.columns]
     data = [
         [305, 'id_attribute', 'TEXT', 0, 2, None, 'attribute-selector', None,
          None, 'EXECUTION', 85],
-        [306, 'type', 'TEXT', 0, 4, 'pie', 'dropdown', None,
-         json.dumps(pie_types), 'EXECUTION', 85],
         [307, 'x_format', 'TEXT', 0, 7, None, 'select2', None,
          json.dumps(supported_formats), 'EXECUTION', 85],
         [308, 'x_prefix', 'TEXT', 0, 8, None, 'text', None, None, 'EXECUTION',
