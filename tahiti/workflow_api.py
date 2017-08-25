@@ -272,7 +272,7 @@ class WorkflowImportApi(Resource):
     def post():
         url = request.form.get('url')
         token = request.form.get('token')
-        contents = request.form('source')
+        contents = request.form.get('source')
 
         if not contents:
             if not all([url, token]):
