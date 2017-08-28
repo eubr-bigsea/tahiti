@@ -29,7 +29,7 @@ def _insert_operation():
                )
     all_ops = (
         (87, 'plot-chart', 1, 'TRANSFORMATION', 'fa-lemon-o'),
-        (88, 'map', 1, 'TRANSFORMATION', 'fa-map-marker'),
+        (88, 'map-chart', 1, 'TRANSFORMATION', 'fa-map-marker'),
     )
     rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
             all_ops]

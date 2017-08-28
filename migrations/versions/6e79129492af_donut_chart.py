@@ -257,6 +257,9 @@ def _insert_operation_form_field():
         [343, 'x_suffix', 'TEXT', 0, 9, None, 'text', None, None, 'EXECUTION',
          113],
 
+        [345, 'x_title', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
+         113],
+
         # Freq itemset
         [344, 'min_confidence', 'FLOAT', 0, 2, '0.9', 'decimal', None, None,
          'EXECUTION', 3],
@@ -301,6 +304,11 @@ def _insert_operation_form_field_translation():
          u'Min. confidence (for rules generation)'],
         [344, 'pt', u'Confiança mínima (para geração das regras)',
          u'Confiança mínima (para geração das regras)'],
+
+        [345, 'en', u'Inner title',
+         u'Inner title displayed in the center of the donut'],
+        [345, 'pt', u'Título interno',
+         u'Título interno, exibido no centro.'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
