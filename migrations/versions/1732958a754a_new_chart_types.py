@@ -264,6 +264,9 @@ def _insert_operation_form_field():
     ]
     columns = [c.name for c in tb.columns]
     data = [
+        [279, 'series_attribute', 'TEXT', 1, 4, None, 'attribute-selector',
+         None, None, 'EXECUTION', 111],
+
         [311, 'x_axis_attribute', 'TEXT', 1, 0, None, 'attribute-selector',
          None, None, 'EXECUTION', 111],
         [312, 'y_axis_attribute', 'TEXT', 1, 1, None, 'attribute-selector',
@@ -348,6 +351,10 @@ def _insert_operation_form_field_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
+        [279, 'en', 'Attribute used for series (optional)',
+         'Attribute used for series (optional)'],
+        [279, 'pt', 'Atributo usado para séries', 'Atributo usado para séries'],
+
         [311, 'en', 'X-axis attribute', 'X-axis attribute'],
         [311, 'pt', 'Atributo para eixo X', 'Atributo para eixo X'],
         [312, 'en', 'Y-axis attribute', 'Y-axis attribute'],

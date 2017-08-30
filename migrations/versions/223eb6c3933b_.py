@@ -124,7 +124,6 @@ def upgrade():
     data = [
         [305, 'en', 'Optional label attribute (blank: use value as label',
          'Attribute used as label'],
-        [306, 'en', 'Graph type', 'Graph type'],
         [307, 'en', 'X-axis values format',
          'Format to be applied to the values in X-axis'],
         [308, 'en', 'X-axis prefix (added to the value when displaying it)',
@@ -136,7 +135,6 @@ def upgrade():
         [305, 'pt',
          u'Atributo usado como rótulo (vazio: usar o valor como rótulo)',
          u'Atributo usado para o rótulo'],
-        [306, 'pt', u'Tipo de gráfico', u'Tipo de gráfico'],
         [307, 'pt', u'Formato para eixo X', u'Formato para valores eixo X'],
         [308, 'pt', u'Prefixo para eixo X',
          u'Prefixo para eixo X (adicionado ao valor ao exibi-lo)'],
