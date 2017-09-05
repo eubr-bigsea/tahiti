@@ -359,7 +359,7 @@ def _insert_operation_form_field():
 
     modes = [
         {"key": "PERMISSIVE", "value": "Convert invalid data to NULL"},
-        {"key": "DROPMALFORMED", "value": "Ignore whole corrupeted record"},
+        {"key": "DROPMALFORMED", "value": "Ignore whole corrupted record"},
         {"key": "FAILFAST", "value": "Stop processing and raise error"},
     ]
     data = [
