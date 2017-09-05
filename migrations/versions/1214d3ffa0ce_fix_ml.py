@@ -123,11 +123,11 @@ def _add_field_apply_model():
 
     columns = [c.name for c in tb.columns]
     data = [
-        [346, 'features', 'TEXT', 1, 2, None, 'attribute-selector', None, None,
+        [346, 'features', 'TEXT', 1, 1, None, 'attribute-selector', None, None,
          'EXECUTION', 52],
         # Clustering model
-        [347, 'prediction', 'TEXT', 0, 2, 'prediction', 'text', None, None, 'EXECUTION',
-         10],
+        [347, 'prediction', 'TEXT', 0, 2, 'prediction', 'text', None, None,
+         'EXECUTION', 10],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -154,7 +154,7 @@ def _add_field_apply_model():
     op.bulk_insert(tb, rows)
 
 
-def _add_output_to_classification_model():
+def _add_output_to_classification_and_clustering_models():
     tb = table(
         'operation_port',
         column('id', Integer),
@@ -167,8 +167,9 @@ def _add_output_to_classification_model():
     columns = [c.name for c in tb.columns]
     data = [
         [
-            200, 'OUTPUT', None, 1, 1, 'MANY', 'output data'
-        ]
+            200, 'OUTPUT', None, 1, 1, 'MANY', 'output data',
+        ],
+        [202, 'OUTPUT', None, 10, 3, 'MANY', 'cluster centroids'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -179,7 +180,10 @@ def _add_output_to_classification_model():
         column('operation_port_interface_id', Integer), )
 
     columns = [c.name for c in tb.columns]
-    data = [[200, 1]]
+    data = [
+        [200, 1],
+        [202, 1]
+    ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
@@ -194,6 +198,9 @@ def _add_output_to_classification_model():
     data = [
         (200, 'en', 'output data', 'Output data'),
         (200, 'pt', u'dados de saída', u'Dados de saída'),
+
+        (202, 'en', 'cluster centroids', 'Cluster centroids'),
+        (202, 'pt', u'centroides do agrupamento', u'Centroides do agrupamento'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -297,14 +304,14 @@ all_commands = [
          'DELETE FROM operation_form_field WHERE id IN (346, 347)'],
     ],
     [
-        _add_output_to_classification_model,
+        _add_output_to_classification_and_clustering_models,
         [
             '''
             DELETE FROM operation_port_interface_operation_port
-            WHERE operation_port_id = 200
+            WHERE operation_port_id IN (200, 202)
             ''',
-            '''DELETE FROM operation_port_translation WHERE id = 200''',
-            '''DELETE FROM operation_port WHERE id = 200''',
+            '''DELETE FROM operation_port_translation WHERE id IN (200, 202)''',
+            '''DELETE FROM operation_port WHERE id IN (200, 202)''',
 
         ],
     ],
@@ -353,6 +360,8 @@ all_commands = [
             DELETE FROM operation_port_interface_operation_port
             WHERE operation_port_id = 201
             ''',
+            '''DELETE FROM operation_port_interface_operation_port
+                WHERE operation_port_id = 201''',
             '''DELETE FROM operation_port_translation WHERE id = 201''',
             '''DELETE FROM operation_port WHERE id = 201''',
 
