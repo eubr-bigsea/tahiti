@@ -576,8 +576,12 @@ all_commands = [
         '''DELETE FROM operation_port_interface_operation_port
             WHERE operation_port_id = 93 AND
             operation_port_interface_id = 20'''
+    ],
+    # Scatter plot
+    [
+        '''UPDATE operation SET slug = 'scatter-plot' WHERE id = 87''',
+        '''UPDATE operation SET slug = 'plot-chart' WHERE id = 87''',
     ]
-
 ]
 
 
