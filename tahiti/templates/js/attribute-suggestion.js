@@ -18,8 +18,8 @@ var TahitiAttributeSuggester = (function () {
                         function(item) {return item.attributes;}));
     };
     var cloneDeep = function(o){
-      let newO
-      let i
+      var newO
+      var i
 
       if (typeof o !== 'object') return o
 
@@ -132,25 +132,24 @@ var TahitiAttributeSuggester = (function () {
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs).sort(caseInsensitiveComparator);
     };
     var joinSuffixDuplicatedAttributes = function(task) {
-        /* Group attributes by name */
-        let groupedFields = flatArrayOfArrays(task.uiPorts.inputs).reduce(function(acc, val){
-            (acc[val] = acc[val] || []).push(val);
-            return acc;
-        }, {});
-        /* Change the name of duplicated attributes, suffixing a number */
-        let result = [];
-        for(var property in groupedFields) {
-            if (groupedFields.hasOwnProperty(property)) {
-                if (groupedFields[property].length > 1){
-                    for(var i = 0; i < groupedFields[property].length - 1; i++){
-                        result.push(property + '_' + i);
-                    }
-                } else {
-                    result.push(property);
-                }
+
+        var prefix = task.forms['aliases'];
+        var finalPrefix = ['ds0_', 'ds1_']
+        if (prefix && prefix.value){
+            var parts = prefix.value.split(',');
+            if (parts.length == 2){
+                finalPrefix = parts.map(function(v) { return v.trim()})
             }
         }
-        //task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
+        var result = [];
+        sorted_ports = task.uiPorts.inputs.sort(
+            function(a, b) {return a.targetPortId - b.targetPortId}
+        );
+        for(var p = 0; p < 2; p++){
+            for(var i =0; i < sorted_ports[p].attributes.length; i++){
+                result.push(finalPrefix[p] + sorted_ports[p].attributes[i]);
+            }
+        }
         task.uiPorts.output = result.sort(caseInsensitiveComparator);
     }
     var copyInputAddAttributesSplitAlias = function(task, attributes, alias, suffix){
@@ -175,7 +174,7 @@ var TahitiAttributeSuggester = (function () {
     }
 
     var copyFromOnlyOneInput = function(task, id) {
-        let inputs = task.uiPorts.inputs.filter(
+        var inputs = task.uiPorts.inputs.filter(
             function(input) {
                 return parseInt(input.targetPortId) === parseInt(id);
             }) || [];
