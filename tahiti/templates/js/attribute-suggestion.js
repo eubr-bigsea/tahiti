@@ -145,12 +145,14 @@ var TahitiAttributeSuggester = (function () {
         sorted_ports = task.uiPorts.inputs.sort(
             function(a, b) {return a.targetPortId - b.targetPortId}
         );
-        for(var p = 0; p < 2; p++){
-            for(var i =0; i < sorted_ports[p].attributes.length; i++){
-                result.push(finalPrefix[p] + sorted_ports[p].attributes[i]);
+        if (sorted_ports.length == 2) {
+            for(var p = 0; p < sorted_ports.length; p++){
+                for(var i =0; i < sorted_ports[p].attributes.length; i++){
+                    result.push(finalPrefix[p] + sorted_ports[p].attributes[i]);
+                }
             }
+            task.uiPorts.output = result.sort(caseInsensitiveComparator);
         }
-        task.uiPorts.output = result.sort(caseInsensitiveComparator);
     }
     var copyInputAddAttributesSplitAlias = function(task, attributes, alias, suffix){
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
