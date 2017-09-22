@@ -167,9 +167,6 @@ var TahitiAttributeSuggester = (function () {
                 var attr = task.forms[attributes].value[aliases.length];
                 aliases.push(attr + suffix);
             }
-        } else {
-            console.error('Alias ' + alias + ' does not exist for task ' +
-                task.id + '(' + task.operation.slug + ')');
         }
         Array.prototype.push.apply(task.uiPorts.output, aliases);
         task.uiPorts.output.sort(caseInsensitiveComparator);
