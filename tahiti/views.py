@@ -3,8 +3,7 @@ from flask import render_template, make_response
 from flask.views import MethodView
 from sqlalchemy.orm import joinedload, Load
 
-from tahiti.models import Operation, OperationScript, db, ScriptType, \
-    OperationCategory
+from tahiti.models import Operation, OperationScript, db, ScriptType
 
 
 class AttributeSuggestionView(MethodView):
@@ -28,7 +27,8 @@ class AttributeSuggestionView(MethodView):
         response = make_response(render_template('/js/attribute-suggestion.js',
                                                  **context))
         response.headers.set('Content-Type', 'application/javascript')
-        response.headers('Cache-Control', 'no-cache, no-store, must-revalidate')
-        response.headers('Pragma', 'no-cache')
-        response.headers('Expires', '0')
+        response.headers.set('Cache-Control',
+                             'no-cache, no-store, must-revalidate')
+        response.headers.set('Pragma', 'no-cache')
+        response.headers.set('Expires', '0')
         return response
