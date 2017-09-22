@@ -20,12 +20,15 @@ class AttributeSuggestionView(MethodView):
             .filter(OperationScript.enabled) \
             .filter(OperationScript.type == ScriptType.JS_CLIENT)
 
-        data_sources = Operation.query.join(Operation.categories)\
-            .options(Load(Operation).load_only('id'))\
-            .filter(OperationCategory.type == 'data source')
+        # data_sources = Operation.query.join(Operation.categories)\
+        #     .options(Load(Operation).load_only('id'))\
+        #     .filter(OperationCategory.type == 'data source')
 
         context = {'operations': operations}
         response = make_response(render_template('/js/attribute-suggestion.js',
                                                  **context))
         response.headers.set('Content-Type', 'application/javascript')
+        response.headers('Cache-Control', 'no-cache, no-store, must-revalidate')
+        response.headers('Pragma', 'no-cache')
+        response.headers('Expires', '0')
         return response
