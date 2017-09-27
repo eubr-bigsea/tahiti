@@ -120,8 +120,15 @@ var TahitiAttributeSuggester = (function () {
          }
          task.uiPorts.output.sort(caseInsensitiveComparator);
     }
-    var copyAllInputsRemoveDuplicated = function(task) {
+    var copyAllInputsRemoveDuplicated = function(task, field) {
         var attrs = flatArrayOfArrays(task.uiPorts.inputs).sort(caseInsensitiveComparator);
+        if (field && task.forms[field] && task.forms[field].value){
+            attrs = [];
+            var newNames = task.forms[field] && task.forms[field].value.split(',');
+            for(var i = 0; i < newNames.length; i++){
+                attrs.push(newNames[i]);
+            }
+        }
         task.uiPorts.output = attrs.filter(
             function(item, index, inputArray ) {
                 return inputArray.indexOf(item) === index;
