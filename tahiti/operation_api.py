@@ -89,6 +89,9 @@ class OperationListApi(Resource):
                 else:
                     operations = operations.filter(
                         Operation.platforms.any(enabled=True, slug=platform))
+            else:
+                operations = operations.filter(
+                    Operation.platforms.any(enabled=True))
 
             name = request.args.get('name', '')
             # SqlAlchemy-i18n is not working when a filter
