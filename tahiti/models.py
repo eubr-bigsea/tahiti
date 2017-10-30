@@ -485,6 +485,7 @@ class Task(db.Model):
     # Fields
     id = Column(String(250), primary_key=True,
                 autoincrement=False)
+    name = Column(String(200))
     left = Column(Integer, nullable=False)
     top = Column(Integer, nullable=False)
     z_index = Column(Integer, nullable=False)
@@ -509,7 +510,7 @@ class Task(db.Model):
         foreign_keys=[operation_id])
 
     def __unicode__(self):
-        return self.left
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)

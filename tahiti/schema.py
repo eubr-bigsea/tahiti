@@ -750,6 +750,7 @@ class PlatformItemResponseSchema(Schema):
 class TaskListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.String(required=True)
+    name = fields.String(required=False, allow_none=True)
     left = fields.Integer(required=True)
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
@@ -772,6 +773,7 @@ class TaskListResponseSchema(Schema):
 class TaskCreateRequestSchema(Schema):
     """ JSON serialization schema """
     id = fields.String(required=True)
+    name = fields.String(required=False, allow_none=True)
     left = fields.Integer(required=True)
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
@@ -792,6 +794,7 @@ class TaskCreateRequestSchema(Schema):
 class TaskItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.String(required=True)
+    name = fields.String(required=False, allow_none=True)
     left = fields.Integer(required=True)
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
@@ -814,6 +817,7 @@ class TaskItemResponseSchema(Schema):
 class TaskExecuteRequestSchema(Schema):
     """ JSON schema for executing tasks """
     id = fields.String(required=True)
+    name = fields.String(required=False, allow_none=True)
     left = fields.Integer(required=True)
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
