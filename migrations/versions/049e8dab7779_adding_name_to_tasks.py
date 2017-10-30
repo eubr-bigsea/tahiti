@@ -105,6 +105,30 @@ all_commands = [
      'WHERE id IN (SELECT id FROM operation_form_field '
      '   WHERE (id BETWEEN 369 AND 369))'),
     (add_name_to_task, remove_name_from_task,),
+    (
+        """
+        UPDATE operation_form_field SET `values`= '{}' WHERE id = 111
+        """.format(json.dumps([
+            {
+                "key": "simple",
+                "value": "Simple, use spaces as delimiters"
+            },
+            {
+                "key": "regex",
+                "value": "Use regular expression to determine delimiters"
+            }])),
+        """
+        UPDATE operation_form_field SET `values`= '{}' WHERE id = 111
+        """.format(json.dumps([
+            {
+                "key": "simple",
+                "value": "Simple, use spaces and punctuation as delimiters"
+            },
+            {
+                "key": "regex",
+                "value": "Use regular expression to determine delimiters"
+            }]))
+    )
 ]
 
 
