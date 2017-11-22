@@ -244,7 +244,7 @@ def _insert_operation_form_field():
          None, 'EXECUTION', 9],
 
         # For NaiveBayes
-        [375, 'model_type', 'TEXT', 0, 1, None, 'lookup', None,
+        [375, 'model_type', 'TEXT', 0, 1, None, 'dropdown', None,
          json.dumps([
              {'key': 'multinomial', 'value': 'Multinomial (default)'},
              {'key': 'bernoulli', 'value': 'Bernoulli'}]), 'EXECUTION', 64],
@@ -260,7 +260,7 @@ def _insert_operation_form_field():
          'EXECUTION', 68],
         [381, 'seed', 'INTEGER', 0, 3, None, 'integer', None, None,
          'EXECUTION', 68],
-        [382, 'solver', 'TEXT', 0, 4, None, 'lookup', None,
+        [382, 'solver', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'l-bfgs', 'value': 'l-bfgs'},
              {'key': 'gd', 'value': 'gd'}]), 'EXECUTION', 68],
@@ -282,7 +282,7 @@ def _insert_operation_form_field():
          'EXECUTION', 66],
         [390, 'min_instances_per_node', 'INTEGER', 0, 6, 1, 'integer', None,
          None, 'EXECUTION', 66],
-        [391, 'impurity', 'TEXT', 0, 2, None, 'lookup', None,
+        [391, 'impurity', 'TEXT', 0, 2, None, 'dropdown', None,
          json.dumps([
              {'key': 'entropy', 'value': 'Entropy'},
              {'key': 'gini', 'value': 'Gini'}]), 'EXECUTION', 66],
@@ -292,7 +292,7 @@ def _insert_operation_form_field():
          'EXECUTION', 67],
         [393, 'check_point_interval', 'INTEGER', 0, 2, None, 'integer', None,
          None, 'EXECUTION', 67],
-        [394, 'loss_type', 'TEXT', 0, 3, 'logistic', 'lookup', None,
+        [394, 'loss_type', 'TEXT', 0, 3, 'logistic', 'dropdown', None,
          json.dumps([
              {'key': 'logistic', 'value': 'Logistic'}]), 'EXECUTION', 67],
         [395, 'max_bins', 'INTEGER', 0, 4, None, 'integer', None,
@@ -663,7 +663,7 @@ all_commands = [
             0, 3, 'text', 'EXECUTION', 34)
     """),
     ("""UPDATE operation_form_field SET
-    suggested_widget = 'lookup' WHERE id = 149""",
+    suggested_widget = 'dropdown' WHERE id = 149""",
      """UPDATE operation_form_field SET suggested_widget =
         'multi-select-dropdown' WHERE id = 149"""),
 
