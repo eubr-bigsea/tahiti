@@ -109,6 +109,18 @@ class DataType:
                 if n[0] != '_' and n != 'values']
 
 
+# noinspection PyClassHasNoInit
+class PermissionType:
+    READ = 'READ'
+    WRITE = 'WRITE'
+    EXECUTE = 'EXECUTE'
+
+    @staticmethod
+    def values():
+        return [n for n in PermissionType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
+
 class Application(db.Model):
     """ Any external application that can be ran by Juicer """
     __tablename__ = 'application'
@@ -536,6 +548,11 @@ class Workflow(db.Model):
                      onupdate=datetime.datetime.utcnow)
     version = Column(Integer, nullable=False)
     image = Column(String(1000))
+    is_template = Column(Boolean,
+                         default=False, nullable=False)
+    is_public = Column(Boolean,
+                       default=False, nullable=False)
+    template_code = Column(Text)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }
@@ -549,6 +566,64 @@ class Workflow(db.Model):
 
     def __unicode__(self):
         return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class WorkflowHistory(db.Model):
+    """ Stores previous versions of the workflow. """
+    __tablename__ = 'workflow_history'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    version = Column(Integer, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(50), nullable=False)
+    user_name = Column(String(200), nullable=False)
+    date = Column(DateTime,
+                  default=datetime.datetime.utcnow, nullable=False)
+    content = Column(Text, nullable=False)
+
+    # Associations
+    workflow_id = Column(Integer,
+                         ForeignKey("workflow.id"), nullable=False)
+    workflow = relationship(
+        "Workflow",
+        foreign_keys=[workflow_id],
+        backref=backref("versions",
+                        cascade="all, delete-orphan"))
+
+    def __unicode__(self):
+        return self.version
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class WorkflowPermission(db.Model):
+    """ Associate users and permissions """
+    __tablename__ = 'workflow_permission'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    permission = Column(Enum(*PermissionType.values(),
+                             name='PermissionTypeEnumType'), nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(50), nullable=False)
+    user_name = Column(String(200), nullable=False)
+
+    # Associations
+    workflow_id = Column(Integer,
+                         ForeignKey("workflow.id"), nullable=False)
+    workflow = relationship(
+        "Workflow",
+        foreign_keys=[workflow_id],
+        backref=backref("permissions",
+                        cascade="all, delete-orphan"))
+
+    def __unicode__(self):
+        return self.permission
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
