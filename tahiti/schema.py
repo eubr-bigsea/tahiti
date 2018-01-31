@@ -858,6 +858,11 @@ class WorkflowExecuteRequestSchema(Schema):
                               default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
+    is_template = fields.Boolean(required=True, missing=False,
+                                 default=False)
+    is_public = fields.Boolean(required=True, missing=False,
+                               default=False)
+    template_code = fields.String(required=False, allow_none=True)
     tasks = fields.Nested(
         'tahiti.schema.TaskExecuteRequestSchema',
         allow_none=True,
@@ -869,6 +874,10 @@ class WorkflowExecuteRequestSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformExecuteRequestSchema',
         required=True)
+    permissions = fields.Nested(
+        'tahiti.schema.WorkflowPermissionExecuteRequestSchema',
+        allow_none=True,
+        many=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -893,6 +902,10 @@ class WorkflowListResponseSchema(Schema):
                               default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
+    is_template = fields.Boolean(required=True, missing=False,
+                                 default=False)
+    is_public = fields.Boolean(required=True, missing=False,
+                               default=False)
     tasks = fields.Nested(
         'tahiti.schema.TaskListResponseSchema',
         allow_none=True,
@@ -904,6 +917,10 @@ class WorkflowListResponseSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformListResponseSchema',
         required=True)
+    permissions = fields.Nested(
+        'tahiti.schema.WorkflowPermissionListResponseSchema',
+        allow_none=True,
+        many=True)
     user = fields.Function(
         lambda x: {
             "id": x.user_id,
@@ -930,6 +947,10 @@ class WorkflowCreateRequestSchema(Schema):
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
     image = fields.String(required=False, allow_none=True)
+    is_template = fields.Boolean(required=True, missing=False,
+                                 default=False)
+    is_public = fields.Boolean(required=True, missing=False,
+                               default=False)
     tasks = fields.Nested(
         'tahiti.schema.TaskCreateRequestSchema',
         allow_none=True,
@@ -939,6 +960,10 @@ class WorkflowCreateRequestSchema(Schema):
         allow_none=True,
         many=True)
     platform_id = fields.Integer(required=True)
+    permissions = fields.Nested(
+        'tahiti.schema.WorkflowPermissionCreateRequestSchema',
+        allow_none=True,
+        many=True)
     user = fields.Nested(
         'tahiti.schema.UserCreateRequestSchema',
         allow_none=True)
@@ -966,6 +991,10 @@ class WorkflowItemResponseSchema(Schema):
                               default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
+    is_template = fields.Boolean(required=True, missing=False,
+                                 default=False)
+    is_public = fields.Boolean(required=True, missing=False,
+                               default=False)
     tasks = fields.Nested(
         'tahiti.schema.TaskItemResponseSchema',
         allow_none=True,
@@ -977,6 +1006,10 @@ class WorkflowItemResponseSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformItemResponseSchema',
         required=True)
+    permissions = fields.Nested(
+        'tahiti.schema.WorkflowPermissionItemResponseSchema',
+        allow_none=True,
+        many=True)
     user = fields.Function(
         lambda x: {
             "id": x.user_id,
@@ -988,6 +1021,105 @@ class WorkflowItemResponseSchema(Schema):
     def make_object(self, data):
         """ Deserialize data into an instance of Workflow"""
         return Workflow(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowHistoryListResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    version = fields.Integer(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    date = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                           default=datetime.datetime.utcnow)
+    content = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowHistory"""
+        return WorkflowHistory(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowHistoryItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    version = fields.Integer(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    date = fields.DateTime(required=True, missing=datetime.datetime.utcnow,
+                           default=datetime.datetime.utcnow)
+    content = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowHistory"""
+        return WorkflowHistory(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowPermissionListResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    permission = fields.String(required=True,
+                               validate=[OneOf(PermissionType.__dict__.keys())])
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowPermission"""
+        return WorkflowPermission(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowPermissionItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    permission = fields.String(required=True,
+                               validate=[OneOf(PermissionType.__dict__.keys())])
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowPermission"""
+        return WorkflowPermission(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowPermissionCreateRequestSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    permission = fields.String(required=True,
+                               validate=[OneOf(PermissionType.__dict__.keys())])
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowPermission"""
+        return WorkflowPermission(**data)
 
     class Meta:
         ordered = True
