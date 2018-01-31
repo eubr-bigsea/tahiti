@@ -160,6 +160,10 @@ class WorkflowListApi(Resource):
                 db.session.commit()
                 result, result_code = response_schema.dump(
                     workflow).data, 200
+                if workflow.is_template:
+                    workflow.template_code = result
+                    db.session.add(workflow)
+                    db.session.commit()
             except Exception, e:
                 log.exception('Error in POST')
                 result, result_code = dict(status="ERROR",
@@ -237,9 +241,23 @@ class WorkflowDetailApi(Resource):
                     try:
                         form.data.id = workflow_id
                         form.data.updated = datetime.datetime.utcnow()
+
                         workflow = db.session.merge(form.data)
                         db.session.flush()
                         update_port_name_in_flows(db.session, workflow.id)
+                        db.session.commit()
+
+                        historical_data = json.dumps(
+                            response_schema.dump(workflow).data)
+                        # if workflow.is_template:
+                        #     workflow.template_code = historical_data
+
+                        history = WorkflowHistory(
+                            user_id=g.user.id, user_name=g.user.name,
+                            user_login=g.user.login,
+                            version=workflow.version,
+                            workflow=workflow, content=historical_data)
+                        db.session.add(history)
                         db.session.commit()
 
                         if workflow is not None:
