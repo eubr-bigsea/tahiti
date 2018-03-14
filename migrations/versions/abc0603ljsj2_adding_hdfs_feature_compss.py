@@ -660,17 +660,17 @@ all_commands = [
             WHERE id=3053;"""),
     ("""UPDATE platform_translation
             SET description = 'COMPSs 2.2 Camellia - Execution platform'
-            WHERE id = 3 and locale = `en`;
+            WHERE id = 3 and locale = 'en';
         UPDATE platform_translation
             SET description = 'COMPSs 2.2 Camellia - Plataforma de execução'
-            WHERE id = 3 and locale = `pt`;
+            WHERE id = 3 and locale = 'pt';
     ""","""
         UPDATE platform_translation
             SET description = 'COMPSs 2.1 Bougainvillea - Execution platform'
-            WHERE id = 3 and locale = `en`;
+            WHERE id = 3 and locale = 'en';
         UPDATE platform_translation
             SET description = 'COMPSs 2.1 Bougainvillea - Plataforma de execução'
-            WHERE id = 3 and locale = `pt`;
+            WHERE id = 3 and locale = 'pt';
     """),
     ("""
         UPDATE operation_form_field
