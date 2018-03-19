@@ -1,0 +1,409 @@
+# coding=utf-8
+"""Kafka consumer operation
+
+Revision ID: 08486c333c57
+Revises: 500f09c2325d
+Create Date: 2017-12-13 11:10:35.579289
+
+"""
+import json
+
+from alembic import context
+from alembic import op
+from sqlalchemy import Integer, String, Text
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import table, column
+
+# revision identifiers, used by Alembic.
+revision = '08486c333c57'
+down_revision = '500f09c2325d'
+branch_labels = None
+depends_on = None
+
+STREAM_CONSUMER_ID = 97
+STREAM_CONSUMER_FORM_ID = 122
+
+APPEARANCE_FORM_ID = 41
+RESULTS_FORM_ID = 110
+
+
+def _insert_operation():
+    tb = table('operation',
+               column("id", Integer),
+               column("slug", String),
+               column('enabled', Integer),
+               column('type', String),
+               column('icon', String), )
+    columns = [c.name for c in tb.columns]
+    data = [
+        (STREAM_CONSUMER_ID, 'stream-consumer', 1, 'TRANSFORMATION',
+         'fa-angle-double-right'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_translation():
+    tb = table(
+        'operation_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String),
+        column('description', String), )
+    columns = [c.name for c in tb.columns]
+    data = [
+        (STREAM_CONSUMER_ID, 'en', 'Data stream consumer',
+         'Consumes a stream of data. Data can be consumed using different '
+         'types of window (time, size, etc).'),
+        (STREAM_CONSUMER_ID, 'pt', u'Consumir fluxo de dados',
+         u'Consume um fluxo de dados. Dados podem ser consumidos usando-se '
+         u'diferentes tipos de janela (tempo, tamanho, etc).'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_platform():
+    tb = table(
+        'operation_platform',
+        column('operation_id', Integer),
+        column('platform_id', Integer))
+    columns = [c.name for c in tb.columns]
+    data = [
+        (STREAM_CONSUMER_ID, 1),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_form():
+    tb = table(
+        'operation_form',
+        column('id', Integer),
+        column('enabled', Integer),
+        column('order', Integer),
+        column('category', String), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (STREAM_CONSUMER_FORM_ID, 1, 1, 'execution'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_operation_form():
+    tb = table(
+        'operation_operation_form',
+        column('operation_id', Integer),
+        column('operation_form_id', Integer))
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (STREAM_CONSUMER_ID, STREAM_CONSUMER_FORM_ID),
+        (STREAM_CONSUMER_ID, APPEARANCE_FORM_ID),
+        (STREAM_CONSUMER_ID, RESULTS_FORM_ID),
+        (STREAM_CONSUMER_ID, RESULTS_FORM_ID),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_form_translation():
+    tb = table(
+        'operation_form_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String)
+    )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (STREAM_CONSUMER_FORM_ID, 'en', 'Execution'),
+        (STREAM_CONSUMER_FORM_ID, 'pt', 'Execução'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_form_field():
+    tb = table(
+        'operation_form_field',
+        column('id', Integer),
+        column('name', String),
+        column('type', String),
+        column('required', Integer),
+        column('order', Integer),
+        column('default', Text),
+        column('suggested_widget', String),
+        column('values_url', String),
+        column('values', String),
+        column('scope', String),
+        column('form_id', Integer), )
+
+    columns = [c.name for c in tb.columns]
+
+    source_type = [
+        {"key": "kafka", "value": "Apache Kafka source"},
+        {"key": "hdfs", "value": "HDFS directory"},
+    ]
+    window_type = [
+        {"key": "seconds", "value": "Seconds"},
+        {"key": "size", "value": "Size"},
+    ]
+
+    data = [
+        (429, 'source_type', 'TEXT', 1, 1, 'hdfs', 'dropdown', None,
+         json.dumps(source_type), 'EXECUTION', STREAM_CONSUMER_FORM_ID),
+
+        (430, 'window_type', 'TEXT', 1, 2, 'seconds', 'dropdown', None,
+         json.dumps(window_type), 'EXECUTION', STREAM_CONSUMER_FORM_ID),
+
+        (431, 'data_source', 'TEXT', 1, 3, None, 'lookup',
+         '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`', None,
+         'EXECUTION', STREAM_CONSUMER_FORM_ID),
+
+        (432, 'window_size', 'INTEGER', 1, 4, '2', 'integer', None, None,
+         'EXECUTION', STREAM_CONSUMER_FORM_ID),
+
+        (433, 'broker_url', 'TEXT', 1, 5, None, 'text', None, None,
+         'EXECUTION', STREAM_CONSUMER_FORM_ID),
+
+        (434, 'topic', 'TEXT', 0, 6, None, 'text', None, None,
+         'EXECUTION', STREAM_CONSUMER_FORM_ID),
+
+        (435, 'group', 'TEXT', 0, 7, None, 'text', None, None,
+         'EXECUTION', STREAM_CONSUMER_FORM_ID),
+
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_form_field_translation():
+    tb = table(
+        'operation_form_field_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('label', String),
+        column('help', String), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (429, 'en', 'Source type',
+         'Source type from which data will be consumed.'),
+        (429, 'pt', u'Tipo de fonte',
+         u'Tipo de fonte de onde os dados serão consumidos.'),
+
+        (430, 'en', 'Window type',
+         'Window type. How data is consumed, in time or quantity fashion.'),
+        (430, 'pt', 'Tipo de janela',
+         'Tipo de janela. Indica como os dados são consumidos, por tempo '
+         'ou por quantidade'),
+
+        (431, 'en', 'Data source used for schema',
+         'Define the format of the data being read in the stream. '
+         'The data source and stream must be in the same format and have the '
+         'same attributes.'),
+        (431, 'pt', 'Fonte de dados usada para o esquema',
+         'Define o formato dos dados a serem lidos pelo fluxo (stream). '
+         'A fonte de dados e o fluxo devem ter o mesmo formato e os mesmos '
+         'atributos.'),
+
+        (432, 'en', 'Window size',
+         'Window size. Defines the time in seconds or the amount of records '
+         'processed in each window.'),
+        (432, 'pt', 'Tamanho da janela',
+         'Tamanho da janela. Determina o tempo em segundos ou '
+         'quantidade de registros processados.'),
+
+        (433, 'en', 'Broker URL',
+         'Broker URL. URL used to connect to the source broker (service). '
+         'For HDFS, it is the full path to the directory containing files.'),
+        (433, 'pt', 'URL para o broker',
+         'URL para o broker. URL usada para conectar ao broker provedor '
+         'dos dados (serviço). Para o HDFS, é o caominho completo para o '
+         'diretório contendo os arquivos.'),
+
+        (434, 'en', 'Topic',
+         'Topic. Optional, used by some brokers.'),
+        (434, 'pt', 'Tópico',
+         'T4pico. Opcional, usado por alguns brokers.'),
+
+        (435, 'en', 'Group', 'Group. Optional, used by some brokers.'),
+        (435, 'pt', 'Grupo',
+         'Grupo. Opcional, usado por alguns brokers.'),
+
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_category_operation():
+    tb = table(
+        'operation_category_operation',
+        column('operation_id', Integer),
+        column('operation_category_id', Integer))
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (STREAM_CONSUMER_ID, 3),
+        (STREAM_CONSUMER_ID, 6),
+    ]
+    rows = [dict(zip(columns, cat)) for cat in data]
+
+    op.bulk_insert(tb, rows)
+
+
+#
+def _insert_operation_port():
+    tb = table(
+        'operation_port',
+        column('id', Integer),
+        column('type', String),
+        column('tags', String),
+        column('operation_id', Integer),
+        column('order', Integer),
+        column('multiplicity', String),
+        column('slug', String), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (222, 'OUTPUT', None, STREAM_CONSUMER_ID, 1, 'MANY', 'output data'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_port_translation():
+    tb = table(
+        'operation_port_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String),
+        column('description', String), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (222, 'en', 'output data', 'Output data'),
+        (222, 'pt', 'dados de saída', 'Dados de saída'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_port_interface_operation_port():
+    tb = table(
+        'operation_port_interface_operation_port',
+        column('operation_port_id', Integer),
+        column('operation_port_interface_id', Integer), )
+
+    columns = [c.name for c in tb.columns]
+    data = [
+        (222, 1),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+all_commands = [
+    (_insert_operation,
+     'DELETE FROM operation WHERE id IN ({}, {})'.format(
+         STREAM_CONSUMER_ID, STREAM_CONSUMER_ID)),
+
+    (_insert_operation_translation,
+     'DELETE FROM operation_translation WHERE id IN ({}, {})'.format(
+         STREAM_CONSUMER_ID, STREAM_CONSUMER_ID)),
+    (_insert_operation_platform,
+     'DELETE FROM operation_platform '
+     'WHERE platform_id = 1 AND operation_id IN ({}, {})'.format(
+         STREAM_CONSUMER_ID, STREAM_CONSUMER_ID)),
+    (_insert_operation_category_operation,
+     'DELETE from operation_category_operation '
+     'WHERE operation_id IN ({}, {})'.format(STREAM_CONSUMER_ID,
+                                             STREAM_CONSUMER_ID)),
+    (_insert_operation_port,
+     "DELETE FROM operation_port WHERE id in (222)"),
+    (_insert_operation_port_translation,
+     "DELETE FROM operation_port_translation WHERE id in "
+     "(222)"),
+
+    (_insert_operation_port_interface_operation_port,
+     "DELETE FROM operation_port_interface_operation_port "
+     "WHERE operation_port_id in (222)"),
+
+    (_insert_operation_form,
+     'DELETE FROM operation_form WHERE id IN ({0}, {1})'.format(
+         STREAM_CONSUMER_FORM_ID, STREAM_CONSUMER_FORM_ID)),
+    (_insert_operation_operation_form,
+     'DELETE FROM operation_operation_form '
+     'WHERE operation_id IN ({0}, {1})'.format(STREAM_CONSUMER_ID,
+                                               STREAM_CONSUMER_ID)),
+    (_insert_operation_form_translation,
+     'DELETE FROM operation_form_translation  WHERE id IN ({0}, {1})'.format(
+         STREAM_CONSUMER_FORM_ID, STREAM_CONSUMER_FORM_ID)),
+    (_insert_operation_form_field,
+     'DELETE FROM operation_form_field WHERE form_id IN ({0}, {1})'.format(
+         STREAM_CONSUMER_FORM_ID, STREAM_CONSUMER_FORM_ID)),
+    (_insert_operation_form_field_translation,
+     'DELETE FROM operation_form_field_translation '
+     'WHERE id IN (SELECT id FROM operation_form_field '
+     '   WHERE form_id IN ({0}, {1}))'.format(STREAM_CONSUMER_FORM_ID,
+                                              STREAM_CONSUMER_FORM_ID)),
+    (
+        '''INSERT INTO
+        operation_script(id, `type`, enabled, body, operation_id)
+        VALUES (45, 'JS_CLIENT', '1',
+        'copyInputAddField(task, "output_attribute", false, "value");',
+            {})'''.format(STREAM_CONSUMER_ID),
+        '''DELETE FROM operation_script WHERE id = 45'''
+    ),
+]
+
+
+def upgrade():
+    ctx = context.get_context()
+    session = sessionmaker(bind=ctx.bind)()
+    connection = session.connection()
+
+    try:
+        for cmd in all_commands:
+            if isinstance(cmd[0], (unicode, str)):
+                connection.execute(cmd[0])
+            elif isinstance(cmd[0], list):
+                for row in cmd[0]:
+                    connection.execute(row)
+            else:
+                cmd[0]()
+    except:
+        session.rollback()
+        raise
+    session.commit()
+
+
+def downgrade():
+    ctx = context.get_context()
+    session = sessionmaker(bind=ctx.bind)()
+    connection = session.connection()
+
+    try:
+        for cmd in reversed(all_commands):
+            if isinstance(cmd[1], (unicode, str)):
+                connection.execute(cmd[1])
+            elif isinstance(cmd[1], list):
+                for row in cmd[1]:
+                    connection.execute(row)
+            else:
+                cmd[1]()
+    except:
+        session.rollback()
+        raise
+    session.commit()
