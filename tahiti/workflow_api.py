@@ -25,7 +25,7 @@ def optimize_workflow_query(workflows):
 
 def update_port_name_in_flows(session, workflow_id):
     sql = """
-        UPDATE flow, operation_port s, operation_port t, 
+        UPDATE flow, operation_port s, operation_port t,
         operation_port_translation t1, operation_port_translation t2
         SET source_port_name = t1.name, target_port_name = t2.name
         WHERE flow.source_port = s.id AND flow.target_port = t.id
@@ -70,7 +70,7 @@ class WorkflowListApi(Resource):
                 workflows = workflows.filter(
                     Workflow.name.like('%%{}%%'.format(name_filter)))
             sort = request.args.get('sort', 'name')
-            if sort not in ['name', 'id', 'user_name', 'updated']:
+            if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
                 sort = 'name'
             sort_option = getattr(Workflow, sort)
             if request.args.get('asc', 'true') == 'false':
