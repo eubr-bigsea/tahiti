@@ -98,7 +98,8 @@ var TahitiAttributeSuggester = (function () {
             Array.prototype.push.apply(task.uiPorts.output,
                 task.forms[field].value.split(', ').map(function(attr){return attr.trim() }));
         } else if (task.forms[field]) {
-            Array.prototype.push.apply(task.uiPorts.output, task.forms[field].value);
+            Array.prototype.push.apply(task.uiPorts.output,
+                task.forms[field].value || []);
         }
         task.uiPorts.output.sort(caseInsensitiveComparator);
     }
