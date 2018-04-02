@@ -36,7 +36,7 @@ def _insert_operation():
     columns = [c.name for c in tb.columns]
     data = [
         (WINDOW_TRANSFORMATION_ID, 'window-transformation', 1,
-         'TRANSFORMATION', 'fa-picture-o'),
+         'TRANSFORMATION', 'fa-image'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
