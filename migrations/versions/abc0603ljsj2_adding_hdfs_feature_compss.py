@@ -7,8 +7,8 @@ Updating the COMPSs Operations and adding new ones.
 (COMPSs Operations)
 
 Revision ID: abc0603ljsj2
-Revises: 8aa2350c2118
-Create Date: 2017-10-05 10:42:09.555626
+Revises: acb362512a62
+Create Date: 2018-03-05 10:42:09.555626
 
 """
 from alembic import context
@@ -20,7 +20,7 @@ from sqlalchemy.sql import table, column,text
 
 # revision identifiers, used by Alembic.
 revision = 'abc0603ljsj2'
-down_revision = '8aa2350c2118'
+down_revision = 'acb362512a62'
 branch_labels = None
 depends_on = None
 
@@ -660,17 +660,17 @@ all_commands = [
             WHERE id=3053;"""),
     ("""UPDATE platform_translation
             SET description = 'COMPSs 2.2 Camellia - Execution platform'
-            WHERE id = 3 and locale = `en`;
+            WHERE id = 3 and locale = 'en';
         UPDATE platform_translation
             SET description = 'COMPSs 2.2 Camellia - Plataforma de execução'
-            WHERE id = 3 and locale = `pt`;
+            WHERE id = 3 and locale = 'pt';
     ""","""
         UPDATE platform_translation
             SET description = 'COMPSs 2.1 Bougainvillea - Execution platform'
-            WHERE id = 3 and locale = `en`;
+            WHERE id = 3 and locale = 'en';
         UPDATE platform_translation
             SET description = 'COMPSs 2.1 Bougainvillea - Plataforma de execução'
-            WHERE id = 3 and locale = `pt`;
+            WHERE id = 3 and locale = 'pt';
     """),
     ("""
         UPDATE operation_form_field
