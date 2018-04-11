@@ -9,7 +9,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
-
+from sqlalchemy.dialects.mysql import LONGTEXT
 make_translatable(options={'locales': ['pt', 'en', 'es'],
                            'auto_create_locales': True,
                            'fallback_locale': 'en'})
@@ -133,7 +133,7 @@ class Application(db.Model):
                      default=True, nullable=False)
     type = Column(Enum(*ApplicationType.values(),
                        name='ApplicationTypeEnumType'), nullable=False)
-    execution_parameters = Column(Text)
+    execution_parameters = Column(LONGTEXT)
     __mapper_args__ = {
         'order_by': 'name'
     }
@@ -328,10 +328,10 @@ class OperationFormField(db.Model, Translatable):
     required = Column(Boolean, nullable=False)
     order = Column(Integer,
                    default=0, nullable=False)
-    default = Column(Text)
+    default = Column(LONGTEXT)
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
-    values = Column(Text)
+    values = Column(LONGTEXT)
     scope = Column(Enum(*OperationFieldScope.values(),
                         name='OperationFieldScopeEnumType'), nullable=False)
     __mapper_args__ = {
@@ -371,7 +371,7 @@ class OperationPort(db.Model, Translatable):
     slug = Column(String(50), nullable=False)
     type = Column(Enum(*OperationPortType.values(),
                        name='OperationPortTypeEnumType'), nullable=False)
-    tags = Column(Text)
+    tags = Column(LONGTEXT)
     order = Column(Integer)
     multiplicity = Column(Enum(*OperationPortMultiplicity.values(),
                                name='OperationPortMultiplicityEnumType'),
@@ -447,7 +447,7 @@ class OperationScript(db.Model):
     type = Column(Enum(*ScriptType.values(),
                        name='ScriptTypeEnumType'), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    body = Column(Text, nullable=False)
+    body = Column(LONGTEXT, nullable=False)
 
     # Associations
     operation_id = Column(Integer,
@@ -501,8 +501,10 @@ class Task(db.Model):
     left = Column(Integer, nullable=False)
     top = Column(Integer, nullable=False)
     z_index = Column(Integer, nullable=False)
-    forms = Column(Text, nullable=False)
+    forms = Column(LONGTEXT, nullable=False)
     version = Column(Integer, nullable=False)
+    enabled = Column(Boolean,
+                     default=True, nullable=False)
     __mapper_args__ = {
         'version_id_col': version,
     }
@@ -535,7 +537,7 @@ class Workflow(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    description = Column(Text)
+    description = Column(LONGTEXT)
     enabled = Column(Boolean,
                      default=True, nullable=False)
     user_id = Column(Integer, nullable=False)
@@ -552,7 +554,7 @@ class Workflow(db.Model):
                          default=False, nullable=False)
     is_public = Column(Boolean,
                        default=False, nullable=False)
-    template_code = Column(Text)
+    template_code = Column(LONGTEXT)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }
@@ -583,7 +585,7 @@ class WorkflowHistory(db.Model):
     user_name = Column(String(200), nullable=False)
     date = Column(DateTime,
                   default=datetime.datetime.utcnow, nullable=False)
-    content = Column(Text, nullable=False)
+    content = Column(LONGTEXT, nullable=False)
 
     # Associations
     workflow_id = Column(Integer,
