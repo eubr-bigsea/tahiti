@@ -439,7 +439,8 @@ class OperationFormFieldListResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(DataType.__dict__.keys())])
     required = fields.Boolean(required=True)
-    order = fields.Integer(required=True)
+    order = fields.Integer(required=True, missing=0,
+                           default=0)
     default = fields.String(required=False, allow_none=True)
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
@@ -465,7 +466,8 @@ class OperationFormFieldCreateRequestSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(DataType.__dict__.keys())])
     required = fields.Boolean(required=True)
-    order = fields.Integer(required=True)
+    order = fields.Integer(required=True, missing=0,
+                           default=0)
     default = fields.String(required=False, allow_none=True)
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
@@ -491,7 +493,8 @@ class OperationFormFieldItemResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(DataType.__dict__.keys())])
     required = fields.Boolean(required=True)
-    order = fields.Integer(required=True)
+    order = fields.Integer(required=True, missing=0,
+                           default=0)
     default = fields.String(required=False, allow_none=True)
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
@@ -756,6 +759,8 @@ class TaskListResponseSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
@@ -778,6 +783,8 @@ class TaskCreateRequestSchema(Schema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Dict(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     operation_id = fields.Integer(required=True)
 
     # noinspection PyUnresolvedReferences
@@ -800,6 +807,8 @@ class TaskItemResponseSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
@@ -823,6 +832,8 @@ class TaskExecuteRequestSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.String(required=True)
     version = fields.Integer(required=True)
+    enabled = fields.Boolean(required=True, missing=True,
+                             default=True)
     next_task_id = fields.String(allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationExecuteRequestSchema',
