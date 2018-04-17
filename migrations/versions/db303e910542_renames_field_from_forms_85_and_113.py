@@ -1,3 +1,5 @@
+# encoding=utf8
+
 """Renames field from forms 85 and 113
 
 Revision ID: db303e910542
@@ -7,6 +9,10 @@ Create Date: 2018-04-17 15:48:16.729916
 """
 from alembic import op
 import sqlalchemy as sa
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 PIE_X_PREFIX = 342
 PIE_X_SUFIX = 343
@@ -29,11 +35,11 @@ def upgrade():
       WHERE id={} \
       AND locale="en"'.format(DONUT_X_PREFIX))
   op.execute('UPDATE operation_form_field_translation \
-      set label = "Prefixo para rotulo", help = "Texto adicionado ao inicio do rotulo" \
+      set label = "Prefixo para rótulo", help = "Texto adicionado ao início do rótulo" \
       WHERE id={} \
       AND locale="pt"'.format(PIE_X_PREFIX))
   op.execute('UPDATE operation_form_field_translation \
-      set label = "Prefixo para rotulo", help = "Texto adicionado ao inicio do rotulo" \
+      set label = "Prefixo para rótulo", help = "Texto adicionado ao início do rótulo" \
       WHERE id={} \
       AND locale="pt"'.format(DONUT_X_PREFIX))
   op.execute('UPDATE operation_form_field_translation \
@@ -45,11 +51,11 @@ def upgrade():
       WHERE id={} \
       AND locale="en"'.format(DONUT_X_SUFIX))
   op.execute('UPDATE operation_form_field_translation \
-      set label = "Sufixo para rotulo", help = "Texto adicionado ao final do rotulo" \
+      set label = "Sufixo para rótulo", help = "Texto adicionado ao final do rótulo" \
       WHERE id={} \
       AND locale="pt"'.format(PIE_X_SUFIX))
   op.execute('UPDATE operation_form_field_translation \
-      set label = "Sufixo para rotulo", help = "Texto adicionado ao final do rotulo" \
+      set label = "Sufixo para rótulo", help = "Texto adicionado ao final do rótulo" \
       WHERE id={} \
       AND locale="pt"'.format(DONUT_X_SUFIX))
 
