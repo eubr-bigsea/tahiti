@@ -1,8 +1,8 @@
-"""Change Form 83
+"""Remove Field from Form 85
 
-Revision ID: 7b74edc374d6
-Revises: 31fdc250f191
-Create Date: 2018-04-16 17:09:45.418110
+Revision ID: 185a7d89aa72
+Revises: 2eaeb4b0c43f
+Create Date: 2018-04-17 14:28:35.098385
 
 """
 import json
@@ -11,23 +11,21 @@ from alembic import op
 from sqlalchemy import String, Integer, Text
 from sqlalchemy.sql import table, column, text
 
-
 # revision identifiers, used by Alembic.
-revision = '7b74edc374d6'
-down_revision = '31fdc250f191'
+revision = '185a7d89aa72'
+down_revision = '2eaeb4b0c43f'
 branch_labels = None
 depends_on = None
 
-X_FORMAT_ID = 298
-Y_FORMAT_ID = 299
-FORM_ID = 83
-NEW_FIELD_ID = 455
+X_FORMAT_ID = 307
+LEGEND_ID = 310
+FORM_ID = 85
 
 def upgrade():
   op.execute('DELETE FROM operation_form_field WHERE id={}'.format(X_FORMAT_ID))
-  op.execute('DELETE FROM operation_form_field WHERE id={}'.format(Y_FORMAT_ID))
   op.execute('DELETE FROM operation_form_field_translation WHERE id={}'.format(X_FORMAT_ID))
-  op.execute('DELETE FROM operation_form_field_translation WHERE id={}'.format(Y_FORMAT_ID))
+  op.execute('DELETE FROM operation_form_field WHERE id={}'.format(LEGEND_ID))
+  op.execute('DELETE FROM operation_form_field_translation WHERE id={}'.format(LEGEND_ID))
 
 def downgrade():
   tb = table(
@@ -74,7 +72,7 @@ def downgrade():
 
   data = [
     [X_FORMAT_ID, 'x_format', 'TEXT', 0, 8, None, 'select2', None, json.dumps(supported_formats), 'EXECUTION', FORM_ID],
-    [Y_FORMAT_ID, 'y_format', 'TEXT', 0, 9, None, 'select2', None, json.dumps(supported_formats), 'EXECUTION', FORM_ID]
+    [LEGEND_ID, 'legend', 'INTEGER', 0, 5, 1, 'checkbox', None, None, 'EXECUTION', FORM_ID],
   ]
 
   rows = [dict(zip(columns, row)) for row in data]
@@ -92,8 +90,8 @@ def downgrade():
   data = [
       [X_FORMAT_ID, 'en', 'X-axis format', 'X-axis format'],
       [X_FORMAT_ID, 'pt', 'Formato para eixo X', 'Formato para eixo X'],
-      [Y_FORMAT_ID, 'en', 'Y-axis format', 'Y-axis format'],
-      [Y_FORMAT_ID, 'pt', 'Formato para eixo Y', 'Formato para eixo Y'],
+      [LEGEND_ID, 'en', 'Display Legend', 'Display Legend'],
+      [LEGEND_ID, 'pt', 'Exibir Legenda', 'Exibir Legenda'],
   ]
 
   rows = [dict(zip(columns, row)) for row in data]
