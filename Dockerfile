@@ -1,5 +1,5 @@
 FROM ubuntu:16.04
-MAINTAINER Vinicius Dias <viniciusvdias@dcc.ufmg.br>
+LABEL maintainer="Vinicius Dias <viniciusvdias@dcc.ufmg.br>, Guilherme Maluf <guimaluf@dcc.ufmg.br>"
 
 ENV TAHITI_HOME /usr/local/tahiti
 ENV TAHITI_CONFIG $TAHITI_HOME/conf/tahiti-config.yaml
@@ -14,4 +14,4 @@ RUN pip install -r $TAHITI_HOME/requirements.txt
 
 COPY . $TAHITI_HOME
 
-CMD ["/usr/local/tahiti/sbin/tahiti-daemon.sh", "startf"]
+CMD ["/usr/local/tahiti/sbin/tahiti-daemon.sh", "docker"]
