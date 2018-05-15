@@ -88,9 +88,11 @@ var TahitiAttributeSuggester = (function () {
       return {order: sorted, info: topological.info};
     };
     var loadFromDataSource = function(task, result, callback) {
-        Array.prototype.push.apply(task.uiPorts.output, result);
-        if (callback) {
-            callback(result);
+        if (task.uiPorts) {
+            Array.prototype.push.apply(task.uiPorts.output, result);
+            if (callback) {
+                callback(result);
+            }
         }
     }
     var onlyField = function(task, field, many) {
