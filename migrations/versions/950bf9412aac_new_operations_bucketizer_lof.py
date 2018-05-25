@@ -474,15 +474,17 @@ all_commands = [
      SELECT 1
      """),
     ("""
+        UPDATE operation_script SET
+        body = 'copyAddExpressionAlias(task, "expressions", "alias");'
+        WHERE `id` IN (48);
     """,
-     """"""),
+     """SELECT 1"""),
     ("""
+        UPDATE operation_script SET
+        body = 'copyAddExpressionAlias(task, "expression", "alias");'
+        WHERE `id` IN (2);
     """,
-     """"""),
-    ("""
-    """,
-     """"""),
-
+     """SELECT 1"""),
 ]
 
 
