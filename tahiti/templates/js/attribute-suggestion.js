@@ -88,9 +88,11 @@ var TahitiAttributeSuggester = (function () {
       return {order: sorted, info: topological.info};
     };
     var loadFromDataSource = function(task, result, callback) {
-        Array.prototype.push.apply(task.uiPorts.output, result);
-        if (callback) {
-            callback(result);
+        if (task.uiPorts) {
+            Array.prototype.push.apply(task.uiPorts.output, result);
+            if (callback) {
+                callback(result);
+            }
         }
     }
     var onlyField = function(task, field, many) {
@@ -102,6 +104,12 @@ var TahitiAttributeSuggester = (function () {
                 task.forms[field].value || []);
         }
         task.uiPorts.output.sort(caseInsensitiveComparator);
+    }
+    var copyAddExpressionAlias = function(task, field, alias){
+
+        task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
+        Array.prototype.push.apply(task.uiPorts.output,
+            (task.forms[field].value || []).map(function(v){return v[alias].trim()}));
     }
     var copyInputAddField = function(task, field, many, defaultValue){
         if (many === undefined || !many ) {
