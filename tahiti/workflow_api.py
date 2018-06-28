@@ -108,7 +108,7 @@ class WorkflowListApi(Resource):
     @requires_auth
     def post():
         result, result_code = dict(
-            status="ERROR", message="Missing json in the request body"), 401
+            status="ERROR", message="Missing json in the request body"), 400
         if request.args.get('source'):
             original = Workflow.query.get(int(request.args.get('source')))
             response_schema = WorkflowItemResponseSchema()
@@ -132,6 +132,7 @@ class WorkflowListApi(Resource):
             request_schema = WorkflowCreateRequestSchema()
             response_schema = WorkflowItemResponseSchema()
             for task in data.get('tasks', {}):
+                task['operation_id'] = task['operation']['id']
                 task['forms'] = {k: v for k, v in task['forms'].iteritems()
                                  if v.get('value') is not None}
             params = {}
