@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # This script controls the tahiti server daemon initialization, status reporting
 # and termination
