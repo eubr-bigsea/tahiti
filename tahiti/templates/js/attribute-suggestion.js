@@ -108,8 +108,9 @@ var TahitiAttributeSuggester = (function () {
     var copyAddExpressionAlias = function(task, field, alias){
 
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
+        var valid = (task.forms[field].value || []).filter(function(item){return item.alias});
         Array.prototype.push.apply(task.uiPorts.output,
-            (task.forms[field].value || []).map(function(v){return v[alias].trim()}));
+            valid.map(function(v){return v[alias].trim()}));
     }
     var copyInputAddField = function(task, field, many, defaultValue){
         if (many === undefined || !many ) {
