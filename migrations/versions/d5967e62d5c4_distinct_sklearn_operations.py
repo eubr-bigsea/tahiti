@@ -469,8 +469,8 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
 	(_insert_operation_category, 'DELETE FROM operation_category WHERE id > 4000' ),
-	(_insert_operation_category_translation, 'DELETE FROM operation_category_translation WHERE id > 4000' ),
 	(_insert_operation, 'DELETE FROM operation WHERE id > 4000'),
+    (_insert_operation_category_translation, 'DELETE FROM operation_category_translation WHERE id > 4000' ),
 	(_insert_new_operation_platform, 'DELETE FROM operation_platform WHERE operation_id > 4000' ),
 	(_insert_operation_category_operation, 'DELETE FROM operation_category_operation WHERE operation_id > 4000'),
 	(_insert_operation_form, 'DELETE FROM operation_form WHERE id > 4000'),
