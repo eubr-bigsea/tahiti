@@ -151,7 +151,7 @@ class WorkflowListApi(Resource):
         if form.errors:
             result, result_code = dict(
                 status="ERROR", message="Validation error",
-                errors=form.errors), 401
+                errors=form.errors), 400
         else:
             try:
                 workflow = form.data
@@ -296,7 +296,7 @@ class WorkflowImportApi(Resource):
         if not contents:
             if not all([url, token]):
                 return {'error': 'Missing url or token parameter',
-                        'status': 'ERROR'}, 401
+                        'status': 'ERROR'}, 400
 
             r = urllib2.Request(url, headers={"X-Auth-Token": token})
             contents = urllib2.urlopen(r).read()
@@ -333,7 +333,7 @@ class WorkflowImportApi(Resource):
             if form.errors:
                 result, result_code = dict(
                     status="ERROR", message="Validation error",
-                    errors=form.errors), 401
+                    errors=form.errors), 400
             else:
                 try:
                     workflow = form.data
@@ -356,4 +356,4 @@ class WorkflowImportApi(Resource):
 
         except Exception as e:
             log.exception(e)
-            return 'Invalid workflow', 401
+            return 'Invalid workflow', 400
