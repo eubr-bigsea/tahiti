@@ -371,7 +371,7 @@ def _insert_operation_form_field():
         (4016, 'max_depth', 'INTEGER', 0, 1, None, 'integer', None, None, 'EXECUTION', 4004),
         (4017, 'min_samples_split', 'FLOAT', 0, 2, None, 'decimal', None, None, 'EXECUTION', 4004),
         (4018, 'min_samples_leaf', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', 4004),
-        (4019, 'min_weight', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', 4004),
+        (4019, 'min_weight', 'FLOAT', 0, 4, 0.0, 'decimal', None, None, 'EXECUTION', 4004),
         (4020, 'seed', 'INTEGER', 0, 5, None, 'integer', None, None, 'EXECUTION', 4004),
 
         #perceptron-classifier
@@ -469,8 +469,8 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
 	(_insert_operation_category, 'DELETE FROM operation_category WHERE id > 4000' ),
+	(_insert_operation_category_translation, 'DELETE FROM operation_category_translation WHERE id > 4000' ),
 	(_insert_operation, 'DELETE FROM operation WHERE id > 4000'),
-    (_insert_operation_category_translation, 'DELETE FROM operation_category_translation WHERE id > 4000' ),
 	(_insert_new_operation_platform, 'DELETE FROM operation_platform WHERE operation_id > 4000' ),
 	(_insert_operation_category_operation, 'DELETE FROM operation_category_operation WHERE operation_id > 4000'),
 	(_insert_operation_form, 'DELETE FROM operation_form WHERE id > 4000'),
@@ -478,7 +478,7 @@ all_commands = [
 	(_insert_operation_operation_form, 'DELETE FROM operation_operation_form WHERE operation_id > 4000'),
 	(_insert_operation_translation, 'DELETE FROM operation_translation WHERE id > 4000'),
 	(_insert_operation_port, 'DELETE FROM operation_port WHERE id > 4000' ),
-	(_insert_operation_port_translation, 'DELETE FROM operation_port_translation WHERE id > 3000' ),
+	(_insert_operation_port_translation, 'DELETE FROM operation_port_translation WHERE id > 4000' ),
 	(_insert_operation_port_interface_operation_port, 'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id > 4000'),
 	(_insert_operation_form_field, 'DELETE FROM operation_form_field WHERE id > 4000'),
 	(_insert_operation_form_field_translation, 'DELETE FROM operation_form_field_translation WHERE id > 4000' ),

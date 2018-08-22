@@ -79,14 +79,14 @@ def _add_operations_platform_from_spark():
         (27, 4), #replace-value
         (28, 4),#'sample'
         (13, 4),#'set-intersection'
-		(32, 4),#'sort'
+        (32, 4),#'sort'
         (17, 4),#'split'
-		(7, 4), #'tranformation'
+        (7, 4), #'tranformation'
 
         (25, 4),#'comment'
 
-		(3031, 4),#'read-shapefile'
-		(55, 4),#'within'
+        (3031, 4),#'read-shapefile'
+        (55, 4),#'within'
 
         (41, 4),  # Feature indexer
         (92, 4),  # Max-abs scaler
@@ -120,6 +120,21 @@ def _add_operations_platform_from_spark():
         (9, 4), # svm-classification
         (3005, 4), # knn-classifier
         (3008, 4), # logistic-regression
+
+        (3, 4),   # fp-growth
+        (85, 4),  # association rule
+        (86, 4),  # sequence mining
+
+        (26, 4),  #publish-as-visualization
+        (35, 4),  #table-visualization
+        (68, 4),  #line-chart
+        (69, 4),  #bar-chart
+        (70, 4),  #pie-chart
+        (71, 4),  #area-chart
+        (80, 4),  #scatter-plot
+        (81, 4),  #summary-statistics
+        (88, 4) , #map-chart
+        (89, 4),  #donut-chart
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
