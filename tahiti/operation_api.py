@@ -116,15 +116,17 @@ class OperationListApi(Resource):
             data = OperationListResponseSchema(many=True, only=only).dump(
                 operations).data
             # Group forms with same type
-            for op in data:
-                groups = itertools.groupby(op['forms'], lambda f: f['category'])
-                op['forms'] = []
+            if only is None or 'forms' in only:
+                for op in data:
+                    groups = itertools.groupby(op['forms'],
+                                               lambda f: f['category'])
+                    op['forms'] = []
 
-                for key, group in groups:
-                    merged = reduce(
-                        lambda v1, v2: deep_merge(v1, v2, handle_conflicts),
-                        group, {})
-                    op['forms'].append(merged)
+                    for key, group in groups:
+                        merged = reduce(
+                            lambda v1, v2: deep_merge(v1, v2, handle_conflicts),
+                            group, {})
+                        op['forms'].append(merged)
 
             return data
 
