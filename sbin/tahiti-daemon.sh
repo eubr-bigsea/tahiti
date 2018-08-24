@@ -52,8 +52,18 @@ case $cmd_option in
   (docker)
     trap "$0 stop" SIGINT SIGTERM
     # set python path
+
     PYTHONPATH=${TAHITI_HOME}:${PYTHONPATH} \
       python ${TAHITI_HOME}/tahiti/manage.py db upgrade
+
+    # check if db migration was successful
+    if [ $? -eq 0 ]
+    then
+      echo "DB migration: successful"
+    else
+      echo "Error on DB migration"
+      exit 1
+    fi
 
     PYTHONPATH=${TAHITI_HOME}:${PYTHONPATH} \
       python ${TAHITI_HOME}/tahiti/runner/tahiti_server.py \
