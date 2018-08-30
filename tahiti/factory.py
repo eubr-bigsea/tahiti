@@ -2,7 +2,6 @@ import logging
 import logging.config
 import os
 
-import jinja2
 import sqlalchemy_utils
 from flask import Flask
 from flask_admin import Admin
@@ -19,7 +18,8 @@ from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
-from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi
+from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi, \
+    WorkflowHistoryApi, RevertToWorkflowHistoryApi, WorkflowHistoryDiffApi
 from tahiti.workflow_api import WorkflowListApi
 
 
@@ -80,6 +80,11 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/platforms/<int:platform_id>': PlatformDetailApi,
         '/workflows': WorkflowListApi,
         '/workflows/<int:workflow_id>': WorkflowDetailApi,
+        '/workflows/<int:workflow_id>/history': WorkflowHistoryApi,
+        '/workflows/<int:workflow_id>/revert/<int:version>':
+            RevertToWorkflowHistoryApi,
+        '/workflows/<int:workflow_id>/diff/<int:version>':
+            WorkflowHistoryDiffApi,
         '/workflows/import': WorkflowImportApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }

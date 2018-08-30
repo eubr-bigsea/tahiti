@@ -4,6 +4,8 @@ import os
 import urllib2
 import uuid
 
+import jsondiff
+from flask import Response
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy.orm import joinedload
@@ -78,7 +80,7 @@ class WorkflowListApi(Resource):
                 sort_option = sort_option.desc()
             workflows = optimize_workflow_query(
                 workflows.order_by(sort_option))
-            page = request.args.get('page')
+            page = request.args.get('page', '20')
 
             if page is not None and page.isdigit():
                 page_size = int(request.args.get('size', 20))
@@ -236,11 +238,11 @@ class WorkflowDetailApi(Resource):
                 params.update(data)
                 if 'platform_id' in params and params['platform_id'] is None:
                     params.pop('platform_id')
-                if 'user' in params:
-                    user = params.pop('user')
-                    params['user_id'] = user['id']
-                    params['user_login'] = user['login']
-                    params['user_name'] = user['name']
+
+                user = params.pop('user')
+                params['user_id'] = user['id']
+                params['user_login'] = user['login']
+                params['user_name'] = user['name']
 
                 form = request_schema.load(params, partial=True)
                 response_schema = WorkflowItemResponseSchema()
@@ -249,10 +251,9 @@ class WorkflowDetailApi(Resource):
                         form.data.id = workflow_id
                         form.data.updated = datetime.datetime.utcnow()
 
-                        workflow = db.session.merge(form.data)
-                        db.session.flush()
-                        update_port_name_in_flows(db.session, workflow.id)
-                        db.session.commit()
+                        # Retrieves current version of workflow in order
+                        # to save it in history.
+                        workflow = Workflow.query.get(workflow_id)
 
                         historical_data = json.dumps(
                             response_schema.dump(workflow).data)
@@ -260,11 +261,17 @@ class WorkflowDetailApi(Resource):
                         #     workflow.template_code = historical_data
 
                         history = WorkflowHistory(
-                            user_id=g.user.id, user_name=g.user.name,
-                            user_login=g.user.login,
+                            user_id=user['id'], user_name=user['name'],
+                            user_login=user['login'],
                             version=workflow.version,
                             workflow=workflow, content=historical_data)
                         db.session.add(history)
+
+                        workflow = db.session.merge(form.data)
+                        db.session.flush()
+                        update_port_name_in_flows(db.session, workflow.id)
+                        db.session.commit()
+
                         db.session.commit()
 
                         if workflow is not None:
@@ -363,3 +370,105 @@ class WorkflowImportApi(Resource):
         except Exception as e:
             log.exception(e)
             return 'Invalid workflow', 400
+
+
+class WorkflowHistoryApi(Resource):
+    @staticmethod
+    @requires_auth
+    def get(workflow_id):
+        history = WorkflowHistory.query.filter(
+            WorkflowHistory.workflow_id == workflow_id).order_by(
+            WorkflowHistory.version.desc()).limit(50)
+        return WorkflowHistoryListResponseSchema(
+            only=('id', 'date', 'user_id', 'user_name', 'version'),
+            many=True).dump(history).data
+
+
+class RevertToWorkflowHistoryApi(Resource):
+    @staticmethod
+    @requires_auth
+    def post(workflow_id, version):
+        result, result_code = dict(status="ERROR", message="Not found"), 404
+
+        history = WorkflowHistory.query.filter(
+            WorkflowHistory.version == version,
+            WorkflowHistory.workflow_id == workflow_id).first()
+        if history is not None:
+            try:
+                w = json.loads(history.content)
+                user = w.pop('user')
+                w['user_id'] = user['id']
+                w['user_login'] = user['login']
+                w['user_name'] = user['name']
+
+                # Remove version, it causes problems when updating
+                del w['version']
+                w['platform_id'] = w['platform']['id']
+                for t in w['tasks']:
+                    t['operation_id'] = t['operation']['id']
+                    del t['version']
+
+                schema = WorkflowItemResponseSchema()
+                create_schema = WorkflowCreateRequestSchema()
+                loaded = create_schema.load(w)
+                if loaded.errors:
+                    result = 'Incompatible history for workflow.'
+                    result_code = 201
+                else:
+                    new_workflow = loaded.data
+                    new_workflow.updated = datetime.datetime.utcnow()
+                    new_workflow.id = workflow_id
+
+                    historical_data = json.dumps(
+                        schema.dump(history.workflow).data)
+
+                    history = WorkflowHistory(
+                        user_id=user['id'], user_name=user['name'],
+                        user_login=user['login'],
+                        version=history.workflow.version,
+                        workflow=history.workflow, content=historical_data)
+
+                    db.session.merge(new_workflow)
+                    update_port_name_in_flows(db.session, new_workflow.id)
+                    db.session.add(history)
+                    db.session.commit()
+
+                    result = {'status': 'OK', 'message': '',
+                              'workflow': schema.dump(new_workflow).data}
+                    result_code = 200
+            except Exception as e:
+                log.exception(e)
+                return 'Invalid workflow', 400
+        return result, result_code
+
+
+class WorkflowHistoryDiffApi(Resource):
+    @staticmethod
+    @requires_auth
+    def get(workflow_id, version):
+        history = WorkflowHistory.query.filter(
+            WorkflowHistory.workflow_id == workflow_id,
+            WorkflowHistory.version == version).first()
+        if history:
+            schema = WorkflowItemResponseSchema()
+            version_json = json.loads(history.content)
+
+            def fix_diff_dict(d):
+                new_dict = {}
+                for k, v in d.iteritems():
+                    key = str(k)
+                    if isinstance(v, dict):
+                        new_dict[key] = fix_diff_dict(v)
+                    else:
+                        new_dict[key] = v
+                return new_dict
+
+            # noinspection PyProtectedMember
+            current_json = json.loads(schema.dumps(history.workflow).data)
+            diff = jsondiff.diff(version_json, current_json)
+
+            result = fix_diff_dict(diff)
+            result_code = 200
+        else:
+            result, result_code = dict(status="ERROR", message="Not found"), 404
+        return result, result_code
