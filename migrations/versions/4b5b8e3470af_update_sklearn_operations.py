@@ -36,6 +36,9 @@ def _insert_operation():
         (4008, 'random-forest-regressor', 1, 'TRANSFORMATION','fa-laptop'),
         (4009, 'sgd-regressor',	1, 'TRANSFORMATION','fa-id-card'),
         (4010, 'huber-regressor', 1, 'TRANSFORMATION','fa-laptop'),
+        (4011, 'svm-classification', 1, 'TRANSFORMATION', 'fa-tag'),
+        (4012, 'naive-bayes-classifier', 1, 'TRANSFORMATION', 'fa-tag'),
+
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -55,7 +58,8 @@ def _insert_new_operation_platform():
         (4008, 4),
         (4009, 4),
         (4010, 4),
-
+        (4011, 4),
+        (4012, 4),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -88,6 +92,14 @@ def _insert_operation_category_operation():
         (4010, 21),
         (4010, 4001),
 
+        (4011, 8),
+        (4011, 18),
+        (4011, 4001),
+
+        (4012, 8),
+        (4012, 18),
+        (4012, 4001),
+
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -109,6 +121,8 @@ def _insert_operation_form():
         (4008, 1, 1, 'execution'),
         (4009, 1, 1, 'execution'),
         (4010, 1, 1, 'execution'),
+        (4011, 1, 1, 'execution'),
+        (4012, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -133,6 +147,10 @@ def _insert_operation_form_translation():
         (4009, 'pt', 'Execução'),
         (4010, 'en', 'Execution'),
         (4010, 'pt', 'Execução'),
+        (4011, 'en', 'Execution'),
+        (4011, 'pt', 'Execução'),
+        (4012, 'en', 'Execution'),
+        (4012, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -161,6 +179,12 @@ def _insert_operation_operation_form():
         (4010, 41),
         (4010, 4010),
 
+        (4011, 41),
+        (4011, 4011),
+
+        (4012, 41),
+        (4012, 4012),
+
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -183,12 +207,16 @@ def _insert_operation_translation():
         (4008, 'en', 'Random Forest Regressor', 'A random forest regressor.'),
         (4009, 'en', 'SGD Regressor', 'Linear model fitted by minimizing a regularized empirical loss with Stochastic Gradient Descent.'),
         (4010, 'en', 'Huber Regressor',  'Linear regression model that is robust to outliers.'),
+        (4011, 'en', 'SVM Classification',  'Uses a SVM Classifier.'),
+        (4012, 'en', 'Naive-Bayes Classifier',  'Uses a Naive-Bayes Classifier.'),
 
         (4006, 'pt', 'Regressor Gradient Boosting',	'Regressão por Gradient Boosting'),
         (4007, 'pt', 'Regressão Linear', 'Regressão linear com combinações de regularizadores L1 e L2 (ElasticNet).'),
         (4008, 'pt', 'Regressão por Random Forest', 'Um regressor por random forest.'),
         (4009, 'pt', 'Regressor SGD', 'Modelo linear ajustado por minimização com o gradiente descendente estocástico.'),
         (4010, 'pt', 'Regressor Hube ',  'Modelo de regressão linear que é robusto para outliers.'),
+        (4011, 'pt', 'Classificador SVM',  'Usa um classificador SVM.'),
+        (4012, 'pt', 'Classificador Naive-Bayes',  'Usa um classificador Naive-Bayes.'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -214,7 +242,8 @@ def _insert_operation_port():
         (4008, 'OUTPUT', None, 4008, 1, 'MANY', 'algorithm'),
         (4009, 'OUTPUT', None, 4009, 1, 'MANY', 'algorithm'),
         (4010, 'OUTPUT', None, 4010, 1, 'MANY', 'algorithm'),
-
+        (4011, 'OUTPUT', None, 4011, 1, 'MANY', 'algorithm'),
+        (4012, 'OUTPUT', None, 4012, 1, 'MANY', 'algorithm'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -240,7 +269,10 @@ def _insert_operation_port_translation():
         (4009, 'pt', 'algoritmo', 'Modelo de regressão não treinado'),
         (4010, 'en', 'algorithm', 'Untrained regressor model'),
         (4010, 'pt', 'algoritmo', 'Modelo de regressão não treinado'),
-
+        (4011, 'en', 'algorithm', 'Untrained classification model'),
+        (4011, 'pt', 'algoritmo', 'Modelo de classificação não treinado'),
+        (4012, 'en', 'algorithm', 'Untrained classification model'),
+        (4012, 'pt', 'algoritmo', 'Modelo de classificação não treinado'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -260,6 +292,8 @@ def _insert_operation_port_interface_operation_port():
         (4008, 17),
         (4009, 17),
         (4010, 17),
+        (4011, 5),  #ClassificationAlgorithm
+        (4012, 5),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -288,8 +322,8 @@ def _insert_operation_form_field():
         (4027, 'learning_rate', 'FLOAT', 0, 1, 0.1, 'decimal', None, None, 'EXECUTION', 4006),
         (4028, 'n_estimators', 'INTEGER', 0, 2, 100, 'integer', None, None, 'EXECUTION', 4006),
         (4029, 'max_depth', 'INTEGER', 0, 3, 3, 'integer', None, None, 'EXECUTION', 4006),
-        (4030, 'min_samples_split', 'FLOAT', 0, 4, 2, 'decimal', None, None, 'EXECUTION', 4006),
-        (4031, 'min_samples_leaf', 'FLOAT', 0, 5, 1, 'decimal', None, None, 'EXECUTION', 4006),
+        (4030, 'min_samples_split', 'INTEGER', 0, 4, 2, 'integer', None, None, 'EXECUTION', 4006),
+        (4031, 'min_samples_leaf', 'INTEGER', 0, 5, 1, 'integer', None, None, 'EXECUTION', 4006),
         (4032, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4006),
 
         # linear-regression
@@ -307,8 +341,8 @@ def _insert_operation_form_field():
 		'{\"key\": \"sqrt - max=sqrt(n_features)\", \"value\": \"sqrt\"}, '
         '{\"key\": \"log2 - max=log2(n_features)\", \"value\": \"log2\"}]', 'EXECUTION', 4008),
         (4041, 'max_depth', 'INTEGER', 0, 3, 3, 'integer', None, None, 'EXECUTION', 4008),
-        (4042, 'min_samples_split', 'FLOAT', 0, 4, 2, 'decimal', None, None, 'EXECUTION', 4008),
-        (4043, 'min_samples_leaf', 'FLOAT', 0, 5, 1, 'decimal', None, None, 'EXECUTION', 4008),
+        (4042, 'min_samples_split', 'INTEGER', 0, 4, 2, 'integer', None, None, 'EXECUTION', 4008),
+        (4043, 'min_samples_leaf', 'INTEGER', 0, 5, 1, 'integer', None, None, 'EXECUTION', 4008),
         (4044, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4008),
 
         # sgd-regressor
@@ -327,6 +361,27 @@ def _insert_operation_form_field():
         #geo-within
         (3113, 'attributes', 'TEXT',   0, 4, None, 'attribute-selector', None, None, 'EXECUTION', 3031),
 
+        #svm-classification
+        (4054, 'c', 'FLOAT', 	0, 1, 1.0, 'decimal', None, None, 'EXECUTION', 4011),
+        (4055, 'kernel', 'TEXT', 0, 2, 'rbf', 'dropdown', None,
+		'[{"key": \"rbf\", \"value\": \"rbf\"}, '
+		'{\"key\": \"linear\", \"value\": \"linear\"}, '
+        '{\"key\": \"poly\", \"value\": \"poly\"}, '
+        '{\"key\": \"sigmoid\", \"value\": \"sigmoid\"}]', 'EXECUTION', 4011),
+        (4056, 'degree', 'INTEGER', 0, 3, 3, 'integer', None, None, 'EXECUTION', 4011),
+        (4057, 'tol', 'FLOAT', 	0, 4, 0.001, 'decimal', None, None, 'EXECUTION', 4011),
+        (4058, 'max_iter', 'INTEGER', 0, 5, 1000, 'integer', None, None, 'EXECUTION', 4011),
+        (4059, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4011),
+
+        #naive-Bayes
+        (4060, 'type', 'TEXT', 0, 1, 'Multinomial', 'dropdown', None,
+		'[{"key": \"Bernoulli\", \"value\": \"Bernoulli\"}, '
+		'{\"key\": \"Multinomial\", \"value\": \"Multinomial\"}, '
+        '{\"key\": \"Gaussian\", \"value\": \"Gaussian\"}]', 'EXECUTION', 4012),
+        (4061, 'alpha', 'FLOAT', 	0, 2, 1.0, 'decimal', None, None, 'EXECUTION', 4012),
+        (4062, 'class_prior', 'TEXT',   0, 3, None, 'attribute-selector', None, None, 'EXECUTION', 4012),
+
+        (4063, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4003),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -411,6 +466,30 @@ def _insert_operation_form_field_translation():
         (3113, 'en', 'Attributes', 'List of selected shapefile attributes (without polygon field).'),
 		(3113, 'pt', 'Atributos', 'Lista dos atributos para selecionar do shapefile.'),
 
+        #svm-classification
+        (4054, 'en', 'C', 'Penalty parameter C of the error term.'),
+        (4055, 'en', 'Kernel', 'Specifies the kernel type to be used in the algorithm.'),
+        (4056, 'en', 'Degree', 'Degree of the polynomial kernel function. Ignored by all other kernels.'),
+        (4057, 'en', 'Tolerance', 'Tolerance for stopping criterion.'),
+        (4058, 'en', 'Maximum number of iterations', 'Maximum number of iterations.'),
+        (4059, 'en', 'Seed', 'The seed of the pseudo random number generator to use when shuffling the data.'),
+        (4054, 'pt', 'C', 'Parâmetro de penalidade C do termo de erro.'),
+        (4055, 'pt', 'Kernel', 'Especifica o tipo de kernel a ser usado no algoritmo.'),
+        (4056, 'pt', 'Grau do Polinômio', 'Grau da função do kernel polinomial. Ignorado por todos os outros kernels.'),
+        (4057, 'pt', 'Tolerancia', 'Tolerância para critérios de parada.'),
+        (4058, 'pt', 'Número máximo de iterações', 'Número máximo de iterações.'),
+        (4059, 'pt', 'Semente', 'A semente do gerador de números pseudo-aleatórios a ser usada ao embaralhar os dados.'),
+
+        #naive-Bayes
+        (4060, 'en', 'Model type', 'The Gaussian assumes that the likelihood of the features is Gaussian; '
+            'The multinomial is suitable for discrete features; Bernoulli is designed for binary/boolean features (non binary features will be converted).'),
+        (4061, 'en', 'Smoothing', 'Additive (Laplace/Lidstone) smoothing parameter (0 for no smoothing). Only for Multinomial and Bernoulli types.'),
+        (4062, 'en', 'Classes probabilities', 'Prior probabilities of the classes. If specified the priors are not adjusted according to the data.'),
+        (4060, 'pt', 'Tipo de modelo', 'O Gaussiano assume que a probabilidade das características é Gaussiana; '
+            'O multinomial é adequado para características discretas; Bernoulli é projetado para campos binários/booleanos (campos não binários serão convertidos).'),
+        (4061, 'pt', 'Suavização', 'Parâmetro de suavização Aditivo (Laplace / Lidstone) (0 para não suavização). Apenas para os tipos Multinomial e Bernoulli.'),
+        (4062, 'pt', 'Peso das classes', 'Peso probabilistico das classes. Se especificado, os pesos não são ajustados de acordo com os dados.'),
+
 	]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -444,13 +523,69 @@ all_commands = [
     ("""
     DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=78;
     DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=8;
-    DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=74;
+    DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=9;
+    DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=4;
+    DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=3008;
     """,
     """
-    INSERT INTO operation_platform (operation_id, platform_id) VALUES (78, 4), (8, 4), (74, 4);
+    INSERT INTO operation_platform (operation_id, platform_id) VALUES (78, 4), (8, 4), (9, 4), (4, 4);
+    """),
+    ("""
+        UPDATE operation_form_field
+        SET type='INTEGER', suggested_widget='integer'
+        WHERE id=4008 or id=4009 or id=4014 or id=4015 or id=4017 or id=4018;
+    ""","""
+        UPDATE operation_form_field
+        SET type='FLOAT', suggested_widget='decimal'
+        WHERE id=4008 or id=4009 or id=4014 or id=4015 or id=4017 or id=4018;
+    """),
+    ("""
+        UPDATE operation_form_field
+        SET `default`=2
+        WHERE id=4008 or id=4014 or id=4017;
+        UPDATE operation_form_field
+        SET `default`=1
+        WHERE id=4009 or id=4015 or id=4018;
+    ""","""
+        UPDATE operation_form_field
+        SET `default`=NULL
+        WHERE id=4008 or id=4014 or id=4017;
+        UPDATE operation_form_field
+        SET `default`=NULL
+        WHERE id=4009 or id=4015 or id=4018;
+    """),
+    ("""
+        UPDATE operation_form_field_translation
+        SET label='C', help='Inverse of regularization strength. Like in support vector machines, smaller values specify stronger regularization.'
+        WHERE id=4002 AND locale='en';
+        UPDATE operation_form_field_translation
+        SET label='C', help='Força de regularização inversa. Como no SVM, valores menores especificam uma regularização mais forte.'
+        WHERE id=4002 AND locale='pt';
+    """,
+    """
+        UPDATE operation_form_field_translation
+        SET label='Inverse of regularization strength', help='Like in support vector machines, smaller values specify stronger regularization.'
+        WHERE id=4002 AND locale='en';
+        UPDATE operation_form_field_translation
+        SET label='força de regularização inversa', help='Como nas máquinas de vetores de suporte, valores menores especificam uma regularização mais forte.'
+        WHERE id=4002 AND locale='pt';
+    """),
+    ("""
+        UPDATE operation_form_field_translation SET help='The Laplace smoothing parameter (0 for no smoothing).' WHERE id=136 AND locale='en';
+        UPDATE operation_form_field_translation SET help='Parâmetro de suavização Laplace (0 para não suavização).' WHERE id=136 AND locale='pt';
+        UPDATE operation_form_field_translation SET help='Thresholds in multi-class classification to adjust the probability of predicting each class. Array must have length equal to the number of classes.' WHERE id=377 AND locale='en';
+        UPDATE operation_form_field_translation SET help='Limiar na classificação de várias classes para ajustar a probabilidade de prever cada classe. A lista deve ter comprimento igual ao número de classes.' WHERE id=377 AND locale='pt';
+    """,
+    """
+        UPDATE operation_form_field_translation SET help='Smoothing.' WHERE id=136 AND locale='en';
+        UPDATE operation_form_field_translation SET help='Smoothing.' WHERE id=136 AND locale='pt';
+        UPDATE operation_form_field_translation SET help='Thresholds' WHERE id=377 AND locale='en';
+        UPDATE operation_form_field_translation SET help='Thresholds' WHERE id=377 AND locale='pt';
     """)
-	]
 
+
+
+	]
 
 def upgrade():
     ctx = context.get_context()
