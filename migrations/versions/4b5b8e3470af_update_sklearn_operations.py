@@ -38,6 +38,7 @@ def _insert_operation():
         (4010, 'huber-regressor', 1, 'TRANSFORMATION','fa-laptop'),
         (4011, 'svm-classification', 1, 'TRANSFORMATION', 'fa-tag'),
         (4012, 'naive-bayes-classifier', 1, 'TRANSFORMATION', 'fa-tag'),
+        (4013, 'k-means-clustering', 1, 'TRANSFORMATION', 'fa-braille'),
 
     ]
 
@@ -60,6 +61,7 @@ def _insert_new_operation_platform():
         (4010, 4),
         (4011, 4),
         (4012, 4),
+        (4013, 4),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -73,7 +75,7 @@ def _insert_operation_category_operation():
     columns = ('operation_id', 'operation_category_id')
     data = [
         (4006, 8),
-        (4006, 21),
+        (4006, 21), #classifier
         (4006, 4001),
 
         (4007, 8),
@@ -93,12 +95,16 @@ def _insert_operation_category_operation():
         (4010, 4001),
 
         (4011, 8),
-        (4011, 18),
+        (4011, 18), #regressors
         (4011, 4001),
 
         (4012, 8),
         (4012, 18),
         (4012, 4001),
+
+        (4013, 8),
+        (4013, 19),  #clustering
+        (4013, 4001),
 
     ]
 
@@ -123,6 +129,7 @@ def _insert_operation_form():
         (4010, 1, 1, 'execution'),
         (4011, 1, 1, 'execution'),
         (4012, 1, 1, 'execution'),
+        (4013, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -151,6 +158,8 @@ def _insert_operation_form_translation():
         (4011, 'pt', 'Execução'),
         (4012, 'en', 'Execution'),
         (4012, 'pt', 'Execução'),
+        (4013, 'en', 'Execution'),
+        (4013, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -185,6 +194,8 @@ def _insert_operation_operation_form():
         (4012, 41),
         (4012, 4012),
 
+        (4013, 41),
+        (4013, 4013),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -209,6 +220,7 @@ def _insert_operation_translation():
         (4010, 'en', 'Huber Regressor',  'Linear regression model that is robust to outliers.'),
         (4011, 'en', 'SVM Classification',  'Uses a SVM Classifier.'),
         (4012, 'en', 'Naive-Bayes Classifier',  'Uses a Naive-Bayes Classifier.'),
+        (4013, 'en', 'K-Means Clustering',  'Uses K-Means algorithm for clustering.'),
 
         (4006, 'pt', 'Regressor Gradient Boosting',	'Regressão por Gradient Boosting'),
         (4007, 'pt', 'Regressão Linear', 'Regressão linear com combinações de regularizadores L1 e L2 (ElasticNet).'),
@@ -217,6 +229,7 @@ def _insert_operation_translation():
         (4010, 'pt', 'Regressor Hube ',  'Modelo de regressão linear que é robusto para outliers.'),
         (4011, 'pt', 'Classificador SVM',  'Usa um classificador SVM.'),
         (4012, 'pt', 'Classificador Naive-Bayes',  'Usa um classificador Naive-Bayes.'),
+        (4013, 'pt', 'Agrupamento K-Means',  'Usa o algoritmo K-Means para agrupamento.'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -244,6 +257,7 @@ def _insert_operation_port():
         (4010, 'OUTPUT', None, 4010, 1, 'MANY', 'algorithm'),
         (4011, 'OUTPUT', None, 4011, 1, 'MANY', 'algorithm'),
         (4012, 'OUTPUT', None, 4012, 1, 'MANY', 'algorithm'),
+        (4013, 'OUTPUT', None, 4013, 1, 'MANY', 'algorithm'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -273,6 +287,8 @@ def _insert_operation_port_translation():
         (4011, 'pt', 'algoritmo', 'Modelo de classificação não treinado'),
         (4012, 'en', 'algorithm', 'Untrained classification model'),
         (4012, 'pt', 'algoritmo', 'Modelo de classificação não treinado'),
+        (4013, 'en', 'algorithm', 'Clustering model'),
+        (4013, 'pt', 'algoritmo', 'Modelo de agrupamento'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -294,6 +310,7 @@ def _insert_operation_port_interface_operation_port():
         (4010, 17),
         (4011, 5),  #ClassificationAlgorithm
         (4012, 5),
+        (4013, 11),  #IClusteringAlgorithm
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -382,6 +399,18 @@ def _insert_operation_form_field():
         (4062, 'class_prior', 'TEXT',   0, 3, None, 'attribute-selector', None, None, 'EXECUTION', 4012),
 
         (4063, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4003),
+
+        #k-means
+        (4064, 'n_clusters', 'INTEGER', 1, 1, 8, 'integer', None, None, 'EXECUTION', 4013),
+        (4065, 'type', 'TEXT', 1, 2, 'K-Means', 'dropdown', None,
+		'[{"key": \"K-Means\", \"value\": \"K-Means\"}, '
+		'{\"key\": \"Mini-Batch K-Means\", \"value\": \"Mini-Batch K-Means\"}]', 'EXECUTION', 4013),
+        (4066, 'init', 'TEXT', 1, 3, 'K-Means++', 'dropdown', None,
+		'[{"key": \"K-Means++\", \"value\": \"K-Meanss++\"}, '
+		'{\"key\": \"Random\", \"value\": \"Random\"}]', 'EXECUTION', 4013),
+        (4067, 'max_iter', 'INTEGER', 0, 4, 300, 'integer', None, None, 'EXECUTION', 4013),
+        (4068, 'tolerance', 'FLOAT', 	0, 5, 0.001, 'decimal', None, None, 'EXECUTION', 4013),
+        (4069, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4013),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -490,6 +519,23 @@ def _insert_operation_form_field_translation():
         (4061, 'pt', 'Suavização', 'Parâmetro de suavização Aditivo (Laplace / Lidstone) (0 para não suavização). Apenas para os tipos Multinomial e Bernoulli.'),
         (4062, 'pt', 'Peso das classes', 'Peso probabilistico das classes. Se especificado, os pesos não são ajustados de acordo com os dados.'),
 
+        (4063, 'en', 'Seed', 'The seed of the pseudo random number generator to use when shuffling the data.'),
+        (4063, 'pt', 'Semente', 'A semente do gerador de números pseudo-aleatórios a ser usada ao embaralhar os dados.'),
+
+        #kmeans
+        (4064, 'en', 'Number of clusters', 'The number of clusters to form as well as the number of centroids to generate.'),
+        (4065, 'en', 'Algorithm', 'K-Means using Lloyds algorithm or Mini-Batch K-Means clustering.'),
+        (4066, 'en', 'Method for initialization', 'Method for initialization.'),
+        (4067, 'en', 'Maximum number of iterations', 'Maximum number of iterations.'),
+        (4068, 'en', 'Tolerance', 'Tolerance for stopping criterion.'),
+        (4069, 'en', 'Seed', 'The seed of the pseudo random number generator to use when shuffling the data.'),
+        (4064, 'pt', 'Número de clusters', 'O número de clusters a serem formados, bem como o número de centróides a serem gerados.'),
+        (4065, 'pt', 'Algoritmo', 'K-Means usando o algoritmo de Lloyd ou o Mini-Batch K-Means.'),
+        (4066, 'pt', 'Método para inicialização', 'Método para inicialização.'),
+        (4067, 'pt', 'Número máximo de iterações', 'Número máximo de iterações.'),
+        (4068, 'pt', 'Tolerancia', 'Tolerância para critérios de parada.'),
+        (4069, 'pt', 'Semente', 'A semente do gerador de números pseudo-aleatórios a ser usada ao embaralhar os dados.'),
+
 	]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -526,9 +572,10 @@ all_commands = [
     DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=9;
     DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=4;
     DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=3008;
+    DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=29;
     """,
     """
-    INSERT INTO operation_platform (operation_id, platform_id) VALUES (78, 4), (8, 4), (9, 4), (4, 4);
+    INSERT INTO operation_platform (operation_id, platform_id) VALUES (78, 4), (8, 4), (9, 4), (4, 4), (29, 4);
     """),
     ("""
         UPDATE operation_form_field
