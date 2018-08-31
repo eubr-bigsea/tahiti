@@ -31,14 +31,15 @@ def _insert_operation():
                             )
     columns = ['id', 'slug', 'enabled', 'type', 'icon']
     data = [
-        (4006, 'gbt-regressor',	1, 'TRANSFORMATION','fa-id-card'),
-        (4007, 'linear-regression',	1, 'TRANSFORMATION','fa-chart-line'),
-        (4008, 'random-forest-regressor', 1, 'TRANSFORMATION','fa-laptop'),
-        (4009, 'sgd-regressor',	1, 'TRANSFORMATION','fa-id-card'),
-        (4010, 'huber-regressor', 1, 'TRANSFORMATION','fa-laptop'),
-        (4011, 'svm-classification', 1, 'TRANSFORMATION', 'fa-tag'),
-        (4012, 'naive-bayes-classifier', 1, 'TRANSFORMATION', 'fa-tag'),
-        (4013, 'k-means-clustering', 1, 'TRANSFORMATION', 'fa-braille'),
+    (4006, 'gbt-regressor',	1, 'TRANSFORMATION','fa-id-card'),
+    (4007, 'linear-regression',	1, 'TRANSFORMATION','fa-chart-line'),
+    (4008, 'random-forest-regressor', 1, 'TRANSFORMATION','fa-laptop'),
+    (4009, 'sgd-regressor',	1, 'TRANSFORMATION','fa-id-card'),
+    (4010, 'huber-regressor', 1, 'TRANSFORMATION','fa-laptop'),
+    (4011, 'svm-classification', 1, 'TRANSFORMATION', 'fa-tag'),
+    (4012, 'naive-bayes-classifier', 1, 'TRANSFORMATION', 'fa-tag'),
+    (4013, 'k-means-clustering', 1, 'TRANSFORMATION', 'fa-braille'),
+    (4014, 'quantile-discretizer', 1, 'TRANSFORMATION', 'fa-ruler-horizontal'),
 
     ]
 
@@ -62,6 +63,7 @@ def _insert_new_operation_platform():
         (4011, 4),
         (4012, 4),
         (4013, 4),
+        (4014, 4),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -106,6 +108,9 @@ def _insert_operation_category_operation():
         (4013, 19),  #clustering
         (4013, 4001),
 
+        (4014, 8),
+        (4014, 23),  #clustering
+        (4014, 4001),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -130,6 +135,7 @@ def _insert_operation_form():
         (4011, 1, 1, 'execution'),
         (4012, 1, 1, 'execution'),
         (4013, 1, 1, 'execution'),
+        (4014, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -160,6 +166,8 @@ def _insert_operation_form_translation():
         (4012, 'pt', 'Execução'),
         (4013, 'en', 'Execution'),
         (4013, 'pt', 'Execução'),
+        (4014, 'en', 'Execution'),
+        (4014, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -196,6 +204,10 @@ def _insert_operation_operation_form():
 
         (4013, 41),
         (4013, 4013),
+
+        (4014, 41),
+        (4014, 110), #results
+        (4014, 4014),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -221,6 +233,7 @@ def _insert_operation_translation():
         (4011, 'en', 'SVM Classification',  'Uses a SVM Classifier.'),
         (4012, 'en', 'Naive-Bayes Classifier',  'Uses a Naive-Bayes Classifier.'),
         (4013, 'en', 'K-Means Clustering',  'Uses K-Means algorithm for clustering.'),
+        (4014, 'en', 'Quantile discretizer',  'Quantile discretizer takes an attribute with continuous features and outputs an attribute with binned categorical features.'),
 
         (4006, 'pt', 'Regressor Gradient Boosting',	'Regressão por Gradient Boosting'),
         (4007, 'pt', 'Regressão Linear', 'Regressão linear com combinações de regularizadores L1 e L2 (ElasticNet).'),
@@ -230,6 +243,7 @@ def _insert_operation_translation():
         (4011, 'pt', 'Classificador SVM',  'Usa um classificador SVM.'),
         (4012, 'pt', 'Classificador Naive-Bayes',  'Usa um classificador Naive-Bayes.'),
         (4013, 'pt', 'Agrupamento K-Means',  'Usa o algoritmo K-Means para agrupamento.'),
+        (4014, 'pt', 'Discretizador em quantis', 'Discretizador em quantis recebe um atributo e associa-o a quantis especificados em faixas de valores.'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -258,6 +272,9 @@ def _insert_operation_port():
         (4011, 'OUTPUT', None, 4011, 1, 'MANY', 'algorithm'),
         (4012, 'OUTPUT', None, 4012, 1, 'MANY', 'algorithm'),
         (4013, 'OUTPUT', None, 4013, 1, 'MANY', 'algorithm'),
+        (4014,	'INPUT',  None, 4014, 1,'ONE','input data'),
+        (4015,	'OUTPUT', None, 4014, 1,'MANY','output data'),
+        (4016,	'OUTPUT', None, 4014, 2,'MANY','model'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -289,6 +306,13 @@ def _insert_operation_port_translation():
         (4012, 'pt', 'algoritmo', 'Modelo de classificação não treinado'),
         (4013, 'en', 'algorithm', 'Clustering model'),
         (4013, 'pt', 'algoritmo', 'Modelo de agrupamento'),
+
+        (4014,'en', 'input data', 'Input data'),
+        (4014,'pt', 'dados de entrada', 'Dados de entrada'),
+        (4015,'en', 'output data', 'Output data'),
+        (4015,'pt', 'dados de saída', 'Dados de saída'),
+        (4016,'en', 'model', 'Model'),
+        (4016,'pt', 'modelo', 'Modelo'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -311,6 +335,10 @@ def _insert_operation_port_interface_operation_port():
         (4011, 5),  #ClassificationAlgorithm
         (4012, 5),
         (4013, 11),  #IClusteringAlgorithm
+        (4014, 1),
+        (4014, 1), #data
+        (4014, 20), #model
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -396,7 +424,7 @@ def _insert_operation_form_field():
 		'{\"key\": \"Multinomial\", \"value\": \"Multinomial\"}, '
         '{\"key\": \"Gaussian\", \"value\": \"Gaussian\"}]', 'EXECUTION', 4012),
         (4061, 'alpha', 'FLOAT', 	0, 2, 1.0, 'decimal', None, None, 'EXECUTION', 4012),
-        (4062, 'class_prior', 'TEXT',   0, 3, None, 'attribute-selector', None, None, 'EXECUTION', 4012),
+        (4062, 'class_prior', 'TEXT',   0, 3, None, 'text', None, None, 'EXECUTION', 4012),
 
         (4063, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4003),
 
@@ -411,6 +439,16 @@ def _insert_operation_form_field():
         (4067, 'max_iter', 'INTEGER', 0, 4, 300, 'integer', None, None, 'EXECUTION', 4013),
         (4068, 'tolerance', 'FLOAT', 	0, 5, 0.001, 'decimal', None, None, 'EXECUTION', 4013),
         (4069, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4013),
+
+        #Quantile-transform
+        (4070, 'attribute', 'TEXT',   1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4014),
+        (4071, 'alias', 'TEXT',   0, 2, None, 'text', None, None, 'EXECUTION', 4014),
+        (4072, 'n_quantiles', 'INTEGER', 0, 3, 1000, 'integer', None, None, 'EXECUTION', 4014),
+        (4073, 'output_distribution', 'TEXT', 0, 4, 'uniform', 'dropdown', None,
+		'[{"key": \"normal\", \"value\": \"normal\"}, '
+		'{\"key\": \"uniform\", \"value\": \"uniform\"}]', 'EXECUTION', 4014),
+        (4074, 'seed', 'INTEGER', 0, 5, None, 'integer', None, None, 'EXECUTION', 4014),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -536,6 +574,19 @@ def _insert_operation_form_field_translation():
         (4068, 'pt', 'Tolerancia', 'Tolerância para critérios de parada.'),
         (4069, 'pt', 'Semente', 'A semente do gerador de números pseudo-aleatórios a ser usada ao embaralhar os dados.'),
 
+        #Quantile-transform
+        (4070, 'en', 'Feature', 'Feature column'),
+        (4071, 'en', 'Alias', 'Alias for generated indexed fields.'),
+        (4072, 'en', 'Number of quantiles', 'Number of quantiles to be computed. It corresponds to the number of landmarks used to discretize the cumulative density function.'),
+        (4073, 'en', 'Distribuition', 'Marginal distribution for the transformed data.'),
+        (4074, 'en', 'Seed', 'The seed of the pseudo random number generator to use when shuffling the data.'),
+        (4070, 'pt', 'Atributo com features', 'Nome da coluna de atributos.'),
+        (4071, 'pt', 'Alias', 'Alias para os campos indexados gerados.'),
+        (4072, 'pt', 'Número de quantis', 'Número de quantis a serem calculados. Corresponde ao número de pontos de referência usados para discretizar a função de densidade acumulada.'),
+        (4073, 'pt', 'Distribuição', 'Distribuição marginal para os dados transformados.'),
+        (4074, 'pt', 'Seed', 'The seed of the pseudo random number generator to use when shuffling the data.'),
+
+
 	]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -608,6 +659,10 @@ all_commands = [
         UPDATE operation_form_field_translation
         SET label='C', help='Força de regularização inversa. Como no SVM, valores menores especificam uma regularização mais forte.'
         WHERE id=4002 AND locale='pt';
+        UPDATE operation_translation SET name='Principal component analysis'
+        WHERE id=95 AND locale='en';
+        UPDATE operation_translation SET name='Classificador Perceptron'
+        WHERE id=47 AND locale='pt';
     """,
     """
         UPDATE operation_form_field_translation
