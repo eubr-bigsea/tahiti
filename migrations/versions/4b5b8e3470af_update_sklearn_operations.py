@@ -55,6 +55,8 @@ def _insert_new_operation_platform():
 
     columns = ('operation_id', 'platform_id')
     data = [
+        (3020, 4), #dbscan
+        (3021, 4), #stdbscan
         (4006, 4),
         (4007, 4),
         (4008, 4),
@@ -64,6 +66,7 @@ def _insert_new_operation_platform():
         (4012, 4),
         (4013, 4),
         (4014, 4),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -627,6 +630,8 @@ all_commands = [
     """,
     """
     INSERT INTO operation_platform (operation_id, platform_id) VALUES (78, 4), (8, 4), (9, 4), (4, 4), (29, 4);
+    DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=3021;
+    DELETE FROM operation_platform WHERE platform_id=4 AND operation_id=3020;
     """),
     ("""
         UPDATE operation_form_field
