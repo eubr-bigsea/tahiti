@@ -32,6 +32,7 @@ def _insert_operation():
     columns = ['id', 'slug', 'enabled', 'type', 'icon']
     data = [
     (4015, 'agglomerative-clustering', 1, 'TRANSFORMATION', 'fa-ruler-horizontal'),
+    (4016, 'word-to-vector', 1, 'TRANSFORMATION', 'fa-list-ol'),
 
     ]
 
@@ -50,6 +51,7 @@ def _insert_new_operation_platform():
         (4015, 4),
         (3015, 4), #regression-model (compss)
         (3018, 4), #classification-model (compss)
+        (4016, 4),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -66,6 +68,9 @@ def _insert_operation_category_operation():
         (4015, 8),
         (4015, 19),  #clustering
         (4015, 4001),
+
+        (4016, 16), #textoperaitons
+        (4016, 4001),
 
     ]
 
@@ -84,6 +89,7 @@ def _insert_operation_form():
     columns = ('id', 'enabled', 'order', 'category')
     data = [
         (4015, 1, 1, 'execution'),
+        (4016, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -100,6 +106,8 @@ def _insert_operation_form_translation():
     data = [
         (4015, 'en', 'Execution'),
         (4015, 'pt', 'Execução'),
+        (4016, 'en', 'Execution'),
+        (4016, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -116,6 +124,10 @@ def _insert_operation_operation_form():
         (4015, 41), # appearance
         (4015, 110), #results
         (4015, 4015), # own execution form
+
+        (4016, 41), # appearance
+        (4016, 110), #results
+        (4016, 4016), # own execution form
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -135,6 +147,9 @@ def _insert_operation_translation():
 
         (4015, 'en', 'Agglomerative Clustering', 'Recursively merges the pair of clusters that minimally increases a given linkage distance.'),
         (4015, 'pt', 'Agrupamento Aglomerativo', 'Recursivamente mescla o par de clusters que aumenta minimamente uma dada distância de ligamento.'),
+
+        (4016, 'en', 'Convert words to vector', 'Convert words to vector.'),
+        (4016, 'pt', 'Converter palavras em vetor', 'Converter palavras em vetor.'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -159,6 +174,11 @@ def _insert_operation_port():
         (4018,	'OUTPUT', None, 4015, 1,'MANY','output data'),
         (3069,	'OUTPUT', None, 3016, 2,'MANY','cluster centroids'),
 
+        (4019,'INPUT',None, 4016, 1,'ONE','input data'),
+        (4020,'OUTPUT',None, 4016, 1,'MANY','vocabulary'),
+        (4021,'OUTPUT',None, 4016, 2,'MANY','output data'),
+        (4022,'OUTPUT',None, 4016, 3,'MANY','vector-model'),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -179,8 +199,15 @@ def _insert_operation_port_translation():
         (4018,'en', 'output data', 'Output data'),
         (4018,'pt', 'dados de saída', 'Dados de saída'),
         (3069,'en', 'cluster centroids', 'Cluster centroids'),
-        (3069,'pt', 'centroids do agrupamento', 'Centroids do agrupamento')
-
+        (3069,'pt', 'centroids do agrupamento', 'Centroids do agrupamento'),
+        (4019, 'en','input data','Input data'),
+        (4019, 'pt','dados de entrada','Dados de entrada'),
+        (4020, 'en','vocabulary','Vocabulary produced'),
+        (4020, 'pt','vocabulário','Vocabulário gerado'),
+        (4021, 'en','output data','Output data'),
+        (4021, 'pt','dados de saída','Dados de saída'),
+        (4022, 'en','vector model','Vector model'),
+        (4022, 'pt','modelo de vetores','Modelo de vetores'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -199,6 +226,11 @@ def _insert_operation_port_interface_operation_port():
         (4017, 1),  # data
         (4018, 1),  # data
         (3069, 1),
+
+        (4019, 1),
+        (4020, 13), #vocabulary
+        (4021, 1),
+        (4022, 20), #model
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -229,15 +261,27 @@ def _insert_operation_form_field():
         (4076, 'alias','TEXT', 0, 2, 'clusters','text',None,None,'EXECUTION', 4015),
         (4077, 'number_of_clusters', 'INTEGER', 0, 3, 2, 'integer', None, None, 'EXECUTION', 4015),
         (4078, 'linkage', 'TEXT', 0, 4, 'euclidean', 'dropdown', None,
-		'[{"key": \"euclidean\", \"value\": \"euclidean\"}, '
+		'[{"key": \"ward\", \"value\": \"ward\"}, '
+		'{\"key\": \"complete\", \"value\": \"complete\"}, '
+        '{\"key\": \"average\", \"value\": \"average\"}]', 'EXECUTION', 4015),
+        (4079, 'affinity', 'TEXT', 0, 5, 'ward', 'dropdown', None,
+        '[{"key": \"euclidean\", \"value\": \"euclidean\"}, '
 		'{\"key\": \"l1\", \"value\": \"l1\"}, '
         '{\"key\": \"l2\", \"value\": \"l2\"}, '
         '{\"key\": \"manhattan\", \"value\": \"manhattan\"}, '
         '{\"key\": \"cosine\", \"value\": \"cosine\"}]', 'EXECUTION', 4015),
-        (4079, 'affinity', 'TEXT', 0, 5, 'ward', 'dropdown', None,
-		'[{"key": \"ward\", \"value\": \"ward\"}, '
-		'{\"key\": \"complete\", \"value\": \"complete\"}, '
-        '{\"key\": \"average\", \"value\": \"average\"}]', 'EXECUTION', 4015),
+
+        #words-to-Vector
+        (4080, 'attributes', 'TEXT',   1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4016),
+        (4081, 'alias','TEXT', 0, 2, 'wordsvector','text',None,None,'EXECUTION', 4016),
+        (4082,'type','TEXT',1, 3,'count','dropdown',None,
+        '[{"en": "Count term frequency", "value": "Count term frequency", "key": "count", "pt": "Contar a frequencia do termo"}, '
+         '{"en": "Term Frequency Inverse Document Frequency (TF-IDF)", "value": "tf-idf", "key": "TF-IDF", "pt": "TF-IDF"}, '
+         '{"en": "Use word2vec algorithm", "value": "Use Word2vec algorithm", "key": "word2vec", "pt": "Usar o algoritmo Word2vec"}, '
+         '{"en": "Map the sequence of terms to their TF using hashing trick", "value": "Map the sequence of terms to their TF using hashing trick", '
+        '"key": "hashing_tf", "pt": "Mapear a sequencia de termos para TF (frequencia do termo) usando hashing"}]','EXECUTION', 4016),
+        (4083,'vocab_size','INTEGER',0,4,None,'integer',None,None,'EXECUTION', 4016),
+        (4084,'minimum_df','INTEGER',0,5,None,'integer',None,None,'EXECUTION', 4016),
 
 
     ]
@@ -268,7 +312,17 @@ def _insert_operation_form_field_translation():
         (4078, 'pt', 'Ligação', 'O critério de ligação determina qual distância usar entre conjuntos de observação.'),
         (4079, 'pt', 'Afinidade', 'Métrica usada para calcular a ligação.'),
 
-
+        #wordsvector
+        (4080,'en', 'Attribute', 'Field with the words to converter.'),
+        (4081,'en','Alias','New column name.'),
+        (4082,'en', 'Type','Type of conversor.'),
+        (4083,'en', 'Vocabulary size', 'If there are more unique words than this, then prune the infrequent ones.' ),
+        (4084,'en', 'Minimum frequency in docs (DF)','Ignores all words with total frequency lower than this.'),
+        (4080,'pt', 'Attributo', 'Campo com as palavras para serem convertidas.'),
+        (4081,'pt','Alias','Nova coluna.'),
+        (4082,'pt', 'Tipo','Tipo do conversor.'),
+        (4083,'pt', 'Tamanho do Vocabulario', 'Se houver mais palavras únicas do que isso, podar as menos frequentes.' ),
+        (4084,'pt', 'Frequência mínima nos documentos (DF)','Ignora todas as palavras com frequência total inferior a esta.'),
 
 	]
     rows = [dict(zip(columns, row)) for row in data]
@@ -282,7 +336,8 @@ all_commands = [
 	(_insert_new_operation_platform,
         'DELETE FROM operation_platform WHERE operation_id >= 4015;'
         'DELETE FROM operation_platform WHERE operation_id = 3018 AND platform_id = 4;'
-        'DELETE FROM operation_platform WHERE operation_id = 3015 AND platform_id = 4;' ),
+        'DELETE FROM operation_platform WHERE operation_id = 3015 AND platform_id = 4;'
+         ),
 	(_insert_operation_category_operation, 'DELETE FROM operation_category_operation WHERE operation_id >= 4015'),
 	(_insert_operation_form, 'DELETE FROM operation_form WHERE id >= 4015'),
 	(_insert_operation_form_translation, 'DELETE FROM operation_form_translation WHERE id >= 4015'),
@@ -297,6 +352,7 @@ all_commands = [
     ("""
     DELETE FROM operation_platform WHERE operation_id = 1  AND platform_id = 4;
     DELETE FROM operation_platform WHERE operation_id = 73 AND platform_id = 4;
+    DELETE FROM operation_platform WHERE operation_id = 52 AND platform_id = 4;
     DELETE FROM operation_operation_form
     WHERE operation_id >= 4001 AND operation_id <= 4005 AND operation_form_id = 110;
     DELETE FROM operation_operation_form
@@ -310,7 +366,7 @@ all_commands = [
     """,
     """
     INSERT INTO operation_platform (operation_id, platform_id)
-    VALUES (1, 4), (73, 4);
+    VALUES (1, 4), (73, 4), (52, 4);
     INSERT INTO operation_operation_form (operation_id, operation_form_id)
     VALUES (3005, 110), (3007, 110), (3009, 110), (3013, 110),
            (4001, 110), (4002, 110), (4003, 110), (4004, 110), (4005, 110);
