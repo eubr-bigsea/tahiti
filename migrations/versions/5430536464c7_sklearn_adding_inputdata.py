@@ -33,7 +33,7 @@ def _insert_operation():
     data = [
     (4015, 'agglomerative-clustering', 1, 'TRANSFORMATION', 'fa-ruler-horizontal'),
     (4016, 'word-to-vector', 1, 'TRANSFORMATION', 'fa-list-ol'),
-
+    (4017,'evaluate-model',1,'TRANSFORMATION','fa-check'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -52,6 +52,7 @@ def _insert_new_operation_platform():
         (3015, 4), #regression-model (compss)
         (3018, 4), #classification-model (compss)
         (4016, 4),
+        (4017, 4),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -72,6 +73,10 @@ def _insert_operation_category_operation():
         (4016, 16), #textoperaitons
         (4016, 4001),
 
+        (4017, 8),
+        (4017, 26), #evaluate-model
+        (4017, 4001),
+
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -90,6 +95,7 @@ def _insert_operation_form():
     data = [
         (4015, 1, 1, 'execution'),
         (4016, 1, 1, 'execution'),
+        (4017, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -108,6 +114,8 @@ def _insert_operation_form_translation():
         (4015, 'pt', 'Execução'),
         (4016, 'en', 'Execution'),
         (4016, 'pt', 'Execução'),
+        (4017, 'en', 'Execution'),
+        (4017, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -128,6 +136,10 @@ def _insert_operation_operation_form():
         (4016, 41), # appearance
         (4016, 110), #results
         (4016, 4016), # own execution form
+
+        (4017, 41), # appearance
+        (4017, 110), #results
+        (4017, 4017), # own execution form
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -150,6 +162,9 @@ def _insert_operation_translation():
 
         (4016, 'en', 'Convert words to vector', 'Convert words to vector.'),
         (4016, 'pt', 'Converter palavras em vetor', 'Converter palavras em vetor.'),
+
+        (4017,'en','Evaluate model','Evaluates a machine learning model'),
+        (4017,'pt','Avaliar modelo','Avalia um modelo de aprendizado de máquina'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -178,6 +193,9 @@ def _insert_operation_port():
         (4020,'OUTPUT',None, 4016, 1,'MANY','vocabulary'),
         (4021,'OUTPUT',None, 4016, 2,'MANY','output data'),
         (4022,'OUTPUT',None, 4016, 3,'MANY','vector-model'),
+
+        (4023,'INPUT',None,4017,1, 'ONE','input data'),
+        (4024,'INPUT',None,4017,2, 'ONE','model'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -208,6 +226,11 @@ def _insert_operation_port_translation():
         (4021, 'pt','dados de saída','Dados de saída'),
         (4022, 'en','vector model','Vector model'),
         (4022, 'pt','modelo de vetores','Modelo de vetores'),
+
+        (4023,'en','input data','Input data to be used during evaluation'),
+        (4023,'pt','dados de entrada','Input data to be used during evaluation'),
+        (4024,'en','model','Model to be evaluated'),
+        (4024,'pt','modelo','Model to be evaluated'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -231,6 +254,15 @@ def _insert_operation_port_interface_operation_port():
         (4020, 13), #vocabulary
         (4021, 1),
         (4022, 20), #model
+
+        (4023,1),
+        (4024,2),
+        (4024,4),
+        (4024,14),
+        (4024,15),
+        (4024,18),
+        (4024,20),
+
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -257,7 +289,7 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
         # agglomerative-clustering
-        (4075, 'attributes', 'TEXT',   1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4015),
+        (4075, 'attributes', 'TEXT',   1, 1, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', 4015),
         (4076, 'alias','TEXT', 0, 2, 'clusters','text',None,None,'EXECUTION', 4015),
         (4077, 'number_of_clusters', 'INTEGER', 0, 3, 2, 'integer', None, None, 'EXECUTION', 4015),
         (4078, 'linkage', 'TEXT', 0, 4, 'euclidean', 'dropdown', None,
@@ -272,7 +304,7 @@ def _insert_operation_form_field():
         '{\"key\": \"cosine\", \"value\": \"cosine\"}]', 'EXECUTION', 4015),
 
         #words-to-Vector
-        (4080, 'attributes', 'TEXT',   1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4016),
+        (4080, 'attributes', 'TEXT',   1, 1, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', 4016),
         (4081, 'alias','TEXT', 0, 2, 'wordsvector','text',None,None,'EXECUTION', 4016),
         (4082,'type','TEXT',1, 3,'count','dropdown',None,
         '[{"en": "Count term frequency", "value": "Count term frequency", "key": "count", "pt": "Contar a frequencia do termo"}, '
@@ -282,6 +314,26 @@ def _insert_operation_form_field():
         '"key": "hashing_tf", "pt": "Mapear a sequencia de termos para TF (frequencia do termo) usando hashing"}]','EXECUTION', 4016),
         (4083,'vocab_size','INTEGER',0,4,None,'integer',None,None,'EXECUTION', 4016),
         (4084,'minimum_df','INTEGER',0,5,None,'integer',None,None,'EXECUTION', 4016),
+
+
+        (4085,'prediction_attribute','TEXT',1,1,None,'attribute-selector',None,'{"multiple": false}','EXECUTION',4017),
+        (4086,'label_attribute','TEXT',1,2,None,'attribute-selector',None,'{"multiple": false}','EXECUTION',4017),
+        (4087,'metric','TEXT',0,3,None,'dropdown',None,
+        '[{"en": "Area under ROC curve(binary classification)", "value": "Area under ROC curve (binary classification)", "key": "areaUnderROC", "pt": "Área sob a curva ROC (classificação binária)"}, '
+          '{"en": "Area under precision-recall curve (binary classification)", "value": "Area under precision-recall curve (binary classification)", "key": "areaUnderPR", "pt": "Área sob a curva precisão-revocação (classificação binária)"}, '
+          '{"en": "Cohens kappa Score (multiclass classification)", "value": "Cohens kappa Score (multiclass classification)", "key": "cohen_kappa_score", "pt": "Pontuação Kappa de Cohen"}, '
+          '{"en": "Jaccard similarity coefficient score (multiclass classification)", "value": "Jaccard similarity coefficient score (multiclass classification)", "key": "jaccard_similarity_score", "pt": "Pontuação de similaridade de Jaccard"}, '
+          '{"en": "Matthews correlation coefficient (multiclass classification)", "value": "Matthews correlation coefficient (multiclass/binary classification)", "key": "matthews_corrcoef", "pt": "Coeficiente de correlação de Matthews (MCC)"}, '
+          '{"en": "Weighted precision (multiclass classification)", "value": "Weighted precision (multiclass classification)", "key": "weightedPrecision", "pt": "Precisão ponderada"}, '
+          '{"en": "Weighted recall (multiclass classification)", "value": "Weighted recall (multiclass classification)", "key": "weightedRecall", "pt": "Revocação ponderada"}, '
+          '{"en": "F1 score (multiclass classification)", "value": "F1 score (multiclass classification)", "key": "f1", "pt": "F1"}, '
+          '{"en": "Accuracy (multiclass classification)", "value": "Accuracy (multiclass classification)", "key": "accuracy", "pt": "Acurácia"}, '
+          '{"en": "Calinski and Harabaz score (clustering)", "value": "Calinski and Harabaz score (clustering)", "key": "calinski_harabaz_scor", "pt": "Pontuação de Calinski and Harabaz"}, '
+          '{"en": "Silhouette Coefficient (clustering)", "value": "Silhouette Coefficient (clustering)", "key": "silhouette_score", "pt": "Coeficiente de Silhouette"}, '
+          '{"en": "Root mean squared error  (regression)", "value": "Root mean squared error  (regression)", "key": "rmse", "pt": "Raiz do erro quadratico médio"}, '
+          '{"mse": "mse", "en": "Mean squared error (regression)", "pt": "Erro quadratico médio", "value": "Mean squared error (regression)"}, '
+          '{"en": "Mean absolute error (regression)", "value": "Mean absolute error regression)", "key": "mae", "pt": "Erro absoluto médio"}]','EXECUTION',4017),
+
 
 
     ]
@@ -323,6 +375,14 @@ def _insert_operation_form_field_translation():
         (4082,'pt', 'Tipo','Tipo do conversor.'),
         (4083,'pt', 'Tamanho do Vocabulario', 'Se houver mais palavras únicas do que isso, podar as menos frequentes.' ),
         (4084,'pt', 'Frequência mínima nos documentos (DF)','Ignora todas as palavras com frequência total inferior a esta.'),
+
+        #evaluate-model
+        (4085,'en','Prediction attribute','Prediction attribute.'),
+        (4085,'pt','Atributo usado para predição','Atributo usado para predição.'),
+        (4086,'en','Label attribute','Label attribute'),
+        (4086,'pt','Atributo usado como label','Atributo usado como label.'),
+        (4087,'en','Metric to evaluation','Metric to evaluation'),
+        (4087,'pt','Métrica usada para avaliação','Métrica usada para avaliação.'),
 
 	]
     rows = [dict(zip(columns, row)) for row in data]
