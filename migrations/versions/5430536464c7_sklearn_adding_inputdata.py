@@ -195,6 +195,7 @@ def _insert_operation_port():
 
         (4017, 'INPUT', None, 4015, 1, 'ONE', 'input data'),
         (4018, 'OUTPUT', None, 4015, 1, 'MANY', 'output data'),
+
         (3069, 'OUTPUT', None, 3016, 2, 'MANY', 'cluster centroids'),
 
         (4019, 'INPUT', None, 4016, 1, 'ONE', 'input data'),
@@ -427,41 +428,45 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
 
-    (_insert_operation, 'DELETE FROM operation WHERE id >= 4015'),
+    (_insert_operation, 'DELETE FROM operation WHERE id BETWEEN 4015 AND 4017'),
     (_insert_new_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id >= 4015;'
+     'DELETE FROM operation_platform WHERE operation_id BETWEEN 4015 AND 4017;'
      'DELETE FROM operation_platform WHERE operation_id = 3018 AND '
      'platform_id = 4;'
      'DELETE FROM operation_platform WHERE operation_id = 3015 AND '
      'platform_id = 4;'
      ),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id >= 4015'),
-    (_insert_operation_form, 'DELETE FROM operation_form WHERE id >= 4015'),
+     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN '
+     '4015 AND 4017'),
+    (_insert_operation_form,
+     'DELETE FROM operation_form WHERE id BETWEEN 4015 AND 4017'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id >= 4015'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 4015 AND 4017'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id >= 4015'),
+     'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 4015 '
+     'AND 4017'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id >= 4015'),
+     'DELETE FROM operation_translation WHERE id BETWEEN 4015 AND 4017'),
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id >= 4017 OR id = 3069'),
+     'DELETE FROM operation_port WHERE id BETWEEN 4017 AND 4024 OR id = 3069'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id >= 4017 OR id = 3069'),
+     'DELETE FROM operation_port_translation WHERE id BETWEEN 4017 AND 4024 '
+     'OR id = 3069'),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port WHERE '
-     'operation_port_id >= 4017 OR operation_port_id = 3069'),
+     'operation_port_id BETWEEN 4017 AND 4024 OR operation_port_id = 3069'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id >= 4075'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4075 AND 4088'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id >= 4075'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4075 AND '
+     '4088'),
     ("""
     DELETE FROM operation_platform WHERE operation_id = 1  AND platform_id = 4;
     DELETE FROM operation_platform WHERE operation_id = 73 AND platform_id = 4;
     DELETE FROM operation_platform WHERE operation_id = 52 AND platform_id = 4;
     DELETE FROM operation_operation_form
-    WHERE operation_id >= 4001 AND operation_id <= 4005 AND operation_form_id 
-    = 110;
+    WHERE operation_id BETWEEN 4001 AND 4005 AND operation_form_id = 110;
     DELETE FROM operation_operation_form
     WHERE operation_id = 3005 AND operation_form_id = 110;
     DELETE FROM operation_operation_form
