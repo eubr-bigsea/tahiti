@@ -47,6 +47,7 @@ def _insert_new_operation_platform():
     data = [
 
         (18, 4), #spark data-reader
+        (43, 4), #cross-validation
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -233,6 +234,8 @@ all_commands = [
     (_insert_new_operation_platform,
      'DELETE FROM operation_platform WHERE operation_id = 18 AND '
      'platform_id = 4;'
+     'DELETE FROM operation_platform WHERE operation_id = 43 AND '
+     'platform_id = 4;'
      ),
     # (_insert_operation_category_operation,
     #  'DELETE FROM operation_category_operation WHERE operation_id BETWEEN '
@@ -262,6 +265,10 @@ all_commands = [
     ("""
         DELETE FROM operation_platform WHERE operation_id = 3001 AND 
         platform_id = 4;
+        
+        UPDATE operation_category_operation 
+        SET operation_category_id = 16
+        WHERE operation_id = 3004 AND operation_category_id = 12; 
      """,
      """
         INSERT INTO operation_platform (operation_id, platform_id)
