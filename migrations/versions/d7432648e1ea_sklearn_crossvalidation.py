@@ -30,6 +30,7 @@ def _insert_operation():
                )
     columns = ['id', 'slug', 'enabled', 'type', 'icon']
     data = [
+        ('4018', 'execute-sql', '1', 'TRANSFORMATION', 'fa-bolt'),
 
     ]
 
@@ -46,8 +47,10 @@ def _insert_new_operation_platform():
     columns = ('operation_id', 'platform_id')
     data = [
 
-        (18, 4), #spark data-reader
-        (43, 4), #cross-validation
+        (18, 4),  # spark data-reader
+        (43, 4),  # cross-validation
+        (82, 4),  # execute-python
+        (4018, 4),  # execute-sql
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -62,6 +65,8 @@ def _insert_operation_category_operation():
 
     columns = ('operation_id', 'operation_category_id')
     data = [
+        (4018, 4001),  # execute-sql
+        (4018, 7),  # execute-sql
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -78,7 +83,7 @@ def _insert_operation_form():
 
     columns = ('id', 'enabled', 'order', 'category')
     data = [
-
+        (4018, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -94,7 +99,8 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
-
+        (4018, 'en', 'Execution'),
+        (4018, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -108,7 +114,9 @@ def _insert_operation_operation_form():
 
     columns = ('operation_id', 'operation_form_id')
     data = [
-
+        (4018, 41),
+        (4018, 110),
+        (4018, 4018),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -125,8 +133,11 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-
-
+        (4018, 'pt', 'Executar consulta SQL',
+         'Executa uma consulta usando a linguagem SQL disponível no Pandas '
+         'SQL.'),
+        (4018, 'en', 'Execute SQL query',
+         'Executes a query using SQL language available in Pandas SQL.')
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -146,7 +157,9 @@ def _insert_operation_port():
 
     columns = [c.name for c in tb.columns]
     data = [
-
+        (4025, 'INPUT', None, 4018, 1, 'ONE', 'input data 1 '),
+        (4026, 'INPUT', None, 4018, 2, 'ONE', 'input data 2'),
+        (4027, 'OUTPUT', None, 4018, 1, 'MANY', 'output data'),
 
 
     ]
@@ -164,7 +177,12 @@ def _insert_operation_port_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-
+        (4025, 'en', 'input data 1', 'Input data 1'),
+        (4025, 'pt', 'dados de entrada 1', 'Input data 1'),
+        (4026, 'en', 'input data 2', 'Input data 2'),
+        (4026, 'pt', 'dados de entrada 2', 'Input data 2'),
+        (4027, 'en', 'output data', 'Output data'),
+        (4027, 'pt', 'dados de saída', 'Dados de saída'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -179,9 +197,9 @@ def _insert_operation_port_interface_operation_port():
 
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
-
-
-
+        (4025, 1),
+        (4026, 1),
+        (4027, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -206,6 +224,10 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
 
+        (4089, 'query', 'TEXT', 1, 1, None, 'code', None, None, 'EXECUTION',
+         4018),
+        (4090, 'names', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION',
+         4018),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -223,6 +245,23 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
 
+        (4089, 'en',
+         'SQL Query, (inputs are available as tables named ds1 and ds2)',
+         'SQL query compatible with SQLite sytanx. For more information, '
+         'see https://www.sqlite.org/lang.html or '
+         'https://github.com/yhat/pandasql.'),
+        (4089, 'pt',
+         'Consulta (entradas estão disponíveis como tabelas chamadas ds1 e '
+         'ds2)',
+         'Consulta SQL compatível com o Apache Spark. Para mais informações, '
+         'veja https://www.sqlite.org/lang.html ou '
+         'https://github.com/yhat/pandasql.'),
+        (4090, 'en', 'Names of attributes after the query',
+         'Name of the new attributes after executing the query (optional, '
+         'helps attribute suggestion).'),
+        (4090, 'pt', 'Nome dos novos atributos após a consulta',
+         'Nome dos novos atributos após executar a consulta (opcional. auxilia '
+         'na sugestão de atributos).'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -230,38 +269,38 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
 
-    #(_insert_operation, 'DELETE FROM operation WHERE id BETWEEN 4015 AND 4017'),
+    (_insert_operation, 'DELETE FROM operation WHERE id = 4018'),
     (_insert_new_operation_platform,
      'DELETE FROM operation_platform WHERE operation_id = 18 AND '
      'platform_id = 4;'
      'DELETE FROM operation_platform WHERE operation_id = 43 AND '
      'platform_id = 4;'
+     'DELETE FROM operation_platform WHERE operation_id = 82 AND '
+     'platform_id = 4;'
+     'DELETE FROM operation_platform WHERE operation_id = 4018'
      ),
-    # (_insert_operation_category_operation,
-    #  'DELETE FROM operation_category_operation WHERE operation_id BETWEEN '
-    #  '4015 AND 4017'),
-    # (_insert_operation_form,
-    #  'DELETE FROM operation_form WHERE id BETWEEN 4015 AND 4017'),
-    # (_insert_operation_form_translation,
-    #  'DELETE FROM operation_form_translation WHERE id BETWEEN 4015 AND 4017'),
-    # (_insert_operation_operation_form,
-    #  'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 4015 '
-    #  'AND 4017'),
-    # (_insert_operation_translation,
-    #  'DELETE FROM operation_translation WHERE id BETWEEN 4015 AND 4017'),
-    # (_insert_operation_port,
-    #  'DELETE FROM operation_port WHERE id BETWEEN 4017 AND 4024 OR id = 3069'),
-    # (_insert_operation_port_translation,
-    #  'DELETE FROM operation_port_translation WHERE id BETWEEN 4017 AND 4024 '
-    #  'OR id = 3069'),
-    # (_insert_operation_port_interface_operation_port,
-    #  'DELETE FROM operation_port_interface_operation_port WHERE '
-    #  'operation_port_id BETWEEN 4017 AND 4024 OR operation_port_id = 3069'),
-    # (_insert_operation_form_field,
-    #  'DELETE FROM operation_form_field WHERE id BETWEEN 4075 AND 4088'),
-    # (_insert_operation_form_field_translation,
-    #  'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4075 AND '
-    #  '4088'),
+    (_insert_operation_category_operation,
+     'DELETE FROM operation_category_operation WHERE operation_id = 4018'),
+    (_insert_operation_form,
+     'DELETE FROM operation_form WHERE id = 4018'),
+    (_insert_operation_form_translation,
+     'DELETE FROM operation_form_translation WHERE id = 4018'),
+    (_insert_operation_operation_form,
+     'DELETE FROM operation_operation_form WHERE operation_id = 4018'),
+    (_insert_operation_translation,
+     'DELETE FROM operation_translation WHERE id = 4018'),
+    (_insert_operation_port,
+     'DELETE FROM operation_port WHERE id BETWEEN 4025 AND 4027'),
+    (_insert_operation_port_translation,
+     'DELETE FROM operation_port_translation WHERE id BETWEEN 4025 AND 4027'),
+    (_insert_operation_port_interface_operation_port,
+     'DELETE FROM operation_port_interface_operation_port WHERE '
+     'operation_port_id BETWEEN 4025 AND 4027'),
+    (_insert_operation_form_field,
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4089 AND 4090'),
+    (_insert_operation_form_field_translation,
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4089 AND '
+     '4090'),
     ("""
         DELETE FROM operation_platform WHERE operation_id = 3001 AND 
         platform_id = 4;
