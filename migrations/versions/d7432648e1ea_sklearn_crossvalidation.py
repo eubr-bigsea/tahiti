@@ -30,8 +30,9 @@ def _insert_operation():
                )
     columns = ['id', 'slug', 'enabled', 'type', 'icon']
     data = [
-        ('4018', 'execute-sql', '1', 'TRANSFORMATION', 'fa-bolt'),
-
+        (4018, 'execute-sql', '1', 'TRANSFORMATION', 'fa-bolt'),
+        (4019, 'mlp-classifier', 1,  'TRANSFORMATION', 'fa-code-branch'),
+        (4020, 'mlp-regressor', 1, 'TRANSFORMATION', 'fa-code-branch'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -51,6 +52,8 @@ def _insert_new_operation_platform():
         (43, 4),  # cross-validation
         (82, 4),  # execute-python
         (4018, 4),  # execute-sql
+        (4019, 4),
+        (4020, 4),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -67,6 +70,14 @@ def _insert_operation_category_operation():
     data = [
         (4018, 4001),  # execute-sql
         (4018, 7),  # execute-sql
+
+        (4019, 8),
+        (4019, 18), #classifier
+        (4019, 4001),
+
+        (4020, 8),
+        (4020, 21),      # regressors
+        (4020, 4001),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -84,6 +95,8 @@ def _insert_operation_form():
     columns = ('id', 'enabled', 'order', 'category')
     data = [
         (4018, 1, 1, 'execution'),
+        (4019, 1, 1, 'execution'),
+        (4020, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -101,6 +114,10 @@ def _insert_operation_form_translation():
     data = [
         (4018, 'en', 'Execution'),
         (4018, 'pt', 'Execução'),
+        (4019, 'en', 'Execution'),
+        (4019, 'pt', 'Execução'),
+        (4020, 'en', 'Execution'),
+        (4020, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -117,6 +134,12 @@ def _insert_operation_operation_form():
         (4018, 41),
         (4018, 110),
         (4018, 4018),
+
+        (4019, 41),
+        (4019, 4019),
+
+        (4020, 41),
+        (4020, 4020),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -137,7 +160,17 @@ def _insert_operation_translation():
          'Executa uma consulta usando a linguagem SQL disponível no Pandas '
          'SQL.'),
         (4018, 'en', 'Execute SQL query',
-         'Executes a query using SQL language available in Pandas SQL.')
+         'Executes a query using SQL language available in Pandas SQL.'),
+
+        (4019, 'pt', 'Classificador Perceptron multicamadas',
+         'Classificador Perceptron multicamadas.'),
+        (4019, 'en', 'Multi-layer Perceptron classifier',
+         'Multi-layer Perceptron classifier.'),
+
+        (4020, 'pt', 'Regressor Perceptron multicamadas',
+         'Regressor Perceptron multicamadas.'),
+        (4020, 'en', 'Multi-layer Perceptron Regressor',
+         'Multi-layer Perceptron Regressor.')
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -161,6 +194,9 @@ def _insert_operation_port():
         (4026, 'INPUT', None, 4018, 2, 'ONE', 'input data 2'),
         (4027, 'OUTPUT', None, 4018, 1, 'MANY', 'output data'),
 
+        (4028, 'OUTPUT', None, 4019, 1, 'MANY', 'algorithm'),
+        (4029, 'OUTPUT', None, 4020, 1, 'MANY', 'algorithm'),
+
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -183,6 +219,13 @@ def _insert_operation_port_translation():
         (4026, 'pt', 'dados de entrada 2', 'Input data 2'),
         (4027, 'en', 'output data', 'Output data'),
         (4027, 'pt', 'dados de saída', 'Dados de saída'),
+
+        (4028, 'en', 'algorithm', 'Untrained classification model'),
+        (4028, 'pt', 'algoritmo', 'Modelo de classificação não treinado'),
+
+        (4029, 'en', 'algorithm', 'Untrained regressor model'),
+        (4029, 'pt', 'algoritmo', 'Modelo de regressão não treinado'),
+
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -200,6 +243,8 @@ def _insert_operation_port_interface_operation_port():
         (4025, 1),
         (4026, 1),
         (4027, 1),
+        (4028, 5),  # ClassificationAlgorithm
+        (4029, 17),  # IRegressionAlgorithm
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -228,6 +273,51 @@ def _insert_operation_form_field():
          4018),
         (4090, 'names', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION',
          4018),
+
+        # mpl-classifier
+        (4091, 'layer_sizes', 'TEXT', 1, 1, '(1,100,1)', 'text', None, None,
+         'EXECUTION',
+         4019),
+        (4092, 'activation', 'TEXT', 0, 2, 'relu', 'dropdown', None,
+         '[{"key": \"identity\", \"value\": \"identity\"}, '
+         '{\"key\": \"logistic\", \"value\": \"logistic\"}, '
+         '{\"key\": \"tanh\", \"value\": \"tanh\"}, '
+         '{\"key\": \"relu\", \"value\": \"relu\"}]', 'EXECUTION', 4019),
+        (4093, 'solver', 'TEXT', 0, 3, 'adam', 'dropdown', None,
+         '[{"key": \"lbfgs\", \"value\": \"lbfgs\"}, '
+         '{\"key\": \"sgd\", \"value\": \"sgd\"}, '
+         '{\"key\": \"adam\", \"value\": \"adam\"}]', 'EXECUTION', 4019),
+        (4094, 'alpha', 'FLOAT', 0, 4, 1.0, 'decimal', None, None, 'EXECUTION',
+         4019),
+        (4095, 'max_iter', 'INTEGER', 0, 5, 200, 'integer', None, None,
+         'EXECUTION', 4007),
+        (4096, 'tol', 'FLOAT', 0, 6, 0.0001, 'decimal', None, None, 'EXECUTION',
+         4019),
+        (4097, 'seed', 'INTEGER', 0, 7, None, 'integer', None, None,
+         'EXECUTION', 4019),
+
+        # mpl-regressor
+        (4098, 'layer_sizes', 'TEXT', 1, 1, '(1,100,1)', 'text', None, None,
+         'EXECUTION',
+         4020),
+        (4099, 'activation', 'TEXT', 0, 2, 'relu', 'dropdown', None,
+         '[{"key": \"identity\", \"value\": \"identity\"}, '
+         '{\"key\": \"logistic\", \"value\": \"logistic\"}, '
+         '{\"key\": \"tanh\", \"value\": \"tanh\"}, '
+         '{\"key\": \"relu\", \"value\": \"relu\"}]', 'EXECUTION', 4020),
+        (4100, 'solver', 'TEXT', 0, 3, 'adam', 'dropdown', None,
+         '[{"key": \"lbfgs\", \"value\": \"lbfgs\"}, '
+         '{\"key\": \"sgd\", \"value\": \"sgd\"}, '
+         '{\"key\": \"adam\", \"value\": \"adam\"}]', 'EXECUTION', 4020),
+        (4101, 'alpha', 'FLOAT', 0, 4, 1.0, 'decimal', None, None, 'EXECUTION',
+         4020),
+        (4102, 'max_iter', 'INTEGER', 0, 5, 200, 'integer', None, None,
+         'EXECUTION', 4007),
+        (4103, 'tol', 'FLOAT', 0, 6, 0.0001, 'decimal', None, None, 'EXECUTION',
+         4020),
+        (4104, 'seed', 'INTEGER', 0, 7, None, 'integer', None, None,
+         'EXECUTION', 4020),
+
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -262,6 +352,52 @@ def _insert_operation_form_field_translation():
         (4090, 'pt', 'Nome dos novos atributos após a consulta',
          'Nome dos novos atributos após executar a consulta (opcional. auxilia '
          'na sugestão de atributos).'),
+
+        (4091, 'en', 'Layer sizes',
+         'The ith element represents the number of neurons.'),
+        (4092, 'en', 'Activation', 'Activation function for the hidden layer.'),
+        (4093, 'en', 'Solver', 'The solver for weight optimization.'),
+        (4094, 'en', 'Alpha', 'L2 penalty (regularization term) parameter.'),
+        (4095, 'en', 'Maximum number of iterations',
+         'The solver iterates until convergence or this number of iterations.'),
+        (4096, 'en', 'Tolerance', 'Tolerance for the optimization.'),
+        (4097, 'en', 'Seed', 'Seed used by the random number generator.'),
+        (4091, 'pt', 'Tamanhos das Camadas',
+         'O elemento de ordem i representa o número de neurónios.'),
+        (4092, 'pt', 'Ativação', 'Função de ativação para a camada oculta.'),
+        (4093, 'pt', 'Solver', 'O solucionador para otimização de peso.'),
+        (4094, 'pt', 'Alpha',
+         'Parâmetro de penalidade L2 (termo de regularização).'),
+        (4095, 'pt', 'Número máximo de iterações',
+         'O solucionador itera até a convergência ou esse número de '
+         'iterações.'),
+        (4096, 'pt', 'Tolerância', 'Tolerância para a otimização.'),
+        (4097, 'pt', 'Semente',
+         'Semente usada pelo gerador de números aleatórios.'),
+
+
+        (4098, 'en', 'Layer sizes',
+         'The ith element represents the number of neurons.'),
+        (4099, 'en', 'Activation', 'Activation function for the hidden layer.'),
+        (4100, 'en', 'Solver', 'The solver for weight optimization.'),
+        (4101, 'en', 'Alpha', 'L2 penalty (regularization term) parameter.'),
+        (4102, 'en', 'Maximum number of iterations',
+         'The solver iterates until convergence or this number of iterations.'),
+        (4103, 'en', 'Tolerance', 'Tolerance for the optimization.'),
+        (4104, 'en', 'Seed', 'Seed used by the random number generator.'),
+        (4098, 'pt', 'Tamanhos das Camadas',
+         'O elemento de ordem i representa o número de neurónios.'),
+        (4099, 'pt', 'Ativação', 'Função de ativação para a camada oculta.'),
+        (4100, 'pt', 'Solver', 'O solucionador para otimização de peso.'),
+        (4101, 'pt', 'Alpha',
+         'Parâmetro de penalidade L2 (termo de regularização).'),
+        (4102, 'pt', 'Número máximo de iterações',
+         'O solucionador itera até a convergência ou esse número de '
+         'iterações.'),
+        (4103, 'pt', 'Tolerância', 'Tolerância para a otimização.'),
+        (4104, 'pt', 'Semente',
+         'Semente usada pelo gerador de números aleatórios.'),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -269,7 +405,7 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
 
-    (_insert_operation, 'DELETE FROM operation WHERE id = 4018'),
+    (_insert_operation, 'DELETE FROM operation WHERE id BETWEEN 4018 AND 4020'),
     (_insert_new_operation_platform,
      'DELETE FROM operation_platform WHERE operation_id = 18 AND '
      'platform_id = 4;'
@@ -277,30 +413,32 @@ all_commands = [
      'platform_id = 4;'
      'DELETE FROM operation_platform WHERE operation_id = 82 AND '
      'platform_id = 4;'
-     'DELETE FROM operation_platform WHERE operation_id = 4018'
+     'DELETE FROM operation_platform WHERE operation_id BETWEEN 4018 AND 4020'
      ),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id = 4018'),
+     'DELETE FROM operation_category_operation '
+     'WHERE operation_id BETWEEN 4018 AND 4020'),
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id = 4018'),
+     'DELETE FROM operation_form WHERE id BETWEEN 4018 AND 4020'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id = 4018'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 4018 AND 4020'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 4018'),
+     'DELETE FROM operation_operation_form '
+     'WHERE operation_id BETWEEN 4018 AND 4020'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id = 4018'),
+     'DELETE FROM operation_translation WHERE id BETWEEN 4018 AND 4020'),
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id BETWEEN 4025 AND 4027'),
+     'DELETE FROM operation_port WHERE id BETWEEN 4025 AND 4029'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id BETWEEN 4025 AND 4027'),
+     'DELETE FROM operation_port_translation WHERE id BETWEEN 4025 AND 4029'),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port WHERE '
-     'operation_port_id BETWEEN 4025 AND 4027'),
+     'operation_port_id BETWEEN 4025 AND 4029'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 4089 AND 4090'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4089 AND 4104'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4089 AND '
-     '4090'),
+     'DELETE FROM operation_form_field_translation '
+     'WHERE id BETWEEN 4089 AND 4104'),
     ("""
         DELETE FROM operation_platform WHERE operation_id = 3001 AND 
         platform_id = 4;
