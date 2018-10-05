@@ -287,7 +287,7 @@ def _insert_operation_form_field():
          '[{"key": \"lbfgs\", \"value\": \"lbfgs\"}, '
          '{\"key\": \"sgd\", \"value\": \"sgd\"}, '
          '{\"key\": \"adam\", \"value\": \"adam\"}]', 'EXECUTION', 4019),
-        (4094, 'alpha', 'FLOAT', 0, 4, 1.0, 'decimal', None, None, 'EXECUTION',
+        (4094, 'alpha', 'FLOAT', 0, 4, 0.0001, 'decimal', None, None, 'EXECUTION',
          4019),
         (4095, 'max_iter', 'INTEGER', 0, 5, 200, 'integer', None, None,
          'EXECUTION', 4007),
@@ -309,7 +309,7 @@ def _insert_operation_form_field():
          '[{"key": \"lbfgs\", \"value\": \"lbfgs\"}, '
          '{\"key\": \"sgd\", \"value\": \"sgd\"}, '
          '{\"key\": \"adam\", \"value\": \"adam\"}]', 'EXECUTION', 4020),
-        (4101, 'alpha', 'FLOAT', 0, 4, 1.0, 'decimal', None, None, 'EXECUTION',
+        (4101, 'alpha', 'FLOAT', 0, 4, 0.0001, 'decimal', None, None, 'EXECUTION',
          4020),
         (4102, 'max_iter', 'INTEGER', 0, 5, 200, 'integer', None, None,
          'EXECUTION', 4007),
