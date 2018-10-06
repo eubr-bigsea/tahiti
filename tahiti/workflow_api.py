@@ -137,10 +137,9 @@ class WorkflowListApi(Resource):
                                  if v.get('value') is not None}
             params = {}
             params.update(data)
-            user = params.pop('user')
-            params['user_id'] = user['id']
-            params['user_login'] = user['login']
-            params['user_name'] = user['name']
+            params['user_id'] = g.user.id
+            params['user_login'] = g.user.login
+            params['user_name'] = g.user.name
             params['platform_id'] = params.get('platform', {}).get(
                 'id') or params.get('platform_id')
 
