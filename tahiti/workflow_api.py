@@ -115,12 +115,11 @@ class WorkflowListApi(Resource):
             response_schema = WorkflowItemResponseSchema()
             cloned = response_schema.dump(original).data
             # User field is not present in constructor
-            user = cloned.pop('user')
             platform = cloned.pop('platform')
             cloned['platform'] = Platform.query.get(platform['id'])
-            cloned['user_id'] = user['id']
-            cloned['user_login'] = user['login']
-            cloned['user_name'] = user['name']
+            cloned['user_id'] = g.user.id
+            cloned['user_login'] = g.user.login
+            cloned['user_name'] = g.user.name
             for task in cloned['tasks']:
                 task['id'] = str(uuid.uuid1())
                 task['operation_id'] = task['operation']['id']
