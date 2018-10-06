@@ -8,7 +8,7 @@ import re
 import requests
 from flask import request, Response, current_app, g as flask_g
 
-User = namedtuple("User", "id, login, email, first_name, last_name, locale")
+User = namedtuple("User", "id, login, email, name, first_name, last_name, locale")
 
 MSG1 = 'Could not verify your access level for that URL. ' \
        'You have to login with proper credentials provided by Lemonade Thorn'
@@ -48,7 +48,7 @@ def requires_auth(f):
                 'data': {
                     'attributes': {
                         'authenticity-token': token,
-                        'email': email
+                        'email': email,
                     },
                     'type': 'tokens',
                     'id': user_id
@@ -76,16 +76,18 @@ def requires_auth(f):
                 user_data = json.loads(r.text)
                 setattr(flask_g, 'user', User(
                     id=user_id,
+                    name='{} {}'.format(user_data['data']['attributes']['first-name'], 
+                        user_data['data']['attributes']['last-name']),
                     login=user_data['data']['attributes']['email'],
                     email=user_data['data']['attributes']['email'],
-                    first_name=user_data['data']['attributes']['email'],
-                    last_name='',
+                    first_name=user_data['data']['attributes']['first-name'],
+                    last_name=user_data['data']['attributes']['last-name'],
                     locale=''))
                 return f(*_args, **kwargs)
         elif internal_token:
             if internal_token == str(config['secret']):
                 # System user being used
-                setattr(flask_g, 'user', User(1, '', '', '', '', ''))
+                setattr(flask_g, 'user', User(1, '', '', '', '', '', ''))
                 return f(*_args, **kwargs)
             else:
                 return authenticate(MSG2, {"message": "Invalid X-Auth-Token"})
