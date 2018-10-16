@@ -149,6 +149,7 @@ class OperationSimpleListResponseSchema(Schema):
     name = fields.String(required=False, allow_none=True)
     slug = fields.String(required=False, allow_none=True)
 
+
     # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data):

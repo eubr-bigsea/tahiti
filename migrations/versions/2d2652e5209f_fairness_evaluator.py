@@ -1,4 +1,8 @@
-# coding=utf-8
+# coding=utf-8from alembic import context
+from alembic import op
+from sqlalchemy import String, Integer, Text
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql import table, column,text
 """fairness_evaluator
 
 Revision ID: 2d2652e5209f

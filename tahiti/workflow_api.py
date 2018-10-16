@@ -46,7 +46,7 @@ class WorkflowListApi(Resource):
                 only = [x.strip() for x in
                         request.args.get('fields').split(',')]
             else:
-                only = ('id', 'name') \
+                only = ('id', 'name', 'platform.id') \
                     if request.args.get('simple', 'false') == 'true' else None
 
             workflows = Workflow.query
@@ -61,10 +61,9 @@ class WorkflowListApi(Resource):
                 workflows = workflows.filter(
                     Workflow.enabled == (enabled_filter != 'false'))
 
-            user_id_filter = request.args.get('user_id')
-            if user_id_filter:
-                workflows = workflows.filter(
-                    Workflow.user_id == user_id_filter)
+            # user_id_filter = request.args.get('user_id')
+            # if user_id_filter:
+            workflows = workflows.filter(Workflow.user_id == g.user.id)
 
             name_filter = request.args.get('name')
             if name_filter:
