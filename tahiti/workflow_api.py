@@ -119,6 +119,7 @@ class WorkflowListApi(Resource):
             cloned['user_id'] = g.user.id
             cloned['user_login'] = g.user.login
             cloned['user_name'] = g.user.name
+
             for task in cloned['tasks']:
                 task['id'] = str(uuid.uuid1())
                 task['operation_id'] = task['operation']['id']
@@ -128,6 +129,8 @@ class WorkflowListApi(Resource):
             form = request_schema.load(cloned)
         elif request.data is not None:
             data = json.loads(request.data)
+            if 'user' in data:
+                data.pop('user')
             request_schema = WorkflowCreateRequestSchema()
             response_schema = WorkflowItemResponseSchema()
             for task in data.get('tasks', {}):
@@ -187,8 +190,20 @@ class WorkflowDetailApi(Resource):
         else:
             workflow = optimize_workflow_query(
                 Workflow.query.filter_by(id=workflow_id).order_by(
-                    Workflow.name)).first()
+                    Workflow.name))
+            workflow = workflow.options(
+                joinedload('tasks.operation.forms')).options(
+                joinedload('tasks.operation.forms.fields')).first()
             if workflow is not None:
+                # Set the json form for operations
+                for task in workflow.tasks:
+                    current_form = json.loads(task.forms) if task.forms else {}
+                    for form in task.operation.forms:
+                        for field in form.fields:
+                            if field.name not in current_form:
+                                current_form[field.name] = {
+                                    'value': field.default}
+                    task.forms = json.dumps(current_form)
                 return WorkflowItemResponseSchema().dump(workflow).data
             else:
                 return dict(status="ERROR", message="Not found"), 404
