@@ -20,7 +20,7 @@ from tahiti.operation_api import OperationListApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi
-from tahiti.workflow_api import WorkflowListApi
+from tahiti.workflow_api import WorkflowListApi, WorkflowHistoryApi
 
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
@@ -81,6 +81,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows': WorkflowListApi,
         '/workflows/<int:workflow_id>': WorkflowDetailApi,
         '/workflows/import': WorkflowImportApi,
+        '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in mappings.iteritems():

@@ -375,3 +375,20 @@ class WorkflowImportApi(Resource):
         except Exception as e:
             log.exception(e)
             return 'Invalid workflow', 400
+
+
+class WorkflowHistoryApi(Resource):
+    @staticmethod
+    @requires_auth
+    def post(workflow_id):
+        return ""
+
+    @staticmethod
+    @requires_auth
+    def get(workflow_id):
+        history = WorkflowHistory.query.filter(
+            WorkflowHistory.workflow_id == workflow_id).order_by(
+            WorkflowHistory.date.desc()).limit(20)
+        only = ('id', 'date', 'version', 'user_name')
+        return {'data': WorkflowHistoryListResponseSchema(
+            many=True, only=only).dump(history).data}
