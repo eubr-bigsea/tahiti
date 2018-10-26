@@ -35,6 +35,26 @@ def update_port_name_in_flows(session, workflow_id):
     session.execute(sql, {'id': workflow_id})
 
 
+def get_workflow(workflow_id):
+    workflow = optimize_workflow_query(
+        Workflow.query.filter_by(id=workflow_id).order_by(
+            Workflow.name))
+    workflow = workflow.options(
+        joinedload('tasks.operation.forms')).options(
+        joinedload('tasks.operation.forms.fields')).first()
+    if workflow is not None:
+        # Set the json form for operations
+        for task in workflow.tasks:
+            current_form = json.loads(task.forms) if task.forms else {}
+            for form in task.operation.forms:
+                for field in form.fields:
+                    if field.name not in current_form:
+                        current_form[field.name] = {
+                            'value': field.default}
+            task.forms = json.dumps(current_form)
+    return workflow
+
+
 class WorkflowListApi(Resource):
     """ REST API for listing class Workflow """
 
@@ -188,25 +208,12 @@ class WorkflowDetailApi(Resource):
             with open(hack_path) as f:
                 return json.loads(f.read())
         else:
-            workflow = optimize_workflow_query(
-                Workflow.query.filter_by(id=workflow_id).order_by(
-                    Workflow.name))
-            workflow = workflow.options(
-                joinedload('tasks.operation.forms')).options(
-                joinedload('tasks.operation.forms.fields')).first()
-            if workflow is not None:
-                # Set the json form for operations
-                for task in workflow.tasks:
-                    current_form = json.loads(task.forms) if task.forms else {}
-                    for form in task.operation.forms:
-                        for field in form.fields:
-                            if field.name not in current_form:
-                                current_form[field.name] = {
-                                    'value': field.default}
-                    task.forms = json.dumps(current_form)
-                return WorkflowItemResponseSchema().dump(workflow).data
-            else:
-                return dict(status="ERROR", message="Not found"), 404
+            workflow = get_workflow(workflow_id)
+
+        if workflow is not None:
+            return WorkflowItemResponseSchema().dump(workflow).data
+        else:
+            return dict(status="ERROR", message="Not found"), 404
 
     @staticmethod
     @requires_auth
@@ -241,8 +248,10 @@ class WorkflowDetailApi(Resource):
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
                 for task in data.get('tasks', {}):
-                    task['forms'] = {k: v for k, v in task['forms'].iteritems() \
+                    task['forms'] = {k: v for k, v in task['forms'].iteritems()
                                      if v.get('value') is not None}
+                    task['operation_id'] = task['operation']['id']
+
                 # Ignore missing fields to allow partial updates
                 params = {}
                 params.update(data)
@@ -381,7 +390,43 @@ class WorkflowHistoryApi(Resource):
     @staticmethod
     @requires_auth
     def post(workflow_id):
-        return ""
+        result, result_code = dict(status="ERROR", message="Not found"), 404
+        params = request.json
+
+        if 'version' in params:
+            workflow = get_workflow(workflow_id)
+            if workflow.user_id == g.user.id:
+                history = WorkflowHistory.query.filter(
+                    WorkflowHistory.workflow_id == workflow_id,
+                    WorkflowHistory.version == int(params['version'])).one()
+                # return json.load(history.content), 200
+                old = json.loads(history.content)
+                old['platform_id'] = old['platform']['id']
+                old['user_id'] = g.user.id
+                old['user_login'] = g.user.login
+                old['user_name'] = g.user.name
+                del old['user']
+
+                for task in old['tasks']:
+                    task['operation_id'] = task['operation']['id']
+
+                rw = WorkflowCreateRequestSchema().load(old)
+                # import pdb
+                # pdb.set_trace()
+                if rw.errors:
+                    result_code = 400
+                    result = dict(
+                        status="ERROR",
+                        message="Version {} is not compatible anymore.".format(
+                            params['version']))
+                else:
+                    result = old
+                    result_code = 200
+            else:
+                result, result_code = dict(status="ERROR",
+                                           message="Not authorized"), 401
+
+        return result, result_code
 
     @staticmethod
     @requires_auth

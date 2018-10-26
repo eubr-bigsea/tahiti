@@ -76,7 +76,7 @@ def requires_auth(f):
             else:
                 user_data = json.loads(r.text)
                 setattr(flask_g, 'user', User(
-                    id=user_id,
+                    id=int(user_id),
                     name='{} {}'.format(
                         user_data['data']['attributes']['first-name'].encode(
                             'utf8'),
