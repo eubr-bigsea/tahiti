@@ -407,8 +407,11 @@ class WorkflowHistoryApi(Resource):
                 old['user_name'] = g.user.name
                 del old['user']
 
-                for task in old['tasks']:
+                for i, task in enumerate(old['tasks']):
                     task['operation_id'] = task['operation']['id']
+                    if not task.get('name'):
+                        task['name'] = '{} {}'.format(task['operation']['name'],
+                                                      i)
 
                 rw = WorkflowCreateRequestSchema().load(old)
                 # import pdb
