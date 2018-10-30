@@ -77,12 +77,13 @@ var TahitiAttributeSuggester = (function () {
           ancestors.push(taskId);
 
           visited[taskId] = true;
-
-          task.targets.forEach(function (after) {
-              if (ancestors.indexOf(after) >= 0)  // if already in ancestors, a closed chain exists.
-                  throw new Error('closed chain : ' + after.target + ' is in ' + taskId);
-              visit(after.target.toString(), ancestors.map(function (v) { return v })); // recursive call
-          });
+          if (task){
+              task.targets.forEach(function (after) {
+                  if (ancestors.indexOf(after) >= 0)  // if already in ancestors, a closed chain exists.
+                      throw new Error('closed chain : ' + after.target + ' is in ' + taskId);
+                  visit(after.target.toString(), ancestors.map(function (v) { return v })); // recursive call
+              });
+          }
           sorted.unshift(taskId);
       });
       return {order: sorted, info: topological.info};
