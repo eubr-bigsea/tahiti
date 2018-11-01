@@ -51,15 +51,15 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
-        #Dense - rate
+        #Dropout - rate
         (5120, 'en', 'Execution'),
         (5120, 'pt', 'Execução'),
 
-        #Dense - noise_shape
+        #Dropout - noise_shape
         (5121, 'en', 'Execution'),
         (5121, 'pt', 'Execução'),
 
-        #Dense - seed
+        #Dropout - seed
         (5122, 'en', 'Execution'),
         (5122, 'pt', 'Execução'),
     ]
