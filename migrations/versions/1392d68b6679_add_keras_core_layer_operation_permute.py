@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Add Keras Core Layer Operation Reshape
+"""Add Keras Core Layer Operation Permute
 
-Revision ID: 1d7c21b6c7d2
-Revises: 4a4b7df125b7
-Create Date: 2018-11-01 10:26:22.659859
+Revision ID: 1392d68b6679
+Revises: 1d7c21b6c7d2
+Create Date: 2018-11-01 15:16:39.140050
 
 """
 from alembic import op
@@ -14,10 +14,9 @@ from sqlalchemy import String, Integer, Text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column, text
 
-
 # revision identifiers, used by Alembic.
-revision = '1d7c21b6c7d2'
-down_revision = '4a4b7df125b7'
+revision = '1392d68b6679'
+down_revision = '1d7c21b6c7d2'
 branch_labels = None
 depends_on = None
 
@@ -32,7 +31,7 @@ def _insert_operation_platform():
 
     columns = ('operation_id', 'platform_id')
     data = [
-        (5015, KERAS_PLATAFORM_ID),# Reshape
+        (5016, KERAS_PLATAFORM_ID),# Permute
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -50,7 +49,7 @@ def _insert_operation():
 
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
     data = [
-        (5015, "reshape", 1, 'ACTION', ''),
+        (5016, "permute", 1, 'ACTION', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -65,7 +64,7 @@ def _insert_operation_category():
 
     columns = ('id', 'type')
     data = [
-        (5015, "subgroup"),# Reshape
+        (5016, "subgroup"),# Permute
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -81,7 +80,7 @@ def _insert_operation_category_operation():
     columns = ('operation_category_id', 'operation_id')
     data = [
         #Core Layers
-        (5010, 5015),# Reshape
+        (5010, 5016),# Permute
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -98,7 +97,7 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (5015, "en", 'Reshape', ''),
+        (5016, "en", 'Permute', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -118,9 +117,9 @@ def _insert_operation_port():
 
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
-        #Reshape
-        (5115, 'INPUT', '', 1, 'ONE', 5015, 'input data'),
-        (5215, 'OUTPUT', '', 1, 'ONE', 5015, 'output data'),
+        #Permute
+        (5116, 'INPUT', '', 1, 'ONE', 5016, 'input data'),
+        (5216, 'OUTPUT', '', 1, 'ONE', 5016, 'output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -136,8 +135,8 @@ def _insert_operation_port_interface_operation_port():
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
         #Reshape
-        (5115, 1),
-        (5215, 1),
+        (5116, 1),
+        (5216, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -155,8 +154,8 @@ def _insert_operation_port_translation():
     columns = ('id', 'locale', 'name', 'description')
     data = [
         #Reshape
-        (5115, "en", 'input data', 'Input data'),
-        (5215, "en", 'output data', 'Output data'),
+        (5116, "en", 'input data', 'Input data'),
+        (5216, "en", 'output data', 'Output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -173,10 +172,8 @@ def _insert_operation_form():
 
     columns = ('id', 'enabled', 'order', 'category')
     data = [
-        #Reshape - target_shape
-        (5132, 1, 1, 'execution'),
-        #Reshape - input_shape
-        #(5133, 1, 1, 'execution'),
+        #Permute - dims
+        (5134, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -192,12 +189,9 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
-        #Reshape - target_shape
-        (5132, 'en', 'Execution'),
-        (5132, 'pt', 'Execução'),
-        #Reshape - input_shape
-        #(5133, 'en', 'Execution'),
-        #(5133, 'pt', 'Execução'),
+        #Permute - dims
+        (5134, 'en', 'Execution'),
+        (5134, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -211,12 +205,9 @@ def _insert_operation_operation_form():
 
     columns = ('operation_id', 'operation_form_id')
     data = [
-        (5015, 41),  #appearance
-
-        #Reshape - target_shape
-        (5015, 5132),  # own execution form
-        #Reshape - input_shape
-        #(5015, 5133),  # own execution form
+        (5016, 41),  #appearance
+        #Permute - dims
+        (5016, 5134),  # own execution form
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -242,10 +233,8 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
 
-        #Reshape - target_shape
-        (5132, 'target_shape', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5132),
-        #Reshape - input_shape
-        #(5133, 'input_shape', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5133),
+        #Permute - dims
+        (5134, 'dims', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5134),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -262,13 +251,11 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
 
-        #Reshape - target_shape
-        (5132, 'en', 'target_shape', 'Tuple of integers. Does not include the batch axis. Ex.: (6,2)'),
-        #Reshape - input_shape
-        #(5133, 'en', 'input_shape', 'Arbitrary, although all dimensions in the input shaped must be fixed. '
-        #                            'Use the keyword argument input_shape (tuple of integers, does not '
-        #                            'include the batch axis) when using this layer as the first '
-        #                            'layer in a model. Ex.: (12,)'),
+        #Permute - dims
+        (5134, 'en', 'dims', 'Tuple of integers. Permutation pattern, '
+                             'does not include the samples dimension. '
+                             'Indexing starts at 1. For instance, (2, 1) '
+                             'permutes the first and second dimension of the input.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -276,33 +263,33 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id = 5015'),
+     'DELETE FROM operation WHERE id = 5016'),
     (_insert_operation_category,
-     'DELETE FROM operation_category WHERE id = 5015'),
+     'DELETE FROM operation_category WHERE id = 5016'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id = 5015'),
+     'DELETE FROM operation_translation WHERE id = 5016'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id = 5015'),
+     'DELETE FROM operation_category_operation WHERE operation_id = 5016'),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id = 5015 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
+     'DELETE FROM operation_platform WHERE operation_id = 5016 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id IN (5115, 5215)'),
+     'DELETE FROM operation_port WHERE id IN (5116, 5216)'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (5115, 5215)'),
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (5116, 5216)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id IN (5115, 5215)'),
+     'DELETE FROM operation_port_translation WHERE id IN (5116, 5216)'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id IN (5132, 5133)'),
+     'DELETE FROM operation_form WHERE id IN (5134)'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id IN (5132, 5133)'),
+     'DELETE FROM operation_form_field WHERE id IN (5134)'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id IN (5132, 5133)'),
+     'DELETE FROM operation_form_translation WHERE id IN (5134)'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id IN (5132, 5133)'),
+     'DELETE FROM operation_form_field_translation WHERE id IN (5134)'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 5015'),
+     'DELETE FROM operation_operation_form WHERE operation_id = 5016'),
 ]
 
 
