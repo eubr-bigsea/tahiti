@@ -50,7 +50,7 @@ def _insert_operation():
 
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
     data = [
-        (5017, "permute", 1, 'ACTION', ''),
+        (5017, "repeatVector", 1, 'ACTION', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -98,7 +98,7 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (5017, "en", 'Permute', ''),
+        (5017, "en", 'RepeatVector', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -118,7 +118,7 @@ def _insert_operation_port():
 
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
-        #Permute
+        #RepeatVector
         (5117, 'INPUT', '', 1, 'ONE', 5017, 'input data'),
         (5217, 'OUTPUT', '', 1, 'ONE', 5017, 'output data'),
     ]
@@ -135,7 +135,7 @@ def _insert_operation_port_interface_operation_port():
 
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
-        #Reshape
+        #RepeatVector
         (5117, 1),
         (5217, 1),
     ]
@@ -154,7 +154,7 @@ def _insert_operation_port_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        #Reshape
+        #RepeatVector
         (5117, "en", 'input data', 'Input data'),
         (5217, "en", 'output data', 'Output data'),
     ]
