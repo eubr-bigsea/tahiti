@@ -59,11 +59,13 @@ var TahitiAttributeSuggester = (function () {
           topological.info[task.id] = {targets: [], task: cloneDeep(task)};
       });
       workflow.flows.forEach(function(flow){
-          topological.info[flow.source_id].targets.push(
-          {
-              target: flow.target_id,
-              targetPortId: flow.target_port,
-          });
+          if (topological.info[flow.source_id]){
+              topological.info[flow.source_id].targets.push(
+              {
+                  target: flow.target_id,
+                  targetPortId: flow.target_port,
+              });
+          }
       });
       // 2. topological sort
       Object.keys(topological.info).forEach(function visit(taskId, ancestors) {
