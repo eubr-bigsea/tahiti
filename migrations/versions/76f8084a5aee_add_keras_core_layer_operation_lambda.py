@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-"""Add Keras Core Layer Operation RepeatVector
+"""Add Keras Core Layer Operation Lambda
 
-Revision ID: 1ff9d4d725e5
-Revises: 1392d68b6679
-Create Date: 2018-11-01 15:45:57.075654
+Revision ID: 76f8084a5aee
+Revises: 1ff9d4d725e5
+Create Date: 2018-11-05 12:00:28.217290
 
 """
 from alembic import op
@@ -16,8 +16,8 @@ from sqlalchemy.sql import table, column, text
 
 
 # revision identifiers, used by Alembic.
-revision = '1ff9d4d725e5'
-down_revision = '1392d68b6679'
+revision = '76f8084a5aee'
+down_revision = '1ff9d4d725e5'
 branch_labels = None
 depends_on = None
 
@@ -32,7 +32,7 @@ def _insert_operation_platform():
 
     columns = ('operation_id', 'platform_id')
     data = [
-        (5017, KERAS_PLATAFORM_ID),# RepeatVector
+        (5018, KERAS_PLATAFORM_ID),#Lambda
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -50,7 +50,7 @@ def _insert_operation():
 
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
     data = [
-        (5017, "repeatVector", 1, 'ACTION', ''),
+        (5018, "lambda", 1, 'ACTION', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -65,7 +65,8 @@ def _insert_operation_category():
 
     columns = ('id', 'type')
     data = [
-        (5017, "subgroup"),# RepeatVector
+        # Lambda
+        (5018, "subgroup"),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -80,8 +81,8 @@ def _insert_operation_category_operation():
 
     columns = ('operation_category_id', 'operation_id')
     data = [
-        #Core Layers
-        (5010, 5017),# RepeatVector
+        # Core Layers - Lambda
+        (5010, 5018),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -98,7 +99,7 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (5017, "en", 'RepeatVector', ''),
+        (5018, "en", 'Lambda', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -118,9 +119,9 @@ def _insert_operation_port():
 
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
-        #RepeatVector
-        (5117, 'INPUT', '', 1, 'ONE', 5017, 'input data'),
-        (5217, 'OUTPUT', '', 1, 'ONE', 5017, 'output data'),
+        # Lambda
+        (5118, 'INPUT', '', 1, 'ONE', 5018, 'input data'),
+        (5218, 'OUTPUT', '', 1, 'ONE', 5018, 'output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -135,9 +136,9 @@ def _insert_operation_port_interface_operation_port():
 
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
-        #RepeatVector
-        (5117, 1),
-        (5217, 1),
+        # Lambda
+        (5118, 1),
+        (5218, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -154,9 +155,9 @@ def _insert_operation_port_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        #RepeatVector
-        (5117, "en", 'input data', 'Input data'),
-        (5217, "en", 'output data', 'Output data'),
+        # Lambda
+        (5118, "en", 'input data', 'Input data'),
+        (5218, "en", 'output data', 'Output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -173,8 +174,12 @@ def _insert_operation_form():
 
     columns = ('id', 'enabled', 'order', 'category')
     data = [
-        #RepeatVector - n
-        (5135, 1, 1, 'execution'),
+        # Lambda - function
+        (5136, 1, 1, 'execution'),
+        # Lambda - mask
+        (5137, 1, 1, 'execution'),
+        # Lambda - arguments
+        (5138, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -190,9 +195,15 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
-        #RepeatVector - n
-        (5135, 'en', 'Execution'),
-        (5135, 'pt', 'Execução'),
+        #Lambda - function
+        (5136, 'en', 'Execution'),
+        (5136, 'pt', 'Execução'),
+        #Lambda - mask
+        (5137, 'en', 'Execution'),
+        (5137, 'pt', 'Execução'),
+        #Lambda - arguments
+        (5138, 'en', 'Execution'),
+        (5138, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -206,9 +217,13 @@ def _insert_operation_operation_form():
 
     columns = ('operation_id', 'operation_form_id')
     data = [
-        (5017, 41),  #appearance
-        #RepeatVector - n
-        (5017, 5135),  # own execution form
+        (5018, 41),#appearance
+        #Lambda - function
+        (5018, 5136),
+        #Lambda - mask
+        (5018, 5137),
+        #Lambda - arguments
+        (5018, 5138),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -234,8 +249,12 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
 
-        #RepeatVector - n
-        (5135, 'n', 'INTEGER', 1, 1, None, 'integer', None, None, 'EXECUTION', 5135),
+        # Lambda - function
+        (5136, 'function', 'TEXT', 1, 1, None, 'code', None, '{"language": "python"}', 'EXECUTION', 5136),
+        # Lambda - mask
+        (5137, 'mask', 'DECIMAL', 0, 4, None, 'decimal', None, None, 'EXECUTION', 5137),
+        # Lambda - arguments
+        (5138, 'arguments', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5138),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -252,8 +271,18 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
 
-        #RepeatVector - n
-        (5135, 'en', 'n', 'Repeats the input n times.'),
+        # Lambda - function
+        (5136, 'en', 'function', 'The function to be evaluated. Takes input tensor as first argument.'),
+        # Lambda - mask
+        (5137, 'en', 'mask', 'Masks a sequence by using a mask value to skip timesteps.'
+                             'For each timestep in the input tensor (dimension #1 in the tensor), '
+                             'if all values in the input tensor at that timestep are equal to '
+                             'mask_value, then the timestep will be masked (skipped) in all '
+                             'downstream layers (as long as they support masking).'
+                             'If any downstream layer does not support masking yet '
+                             'receives such an input mask, an exception will be raised.'),
+        # Lambda - arguments
+        (5138, 'en', 'arguments', 'Optional dictionary of keyword arguments to be passed to the function.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -261,33 +290,33 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id = 5017'),
+     'DELETE FROM operation WHERE id = 5018'),
     (_insert_operation_category,
-     'DELETE FROM operation_category WHERE id = 5017'),
+     'DELETE FROM operation_category WHERE id = 5018'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id = 5017'),
+     'DELETE FROM operation_translation WHERE id = 5018'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id = 5017'),
+     'DELETE FROM operation_category_operation WHERE operation_id = 5018'),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id = 5017 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
+     'DELETE FROM operation_platform WHERE operation_id = 5018 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id IN (5117, 5217)'),
+     'DELETE FROM operation_port WHERE id IN (5118, 5218)'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (5117, 5217)'),
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (5118, 5218)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id IN (5117, 5217)'),
+     'DELETE FROM operation_port_translation WHERE id IN (5118, 5218)'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id IN (5135)'),
+     'DELETE FROM operation_form WHERE id BETWEEN 5136 AND 5138'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id IN (5135)'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5136 AND 5138'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id IN (5135)'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 5136 AND 5138'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id IN (5135)'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5136 AND 5138'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 5017'),
+     'DELETE FROM operation_operation_form WHERE operation_id = 5018'),
 ]
 
 
