@@ -895,6 +895,14 @@ class WorkflowExecuteRequestSchema(Schema):
                                default=False)
     template_code = fields.String(required=False, allow_none=True)
     forms = fields.String(required=True)
+    tasks = fields.Nested(
+        'tahiti.schema.TaskExecuteRequestSchema',
+        allow_none=True,
+        many=True)
+    flows = fields.Nested(
+        'tahiti.schema.FlowExecuteRequestSchema',
+        allow_none=True,
+        many=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformExecuteRequestSchema',
         required=True)
@@ -926,7 +934,14 @@ class WorkflowListResponseSchema(Schema):
                                  default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
-    forms = fields.String(required=True)
+    tasks = fields.Nested(
+        'tahiti.schema.TaskListResponseSchema',
+        allow_none=True,
+        many=True)
+    flows = fields.Nested(
+        'tahiti.schema.FlowListResponseSchema',
+        allow_none=True,
+        many=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformListResponseSchema',
         required=True)
@@ -961,6 +976,14 @@ class WorkflowCreateRequestSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
     forms = fields.String(required=True)
+    tasks = fields.Nested(
+        'tahiti.schema.TaskCreateRequestSchema',
+        allow_none=True,
+        many=True)
+    flows = fields.Nested(
+        'tahiti.schema.FlowCreateRequestSchema',
+        allow_none=True,
+        many=True)
     platform_id = fields.Integer(required=True)
     user = fields.Nested(
         'tahiti.schema.UserCreateRequestSchema',
@@ -993,7 +1016,14 @@ class WorkflowItemResponseSchema(Schema):
                                  default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
-    forms = fields.String(required=True)
+    tasks = fields.Nested(
+        'tahiti.schema.TaskItemResponseSchema',
+        allow_none=True,
+        many=True)
+    flows = fields.Nested(
+        'tahiti.schema.FlowItemResponseSchema',
+        allow_none=True,
+        many=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformItemResponseSchema',
         required=True)
