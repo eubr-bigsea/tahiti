@@ -278,6 +278,8 @@ class OperationCategory(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     type = Column(String(200), nullable=False)
+    order = Column(Integer,
+                   default=1, nullable=False)
 
     def __unicode__(self):
         return self.name
@@ -348,7 +350,7 @@ class OperationFormField(db.Model, Translatable):
     scope = Column(Enum(*OperationFieldScope.values(),
                         name='OperationFieldScopeEnumType'),
                    default='BOTH', nullable=False)
-    enable_conditions = Column(String(16000000))
+    enable_conditions = Column(String(2000))
     __mapper_args__ = {
         'order_by': 'order'
     }
@@ -604,6 +606,7 @@ class Workflow(db.Model):
     is_public = Column(Boolean,
                        default=False, nullable=False)
     template_code = Column(String(16000000))
+    forms = Column(String(16000000), nullable=False)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }

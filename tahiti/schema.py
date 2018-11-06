@@ -20,7 +20,7 @@ def partial_schema_factory(schema_cls):
 def load_json(str_value):
     try:
         return json.loads(str_value)
-    except:
+    except BaseException:
         return "Error loading JSON"
 
 
@@ -148,7 +148,6 @@ class OperationSimpleListResponseSchema(Schema):
     id = fields.Integer(allow_none=True)
     name = fields.String(required=False, allow_none=True)
     slug = fields.String(required=False, allow_none=True)
-
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -324,6 +323,8 @@ class OperationCategoryCreateRequestSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     type = fields.String(required=True)
+    order = fields.Integer(required=True, missing=1,
+                           default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -340,6 +341,8 @@ class OperationCategoryListResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     type = fields.String(required=True)
+    order = fields.Integer(required=True, missing=1,
+                           default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -355,6 +358,8 @@ class OperationCategoryItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True)
+    order = fields.Integer(required=True, missing=1,
+                           default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -446,8 +451,10 @@ class OperationFormFieldListResponseSchema(Schema):
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=True,
+    scope = fields.String(required=True, missing='BOTH',
+                          default='BOTH',
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
+    enable_conditions = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -473,8 +480,10 @@ class OperationFormFieldCreateRequestSchema(Schema):
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=True,
+    scope = fields.String(required=True, missing='BOTH',
+                          default='BOTH',
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
+    enable_conditions = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -500,8 +509,10 @@ class OperationFormFieldItemResponseSchema(Schema):
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=True,
+    scope = fields.String(required=True, missing='BOTH',
+                          default='BOTH',
                           validate=[OneOf(OperationFieldScope.__dict__.keys())])
+    enable_conditions = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -708,6 +719,10 @@ class PlatformListResponseSchema(Schema):
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     icon = fields.String(required=True)
+    forms = fields.Nested(
+        'tahiti.schema.OperationFormListResponseSchema',
+        required=True,
+        many=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -740,6 +755,10 @@ class PlatformItemResponseSchema(Schema):
     slug = fields.String(required=True)
     description = fields.String(required=True)
     icon = fields.String(required=True)
+    forms = fields.Nested(
+        'tahiti.schema.OperationFormItemResponseSchema',
+        required=True,
+        many=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -875,21 +894,10 @@ class WorkflowExecuteRequestSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
     template_code = fields.String(required=False, allow_none=True)
-    tasks = fields.Nested(
-        'tahiti.schema.TaskExecuteRequestSchema',
-        allow_none=True,
-        many=True)
-    flows = fields.Nested(
-        'tahiti.schema.FlowExecuteRequestSchema',
-        allow_none=True,
-        many=True)
+    forms = fields.String(required=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformExecuteRequestSchema',
         required=True)
-    permissions = fields.Nested(
-        'tahiti.schema.WorkflowPermissionExecuteRequestSchema',
-        allow_none=True,
-        many=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -918,21 +926,10 @@ class WorkflowListResponseSchema(Schema):
                                  default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
-    tasks = fields.Nested(
-        'tahiti.schema.TaskListResponseSchema',
-        allow_none=True,
-        many=True)
-    flows = fields.Nested(
-        'tahiti.schema.FlowListResponseSchema',
-        allow_none=True,
-        many=True)
+    forms = fields.String(required=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformListResponseSchema',
         required=True)
-    permissions = fields.Nested(
-        'tahiti.schema.WorkflowPermissionListResponseSchema',
-        allow_none=True,
-        many=True)
     user = fields.Function(
         lambda x: {
             "id": x.user_id,
@@ -963,19 +960,8 @@ class WorkflowCreateRequestSchema(Schema):
                                  default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
-    tasks = fields.Nested(
-        'tahiti.schema.TaskCreateRequestSchema',
-        allow_none=True,
-        many=True)
-    flows = fields.Nested(
-        'tahiti.schema.FlowCreateRequestSchema',
-        allow_none=True,
-        many=True)
+    forms = fields.String(required=True)
     platform_id = fields.Integer(required=True)
-    permissions = fields.Nested(
-        'tahiti.schema.WorkflowPermissionCreateRequestSchema',
-        allow_none=True,
-        many=True)
     user = fields.Nested(
         'tahiti.schema.UserCreateRequestSchema',
         allow_none=True)
@@ -1007,21 +993,10 @@ class WorkflowItemResponseSchema(Schema):
                                  default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
-    tasks = fields.Nested(
-        'tahiti.schema.TaskItemResponseSchema',
-        allow_none=True,
-        many=True)
-    flows = fields.Nested(
-        'tahiti.schema.FlowItemResponseSchema',
-        allow_none=True,
-        many=True)
+    forms = fields.String(required=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformItemResponseSchema',
         required=True)
-    permissions = fields.Nested(
-        'tahiti.schema.WorkflowPermissionItemResponseSchema',
-        allow_none=True,
-        many=True)
     user = fields.Function(
         lambda x: {
             "id": x.user_id,
