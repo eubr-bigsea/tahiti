@@ -25,7 +25,7 @@ def handle_conflicts(v1, v2):
 
 
 def deep_merge(d1, d2, in_conflict=lambda v1, v2: v2):
-    """ merge d2 into d1. using inconflict function to
+    """ merge d2 into d1. using in conflict function to
     resolve the leaf conflicts """
     for k in d2:
         if k in d1:

@@ -9,7 +9,7 @@ from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
-from sqlalchemy.dialects.mysql import LONGTEXT
+
 make_translatable(options={'locales': ['pt', 'en', 'es'],
                            'auto_create_locales': True,
                            'fallback_locale': 'en'})
@@ -88,6 +88,7 @@ class OperationFieldScope:
 
 # noinspection PyClassHasNoInit
 class DataType:
+    BINARY = 'BINARY'
     FLOAT = 'FLOAT'
     LAT_LONG = 'LAT_LONG'
     TIME = 'TIME'
@@ -121,6 +122,18 @@ class PermissionType:
                 if n[0] != '_' and n != 'values']
 
 
+# noinspection PyClassHasNoInit
+class TaskGroupType:
+    PIPELINE = 'PIPELINE'
+    TEMPLATE = 'TEMPLATE'
+    SERVICE = 'SERVICE'
+
+    @staticmethod
+    def values():
+        return [n for n in TaskGroupType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
+
 class Application(db.Model):
     """ Any external application that can be ran by Juicer """
     __tablename__ = 'application'
@@ -133,7 +146,7 @@ class Application(db.Model):
                      default=True, nullable=False)
     type = Column(Enum(*ApplicationType.values(),
                        name='ApplicationTypeEnumType'), nullable=False)
-    execution_parameters = Column(LONGTEXT)
+    execution_parameters = Column(String(16000000))
     __mapper_args__ = {
         'order_by': 'name'
     }
@@ -265,6 +278,8 @@ class OperationCategory(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     type = Column(String(200), nullable=False)
+    order = Column(Integer,
+                   default=1, nullable=False)
 
     def __unicode__(self):
         return self.name
@@ -328,12 +343,14 @@ class OperationFormField(db.Model, Translatable):
     required = Column(Boolean, nullable=False)
     order = Column(Integer,
                    default=0, nullable=False)
-    default = Column(LONGTEXT)
+    default = Column(String(16000000))
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
-    values = Column(LONGTEXT)
+    values = Column(String(16000000))
     scope = Column(Enum(*OperationFieldScope.values(),
-                        name='OperationFieldScopeEnumType'), nullable=False)
+                        name='OperationFieldScopeEnumType'),
+                   default='BOTH', nullable=False)
+    enable_conditions = Column(String(2000))
     __mapper_args__ = {
         'order_by': 'order'
     }
@@ -371,7 +388,7 @@ class OperationPort(db.Model, Translatable):
     slug = Column(String(50), nullable=False)
     type = Column(Enum(*OperationPortType.values(),
                        name='OperationPortTypeEnumType'), nullable=False)
-    tags = Column(LONGTEXT)
+    tags = Column(String(16000000))
     order = Column(Integer)
     multiplicity = Column(Enum(*OperationPortMultiplicity.values(),
                                name='OperationPortMultiplicityEnumType'),
@@ -447,7 +464,7 @@ class OperationScript(db.Model):
     type = Column(Enum(*ScriptType.values(),
                        name='ScriptTypeEnumType'), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    body = Column(LONGTEXT, nullable=False)
+    body = Column(String(16000000), nullable=False)
 
     # Associations
     operation_id = Column(Integer,
@@ -473,6 +490,22 @@ class Platform(db.Model, Translatable):
     slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
     icon = Column(String(200), nullable=False)
+
+    # Associations
+    # noinspection PyUnresolvedReferences
+    platform_form = db.Table(
+        'platform_form',
+        Column('platform_id', Integer,
+               ForeignKey('platform.id'), nullable=False),
+        Column('operation_form_id', Integer,
+               ForeignKey('operation_form.id'), nullable=False))
+    forms = relationship(
+        "OperationForm",
+        secondary=platform_form,
+        secondaryjoin=(
+            "and_("
+            "OperationForm.id==platform_form.c.operation_form_id,"
+            "OperationForm.enabled==1)"))
 
     def __unicode__(self):
         return self.name
@@ -501,7 +534,7 @@ class Task(db.Model):
     left = Column(Integer, nullable=False)
     top = Column(Integer, nullable=False)
     z_index = Column(Integer, nullable=False)
-    forms = Column(LONGTEXT, nullable=False)
+    forms = Column(String(16000000), nullable=False)
     version = Column(Integer, nullable=False)
     enabled = Column(Boolean,
                      default=True, nullable=False)
@@ -530,6 +563,24 @@ class Task(db.Model):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
+class TaskGroup(db.Model):
+    """ Group of tasks """
+    __tablename__ = 'task_group'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    type = Column(Enum(*TaskGroupType.values(),
+                       name='TaskGroupTypeEnumType'), nullable=False)
+    color = Column(String(200))
+
+    def __unicode__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
 class Workflow(db.Model):
     """ Workflow in Lemonade. It's a set of tasks """
     __tablename__ = 'workflow'
@@ -537,7 +588,7 @@ class Workflow(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    description = Column(LONGTEXT)
+    description = Column(String(16000000))
     enabled = Column(Boolean,
                      default=True, nullable=False)
     user_id = Column(Integer, nullable=False)
@@ -554,7 +605,8 @@ class Workflow(db.Model):
                          default=False, nullable=False)
     is_public = Column(Boolean,
                        default=False, nullable=False)
-    template_code = Column(LONGTEXT)
+    template_code = Column(String(16000000))
+    forms = Column(String(16000000), nullable=False)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }
@@ -585,7 +637,7 @@ class WorkflowHistory(db.Model):
     user_name = Column(String(200), nullable=False)
     date = Column(DateTime,
                   default=datetime.datetime.utcnow, nullable=False)
-    content = Column(LONGTEXT, nullable=False)
+    content = Column(String(16000000), nullable=False)
 
     # Associations
     workflow_id = Column(Integer,
