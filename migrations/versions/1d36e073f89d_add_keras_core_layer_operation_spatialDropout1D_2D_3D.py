@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Add Keras Core Layer Operation SpatialDropout1D
+"""Add Keras Core Layer Operation SpatialDropout1D, SpatialDropout2D and SpatialDropout3D
 
 Revision ID: 1d36e073f89d
 Revises: e2679b474622
@@ -33,6 +33,10 @@ def _insert_operation_platform():
     data = [
         # SpatialDropout1D
         (5024, KERAS_PLATAFORM_ID),
+        # SpatialDropout2D
+        (5025, KERAS_PLATAFORM_ID),
+        # SpatialDropout3D
+        (5026, KERAS_PLATAFORM_ID),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -52,6 +56,10 @@ def _insert_operation():
     data = [
         # SpatialDropout1D
         (5024, "spatialDropout1D", 1, 'ACTION', ''),
+        # SpatialDropout2D
+        (5025, "spatialDropout2D", 1, 'ACTION', ''),
+        # SpatialDropout3D
+        (5026, "spatialDropout3D", 1, 'ACTION', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -68,6 +76,10 @@ def _insert_operation_category():
     data = [
         # SpatialDropout1D
         (5024, "subgroup"),
+        # SpatialDropout2D
+        (5025, "subgroup"),
+        # SpatialDropout3D
+        (5026, "subgroup"),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -84,6 +96,10 @@ def _insert_operation_category_operation():
     data = [
         # Core Layers - SpatialDropout1D
         (5010, 5024),
+        # Core Layers - SpatialDropout2D
+        (5010, 5025),
+        # Core Layers - SpatialDropout3D
+        (5010, 5026),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -111,6 +127,26 @@ def _insert_operation_translation():
                                          'an effective learning rate decrease. In this case, '
                                          'SpatialDropout1D will help promote independence between '
                                          'feature maps and should be used instead.'),
+        (5025, "en", 'SpatialDropout2D', 'Spatial 2D version of Dropout. This version performs '
+                                         'the same function as Dropout, however it drops entire 2D '
+                                         'feature maps instead of individual elements. If adjacent '
+                                         'pixels within feature maps are strongly correlated (as is '
+                                         'normally the case in early convolution layers) then '
+                                         'regular dropout will not regularize the activations '
+                                         'and will otherwise just result in an effective learning '
+                                         'rate decrease. In this case, SpatialDropout2D will help '
+                                         'promote independence between feature maps and '
+                                         'should be used instead.'),
+        (5026, "en", 'SpatialDropout3D', 'Spatial 3D version of Dropout. This version performs '
+                                         'the same function as Dropout, however it drops entire '
+                                         '3D feature maps instead of individual elements. If '
+                                         'adjacent voxels within feature maps are strongly '
+                                         'correlated (as is normally the case in early convolution '
+                                         'layers) then regular dropout will not regularize '
+                                         'the activations and will otherwise just result in an '
+                                         'effective learning rate decrease. In this case, '
+                                         'SpatialDropout3D will help promote independence between '
+                                         'feature maps and should be used instead.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -133,6 +169,12 @@ def _insert_operation_port():
         # SpatialDropout1D
         (5124, 'INPUT', '', 1, 'ONE', 5024, 'input data'),
         (5224, 'OUTPUT', '', 1, 'ONE', 5024, 'output data'),
+        # SpatialDropout2D
+        (5125, 'INPUT', '', 1, 'ONE', 5025, 'input data'),
+        (5225, 'OUTPUT', '', 1, 'ONE', 5025, 'output data'),
+        # SpatialDropout3D
+        (5126, 'INPUT', '', 1, 'ONE', 5026, 'input data'),
+        (5226, 'OUTPUT', '', 1, 'ONE', 5026, 'output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -150,6 +192,12 @@ def _insert_operation_port_interface_operation_port():
         # SpatialDropout1D
         (5124, 1),
         (5224, 1),
+        # SpatialDropout2D
+        (5125, 1),
+        (5225, 1),
+        # SpatialDropout3D
+        (5126, 1),
+        (5226, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -169,6 +217,12 @@ def _insert_operation_port_translation():
         # SpatialDropout1D
         (5124, "en", 'input data', 'Input data'),
         (5224, "en", 'output data', 'Output data'),
+        # SpatialDropout2D
+        (5125, "en", 'input data', 'Input data'),
+        (5225, "en", 'output data', 'Output data'),
+        # SpatialDropout3D
+        (5126, "en", 'input data', 'Input data'),
+        (5226, "en", 'output data', 'Output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -185,7 +239,7 @@ def _insert_operation_form():
 
     columns = ('id', 'enabled', 'order', 'category')
     data = [
-        # SpatialDropout1D - rate
+        # SpatialDropout1D, SpatialDropout2D, SpatialDropout3D - rate
         (5142, 1, 1, 'execution'),
     ]
 
@@ -202,7 +256,7 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
-        # SpatialDropout1D - rate
+        # SpatialDropout1D, SpatialDropout2D, SpatialDropout3D - rate
         (5142, 'en', 'Execution'),
         (5142, 'pt', 'Execução'),
     ]
@@ -218,9 +272,14 @@ def _insert_operation_operation_form():
 
     columns = ('operation_id', 'operation_form_id')
     data = [
-        (5024, 41),#appearance
-        # SpatialDropout1D - rate
+        # SpatialDropout1D, SpatialDropout2D, SpatialDropout3D - appearance
+        (5024, 41),
+        (5025, 41),
+        (5026, 41),
+        # SpatialDropout1D, SpatialDropout2D, SpatialDropout3D - rate
         (5024, 5142),
+        (5025, 5142),
+        (5026, 5142),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -247,7 +306,7 @@ def _insert_operation_form_field():
     data = [
 
         # SpatialDropout1D - rate
-        (5142, 'l1', 'DECIMAL', 1, 1, 0.0, 'decimal', None, None, 'EXECUTION', 5142),
+        (5142, 'rate', 'DECIMAL', 1, 1, 0.0, 'decimal', None, None, 'EXECUTION', 5142),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -273,22 +332,24 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id = 5024'),
+     'DELETE FROM operation WHERE id BETWEEN 5024 AND 5026'),
     (_insert_operation_category,
-     'DELETE FROM operation_category WHERE id = 5024'),
+     'DELETE FROM operation_category WHERE id BETWEEN 5024 AND 5026'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id = 5024'),
+     'DELETE FROM operation_translation WHERE id BETWEEN 5024 AND 5026'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id = 5024'),
+     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 5024 AND 5026'),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id = 5024 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
+     'DELETE FROM operation_platform '
+     'WHERE operation_id BETWEEN 5024 AND 5026 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id IN (5124, 5224)'),
+     'DELETE FROM operation_port WHERE id IN (5124, 5224, 5125, 5225, 5126, 5226)'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (5124, 5224)'),
+     'DELETE FROM operation_port_interface_operation_port '
+     'WHERE operation_port_id IN (5124, 5224, 5125, 5225, 5126, 5226)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id IN (5124, 5224)'),
+     'DELETE FROM operation_port_translation WHERE id IN (5124, 5224, 5125, 5225, 5126, 5226)'),
 
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id IN (5142)'),
@@ -299,7 +360,7 @@ all_commands = [
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id IN (5142)'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 5024'),
+     'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 5024 AND 5026'),
 ]
 
 
