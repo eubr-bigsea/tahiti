@@ -262,7 +262,8 @@ class WorkflowDetailApi(Resource):
                     params['user_id'] = user['id']
                     params['user_login'] = user['login']
                     params['user_name'] = user['name']
-
+                if params.get('forms'):
+                    params['forms'] = json.dumps(params['forms'])
                 form = request_schema.load(params, partial=True)
                 response_schema = WorkflowItemResponseSchema()
                 if not form.errors:
@@ -304,6 +305,7 @@ class WorkflowDetailApi(Resource):
                 else:
                     result = dict(status="ERROR", message="Invalid data",
                                   errors=form.errors)
+                    result_code = 400
         except Exception as e:
             log.exception('Error in PATCH')
             result_code = 500
