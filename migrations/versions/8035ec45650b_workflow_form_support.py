@@ -31,7 +31,7 @@ def upgrade():
                   sa.Column('enable_conditions', sa.String(length=2000),
                             nullable=True))
     op.add_column(u'workflow', sa.Column('forms', sa.TEXT(),
-                                         nullable=False))
+                                         nullable=True))
     # ### end Alembic commands ###
 
 

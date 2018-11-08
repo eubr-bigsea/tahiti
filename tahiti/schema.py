@@ -894,7 +894,7 @@ class WorkflowExecuteRequestSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
     template_code = fields.String(required=False, allow_none=True)
-    forms = fields.String(required=True)
+    forms = fields.String(required=False, allow_none=True)
     tasks = fields.Nested(
         'tahiti.schema.TaskExecuteRequestSchema',
         allow_none=True,
@@ -975,7 +975,7 @@ class WorkflowCreateRequestSchema(Schema):
                                  default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
-    forms = fields.String(required=True)
+    forms = fields.String(required=False, allow_none=True)
     tasks = fields.Nested(
         'tahiti.schema.TaskCreateRequestSchema',
         allow_none=True,
@@ -1016,6 +1016,7 @@ class WorkflowItemResponseSchema(Schema):
                                  default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
+    forms = fields.Function(lambda x: load_json(x.forms))
     tasks = fields.Nested(
         'tahiti.schema.TaskItemResponseSchema',
         allow_none=True,

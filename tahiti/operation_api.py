@@ -113,8 +113,10 @@ class OperationListApi(Resource):
                 'operation_translation_1.locale = :param_locale',
                 bindparams=[param_locale]))
 
-            data = OperationListResponseSchema(many=True, only=only).dump(
-                operations).data
+            exclude = ('platforms.forms', 'platforms.icon',
+                       'platforms.description')
+            data = OperationListResponseSchema(
+                many=True, only=only, exclude=exclude).dump(operations).data
             # Group forms with same type
             if only is None or 'forms' in only:
                 for op in data:
