@@ -263,7 +263,7 @@ def _insert_operation_form_field_translation():
     data = [
 
         #Reshape - target_shape
-        (5132, 'en', 'target_shape', 'Tuple of integers. Does not include the batch axis. Ex.: (6,2)'),
+        (5132, 'en', 'Target shape', 'Tuple of integers. Does not include the batch axis. Ex.: (6,2)'),
         #Reshape - input_shape
         #(5133, 'en', 'input_shape', 'Arbitrary, although all dimensions in the input shaped must be fixed. '
         #                            'Use the keyword argument input_shape (tuple of integers, does not '

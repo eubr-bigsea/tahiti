@@ -324,7 +324,7 @@ def _insert_operation_form_field_translation():
     data = [
 
         # SpatialDropout1D - rate
-        (5142, 'en', 'rate', 'Float between 0 and 1. Fraction of the input units to drop.'),
+        (5142, 'en', 'Rate', 'Float between 0 and 1. Fraction of the input units to drop.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)

@@ -252,7 +252,7 @@ def _insert_operation_form_field_translation():
     data = [
 
         #Permute - dims
-        (5134, 'en', 'dims', 'Tuple of integers. Permutation pattern, '
+        (5134, 'en', 'Dimensions', 'Tuple of integers. Permutation pattern, '
                              'does not include the samples dimension. '
                              'Indexing starts at 1. For instance, (2, 1) '
                              'permutes the first and second dimension of the input.'),

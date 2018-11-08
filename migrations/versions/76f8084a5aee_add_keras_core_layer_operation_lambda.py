@@ -272,9 +272,9 @@ def _insert_operation_form_field_translation():
     data = [
 
         # Lambda - function
-        (5136, 'en', 'function', 'The function to be evaluated. Takes input tensor as first argument.'),
+        (5136, 'en', 'Function', 'The function to be evaluated. Takes input tensor as first argument.'),
         # Lambda - mask
-        (5137, 'en', 'mask', 'Masks a sequence by using a mask value to skip timesteps.'
+        (5137, 'en', 'Mask', 'Masks a sequence by using a mask value to skip timesteps.'
                              'For each timestep in the input tensor (dimension #1 in the tensor), '
                              'if all values in the input tensor at that timestep are equal to '
                              'mask_value, then the timestep will be masked (skipped) in all '
@@ -282,7 +282,7 @@ def _insert_operation_form_field_translation():
                              'If any downstream layer does not support masking yet '
                              'receives such an input mask, an exception will be raised.'),
         # Lambda - arguments
-        (5138, 'en', 'arguments', 'Optional dictionary of keyword arguments to be passed to the function.'),
+        (5138, 'en', 'Arguments', 'Optional dictionary of keyword arguments to be passed to the function.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)

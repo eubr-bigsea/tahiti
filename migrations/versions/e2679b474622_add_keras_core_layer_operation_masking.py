@@ -262,7 +262,7 @@ def _insert_operation_form_field_translation():
     data = [
 
         # Masking - mask_value
-        (5141, 'en', 'mask_value', 'Masks a sequence by using a mask_value to skip timesteps.'),
+        (5141, 'en', 'Mask value', 'Masks a sequence by using a mask_value to skip timesteps.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)

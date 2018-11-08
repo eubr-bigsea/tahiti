@@ -253,7 +253,7 @@ def _insert_operation_form_field_translation():
     data = [
 
         #RepeatVector - n
-        (5135, 'en', 'n', 'Repeats the input n times.'),
+        (5135, 'en', 'N', 'Repeats the input n times.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
