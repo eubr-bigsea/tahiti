@@ -27,6 +27,13 @@ def upgrade():
                     )
     op.add_column(u'operation_category',
                   sa.Column('order', sa.Integer(), nullable=False, default=1))
+    op.add_column(u'operation_category',
+                  sa.Column('default_order', sa.Integer(), nullable=False,
+                            default=1))
+    op.add_column(u'workflow',
+                  sa.Column('is_system_template', sa.Boolean(), nullable=False,
+                            default=0))
+
     op.add_column(u'operation_form_field',
                   sa.Column('enable_conditions', sa.String(length=2000),
                             nullable=True))
