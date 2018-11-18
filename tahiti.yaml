@@ -1,0 +1,14 @@
+# Stand configuration file
+tahiti:
+    debug: true
+    environment: dev
+    secret: 123456
+    servers:
+        database_url: mysql+pymysql://root:lemon@stage.ctweb.inweb.org.br:33062/tahiti2?charset=utf8
+    services:
+        thorn:
+            url: https://dev.ctweb.inweb.org.br/thorn
+    config:
+        SQLALCHEMY_POOL_SIZE: 10
+        SQLALCHEMY_POOL_RECYCLE: 240
+
