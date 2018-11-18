@@ -70,16 +70,19 @@ def _insert_operation_category():
     tb = table(
         'operation_category',
         column('id', Integer),
-        column('type', String))
+        column('type', String),
+        column('order', Integer),
+        column('default_order', Integer),
+        )
 
-    columns = ('id', 'type')
+    columns = ('id', 'type', 'order', 'default_order')
     data = [
         # SpatialDropout1D
-        (5024, "subgroup"),
+        (5024, "subgroup", 9, 9),
         # SpatialDropout2D
-        (5025, "subgroup"),
+        (5025, "subgroup", 9, 9),
         # SpatialDropout3D
-        (5026, "subgroup"),
+        (5026, "subgroup", 9, 9),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 

@@ -2,7 +2,7 @@
 """Add keras plataform
 
 Revision ID: 86dd15ad5169
-Revises: 5430536464c7
+Revises: 8035ec45650b
 Create Date: 2018-10-01 15:41:55.368398
 
 """
@@ -15,7 +15,7 @@ from sqlalchemy.sql import table, column, text
 
 # revision identifiers, used by Alembic.
 revision = '86dd15ad5169'
-down_revision = '5430536464c7'
+down_revision = '8035ec45650b'
 branch_labels = None
 depends_on = None
 
@@ -112,24 +112,27 @@ def _insert_operation_category():
     tb = table(
         'operation_category',
         column('id', Integer),
-        column('type', String))
+        column('type', String),
+        column('order', Integer),
+        column('default_order', Integer),
+        )
 
-    columns = ('id', 'type')
+    columns = ('id', 'type', 'order', 'default_order')
     data = [
-        (5010, "group"),
-            (5011, "subgroup"),
-            (5012, "subgroup"),
-            (5013, "subgroup"),
-        (5020, "group"),
-            (5021, "subgroup"),
-            (5022, "subgroup"),
-        (5030, "group"),
-            (5031, "subgroup"),
-        (5040, "group"),
-            (5041, "subgroup"),
-            (5042, "subgroup"),
-        (5050, "group"),
-            (5051, "subgroup"),
+        (5010, "group", 1, 1),
+            (5011, "subgroup", 1, 1),
+            (5012, "subgroup", 2, 2),
+            (5013, "subgroup", 3, 3),
+        (5020, "group", 2, 2),
+            (5021, "subgroup", 1, 1),
+            (5022, "subgroup", 2, 2),
+        (5030, "group", 3, 3),
+            (5031, "subgroup", 1, 1),
+        (5040, "group", 4, 4),
+            (5041, "subgroup", 1, 1),
+            (5042, "subgroup", 2, 2),
+        (5050, "group", 5, 5),
+            (5051, "subgroup", 1, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 

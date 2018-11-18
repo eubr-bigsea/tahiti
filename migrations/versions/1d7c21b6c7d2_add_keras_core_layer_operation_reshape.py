@@ -61,11 +61,14 @@ def _insert_operation_category():
     tb = table(
         'operation_category',
         column('id', Integer),
-        column('type', String))
+        column('type', String),
+        column('order', Integer),
+        column('default_order', Integer),
+        )
 
-    columns = ('id', 'type')
+    columns = ('id', 'type', 'order', 'default_order')
     data = [
-        (5015, "subgroup"),# Reshape
+        (5015, "subgroup", 8, 8),# Reshape
     ]
     rows = [dict(zip(columns, row)) for row in data]
 

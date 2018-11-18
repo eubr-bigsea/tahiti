@@ -61,12 +61,15 @@ def _insert_operation_category():
     tb = table(
         'operation_category',
         column('id', Integer),
-        column('type', String))
+        column('type', String),
+        column('order', Integer),
+        column('default_order', Integer),
+        )
 
-    columns = ('id', 'type')
+    columns = ('id', 'type', 'order', 'default_order')
     data = [
         # Lambda
-        (5018, "subgroup"),
+        (5018, "subgroup", 9, 9 ),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
