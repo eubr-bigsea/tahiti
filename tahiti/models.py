@@ -280,6 +280,8 @@ class OperationCategory(db.Model, Translatable):
     type = Column(String(200), nullable=False)
     order = Column(Integer,
                    default=1, nullable=False)
+    default_order = Column(Integer,
+                           default=1, nullable=False)
 
     def __unicode__(self):
         return self.name
@@ -603,6 +605,8 @@ class Workflow(db.Model):
     image = Column(String(1000))
     is_template = Column(Boolean,
                          default=False, nullable=False)
+    is_system_template = Column(Boolean,
+                                default=False, nullable=False)
     is_public = Column(Boolean,
                        default=False, nullable=False)
     template_code = Column(String(16000000))

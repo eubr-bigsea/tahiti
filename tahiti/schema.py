@@ -325,6 +325,8 @@ class OperationCategoryCreateRequestSchema(Schema):
     type = fields.String(required=True)
     order = fields.Integer(required=True, missing=1,
                            default=1)
+    default_order = fields.Integer(required=True, missing=1,
+                                   default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -343,6 +345,8 @@ class OperationCategoryListResponseSchema(Schema):
     type = fields.String(required=True)
     order = fields.Integer(required=True, missing=1,
                            default=1)
+    default_order = fields.Integer(required=True, missing=1,
+                                   default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -360,6 +364,8 @@ class OperationCategoryItemResponseSchema(Schema):
     type = fields.String(required=True)
     order = fields.Integer(required=True, missing=1,
                            default=1)
+    default_order = fields.Integer(required=True, missing=1,
+                                   default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -891,6 +897,8 @@ class WorkflowExecuteRequestSchema(Schema):
     image = fields.String(required=False, allow_none=True)
     is_template = fields.Boolean(required=True, missing=False,
                                  default=False)
+    is_system_template = fields.Boolean(required=True, missing=False,
+                                        default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
     template_code = fields.String(required=False, allow_none=True)
@@ -932,6 +940,8 @@ class WorkflowListResponseSchema(Schema):
     image = fields.String(required=False, allow_none=True)
     is_template = fields.Boolean(required=True, missing=False,
                                  default=False)
+    is_system_template = fields.Boolean(required=True, missing=False,
+                                        default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
     tasks = fields.Nested(
@@ -973,6 +983,8 @@ class WorkflowCreateRequestSchema(Schema):
     image = fields.String(required=False, allow_none=True)
     is_template = fields.Boolean(required=True, missing=False,
                                  default=False)
+    is_system_template = fields.Boolean(required=True, missing=False,
+                                        default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
     forms = fields.String(required=False, allow_none=True)
@@ -1014,6 +1026,8 @@ class WorkflowItemResponseSchema(Schema):
     image = fields.String(required=False, allow_none=True)
     is_template = fields.Boolean(required=True, missing=False,
                                  default=False)
+    is_system_template = fields.Boolean(required=True, missing=False,
+                                        default=False)
     is_public = fields.Boolean(required=True, missing=False,
                                default=False)
     forms = fields.Function(lambda x: load_json(x.forms))
