@@ -2,7 +2,7 @@
 """Add Keras Core Layer Operation Permute
 
 Revision ID: 1392d68b6679
-Revises: 1d7c21b6c7d2
+Revises: 8035ec45650b
 Create Date: 2018-11-01 15:16:39.140050
 
 """
