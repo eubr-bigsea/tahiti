@@ -101,7 +101,7 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
         #Loss functions
-        (5161, 'loss', 'TEXT', 0, 1, 'mean_squared_logarithmic_error', 'dropdown', None,
+        (5161, 'loss', 'TEXT', 0, 1, None, 'dropdown', None,
          json.dumps([
              {"key": "squared_hinge", "value": "squared_hinge"},
              {"key": "hinge", "value": "hinge"},
@@ -121,7 +121,7 @@ def _insert_operation_form_field():
          'EXECUTION', 5161),
 
         #Optimizer functions
-        (5162, 'optimizer', 'TEXT', 0, 2, 'SGD', 'dropdown', None,
+        (5162, 'optimizer', 'TEXT', 1, 2, 'adam', 'dropdown', None,
          json.dumps([
              {"key": "sgd", "value": "sgd"},
              {"key": "rmsprop", "value": "rmsprop"},

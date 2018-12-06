@@ -197,15 +197,32 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (5011, "en", 'Dense', ''),
-        (5012, "en", 'Dropout', ''),
-        (5013, "en", 'Flatten', ''),
-        (5021, "en", 'Convolution2D', ''),
-        (5022, "en", 'ZeroPadding2D', ''),
-        (5031, "en", 'MaxPooling2D', ''),
-        (5041, "en", 'LSTM', ''),
-        (5042, "en", 'SimpleRNN', ''),
-        (5051, "en", 'BatchNormalization', ''),
+        (5011, "en", 'Dense', 'Just your regular densely-connected NN layer.'),
+        (5012, "en", 'Dropout', 'Applies Dropout to the input. '
+                                'Dropout consists in randomly setting a fraction '
+                                'rate of input units to 0 at each update during '
+                                'training time, which helps prevent overfitting.'),
+        (5013, "en", 'Flatten', 'Flattens the input. Does not affect the batch size.'),
+        (5021, "en", 'Convolution2D', '2D convolution layer (e.g. spatial convolution over images). '
+                                      'This layer creates a convolution kernel that is convolved with '
+                                      'the layer input to produce a tensor of outputs. If use_bias is '
+                                      'True, a bias vector is created and added to the outputs. Finally, '
+                                      'if activation is not None, it is applied to the outputs as well. '
+                                      'When using this layer as the first layer in a model, provide the '
+                                      'keyword argument input_shape (tuple of integers, does not include '
+                                      'the batch axis), e.g. input_shape=(128, 128, 3) for 128x128 RGB '
+                                      'pictures in data_format="channels_last".'),
+        (5022, "en", 'ZeroPadding2D', 'Zero-padding layer for 2D input (e.g. picture). This layer can '
+                                      'add rows and columns of zeros at the top, bottom, '
+                                      'left and right side of an image tensor.'),
+        (5031, "en", 'MaxPooling2D', 'Max pooling operation for spatial data.'),
+        (5041, "en", 'LSTM', 'Long Short-Term Memory layer - Hochreiter 1997.'),
+        (5042, "en", 'SimpleRNN', 'Fully-connected RNN where the output is to be fed back to input.'),
+        (5051, "en", 'BatchNormalization', 'Batch normalization layer (Ioffe and Szegedy, 2014). '
+                                           'Normalize the activations of the previous layer at each '
+                                           'batch, i.e. applies a transformation that maintains the '
+                                           'mean activation close to 0 and the activation '
+                                           'standard deviation close to 1.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
