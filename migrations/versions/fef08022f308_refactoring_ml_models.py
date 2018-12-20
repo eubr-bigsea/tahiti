@@ -20,7 +20,8 @@ down_revision = '1d36e073f89d'
 branch_labels = None
 depends_on = None
 
-OPERATIONS = ",".join(["104", "105", "106", "107", "108", "109", "110", "111"])
+OPERATIONS = ",".join(["104", "105", "106", "107", "108", "109", "110", "111",
+                       "112", "113", "114", "115", "116", "117"])
 
 
 def _insert_operation():
@@ -45,6 +46,19 @@ def _insert_operation():
          "fa-angle-double-down"),
         (111, "one-vs-rest-classifier-model", "1", "TRANSFORMATION",
          "fa-window-close"),
+
+        # Regression
+        (112, "isotonic-regression-model", 1, "TRANSFORMATION",
+         "fa-battery-quarter"),
+        (113, "aft-survival-regression-model", 1, "TRANSFORMATION", "fa-fire"),
+        (114, "gbt-regressor-model", 1, "TRANSFORMATION", "fa-id-card"),
+        (115, "random-forest-regressor-model", 1, "TRANSFORMATION",
+         "fa-laptop"),
+        (116, "generalized-linear-regressor-model", 1, "TRANSFORMATION",
+         "fa-plus-square"),
+
+        (117, "linear-regression-model", 1, "TRANSFORMATION", "fa-chart-line"),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -86,6 +100,31 @@ def _insert_operation_translation():
          "Classifier trainer based on the Multilayer Perceptron. Each layer has sigmoid activation function\, output layer has softmax. Number of inputs has to be equal to the size of feature vectors. Number of "),
         (111, "pt", "Classificador 1 vs. resto",
          "Redução da classificação multiclasse para a classificação binária."),
+
+        # Regression
+        (112, "en", "Isotonic Regression", "Isotonic Regression"),
+        (113, "en", "AFT Survival Regression",
+         "Accelerated Failure Time (AFT) Model Survival Regression"),
+        (114, "en", "GBT Regressor",
+         "Gradient-Boosted Trees (GBTs) learning algorithm for regression. It supports both continuous and categorical featur"),
+        (115, "en", "Random Forest Regressor",
+         "Random Forest learning algorithm for regression. It supports both continuous and categorical features."),
+        (116, "en", "Generalized Linear Regressor",
+         "Generalized Linear Regressor"),
+        (117, "en", "Linear regression",
+         "Applies a linear regression algorithm"),
+
+        (112, "pt", "Regressão Isotônica", "Regressão Isotônica"),
+        (113, "pt", "Regressão AFT Survival",
+         "Accelerated Failure Time (AFT) Model Survival Regression"),
+        (114, "pt", "Regressor GBT",
+         "Gradient-Boosted Trees (GBTs) learning algorithm for regression. It supports both continuous and categorical feature"),
+        (115, "pt", "Regressor Random Forest",
+         "Random Forest learning algorithm for regression. It supports both continuous and categorical features."),
+        (116, "pt", "Regressor Linear Generalizado",
+         "Regressor Linear Generalizado"),
+        (117, "pt", "Regressão linear", "Aplica a regressão linear"),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -106,6 +145,13 @@ def _insert_operation_platform():
         (109, 1),
         (110, 1),
         (111, 1),
+
+        (112, 1),
+        (113, 1),
+        (114, 1),
+        (115, 1),
+        (116, 1),
+        (117, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -148,6 +194,25 @@ def _insert_operation_port():
         (260, "INPUT", None, 1, "ONE", 111, "train input data"),
         (261, "OUTPUT", None, 2, "MANY", 111, "model"),
         (262, "OUTPUT", None, 1, "MANY", 111, "output data"),
+
+        (263, "INPUT", None, 1, "ONE", 112, "train input data"),
+        (264, "OUTPUT", None, 2, "MANY", 112, "model"),
+        (265, "OUTPUT", None, 1, "MANY", 112, "output data"),
+        (266, "INPUT", None, 1, "ONE", 113, "train input data"),
+        (267, "OUTPUT", None, 2, "MANY", 113, "model"),
+        (268, "OUTPUT", None, 1, "MANY", 113, "output data"),
+        (269, "INPUT", None, 1, "ONE", 114, "train input data"),
+        (270, "OUTPUT", None, 2, "MANY", 114, "model"),
+        (271, "OUTPUT", None, 1, "MANY", 114, "output data"),
+        (272, "INPUT", None, 1, "ONE", 115, "train input data"),
+        (273, "OUTPUT", None, 2, "MANY", 115, "model"),
+        (274, "OUTPUT", None, 1, "MANY", 115, "output data"),
+        (275, "INPUT", None, 1, "ONE", 116, "train input data"),
+        (276, "OUTPUT", None, 2, "MANY", 116, "model"),
+        (277, "OUTPUT", None, 1, "MANY", 116, "output data"),
+        (278, "INPUT", None, 1, "ONE", 117, "train input data"),
+        (279, "OUTPUT", None, 2, "MANY", 117, "model"),
+        (280, "OUTPUT", None, 1, "MANY", 117, "output data"),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -214,6 +279,44 @@ def _insert_operation_port_translation():
         (261, "pt", "modelo", "Output model"),
         (262, "pt", "dados de saída", "Dados de saída"),
 
+        (263, "en", "train input data", "Train input data"),
+        (264, "en", "model", "Output model"),
+        (265, "en", "output data", "Output data"),
+        (266, "en", "train input data", "Train input data"),
+        (267, "en", "model", "Output model"),
+        (268, "en", "output data", "Output data"),
+        (269, "en", "train input data", "Train input data"),
+        (270, "en", "model", "Output model"),
+        (271, "en", "output data", "Output data"),
+        (272, "en", "train input data", "Train input data"),
+        (273, "en", "model", "Output model"),
+        (274, "en", "output data", "Output data"),
+        (275, "en", "train input data", "Train input data"),
+        (276, "en", "model", "Output model"),
+        (277, "en", "output data", "Output data"),
+        (278, "en", "train input data", "Train input data"),
+        (279, "en", "model", "Output model"),
+        (280, "en", "output data", "Output data"),
+
+        (263, "pt", "entrada do treino", "Train input data"),
+        (264, "pt", "modelo", "Output model"),
+        (265, "pt", "dados de saída", "Dados de saída"),
+        (266, "pt", "entrada do treino", "Train input data"),
+        (267, "pt", "modelo", "Output model"),
+        (268, "pt", "dados de saída", "Dados de saída"),
+        (269, "pt", "entrada do treino", "Train input data"),
+        (270, "pt", "modelo", "Output model"),
+        (271, "pt", "dados de saída", "Dados de saída"),
+        (272, "pt", "entrada do treino", "Train input data"),
+        (273, "pt", "modelo", "Output model"),
+        (274, "pt", "dados de saída", "Dados de saída"),
+        (275, "pt", "entrada do treino", "Train input data"),
+        (276, "pt", "modelo", "Output model"),
+        (277, "pt", "dados de saída", "Dados de saída"),
+        (278, "pt", "entrada do treino", "Train input data"),
+        (279, "pt", "modelo", "Output model"),
+        (280, "pt", "dados de saída", "Dados de saída"),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -227,8 +330,8 @@ def _insert_operation_port_interface_operation_port():
         column('operation_port_interface_id', Integer), )
 
     columns = [c.name for c in tb.columns]
-    models_ports = set(range(240, 262, 3))
-    data_ports = set(range(239, 263, 1)) - models_ports
+    models_ports = set(range(240, 280, 3))
+    data_ports = set(range(239, 281, 1)) - models_ports
     data = sorted(list(itertools.product(data_ports, [1])) + list(
         itertools.product(models_ports, [2])), key=lambda x: x[0])
 
@@ -244,10 +347,18 @@ def _insert_operation_category_operation():
         column('operation_category_id', Integer))
 
     columns = [c.name for c in tb.columns]
-    data = itertools.product([int(x) for x in OPERATIONS.split(',')],
+    data = itertools.product([int(x) for x in OPERATIONS.split(',')
+                              if int(x) <= 111],
                              [1, 4, 18, 8])
+
     rows = [dict(zip(columns, cat)) for cat in data]
 
+    op.bulk_insert(tb, rows)
+
+    data = itertools.product([int(x) for x in OPERATIONS.split(',')
+                              if int(x) > 111],
+                             [1, 21, 8])
+    rows = [dict(zip(columns, cat)) for cat in data]
     op.bulk_insert(tb, rows)
 
 
@@ -304,7 +415,28 @@ def _insert_operation_operation_form():
         [111, 1],
         [111, 119],
         [111, 110],
-        [111, 41]
+        [111, 41],
+
+        [112, 102],
+        [112, 103],
+        [112, 41],
+        [113, 102],
+        [113, 104],
+        [113, 41],
+        [114, 102],
+        [114, 105],
+        [114, 41],
+        [115, 106],
+        [115, 41],
+        [115, 102],
+        [116, 107],
+        [116, 41],
+        [116, 102],
+
+        [117, 8],
+        [117, 41],
+        [117, 102],
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
