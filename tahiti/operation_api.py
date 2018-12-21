@@ -74,8 +74,7 @@ class OperationListApi(Resource):
                 only = ('id', 'name') \
                     if request.args.get('simple', 'false') == 'true' else None
 
-            operations = optimize_operation_query(
-                Operation.query.order_by('operation_translation_1.name'))
+            operations = optimize_operation_query(Operation.query)
 
             disabled_filter = request.args.get('disabled')
             if not disabled_filter:
@@ -115,54 +114,58 @@ class OperationListApi(Resource):
 
             exclude = ('platforms.forms', 'platforms.icon',
                        'platforms.description')
-            data = OperationListResponseSchema(
-                many=True, only=only, exclude=exclude).dump(operations).data
-            # Group forms with same type
-            if only is None or 'forms' in only:
-                for op in data:
-                    groups = itertools.groupby(op['forms'],
-                                               lambda f: f['category'])
-                    op['forms'] = []
 
-                    for key, group in groups:
-                        merged = reduce(
-                            lambda v1, v2: deep_merge(v1, v2, handle_conflicts),
-                            group, {})
-                        op['forms'].append(merged)
+            page = request.args.get('page')
+            if page is not None and page.isdigit():
+                page_size = int(request.args.get('size', 20))
+                page = int(page)
+                try:
+                    s = request.args.get('sort')
+                    if s == 'name':
+                        s = 'operation_translation.name'
+                    else:
+                        s = '1'
+                    if request.args.get('asc') == 'true':
+                        s += ' ASC '
+                    else:
+                        s += ' DESC'
+                    operations = operations.order_by(s)
+                    pagination = operations.paginate(page, page_size, True)
+                    results = {
+                        'data': OperationListResponseSchema(many=True,
+                                                            only=only).dump(
+                            pagination.items).data,
+                        'pagination': {'page': page, 'size': page_size,
+                                       'total': pagination.total,
+                                       'pages': pagination.total / page_size + 1
+                                       }}
+                except Exception as e:
+                    raise
+            else:
+                operations = operations.order_by('operation_translation_1.name')
+                data = OperationListResponseSchema(
+                    many=True, only=only, exclude=exclude).dump(operations).data
 
-            return data
+                # Group forms with same type
+                if only is None or 'forms' in only:
+                    for op in data:
+                        groups = itertools.groupby(
+                            sorted(op['forms'], key=lambda f: f['category']),
+                            lambda f: f['category'])
+
+                        op['forms'] = []
+
+                        for key, group in groups:
+                            merged = reduce(
+                                lambda v1, v2: deep_merge(v1, v2,
+                                                          handle_conflicts),
+                                group, {})
+                            op['forms'].append(merged)
+                results = data
+
+            return results
 
         return result()
-
-    @staticmethod
-    @requires_auth
-    def post():
-        result, result_code = dict(
-            status="ERROR", message="Missing json in the request body"), 401
-        if request.json is not None:
-            request_schema = OperationCreateRequestSchema()
-            response_schema = OperationItemResponseSchema()
-            form = request_schema.load(request.json)
-            if form.errors:
-                result, result_code = dict(
-                    status="ERROR", message="Validation error",
-                    errors=form.errors, ), 401
-            else:
-                try:
-                    operation = form.data
-                    db.session.add(operation)
-                    db.session.commit()
-                    result, result_code = response_schema.dump(
-                        operation).data, 200
-                except Exception, e:
-                    log.exception('Error in POST')
-                    result, result_code = dict(status="ERROR",
-                                               message="Internal error"), 500
-                    if current_app.debug:
-                        result['debug_detail'] = e.message
-                    db.session.rollback()
-
-        return result, result_code
 
 
 class OperationDetailApi(Resource):
@@ -185,29 +188,9 @@ class OperationDetailApi(Resource):
 
     @staticmethod
     @requires_auth
-    def delete(operation_id):
-        result, result_code = dict(status="ERROR", message="Not found"), 404
-
-        operation = Operation.query.get(operation_id)
-        if operation is not None:
-            try:
-                db.session.delete(operation)
-                db.session.commit()
-                result, result_code = dict(status="OK", message="Deleted"), 200
-            except Exception, e:
-                log.exception('Error in DELETE')
-                result, result_code = dict(status="ERROR",
-                                           message="Internal error"), 500
-                if current_app.debug:
-                    result['debug_detail'] = e.message
-                db.session.rollback()
-        return result, result_code
-
-    @staticmethod
-    @requires_auth
     def patch(operation_id):
         result = dict(status="ERROR", message="Insufficient data")
-        result_code = 404
+        result_code = 400
 
         if request.json:
             request_schema = partial_schema_factory(
@@ -224,6 +207,7 @@ class OperationDetailApi(Resource):
                         result, result_code = dict(
                             status="OK", message="Updated",
                             data=response_schema.dump(operation).data), 200
+                        cache.clear()
                     else:
                         result = dict(status="ERROR", message="Not found")
                 except Exception, e:
@@ -241,6 +225,8 @@ class OperationDetailApi(Resource):
 
 class OperationClearCacheApi(Resource):
     # noinspection PyMethodMayBeStatic
-    def post(self):
+    @staticmethod
+    @requires_auth
+    def post():
         cache.clear()
         return '{"msg": "Cache cleaned"}', 200
