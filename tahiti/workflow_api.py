@@ -110,7 +110,6 @@ class WorkflowListApi(Resource):
                     'pagination': {'page': page, 'size': page_size,
                                    'total': pagination.total,
                                    'pages': pagination.total / page_size + 1}}
-                print result
             else:
                 result = {'data': WorkflowListResponseSchema(many=True,
                                                              only=only).dump(
