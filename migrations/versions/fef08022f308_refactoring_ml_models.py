@@ -21,7 +21,8 @@ branch_labels = None
 depends_on = None
 
 OPERATIONS = ",".join(["104", "105", "106", "107", "108", "109", "110", "111",
-                       "112", "113", "114", "115", "116", "117"])
+                       "112", "113", "114", "115", "116", "117", "118", "119",
+                       "120"])
 
 
 def _insert_operation():
@@ -56,9 +57,13 @@ def _insert_operation():
          "fa-laptop"),
         (116, "generalized-linear-regressor-model", 1, "TRANSFORMATION",
          "fa-plus-square"),
-
         (117, "linear-regression-model", 1, "TRANSFORMATION", "fa-chart-line"),
 
+        # Clustering
+        (118, "k-means-clustering-model", 1, "TRANSFORMATION", "fa-lemon"),
+        (119, "lda-clustering-model", 1, "TRANSFORMATION", "fa-file-alt"),
+        (120, "gaussian-mixture-clustering-model", 1, "TRANSFORMATION",
+         "fa-bullseye"),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -125,6 +130,17 @@ def _insert_operation_translation():
          "Regressor Linear Generalizado"),
         (117, "pt", "Regressão linear", "Aplica a regressão linear"),
 
+        # Clustering
+        (118, "en", "K-Means Clustering",
+         "Uses K-Means algorithm for clustering"),
+        (119, "en", "LDA Clustering", "LDA Clustering"),
+        (120, "en", "Gaussian Mix. Clustering", "Gaussian Mix. Clustering"),
+
+        (118, "pt", "Agrupamento K-Means",
+         "Usa o algoritmo K-Means para agrupamento"),
+        (119, "pt", "Agrupamento LDA", "Agrupamento LDA"),
+        (120, "pt", "Agrupamento Gaussian Mix.", "Agrupamento Gaussian Mix."),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -152,6 +168,10 @@ def _insert_operation_platform():
         (115, 1),
         (116, 1),
         (117, 1),
+
+        (118, 1),
+        (119, 1),
+        (120, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -213,6 +233,17 @@ def _insert_operation_port():
         (278, "INPUT", None, 1, "ONE", 117, "train input data"),
         (279, "OUTPUT", None, 2, "MANY", 117, "model"),
         (280, "OUTPUT", None, 1, "MANY", 117, "output data"),
+
+        (281, "INPUT", None, 1, "ONE", 118, "train input data"),
+        (282, "OUTPUT", None, 2, "MANY", 118, "model"),
+        (283, "OUTPUT", None, 1, "MANY", 118, "output data"),
+        (284, "INPUT", None, 1, "ONE", 119, "train input data"),
+        (285, "OUTPUT", None, 2, "MANY", 119, "model"),
+        (286, "OUTPUT", None, 1, "MANY", 119, "output data"),
+        (287, "INPUT", None, 1, "ONE", 120, "train input data"),
+        (288, "OUTPUT", None, 2, "MANY", 120, "model"),
+        (289, "OUTPUT", None, 1, "MANY", 120, "output data"),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -317,6 +348,26 @@ def _insert_operation_port_translation():
         (279, "pt", "modelo", "Output model"),
         (280, "pt", "dados de saída", "Dados de saída"),
 
+        (281, "en", "train input data", "Train input data"),
+        (282, "en", "model", "Output model"),
+        (283, "en", "output data", "Output data"),
+        (284, "en", "train input data", "Train input data"),
+        (285, "en", "model", "Output model"),
+        (286, "en", "output data", "Output data"),
+        (287, "en", "train input data", "Train input data"),
+        (288, "en", "model", "Output model"),
+        (289, "en", "output data", "Output data"),
+
+        (281, "pt", "entrada do treino", "Train input data"),
+        (282, "pt", "modelo", "Output model"),
+        (283, "pt", "dados de saída", "Dados de saída"),
+        (284, "pt", "entrada do treino", "Train input data"),
+        (285, "pt", "modelo", "Output model"),
+        (286, "pt", "dados de saída", "Dados de saída"),
+        (287, "pt", "entrada do treino", "Train input data"),
+        (288, "pt", "modelo", "Output model"),
+        (289, "pt", "dados de saída", "Dados de saída"),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -330,8 +381,8 @@ def _insert_operation_port_interface_operation_port():
         column('operation_port_interface_id', Integer), )
 
     columns = [c.name for c in tb.columns]
-    models_ports = set(range(240, 280, 3))
-    data_ports = set(range(239, 281, 1)) - models_ports
+    models_ports = set(range(240, 289, 3))
+    data_ports = set(range(239, 290, 1)) - models_ports
     data = sorted(list(itertools.product(data_ports, [1])) + list(
         itertools.product(models_ports, [2])), key=lambda x: x[0])
 
@@ -347,6 +398,8 @@ def _insert_operation_category_operation():
         column('operation_category_id', Integer))
 
     columns = [c.name for c in tb.columns]
+
+    # Classification
     data = itertools.product([int(x) for x in OPERATIONS.split(',')
                               if int(x) <= 111],
                              [1, 4, 18, 8])
@@ -355,9 +408,17 @@ def _insert_operation_category_operation():
 
     op.bulk_insert(tb, rows)
 
+    # Regression
     data = itertools.product([int(x) for x in OPERATIONS.split(',')
-                              if int(x) > 111],
+                              if 118 > int(x) > 111],
                              [1, 21, 8])
+    rows = [dict(zip(columns, cat)) for cat in data]
+    op.bulk_insert(tb, rows)
+
+    # Clustering
+    data = itertools.product([int(x) for x in OPERATIONS.split(',')
+                              if 121 > int(x) > 117],
+                             [1, 19, 8])
     rows = [dict(zip(columns, cat)) for cat in data]
     op.bulk_insert(tb, rows)
 
@@ -374,42 +435,42 @@ def _insert_operation_operation_form():
         [104, 39],
         [104, 40],
         [104, 41],
-        [104, 43],
+        [104, 110],
         [104, 64],
         [105, 1],
         [105, 9],
         [105, 39],
         [105, 40],
         [105, 41],
-        [105, 43],
+        [105, 110],
         [106, 1],
         [106, 34],
         [106, 39],
         [106, 40],
         [106, 41],
-        [106, 43],
+        [106, 110],
         [107, 1],
         [107, 41],
         [107, 39],
-        [107, 43],
+        [107, 110],
         [107, 40],
         [107, 65],
         [108, 1],
         [108, 41],
         [108, 39],
-        [108, 43],
+        [108, 110],
         [108, 40],
         [108, 67],
         [109, 1],
         [109, 41],
         [109, 39],
-        [109, 43],
+        [109, 110],
         [109, 40],
         [109, 66],
         [110, 1],
         [110, 41],
         [110, 39],
-        [110, 43],
+        [110, 110],
         [110, 40],
         [110, 68],
         [111, 1],
@@ -420,22 +481,41 @@ def _insert_operation_operation_form():
         [112, 102],
         [112, 103],
         [112, 41],
+        [112, 110],
         [113, 102],
         [113, 104],
         [113, 41],
+        [113, 110],
         [114, 102],
         [114, 105],
         [114, 41],
+        [114, 110],
         [115, 106],
         [115, 41],
+        [115, 110],
         [115, 102],
         [116, 107],
         [116, 41],
+        [116, 110],
         [116, 102],
 
         [117, 8],
         [117, 41],
+        [117, 110],
         [117, 102],
+
+        [118, 27],
+        [118, 10],
+        [118, 41],
+        [118, 110],
+        [119, 41],
+        [119, 10],
+        [119, 110],
+        [119, 58],
+        [120, 41],
+        [120, 10],
+        [120, 110],
+        [120, 71],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -476,6 +556,24 @@ all_commands = [
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form '
      'WHERE operation_id IN ({})'.format(OPERATIONS)),
+
+    ("""UPDATE operation_form SET category = 'execution'
+        WHERE id IN (9,34,64,65,66,67,68,119)""",
+     """UPDATE operation_form SET category = 'paramgrid'
+        WHERE id IN (9,34,64,65,66,67,68,119)"""),
+
+    ("""UPDATE operation_form_translation SET NAME = 'Execution'
+        WHERE id IN (9,34,64,65,66,67,68,119) AND locale = 'en';""",
+     """UPDATE operation_form_translation SET NAME = 'Param grid'
+        WHERE id IN (9,34,64,65,66,67,68,119) AND locale = 'en';"""),
+
+    ("""UPDATE operation_form_translation SET NAME = 'Execução'
+        WHERE id IN (9,34,64,65,66,67,68,119) AND locale = 'pt';""",
+     """UPDATE operation_form_translation SET NAME = 'Grade de parâmetros'
+        WHERE id IN (9,34,64,65,66,67,68,119) AND locale = 'pt';"""),
+
+    ("UPDATE operation_form SET `order` = 0 WHERE id IN (10, 1, 102)",
+     "UPDATE operation_form SET `order` = 1 WHERE id IN (10, 1, 102)")
 ]
 
 
