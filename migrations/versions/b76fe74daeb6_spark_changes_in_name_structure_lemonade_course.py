@@ -1285,7 +1285,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            print cmd[0]
+            # print cmd[0]
             if isinstance(cmd[0], (unicode, str)):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
@@ -1306,7 +1306,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            print cmd[0]
+            # print cmd[0]
             if isinstance(cmd[1], (unicode, str)):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
