@@ -32,16 +32,16 @@ def _insert_operation_platform():
 
     columns = ('operation_id', 'platform_id')
     data = [
-        (5052, KERAS_PLATAFORM_ID),
+        (5052, KERAS_PLATAFORM_ID), #CuDNNLSTM
         # 5041 - LSTM - Was added with the keras platform review "86dd15ad5169"
         # 5042 - Simple-RNN - Was added with the keras platform review "86dd15ad5169"
-        (5043, KERAS_PLATAFORM_ID),
-        (5044, KERAS_PLATAFORM_ID),
-        (5045, KERAS_PLATAFORM_ID),
-        (5046, KERAS_PLATAFORM_ID),
-        (5047, KERAS_PLATAFORM_ID),
-        (5048, KERAS_PLATAFORM_ID),
-        (5049, KERAS_PLATAFORM_ID),
+        (5043, KERAS_PLATAFORM_ID), #RNN - not implemented, yet.
+        (5044, KERAS_PLATAFORM_ID), #GRU
+        (5045, KERAS_PLATAFORM_ID), #ConvLSTM2D
+        (5046, KERAS_PLATAFORM_ID), #SimpleRNNCell
+        (5047, KERAS_PLATAFORM_ID), #GRUCell
+        (5048, KERAS_PLATAFORM_ID), #LSTMCell
+        (5049, KERAS_PLATAFORM_ID), #CuDNNGRU
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -59,7 +59,7 @@ def _insert_operation():
 
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
     data = [
-        (5052, "cu-dnn-lstm", 0, 'ACTION', ''),
+        (5052, "cu-dnn-lstm", 0, 'ACTION', ''), #Can only be run on GPU, with the TensorFlow backend. enabled=0
         # 5041 - LSTM - Was added with the keras platform review "86dd15ad5169"
         # 5042 - Simple-RNN - Was added with the keras platform review "86dd15ad5169"
         (5043, "rnn", 1, 'ACTION', ''),
@@ -68,7 +68,7 @@ def _insert_operation():
         (5046, "simple-rnn-cell", 1, 'ACTION', ''),
         (5047, "gru-cell", 1, 'ACTION', ''),
         (5048, "lstm-cell", 1, 'ACTION', ''),
-        (5049, "cu-dnn-gru", 0, 'ACTION', ''),
+        (5049, "cu-dnn-gru", 0, 'ACTION', ''), #Can only be run on GPU, with the TensorFlow backend. enabled=0
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -316,6 +316,28 @@ def _insert_operation_form():
         (5188, 1, 1, 'execution'), #stateful
         (5189, 1, 1, 'execution'), #unroll
 
+        #SimpleRNN
+        (5201, 1, 1, 'execution'), #units
+        (5202, 1, 1, 'execution'), #activation
+        (5203, 1, 1, 'execution'), #use_bias
+        (5204, 1, 1, 'execution'), #kernel_initializer
+        (5205, 1, 1, 'execution'), #recurrent_initializer
+        (5206, 1, 1, 'execution'), #bias_initializer
+        (5207, 1, 1, 'execution'), #kernel_regularizer
+        (5208, 1, 1, 'execution'), #recurrent_regularizer
+        (5209, 1, 1, 'execution'), #bias_regularizer
+        (5210, 1, 1, 'execution'), #activity_regularizer
+        (5211, 1, 1, 'execution'), #kernel_constraint
+        (5212, 1, 1, 'execution'), #recurrent_constraint
+        (5213, 1, 1, 'execution'), #bias_constraint
+        (5214, 1, 1, 'execution'), #dropout
+        (5215, 1, 1, 'execution'), #recurrent_dropout
+        (5216, 1, 1, 'execution'), #return_sequences
+        (5217, 1, 1, 'execution'), #return_state
+        (5218, 1, 1, 'execution'), #go_backwards
+        (5219, 1, 1, 'execution'), #stateful
+        (5220, 1, 1, 'execution'), #unroll
+
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -331,6 +353,7 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
+        #LSTM - EN
         (5178, 'en', 'Execution'), #recurrent_activation
         (5179, 'en', 'Execution'), #unit_forget_bias
         (5180, 'en', 'Execution'), #recurrent_regularizer
@@ -354,7 +377,7 @@ def _insert_operation_form_translation():
         (5198, 'en', 'Execution'), #activity_regularizer
         (5199, 'en', 'Execution'), #kernel_constraint
         (5200, 'en', 'Execution'), #bias_constraint
-
+        #LSTM - PT
         (5178, 'pt', 'Execução'), #recurrent_activation
         (5179, 'pt', 'Execução'), #unit_forget_bias
         (5180, 'pt', 'Execução'), #recurrent_regularizer
@@ -378,6 +401,49 @@ def _insert_operation_form_translation():
         (5198, 'pt', 'Execução'), #activity_regularizer
         (5199, 'pt', 'Execução'), #kernel_constraint
         (5200, 'pt', 'Execução'), #bias_constraint
+        #SimpleRNN - EN
+        (5201, 'en', 'Execution'), #units
+        (5202, 'en', 'Execution'), #activation
+        (5203, 'en', 'Execution'), #use_bias
+        (5204, 'en', 'Execution'), #kernel_initializer
+        (5205, 'en', 'Execution'), #recurrent_initializer
+        (5206, 'en', 'Execution'), #bias_initializer
+        (5207, 'en', 'Execution'), #kernel_regularizer
+        (5208, 'en', 'Execution'), #recurrent_regularizer
+        (5209, 'en', 'Execution'), #bias_regularizer
+        (5210, 'en', 'Execution'), #activity_regularizer
+        (5211, 'en', 'Execution'), #kernel_constraint
+        (5212, 'en', 'Execution'), #recurrent_constraint
+        (5213, 'en', 'Execution'), #bias_constraint
+        (5214, 'en', 'Execution'), #dropout
+        (5215, 'en', 'Execution'), #recurrent_dropout
+        (5216, 'en', 'Execution'), #return_sequences
+        (5217, 'en', 'Execution'), #return_state
+        (5218, 'en', 'Execution'), #go_backwards
+        (5219, 'en', 'Execution'), #stateful
+        (5220, 'en', 'Execution'), #unroll
+        #SimpleRNN - PT
+        (5201, 'pt', 'Execução'), #units
+        (5202, 'pt', 'Execução'), #activation
+        (5203, 'pt', 'Execução'), #use_bias
+        (5204, 'pt', 'Execução'), #kernel_initializer
+        (5205, 'pt', 'Execução'), #recurrptt_initializer
+        (5206, 'pt', 'Execução'), #bias_initializer
+        (5207, 'pt', 'Execução'), #kernel_regularizer
+        (5208, 'pt', 'Execução'), #recurrptt_regularizer
+        (5209, 'pt', 'Execução'), #bias_regularizer
+        (5210, 'pt', 'Execução'), #activity_regularizer
+        (5211, 'pt', 'Execução'), #kernel_constraint
+        (5212, 'pt', 'Execução'), #recurrptt_constraint
+        (5213, 'pt', 'Execução'), #bias_constraint
+        (5214, 'pt', 'Execução'), #dropout
+        (5215, 'pt', 'Execução'), #recurrptt_dropout
+        (5216, 'pt', 'Execução'), #return_sequptces
+        (5217, 'pt', 'Execução'), #return_state
+        (5218, 'pt', 'Execução'), #go_backwards
+        (5219, 'pt', 'Execução'), #stateful
+        (5220, 'pt', 'Execução'), #unroll
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -391,6 +457,7 @@ def _insert_operation_operation_form():
 
     columns = ('operation_id', 'operation_form_id')
     data = [
+        #LSTM
         (5041, 5178),
         (5041, 5179),
         (5041, 5180),
@@ -415,6 +482,29 @@ def _insert_operation_operation_form():
         (5041, 5199),
         (5041, 5200),
         (5041, 41),#appearance
+
+        #SimpleRNN
+        (5042, 5201),
+        (5042, 5202),
+        (5042, 5203),
+        (5042, 5204),
+        (5042, 5205),
+        (5042, 5206),
+        (5042, 5207),
+        (5042, 5208),
+        (5042, 5209),
+        (5042, 5210),
+        (5042, 5211),
+        (5042, 5212),
+        (5042, 5213),
+        (5042, 5214),
+        (5042, 5215),
+        (5042, 5216),
+        (5042, 5217),
+        (5042, 5218),
+        (5042, 5219),
+        (5042, 5220),
+        (5042, 41), #appearance
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -439,12 +529,11 @@ def _insert_operation_form_field():
     columns = ('id', 'name', 'type', 'required', 'order', 'default',
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id', 'enable_conditions')
     data = [
-
-        #LSTM - units
+        #LSTM
+        #units
         (5191, 'units', 'INTEGER', 1, 1, None, 'integer', None, None, 'EXECUTION', 5191),
-
-        #LSTM - activation
-        (5192, 'activation', 'TEXT', 0, 2, 'linear', 'dropdown', None,
+        #activation
+        (5192, 'activation', 'TEXT', 0, 2, 'tanh', 'dropdown', None,
          json.dumps([
              {"key": "elu", "value": "elu"},
              {"key": "exponential", "value": "exponential"},
@@ -459,8 +548,7 @@ def _insert_operation_form_field():
              {"key": "tanh", "value": "tanh"}
          ]),
          'EXECUTION', 5192),
-
-        #LSTM - recurrent_activation
+        #recurrent_activation
         (5178, 'recurrent_activation', 'TEXT', 0, 3, "hard_sigmoid", 'dropdown', None,
          json.dumps([
              {"key": "elu", "value": "elu"},
@@ -476,11 +564,9 @@ def _insert_operation_form_field():
              {"key": "tanh", "value": "tanh"}
          ]),
          'EXECUTION', 5178),
-
-        #LSTM - use_bias
+        #use_bias
         (5193, 'use_bias', 'INTEGER', 0, 4, None, 'checkbox', None, None, 'EXECUTION', 5193),
-
-        #LSTM - kernel_initializer
+        #kernel_initializer
         (5194, 'kernel_initializer', 'TEXT', 0, 5, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
@@ -501,9 +587,8 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5194),
-
-        #LSTM - recurrent_initializer
-        (5190, 'recurrent_initializer', 'TEXT', 0, 6, 0, 'dropdown', None,
+        #recurrent_initializer
+        (5190, 'recurrent_initializer', 'TEXT', 0, 6, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -523,8 +608,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5190),
-
-        #LSTM - bias_initializer
+        #bias_initializer
         (5195, 'bias_initializer', 'TEXT', 0, 7, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
@@ -545,11 +629,9 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}]
          ),
          'EXECUTION', 5195),
-
-        #LSTM - unit_forget_bias
+        #unit_forget_bias
         (5179, 'unit_forget_bias', 'INTEGER', 0, 8, None, 'checkbox', None, None, 'EXECUTION', 5179),
-
-        #LSTM - kernel_regularizer
+        #kernel_regularizer
         (5196, 'kernel_regularizer', 'TEXT', 0, 9, None, 'dropdown', None,
          json.dumps([
              {"key": "l1", "value": "l1"},
@@ -557,8 +639,7 @@ def _insert_operation_form_field():
              {"key": "l1_l2", "value": "l1_l2"}]
          ),
          'EXECUTION', 5196),
-
-        #LSTM - recurrent_regularizer
+        #recurrent_regularizer
         (5180, 'recurrent_regularizer', 'TEXT', 0, 10, None, 'dropdown', None,
          json.dumps([
              {"key": "l1", "value": "l1"},
@@ -566,8 +647,7 @@ def _insert_operation_form_field():
              {"key": "l1_l2", "value": "l1_l2"}]
          ),
          'EXECUTION', 5180),
-
-        #LSTM - bias_regularizer
+        #bias_regularizer
         (5197, 'bias_regularizer', 'TEXT', 0, 11, None, 'dropdown', None,
          json.dumps([
              {"key": "l1", "value": "l1"},
@@ -575,8 +655,7 @@ def _insert_operation_form_field():
              {"key": "l1_l2", "value": "l1_l2"}]
          ),
          'EXECUTION', 5197),
-
-        #LSTM - activity_regularizer
+        #activity_regularizer
         (5198, 'activity_regularizer', 'TEXT', 0, 12, None, 'dropdown', None,
          json.dumps([
              {"key": "l1", "value": "l1"},
@@ -594,8 +673,7 @@ def _insert_operation_form_field():
              {"key": "unit_norm", "value": "unit_norm"}
          ]),
          'EXECUTION', 5199),
-
-        #LSTM - recurrent_constraint
+        #recurrent_constraint
         (5181, 'recurrent_constraint', 'TEXT', 0, 14, None, 'dropdown', None,
          json.dumps([
              {"key": "max_norm", "value": "max_norm"},
@@ -604,8 +682,7 @@ def _insert_operation_form_field():
              {"key": "unit_norm", "value": "unit_norm"}
          ]),
          'EXECUTION', 5181),
-
-        #LSTM - bias_constraint
+        #bias_constraint
         (5200, 'bias_constraint', 'TEXT', 0, 15, None, 'dropdown', None,
          json.dumps([
              {"key": "max_norm", "value": "max_norm"},
@@ -614,36 +691,185 @@ def _insert_operation_form_field():
              {"key": "unit_norm", "value": "unit_norm"}
          ]),
          'EXECUTION', 5200),
-
-        #LSTM - dropout
+        #dropout
         (5182, 'dropout', 'FLOAT', 0, 16, 0.0, 'decimal', None, None, 'EXECUTION', 5182),
-
-        #LSTM - recurrent_dropout
+        #recurrent_dropout
         (5183, 'recurrent_dropout', 'FLOAT', 0, 17, 0.0, 'decimal', None, None, 'EXECUTION', 5183),
-
-        #LSTM - implementation
-        (5184, 'implementation', 'INTEGER', 0, 18, None, 'dropdown', None,
+        #implementation
+        (5184, 'implementation', 'INTEGER', 0, 18, 1, 'dropdown', None,
          json.dumps([
              {"key": 1, "value": 1},
              {"key": 2, "value": 2}
          ]),
          'EXECUTION', 5184),
-
-        #LSTM - return_sequences
+        #return_sequences
         (5185, 'return_sequences', 'INTEGER', 0, 19, None, 'checkbox', None, None, 'EXECUTION', 5185),
-
-        #LSTM - return_state
-        (5186, 'return_sequences', 'INTEGER', 0, 20, None, 'checkbox', None, None, 'EXECUTION', 5186),
-
-        #LSTM - go_backwards
+        #return_state
+        (5186, 'return_state', 'INTEGER', 0, 20, None, 'checkbox', None, None, 'EXECUTION', 5186),
+        #go_backwards
         (5187, 'go_backwards', 'INTEGER', 0, 21, 0, 'checkbox', None, None, 'EXECUTION', 5187),
-
-        #LSTM - stateful
+        #stateful
         (5188, 'stateful', 'INTEGER', 0, 22, 0, 'checkbox', None, None, 'EXECUTION', 5188),
-
-        #LSTM - unroll
+        #unroll
         (5189, 'unroll', 'INTEGER', 0, 23, 0, 'checkbox', None, None, 'EXECUTION', 5189),
 
+        #SimpleRNN
+        #units
+        (5201, 'units', 'INTEGER', 1, 1, None, 'integer', None, None, 'EXECUTION', 5201),
+        #activation
+        (5202, 'activation', 'TEXT', 0, 2, 'tanh', 'dropdown', None,
+         json.dumps([
+             {"key": "elu", "value": "elu"},
+             {"key": "exponential", "value": "exponential"},
+             {"key": "hard_sigmoid", "value": "hard_sigmoid"},
+             {"key": "linear", "value": "linear"},
+             {"key": "relu", "value": "relu"},
+             {"key": "selu", "value": "selu"},
+             {"key": "sigmoid", "value": "sigmoid"},
+             {"key": "softmax", "value": "softmax"},
+             {"key": "softplus", "value": "softplus"},
+             {"key": "softsign", "value": "softsign"},
+             {"key": "tanh", "value": "tanh"}
+         ]),
+         'EXECUTION', 5202),
+        #use_bias
+        (5203, 'use_bias', 'INTEGER', 0, 4, None, 'checkbox', None, None, 'EXECUTION', 5203),
+        #kernel_initializer
+        (5204, 'kernel_initializer', 'TEXT', 0, 5, None, 'dropdown', None,
+         json.dumps([
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}
+         ]),
+         'EXECUTION', 5204),
+        #recurrent_initializer
+        (5205, 'recurrent_initializer', 'TEXT', 0, 6, None, 'dropdown', None,
+         json.dumps([
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}
+         ]),
+         'EXECUTION', 5205),
+        #bias_initializer
+        (5206, 'bias_initializer', 'TEXT', 0, 7, None, 'dropdown', None,
+         json.dumps([
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}]
+         ),
+         'EXECUTION', 5206),
+        #kernel_regularizer
+        (5207, 'kernel_regularizer', 'TEXT', 0, 9, None, 'dropdown', None,
+         json.dumps([
+             {"key": "l1", "value": "l1"},
+             {"key": "l2", "value": "l2"},
+             {"key": "l1_l2", "value": "l1_l2"}]
+         ),
+         'EXECUTION', 5207),
+        #recurrent_regularizer
+        (5208, 'recurrent_regularizer', 'TEXT', 0, 10, None, 'dropdown', None,
+         json.dumps([
+             {"key": "l1", "value": "l1"},
+             {"key": "l2", "value": "l2"},
+             {"key": "l1_l2", "value": "l1_l2"}]
+         ),
+         'EXECUTION', 5208),
+        #bias_regularizer
+        (5209, 'bias_regularizer', 'TEXT', 0, 11, None, 'dropdown', None,
+         json.dumps([
+             {"key": "l1", "value": "l1"},
+             {"key": "l2", "value": "l2"},
+             {"key": "l1_l2", "value": "l1_l2"}]
+         ),
+         'EXECUTION', 5209),
+        #activity_regularizer
+        (5210, 'activity_regularizer', 'TEXT', 0, 12, None, 'dropdown', None,
+         json.dumps([
+             {"key": "l1", "value": "l1"},
+             {"key": "l2", "value": "l2"},
+             {"key": "l1_l2", "value": "l1_l2"}]
+         ),
+         'EXECUTION', 5210),
+        #kernel_constraint
+        (5211, 'kernel_constraint', 'TEXT', 0, 13, None, 'dropdown', None,
+         json.dumps([
+             {"key": "max_norm", "value": "max_norm"},
+             {"key": "min_max_norm", "value": "min_max_norm"},
+             {"key": "non_neg", "value": "non_neg"},
+             {"key": "unit_norm", "value": "unit_norm"}
+         ]),
+         'EXECUTION', 5211),
+        #recurrent_constraint
+        (5212, 'recurrent_constraint', 'TEXT', 0, 14, None, 'dropdown', None,
+         json.dumps([
+             {"key": "max_norm", "value": "max_norm"},
+             {"key": "min_max_norm", "value": "min_max_norm"},
+             {"key": "non_neg", "value": "non_neg"},
+             {"key": "unit_norm", "value": "unit_norm"}
+         ]),
+         'EXECUTION', 5212),
+        #bias_constraint
+        (5213, 'bias_constraint', 'TEXT', 0, 15, None, 'dropdown', None,
+         json.dumps([
+             {"key": "max_norm", "value": "max_norm"},
+             {"key": "min_max_norm", "value": "min_max_norm"},
+             {"key": "non_neg", "value": "non_neg"},
+             {"key": "unit_norm", "value": "unit_norm"}
+         ]),
+         'EXECUTION', 5213),
+        #dropout
+        (5214, 'dropout', 'FLOAT', 0, 16, 0.0, 'decimal', None, None, 'EXECUTION', 5214),
+        #recurrent_dropout
+        (5215, 'recurrent_dropout', 'FLOAT', 0, 17, 0.0, 'decimal', None, None, 'EXECUTION', 5215),
+        #return_sequences
+        (5216, 'return_sequences', 'INTEGER', 0, 19, None, 'checkbox', None, None, 'EXECUTION', 5216),
+        #return_state
+        (5217, 'return_state', 'INTEGER', 0, 20, None, 'checkbox', None, None, 'EXECUTION', 5217),
+        #go_backwards
+        (5218, 'go_backwards', 'INTEGER', 0, 21, 0, 'checkbox', None, None, 'EXECUTION', 5218),
+        #stateful
+        (5219, 'stateful', 'INTEGER', 0, 22, 0, 'checkbox', None, None, 'EXECUTION', 5219),
+        #unroll
+        (5220, 'unroll', 'INTEGER', 0, 23, 0, 'checkbox', None, None, 'EXECUTION', 5220),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -660,83 +886,83 @@ def _insert_operation_form_field_translation():
 
     columns = ('id', 'locale', 'label', 'help')
     data = [
-
-        # LSTM - recurrent_activation
+        #LSTM
         (5178, 'en', 'Recurrent activation', 'Activation function to use for the recurrent step.'),
-        # LSTM - unit_forget_bias
         (5179, 'en', 'Unit forget bias', 'If True, add 1 to the bias of the forget gate at initialization. '
                                          'Use in combination with bias_initializer="zeros". '
                                          'This is recommended in Jozefowicz et al. (2015).'),
-        # LSTM - recurrent_regularizer
         (5180, 'en', 'Recurrent regularizer', 'Regularizer function applied to the '
                                               'recurrent_kernel weights matrix'),
-        # LSTM - recurrent_constraint
         (5181, 'en', 'Recurrent constraint', 'Constraint function applied to the recurrent_kernel weights matrix.'),
-        # LSTM - dropout
         (5182, 'en', 'Dropout', 'Float between 0 and 1. Fraction of the units to drop for '
                                 'the linear transformation of the inputs.'),
-        # LSTM - recurrent_dropout
         (5183, 'en', 'Recurrent dropout', 'Float between 0 and 1. Fraction of the units '
                                           'to drop for the linear transformation of the recurrent state.'),
-        # LSTM - implementation
         (5184, 'en', 'Implementation mode', 'Implementation mode, either 1 or 2. Mode 1 will structure '
                                             'its operations as a larger number of smaller dot products '
                                             'and additions, whereas mode 2 will batch them into fewer, '
                                             'larger operations. These modes will have different '
                                             'performance profiles on different hardware and '
                                             'for different applications.'),
-        # LSTM - return_sequences
         (5185, 'en', 'Return sequences', 'Whether to return the last output in the '
                                          'output sequence, or the full sequence.'),
-        # LSTM - return_state
         (5186, 'en', 'Return state', 'Whether to return the last state in addition to the output.'),
-        # LSTM - go_backwards
         (5187, 'en', 'Go backwards', 'If True, process the input sequence backwards and return the reversed sequence.'),
-        # LSTM - stateful
         (5188, 'en', 'Stateful', 'If True, the last state for each sample at index i '
                                  'in a batch will be used as initial state for the '
                                  'sample of index i in the following batch.'),
-        # LSTM - unroll
         (5189, 'en', 'Unroll', 'If True, the network will be unrolled, else a symbolic loop '
                                'will be used. Unrolling can speed-up a RNN, although '
                                'it tends to be more memory-intensive. Unrolling is '
                                'only suitable for short sequences.'),
-
-        # LSTM - recurrent_initializer
         (5190, 'en', 'Recurrent initializer', 'Initializer for the recurrent_kernel weights matrix, '
                                               'used for the linear transformation of the recurrent state.'),
-
-        # LSTM - units
         (5191, 'en', 'Output dimensions', 'Positive integer, dimensionality of the output space.'),
-
-        # LSTM - activation
         (5192, 'en', 'Activation function', 'Activation function to use. If you do not specify anything, '
                                             'no activation is applied (ie. \"linear\" activation: a(x) = x).'),
-
-        # LSTM - use_bias
         (5193, 'en', 'Use bias', 'Boolean (True|False), whether the layer uses a bias vector.'),
-
-        # LSTM - kernel_initializer
         (5194, 'en', 'Weight initialization function', ' Initializer for the kernel weights matrix.'),
-
-        # LSTM - bias_initializer
         (5195, 'en', 'Bias initialization function', 'Initializer for the bias vector.'),
-
-        # LSTM - kernel_regularizer
         (5196, 'en', 'Regularizer for input weight', 'Regularizer function applied to the kernel weights matrix'),
-
-        # LSTM - bias_regularizer
         (5197, 'en', 'Bias regularizer', 'Regularizer function applied to the bias vector.'),
-
-        # LSTM - activity_regularizer
         (5198, 'en', 'Activity regularizer', 'Regularizer function applied to the output of '
                                              'the layer (its "activation").'),
-
-        # LSTM - kernel_constraint
         (5199, 'en', 'Weight constraint', 'Constraint function applied to the kernel weights matrix.'),
-
-        # LSTM - bias_constraint
         (5200, 'en', 'Bias constraint', 'Constraint function applied to the bias vector.'),
+
+        #SimpleRNN
+        (5201, 'en', 'Output dimensions', 'Positive integer, dimensionality of the output space.'),
+        (5202, 'en', 'Activation function', 'Activation function to use. If you do not specify anything, '
+                                            'no activation is applied (ie. \"linear\" activation: a(x) = x).'),
+        (5203, 'en', 'Use bias', 'Boolean (True|False), whether the layer uses a bias vector.'),
+        (5204, 'en', 'Weight initialization function', ' Initializer for the kernel weights matrix.'),
+        (5205, 'en', 'Recurrent initializer', 'Initializer for the recurrent_kernel weights matrix, '
+                                              'used for the linear transformation of the recurrent state.'),
+        (5206, 'en', 'Bias initialization function', 'Initializer for the bias vector.'),
+        (5207, 'en', 'Regularizer for input weight', 'Regularizer function applied to the kernel weights matrix'),
+        (5208, 'en', 'Recurrent regularizer', 'Regularizer function applied to the '
+                                              'recurrent_kernel weights matrix'),
+        (5209, 'en', 'Bias regularizer', 'Regularizer function applied to the bias vector.'),
+        (5210, 'en', 'Activity regularizer', 'Regularizer function applied to the output of '
+                                             'the layer (its "activation").'),
+        (5211, 'en', 'Weight constraint', 'Constraint function applied to the kernel weights matrix.'),
+        (5212, 'en', 'Recurrent constraint', 'Constraint function applied to the recurrent_kernel weights matrix.'),
+        (5213, 'en', 'Bias constraint', 'Constraint function applied to the bias vector.'),
+        (5214, 'en', 'Dropout', 'Float between 0 and 1. Fraction of the units to drop for '
+                                'the linear transformation of the inputs.'),
+        (5215, 'en', 'Recurrent dropout', 'Float between 0 and 1. Fraction of the units '
+                                          'to drop for the linear transformation of the recurrent state.'),
+        (5216, 'en', 'Return sequences', 'Whether to return the last output in the '
+                                         'output sequence, or the full sequence.'),
+        (5217, 'en', 'Return state', 'Whether to return the last state in addition to the output.'),
+        (5218, 'en', 'Go backwards', 'If True, process the input sequence backwards and return the reversed sequence.'),
+        (5219, 'en', 'Stateful', 'If True, the last state for each sample at index i '
+                                 'in a batch will be used as initial state for the '
+                                 'sample of index i in the following batch.'),
+        (5220, 'en', 'Unroll', 'If True, the network will be unrolled, else a symbolic loop '
+                               'will be used. Unrolling can speed-up a RNN, although '
+                               'it tends to be more memory-intensive. Unrolling is '
+                               'only suitable for short sequences.'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -767,15 +993,15 @@ all_commands = [
      '5147, 5148, 5149, 5240, 5243, 5244, 5245, 5246, 5247, 5248, 5249)'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN 5178 AND 5200'),
+     'DELETE FROM operation_form WHERE id BETWEEN 5178 AND 5220'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5178 AND 5200'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5178 AND 5220'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN 5178 AND 5200'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 5178 AND 5220'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5178 AND 5200'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5178 AND 5220'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 5041'),
+     'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 5041 AND 5042'),
 ]
 
 def upgrade():
