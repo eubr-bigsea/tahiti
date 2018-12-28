@@ -417,9 +417,14 @@ def _insert_operation_category_operation():
 
     # Clustering
     data = itertools.product([int(x) for x in OPERATIONS.split(',')
-                              if 121 > int(x) > 117],
+                              if (121 > int(x) > 117) and (int(x) != 119)],
                              [1, 19, 8])
+
     rows = [dict(zip(columns, cat)) for cat in data]
+    op.bulk_insert(tb, rows)
+
+    data = [(119, 32), (119, 37),]
+    rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -573,7 +578,228 @@ all_commands = [
         WHERE id IN (9,34,64,65,66,67,68,119) AND locale = 'pt';"""),
 
     ("UPDATE operation_form SET `order` = 0 WHERE id IN (10, 1, 102)",
-     "UPDATE operation_form SET `order` = 1 WHERE id IN (10, 1, 102)")
+     "UPDATE operation_form SET `order` = 1 WHERE id IN (10, 1, 102)"),
+
+    ('UPDATE operation_translation '
+     'SET name = "Naïve Bayes" '
+     'WHERE id = 104 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Naïve Bayes Classifier" '
+     'WHERE id = 104 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Naïve Bayes" '
+     'WHERE id = 104 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Classificador Naive Bayes" '
+     'WHERE id = 104 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Support Vector Machines (SVM)" '
+     'WHERE id = 105 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "SVM Classification" '
+     'WHERE id = 105 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Support Vector Machines (SVM)" '
+     'WHERE id = 105 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Classificador SVM" '
+     'WHERE id = 105 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Logistic regression" '
+     'WHERE id = 106 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Logistic regression" '
+     'WHERE id = 106 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Regressão logística" '
+     'WHERE id = 106 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Regressão logística" '
+     'WHERE id = 106 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Random forest" '
+     'WHERE id = 107 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Random forest classifier" '
+     'WHERE id = 107 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Random forest" '
+     'WHERE id = 107 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Classificador random forest" '
+     'WHERE id = 107 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Gradient Boosted Tree" '
+     'WHERE id = 108 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "GBT Classifier" '
+     'WHERE id = 108 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Gradient Boosted Tree" '
+     'WHERE id = 108 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Classificador GBT" '
+     'WHERE id = 108 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Decision Tree" '
+     'WHERE id = 109 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Decision tree classifier" '
+     'WHERE id = 109 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Árvore de Decisão" '
+     'WHERE id = 109 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Classif. Árv. Decisão" '
+     'WHERE id = 109 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Perceptron" '
+     'WHERE id = 110 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Perceptron Classifier" '
+     'WHERE id = 110 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Perceptron" '
+     'WHERE id = 110 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Classificador Perceptron" '
+     'WHERE id = 110 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "One vs. rest classifier" '
+     'WHERE id = 111 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "One vs. rest classifier" '
+     'WHERE id = 111 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Classificador 1 vs. resto" '
+     'WHERE id = 111 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Classificador 1 vs. resto" '
+     'WHERE id = 111 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Isotonic Regression" '
+     'WHERE id = 112 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Isotonic Regression" '
+     'WHERE id = 112 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Regressão Isotônica" '
+     'WHERE id = 112 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Regressão Isotônica" '
+     'WHERE id = 112 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "AFT Survival Regression" '
+     'WHERE id = 113 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "AFT Survival Regression" '
+     'WHERE id = 113 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Regressão AFT Survival" '
+     'WHERE id = 113 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Regressão AFT Survival" '
+     'WHERE id = 113 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "" '
+     'WHERE id = 114 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "" '
+     'WHERE id = 114 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "" '
+     'WHERE id = 114 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "" '
+     'WHERE id = 114 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Gradient Boosted Tree Regressor" '
+     'WHERE id = 115 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "GBT Regressor" '
+     'WHERE id = 115 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Gradient Boosted Tree Regressor" '
+     'WHERE id = 115 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Regressor GBT" '
+     'WHERE id = 115 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Generalized Linear Regression" '
+     'WHERE id = 116 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Generalized Linear Regressor" '
+     'WHERE id = 116 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Regressão Linear generalizada" '
+     'WHERE id = 116 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Regressor Linear Generalizado" '
+     'WHERE id = 116 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Linear regression" '
+     'WHERE id = 117 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Linear regression" '
+     'WHERE id = 117 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Regressão linear" '
+     'WHERE id = 117 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Regressão linear" '
+     'WHERE id = 117 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "K-Means" '
+     'WHERE id = 118 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "K-Means Clustering" '
+     'WHERE id = 118 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "K-Means" '
+     'WHERE id = 118 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Agrupamento K-Means" '
+     'WHERE id = 118 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Latent Dirichlet Allocation (LDA)" '
+     'WHERE id = 119 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "LDA Clustering" '
+     'WHERE id = 119 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Latent Dirichlet Allocation (LDA)" '
+     'WHERE id = 119 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Agrupamento LDA" '
+     'WHERE id = 119 AND locale = "pt"'),
+
+    ('UPDATE operation_translation '
+     'SET name = "Gaussian Mixture" '
+     'WHERE id = 120 AND locale = "en"',
+     'UPDATE operation_translation '
+     'SET name = "Gaussian Mix. Clustering" '
+     'WHERE id = 120 AND locale = "en"'),
+    ('UPDATE operation_translation '
+     'SET name = "Mistura de Gaussianas" '
+     'WHERE id = 120 AND locale = "pt"',
+     'UPDATE operation_translation '
+     'SET name = "Agrupamento Gaussian Mix." '
+     'WHERE id = 120 AND locale = "pt"'),
 ]
 
 
