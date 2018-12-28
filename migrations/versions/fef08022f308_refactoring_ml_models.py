@@ -711,29 +711,29 @@ all_commands = [
      'WHERE id = 113 AND locale = "pt"'),
 
     ('UPDATE operation_translation '
-     'SET name = "" '
+     'SET name = "Gradient Boosted Tree Regressor" '
      'WHERE id = 114 AND locale = "en"',
      'UPDATE operation_translation '
-     'SET name = "" '
+     'SET name = "GBT Regressor" '
      'WHERE id = 114 AND locale = "en"'),
     ('UPDATE operation_translation '
-     'SET name = "" '
+     'SET name = "Gradient Boosted Tree Regressor" '
      'WHERE id = 114 AND locale = "pt"',
      'UPDATE operation_translation '
-     'SET name = "" '
+     'SET name = "Regressor GBT" '
      'WHERE id = 114 AND locale = "pt"'),
 
     ('UPDATE operation_translation '
-     'SET name = "Gradient Boosted Tree Regressor" '
+     'SET name = "Random Forest Regressor" '
      'WHERE id = 115 AND locale = "en"',
      'UPDATE operation_translation '
-     'SET name = "GBT Regressor" '
+     'SET name = "Random Forest Regressor" '
      'WHERE id = 115 AND locale = "en"'),
     ('UPDATE operation_translation '
-     'SET name = "Gradient Boosted Tree Regressor" '
+     'SET name = "Random Forest Regressor" '
      'WHERE id = 115 AND locale = "pt"',
      'UPDATE operation_translation '
-     'SET name = "Regressor GBT" '
+     'SET name = "Regressor Random Forest" '
      'WHERE id = 115 AND locale = "pt"'),
 
     ('UPDATE operation_translation '
