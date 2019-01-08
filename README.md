@@ -63,10 +63,12 @@ To import the script, use the following command (requires installation of mysql-
 TAHITI_CONFIG=tahiti.yaml python tahiti/app.py
 ```
 
+In order to use Lemonade, you need to import the migrations, so you need execute
+the following command (if tahiti.sql not exist).
 ### Upgrade db
 
 ```
-
+TAHITI_CONFIG=tahiti.yaml python tahiti/manage.py db upgrade
 ```
 
 ### Check db migration version
