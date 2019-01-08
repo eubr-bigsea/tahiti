@@ -5,7 +5,23 @@ Repository for backend execution of Lemonade project
 ```
 git clone git@github.com:eubr-bigsea/tahiti.git
 cd tahiti
-pip install -r requirements.txt
+```
+
+### Install Requirements
+
+```
+pip install -r requiremenets.txt
+```
+
+If you prefer, use a virtualenv to install all requirements.
+
+
+### Define path
+
+Execute the following command inside tahiti folder
+
+```
+export PYTHONPATH=.
 ```
 
 ### Config
@@ -45,6 +61,18 @@ To import the script, use the following command (requires installation of mysql-
 ### Run
 ```
 TAHITI_CONFIG=tahiti.yaml python tahiti/app.py
+```
+
+### Upgrade db
+
+```
+
+```
+
+### Check db migration version
+
+```
+TAHITI_CONFIG=../tahiti.yaml python tahiti/manage.py db current
 ```
 
 #### Using docker
