@@ -17,7 +17,7 @@ cp tahiti.yaml.example tahiti.yaml
 Create a database named `tahiti`
 ```
 #Example
-mysql -uroot -pmysecret -e "CREATE DATABASE tahiti;"
+mysql -uroot -pmysecret -e "CREATE DATABASE tahiti CHARACTER SET utf8;"
 
 ```
 and then create a user and give him/her permissions to the database (
