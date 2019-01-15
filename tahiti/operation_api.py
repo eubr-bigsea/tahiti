@@ -67,6 +67,9 @@ class OperationListApi(Resource):
     def get():
         @cache.memoize(600, make_name=lambda f: request.url)
         def result():
+
+            config = current_app.config['TAHITI_CONFIG']
+
             if request.args.get('fields'):
                 only = [x.strip() for x in
                         request.args.get('fields').split(',')]
@@ -75,6 +78,12 @@ class OperationListApi(Resource):
                     if request.args.get('simple', 'false') == 'true' else None
 
             operations = optimize_operation_query(Operation.query)
+
+            # Operations disabled in config file
+            disabled_ops = config.get('operations', {}).get('disabled', [])
+            if disabled_ops:
+                operations = operations.filter(
+                    Operation.id.notin_(disabled_ops))
 
             disabled_filter = request.args.get('disabled')
             if not disabled_filter:

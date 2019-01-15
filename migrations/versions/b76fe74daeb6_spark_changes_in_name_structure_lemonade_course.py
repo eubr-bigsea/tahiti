@@ -1119,12 +1119,12 @@ all_commands = [
      'SET name = "Ler shapefile" '
      'WHERE id = 53 AND locale = "pt"'),
 
-    ('UPDATE operation '
-     'SET enabled = 0 '
-     'WHERE id IN (1, 10, 59, 60, 73, 76, 94, 97, 98, 103)',
-     'UPDATE operation '
-     'SET enabled = 1 '
-     'WHERE id IN (1, 10, 59, 60, 73, 76, 94, 97, 98, 103)'),
+    # ('UPDATE operation '
+    #  'SET enabled = 0 '
+    #  'WHERE id IN (1, 10, 59, 60, 73, 76, 94, 97, 98, 103)',
+    #  'UPDATE operation '
+    #  'SET enabled = 1 '
+    #  'WHERE id IN (1, 10, 59, 60, 73, 76, 94, 97, 98, 103)'),
 
     ('UPDATE operation_category '
      'SET `default_order` = 7 '
