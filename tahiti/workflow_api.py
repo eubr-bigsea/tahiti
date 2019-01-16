@@ -98,11 +98,10 @@ class WorkflowListApi(Resource):
             workflows = optimize_workflow_query(
                 workflows.order_by(sort_option))
             page = request.args.get('page')
-
             if page is not None and page.isdigit():
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
-                pagination = workflows.paginate(page, page_size, True)
+                pagination = workflows.paginate(page, page_size, False)
                 result = {
                     'data': WorkflowListResponseSchema(many=True,
                                                        only=only).dump(
@@ -117,7 +116,7 @@ class WorkflowListApi(Resource):
 
             return result
         except Exception, e:
-            log.exception("Error in GET")
+            log.exception(e)
             result = dict(status="ERROR", message="Internal error")
             if current_app.debug:
                 result['debug_detail'] = e.message
