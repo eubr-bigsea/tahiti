@@ -1,19 +1,23 @@
-FROM python:2.7-alpine as base
+FROM node:8 as citrus_build
+LABEL maintainer="Walter dos Santos Filho <walter AT dcc.ufmg.br> Guilherme Maluf Balzana <guimaluf AT dcc.ufmg.br"
 
-FROM base as pip_builder
-RUN apk add --no-cache gcc musl-dev
-COPY requirements.txt /
-RUN pip install -r /requirements.txt
+ENV CITRUS_HOME=/usr/local/citrus
+WORKDIR $CITRUS_HOME
 
-FROM base
-LABEL maintainer="Vinicius Dias <viniciusvdias@dcc.ufmg.br>, Guilherme Maluf <guimaluf@dcc.ufmg.br>"
+COPY package*.json $CITRUS_HOME/
+RUN npm install
 
-ENV TAHITI_HOME /usr/local/tahiti
-ENV TAHITI_CONFIG $TAHITI_HOME/conf/tahiti-config.yaml
+COPY . $CITRUS_HOME
+RUN npm run build
 
-COPY --from=pip_builder /usr/local /usr/local
+#
+FROM nginx:1.15-alpine
+LABEL maintainer="Walter dos Santos Filho <walter AT dcc.ufmg.br> Guilherme Maluf Balzana <guimaluf AT dcc.ufmg.br"
 
-WORKDIR $TAHITI_HOME
-COPY . $TAHITI_HOME
+ENV CITRUS_HOME=/usr/local/citrus
+WORKDIR $CITRUS_HOME
 
-CMD ["/usr/local/tahiti/sbin/tahiti-daemon.sh", "docker"]
+COPY extras/nginx.conf.sample /etc/nginx/conf.d/default.conf
+COPY --from=citrus_build /usr/local/citrus/dist ./dist
+
+EXPOSE 8080

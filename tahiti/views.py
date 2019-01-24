@@ -1,14 +1,16 @@
 # -*- coding: utf-8 -*-
-from flask import render_template, make_response
+from flask import render_template, make_response, request
 from flask.views import MethodView
 from sqlalchemy.orm import joinedload, Load
 
+from cache import cache
 from tahiti.models import Operation, OperationScript, db, ScriptType
 
 
 class AttributeSuggestionView(MethodView):
     # noinspection PyUnresolvedReferences
     @staticmethod
+    @cache.memoize(600, make_name=lambda f: request.url)
     def get():
         operations = db.session.query(Operation, OperationScript) \
             .join(Operation.scripts) \

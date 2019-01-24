@@ -79,12 +79,6 @@ class OperationListApi(Resource):
 
             operations = optimize_operation_query(Operation.query)
 
-            # Operations disabled in config file
-            disabled_ops = config.get('operations', {}).get('disabled', [])
-            if disabled_ops:
-                operations = operations.filter(
-                    Operation.id.notin_(disabled_ops))
-
             disabled_filter = request.args.get('disabled')
             if not disabled_filter:
                 operations = operations.filter(Operation.enabled)
@@ -125,6 +119,10 @@ class OperationListApi(Resource):
                        'platforms.description')
 
             page = request.args.get('page')
+
+            # Operations disabled in config file
+            disabled_ops = config.get('operations', {}).get('disabled', [])
+
             if page is not None and page.isdigit():
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
@@ -140,10 +138,14 @@ class OperationListApi(Resource):
                         s += ' DESC'
                     operations = operations.order_by(s)
                     pagination = operations.paginate(page, page_size, True)
+                    items = pagination.items
+                    for item in items:
+                        if item.id in disabled_ops:
+                            item.enabled = False
                     results = {
                         'data': OperationListResponseSchema(many=True,
                                                             only=only).dump(
-                            pagination.items).data,
+                            items).data,
                         'pagination': {'page': page, 'size': page_size,
                                        'total': pagination.total,
                                        'pages': pagination.total / page_size + 1
@@ -152,8 +154,13 @@ class OperationListApi(Resource):
                     raise
             else:
                 operations = operations.order_by('operation_translation_1.name')
+                items = operations
+                for item in items:
+                    if item.id in disabled_ops:
+                        item.enabled = False
+
                 data = OperationListResponseSchema(
-                    many=True, only=only, exclude=exclude).dump(operations).data
+                    many=True, only=only, exclude=exclude).dump(items).data
 
                 # Group forms with same type
                 if only is None or 'forms' in only:

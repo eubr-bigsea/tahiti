@@ -7,6 +7,7 @@ import uuid
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy.orm import joinedload
+from werkzeug.exceptions import NotFound
 
 from app_auth import requires_auth
 from schema import *
@@ -41,7 +42,8 @@ def get_workflow(workflow_id):
             Workflow.name))
     workflow = workflow.options(
         joinedload('tasks.operation.forms')).options(
-        joinedload('tasks.operation.forms.fields')).first()
+        joinedload('tasks.operation.forms.fields'))
+    workflow = workflow.first()
     if workflow is not None:
         # Set the json form for operations
         for task in workflow.tasks:
@@ -61,6 +63,8 @@ class WorkflowListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
+        workflows = Workflow.query
+        page = request.args.get('page', 1)
         try:
             if request.args.get('fields'):
                 only = [x.strip() for x in
@@ -68,8 +72,6 @@ class WorkflowListApi(Resource):
             else:
                 only = ('id', 'name', 'platform.id') \
                     if request.args.get('simple', 'false') == 'true' else None
-
-            workflows = Workflow.query
 
             platform = request.args.get('platform', None)
             if platform:
@@ -99,10 +101,14 @@ class WorkflowListApi(Resource):
                 workflows.order_by(sort_option))
             page = request.args.get('page')
 
+            page = "3"
             if page is not None and page.isdigit():
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
-                pagination = workflows.paginate(page, page_size, True)
+                pagination = workflows.paginate(page, page_size, False)
+                if pagination.total < page * page_size and page != 1:
+                    # Nothing in that specified page, return to page 1
+                    pagination = workflows.paginate(1, page_size, False)
                 result = {
                     'data': WorkflowListResponseSchema(many=True,
                                                        only=only).dump(
@@ -116,8 +122,11 @@ class WorkflowListApi(Resource):
                     workflows).data}
 
             return result
+
         except Exception, e:
-            log.exception("Error in GET")
+            import pdb
+            pdb.set_trace()
+            log.exception(e)
             result = dict(status="ERROR", message="Internal error")
             if current_app.debug:
                 result['debug_detail'] = e.message

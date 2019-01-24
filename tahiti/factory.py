@@ -43,6 +43,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     app.config["RESTFUL_JSON"] = {
         'cls': app.json_encoder,
         'sort_keys': False,
+        'indent': None
     }
     app.secret_key = 'l3m0n4d1'
     config = tahiti_configuration
