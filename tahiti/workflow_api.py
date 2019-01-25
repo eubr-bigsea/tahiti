@@ -7,7 +7,6 @@ import uuid
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy.orm import joinedload
-from werkzeug.exceptions import NotFound
 
 from app_auth import requires_auth
 from schema import *
@@ -101,7 +100,6 @@ class WorkflowListApi(Resource):
                 workflows.order_by(sort_option))
             page = request.args.get('page')
 
-            page = "3"
             if page is not None and page.isdigit():
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
@@ -124,8 +122,6 @@ class WorkflowListApi(Resource):
             return result
 
         except Exception, e:
-            import pdb
-            pdb.set_trace()
             log.exception(e)
             result = dict(status="ERROR", message="Internal error")
             if current_app.debug:
