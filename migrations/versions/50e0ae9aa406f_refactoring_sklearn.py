@@ -546,6 +546,8 @@ def _insert_operation_form_field():
         (4111, 'features', 'TEXT', '1', '1', None, 'attribute-selector', None, None, 'EXECUTION', 4023, None),
         (4112, 'prediction', 'TEXT', '0', '2', None,
          'text', None, None, 'EXECUTION', 4023, None),
+        (476, 'topic_indices', 'TEXT', 1, 2, None, 'attribute-selector', None, None, 'EXECUTION', 2, None),
+        (477, 'topic_terms', 'TEXT', 1, 3, None, 'attribute-selector', None, None, 'EXECUTION', 2, None),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -580,6 +582,11 @@ def _insert_operation_form_field_translation():
         (4111, 'pt', 'Atributo com features', 'Atributo com features'),
         (4112, 'en', 'Prediction attribute (new)', 'Prediction attribute (new)'),
         (4112, 'pt', 'Atributo usado para predição (novo)', 'Atributo usado para predição (novo)'),
+
+        (476, 'en', 'Topic Indices field', 'Topic Indices field'),
+        (476, 'pt', 'Atributo do Indices de tópicos', 'Atributo do Indices de tópicos'),
+        (477, 'en', 'Topic Terms alias', 'Topic Terms alias'),
+        (477, 'pt', 'Coluna para o termos do tópico', 'Coluna para o termos do tópico'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -601,12 +608,12 @@ all_commands = [
      'WHERE platform_id = {} AND operation_id IN ({})'.format(SKLEARN_PLATFORM,ALL_OPERATIONS)),
 
     ('DELETE FROM operation_platform '
-     'WHERE platform_id = 4 AND operation_id IN (74,3005,3015,3016,3018, 56, 48)',
+     'WHERE platform_id = 4 AND operation_id IN (74,3005,3015,3016,3018, 56, 48, 10)',
 
      'DELETE FROM operation_platform '
      'WHERE platform_id = 4 AND operation_id IN (112, 119, 120, 2);'
      'INSERT INTO operation_platform (`operation_id`,`platform_id`) '
-     'VALUES (74, 4), (3005, 4), (3015,4), (3016,4), (3018, 4), (56, 4), (48, 4);'
+     'VALUES (74, 4), (3005, 4), (3015,4), (3016,4), (3018, 4), (56, 4), (48, 4), (10, 4);'
      ),
 
     (_insert_operation_category_operation,
@@ -635,10 +642,12 @@ all_commands = [
      "DELETE FROM operation_form_translation WHERE id BETWEEN 4021 AND 4023"),
 
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 4105 AND 4112'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4105 AND 4112;'
+     'DELETE FROM operation_form_field WHERE id BETWEEN 476 AND 477;'),
 
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4105 AND 4112'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4105 AND 4112;'
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 476 AND 477;'),
 
     #DROP AND JOIN
     ("""
@@ -731,6 +740,13 @@ all_commands = [
         WHERE id in (4001,4002,4003,4004,4005,4006,4007,4008,4009,4010,4011,4012,4013,4019,4020);
 
      """),
+    ("""
+        UPDATE operation_form_field SET `values` = 
+        '[{"key": \"auto\", \"value\": \"auto\"}, {\"key\": \"sqrt\", \"value\": \"sqrt\"}, 
+          {\"key\": \"log2\", \"value\": \"log2\"}]' WHERE id = 4040;
+        UPDATE operation_form_field SET `default` = 'auto' WHERE id = 4040;
+     """,
+     ""),
 ]
 
 
