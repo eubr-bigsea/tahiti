@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-}
-from app_auth import requires_auth
-from flask import request, current_app
+from flask import request
 from flask_restful import Resource
+
+from app_auth import requires_auth
 from schema import *
 
 
@@ -18,7 +19,9 @@ class PlatformListApi(Resource):
             platforms = Platform.query.filter(
                 Platform.enabled == (enabled_filter != 'false'))
         else:
-            platforms = Platform.query.all()
+            platforms = Platform.query
+
+        platforms = platforms.order_by(Platform.slug)
 
         return PlatformListResponseSchema(
             many=True, only=only).dump(platforms).data

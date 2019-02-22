@@ -6,6 +6,7 @@ import uuid
 
 from flask import request, current_app, g
 from flask_restful import Resource
+from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 
 from app_auth import requires_auth
@@ -63,7 +64,6 @@ class WorkflowListApi(Resource):
     @requires_auth
     def get():
         workflows = Workflow.query
-        page = request.args.get('page', 1)
         try:
             if request.args.get('fields'):
                 only = [x.strip() for x in
@@ -82,14 +82,27 @@ class WorkflowListApi(Resource):
                 workflows = workflows.filter(
                     Workflow.enabled == (enabled_filter != 'false'))
 
-            # user_id_filter = request.args.get('user_id')
-            # if user_id_filter:
-            workflows = workflows.filter(Workflow.user_id == g.user.id)
+
+            template_only = request.args.get('template')
+            if template_only is not None:
+                template_only = template_only in ['1', 'true', 'True']
+                workflows = workflows.filter(
+                    Workflow.is_template == template_only)
+            else:
+                template_only = False
+
+            if template_only:
+                workflows = workflows.filter(
+                    or_(Workflow.user_id == g.user.id,
+                        Workflow.is_system_template))
+            else:
+                workflows = workflows.filter(Workflow.user_id == g.user.id)
 
             name_filter = request.args.get('name')
             if name_filter:
                 workflows = workflows.filter(
-                    Workflow.name.like('%%{}%%'.format(name_filter)))
+                    Workflow.name.like(
+                        '%%{}%%'.format(name_filter.encode('utf8'))))
             sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
                 sort = 'name'
@@ -145,7 +158,7 @@ class WorkflowListApi(Resource):
             cloned['user_name'] = g.user.name
 
             for task in cloned['tasks']:
-                task['id'] = str(uuid.uuid1())
+                task['id'] = str(uuid.uuid4())
                 task['operation_id'] = task['operation']['id']
             cloned['platform_id'] = cloned['platform']['id']
 
@@ -349,7 +362,7 @@ class WorkflowImportApi(Resource):
             original_task_ids = {}
             for task in original['tasks']:
                 task['operation_id'] = task['operation']['id']
-                new_id = str(uuid.uuid1())
+                new_id = str(uuid.uuid4())
                 original_task_ids[task['id']] = new_id
                 task['id'] = new_id
 
@@ -435,6 +448,74 @@ class WorkflowHistoryApi(Resource):
                 result, result_code = dict(status="ERROR",
                                            message="Not authorized"), 401
 
+        return result, result_code
+
+    @staticmethod
+    @requires_auth
+    def get(workflow_id):
+        history = WorkflowHistory.query.filter(
+            WorkflowHistory.workflow_id == workflow_id).order_by(
+            WorkflowHistory.date.desc()).limit(20)
+        only = ('id', 'date', 'version', 'user_name')
+        return {'data': WorkflowHistoryListResponseSchema(
+            many=True, only=only).dump(history).data}
+
+
+class WorkflowAddFromTemplateApi(Resource):
+    @staticmethod
+    @requires_auth
+    def post():
+        params = request.json
+
+        if 'template_id' in params:
+            workflow_id = int(params.get('template_id'))
+            workflow = get_workflow(workflow_id)
+
+            if workflow.user_id == g.user.id or workflow.is_system_template:
+                # clone workflow
+                response_schema = WorkflowItemResponseSchema()
+                cloned = json.loads(
+                    json.dumps(response_schema.dump(workflow).data))
+                cloned['platform_id'] = cloned['platform']['id']
+                cloned['user_id'] = g.user.id
+                cloned['user_login'] = g.user.login
+                cloned['user_name'] = g.user.name
+                cloned['name'] = params.get('name', 'workflow')
+                cloned['is_template'] = False
+                cloned['is_system_template'] = False
+                del cloned['user']
+
+                old_task_ids = {}
+                for i, task in enumerate(cloned['tasks']):
+                    new_task_id = str(uuid.uuid4())
+                    old_task_ids[task['id']] = new_task_id
+                    task['id'] = new_task_id
+                    task['operation_id'] = task['operation']['id']
+                    if not task.get('name'):
+                        task['name'] = '{} {}'.format(task['operation']['name'],
+                                                      i)
+
+                for flow in cloned['flows']:
+                    flow['source_id'] = old_task_ids[flow['source_id']]
+                    flow['target_id'] = old_task_ids[flow['target_id']]
+
+                request_schema = WorkflowCreateRequestSchema()
+                form = request_schema.load(cloned)
+                if not form.errors:
+                    new_workflow = form.data
+                    db.session.add(new_workflow)
+                    db.session.flush()
+                    db.session.commit()
+                    result, result_code = response_schema.dump(
+                        new_workflow).data, 200
+                else:
+                    result, result_code = dict(status="ERROR",
+                                               message="Not authorized"), 401
+            else:
+                result, result_code = dict(status="ERROR",
+                                           message="Not authorized"), 401
+        else:
+            result, result_code = dict(status="ERROR", message="Not found"), 404
         return result, result_code
 
     @staticmethod

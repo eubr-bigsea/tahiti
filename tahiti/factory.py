@@ -19,7 +19,8 @@ from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
-from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi
+from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi, \
+    WorkflowAddFromTemplateApi
 from tahiti.workflow_api import WorkflowListApi, WorkflowHistoryApi
 
 
@@ -82,6 +83,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows': WorkflowListApi,
         '/workflows/<int:workflow_id>': WorkflowDetailApi,
         '/workflows/import': WorkflowImportApi,
+        '/workflows/from-template': WorkflowAddFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }

@@ -31,6 +31,17 @@ class OperationType:
 
 
 # noinspection PyClassHasNoInit
+class DiagramEnvironment:
+    DESIGN = 'DESIGN'
+    DEPLOYMENT = 'DEPLOYMENT'
+
+    @staticmethod
+    def values():
+        return [n for n in DiagramEnvironment.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
 class ScriptType:
     PY_SERVER = 'PY_SERVER'
     JS_CLIENT = 'JS_CLIENT'
@@ -168,6 +179,9 @@ class Flow(db.Model):
     target_port = Column(Integer, nullable=False)
     source_port_name = Column(String(200))
     target_port_name = Column(String(200))
+    environment = Column(Enum(*DiagramEnvironment.values(),
+                              name='DiagramEnvironmentEnumType'),
+                         default=DiagramEnvironment.DESIGN, nullable=False)
 
     # Associations
     source_id = Column(String(250),
@@ -538,6 +552,9 @@ class Task(db.Model):
     z_index = Column(Integer, nullable=False)
     forms = Column(String(16000000), nullable=False)
     version = Column(Integer, nullable=False)
+    environment = Column(Enum(*DiagramEnvironment.values(),
+                              name='DiagramEnvironmentEnumType'),
+                         default=DiagramEnvironment.DESIGN, nullable=False)
     enabled = Column(Boolean,
                      default=True, nullable=False)
     __mapper_args__ = {
@@ -610,7 +627,9 @@ class Workflow(db.Model):
     is_public = Column(Boolean,
                        default=False, nullable=False)
     template_code = Column(String(16000000))
-    forms = Column(String(16000000), nullable=False)
+    forms = Column(String(16000000))
+    deployment_enabled = Column(Boolean,
+                                default=False, nullable=False)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }
