@@ -782,13 +782,13 @@ all_commands = [
      'WHERE id = 31 AND locale = "pt"'),
 
     ('UPDATE operation_translation '
-     'SET name = "Perceptron" '
+     'SET name = "Multi-layer Perceptron" '
      'WHERE id = 47 AND locale = "en"',
      'UPDATE operation_translation '
      'SET name = "Perceptron classifier" '
      'WHERE id = 47 AND locale = "en"'),
     ('UPDATE operation_translation '
-     'SET name = "Perceptron" '
+     'SET name = "Perceptron multicamadas" '
      'WHERE id = 47 AND locale = "pt"',
      'UPDATE operation_translation '
      'SET name = "Classificador Perceptron" '

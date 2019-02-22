@@ -528,7 +528,7 @@ def _insert_operation_form_field_translation():
          'Mínimo de instâncias por nó'],
 
         [410, 'en', 'Number of trees', 'Number of trees', ],
-        [410, 'pt', 'Impureza', 'Impureza'],
+        [410, 'pt', 'Número de árvores', 'Número de árvores'],
 
         [411, 'en', 'Subsampling rate', 'Subsampling rate', ],
         [411, 'pt', 'Taxa de subamostragem', 'Taxa de subamostragem'],

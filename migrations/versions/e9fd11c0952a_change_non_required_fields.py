@@ -41,6 +41,13 @@ all_commands = [
         WHERE id =  105 """,
         """UPDATE operation_form_field SET enable_conditions = NULL
         WHERE id = 105 """,
+    ),
+    (
+        """UPDATE operation_form_field
+        SET enable_conditions = 'false'
+        WHERE id =  90 """,
+        """UPDATE operation_form_field SET enable_conditions = NULL
+        WHERE id = 90 """,
     )
 
 ]
