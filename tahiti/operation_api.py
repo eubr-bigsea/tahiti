@@ -65,7 +65,7 @@ class OperationListApi(Resource):
     @staticmethod
     @requires_auth
     def get():
-        @cache.memoize(600, make_name=lambda f: request.url)
+        @cache.memoize(3600 * 24, make_name=lambda f: request.url)
         def result():
 
             config = current_app.config['TAHITI_CONFIG']

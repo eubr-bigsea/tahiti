@@ -10,7 +10,7 @@ from sqlalchemy.orm import relationship, backref
 from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
-make_translatable(options={'locales': ['pt', 'en', 'es'],
+make_translatable(options={'locales': ['pt', 'en'],
                            'auto_create_locales': True,
                            'fallback_locale': 'en'})
 
@@ -216,7 +216,7 @@ class Flow(db.Model):
 class Operation(db.Model, Translatable):
     """ Operation executed in Lemonade """
     __tablename__ = 'operation'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __translatable__ = {'locales': ['pt', 'en']}
 
     # Fields
     id = Column(Integer, primary_key=True)
@@ -287,7 +287,7 @@ class OperationTranslation(translation_base(Operation)):
 class OperationCategory(db.Model, Translatable):
     """ Allows categorize operations """
     __tablename__ = 'operation_category'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __translatable__ = {'locales': ['pt', 'en']}
 
     # Fields
     id = Column(Integer, primary_key=True)
@@ -315,7 +315,7 @@ class OperationCategoryTranslation(translation_base(OperationCategory)):
 class OperationForm(db.Model, Translatable):
     """ A form used to fill parameters to the operations """
     __tablename__ = 'operation_form'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __translatable__ = {'locales': ['pt', 'en']}
 
     # Fields
     id = Column(Integer, primary_key=True)
@@ -349,7 +349,7 @@ class OperationFormTranslation(translation_base(OperationForm)):
 class OperationFormField(db.Model, Translatable):
     """ A field used to fill one parameter of a form for an operations """
     __tablename__ = 'operation_form_field'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __translatable__ = {'locales': ['pt', 'en']}
 
     # Fields
     id = Column(Integer, primary_key=True)
@@ -397,7 +397,7 @@ class OperationFormFieldTranslation(translation_base(OperationFormField)):
 class OperationPort(db.Model, Translatable):
     """ An input or output port for operation """
     __tablename__ = 'operation_port'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __translatable__ = {'locales': ['pt', 'en']}
 
     # Fields
     id = Column(Integer, primary_key=True)
@@ -449,7 +449,7 @@ class OperationPortTranslation(translation_base(OperationPort)):
 class OperationPortInterface(db.Model, Translatable):
     """ An interface that a operation port supports """
     __tablename__ = 'operation_port_interface'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __translatable__ = {'locales': ['pt', 'en']}
 
     # Fields
     id = Column(Integer, primary_key=True)
@@ -499,7 +499,7 @@ class OperationScript(db.Model):
 class Platform(db.Model, Translatable):
     """ Execution platform """
     __tablename__ = 'platform'
-    __translatable__ = {'locales': ['pt', 'en', 'es']}
+    __translatable__ = {'locales': ['pt', 'en']}
 
     # Fields
     id = Column(Integer, primary_key=True)
