@@ -632,7 +632,7 @@ all_commands = [
      'SET name = "Min-max scaler" '
      'WHERE id = 91 AND locale = "en"'),
     ('UPDATE operation_translation '
-     'SET name = "Mı́nimo-Máximo" '
+     'SET name = "Mínimo-Máximo" '
      'WHERE id = 91 AND locale = "pt"',
      'UPDATE operation_translation '
      'SET name = "Escalador min-máx" '

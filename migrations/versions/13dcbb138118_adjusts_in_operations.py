@@ -153,7 +153,8 @@ all_commands = [
         UPDATE operation_form_field SET `default` = null, `values` = '50'
             WHERE id = 16
     '''),
-
+    ('UPDATE operation_form_field SET required = 0 WHERE id = 279',
+     'UPDATE operation_form_field SET required = 1 WHERE id = 279')
 
 
 ]
