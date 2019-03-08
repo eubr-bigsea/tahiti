@@ -6,14 +6,11 @@ Revises: 2232f498d42e
 Create Date: 2019-02-26 11:12:07.685379
 
 """
-from alembic import op
-import sqlalchemy as sa
 from alembic import context
 from alembic import op
 from sqlalchemy import String, Integer, Text
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.sql import table, column, text
-
+from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = '8a4558f255a4'
@@ -31,7 +28,7 @@ def _insert_operation():
         column('slug', String),
         column('enabled', Integer),
         column('type', String),
-        column('icon', Integer),)
+        column('icon', Integer), )
 
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
     data = [
@@ -66,7 +63,7 @@ def _insert_operation_platform():
 
     columns = ('operation_id', 'platform_id')
     data = [
-        (122, SPARK_PLATAFORM_ID),# Vector indexer
+        (122, SPARK_PLATAFORM_ID),  # Vector indexer
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -102,9 +99,10 @@ def _insert_operation_port():
         column('order', Integer),
         column('multiplicity', String),
         column('operation_id', Integer),
-        column('slug', String),)
+        column('slug', String), )
 
-    columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
+    columns = (
+        'id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         (292, 'INPUT', '', 1, 'ONE', 122, 'input data'),
         (293, 'OUTPUT', '', 1, 'MANY', 122, 'output data'),
@@ -142,12 +140,17 @@ def _insert_operation_port_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (292, "en", 'input data', 'Data set with feature columns to be indexed'),
-        (292, "pt", 'dados de entrada', 'Conjunto de dados com atributos a serem indexados'),
+        (
+            292, "en", 'input data',
+            'Data set with feature columns to be indexed'),
+        (292, "pt", 'dados de entrada',
+         'Conjunto de dados com atributos a serem indexados'),
         (293, "en", 'output data', 'Output data with new indexed column'),
-        (293, "pt", 'dados de saída', 'Dados de saída com nova coluna indexada'),
-        (294, "en", 'output data', 'Indexer model generated'),
-        (294, "pt", 'dados de saída', 'Modelo de indexação gerado'),
+        (
+            293, "pt", 'dados de saída',
+            'Dados de saída com nova coluna indexada'),
+        (294, "en", 'model', 'Indexer model generated'),
+        (294, "pt", 'modelo', 'Modelo de indexação gerado'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -223,8 +226,12 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
 
-        (484, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 131),
-        (485, 'alias', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 131),
+        (484, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None,
+         None, 'EXECUTION', 131),
+        (485, 'alias', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION',
+         131),
+        (486, 'max_categories', 'INTEGER', 0, 3, '20', 'integer',
+         None, None, 'EXECUTION', 131),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -251,7 +258,8 @@ def _insert_downgrade_operation_form_field():
 
         (94, "indexer_type", "TEXT", 1, 2, None, "dropdown", None,
          '[{"en": "String", "key": "string", "value": "String", "pt": "String"}, '
-         '{"en": "Vector", "key": "vector", "value": "Vector", "pt": "Vetor"}]', "EXECUTION", 50),
+         '{"en": "Vector", "key": "vector", "value": "Vector", "pt": "Vetor"}]',
+         "EXECUTION", 50),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -270,8 +278,18 @@ def _insert_operation_form_field_translation():
 
         (484, 'en', 'Attributes', 'Attributes (features) to be indexed'),
         (484, 'pt', 'Atributos', 'Atributos (features) a ser indexados'),
-        (485, 'en', 'Name for new indexed attribute(s)', 'Name for new indexed attribute(s)'),
-        (485, 'pt', 'Nome para novo(s) atributo(s) indexado(s)', 'Nome para novo(s) atributo(s) indexado(s)'),
+        (485, 'en', 'Name for new indexed attribute(s)',
+         'Name for new indexed attribute(s)'),
+        (485, 'pt', 'Nome para novo(s) atributo(s) indexado(s)',
+         'Nome para novo(s) atributo(s) indexado(s)'),
+        (486, 'en', 'Max categories (threshold)',
+         'Threshold for the number of values a categorical feature can take '
+         '(>= 2). If a feature is found to have > maxCategories values, '
+         'then it is declared continuous.'),
+        (486, 'pt', 'Quantidade máxima de categorias',
+         'Limite para a quantidade de valores que feature categórica pode ter '
+         '(>= 2). Se uma feature tem mais categorias que esse valor, '
+         'ela é declarada contínua.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -285,7 +303,8 @@ all_commands = [
     (_insert_operation_category_operation,
      'DELETE FROM operation_category_operation WHERE operation_id = 122'),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id = 122 AND platform_id = {}'.format(SPARK_PLATAFORM_ID)),
+     'DELETE FROM operation_platform WHERE operation_id = 122 AND platform_id = {}'.format(
+         SPARK_PLATAFORM_ID)),
     (_insert_operation_port,
      'DELETE FROM operation_port WHERE id BETWEEN 292 AND 294'),
     (_insert_operation_port_interface_operation_port,
