@@ -15,7 +15,7 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = '55605557d9cc'
-down_revision = '8a4558f255a4'
+down_revision = '54dff15ea3f9'
 branch_labels = None
 depends_on = None
 
@@ -234,21 +234,6 @@ def _insert_operation_form_field_translation():
 
 
 all_commands = [
-    ('ALTER TABLE operation '
-     'CHANGE COLUMN `type` `type` ENUM("ACTION", "SHUFFLE", "TRANSFORMATION", "VISUALIZATION", '
-     '"SYSTEM_META_OPERATION", "USER_META_OPERATION") CHARACTER SET "utf8" NOT NULL',
-     'ALTER TABLE operation '
-     'CHANGE COLUMN `type` `type` ENUM("ACTION", "SHUFFLE", "TRANSFORMATION", "VISUALIZATION") '
-     'CHARACTER SET "utf8" NOT NULL'),
-
-    ('ALTER TABLE task '
-     'ADD COLUMN `group_id` VARCHAR(100) NULL DEFAULT NULL AFTER `workflow_id`, '
-     'ADD COLUMN `height` INT(11) NULL AFTER `group_id`, '
-     'ADD COLUMN `width` INT(11) NULL AFTER `height`',
-     'ALTER TABLE task '
-     'DROP COLUMN `width`, '
-     'DROP COLUMN `height`, '
-     'DROP COLUMN `group_id`'),
 
     (_insert_operation,
      'DELETE FROM operation WHERE id = 300'),
