@@ -236,7 +236,7 @@ def _insert_operation_form_field_translation():
 all_commands = [
     ('ALTER TABLE operation '
      'CHANGE COLUMN `type` `type` ENUM("ACTION", "SHUFFLE", "TRANSFORMATION", "VISUALIZATION", '
-     '"SYSTEM META-OPERATION", "USER META-OPERATION") CHARACTER SET "utf8" NOT NULL',
+     '"SYSTEM_META_OPERATION", "USER_META_OPERATION") CHARACTER SET "utf8" NOT NULL',
      'ALTER TABLE operation '
      'CHANGE COLUMN `type` `type` ENUM("ACTION", "SHUFFLE", "TRANSFORMATION", "VISUALIZATION") '
      'CHARACTER SET "utf8" NOT NULL'),
