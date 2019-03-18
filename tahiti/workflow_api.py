@@ -8,6 +8,7 @@ from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
+from sqlalchemy.sql.elements import and_
 
 from app_auth import requires_auth
 from schema import *
@@ -82,18 +83,16 @@ class WorkflowListApi(Resource):
                 workflows = workflows.filter(
                     Workflow.enabled == (enabled_filter != 'false'))
 
-
             template_only = request.args.get('template')
             if template_only is not None:
                 template_only = template_only in ['1', 'true', 'True']
-                workflows = workflows.filter(
-                    Workflow.is_template == template_only)
             else:
                 template_only = False
 
             if template_only:
                 workflows = workflows.filter(
-                    or_(Workflow.user_id == g.user.id,
+                    or_(and_(Workflow.user_id == g.user.id,
+                             Workflow.is_template),
                         Workflow.is_system_template))
             else:
                 workflows = workflows.filter(Workflow.user_id == g.user.id)
