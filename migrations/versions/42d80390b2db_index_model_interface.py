@@ -239,7 +239,7 @@ all_commands = [
 
     ),
     ('''UPDATE operation_form_field_translation
-        SET label = 'Modo para sobrescrita',
+        SET label = 'Modo de gravação',
         `help` = 'Ação a ser realizada se o arquivo destino já existe.'
          WHERE id = 85 AND locale = 'pt'
         ''',
