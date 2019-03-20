@@ -18,10 +18,10 @@ branch_labels = None
 depends_on = None
 
 
-isotonic_old = [{"value": "Isotonic/increasing", "key": True},
-                {"value": "Orantitonic/decreasing", "key": False}]
-isotonic_new = [{"value": "Isotonic/increasing", "key": True},
-                {"value": "Antitonic/decreasing", "key": False}]
+isotonic_new = [{"value": "Isotonic/increasing", "key": True, 
+     'pt': 'Isotônica/crescente'},
+                {"value": "Antitonic/decreasing", "key": False,
+                    'pt': 'Antitônica/decrescente'}]
 
 metrics_new = [
     {
@@ -85,7 +85,16 @@ all_commands = [
     ("""UPDATE operation_form_field SET `values` = '{}' WHERE `id` = '254';
     """.format(pymysql.escape_string(json.dumps(isotonic_new))),
     """UPDATE operation_form_field SET `values` = '{}' WHERE `id` = '254';
-    """.format(pymysql.escape_string(json.dumps(isotonic_old)))),
+    """.format(pymysql.escape_string(json.dumps(isotonic_new)))), # same
+
+    ("ALTER TABLE operation_form_field MODIFY form_id INT(11)",
+     "ALTER TABLE operation_form_field MODIFY form_id INT(11) NOT NULL"),
+
+    ("UPDATE operation_form_field SET form_id = NULL WHERE id = 269",
+    "UPDATE operation_form_field SET form_id =105 WHERE id = 269"),
+
+    ("UPDATE operation_form_field SET `order` = id - 266 WHERE id BETWEEN 274 AND 278",
+    "UPDATE operation_form_field SET `order` = id - 266 WHERE id  BETWEEN 274 AND 278"),
  ]
 def upgrade():
     ctx = context.get_context()
