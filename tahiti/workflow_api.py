@@ -466,7 +466,7 @@ class WorkflowAddFromTemplateApi(Resource):
     def post():
         params = request.json
 
-        if 'template_id' in params:
+        if 'template_id' in params and params.get('template_id'):
             workflow_id = int(params.get('template_id'))
             workflow = get_workflow(workflow_id)
 
