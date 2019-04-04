@@ -658,6 +658,10 @@ class Workflow(db.Model):
     }
 
     # Associations
+    tasks = relationship("Task", back_populates="workflow",
+                         cascade="all, delete-orphan")
+    flows = relationship("Flow", back_populates="workflow",
+                         cascade="all, delete-orphan")
     platform_id = Column(Integer,
                          ForeignKey("platform.id"), nullable=False)
     platform = relationship(
