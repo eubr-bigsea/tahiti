@@ -12,7 +12,6 @@ from sqlalchemy import String, Integer, Text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 
-
 # revision identifiers, used by Alembic.
 revision = '55605557d9cc'
 down_revision = '54dff15ea3f9'
@@ -24,6 +23,8 @@ OPHIDIA_PLATAFORM_ID = 2
 COMPSS_PLATAFORM_ID = 3
 SCIKIT_LEARN_PLATAFORM_ID = 4
 KERAS_PLATAFORM_ID = 5
+
+META_OPERATION_ID = 123
 
 
 def _insert_operation():
@@ -37,7 +38,7 @@ def _insert_operation():
 
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
     data = [
-        (300, "meta-operation", 1, 'ACTION', ''),
+        (META_OPERATION_ID, "meta-operation", 1, 'ACTION', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -54,11 +55,11 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (300, "en", 'Meta-operation',
+        (META_OPERATION_ID, "en", 'Meta-operation',
          'Meta-operation is an operation that contain subworkflows, '
          'i.e. in the workflow they look like a single operation, '
          'although they can contain many operations and even more meta-operations.'),
-        (300, "pt", 'Meta-operação',
+        (META_OPERATION_ID, "pt", 'Meta-operação',
          'A meta-operação é uma operação que contém subfluxos, ou seja, '
          'no fluxo de trabalho eles se parecem com uma única operação, embora '
          'possam conter muitas operações e também outras meta-operações.'),
@@ -76,11 +77,11 @@ def _insert_operation_platform():
 
     columns = ('operation_id', 'platform_id')
     data = [
-        (300, SPARK_PLATAFORM_ID),
-        (300, OPHIDIA_PLATAFORM_ID),
-        (300, COMPSS_PLATAFORM_ID),
-        (300, SCIKIT_LEARN_PLATAFORM_ID),
-        (300, KERAS_PLATAFORM_ID),
+        (META_OPERATION_ID, SPARK_PLATAFORM_ID),
+        (META_OPERATION_ID, OPHIDIA_PLATAFORM_ID),
+        (META_OPERATION_ID, COMPSS_PLATAFORM_ID),
+        (META_OPERATION_ID, SCIKIT_LEARN_PLATAFORM_ID),
+        (META_OPERATION_ID, KERAS_PLATAFORM_ID),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -112,7 +113,7 @@ def _insert_operation_category_operation():
 
     columns = ('operation_category_id', 'operation_id')
     data = [
-        (43, 300),
+        (43, META_OPERATION_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -146,7 +147,7 @@ def _insert_operation_form():
 
     columns = ('id', 'enabled', 'order', 'category')
     data = [
-        (132, 1, 1, 'execution'),
+        (134, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -162,8 +163,8 @@ def _insert_operation_form_translation():
 
     columns = ('id', 'locale', 'name')
     data = [
-        (132, 'en', 'Execution'),
-        (132, 'pt', 'Execução'),
+        (134, 'en', 'Execution'),
+        (134, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -177,9 +178,9 @@ def _insert_operation_operation_form():
 
     columns = ('operation_id', 'operation_form_id')
     data = [
-        (300, 41),
-        (300, 132),
-        (300, 110),
+        (META_OPERATION_ID, 41),
+        (META_OPERATION_ID, 134),
+        (META_OPERATION_ID, 110),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -205,8 +206,10 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
 
-        (487, 'quantity_input_ports', 'INTEGER', 1, 1, 2, 'text', None, None, 'EXECUTION', 132),
-        (488, 'quantity_output_ports', 'INTEGER', 1, 2, 2, 'text', None, None, 'EXECUTION', 132),
+        (491, 'input_ports', 'INTEGER', 1, 1, 2, 'integer', None, None,
+         'EXECUTION', 134),
+        (492, 'output_ports', 'INTEGER', 1, 2, 2, 'integer', None, None,
+         'EXECUTION', 134),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -223,11 +226,15 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
 
-        (487, 'en', 'Input ports', 'Number of input ports for the meta-operation [0:N].'),
-        (487, 'pt', 'Portas de entrada', 'Número de portas de entrada para a meta-operação [0:N].'),
+        (491, 'en', 'Input ports',
+         'Number of input ports for the meta-operation [0:N].'),
+        (491, 'pt', 'Portas de entrada',
+         'Número de portas de entrada para a meta-operação [0:N].'),
 
-        (488, 'en', 'Output ports', 'Number of output ports for the meta-operation [0:N].'),
-        (488, 'pt', 'Portas de saída', 'Número de portas de saída para a meta-operação [0:N].'),
+        (492, 'en', 'Output ports',
+         'Number of output ports for the meta-operation [0:N].'),
+        (492, 'pt', 'Portas de saída',
+         'Número de portas de saída para a meta-operação [0:N].'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -236,28 +243,32 @@ def _insert_operation_form_field_translation():
 all_commands = [
 
     (_insert_operation,
-     'DELETE FROM operation WHERE id = 300'),
+     'DELETE FROM operation WHERE id = {}'.format(META_OPERATION_ID)),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id = 300'),
+     'DELETE FROM operation_translation WHERE id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id = 300'),
+     'DELETE FROM operation_platform WHERE operation_id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_category,
      'DELETE FROM operation_category WHERE ID = 43'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id = 300'),
+     'DELETE FROM operation_category_operation WHERE operation_id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_category_translation,
      'DELETE FROM operation_category_translation WHERE id = 43'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id = 132'),
+     'DELETE FROM operation_form WHERE id = 134'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id = 132'),
+     'DELETE FROM operation_form_translation WHERE id = 134'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 300'),
+     'DELETE FROM operation_operation_form WHERE operation_id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 487 and 488'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 491 and 492'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 487 and 488'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 491 and 492'),
 
 ]
 
