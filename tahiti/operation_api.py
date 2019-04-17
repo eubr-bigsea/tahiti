@@ -153,7 +153,7 @@ class OperationListApi(Resource):
                 except Exception as e:
                     raise
             else:
-                operations = operations.order_by('operation_translation_1.name')
+                operations = operations.order_by(text('operation_translation_1.name'))
                 items = operations
                 for item in items:
                     if item.id in disabled_ops:
