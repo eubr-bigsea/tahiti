@@ -19,7 +19,7 @@ branch_labels = None
 depends_on = None
 
 BOX_PLOT_ID = 123
-BOX_PLOT_FORM_ID = 132
+BOX_PLOT_FORM_ID = 134
 
 APPEARANCE_FORM_ID = 41
 RESULTS_FORM_ID = 110
@@ -144,17 +144,17 @@ def _insert_operation_form_field():
     columns = [c.name for c in tb.columns]
 
     data = [
-        (487, 'title', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION',
+        (490, 'title', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION',
          BOX_PLOT_FORM_ID),
-        (488, 'fact_attributes', 'TEXT', 1, 2, None, 'attribute-selector',
+        (491, 'fact_attributes', 'TEXT', 1, 2, None, 'attribute-selector',
          None, None, 'EXECUTION', BOX_PLOT_FORM_ID),
-        (489, 'group_attribute', 'TEXT', 0, 3, None, 'attribute-selector',
+        (492, 'group_attribute', 'TEXT', 0, 3, None, 'attribute-selector',
          None, None, 'EXECUTION', BOX_PLOT_FORM_ID),
-        (490, 'show_outliers', 'INTEGER', 0, 4, None, 'checkbox',
+        (493, 'show_outliers', 'INTEGER', 0, 4, None, 'checkbox',
          None, None, 'EXECUTION', BOX_PLOT_FORM_ID),
-        (491, 'x_title', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION',
+        (494, 'x_title', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION',
          BOX_PLOT_FORM_ID),
-        (492, 'y_title', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION',
+        (495, 'y_title', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION',
          BOX_PLOT_FORM_ID),
 
     ]
@@ -172,30 +172,30 @@ def _insert_operation_form_field_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (487, 'en', 'Chart Title', 'Title for the chart'),
-        (487, 'pt', 'Título', 'Título para o gráfico'),
+        (490, 'en', 'Chart Title', 'Title for the chart'),
+        (490, 'pt', 'Título', 'Título para o gráfico'),
 
-        (488, 'en', 'Input attribute(s)',
+        (491, 'en', 'Input attribute(s)',
          'Calculate and box plot quartiles for these attributes.'),
-        (488, 'pt', 'Atributo(s) de entrada',
+        (491, 'pt', 'Atributo(s) de entrada',
          'Atributos usados para calcular os quartis e gerar o box plot.'),
 
-        (489, 'en', 'Grouping attribute (x-axis)',
+        (492, 'en', 'Grouping attribute (x-axis)',
          'Input data will be grouped by this attribute and quartiles will be '
          'calculated for each group. Each group will be a box in x-axis.'),
-        (489, 'pt', 'Atributo usado para agrupar (x-axis)',
+        (492, 'pt', 'Atributo usado para agrupar (x-axis)',
          'Os dados de entrada serão agrupados por este atributo e os quartis '
          'serão calculados para cada grupo. Cada grupo será uma caixa no '
          'eixo X.'),
 
-        (490, 'en', 'Show outliers', 'Display outliers'),
-        (490, 'pt', 'Exibir discrepantes', 'Exibir discrepantes (outliers).'),
+        (493, 'en', 'Show outliers', 'Display outliers'),
+        (493, 'pt', 'Exibir discrepantes', 'Exibir discrepantes (outliers).'),
 
-        (491, 'en', 'X-axis title', 'X-axis title.'),
-        (491, 'pt', 'Título para o eixo X', 'Título para o eixo X.'),
+        (494, 'en', 'X-axis title', 'X-axis title.'),
+        (494, 'pt', 'Título para o eixo X', 'Título para o eixo X.'),
 
-        (492, 'en', 'Y-axis title', 'Y-axis title.'),
-        (492, 'pt', 'Título para o eixo Y', 'Título para o eixo Y.'),
+        (495, 'en', 'Y-axis title', 'Y-axis title.'),
+        (495, 'pt', 'Título para o eixo Y', 'Título para o eixo Y.'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
