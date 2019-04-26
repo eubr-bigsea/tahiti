@@ -1,9 +1,9 @@
 # coding=utf-8
-"""box_plot
+"""histogram
 
-Revision ID: ea3e48aa084c
-Revises: 437099b06855
-Create Date: 2019-04-16 08:29:24.212398
+Revision ID: f39f7e2623e3
+Revises: ea3e48aa084c
+Create Date: 2019-04-25 11:26:55.487830
 
 """
 from alembic import context
@@ -13,13 +13,13 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
-revision = 'ea3e48aa084c'
-down_revision = '437099b06855'
+revision = 'f39f7e2623e3'
+down_revision = 'ea3e48aa084c'
 branch_labels = None
 depends_on = None
 
-BOX_PLOT_ID = 123
-BOX_PLOT_FORM_ID = 134
+HISTOGRAM_ID = 124
+HISTOGRAM_FORM_ID = 135
 
 APPEARANCE_FORM_ID = 41
 RESULTS_FORM_ID = 110
@@ -34,7 +34,7 @@ def _insert_operation():
                column('icon', String), )
     columns = [c.name for c in tb.columns]
     data = [
-        (BOX_PLOT_ID, 'box-plot', 1, 'TRANSFORMATION', 'fa-chart'),
+        (HISTOGRAM_ID, 'histogram', 1, 'TRANSFORMATION', 'fa-chart'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -49,13 +49,18 @@ def _insert_operation_translation():
         column('description', String), )
     columns = [c.name for c in tb.columns]
     data = [
-        (BOX_PLOT_ID, 'en', 'Box plot',
-         'A box plot or boxplot is a method for graphically depicting groups '
-         'of numerical data through their quartiles'),
-        (BOX_PLOT_ID, 'pt', 'Box plot',
-         'Diagrama de caixa, diagrama de extremos e quartis, boxplot ou box '
-         'plot é uma ferramenta gráfica para representar a variação de dados '
-         'observados de uma variável numérica por meio de quartis.'),
+        (HISTOGRAM_ID, 'en', 'Histogram',
+         'A histogram is a plot that lets you discover, and show, the '
+         'underlying frequency distribution (shape) of a set of continuous '
+         'data. This allows the inspection of the data for its '
+         'underlying distribution (e.g., normal distribution), '
+         'outliers, skewness, etc.'),
+        (HISTOGRAM_ID, 'pt', 'Histograma',
+         'Um histograma é um gráfico que permite descobrir e mostrar '
+         'a distribuição de frequência subjacente (forma) de um '
+         'conjunto de dados contínuos. '
+         'Isso permite a inspeção dos dados para sua distribuição subjacente '
+         '(por exemplo, distribuição normal), outliers, assimetria, etc.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -68,7 +73,7 @@ def _insert_operation_platform():
         column('platform_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        (BOX_PLOT_ID, 1),
+        (HISTOGRAM_ID, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -84,7 +89,7 @@ def _insert_operation_form():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (BOX_PLOT_FORM_ID, 1, 1, 'execution'),
+        (HISTOGRAM_FORM_ID, 1, 1, 'execution'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -99,9 +104,9 @@ def _insert_operation_operation_form():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (BOX_PLOT_ID, BOX_PLOT_FORM_ID),
-        (BOX_PLOT_ID, APPEARANCE_FORM_ID),
-        (BOX_PLOT_ID, RESULTS_FORM_ID),
+        (HISTOGRAM_ID, HISTOGRAM_FORM_ID),
+        (HISTOGRAM_ID, APPEARANCE_FORM_ID),
+        (HISTOGRAM_ID, RESULTS_FORM_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -118,8 +123,8 @@ def _insert_operation_form_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (BOX_PLOT_FORM_ID, 'en', 'Execution'),
-        (BOX_PLOT_FORM_ID, 'pt', 'Execução'),
+        (HISTOGRAM_FORM_ID, 'en', 'Execution'),
+        (HISTOGRAM_FORM_ID, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -144,18 +149,16 @@ def _insert_operation_form_field():
     columns = [c.name for c in tb.columns]
 
     data = [
-        (490, 'title', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION',
-         BOX_PLOT_FORM_ID),
-        (491, 'fact_attributes', 'TEXT', 1, 2, None, 'attribute-selector',
-         None, None, 'EXECUTION', BOX_PLOT_FORM_ID),
-        (492, 'group_attribute', 'TEXT', 0, 3, None, 'attribute-selector',
-         None, None, 'EXECUTION', BOX_PLOT_FORM_ID),
-        (493, 'show_outliers', 'INTEGER', 0, 4, None, 'checkbox',
-         None, None, 'EXECUTION', BOX_PLOT_FORM_ID),
-        (494, 'x_title', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION',
-         BOX_PLOT_FORM_ID),
-        (495, 'y_title', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION',
-         BOX_PLOT_FORM_ID),
+        (496, 'title', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION',
+         HISTOGRAM_FORM_ID),
+        (497, 'attributes', 'TEXT', 1, 2, None, 'attribute-selector',
+         None, None, 'EXECUTION', HISTOGRAM_FORM_ID),
+        (498, 'bins', 'INTEGER', 0, 3, '10', 'integer',
+         None, None, 'EXECUTION', HISTOGRAM_FORM_ID),
+        (499, 'x_title', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION',
+         HISTOGRAM_FORM_ID),
+        (500, 'y_title', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION',
+         HISTOGRAM_FORM_ID),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -172,30 +175,24 @@ def _insert_operation_form_field_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (490, 'en', 'Chart Title', 'Title for the chart'),
-        (490, 'pt', 'Título', 'Título para o gráfico'),
+        (496, 'en', 'Chart Title', 'Title for the chart'),
+        (496, 'pt', 'Título', 'Título para o gráfico'),
 
-        (491, 'en', 'Input attribute(s)',
-         'Calculate and box plot quartiles for these attributes.'),
-        (491, 'pt', 'Atributo(s) de entrada',
-         'Atributos usados para calcular os quartis e gerar o box plot.'),
+        (497, 'en', 'Input attribute(s)',
+         'Generate a histogram for each one of these attributes.'),
+        (497, 'pt', 'Atributo(s) de entrada',
+         'Gera um histograma para cada um destes atributos.'),
 
-        (492, 'en', 'Grouping attribute (x-axis)',
-         'Input data will be grouped by this attribute and quartiles will be '
-         'calculated for each group. Each group will be a box in x-axis.'),
-        (492, 'pt', 'Atributo usado para agrupar (x-axis)',
-         'Os dados de entrada serão agrupados por este atributo e os quartis '
-         'serão calculados para cada grupo. Cada grupo será uma caixa no '
-         'eixo X.'),
+        (498, 'en', 'Number of bins',
+         'How many intervals data is split.'),
+        (498, 'pt', 'Quantidade de intervalos (bins)',
+         'Em quantos intervalos os dados serão divididos.'),
 
-        (493, 'en', 'Show outliers', 'Display outliers'),
-        (493, 'pt', 'Exibir discrepantes', 'Exibir discrepantes (outliers).'),
+        (499, 'en', 'X-axis title', 'X-axis title.'),
+        (499, 'pt', 'Título para o eixo X', 'Título para o eixo X.'),
 
-        (494, 'en', 'X-axis title', 'X-axis title.'),
-        (494, 'pt', 'Título para o eixo X', 'Título para o eixo X.'),
-
-        (495, 'en', 'Y-axis title', 'Y-axis title.'),
-        (495, 'pt', 'Título para o eixo Y', 'Título para o eixo Y.'),
+        (500, 'en', 'Y-axis title', 'Y-axis title.'),
+        (500, 'pt', 'Título para o eixo Y', 'Título para o eixo Y.'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -210,8 +207,8 @@ def _insert_operation_category_operation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (BOX_PLOT_ID, 1),
-        (BOX_PLOT_ID, 15),
+        (HISTOGRAM_ID, 1),
+        (HISTOGRAM_ID, 15),
     ]
     rows = [dict(zip(columns, cat)) for cat in data]
 
@@ -232,8 +229,8 @@ def _insert_operation_port():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (295, 'OUTPUT', None, BOX_PLOT_ID, 1, 'MANY', 'visualization'),
-        (296, 'INPUT', None, BOX_PLOT_ID, 1, 'ONE', 'input data'),
+        (297, 'OUTPUT', None, HISTOGRAM_ID, 1, 'MANY', 'visualization'),
+        (298, 'INPUT', None, HISTOGRAM_ID, 1, 'ONE', 'input data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -250,11 +247,11 @@ def _insert_operation_port_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (295, 'en', 'visualization', 'Visualization'),
-        (295, 'pt', 'visualization', 'Visualização'),
+        (297, 'en', 'visualization', 'Visualization'),
+        (297, 'pt', 'visualization', 'Visualização'),
 
-        (296, 'en', 'input data', 'Input data'),
-        (296, 'pt', 'dados de entrada', 'Dados de entrada'),
+        (298, 'en', 'input data', 'Input data'),
+        (298, 'pt', 'dados de entrada', 'Dados de entrada'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -270,8 +267,8 @@ def _insert_operation_port_interface_operation_port():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (295, 19),
-        (296, 1),
+        (297, 19),
+        (298, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -281,40 +278,40 @@ def _insert_operation_port_interface_operation_port():
 all_commands = [
 
     (_insert_operation,
-     'DELETE FROM operation WHERE id IN ({})'.format(BOX_PLOT_ID)),
+     'DELETE FROM operation WHERE id IN ({})'.format(HISTOGRAM_ID)),
 
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id IN ({})'.format(BOX_PLOT_ID)),
+     'DELETE FROM operation_translation WHERE id IN ({})'.format(HISTOGRAM_ID)),
     (_insert_operation_platform,
      'DELETE FROM operation_platform '
-     'WHERE platform_id = 1 AND operation_id IN ({})'.format(BOX_PLOT_ID)),
+     'WHERE platform_id = 1 AND operation_id IN ({})'.format(HISTOGRAM_ID)),
     (_insert_operation_category_operation,
      'DELETE from operation_category_operation '
-     'WHERE operation_id IN ({})'.format(BOX_PLOT_ID)),
+     'WHERE operation_id IN ({})'.format(HISTOGRAM_ID)),
     (_insert_operation_port,
-     "DELETE FROM operation_port WHERE id in (295, 296)"),
+     "DELETE FROM operation_port WHERE id in (297, 298)"),
     (_insert_operation_port_translation,
-     "DELETE FROM operation_port_translation WHERE id in (295, 296)"),
+     "DELETE FROM operation_port_translation WHERE id in (297, 298)"),
 
     (_insert_operation_port_interface_operation_port,
      "DELETE FROM operation_port_interface_operation_port "
-     "WHERE operation_port_id in (295, 296)"),
+     "WHERE operation_port_id in (297, 298)"),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id IN ({0})'.format(BOX_PLOT_FORM_ID)),
+     'DELETE FROM operation_form WHERE id IN ({0})'.format(HISTOGRAM_FORM_ID)),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form '
-     'WHERE operation_id IN ({0})'.format(BOX_PLOT_ID)),
+     'WHERE operation_id IN ({0})'.format(HISTOGRAM_ID)),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation  WHERE id IN ({0})'.format(
-         BOX_PLOT_FORM_ID)),
+         HISTOGRAM_FORM_ID)),
     (_insert_operation_form_field,
      'DELETE FROM operation_form_field WHERE form_id IN ({0})'.format(
-         BOX_PLOT_FORM_ID)),
+         HISTOGRAM_FORM_ID)),
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation '
      'WHERE id IN (SELECT id FROM operation_form_field '
-     '   WHERE form_id IN ({0}))'.format(BOX_PLOT_FORM_ID)),
+     '   WHERE form_id IN ({0}))'.format(HISTOGRAM_FORM_ID)),
 
 ]
 
