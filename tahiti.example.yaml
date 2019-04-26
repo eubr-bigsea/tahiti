@@ -1,0 +1,9 @@
+tahiti:
+  port: 3321
+  environment: prod
+  servers:
+    database_url: mysql+pymysql://user:password@host:3306/tahiti
+  services:
+  config:
+    SQLALCHEMY_POOL_SIZE: 0
+    SQLALCHEMY_POOL_RECYCLE: 60
