@@ -318,9 +318,10 @@ all_commands = [
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE operation_id = 122'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 484 and 485'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 484 and 486'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 484 and 485'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 484 '
+     'and 486'),
 
     ('UPDATE operation_port_translation '
      'SET name = "models" '
@@ -400,6 +401,7 @@ def downgrade():
     session = sessionmaker(bind=ctx.bind)()
     connection = session.connection()
 
+    connection.execute('SET FOREIGN_KEY_CHECKS=0;')
     try:
         for cmd in reversed(all_commands):
             if isinstance(cmd[1], (unicode, str)):
@@ -412,4 +414,5 @@ def downgrade():
     except:
         session.rollback()
         raise
+    connection.execute('SET FOREIGN_KEY_CHECKS=1;')
     session.commit()
