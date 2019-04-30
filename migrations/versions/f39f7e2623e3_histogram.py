@@ -341,6 +341,7 @@ def downgrade():
     session = sessionmaker(bind=ctx.bind)()
     connection = session.connection()
 
+    connection.execute('SET FOREIGN_KEY_CHECKS=0;')
     try:
         for cmd in reversed(all_commands):
             if isinstance(cmd[1], (unicode, str)):
@@ -353,4 +354,5 @@ def downgrade():
     except:
         session.rollback()
         raise
+    connection.execute('SET FOREIGN_KEY_CHECKS=1;')
     session.commit()
