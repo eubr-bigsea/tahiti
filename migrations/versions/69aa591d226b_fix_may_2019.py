@@ -167,6 +167,10 @@ all_commands = [
      'UPDATE operation_form_field SET `order` = 1 where id = 283'),
     ('UPDATE operation_form_field SET `order` = 7 where id = 284',
      'UPDATE operation_form_field SET `order` = 2 where id = 284'),
+
+
+    ("UPDATE operation_translation SET description = 'Classificador Naive Bayes. Suporta tanto a versão multinomial, quanto a Bernoulli.' where id = 104 and locale = 'pt'", "UPDATE operation_translation SET description = 'Classificador Naive Bayes. Suporta tanto a versão multinomial, quanto a Bernoulli.' where id = 104 and locale = 'pt'"),
+    ("UPDATE operation_translation SET description = 'Naive Bayes Classifiers. It supports both Multinomial and Bernoulli NB' where id = 104 and locale = 'en'", "UPDATE operation_translation SET description = 'Naive Bayes Classifiers. It supports both Multinomial and Bernoulli NB' where id = 104 and locale = 'en'"),
 ]
 
 
