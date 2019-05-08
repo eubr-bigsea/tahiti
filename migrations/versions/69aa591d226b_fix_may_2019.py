@@ -169,8 +169,35 @@ all_commands = [
      'UPDATE operation_form_field SET `order` = 2 where id = 284'),
 
 
-    ("UPDATE operation_translation SET description = 'Classificador Naive Bayes. Suporta tanto a versão multinomial, quanto a Bernoulli.' where id = 104 and locale = 'pt'", "UPDATE operation_translation SET description = 'Classificador Naive Bayes. Suporta tanto a versão multinomial, quanto a Bernoulli.' where id = 104 and locale = 'pt'"),
-    ("UPDATE operation_translation SET description = 'Naive Bayes Classifiers. It supports both Multinomial and Bernoulli NB' where id = 104 and locale = 'en'", "UPDATE operation_translation SET description = 'Naive Bayes Classifiers. It supports both Multinomial and Bernoulli NB' where id = 104 and locale = 'en'"),
+    ("UPDATE operation_translation SET description = 'Classificador Naive "
+     "Bayes. Suporta tanto a versão multinomial, quanto a Bernoulli.' where "
+     "id = 104 and locale = 'pt'",
+     "UPDATE operation_translation SET description = 'Classificador "
+     "Naive Bayes. Suporta tanto a versão multinomial, quanto a Bernoulli.' "
+     "where id = 104 and locale = 'pt'"),
+    ("UPDATE operation_translation SET description = 'Naive Bayes Classifiers."
+     " It supports both Multinomial and Bernoulli NB'"
+     " where id = 104 and locale = 'en'",
+     "UPDATE operation_translation SET description = 'Naive Bayes Classifiers. "
+     "It supports both Multinomial and Bernoulli NB'"
+     " where id = 104 and locale = 'en'"),
+
+    ("""
+    UPDATE operation_translation SET name = 'Multi-layer Perceptron',
+    description = 'Classifier trainer based on the Multilayer Perceptron. Each layer has sigmoid activation function, output layer has softmax.Number of inputs has to be equal to the size of feature vectors.'
+    WHERE id = 110 AND locale = 'en'""",
+     """UPDATE operation_translation SET name = 'Multi-layer Perceptron',
+    description = 'Classifier trainer based on the Multilayer Perceptron. Each layer has sigmoid activation function, output layer has softmax. Number of inputs has to be equal to the size of feature vectors.'
+    WHERE id = 110 AND locale = 'en'"""),
+
+    ("""
+    UPDATE operation_translation SET name = 'Perceptron multicamadas',
+    description = 'Classificador baseado no Perceptron Multicamadas. Cada camada tem função de ativação sigmóide e a camada de saída usa softmax. O número de entradas deve ser igual ao tamanho dos vetores de recursos.'
+    WHERE id = 110 AND locale = 'pt'""",
+     """UPDATE operation_translation SET name = 'Perceptron multicamadas',
+    description = 'Classificador baseado no Perceptron Multicamadas. Cada camada tem função de ativação sigmóide e a camada de saída usa softmax. O número de entradas deve ser igual ao tamanho dos vetores de recursos.'
+    WHERE id = 110 AND locale = 'pt'
+     """),
 ]
 
 
