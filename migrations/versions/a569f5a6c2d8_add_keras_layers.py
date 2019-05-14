@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Add keras convolution layer
+"""Add keras layers
 
 Revision ID: a569f5a6c2d8
 Revises: 55605557d9cc
@@ -47,6 +47,30 @@ def _insert_operation_platform():
         (5085, KERAS_PLATAFORM_ID),
         (5086, KERAS_PLATAFORM_ID),
         (5087, KERAS_PLATAFORM_ID),
+        (5088, KERAS_PLATAFORM_ID),
+        (5089, KERAS_PLATAFORM_ID),
+        (5090, KERAS_PLATAFORM_ID),
+        (5091, KERAS_PLATAFORM_ID),
+        (5092, KERAS_PLATAFORM_ID),
+        (5093, KERAS_PLATAFORM_ID),
+        (5094, KERAS_PLATAFORM_ID),
+        (5095, KERAS_PLATAFORM_ID),
+        (5096, KERAS_PLATAFORM_ID),
+        (5097, KERAS_PLATAFORM_ID),
+        (5098, KERAS_PLATAFORM_ID),
+        (5099, KERAS_PLATAFORM_ID),
+        (5100, KERAS_PLATAFORM_ID),
+        (5101, KERAS_PLATAFORM_ID),
+        (5102, KERAS_PLATAFORM_ID),
+        (5103, KERAS_PLATAFORM_ID),
+        (5104, KERAS_PLATAFORM_ID),
+        (5105, KERAS_PLATAFORM_ID),
+        (5106, KERAS_PLATAFORM_ID),
+        (5107, KERAS_PLATAFORM_ID),
+        (5108, KERAS_PLATAFORM_ID),
+        (5109, KERAS_PLATAFORM_ID),
+        (5110, KERAS_PLATAFORM_ID),
+        (5111, KERAS_PLATAFORM_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -67,9 +91,9 @@ def _insert_operation():
         (5074, "separable-conv-1d", 1, 'ACTION', ''),
         (5075, "separable-conv-2d", 1, 'ACTION', ''),
         (5076, "depth-wise-conv-2d", 1, 'ACTION', ''),
-        (5077, "conv-2d-tranpose", 1, 'ACTION', ''),
+        (5077, "conv-2d-transpose", 1, 'ACTION', ''),
         (5078, "conv-3d", 1, 'ACTION', ''),
-        (5079, "conv-3d-tranpose", 1, 'ACTION', ''),
+        (5079, "conv-3d-transpose", 1, 'ACTION', ''),
         (5080, "cropping-1d", 1, 'ACTION', ''),
         (5081, "cropping-2d", 1, 'ACTION', ''),
         (5082, "cropping-3d", 1, 'ACTION', ''),
@@ -78,7 +102,61 @@ def _insert_operation():
         (5085, "up-sampling-3d", 1, 'ACTION', ''),
         (5086, "zero-padding-1d", 1, 'ACTION', ''),
         (5087, "zero-padding-3d", 1, 'ACTION', ''),
+        # Pre-trained
+        (5088, "vgg-16", 1, 'ACTION', ''),
+        (5089, "inception-v3", 1, 'ACTION', ''),
 
+        # Advanced
+        (5090, "python-code", 1, 'ACTION', ''),
+
+        # Pooling Layers
+        (5091, "global-average-pooling-2d", 1, 'ACTION', ''),
+
+        # Merge Layers
+        (5092, "add", 1, 'ACTION', ''),
+        (5093, "subtract", 1, 'ACTION', ''),
+        (5094, "multiply", 1, 'ACTION', ''),
+        (5095, "average", 1, 'ACTION', ''),
+        (5096, "maximum", 1, 'ACTION', ''),
+        (5097, "minimum", 1, 'ACTION', ''),
+        (5098, "concatenate", 1, 'ACTION', ''),
+        (5099, "dot", 1, 'ACTION', ''),
+
+        #Input
+        (5100, "input", 1, 'ACTION', ''),
+
+        #Pooling Layers
+        (5101, "max-pooling-1d", 1, 'ACTION', ''),
+        (5102, "max-pooling-3d", 1, 'ACTION', ''),
+        (5103, "average-pooling-1d", 1, 'ACTION', ''),
+        (5104, "average-pooling-2d", 1, 'ACTION', ''),
+        (5105, "average-pooling-3d", 1, 'ACTION', ''),
+        (5106, "global-max-pooling-1d", 1, 'ACTION', ''),
+        (5107, "global-average-pooling-1d", 1, 'ACTION', ''),
+        (5108, "global-max-pooling-2d", 1, 'ACTION', ''),
+        (5109, "global-average-pooling-2d", 1, 'ACTION', ''),
+        (5110, "global-max-pooling-3d", 1, 'ACTION', ''),
+        (5111, "global-average-pooling-3d", 1, 'ACTION', ''),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_category():
+    tb = table(
+        'operation_category',
+        column('id', Integer),
+        column('type', String),
+        column('order', Integer),
+        column('default_order', Integer),
+    )
+
+    columns = ('id', 'type', 'order', 'default_order')
+    data = [
+        (5060, "group", 8, 10),
+        (5061, "group", 10, 10),# Advanced
+        (5062, "group", 9, 10),# Merge Layers
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -109,6 +187,48 @@ def _insert_operation_category_operation():
         (5020, 5085),
         (5020, 5086),
         (5020, 5087),
+        (5060, 5088),
+        (5060, 5089),
+        (5061, 5090),
+        (5030, 5091),
+        (5062, 5092),
+        (5062, 5093),
+        (5062, 5094),
+        (5062, 5095),
+        (5062, 5096),
+        (5062, 5097),
+        (5062, 5098),
+        (5062, 5099),
+        (5010, 5100),
+        (5030, 5101),
+        (5030, 5102),
+        (5030, 5103),
+        (5030, 5104),
+        (5030, 5105),
+        (5030, 5106),
+        (5030, 5107),
+        (5030, 5108),
+        (5030, 5109),
+        (5030, 5110),
+        (5030, 5111),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_category_translation():
+    tb = table(
+        'operation_category_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String))
+
+    columns = ('id', 'locale', 'name')
+    data = [
+        (5060, "en", 'Pre-trained Layers'),
+        (5061, "en", 'Advanced'),
+        (5062, "en", 'Merge Layers'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -260,6 +380,91 @@ def _insert_operation_translation():
                                       '(e.g. temporal sequence).'),
         (5087, 'en', 'ZeroPadding3D', 'Zero-padding layer for 3D data '
                                       '(spatial or spatio-temporal).'),
+        (5088, 'en', 'VGG16', 'VGG16 model, with weights pre-trained on '
+                              'ImageNet. This model can be built both with '
+                              '"channels_first" data format (channels, height, '
+                              'width) or "channels_last" data format (height, '
+                              'width, channels). The default input size for '
+                              'this model is 224x224.'),
+        (5089, 'en', 'InceptionV3', 'Inception V3 model, with weights '
+                                    'pre-trained on ImageNet. This model and '
+                                    'can be built both with "channels_first" '
+                                    'data format (channels, height, width) or '
+                                    '"channels_last" data format (height, '
+                                    'width, channels). The default input size '
+                                    'for this model is 299x299.'),
+        (5090, 'en', 'PythonCode', 'Add Python code to workflow. It enables '
+                                   'the creation of functions, classes and/or '
+                                   'simple lines of code to promote '
+                                   'transformations in the data or addition of '
+                                   'new layers.'),
+
+        (5091, 'en', 'GlobalAveragePooling2D', 'Global average pooling '
+                                               'operation for spatial data.'),
+
+        (5092, 'en', 'Add', 'Layer that adds a list of inputs. It takes as '
+                            'input a list of tensors, all of the same shape, '
+                            'and returns a single tensor (also of the same '
+                            'shape).'),
+        (5093, 'en', 'Subtract', 'Layer that subtracts two inputs. It takes as '
+                                 'input a list of tensors of size 2, both of '
+                                 'the same shape, and returns a single tensor, '
+                                 '(inputs[0] - inputs[1]), also of the same '
+                                 'shape. '),
+        (5094, 'en', 'Multiply', 'Layer that multiplies (element-wise) a list '
+                                 'of inputs. It takes as input a list of '
+                                 'tensors, all of the same shape, and returns '
+                                 'a single tensor (also of the same shape).'),
+        (5095, 'en', 'Average', 'Layer that averages a list of inputs. It '
+                                'takes as input a list of tensors, all of the '
+                                'same shape, and returns a single tensor (also '
+                                'of the same shape).'),
+        (5096, 'en', 'Maximum', 'Layer that computes the maximum '
+                                '(element-wise) a list of inputs. It takes as '
+                                'input a list of tensors, all of the same '
+                                'shape, and returns a single tensor (also of '
+                                'the same shape).'),
+        (5097, 'en', 'Minimum', 'Layer that computes the minimum '
+                                '(element-wise) a list of inputs. It takes '
+                                'as input a list of tensors, all of the same '
+                                'shape, and returns a single tensor (also of '
+                                'the same shape).'),
+        (5098, 'en', 'Concatenate', 'Layer that concatenates a list of inputs. '
+                                    'It takes as input a list of tensors, all '
+                                    'of the same shape except for the '
+                                    'concatenation axis, and returns a single '
+                                    'tensor, the concatenation of all inputs. '),
+        (5099, 'en', 'Dot', 'Layer that computes a dot product between samples '
+                            'in two tensors. E.g. if applied to a list of two '
+                            'tensors a and b of shape (batch_size, n), the '
+                            'output will be a tensor of shape (batch_size, 1) '
+                            'where each entry i will be the dot product '
+                            'between a[i] and b[i].'),
+
+        (5100, 'en', 'Input', 'Input layer is used to instantiate a Keras '
+                              'tensor.'),
+
+        (5101, 'en', 'MaxPooling1D', 'Max pooling operation for temporal '
+                                     'data.'),
+        (5102, 'en', 'MaxPooling3D', 'Max pooling operation for 3D data '
+                                     '(spatial or spatio-temporal).'),
+        (5103, 'en', 'AveragePooling1D', 'Average pooling for temporal data.'),
+        (5104, 'en', 'AveragePooling2D', 'Average pooling operation for spatial '
+                                         'data.'),
+        (5105, 'en', 'AveragePooling3D', 'Average pooling operation for 3D data'
+                                         ' (spatial or spatio-temporal).'),
+        (5106, 'en', 'GlobalMaxPooling1D', 'Global max pooling operation for '
+                                           'temporal data.'),
+        (5107, 'en', 'GlobalAveragePooling1D', 'Global average pooling '
+                                               'operation for temporal data.'),
+        (5108, 'en', 'GlobalMaxPooling2D', 'Global max pooling operation for '
+                                           'patial data.'),
+        (5109, 'en', 'GlobalAveragePooling2D', 'Global average pooling '
+                                               'operation for spatial data.'),
+        (5110, 'en', 'GlobalMaxPooling3D', 'Global Max pooling operation for '
+                                           '3D data.'),
+        (5111, 'en', 'GlobalAveragePooling3D', 'Global Average pooling '
+                                               'operation for 3D data.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -279,7 +484,6 @@ def _insert_operation_port():
 
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
-        # SpatialDropout1D
         (5173, 'INPUT', '', 1, 'ONE', 5073, 'input data'),
         (5174, 'INPUT', '', 1, 'ONE', 5074, 'input data'),
         (5175, 'INPUT', '', 1, 'ONE', 5075, 'input data'),
@@ -295,21 +499,71 @@ def _insert_operation_port():
         (5185, 'INPUT', '', 1, 'ONE', 5085, 'input data'),
         (5186, 'INPUT', '', 1, 'ONE', 5086, 'input data'),
         (5187, 'INPUT', '', 1, 'ONE', 5087, 'input data'),
-        (5273, 'OUTPUT', '', 1, 'ONE', 5073, 'output data'),
-        (5274, 'OUTPUT', '', 1, 'ONE', 5074, 'output data'),
-        (5275, 'OUTPUT', '', 1, 'ONE', 5075, 'output data'),
-        (5276, 'OUTPUT', '', 1, 'ONE', 5076, 'output data'),
-        (5277, 'OUTPUT', '', 1, 'ONE', 5077, 'output data'),
-        (5278, 'OUTPUT', '', 1, 'ONE', 5078, 'output data'),
-        (5279, 'OUTPUT', '', 1, 'ONE', 5079, 'output data'),
-        (5280, 'OUTPUT', '', 1, 'ONE', 5080, 'output data'),
-        (5281, 'OUTPUT', '', 1, 'ONE', 5081, 'output data'),
-        (5282, 'OUTPUT', '', 1, 'ONE', 5082, 'output data'),
-        (5283, 'OUTPUT', '', 1, 'ONE', 5083, 'output data'),
-        (5284, 'OUTPUT', '', 1, 'ONE', 5084, 'output data'),
-        (5285, 'OUTPUT', '', 1, 'ONE', 5085, 'output data'),
-        (5286, 'OUTPUT', '', 1, 'ONE', 5086, 'output data'),
-        (5287, 'OUTPUT', '', 1, 'ONE', 5087, 'output data'),
+        (5188, 'INPUT', '', 1, 'ONE', 5088, 'input data'),
+        (5189, 'INPUT', '', 1, 'ONE', 5089, 'input data'),
+        (5190, 'INPUT', '', 1, 'ONE', 5090, 'input data'),
+        (5191, 'INPUT', '', 1, 'ONE', 5071, 'input data'),
+        (5192, 'INPUT', '', 1, 'ONE', 5091, 'input data'),
+        (5193, 'INPUT', '', 1, 'MANY', 5092, 'input data'),
+        (5194, 'INPUT', '', 1, 'MANY', 5093, 'input data'),
+        (5195, 'INPUT', '', 1, 'MANY', 5094, 'input data'),
+        (5196, 'INPUT', '', 1, 'MANY', 5095, 'input data'),
+        (5197, 'INPUT', '', 1, 'MANY', 5096, 'input data'),
+        (5198, 'INPUT', '', 1, 'MANY', 5097, 'input data'),
+        (5199, 'INPUT', '', 1, 'MANY', 5098, 'input data'),
+        (5200, 'INPUT', '', 1, 'MANY', 5099, 'input data'),
+        (5201, 'INPUT', '', 1, 'ONE', 5100, 'input data'),
+        (5202, 'INPUT', '', 1, 'ONE', 5101, 'input data'),
+        (5203, 'INPUT', '', 1, 'ONE', 5102, 'input data'),
+        (5204, 'INPUT', '', 1, 'ONE', 5103, 'input data'),
+        (5205, 'INPUT', '', 1, 'ONE', 5104, 'input data'),
+        (5206, 'INPUT', '', 1, 'ONE', 5105, 'input data'),
+        (5207, 'INPUT', '', 1, 'ONE', 5106, 'input data'),
+        (5208, 'INPUT', '', 1, 'ONE', 5107, 'input data'),
+        (5209, 'INPUT', '', 1, 'ONE', 5108, 'input data'),
+        (5210, 'INPUT', '', 1, 'ONE', 5109, 'input data'),
+        (5211, 'INPUT', '', 1, 'ONE', 5110, 'input data'),
+        (5212, 'INPUT', '', 1, 'ONE', 5111, 'input data'),
+
+        (5273, 'OUTPUT', '', 1, 'MANY', 5073, 'output data'),
+        (5274, 'OUTPUT', '', 1, 'MANY', 5074, 'output data'),
+        (5275, 'OUTPUT', '', 1, 'MANY', 5075, 'output data'),
+        (5276, 'OUTPUT', '', 1, 'MANY', 5076, 'output data'),
+        (5277, 'OUTPUT', '', 1, 'MANY', 5077, 'output data'),
+        (5278, 'OUTPUT', '', 1, 'MANY', 5078, 'output data'),
+        (5279, 'OUTPUT', '', 1, 'MANY', 5079, 'output data'),
+        (5280, 'OUTPUT', '', 1, 'MANY', 5080, 'output data'),
+        (5281, 'OUTPUT', '', 1, 'MANY', 5081, 'output data'),
+        (5282, 'OUTPUT', '', 1, 'MANY', 5082, 'output data'),
+        (5283, 'OUTPUT', '', 1, 'MANY', 5083, 'output data'),
+        (5284, 'OUTPUT', '', 1, 'MANY', 5084, 'output data'),
+        (5285, 'OUTPUT', '', 1, 'MANY', 5085, 'output data'),
+        (5286, 'OUTPUT', '', 1, 'MANY', 5086, 'output data'),
+        (5287, 'OUTPUT', '', 1, 'MANY', 5087, 'output data'),
+        (5288, 'OUTPUT', '', 1, 'MANY', 5088, 'output data'),
+        (5289, 'OUTPUT', '', 1, 'MANY', 5089, 'output data'),
+        (5290, 'OUTPUT', '', 1, 'MANY', 5090, 'output data'),
+        (5291, 'OUTPUT', '', 1, 'MANY', 5091, 'output data'),
+        (5292, 'OUTPUT', '', 1, 'MANY', 5092, 'output data'),
+        (5293, 'OUTPUT', '', 1, 'MANY', 5093, 'output data'),
+        (5294, 'OUTPUT', '', 1, 'MANY', 5094, 'output data'),
+        (5295, 'OUTPUT', '', 1, 'MANY', 5095, 'output data'),
+        (5296, 'OUTPUT', '', 1, 'MANY', 5096, 'output data'),
+        (5297, 'OUTPUT', '', 1, 'MANY', 5097, 'output data'),
+        (5298, 'OUTPUT', '', 1, 'MANY', 5098, 'output data'),
+        (5299, 'OUTPUT', '', 1, 'MANY', 5099, 'output data'),
+        (5300, 'OUTPUT', '', 1, 'MANY', 5100, 'output data'),
+        (5301, 'OUTPUT', '', 1, 'MANY', 5101, 'output data'),
+        (5302, 'OUTPUT', '', 1, 'MANY', 5102, 'output data'),
+        (5303, 'OUTPUT', '', 1, 'MANY', 5103, 'output data'),
+        (5304, 'OUTPUT', '', 1, 'MANY', 5104, 'output data'),
+        (5305, 'OUTPUT', '', 1, 'MANY', 5105, 'output data'),
+        (5306, 'OUTPUT', '', 1, 'MANY', 5106, 'output data'),
+        (5307, 'OUTPUT', '', 1, 'MANY', 5107, 'output data'),
+        (5308, 'OUTPUT', '', 1, 'MANY', 5108, 'output data'),
+        (5309, 'OUTPUT', '', 1, 'MANY', 5109, 'output data'),
+        (5310, 'OUTPUT', '', 1, 'MANY', 5110, 'output data'),
+        (5311, 'OUTPUT', '', 1, 'MANY', 5111, 'output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -339,6 +593,32 @@ def _insert_operation_port_interface_operation_port():
         (5185, 1),
         (5186, 1),
         (5187, 1),
+        (5188, 1),
+        (5189, 1),
+        (5190, 1),
+        (5191, 1),
+        (5192, 1),
+        (5193, 1),
+        (5194, 1),
+        (5195, 1),
+        (5196, 1),
+        (5197, 1),
+        (5198, 1),
+        (5199, 1),
+        (5200, 1),
+        (5201, 1),
+        (5202, 1),
+        (5203, 1),
+        (5204, 1),
+        (5205, 1),
+        (5206, 1),
+        (5207, 1),
+        (5208, 1),
+        (5209, 1),
+        (5210, 1),
+        (5211, 1),
+        (5212, 1),
+
         (5273, 1),
         (5274, 1),
         (5275, 1),
@@ -354,6 +634,31 @@ def _insert_operation_port_interface_operation_port():
         (5285, 1),
         (5286, 1),
         (5287, 1),
+        (5288, 1),
+        (5289, 1),
+        (5290, 1),
+        (5291, 1),
+        (5292, 1),
+        (5293, 1),
+        (5294, 1),
+        (5295, 1),
+        (5296, 1),
+        (5297, 1),
+        (5298, 1),
+        (5299, 1),
+        (5300, 1),
+        (5301, 1),
+        (5302, 1),
+        (5303, 1),
+        (5304, 1),
+        (5305, 1),
+        (5306, 1),
+        (5307, 1),
+        (5308, 1),
+        (5309, 1),
+        (5310, 1),
+        (5311, 1),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -370,7 +675,6 @@ def _insert_operation_port_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        # SpatialDropout1D
         (5173, 'en', 'input data', 'Input data'),
         (5174, 'en', 'input data', 'Input data'),
         (5175, 'en', 'input data', 'Input data'),
@@ -386,6 +690,31 @@ def _insert_operation_port_translation():
         (5185, 'en', 'input data', 'Input data'),
         (5186, 'en', 'input data', 'Input data'),
         (5187, 'en', 'input data', 'Input data'),
+        (5188, 'en', 'input data', 'Input data'),
+        (5189, 'en', 'input data', 'Input data'),
+        (5190, 'en', 'input data', 'Input data'),
+        (5191, 'en', 'input data', 'Input data'),
+        (5192, 'en', 'input data', 'Input data'),
+        (5193, 'en', 'input data', 'Input data'),
+        (5194, 'en', 'input data', 'Input data'),
+        (5195, 'en', 'input data', 'Input data'),
+        (5196, 'en', 'input data', 'Input data'),
+        (5197, 'en', 'input data', 'Input data'),
+        (5198, 'en', 'input data', 'Input data'),
+        (5199, 'en', 'input data', 'Input data'),
+        (5200, 'en', 'input data', 'Input data'),
+        (5201, 'en', 'input data', 'Input data'),
+        (5202, 'en', 'input data', 'Input data'),
+        (5203, 'en', 'input data', 'Input data'),
+        (5204, 'en', 'input data', 'Input data'),
+        (5205, 'en', 'input data', 'Input data'),
+        (5206, 'en', 'input data', 'Input data'),
+        (5207, 'en', 'input data', 'Input data'),
+        (5208, 'en', 'input data', 'Input data'),
+        (5209, 'en', 'input data', 'Input data'),
+        (5210, 'en', 'input data', 'Input data'),
+        (5211, 'en', 'input data', 'Input data'),
+        (5212, 'en', 'input data', 'Input data'),
         (5273, 'en', 'output data', 'Output data'),
         (5274, 'en', 'output data', 'Output data'),
         (5275, 'en', 'output data', 'Output data'),
@@ -401,6 +730,30 @@ def _insert_operation_port_translation():
         (5285, 'en', 'output data', 'Output data'),
         (5286, 'en', 'output data', 'Output data'),
         (5287, 'en', 'output data', 'Output data'),
+        (5288, 'en', 'output data', 'Output data'),
+        (5289, 'en', 'output data', 'Output data'),
+        (5290, 'en', 'output data', 'Output data'),
+        (5291, 'en', 'output data', 'Output data'),
+        (5292, 'en', 'output data', 'Output data'),
+        (5293, 'en', 'output data', 'Output data'),
+        (5294, 'en', 'output data', 'Output data'),
+        (5295, 'en', 'output data', 'Output data'),
+        (5296, 'en', 'output data', 'Output data'),
+        (5297, 'en', 'output data', 'Output data'),
+        (5298, 'en', 'output data', 'Output data'),
+        (5299, 'en', 'output data', 'Output data'),
+        (5300, 'en', 'output data', 'Output data'),
+        (5301, 'en', 'output data', 'Output data'),
+        (5302, 'en', 'output data', 'Output data'),
+        (5303, 'en', 'output data', 'Output data'),
+        (5304, 'en', 'output data', 'Output data'),
+        (5305, 'en', 'output data', 'Output data'),
+        (5306, 'en', 'output data', 'Output data'),
+        (5307, 'en', 'output data', 'Output data'),
+        (5308, 'en', 'output data', 'Output data'),
+        (5309, 'en', 'output data', 'Output data'),
+        (5310, 'en', 'output data', 'Output data'),
+        (5311, 'en', 'output data', 'Output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -434,6 +787,33 @@ def _insert_operation_form():
         (5157, 1, 1, 'execution'),
         (5158, 1, 1, 'execution'),
         (5159, 1, 1, 'execution'),
+        (5160, 1, 1, 'execution'),
+        (5163, 1, 1, 'execution'),
+        (5164, 1, 1, 'execution'),
+        (5165, 1, 1, 'execution'),
+        (5166, 1, 1, 'execution'),
+        (5167, 1, 1, 'execution'),
+        (5168, 1, 1, 'execution'),
+        (5169, 1, 1, 'execution'),
+        (5170, 1, 1, 'execution'),
+        (5171, 1, 1, 'execution'),
+        (5172, 1, 1, 'execution'),
+        (5173, 1, 1, 'execution'),
+        (5174, 1, 1, 'execution'),
+        (5175, 1, 1, 'execution'),
+
+        (5221, 1, 1, 'execution'),
+        (5222, 1, 1, 'execution'),
+        (5223, 1, 1, 'execution'),
+        (5224, 1, 1, 'execution'),
+        (5225, 1, 1, 'execution'),
+        (5226, 1, 1, 'execution'),
+        (5227, 1, 1, 'execution'),
+        (5228, 1, 1, 'execution'),
+        (5229, 1, 1, 'execution'),
+        (5230, 1, 1, 'execution'),
+        (5231, 1, 1, 'execution'),
+        (5232, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -466,6 +846,32 @@ def _insert_operation_form_translation():
         (5157, 'en', 'Execution'),
         (5158, 'en', 'Execution'),
         (5159, 'en', 'Execution'),
+        (5160, 'en', 'Execution'),
+        (5163, 'en', 'Execution'),
+        (5164, 'en', 'Execution'),
+        (5165, 'en', 'Execution'),
+        (5166, 'en', 'Execution'),
+        (5167, 'en', 'Execution'),
+        (5168, 'en', 'Execution'),
+        (5169, 'en', 'Execution'),
+        (5170, 'en', 'Execution'),
+        (5171, 'en', 'Execution'),
+        (5172, 'en', 'Execution'),
+        (5173, 'en', 'Execution'),
+        (5174, 'en', 'Execution'),
+        (5175, 'en', 'Execution'),
+        (5221, 'en', 'execution'),
+        (5222, 'en', 'Execution'),
+        (5223, 'en', 'Execution'),
+        (5224, 'en', 'Execution'),
+        (5225, 'en', 'Execution'),
+        (5226, 'en', 'Execution'),
+        (5227, 'en', 'Execution'),
+        (5228, 'en', 'Execution'),
+        (5229, 'en', 'Execution'),
+        (5230, 'en', 'Execution'),
+        (5231, 'en', 'Execution'),
+        (5232, 'en', 'Execution'),
         (5143, 'pt', 'Execução'),
         (5144, 'pt', 'Execução'),
         (5145, 'pt', 'Execução'),
@@ -483,6 +889,32 @@ def _insert_operation_form_translation():
         (5157, 'pt', 'Execução'),
         (5158, 'pt', 'Execução'),
         (5159, 'pt', 'Execução'),
+        (5160, 'pt', 'Execução'),
+        (5163, 'pt', 'Execução'),
+        (5164, 'pt', 'Execução'),
+        (5165, 'pt', 'Execução'),
+        (5166, 'pt', 'Execução'),
+        (5167, 'pt', 'Execução'),
+        (5168, 'pt', 'Execução'),
+        (5169, 'pt', 'Execução'),
+        (5170, 'pt', 'Execução'),
+        (5171, 'pt', 'Execução'),
+        (5172, 'pt', 'Execução'),
+        (5173, 'pt', 'Execução'),
+        (5174, 'pt', 'Execução'),
+        (5175, 'pt', 'Execução'),
+        (5221, 'pt', 'Execução'),
+        (5222, 'pt', 'Execução'),
+        (5223, 'pt', 'Execução'),
+        (5224, 'pt', 'Execução'),
+        (5225, 'pt', 'Execução'),
+        (5226, 'pt', 'Execução'),
+        (5227, 'pt', 'Execução'),
+        (5228, 'pt', 'Execução'),
+        (5229, 'pt', 'Execução'),
+        (5230, 'pt', 'Execução'),
+        (5231, 'pt', 'Execução'),
+        (5232, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -498,6 +930,7 @@ def _insert_operation_operation_form():
     data = [
         (5021, 41),
         (5022, 41),
+        (5051, 41),
         (5073, 41),
         (5074, 41),
         (5075, 41),
@@ -513,6 +946,31 @@ def _insert_operation_operation_form():
         (5085, 41),
         (5086, 41),
         (5087, 41),
+        (5088, 41),
+        (5089, 41),
+        (5090, 41),
+        (5091, 41),
+        (5092, 41),
+        (5093, 41),
+        (5094, 41),
+        (5095, 41),
+        (5096, 41),
+        (5097, 41),
+        (5098, 41),
+        (5099, 41),
+        (5100, 41),
+        (5101, 41),
+        (5102, 41),
+        (5103, 41),
+        (5104, 41),
+        (5105, 41),
+        (5106, 41),
+        (5107, 41),
+        (5108, 41),
+        (5109, 41),
+        (5110, 41),
+        (5111, 41),
+        (5031, 41),
         (5021, 5143),
         (5022, 5144),
         (5073, 5145),
@@ -530,6 +988,32 @@ def _insert_operation_operation_form():
         (5085, 5157),
         (5086, 5158),
         (5087, 5159),
+        (5051, 5160),
+        (5088, 5163),
+        (5089, 5164),
+        (5090, 5165),
+        (5091, 5166),
+        (5092, 5167),
+        (5093, 5168),
+        (5094, 5169),
+        (5095, 5170),
+        (5096, 5171),
+        (5097, 5172),
+        (5098, 5173),
+        (5099, 5174),
+        (5100, 5175),
+        (5101, 5221),
+        (5102, 5222),
+        (5103, 5223),
+        (5104, 5224),
+        (5105, 5225),
+        (5106, 5226),
+        (5107, 5227),
+        (5108, 5228),
+        (5109, 5229),
+        (5110, 5230),
+        (5111, 5231),
+        (5031, 5232),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -565,13 +1049,13 @@ def _insert_operation_form_field():
              {'key': 'causal', 'value': 'causal'},
              {'key': 'same', 'value': 'same'},
          ]), 'EXECUTION', 5145),
-        (5225, 'data_format', 'TEXT', 0, 5, 'channels_last', 'dropdown', None,
+        (5225, 'data_format', 'TEXT', 0, 5, None, 'dropdown', None,
          json.dumps([
              {'key': 'channels_last', 'value': 'channels_last'},
              {'key': 'channels_first', 'value': 'channels_first'},
          ]), 'EXECUTION', 5145),
         (5226, 'dilation_rate', 'TEXT', 0, 6, 1, 'text', None, None, 'EXECUTION', 5145),
-        (5227, 'activation', 'TEXT', 1, 7, 'linear', 'dropdown', None,
+        (5227, 'activation', 'TEXT', 1, 7, None, 'dropdown', None,
          json.dumps([
              {"key": "elu", "value": "elu"},
              {"key": "exponential", "value": "exponential"},
@@ -669,7 +1153,7 @@ def _insert_operation_form_field():
         (5236, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5143),
         (5237, 'kernel_size', 'TEXT', 1, 2, 0, 'text', None, None, 'EXECUTION', 5143),
         (5238, 'strides', 'TEXT', 1, 3, "(1, 1)", 'text', None, None, 'EXECUTION', 5143),
-        (5239, 'padding', 'TEXT', 0, 4, 'valid', 'dropdown', None,
+        (5239, 'padding', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
              {'key': 'causal', 'value': 'causal'},
@@ -697,7 +1181,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5143),
         (5243, 'use_bias', 'INTEGER', 0, 8, 1, 'checkbox', None, None, 'EXECUTION', 5143),
-        (5244, 'kernel_initializer', 'TEXT', 0, 9, "glorot_uniform", 'dropdown', None,
+        (5244, 'kernel_initializer', 'TEXT', 0, 9, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -717,7 +1201,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5143),
-        (5245, 'bias_initializer', 'TEXT', 0, 10, "zeros", 'dropdown', None,
+        (5245, 'bias_initializer', 'TEXT', 0, 10, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -787,12 +1271,12 @@ def _insert_operation_form_field():
         (5253, 'filters', 'INTEGER', 0, 1, 0, 'integer', None, None, 'EXECUTION', 5146),
         (5254, 'kernel_size', 'TEXT', 0, 2, 0, 'text', None, None, 'EXECUTION', 5146),
         (5255, 'strides', 'TEXT', 0, 3, "1", 'text', None, None, 'EXECUTION', 5146),
-        (5256, 'padding', 'TEXT', 0, 4, 'valid', 'dropdown', None,
+        (5256, 'padding', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
              {'key': 'same', 'value': 'same'},
          ]), 'EXECUTION', 5146),
-        (5257, 'data_format', 'TEXT', 0, 5, 'channels_last', 'dropdown', None,
+        (5257, 'data_format', 'TEXT', 0, 5, None, 'dropdown', None,
          json.dumps([
              {'key': 'channels_last', 'value': 'channels_last'},
              {'key': 'channels_first', 'value': 'channels_first'},
@@ -815,7 +1299,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5146),
         (5261, 'use_bias', 'INTEGER', 0, 9, 1, 'checkbox', None, None, 'EXECUTION', 5146),
-        (5262, 'depthwise_initializer', 'TEXT', 0, 10, "glorot_uniform", 'dropdown', None,
+        (5262, 'depthwise_initializer', 'TEXT', 0, 10, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -835,7 +1319,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5146),
-        (5263, 'pointwise_initializer', 'TEXT', 0, 11, "glorot_uniform", 'dropdown', None,
+        (5263, 'pointwise_initializer', 'TEXT', 0, 11, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -854,7 +1338,7 @@ def _insert_operation_form_field():
              {"key": "varianceScaling", "value": "varianceScaling"},
              {"key": "zeros", "value": "zeros"}]
          ), 'EXECUTION', 5146),
-        (5264, 'bias_initializer', 'TEXT', 0, 12, "zeros", 'dropdown', None,
+        (5264, 'bias_initializer', 'TEXT', 0, 12, None, 'dropdown', None,
          json.dumps([
               {"key": "constant", "value": "constant"},
               {"key": "glorot_normal", "value": "glorot_normal"},
@@ -930,12 +1414,12 @@ def _insert_operation_form_field():
         (5272, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5147),
         (5273, 'kernel_size', 'TEXT', 1, 2, 0, 'text', None, None, 'EXECUTION', 5147),
         (5274, 'strides', 'TEXT', 1, 3, "(1, 1)", 'text', None, None, 'EXECUTION', 5147),
-        (5275, 'padding', 'TEXT', 0, 4, 'valid', 'dropdown', None,
+        (5275, 'padding', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
              {'key': 'same', 'value': 'same'},
          ]), 'EXECUTION', 5147),
-        (5276, 'data_format', 'TEXT', 0, 5, 'channels_last', 'dropdown', None,
+        (5276, 'data_format', 'TEXT', 0, 5, None, 'dropdown', None,
          json.dumps([
              {'key': 'channels_last', 'value': 'channels_last'},
              {'key': 'channels_first', 'value': 'channels_first'},
@@ -958,7 +1442,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5147),
         (5280, 'use_bias', 'INTEGER', 0, 9, 1, 'checkbox', None, None, 'EXECUTION', 5147),
-        (5281, 'depthwise_initializer', 'TEXT', 0, 10, "glorot_uniform", 'dropdown', None,
+        (5281, 'depthwise_initializer', 'TEXT', 0, 10, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -978,7 +1462,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5147),
-        (5282, 'pointwise_initializer', 'TEXT', 0, 11, "glorot_uniform", 'dropdown', None,
+        (5282, 'pointwise_initializer', 'TEXT', 0, 11, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -997,7 +1481,7 @@ def _insert_operation_form_field():
              {"key": "varianceScaling", "value": "varianceScaling"},
              {"key": "zeros", "value": "zeros"}]
          ), 'EXECUTION', 5147),
-        (5283, 'bias_initializer', 'TEXT', 0, 12, "zeros", 'dropdown', None,
+        (5283, 'bias_initializer', 'TEXT', 0, 12, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1072,7 +1556,7 @@ def _insert_operation_form_field():
         # DepthwiseConv2D
         (5291, 'kernel_size', 'TEXT', 1, 1, 0, 'text', None, None, 'EXECUTION', 5148),
         (5292, 'strides', 'TEXT', 1, 2, "(1, 1)", 'text', None, None, 'EXECUTION', 5148),
-        (5293, 'padding', 'TEXT', 0, 3, 'valid', 'dropdown', None,
+        (5293, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
              {'key': 'same', 'value': 'same'},
@@ -1099,7 +1583,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5148),
         (5297, 'use_bias', 'INTEGER', 0, 7, 1, 'checkbox', None, None, 'EXECUTION', 5148),
-        (5298, 'depthwise_initializer', 'TEXT', 0, 8, "glorot_uniform", 'dropdown', None,
+        (5298, 'depthwise_initializer', 'TEXT', 0, 8, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1119,7 +1603,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5148),
-        (5299, 'bias_initializer', 'TEXT', 0, 9, "zeros", 'dropdown', None,
+        (5299, 'bias_initializer', 'TEXT', 0, 9, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1180,7 +1664,7 @@ def _insert_operation_form_field():
         (5305, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5149),
         (5306, 'kernel_size', 'TEXT', 1, 2, 0, 'text', None, None, 'EXECUTION', 5149),
         (5307, 'strides', 'TEXT', 1, 3, "(1, 1)", 'text', None, None, 'EXECUTION', 5149),
-        (5308, 'padding', 'TEXT', 0, 4, 'valid', 'dropdown', None,
+        (5308, 'padding', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
              {'key': 'same', 'value': 'same'},
@@ -1208,7 +1692,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5149),
         (5313, 'use_bias', 'INTEGER', 0, 9, 1, 'checkbox', None, None, 'EXECUTION', 5149),
-        (5314, 'kernel_initializer', 'TEXT', 0, 10, "glorot_uniform", 'dropdown', None,
+        (5314, 'kernel_initializer', 'TEXT', 0, 10, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1228,7 +1712,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5149),
-        (5315, 'bias_initializer', 'TEXT', 0, 11, "zeros", 'dropdown', None,
+        (5315, 'bias_initializer', 'TEXT', 0, 11, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1289,7 +1773,7 @@ def _insert_operation_form_field():
         (5321, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5150),
         (5322, 'kernel_size', 'TEXT', 1, 2, 0, 'text', None, None, 'EXECUTION', 5150),
         (5323, 'strides', 'TEXT', 1, 3, "(1, 1)", 'text', None, None, 'EXECUTION', 5150),
-        (5324, 'padding', 'TEXT', 0, 4, 'valid', 'dropdown', None,
+        (5324, 'padding', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
              {'key': 'same', 'value': 'same'},
@@ -1316,7 +1800,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5150),
         (5328, 'use_bias', 'INTEGER', 0, 8, 1, 'checkbox', None, None, 'EXECUTION', 5150),
-        (5329, 'kernel_initializer', 'TEXT', 0, 9, "glorot_uniform", 'dropdown', None,
+        (5329, 'kernel_initializer', 'TEXT', 0, 9, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1336,7 +1820,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5150),
-        (5330, 'bias_initializer', 'TEXT', 0, 10, "zeros", 'dropdown', None,
+        (5330, 'bias_initializer', 'TEXT', 0, 10, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1397,7 +1881,7 @@ def _insert_operation_form_field():
         (5336, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5151),
         (5337, 'kernel_size', 'TEXT', 1, 2, 0, 'text', None, None, 'EXECUTION', 5151),
         (5338, 'strides', 'TEXT', 1, 3, "(1, 1, 1)", 'text', None, None, 'EXECUTION', 5151),
-        (5339, 'padding', 'TEXT', 0, 4, 'valid', 'dropdown', None,
+        (5339, 'padding', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
              {'key': 'same', 'value': 'same'},
@@ -1425,7 +1909,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5151),
         (5344, 'use_bias', 'INTEGER', 0, 9, 1, 'checkbox', None, None, 'EXECUTION', 5151),
-        (5345, 'kernel_initializer', 'TEXT', 0, 10, "glorot_uniform", 'dropdown', None,
+        (5345, 'kernel_initializer', 'TEXT', 0, 10, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1445,7 +1929,7 @@ def _insert_operation_form_field():
              {"key": "zeros", "value": "zeros"}
          ]),
          'EXECUTION', 5151),
-        (5346, 'bias_initializer', 'TEXT', 0, 11, "zeros", 'dropdown', None,
+        (5346, 'bias_initializer', 'TEXT', 0, 11, None, 'dropdown', None,
          json.dumps([
              {"key": "constant", "value": "constant"},
              {"key": "glorot_normal", "value": "glorot_normal"},
@@ -1531,7 +2015,7 @@ def _insert_operation_form_field():
              {'key': 'channels_last', 'value': 'channels_last'},
              {'key': 'channels_first', 'value': 'channels_first'},
          ]), 'EXECUTION', 5156),
-        (5360, 'interpolation', 'TEXT', 1, 3, 'nearest', 'dropdown', None,
+        (5360, 'interpolation', 'TEXT', 1, 3, None, 'dropdown', None,
          json.dumps([
              {'key': 'nearest', 'value': 'nearest'},
              {'key': 'bilinear', 'value': 'bilinear'},
@@ -1555,6 +2039,343 @@ def _insert_operation_form_field():
              {'key': 'channels_last', 'value': 'channels_last'},
              {'key': 'channels_first', 'value': 'channels_first'},
          ]), 'EXECUTION', 5159),
+
+        # BatchNormalization
+        (5366, 'axis', 'INTEGER', 0, 1, -1, 'integer', None, None, 'EXECUTION', 5160),
+        (5367, 'momentum', 'DECIMAL', 0, 2, 0.99, 'decimal', None, None, 'EXECUTION', 5160),
+        (5368, 'epsilon', 'DECIMAL', 0, 3, 0.001, 'decimal', None, None, 'EXECUTION', 5160),
+        (5369, 'center', 'INTEGER', 0, 4, 1, 'checkbox', None, None, 'EXECUTION', 5160),
+        (5370, 'scale', 'INTEGER', 0, 5, 1, 'checkbox', None, None, 'EXECUTION', 5160),
+        (5371, 'beta_initializer', 'TEXT', 0, 6, None, 'dropdown', None,
+         json.dumps([
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}]
+         ), 'EXECUTION', 5160),
+        (5372, 'gamma_initializer', 'TEXT', 0, 7, None, 'dropdown', None,
+         json.dumps([
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}]
+         ), 'EXECUTION', 5160),
+        (5373, 'moving_mean_initializer', 'TEXT', 0, 8, None, 'dropdown', None,
+         json.dumps([
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}]
+         ), 'EXECUTION', 5160),
+        (5374, 'moving_variance_initializer', 'TEXT', 0, 9, None, 'dropdown', None,
+         json.dumps([
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}]
+         ), 'EXECUTION', 5160),
+        (5375, 'beta_regularizer', 'TEXT', 0, 10, None, 'dropdown', None,
+         json.dumps([
+             {"key": "l1", "value": "l1"},
+             {"key": "l2", "value": "l2"},
+             {"key": "l1_l2", "value": "l1_l2"}]
+         ), 'EXECUTION', 5160),
+        (5376, 'gamma_regularizer', 'TEXT', 0, 11, None, 'dropdown', None,
+         json.dumps([
+             {"key": "l1", "value": "l1"},
+             {"key": "l2", "value": "l2"},
+             {"key": "l1_l2", "value": "l1_l2"}]
+         ), 'EXECUTION', 5160),
+        (5377, 'beta_constraint', 'TEXT', 0, 12, None, 'dropdown', None,
+         json.dumps([
+             {"key": "max_norm", "value": "max_norm"},
+             {"key": "min_max_norm", "value": "min_max_norm"},
+             {"key": "non_neg", "value": "non_neg"},
+             {"key": "unit_norm", "value": "unit_norm"}
+         ]), 'EXECUTION', 5160),
+        (5378, 'gamma_constraint', 'TEXT', 0, 13, None, 'dropdown', None,
+         json.dumps([
+             {"key": "max_norm", "value": "max_norm"},
+             {"key": "min_max_norm", "value": "min_max_norm"},
+             {"key": "non_neg", "value": "non_neg"},
+             {"key": "unit_norm", "value": "unit_norm"}
+         ]), 'EXECUTION', 5160),
+
+        #VGG16
+        (5379, 'include_top', 'INTEGER', 0, 1, 1, 'checkbox', None, None, 'EXECUTION', 5163),
+        (5380, 'weights', 'TEXT', 0, 3, 'imagenet', 'text', None, None, 'EXECUTION', 5163),
+        (5381, 'input_tensor', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', 5163),
+        (5382, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5163),
+        (5383, 'pooling', 'TEXT', 0, 6, None, 'dropdown', None,
+         json.dumps([
+             {"key": "avg", "value": "avg"},
+             {"key": "max", "value": "max"},
+         ]), 'EXECUTION', 5163),
+        (5384, 'classes', 'INTEGER', 0, 7, None, 'integer', None, None, 'EXECUTION', 5163),
+        (5385, 'trainable', 'INTEGER', 0, 2, 0, 'checkbox', None, None, 'EXECUTION', 5163),
+
+        #InceptionV3
+        (5386, 'include_top', 'INTEGER', 0, 1, 1, 'checkbox', None, None, 'EXECUTION', 5164),
+        (5387, 'weights', 'TEXT', 0, 3, 'imagenet', 'text', None, None, 'EXECUTION', 5164),
+        (5388, 'input_tensor', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', 5164),
+        (5389, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5164),
+        (5390, 'pooling', 'TEXT', 0, 6, None, 'dropdown', None,
+         json.dumps([
+             {"key": "avg", "value": "avg"},
+             {"key": "max", "value": "max"},
+         ]), 'EXECUTION', 5164),
+        (5391, 'classes', 'INTEGER', 0, 7, None, 'integer', None, None, 'EXECUTION', 5164),
+        (5392, 'trainable', 'INTEGER', 0, 2, 0, 'checkbox', None, None, 'EXECUTION', 5164),
+
+        #PythonCode
+        (5393, 'code', 'TEXT', 0, 2, None, 'code', None, None, 'EXECUTION', 5165),
+        (5394, 'out_code', 'INTEGER', 0, 1, 0, 'checkbox', None, None, 'EXECUTION', 5165),
+
+        #Input Layer
+        (5395, 'shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5177),
+
+        # Conv2D
+        (5396, 'weights', 'TEXT', 0, 16, None, 'text', None, None, 'EXECUTION', 5143),
+
+        # GlobalAveragePooling2D
+        (5397, 'data_format', 'TEXT', 0, 2, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5166),
+
+        # Conv2D
+        (5398, 'trainable', 'INTEGER', 0, 8, 0, 'checkbox', None, None, 'EXECUTION', 5143),
+
+        # Merge Add
+        (5399, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5167),
+        (5400, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5167),
+
+        # Merge Subtract
+        (5401, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5168),
+        (5402, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5168),
+
+        # Merge Multiply
+        (5403, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5169),
+        (5404, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5169),
+
+        # Merge Average
+        (5405, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5170),
+        (5406, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5170),
+
+        # Merge Maximum
+        (5407, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5171),
+        (5408, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5171),
+
+        # Merge Minimum
+        (5409, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5172),
+        (5410, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5172),
+
+        # Merge Concatenate
+        (5411, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5173),
+        (5412, 'axis', 'INTEGER', 0, 1, -1, 'integer', None, None, 'EXECUTION', 5173),
+        (5413, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5173),
+
+        # Merge Dot
+        (5414, 'inputs', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5174),
+        (5415, 'axes', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5174),
+        (5416, 'normalize', 'INTEGER', 0, 3, 0, 'checkbox', None, None, 'EXECUTION', 5174),
+        (5417, 'kwargs', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', 5174),
+
+        # Lambda
+        (5418, 'output_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5138),
+
+        # Input Layer
+        (5419, 'shape', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5175),
+        (5420, 'batch_shape', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5175),
+        (5421, 'dtype', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION', 5175),
+        (5422, 'sparse', 'INTEGER', 0, 4, 0, 'checkbox', None, None, 'EXECUTION', 5175),
+
+        # MaxPooling1D
+        (5423, 'pool_size', 'INTEGER', 0, 1, 2, 'integer', None, None, 'EXECUTION', 5221),
+        (5424, 'strides', 'INTEGER', 0, 2, None, 'integer', None, None, 'EXECUTION', 5221),
+        (5425, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'valid', 'value': 'valid'},
+             {'key': 'same', 'value': 'same'},
+         ]), 'EXECUTION', 5221),
+        (5426, 'data_format', 'TEXT', 0, 4, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5221),
+        (5427, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5221),
+
+        # MaxPooling2D
+        (5428, 'pool_size', 'TEXT', 0, 1, "(2, 2)", 'text', None, None, 'EXECUTION', 5232),
+        (5429, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5232),
+        (5430, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'valid', 'value': 'valid'},
+             {'key': 'same', 'value': 'same'},
+         ]), 'EXECUTION', 5232),
+        (5431, 'data_format', 'TEXT', 0, 4, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5232),
+        (5432, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5232),
+
+        # MaxPooling3D
+        (5433, 'pool_size', 'TEXT', 0, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5222),
+        (5434, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5222),
+        (5435, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'valid', 'value': 'valid'},
+             {'key': 'same', 'value': 'same'},
+         ]), 'EXECUTION', 5222),
+        (5436, 'data_format', 'TEXT', 0, 4, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5222),
+        (5437, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5222),
+
+        # AveragePooling1D
+        (5438, 'pool_size', 'TEXT', 0, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5223),
+        (5439, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5223),
+        (5440, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'valid', 'value': 'valid'},
+             {'key': 'same', 'value': 'same'},
+         ]), 'EXECUTION', 5223),
+        (5441, 'data_format', 'TEXT', 0, 4, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5223),
+        (5442, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5223),
+
+        # AveragePooling2D
+        (5443, 'pool_size', 'TEXT', 0, 1, "(2, 2)", 'text', None, None, 'EXECUTION', 5224),
+        (5444, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5224),
+        (5445, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'valid', 'value': 'valid'},
+             {'key': 'same', 'value': 'same'},
+         ]), 'EXECUTION', 5224),
+        (5446, 'data_format', 'TEXT', 0, 4, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5224),
+        (5447, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5224),
+
+        # AveragePooling3D
+        (5448, 'pool_size', 'TEXT', 0, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5225),
+        (5449, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5225),
+        (5450, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'valid', 'value': 'valid'},
+             {'key': 'same', 'value': 'same'},
+         ]), 'EXECUTION', 5225),
+        (5451, 'data_format', 'TEXT', 0, 4, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5225),
+        (5452, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5225),
+
+        # GlobalMaxPooling1D
+        (5453, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5226),
+        (5454, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5226),
+
+        # GlobalAveragePooling1D
+        (5455, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5227),
+        (5456, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5227),
+
+        # GlobalMaxPooling2D
+        (5457, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5228),
+        (5458, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5228),
+
+        # GlobalAveragePooling2D
+        (5459, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5229),
+        (5460, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5229),
+
+        # GlobalMaxPooling3D
+        (5461, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5230),
+        (5462, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5230),
+
+        # GlobalAveragePooling3D
+        (5463, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
+         json.dumps([
+             {'key': 'channels_last', 'value': 'channels_last'},
+             {'key': 'channels_first', 'value': 'channels_first'},
+         ]), 'EXECUTION', 5231),
+        (5464, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5231),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -1751,6 +2572,299 @@ def _insert_operation_form_field_translation():
         (5364, 'en', 'Padding', 'Int, or tuple of 3 ints, or tuple of 3 tuples of 2 ints. If int: the same symmetric padding is applied to height and width. If tuple of 3 ints: interpreted as two different symmetric padding values for height and width: (symmetric_dim1_pad, symmetric_dim2_pad, symmetric_dim3_pad). If tuple of 3 tuples of 2 ints: interpreted as ((left_dim1_pad, right_dim1_pad), (left_dim2_pad, right_dim2_pad), (left_dim3_pad, right_dim3_pad)).'),
         (5365, 'en', 'Data format', 'A string, one of "channels_last" or "channels_first". The ordering of the dimensions in the inputs.  "channels_last" corresponds to inputs with shape  (batch, spatial_dim1, spatial_dim2, spatial_dim3, channels) while "channels_first" corresponds to inputs with shape  (batch, channels, spatial_dim1, spatial_dim2, spatial_dim3). It defaults to the image_data_format value found in your Keras config file at ~/.keras/keras.json. If you never set it, then it will be "channels_last".'),
 
+        # BatchNormalization
+        (5366, 'en', 'Axis', 'Integer, the axis that should be normalized (typically the features axis). For instance, after a Conv2D layer with  data_format="channels_first", set axis=1 in BatchNormalization.'),
+        (5367, 'en', 'Momentum', 'Momentum for the moving mean and the moving variance.'),
+        (5368, 'en', 'Epsilon', 'Small float added to variance to avoid dividing by zero.'),
+        (5369, 'en', 'Center', 'If True, add offset of beta to normalized tensor. If False, beta is ignored.'),
+        (5370, 'en', 'Scale', 'If True, multiply by gamma. If False, gamma is not used. When the next layer is linear (also e.g. nn.relu), this can be disabled since the scaling will be done by the next layer.'),
+        (5371, 'en', 'Beta initializer', 'Initializer for the beta weight.'),
+        (5372, 'en', 'Gamma initializer', 'Initializer for the gamma weight.'),
+        (5373, 'en', 'Moving mean initializer', 'Initializer for the moving mean.'),
+        (5374, 'en', 'Moving variance initializer', 'Initializer for the moving variance.'),
+        (5375, 'en', 'Beta regularizer', 'Optional regularizer for the beta weight.'),
+        (5376, 'en', 'Gamma regularizer', 'Optional regularizer for the gamma weight.'),
+        (5377, 'en', 'Beta constraint', 'Optional constraint for the beta weight.'),
+        (5378, 'en', 'Gamma constraint', 'Optional constraint for the gamma weight.'),
+
+        # VGG16
+        (5379, 'en', 'Include top', 'Whether to include the 3 fully-connected layers at the top of the network.'),
+        (5380, 'en', 'Weights', 'One of None (random initialization) or "imagenet" (pre-training on ImageNet).'),
+        (5381, 'en', 'Input tensor', 'Optional Keras tensor (i.e. output of layers.Input()) to use as image input for the model.'),
+        (5382, 'en', 'Input shape', 'Optional shape tuple, only to be specified if include_top is False (otherwise the input shape has to be (224, 224, 3) (with "channels_last" data format) or (3, 224, 224) (with "channels_first" data format). It should have exactly 3 inputs channels, and width and height should be no smaller than 32. E.g. (200, 200, 3) would be one valid value.'),
+        (5383, 'en', 'Pooling', 'Optional pooling mode for feature extraction when include_top is False. None means that the output of the model will be the 4D tensor output of the last convolutional layer. "avg" means that global average pooling will be applied to the output of the last convolutional layer, and thus the output of the model will be a 2D tensor. "max" means that global max pooling will be applied.'),
+        (5384, 'en', 'Classes', 'Optional number of classes to classify images into, only to be specified if include_top is  True, and if no weights argument is specified.'),
+        (5385, 'en', 'Trainable', 'Indicates whether the layer in the model is trainable.'),
+
+        # InceptionV3
+        (5386, 'en', 'Include top', 'Whether to include the 3 fully-connected layers at the top of the network.'),
+        (5387, 'en', 'Weights', 'One of None (random initialization) or "imagenet" (pre-training on ImageNet).'),
+        (5388, 'en', 'Input tensor', 'Optional Keras tensor (i.e. output of layers.Input()) to use as image input for the model.'),
+        (5389, 'en', 'Input shape', 'Optional shape tuple, only to be specified if include_top is False (otherwise the input shape has to be (224, 224, 3) (with "channels_last" data format) or (3, 224, 224) (with "channels_first" data format). It should have exactly 3 inputs channels, and width and height should be no smaller than 32. E.g. (200, 200, 3) would be one valid value.'),
+        (5390, 'en', 'Pooling', 'Optional pooling mode for feature extraction when include_top is False. None means that the output of the model will be the 4D tensor output of the last convolutional layer. "avg" means that global average pooling will be applied to the output of the last convolutional layer, and thus the output of the model will be a 2D tensor. "max" means that global max pooling will be applied.'),
+        (5391, 'en', 'Classes', 'Optional number of classes to classify images into, only to be specified if include_top is  True, and if no weights argument is specified.'),
+        (5392, 'en', 'Trainable', 'Indicates whether the layer in the model is trainable.'),
+
+        # PythonCode
+        (5393, 'en', 'Code', 'Possible to add simple lines, functions, classes or an entire Python code.'),
+        (5394, 'en', 'Out code', 'Code used out of the method to generate the Keras layers.'),
+
+        # Input Layer
+        (5395, 'en', 'Shape', 'A shape tuple (integer), not including the batch size. For instance, shape=(32,) indicates that the expected input will be batches of 32-dimensional vectors.'),
+
+        #Conv2D
+        (5396, 'en', 'Weights', 'Array of weights. It was probably defined as a variable in a previously created Python code layer.'),
+
+        #GlobalAveragePooling2D
+        (5397, 'en', 'Data format', 'A string, one of channels_last (default) or channels_first. The ordering of the dimensions in the inputs.  channels_last corresponds to inputs with shape  (batch, height, width, channels) while channels_first corresponds to inputs with shape  (batch, channels, height, width). It defaults to the image_data_format value found in your Keras config file at ~/.keras/keras.json. If you never set it, then it will be "channels_last".'),
+
+        #Conv2D
+        (5398, 'en', 'Trainable', 'Indicates whether the layer in the model is trainable.'),
+
+        # Add
+        (5399, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5400, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # Subtract
+        (5401, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5402, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # Multiply
+        (5403, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5404, 'en', '**Kwargs', 'Standard layer keyword arguments.'),
+
+        # Average
+        (5405, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5406, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # Maximum
+        (5407, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5408, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # Minimum
+        (5409, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5410, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # Concatenate
+        (5411, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5412, 'en', 'Axis', 'Concatenation axis.'),
+        (5413, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # Dot
+        (5414, 'en', 'Inputs', 'A list of input tensors (at least 2).'),
+        (5415, 'en', 'Axes', 'Integer or tuple of integers, axis or axes along '
+                             'which to take the dot product.'),
+        (5416, 'en', 'Normalize', 'Whether to L2-normalize samples along the '
+                                  'dot product axis before taking the dot '
+                                  'product. If set to True, then the output '
+                                  'of the dot product is the cosine proximity '
+                                  'between the two samples.'),
+        (5417, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # Lambda output_shape
+        (5418, 'en', 'Output shape', 'Expected output shape from function. '
+                                     'Only relevant when using Theano. Can be '
+                                     'a tuple or function. If a tuple, it only '
+                                     'specifies the first dimension onward; '
+                                     'sample dimension is assumed either the '
+                                     'same as the input: output_shape = (input_'
+                                     'shape[0], ) + output_shape or, the input '
+                                     'is None and the sample dimension is also '
+                                     'None: output_shape = (None, ) + '
+                                     'output_shape If a function, it specifies '
+                                     'the entire shape as a function of the '
+                                     'input shape: '
+                                     'output_shape = f(input_shape).'),
+
+        # Input
+        (5419, 'en', 'Shape', 'A shape tuple (integer), not including the '
+                              'batch size. For instance, shape=(32,) indicates'
+                              ' that the expected input will be batches of '
+                              '32-dimensional vectors.'),
+        (5420, 'en', 'Batch shape', 'A shape tuple (integer), including the '
+                                    'batch size. For instance, '
+                                    'batch_shape=(10, 32) indicates that the '
+                                    'expected input will be batches of 10 '
+                                    '32-dimensional vectors. batch_shape='
+                                    '(None, 32) indicates batches of an '
+                                    'arbitrary number of 32-dimensional '
+                                    'vectors.'),
+        (5421, 'en', 'Data type', 'The data type expected by the input, as a '
+                                  'string (float32, float64, int32...)'),
+        (5422, 'en', 'Sparse', 'A boolean specifying whether the placeholder '
+                               'to be created is sparse.'),
+
+        # MaxPooling1D
+        (5423, 'en', 'Pool size', 'Integer, size of the max pooling windows.'),
+        (5424, 'en', 'Strides', 'Integer, or None. Factor by which to '
+                                'downscale. E.g. 2 will halve the input. If '
+                                'None, it will default to pool_size.'),
+        (5425, 'en', 'Padding', 'One of "valid" or "same" (case-insensitive).'),
+        (5426, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, steps, features) while '
+                                    'channels_first corresponds to inputs '
+                                    'with shape (batch, features, steps).'),
+        (5427, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # MaxPooling2D
+        (5428, 'en', 'Pool size', 'Integer or tuple of 2 integers, factors by '
+                                  'which to downscale (vertical, horizontal). '
+                                  '(2, 2) will halve the input in both spatial '
+                                  'dimension. If only one integer is specified,'
+                                  ' the same window length will be used for '
+                                  'both dimensions.'),
+        (5429, 'en', 'Strides', 'Integer, tuple of 2 integers, or None. Strides'
+                                ' values. If None, it will default to '
+                                'pool_size.'),
+        (5430, 'en', 'Padding', 'One of "valid" or "same" (case-insensitive).'),
+        (5431, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape (batch, '
+                                    'height, width, channels) while '
+                                    'channels_first corresponds to inputs with'
+                                    ' shape (batch, channels, height, width).'),
+        (5432, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # MaxPooling3D
+        (5433, 'en', 'Pool size', 'Tuple of 3 integers, factors by which to '
+                                  'downscale (dim1, dim2, dim3). (2, 2, 2) will'
+                                  ' halve the size of the 3D input in each '
+                                  'dimension.'),
+        (5434, 'en', 'Strides', 'Tuple of 3 integers, or None. Strides values.'),
+        (5435, 'en', 'Padding', 'One of "valid" or "same" (case-insensitive).'),
+        (5436, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, spatial_dim1, spatial_dim2, '
+                                    'spatial_dim3, channels) while '
+                                    'channels_first corresponds to inputs with'
+                                    ' shape  (batch, channels, spatial_dim1, '
+                                    'spatial_dim2, spatial_dim3).'),
+        (5437, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # AveragePooling1D
+        (5438, 'en', 'Pool size', 'Integer size of the average pooling windows.'),
+        (5439, 'en', 'Strides', 'Integer, or None. Factor by which to '
+                                'downscale. E.g. 2 will halve the input. If '
+                                'None, it will default to pool_size.'),
+        (5440, 'en', 'Padding', 'One of "valid" or "same" (case-insensitive).'),
+        (5441, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, steps, features) while '
+                                    'channels_first corresponds to inputs with '
+                                    'shape  (batch, features, steps).'),
+        (5442, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # AveragePooling2D
+        (5443, 'en', 'Pool size', 'Integer or tuple of 2 integers, factors by '
+                                  'which to downscale (vertical, horizontal). '
+                                  '(2, 2) will halve the input in both spatial '
+                                  'dimension. If only one integer is specified,'
+                                  ' the same window length will be used for '
+                                  'both dimensions.'),
+        (5444, 'en', 'Strides', 'Integer, tuple of 2 integers, or None. Strides'
+                                ' values. If None, it will default to '
+                                'pool_size.'),
+        (5445, 'en', 'Padding', 'One of "valid" or "same" (case-insensitive).'),
+        (5446, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape (batch, '
+                                    'height, width, channels) while '
+                                    'channels_first corresponds to inputs with'
+                                    ' shape (batch, channels, height, width).'),
+        (5447, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # AveragePooling3D
+        (5448, 'en', 'Pool size', 'Tuple of 3 integers, factors by which to '
+                                  'downscale (dim1, dim2, dim3). (2, 2, 2) will'
+                                  ' halve the size of the 3D input in each '
+                                  'dimension.'),
+        (5449, 'en', 'Strides', 'Tuple of 3 integers, or None. Strides values.'),
+        (5450, 'en', 'Padding', 'One of "valid" or "same" (case-insensitive).'),
+        (5451, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, spatial_dim1, spatial_dim2, '
+                                    'spatial_dim3, channels) while '
+                                    'channels_first corresponds to inputs with'
+                                    ' shape  (batch, channels, spatial_dim1, '
+                                    'spatial_dim2, spatial_dim3).'),
+        (5452, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # GlobalMaxPooling1D
+        (5453, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, steps, features) while '
+                                    'channels_first corresponds to inputs with '
+                                    'shape  (batch, features, steps).'),
+        (5454, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # GlobalAveragePooling1D
+        (5455, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, steps, features) while '
+                                    'channels_first corresponds to inputs with '
+                                    'shape  (batch, features, steps).'),
+        (5456, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # GlobalMaxPooling2D
+        (5457, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape  (batch, '
+                                    'height, width, channels) while '
+                                    'channels_first corresponds to inputs with '
+                                    'shape  (batch, channels, height, width).'),
+        (5458, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # GlobalAveragePooling2D
+        (5459, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape  (batch, '
+                                    'height, width, channels) while '
+                                    'channels_first corresponds to inputs with '
+                                    'shape  (batch, channels, height, width).'),
+        (5460, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # GlobalMaxPooling3D
+        (5461, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, spatial_dim1, spatial_dim2, '
+                                    'spatial_dim3, channels) while '
+                                    'channels_first corresponds to inputs with'
+                                    ' shape  (batch, channels, spatial_dim1, '
+                                    'spatial_dim2, spatial_dim3).'),
+        (5462, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+        # GlobalAveragePooling3D
+        (5463, 'en', 'Data format', 'A string, one of channels_last (default) '
+                                    'or channels_first. The ordering of the '
+                                    'dimensions in the inputs.  channels_last '
+                                    'corresponds to inputs with shape '
+                                    '(batch, spatial_dim1, spatial_dim2, '
+                                    'spatial_dim3, channels) while '
+                                    'channels_first corresponds to inputs with'
+                                    ' shape  (batch, channels, spatial_dim1, '
+                                    'spatial_dim2, spatial_dim3).'),
+        (5464, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -1758,33 +2872,56 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id BETWEEN 5073 AND 5087'),
+     'DELETE FROM operation WHERE id BETWEEN 5073 AND 5111'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id BETWEEN 5073 AND 5087'),
+     'DELETE FROM operation_translation WHERE id BETWEEN 5073 AND 5111'),
+
+    (_insert_operation_category,
+     'DELETE FROM operation_category WHERE id BETWEEN 5060 AND 5062'),
+    (_insert_operation_category_translation,
+     'DELETE FROM operation_category_translation WHERE id BETWEEN 5060 AND 5062'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 5073 AND 5087'),
+     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 5073 AND 5111'),
+
     (_insert_operation_platform,
      'DELETE FROM operation_platform '
-     'WHERE operation_id BETWEEN 5073 AND 5087 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
+     'WHERE operation_id BETWEEN 5073 AND 5111 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5187) OR (id BETWEEN 5273 AND 5287)'),
+     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5212) OR (id BETWEEN 5273 AND 5311)'),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port '
-     'WHERE (operation_port_id BETWEEN 5173 AND 5187) OR (operation_port_id BETWEEN 5273 AND 5287)'),
+     'WHERE (operation_port_id BETWEEN 5173 AND 5212) OR (operation_port_id BETWEEN 5273 AND 5311)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5187) OR (id BETWEEN 5273 AND 5287)'),
+     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5212) OR (id BETWEEN 5273 AND 5311)'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5159'),
+     'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5232'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5365'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5464'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5159'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5232'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5365'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5464'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE (operation_id BETWEEN 5021 AND 5022) OR (operation_id BETWEEN 5073 AND 5087)'),
+     'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5111))'),
+
+    ('UPDATE operation_port SET multiplicity = "MANY" WHERE type = "OUTPUT"',
+     'UPDATE operation_port SET multiplicity = "ONE" WHERE type = "OUTPUT" AND id NOT BETWEEN 5092 AND 5100'),
+
+    ('UPDATE operation_port SET multiplicity = "MANY" WHERE id = 5118',
+     'UPDATE operation_port SET multiplicity = "ONE" WHERE id = 5118'),
+
+    ('UPDATE operation_form_field SET type = "TEXT", suggested_widget = "text" WHERE id = 5100',
+     'UPDATE operation_form_field SET type = "INTEGER", suggested_widget = "integer" WHERE id = 5100'),
+
+    ('UPDATE operation_form_field SET type = "TEXT", suggested_widget = "text" WHERE id = 5137',
+     'UPDATE operation_form_field SET type = "DECIMAL", suggested_widget = "decimal" WHERE id = 5137'),
+
+    ('UPDATE operation SET enabled = 0, slug = "input-old" WHERE id = 5071',
+     'UPDATE operation SET enabled = 1, slug = "input" WHERE id = 5071'),
+    ('UPDATE operation SET enabled = 0, slug = "output-old" WHERE id = 5072',
+     'UPDATE operation SET enabled = 1, slug = "output" WHERE id = 5072'),
 ]
 
 
