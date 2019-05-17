@@ -71,6 +71,13 @@ def _insert_operation_platform():
         (5109, KERAS_PLATAFORM_ID),
         (5110, KERAS_PLATAFORM_ID),
         (5111, KERAS_PLATAFORM_ID),
+        (5112, KERAS_PLATAFORM_ID), #Model
+        (5113, KERAS_PLATAFORM_ID), #Model Generator
+
+        (5114, KERAS_PLATAFORM_ID), #Save Model
+        (5115, KERAS_PLATAFORM_ID), #Evaluate Model
+        (5116, KERAS_PLATAFORM_ID), #Evaluate Generator Model
+        (5117, KERAS_PLATAFORM_ID), #Load Model
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -137,6 +144,12 @@ def _insert_operation():
         (5109, "global-average-pooling-2d", 1, 'ACTION', ''),
         (5110, "global-max-pooling-3d", 1, 'ACTION', ''),
         (5111, "global-average-pooling-3d", 1, 'ACTION', ''),
+        (5112, "model", 1, 'ACTION', ''),
+        (5113, "model-generator", 1, 'ACTION', ''),
+        (5114, "save-model", 1, 'ACTION', ''),
+        (5115, "evaluate-model", 1, 'ACTION', ''),
+        (5116, "evaluate-model-generator", 1, 'ACTION', ''),
+        (5117, "load-model", 1, 'ACTION', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -157,6 +170,7 @@ def _insert_operation_category():
         (5060, "group", 8, 10),
         (5061, "group", 10, 10),# Advanced
         (5062, "group", 9, 10),# Merge Layers
+        (5063, "group", 11, 10),# Model
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -211,6 +225,13 @@ def _insert_operation_category_operation():
         (5030, 5109),
         (5030, 5110),
         (5030, 5111),
+
+        (5063, 5112),
+        (5063, 5113),
+        (5063, 5114),
+        (5063, 5115),
+        (5063, 5116),
+        (5063, 5117),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -229,6 +250,7 @@ def _insert_operation_category_translation():
         (5060, "en", 'Pre-trained Layers'),
         (5061, "en", 'Advanced'),
         (5062, "en", 'Merge Layers'),
+        (5063, "en", 'Model'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -465,6 +487,24 @@ def _insert_operation_translation():
                                            '3D data.'),
         (5111, 'en', 'GlobalAveragePooling3D', 'Global Average pooling '
                                                'operation for 3D data.'),
+
+        (5112, 'en', 'Model', 'Given some input tensor(s) and output tensor(s),'
+                              ' you can instantiate a Model. This model will '
+                              'include all layers required in the computation'
+                              ' and trains the model for a given number of '
+                              'epochs (iterations on a dataset).'),
+        (5113, 'en', 'Model generator', 'Given some input tensor(s) and output '
+                                        'tensor(s), you can instantiate a '
+                                        'Model. This model will include all '
+                                        'layers required in the computation and'
+                                        ' trains the model on data generated '
+                                        'batch-by-batch by'),
+        (5114, 'en', 'Save model', 'Saves the model.'),
+        (5115, 'en', 'Evaluate model', 'Returns the loss value & metrics values'
+                                       ' for the model in test mode.'),
+        (5116, 'en', 'Evaluate model generator', 'Evaluates the model on a data'
+                                                 ' generator.'),
+        (5117, 'en', 'Load model', 'Load a pre existing model.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -522,8 +562,19 @@ def _insert_operation_port():
         (5208, 'INPUT', '', 1, 'ONE', 5107, 'input data'),
         (5209, 'INPUT', '', 1, 'ONE', 5108, 'input data'),
         (5210, 'INPUT', '', 1, 'ONE', 5109, 'input data'),
-        (5211, 'INPUT', '', 1, 'ONE', 5110, 'input data'),
-        (5212, 'INPUT', '', 1, 'ONE', 5111, 'input data'),
+        (5227, 'INPUT', '', 1, 'ONE', 5110, 'input data'),
+        (5228, 'INPUT', '', 1, 'ONE', 5111, 'input data'),
+
+        (5229, 'INPUT', '', 2, 'ONE', 5112, 'input data'), #x
+        (5230, 'INPUT', '', 1, 'ONE', 5112, 'target'), #y
+        (5232, 'INPUT', '', 1, 'ONE', 5113, 'generator'), #generator
+
+        (5233, 'INPUT', '', 2, 'ONE', 5114, 'model'), #save model
+        (5234, 'INPUT', '', 1, 'ONE', 5115, 'model generator'), #evaluate model
+        (5235, 'INPUT', '', 1, 'ONE', 5116, 'model generator'), #evaluate model generator
+        (5236, 'INPUT', '', 3, 'ONE', 5115, 'input data'), #x
+        (5237, 'INPUT', '', 2, 'ONE', 5115, 'target'), #y
+        (5238, 'INPUT', '', 1, 'ONE', 5116, 'generator'), #generator
 
         (5273, 'OUTPUT', '', 1, 'MANY', 5073, 'output data'),
         (5274, 'OUTPUT', '', 1, 'MANY', 5074, 'output data'),
@@ -564,6 +615,51 @@ def _insert_operation_port():
         (5309, 'OUTPUT', '', 1, 'MANY', 5109, 'output data'),
         (5310, 'OUTPUT', '', 1, 'MANY', 5110, 'output data'),
         (5311, 'OUTPUT', '', 1, 'MANY', 5111, 'output data'),
+
+        (5312, 'OUTPUT', '', 1, 'ONE', 5112, 'model'), #model
+        (5313, 'OUTPUT', '', 1, 'ONE', 5113, 'model generator'), #model generator
+        (5314, 'OUTPUT', '', 1, 'ONE', 5117, 'model'), #model
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_port_interface():
+    tb = table(
+        'operation_port_interface',
+        column('id', Integer),
+        column('color', String))
+
+    columns = ('id', 'color')
+    data = [
+        (22, '#FF2A00'),
+        (23, '#009900'),
+        (24, '#CCCC00'),
+        (25, '#111'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_port_interface_translation():
+    tb = table(
+        'operation_port_interface_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String))
+
+    columns = ('id', 'locale', 'name')
+    data = [
+        (22, 'en', 'Model'),
+        (22, 'pt', 'Model'),
+        (23, 'en', 'Generator'),
+        (23, 'pt', 'Generator'),
+        (24, 'en', 'ModelGenerator'),
+        (24, 'pt', 'ModelGenerator'),
+        (25, 'en', 'Target'),
+        (25, 'pt', 'Target'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -616,8 +712,19 @@ def _insert_operation_port_interface_operation_port():
         (5208, 1),
         (5209, 1),
         (5210, 1),
-        (5211, 1),
-        (5212, 1),
+        (5227, 1),
+        (5228, 1),
+
+        (5229, 1),
+        (5230, 25),
+        (5232, 23),
+        (5233, 22),
+        (5233, 24),
+        (5234, 22),
+        (5235, 24),
+        (5236, 1),
+        (5237, 25),
+        (5238, 23),
 
         (5273, 1),
         (5274, 1),
@@ -658,6 +765,11 @@ def _insert_operation_port_interface_operation_port():
         (5309, 1),
         (5310, 1),
         (5311, 1),
+        (5312, 22),
+        (5313, 24),
+
+        (5314, 22),
+        (5314, 24),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -713,8 +825,18 @@ def _insert_operation_port_translation():
         (5208, 'en', 'input data', 'Input data'),
         (5209, 'en', 'input data', 'Input data'),
         (5210, 'en', 'input data', 'Input data'),
-        (5211, 'en', 'input data', 'Input data'),
-        (5212, 'en', 'input data', 'Input data'),
+        (5227, 'en', 'input data', 'Input data'),
+        (5228, 'en', 'input data', 'Input data'),
+        (5229, 'en', 'input data', 'Input data'),
+        (5230, 'en', 'target', 'Target'),
+        (5232, 'en', 'generator', 'Generator'),
+        (5233, 'en', 'model and model generator', 'Model'),
+        (5234, 'en', 'model', 'Model'),
+        (5235, 'en', 'model generator', 'Model generator'),
+        (5236, 'en', 'input data', 'Input data'),
+        (5237, 'en', 'target', 'Target'),
+        (5238, 'en', 'generator', 'Generator'),
+
         (5273, 'en', 'output data', 'Output data'),
         (5274, 'en', 'output data', 'Output data'),
         (5275, 'en', 'output data', 'Output data'),
@@ -754,6 +876,9 @@ def _insert_operation_port_translation():
         (5309, 'en', 'output data', 'Output data'),
         (5310, 'en', 'output data', 'Output data'),
         (5311, 'en', 'output data', 'Output data'),
+        (5312, 'en', 'model', 'Model'),
+        (5313, 'en', 'model generator', 'Model generator'),
+        (5314, 'en', 'model and model generator', 'Model'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -814,6 +939,9 @@ def _insert_operation_form():
         (5230, 1, 1, 'execution'),
         (5231, 1, 1, 'execution'),
         (5232, 1, 1, 'execution'),
+
+        (5233, 1, 1, 'execution'),
+        (5234, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -872,6 +1000,8 @@ def _insert_operation_form_translation():
         (5230, 'en', 'Execution'),
         (5231, 'en', 'Execution'),
         (5232, 'en', 'Execution'),
+        (5233, 'en', 'Execution'),
+        (5234, 'en', 'Execution'),
         (5143, 'pt', 'Execução'),
         (5144, 'pt', 'Execução'),
         (5145, 'pt', 'Execução'),
@@ -915,6 +1045,8 @@ def _insert_operation_form_translation():
         (5230, 'pt', 'Execução'),
         (5231, 'pt', 'Execução'),
         (5232, 'pt', 'Execução'),
+        (5233, 'pt', 'Execução'),
+        (5234, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -971,6 +1103,8 @@ def _insert_operation_operation_form():
         (5110, 41),
         (5111, 41),
         (5031, 41),
+        (5112, 41),
+        (5113, 41),
         (5021, 5143),
         (5022, 5144),
         (5073, 5145),
@@ -1014,6 +1148,10 @@ def _insert_operation_operation_form():
         (5110, 5230),
         (5111, 5231),
         (5031, 5232),
+        (5112, 5233),
+        (5113, 5234),
+        #(5112, ),
+        #(5112, ),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -2176,7 +2314,7 @@ def _insert_operation_form_field():
         (5392, 'trainable', 'INTEGER', 0, 2, 0, 'checkbox', None, None, 'EXECUTION', 5164),
 
         #PythonCode
-        (5393, 'code', 'TEXT', 0, 2, None, 'code', None, None, 'EXECUTION', 5165),
+        (5393, 'code', 'TEXT', 0, 2, "# Write your Python code here", 'code', None, json.dumps({"language": "python"}), 'EXECUTION', 5165),
         (5394, 'out_code', 'INTEGER', 0, 1, 0, 'checkbox', None, None, 'EXECUTION', 5165),
 
         #Input Layer
@@ -2240,7 +2378,7 @@ def _insert_operation_form_field():
         (5422, 'sparse', 'INTEGER', 0, 4, 0, 'checkbox', None, None, 'EXECUTION', 5175),
 
         # MaxPooling1D
-        (5423, 'pool_size', 'INTEGER', 0, 1, 2, 'integer', None, None, 'EXECUTION', 5221),
+        (5423, 'pool_size', 'INTEGER', 1, 1, 2, 'integer', None, None, 'EXECUTION', 5221),
         (5424, 'strides', 'INTEGER', 0, 2, None, 'integer', None, None, 'EXECUTION', 5221),
         (5425, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
@@ -2255,7 +2393,7 @@ def _insert_operation_form_field():
         (5427, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5221),
 
         # MaxPooling2D
-        (5428, 'pool_size', 'TEXT', 0, 1, "(2, 2)", 'text', None, None, 'EXECUTION', 5232),
+        (5428, 'pool_size', 'TEXT', 1, 1, "(2, 2)", 'text', None, None, 'EXECUTION', 5232),
         (5429, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5232),
         (5430, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
@@ -2270,7 +2408,7 @@ def _insert_operation_form_field():
         (5432, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5232),
 
         # MaxPooling3D
-        (5433, 'pool_size', 'TEXT', 0, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5222),
+        (5433, 'pool_size', 'TEXT', 1, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5222),
         (5434, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5222),
         (5435, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
@@ -2285,7 +2423,7 @@ def _insert_operation_form_field():
         (5437, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5222),
 
         # AveragePooling1D
-        (5438, 'pool_size', 'TEXT', 0, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5223),
+        (5438, 'pool_size', 'TEXT', 1, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5223),
         (5439, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5223),
         (5440, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
@@ -2300,7 +2438,7 @@ def _insert_operation_form_field():
         (5442, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5223),
 
         # AveragePooling2D
-        (5443, 'pool_size', 'TEXT', 0, 1, "(2, 2)", 'text', None, None, 'EXECUTION', 5224),
+        (5443, 'pool_size', 'TEXT', 1, 1, "(2, 2)", 'text', None, None, 'EXECUTION', 5224),
         (5444, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5224),
         (5445, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
@@ -2315,7 +2453,7 @@ def _insert_operation_form_field():
         (5447, 'kwargs', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5224),
 
         # AveragePooling3D
-        (5448, 'pool_size', 'TEXT', 0, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5225),
+        (5448, 'pool_size', 'TEXT', 1, 1, "(2, 2, 2)", 'text', None, None, 'EXECUTION', 5225),
         (5449, 'strides', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5225),
         (5450, 'padding', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
@@ -2377,6 +2515,85 @@ def _insert_operation_form_field():
          ]), 'EXECUTION', 5231),
         (5464, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5231),
 
+        #Model
+        #Optimizer functions
+        (5465, 'optimizer', 'TEXT', 1, 1, None, 'dropdown', None,
+         json.dumps([
+             {"key": "adadelta", "value": "adadelta"},
+             {"key": "adagrad", "value": "adagrad"},
+             {"key": "adam", "value": "adam"},
+             {"key": "adamax", "value": "adamax"},
+             {"key": "nadam", "value": "nadam"},
+             {"key": "rmsprop", "value": "rmsprop"},
+             {"key": "sgd", "value": "sgd"},
+         ]), 'EXECUTION', 5233),
+        (5466, 'loss', 'TEXT', 1, 2, None, 'dropdown', None,
+         json.dumps([
+             {"key": "squared_hinge", "value": "squared_hinge"},
+             {"key": "hinge", "value": "hinge"},
+             {"key": "categorical_hinge", "value": "categorical_hinge"},
+             {"key": "logcosh", "value": "logcosh"},
+             {"key": "categorical_crossentropy", "value": "categorical_crossentropy"},
+             {"key": "sparse_categorical_crossentropy", "value": "sparse_categorical_crossentropy"},
+             {"key": "binary_crossentropy", "value": "binary_crossentropy"},
+             {"key": "kullback_leibler_divergence", "value": "kullback_leibler_divergence"},
+             {"key": "poisson", "value": "poisson"},
+             {"key": "cosine_proximity", "value": "cosine_proximity"},
+             {"key": "mean_squared_error", "value": "mean_squared_error"},
+             {"key": "mean_absolute_error", "value": "mean_absolute_error"},
+             {"key": "mean_absolute_percentage_error", "value": "mean_absolute_percentage_error"},
+             {"key": "mean_squared_logarithmic_error", "value": "mean_squared_logarithmic_error"},
+         ]), 'EXECUTION', 5233),
+        (5467, 'metrics', 'TEXT', 1, 3, "Categorical Accuracy", 'select2', None,
+         json.dumps([
+             {"value": "Binary Accuracy", "key": "acc"},
+             {"value": "Categorical Accuracy", "key": "acc"},
+             {"value": "Cosine Proximity", "key": "cosine"},
+             {"value": "Mean Absolute Error", "key": "mae"},
+             {"value": "Mean Absolute Percentage Error", "key": "mape"},
+             {"value": "Mean Squared Error", "key": "mse"},
+             {"value": "Sparse Categorical Accuracy", "key": "sparse_categorical_accuracy"},
+             {"value": "Sparse Top k Categorical Accuracy", "key": "sparse_top_k_categorical_accuracy"},
+             {"value": "Top k Categorical Accuracy", "key": "top_k_categorical_accuracy"},
+         ]), 'EXECUTION', 5233),
+        (5468, 'k', 'INTEGER', 0, 4, 5, 'integer', None, None, 'EXECUTION', 5233),
+        (5474, 'batch_size', 'INTEGER', 1, 5, 32, 'integer', None, None, 'EXECUTION', 5233),
+        (5475, 'epochs', 'INTEGER', 1, 5, 10, 'integer', None, None, 'EXECUTION', 5233),
+        (5469, 'loss_weights', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', 5233),
+        (5470, 'sample_weight_mode', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', 5233),
+        (5471, 'weighted_metrics', 'TEXT', 0, 7, None, 'text', None, None, 'EXECUTION', 5233),
+        (5472, 'target_tensors', 'TEXT', 0, 8, None, 'text', None, None, 'EXECUTION', 5233),
+        (5473, 'kwargs', 'TEXT', 0, 9, None, 'text', None, None, 'EXECUTION', 5233),
+        (5476, 'verbose', 'TEXT', 0, 12, 1, 'dropdown', None,
+         json.dumps([
+             {"value": "0", "key": "Silent"},
+             {"value": "1", "key": "Progress bar"},
+             {"value": "2", "key": "One line per epoch"},
+         ]), 'EXECUTION', 5233),
+        (5477, 'callbacks', 'TEXT', 0, 12, 1, 'select2', None,
+         json.dumps([
+             {"value": "BaseLogger", "key": "BaseLogger"},
+             {"value": "CSVLogger", "key": "CSVLogger"},
+             {"value": "EarlyStopping", "key": "EarlyStopping"},
+             {"value": "History", "key": "History"},
+             {"value": "LambdaCallback", "key": "LambdaCallback"},
+             {"value": "LearningRateScheduler", "key": "LearningRateScheduler"},
+             {"value": "ModelCheckpoint", "key": "ModelCheckpoint"},
+             {"value": "ProgbarLogger", "key": "ProgbarLogger"},
+             {"value": "ReduceLROnPlateau", "key": "ReduceLROnPlateau"},
+             {"value": "RemoteMonitor", "key": "RemoteMonitor"},
+             {"value": "TensorBoard", "key": "TensorBoard"},
+             {"value": "TerminateOnNaN", "key": "TerminateOnNaN"},
+         ]), 'EXECUTION', 5233),
+        (5478, 'validation_split', 'DECIMAL', 0, 13, None, 'decimal', None, None, 'EXECUTION', 5233),
+        (5479, 'validation_data', 'TEXT', 0, 14, None, 'text', None, None, 'EXECUTION', 5233),
+        (5480, 'shuffle', 'INTEGER', 0, 15, 0, 'checkbox', None, None, 'EXECUTION', 5233),
+        (5481, 'class_weight', 'TEXT', 0, 16, None, 'text', None, None, 'EXECUTION', 5233),
+        (5482, 'sample_weight', 'TEXT', 0, 17, None, 'text', None, None, 'EXECUTION', 5233),
+        (5483, 'initial_epoch', 'INTEGER', 0, 18, None, 'integer', None, None, 'EXECUTION', 5233),
+        (5484, 'steps_per_epoch', 'INTEGER', 0, 19, None, 'integer', None, None, 'EXECUTION', 5233),
+        (5485, 'validation_steps', 'INTEGER', 0, 20, None, 'integer', None, None, 'EXECUTION', 5233),
+        (5486, 'validation_freq', 'TEXT', 0, 21, None, 'text', None, None, 'EXECUTION', 5233),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -2864,7 +3081,152 @@ def _insert_operation_form_field_translation():
                                     'spatial_dim2, spatial_dim3).'),
         (5464, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
 
-
+        (5465, 'en', 'Optimizer', 'An optimizer is one of the two arguments '
+                                  'required for compiling a Keras model.'),
+        (5466, 'en', 'Loss', 'A loss function (or objective function, or '
+                             'optimization score function) is one of the two '
+                             'parameters required to compile a model.'),
+        (5467, 'en', 'Metrics', 'A metric is a function that is used to judge '
+                                'the performance of your model.'),
+        (5468, 'en', 'K', 'K is a parameter required for the metrics related '
+                          'to the Top K Categorical Accuracy functions.'),
+        (5469, 'en', 'Loss weights', 'Optional list or dictionary specifying '
+                                     'scalar coefficients (Python floats) to '
+                                     'weight the loss contributions of '
+                                     'different model outputs. The loss value '
+                                     'that will be minimized by the model will '
+                                     'then be the weighted sum of all '
+                                     'individual losses, weighted by the '
+                                     'loss_weights coefficients. If a list, it '
+                                     'is expected to have a 1:1 mapping to the '
+                                     'model\'s outputs. If a tensor, it is '
+                                     'expected to map output names (strings) '
+                                     'to scalar coefficients.'),
+        (5470, 'en', 'Sample weight mode', 'If you need to do timestep-wise '
+                                           'sample weighting (2D weights), '
+                                           'set this to "temporal". None '
+                                           'defaults to sample-wise weights '
+                                           '(1D). If the model has multiple '
+                                           'outputs, you can use a different '
+                                           'sample_weight_mode on each output '
+                                           'by passing a dictionary or a list '
+                                           'of modes.'),
+        (5471, 'en', 'Weighted metrics', 'List of metrics to be evaluated and '
+                                         'weighted by sample_weight or '
+                                         'class_weight during training and '
+                                         'testing.'),
+        (5472, 'en', 'Target tensors', 'By default, Keras will create '
+                                       'placeholders for the model\'s target, '
+                                       'which will be fed with the target data '
+                                       'during training. If instead you would '
+                                       'like to use your own target tensors '
+                                       '(in turn, Keras will not expect '
+                                       'external Numpy data for these targets '
+                                       'at training time), you can specify '
+                                       'them via the target_tensors argument. '
+                                       'It can be a single tensor (for a '
+                                       'single-output model), a list of '
+                                       'tensors, or a dict mapping output '
+                                       'names to target tensors.'),
+        (5473, 'en', 'Kwargs', 'For the TensorFlow backend, these arguments are'
+                               ' passed into tf.Session.run.'),
+        (5474, 'en', 'Batch size', 'Integer or None. Number of samples per '
+                                   'gradient update. If unspecified, batch_size'
+                                   ' will default to 32.'),
+        (5475, 'en', 'Epochs', 'Integer. Number of epochs to train the model. '
+                               'An epoch is an iteration over the entire x '
+                               'and y data provided. Note that in conjunction '
+                               'with initial_epoch,  epochs is to be understood'
+                               ' as "final epoch". The model is not trained for'
+                               ' a number of iterations given by epochs, but '
+                               'merely until the epoch of index epochs is '
+                               'reached.'),
+        (5476, 'en', 'Verbose', 'Integer. 0, 1, or 2. Verbosity mode. 0 = '
+                                'silent, 1 = progress bar, 2 = one line per '
+                                'epoch.'),
+        (5477, 'en', 'Callbacks', 'A callback is a set of functions to be '
+                                  'applied at given stages of the training '
+                                  'procedure. You can use callbacks to get a '
+                                  'view on internal states and statistics of '
+                                  'the model during training. You can pass a '
+                                  'list of callbacks (as the keyword argument '
+                                  'callbacks) to the .fit() method of the '
+                                  'Sequential or  Model classes. The relevant '
+                                  'methods of the callbacks will then be '
+                                  'called at each stage of the training.'),
+        (5478, 'en', 'Validation split', 'Float between 0 and 1. Fraction of '
+                                         'the training data to be used as '
+                                         'validation data. The model will set '
+                                         'apart this fraction of the training '
+                                         'data, will not train on it, and will '
+                                         'evaluate the loss and any model '
+                                         'metrics on this data at the end of '
+                                         'each epoch. The validation data is '
+                                         'selected from the last samples in '
+                                         'the x and y data provided, before '
+                                         'shuffling.'),
+        (5479, 'en', 'Validation data', 'tuple (x_val, y_val) or tuple '
+                                        '(x_val, y_val, val_sample_weights) on'
+                                        ' which to evaluate the loss and any '
+                                        'model metrics at the end of each '
+                                        'epoch. The model will not be trained '
+                                        'on this data.  validation_data will '
+                                        'override validation_split.'),
+        (5480, 'en', 'Shuffle', 'Boolean (whether to shuffle the training data'
+                                ' before each epoch) or str (for "batch"). '
+                                '"batch" is a special option for dealing with '
+                                'the limitations of HDF5 data; it shuffles in '
+                                'batch-sized chunks. Has no effect when '
+                                'steps_per_epoch is not None.'),
+        (5481, 'en', 'Class weight', 'Optional dictionary mapping class '
+                                     'indices (integers) to a weight (float) '
+                                     'value, used for weighting the loss f'
+                                     'unction (during training only). This can '
+                                     'be useful to tell the model to "pay more '
+                                     'attention" to samples from an '
+                                     'under-represented class.'),
+        (5482, 'en', 'Sample weight', 'Optional Numpy array of weights for the '
+                                      'training samples, used for weighting '
+                                      'the loss function (during training '
+                                      'only). You can either pass a flat (1D) '
+                                      'Numpy array with the same length as the '
+                                      'input samples (1:1 mapping between '
+                                      'weights and samples), or in the case of '
+                                      'temporal data, you can pass a 2D array '
+                                      'with shape  (samples, sequence_length), '
+                                      'to apply a different weight to every '
+                                      'timestep of every sample. In this case '
+                                      'you should make sure to specify '
+                                      'sample_weight_mode="temporal" '
+                                      'in compile().'),
+        (5483, 'en', 'Initial epoch', 'Integer. Epoch at which to start '
+                                      'training (useful for resuming a previous'
+                                      ' training run).'),
+        (5484, 'en', 'Steps per epoch', 'Integer or None. Total number of '
+                                        'steps (batches of samples) before '
+                                        'declaring one epoch finished and '
+                                        'starting the next epoch. When '
+                                        'training with input tensors such as '
+                                        'TensorFlow data tensors, the default '
+                                        'None is equal to the number of '
+                                        'samples in your dataset divided by the'
+                                        ' batch size, or 1 if that cannot be '
+                                        'determined.'),
+        (5485, 'en', 'Validation steps', 'Only relevant if steps_per_epoch is '
+                                         'specified. Total number of steps '
+                                         '(batches of samples) to validate '
+                                         'before stopping.'),
+        (5486, 'en', 'Validation freq', 'Only relevant if validation data is '
+                                        'provided. Integer or list/tuple/set. '
+                                        'If an integer, specifies how many '
+                                        'training epochs to run before a new '
+                                        'validation run is performed, e.g. '
+                                        'validation_freq=2 runs validation '
+                                        'every 2 epochs. If a list, tuple, or '
+                                        'set, specifies the epochs on which to '
+                                        'run validation, e.g. validation_freq='
+                                        '[1, 2, 10] runs validation at the end '
+                                        'of the 1st, 2nd, and 10th epochs.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -2872,39 +3234,44 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id BETWEEN 5073 AND 5111'),
+     'DELETE FROM operation WHERE id BETWEEN 5073 AND 5117'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id BETWEEN 5073 AND 5111'),
+     'DELETE FROM operation_translation WHERE id BETWEEN 5073 AND 5117'),
 
     (_insert_operation_category,
-     'DELETE FROM operation_category WHERE id BETWEEN 5060 AND 5062'),
+     'DELETE FROM operation_category WHERE id BETWEEN 5060 AND 5063'),
     (_insert_operation_category_translation,
-     'DELETE FROM operation_category_translation WHERE id BETWEEN 5060 AND 5062'),
+     'DELETE FROM operation_category_translation WHERE id BETWEEN 5060 AND 5063'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 5073 AND 5111'),
+     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 5073 AND 5117'),
 
     (_insert_operation_platform,
      'DELETE FROM operation_platform '
-     'WHERE operation_id BETWEEN 5073 AND 5111 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
+     'WHERE operation_id BETWEEN 5073 AND 5117 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
+
+    (_insert_operation_port_interface,
+     'DELETE FROM operation_port_interface WHERE id BETWEEN 22 AND 25'),
+    (_insert_operation_port_interface_translation,
+     'DELETE FROM operation_port_interface_translation WHERE id BETWEEN 22 AND 25'),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5212) OR (id BETWEEN 5273 AND 5311)'),
+     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5314) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5238)'),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port '
-     'WHERE (operation_port_id BETWEEN 5173 AND 5212) OR (operation_port_id BETWEEN 5273 AND 5311)'),
+     'WHERE (operation_port_id BETWEEN 5173 AND 5210) OR (operation_port_id BETWEEN 5273 AND 5314) OR (operation_port_id BETWEEN 5227 AND 5230) OR (operation_port_id BETWEEN 5232 AND 5238)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5212) OR (id BETWEEN 5273 AND 5311)'),
+     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5314) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5238)'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5232'),
+     'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5234'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5464'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5486'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5232'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5234'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5464'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5486'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5111))'),
+     'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5113))'),
 
     ('UPDATE operation_port SET multiplicity = "MANY" WHERE type = "OUTPUT"',
      'UPDATE operation_port SET multiplicity = "ONE" WHERE type = "OUTPUT" AND id NOT BETWEEN 5092 AND 5100'),
