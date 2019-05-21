@@ -144,6 +144,8 @@ def _insert_operation():
         (5109, "global-average-pooling-2d", 1, 'ACTION', ''),
         (5110, "global-max-pooling-3d", 1, 'ACTION', ''),
         (5111, "global-average-pooling-3d", 1, 'ACTION', ''),
+
+        #Model
         (5112, "model", 1, 'ACTION', ''),
         (5113, "model-generator", 1, 'ACTION', ''),
         (5114, "save-model", 1, 'ACTION', ''),
@@ -2515,8 +2517,7 @@ def _insert_operation_form_field():
          ]), 'EXECUTION', 5231),
         (5464, 'kwargs', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5231),
 
-        #Model
-        #Optimizer functions
+        # Model
         (5465, 'optimizer', 'TEXT', 1, 1, None, 'dropdown', None,
          json.dumps([
              {"key": "adadelta", "value": "adadelta"},
@@ -2527,7 +2528,7 @@ def _insert_operation_form_field():
              {"key": "rmsprop", "value": "rmsprop"},
              {"key": "sgd", "value": "sgd"},
          ]), 'EXECUTION', 5233),
-        (5466, 'loss', 'TEXT', 1, 2, None, 'dropdown', None,
+        (5466, 'loss', 'TEXT', 1, 2, None, 'select2', None,
          json.dumps([
              {"key": "squared_hinge", "value": "squared_hinge"},
              {"key": "hinge", "value": "hinge"},
@@ -2566,9 +2567,9 @@ def _insert_operation_form_field():
         (5473, 'kwargs', 'TEXT', 0, 9, None, 'text', None, None, 'EXECUTION', 5233),
         (5476, 'verbose', 'TEXT', 0, 12, 1, 'dropdown', None,
          json.dumps([
-             {"value": "0", "key": "Silent"},
-             {"value": "1", "key": "Progress bar"},
-             {"value": "2", "key": "One line per epoch"},
+             {"key": 0, "value": "silent"},
+             {"key": 1, "value": "progress bar"},
+             {"key": 2, "value": "one line per epoch"},
          ]), 'EXECUTION', 5233),
         (5477, 'callbacks', 'TEXT', 0, 12, 1, 'select2', None,
          json.dumps([
@@ -2594,6 +2595,86 @@ def _insert_operation_form_field():
         (5484, 'steps_per_epoch', 'INTEGER', 0, 19, None, 'integer', None, None, 'EXECUTION', 5233),
         (5485, 'validation_steps', 'INTEGER', 0, 20, None, 'integer', None, None, 'EXECUTION', 5233),
         (5486, 'validation_freq', 'TEXT', 0, 21, None, 'text', None, None, 'EXECUTION', 5233),
+
+        # Model Generator
+        (5487, 'optimizer', 'TEXT', 1, 1, None, 'dropdown', None,
+         json.dumps([
+             {"key": "adadelta", "value": "adadelta"},
+             {"key": "adagrad", "value": "adagrad"},
+             {"key": "adam", "value": "adam"},
+             {"key": "adamax", "value": "adamax"},
+             {"key": "nadam", "value": "nadam"},
+             {"key": "rmsprop", "value": "rmsprop"},
+             {"key": "sgd", "value": "sgd"},
+         ]), 'EXECUTION', 5234),
+        (5488, 'loss', 'TEXT', 1, 2, None, 'select2', None,
+         json.dumps([
+             {"key": "squared_hinge", "value": "squared_hinge"},
+             {"key": "hinge", "value": "hinge"},
+             {"key": "categorical_hinge", "value": "categorical_hinge"},
+             {"key": "logcosh", "value": "logcosh"},
+             {"key": "categorical_crossentropy", "value": "categorical_crossentropy"},
+             {"key": "sparse_categorical_crossentropy", "value": "sparse_categorical_crossentropy"},
+             {"key": "binary_crossentropy", "value": "binary_crossentropy"},
+             {"key": "kullback_leibler_divergence", "value": "kullback_leibler_divergence"},
+             {"key": "poisson", "value": "poisson"},
+             {"key": "cosine_proximity", "value": "cosine_proximity"},
+             {"key": "mean_squared_error", "value": "mean_squared_error"},
+             {"key": "mean_absolute_error", "value": "mean_absolute_error"},
+             {"key": "mean_absolute_percentage_error", "value": "mean_absolute_percentage_error"},
+             {"key": "mean_squared_logarithmic_error", "value": "mean_squared_logarithmic_error"},
+         ]), 'EXECUTION', 5234),
+        (5489, 'metrics', 'TEXT', 1, 3, "Categorical Accuracy", 'select2', None,
+         json.dumps([
+             {"value": "Binary Accuracy", "key": "acc"},
+             {"value": "Categorical Accuracy", "key": "acc"},
+             {"value": "Cosine Proximity", "key": "cosine"},
+             {"value": "Mean Absolute Error", "key": "mae"},
+             {"value": "Mean Absolute Percentage Error", "key": "mape"},
+             {"value": "Mean Squared Error", "key": "mse"},
+             {"value": "Sparse Categorical Accuracy", "key": "sparse_categorical_accuracy"},
+             {"value": "Sparse Top k Categorical Accuracy", "key": "sparse_top_k_categorical_accuracy"},
+             {"value": "Top k Categorical Accuracy", "key": "top_k_categorical_accuracy"},
+         ]), 'EXECUTION', 5234),
+        (5490, 'k', 'INTEGER', 0, 4, 5, 'integer', None, None, 'EXECUTION', 5234),
+        (5491, 'loss_weights', 'TEXT', 0, 7, None, 'text', None, None, 'EXECUTION', 5234),
+        (5492, 'sample_weight_mode', 'TEXT', 0, 8, None, 'text', None, None, 'EXECUTION', 5234),
+        (5493, 'weighted_metrics', 'TEXT', 0, 9, None, 'text', None, None, 'EXECUTION', 5234),
+        (5494, 'target_tensors', 'TEXT', 0, 10, None, 'text', None, None, 'EXECUTION', 5234),
+        (5495, 'kwargs', 'TEXT', 0, 11, None, 'text', None, None, 'EXECUTION', 5234),
+
+        (5496, 'steps_per_epoch', 'INTEGER', 1, 5, 32, 'integer', None, None, 'EXECUTION', 5234),
+        (5497, 'epochs', 'INTEGER', 1, 6, 10, 'integer', None, None, 'EXECUTION', 5234),
+        (5498, 'verbose', 'TEXT', 0, 12, 1, 'dropdown', None,
+         json.dumps([
+             {"key": 0, "value": "silent"},
+             {"key": 1, "value": "progress bar"},
+             {"key": 2, "value": "one line per epoch"},
+         ]), 'EXECUTION', 5234),
+        (5499, 'callbacks', 'TEXT', 0, 13, None, 'select2', None,
+         json.dumps([
+             {"value": "BaseLogger", "key": "BaseLogger"},
+             {"value": "CSVLogger", "key": "CSVLogger"},
+             {"value": "EarlyStopping", "key": "EarlyStopping"},
+             {"value": "History", "key": "History"},
+             {"value": "LambdaCallback", "key": "LambdaCallback"},
+             {"value": "LearningRateScheduler", "key": "LearningRateScheduler"},
+             {"value": "ModelCheckpoint", "key": "ModelCheckpoint"},
+             {"value": "ProgbarLogger", "key": "ProgbarLogger"},
+             {"value": "ReduceLROnPlateau", "key": "ReduceLROnPlateau"},
+             {"value": "RemoteMonitor", "key": "RemoteMonitor"},
+             {"value": "TensorBoard", "key": "TensorBoard"},
+             {"value": "TerminateOnNaN", "key": "TerminateOnNaN"},
+         ]), 'EXECUTION', 5234),
+        (5500, 'validation_data', 'TEXT', 0, 14, None, 'text', None, None, 'EXECUTION', 5234),
+        (5501, 'validation_steps', 'DECIMAL', 0, 15, None, 'decimal', None, None, 'EXECUTION', 5234),
+        (5502, 'validation_freq', 'INTEGER', 0, 16, None, 'integer', None, None, 'EXECUTION', 5234),
+        (5503, 'class_weight', 'TEXT', 0, 17, None, 'text', None, None, 'EXECUTION', 5234),
+        (5504, 'max_queue_size', 'INTEGER', 0, 18, 10, 'integer', None, None, 'EXECUTION', 5234),
+        (5505, 'workers', 'INTEGER', 0, 19, 1, 'integer', None, None, 'EXECUTION', 5234),
+        (5506, 'use_multiprocessing', 'INTEGER', 0, 20, 0, 'checkbox', None, None, 'EXECUTION', 5234),
+        (5507, 'shuffle', 'INTEGER', 0, 21, 0, 'checkbox', None, None, 'EXECUTION', 5234),
+        (5508, 'initial_epoch', 'INTEGER', 0, 22, None, 'integer', None, None, 'EXECUTION', 5234),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -3081,11 +3162,14 @@ def _insert_operation_form_field_translation():
                                     'spatial_dim2, spatial_dim3).'),
         (5464, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
 
+        # Model
         (5465, 'en', 'Optimizer', 'An optimizer is one of the two arguments '
                                   'required for compiling a Keras model.'),
-        (5466, 'en', 'Loss', 'A loss function (or objective function, or '
-                             'optimization score function) is one of the two '
-                             'parameters required to compile a model.'),
+        (5466, 'en', 'Loss', 'If the model has multiple outputs, you can use a '
+                             'different loss on each output by passing a '
+                             'dictionary or a list of losses. The loss value '
+                             'that will be minimized by the model will then be '
+                             'the sum of all individual losses.'),
         (5467, 'en', 'Metrics', 'A metric is a function that is used to judge '
                                 'the performance of your model.'),
         (5468, 'en', 'K', 'K is a parameter required for the metrics related '
@@ -3227,6 +3311,150 @@ def _insert_operation_form_field_translation():
                                         'run validation, e.g. validation_freq='
                                         '[1, 2, 10] runs validation at the end '
                                         'of the 1st, 2nd, and 10th epochs.'),
+
+        # Model Generator
+        (5487, 'en', 'Optimizer', 'An optimizer is one of the two arguments '
+                                  'required for compiling a Keras model.'),
+        (5488, 'en', 'Loss', 'If the model has multiple outputs, you can use a '
+                             'different loss on each output by passing a '
+                             'dictionary or a list of losses. The loss value '
+                             'that will be minimized by the model will then be '
+                             'the sum of all individual losses.'),
+        (5489, 'en', 'Metrics', 'A metric is a function that is used to judge '
+                                'the performance of your model.'),
+        (5490, 'en', 'K', 'K is a parameter required for the metrics related '
+                          'to the Top K Categorical Accuracy functions.'),
+        (5491, 'en', 'Loss weights', 'Optional list or dictionary specifying '
+                                     'scalar coefficients (Python floats) to '
+                                     'weight the loss contributions of '
+                                     'different model outputs. The loss value '
+                                     'that will be minimized by the model will '
+                                     'then be the weighted sum of all '
+                                     'individual losses, weighted by the '
+                                     'loss_weights coefficients. If a list, it '
+                                     'is expected to have a 1:1 mapping to the '
+                                     'model\'s outputs. If a tensor, it is '
+                                     'expected to map output names (strings) '
+                                     'to scalar coefficients.'),
+        (5492, 'en', 'Sample weight mode', 'If you need to do timestep-wise '
+                                           'sample weighting (2D weights), '
+                                           'set this to "temporal". None '
+                                           'defaults to sample-wise weights '
+                                           '(1D). If the model has multiple '
+                                           'outputs, you can use a different '
+                                           'sample_weight_mode on each output '
+                                           'by passing a dictionary or a list '
+                                           'of modes.'),
+        (5493, 'en', 'Weighted metrics', 'List of metrics to be evaluated and '
+                                         'weighted by sample_weight or '
+                                         'class_weight during training and '
+                                         'testing.'),
+        (5494, 'en', 'Target tensors', 'By default, Keras will create '
+                                       'placeholders for the model\'s target, '
+                                       'which will be fed with the target data '
+                                       'during training. If instead you would '
+                                       'like to use your own target tensors '
+                                       '(in turn, Keras will not expect '
+                                       'external Numpy data for these targets '
+                                       'at training time), you can specify '
+                                       'them via the target_tensors argument. '
+                                       'It can be a single tensor (for a '
+                                       'single-output model), a list of '
+                                       'tensors, or a dict mapping output '
+                                       'names to target tensors.'),
+        (5495, 'en', 'Kwargs', 'For the TensorFlow backend, these arguments are'
+                               ' passed into tf.Session.run.'),
+
+        (5496, 'en', 'Steps per epoch', 'Total number of steps (batches of '
+                                        'samples) to yield from generator '
+                                        'before declaring one epoch finished '
+                                        'and starting the next epoch. It should'
+                                        ' typically be equal to ceil'
+                                        '(num_samples / batch_size) Optional '
+                                        'for Sequence: if unspecified, will '
+                                        'use the len(generator) as a number of '
+                                        'steps.'),
+        (5497, 'en', 'Epochs', 'Number of epochs to train the model. An epoch '
+                               'is an iteration over the entire data provided, '
+                               'as defined by steps_per_epoch. Note that in '
+                               'conjunction with initial_epoch, epochs is to '
+                               'be understood as "final epoch". The model is '
+                               'not trained for a number of iterations given '
+                               'by epochs, but merely until the epoch of index '
+                               'epochs is reached.'),
+        (5498, 'en', 'Verbose', 'Integer. 0, 1, or 2. Verbosity mode. 0 = '
+                                'silent, 1 = progress bar, 2 = one line per '
+                                'epoch.'),
+        (5499, 'en', 'Callbacks', 'A callback is a set of functions to be '
+                                  'applied at given stages of the training '
+                                  'procedure. You can use callbacks to get a '
+                                  'view on internal states and statistics of '
+                                  'the model during training. You can pass a '
+                                  'list of callbacks (as the keyword argument '
+                                  'callbacks) to the .fit() method of the '
+                                  'Sequential or  Model classes. The relevant '
+                                  'methods of the callbacks will then be '
+                                  'called at each stage of the training.'),
+        (5500, 'en', 'Validation data', 'This can be either a generator or a '
+                                        'Sequence object for the validation '
+                                        'data tuple (x_val, y_val) tuple '
+                                        '(x_val, y_val, val_sample_weights).'),
+        (5501, 'en', 'Validation steps', 'Only relevant if validation_data is a'
+                                         ' generator. Total number of steps '
+                                         '(batches of samples) to yield from '
+                                         'validation_data generator before '
+                                         'stopping at the end of every epoch. '
+                                         'It should typically be equal to the '
+                                         'number of samples of your validation '
+                                         'dataset divided by the batch size. '
+                                         'Optional for Sequence: if '
+                                         'unspecified, will use the '
+                                         'len(validation_data) as a number of '
+                                         'steps.'),
+        (5502, 'en', 'Validation freq', 'Only relevant if validation data is '
+                                        'provided. Integer or collections. '
+                                        'Container instance (e.g. list, tuple, '
+                                        'etc.). If an integer, specifies how '
+                                        'many training epochs to run before a '
+                                        'new validation run is performed, e.g. '
+                                        'validation_freq=2 runs validation '
+                                        'every 2 epochs. If a Container, '
+                                        'specifies the epochs on which to run '
+                                        'validation, e.g. validation_freq=[1, '
+                                        '2, 10] runs validation at the end of '
+                                        'the 1st, 2nd, and 10th epochs.'),
+        (5503, 'en', 'Class weight', 'Optional dictionary mapping class indices'
+                                     ' (integers) to a weight (float) value, '
+                                     'used for weighting the loss function '
+                                     '(during training only). This can be '
+                                     'useful to tell the model to "pay more '
+                                     'attention" to samples from an under-'
+                                     'represented class.'),
+        (5504, 'en', 'Max queue size', 'Maximum size for the generator queue. '
+                                       'If unspecified, max_queue_size will '
+                                       'default to 10.'),
+        (5505, 'en', 'Workers', 'Maximum number of processes to spin up when '
+                                'using process-based threading. If unspecified,'
+                                ' workers will default to 1. If 0, will execute'
+                                ' the generator on the main thread.'),
+        (5506, 'en', 'Use multiprocessing', 'If True, use process-based '
+                                            'threading. If unspecified, '
+                                            'use_multiprocessing will default '
+                                            'to False. Note that because this '
+                                            'implementation relies on '
+                                            'multiprocessing, you should not '
+                                            'pass non-picklable arguments to '
+                                            'the generator as they can\'t be '
+                                            'passed easily to children '
+                                            'processes.'),
+        (5507, 'en', 'Shuffle', 'Whether to shuffle the order of the batches at'
+                                ' the beginning of each epoch. Only used with '
+                                'instances of Sequence (keras.utils.Sequence). '
+                                'Has no effect when steps_per_epoch is not '
+                                'None.'),
+        (5508, 'en', 'Initial epoch', 'Epoch at which to start training '
+                                      '(useful for resuming a previous '
+                                      'training run).'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -3265,11 +3493,11 @@ all_commands = [
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5234'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5486'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5508'),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5234'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5486'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5508'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5113))'),
 
