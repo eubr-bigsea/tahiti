@@ -10,10 +10,6 @@ Create Date: 2018-04-17 15:48:16.729916
 from alembic import op
 import sqlalchemy as sa
 
-import sys
-reload(sys)
-sys.setdefaultencoding('utf8')
-
 PIE_X_PREFIX = 342
 PIE_X_SUFIX = 343
 DONUT_X_PREFIX = 308

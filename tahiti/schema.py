@@ -9,7 +9,7 @@ from tahiti.models import *
 
 def partial_schema_factory(schema_cls):
     schema = schema_cls(partial=True)
-    for field_name, field in schema.fields.items():
+    for field_name, field in list(schema.fields.items()):
         if isinstance(field, fields.Nested):
             new_field = deepcopy(field)
             new_field.schema.partial = True
@@ -49,7 +49,7 @@ class ApplicationListResponseSchema(Schema):
     description = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True)
     type = fields.String(required=True,
-                         validate=[OneOf(ApplicationType.__dict__.keys())])
+                         validate=[OneOf(list(ApplicationType.__dict__.keys()))])
     execution_parameters = fields.Function(
         lambda x: load_json(x.execution_parameters))
 
@@ -70,7 +70,7 @@ class ApplicationItemResponseSchema(Schema):
     description = fields.String(required=True)
     enabled = fields.Boolean(required=True, missing=True)
     type = fields.String(required=True,
-                         validate=[OneOf(ApplicationType.__dict__.keys())])
+                         validate=[OneOf(list(ApplicationType.__dict__.keys()))])
     execution_parameters = fields.Function(
         lambda x: load_json(x.execution_parameters))
 
@@ -91,7 +91,7 @@ class FlowListResponseSchema(Schema):
     source_port_name = fields.String(required=False, allow_none=True)
     target_port_name = fields.String(required=False, allow_none=True)
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
-                                validate=[OneOf(DiagramEnvironment.__dict__.keys())])
+                                validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
@@ -112,7 +112,7 @@ class FlowItemResponseSchema(Schema):
     source_port_name = fields.String(required=False, allow_none=True)
     target_port_name = fields.String(required=False, allow_none=True)
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
-                                validate=[OneOf(DiagramEnvironment.__dict__.keys())])
+                                validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
@@ -133,7 +133,7 @@ class FlowCreateRequestSchema(Schema):
     source_port_name = fields.String(required=False, allow_none=True)
     target_port_name = fields.String(required=False, allow_none=True)
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
-                                validate=[OneOf(DiagramEnvironment.__dict__.keys())])
+                                validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
 
@@ -171,7 +171,7 @@ class OperationListResponseSchema(Schema):
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(OperationType.__dict__.keys())])
+                         validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=True)
     cssClass = fields.String(required=False)
     categories = fields.Nested(
@@ -209,7 +209,7 @@ class OperationCreateRequestSchema(Schema):
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(OperationType.__dict__.keys())])
+                         validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=True)
     cssClass = fields.String(required=False)
     categories = fields.Nested(
@@ -251,7 +251,7 @@ class OperationItemResponseSchema(Schema):
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(OperationType.__dict__.keys())])
+                         validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=True)
     cssClass = fields.String(required=False)
     categories = fields.Nested(
@@ -292,7 +292,7 @@ class OperationUpdateRequestSchema(Schema):
     enabled = fields.Boolean(required=False, allow_none=True)
     description = fields.String(required=False, allow_none=True)
     type = fields.String(required=False, allow_none=True,
-                         validate=[OneOf(OperationType.__dict__.keys())])
+                         validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=False, allow_none=True)
     cssClass = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
@@ -448,7 +448,7 @@ class OperationFormFieldListResponseSchema(Schema):
     label = fields.String(required=True)
     help = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(DataType.__dict__.keys())])
+                         validate=[OneOf(list(DataType.__dict__.keys()))])
     required = fields.Boolean(required=True)
     order = fields.Integer(required=True, missing=0)
     default = fields.String(required=False, allow_none=True)
@@ -456,7 +456,7 @@ class OperationFormFieldListResponseSchema(Schema):
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
     scope = fields.String(required=True, missing='BOTH',
-                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
+                          validate=[OneOf(list(OperationFieldScope.__dict__.keys()))])
     enable_conditions = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
@@ -475,7 +475,7 @@ class OperationFormFieldCreateRequestSchema(Schema):
     label = fields.String(required=True)
     help = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(DataType.__dict__.keys())])
+                         validate=[OneOf(list(DataType.__dict__.keys()))])
     required = fields.Boolean(required=True)
     order = fields.Integer(required=True, missing=0)
     default = fields.String(required=False, allow_none=True)
@@ -483,7 +483,7 @@ class OperationFormFieldCreateRequestSchema(Schema):
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
     scope = fields.String(required=True, missing='BOTH',
-                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
+                          validate=[OneOf(list(OperationFieldScope.__dict__.keys()))])
     enable_conditions = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
@@ -502,7 +502,7 @@ class OperationFormFieldItemResponseSchema(Schema):
     label = fields.String(required=True)
     help = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(DataType.__dict__.keys())])
+                         validate=[OneOf(list(DataType.__dict__.keys()))])
     required = fields.Boolean(required=True)
     order = fields.Integer(required=True, missing=0)
     default = fields.String(required=False, allow_none=True)
@@ -510,7 +510,7 @@ class OperationFormFieldItemResponseSchema(Schema):
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
     scope = fields.String(required=True, missing='BOTH',
-                          validate=[OneOf(OperationFieldScope.__dict__.keys())])
+                          validate=[OneOf(list(OperationFieldScope.__dict__.keys()))])
     enable_conditions = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
@@ -529,12 +529,12 @@ class OperationPortListResponseSchema(Schema):
     name = fields.String(required=True)
     slug = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(OperationPortType.__dict__.keys())])
+                         validate=[OneOf(list(OperationPortType.__dict__.keys()))])
     description = fields.String(required=True)
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
-                                 validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
+                                 validate=[OneOf(list(OperationPortMultiplicity.__dict__.keys()))])
     interfaces = fields.Nested(
         'tahiti.schema.OperationPortInterfaceListResponseSchema',
         required=True,
@@ -556,12 +556,12 @@ class OperationPortCreateRequestSchema(Schema):
     name = fields.String(required=True)
     slug = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(OperationPortType.__dict__.keys())])
+                         validate=[OneOf(list(OperationPortType.__dict__.keys()))])
     description = fields.String(required=True)
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
-                                 validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
+                                 validate=[OneOf(list(OperationPortMultiplicity.__dict__.keys()))])
     interfaces = fields.Nested(
         'tahiti.schema.OperationPortInterfaceCreateRequestSchema',
         required=True,
@@ -583,12 +583,12 @@ class OperationPortItemResponseSchema(Schema):
     name = fields.String(required=True)
     slug = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(OperationPortType.__dict__.keys())])
+                         validate=[OneOf(list(OperationPortType.__dict__.keys()))])
     description = fields.String(required=True)
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
     multiplicity = fields.String(required=True, missing=1,
-                                 validate=[OneOf(OperationPortMultiplicity.__dict__.keys())])
+                                 validate=[OneOf(list(OperationPortMultiplicity.__dict__.keys()))])
     interfaces = fields.Nested(
         'tahiti.schema.OperationPortInterfaceItemResponseSchema',
         required=True,
@@ -654,7 +654,7 @@ class OperationScriptListResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(ScriptType.__dict__.keys())])
+                         validate=[OneOf(list(ScriptType.__dict__.keys()))])
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     body = fields.String(required=True)
@@ -673,7 +673,7 @@ class OperationScriptCreateRequestSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(ScriptType.__dict__.keys())])
+                         validate=[OneOf(list(ScriptType.__dict__.keys()))])
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     body = fields.String(required=True)
@@ -692,7 +692,7 @@ class OperationScriptItemResponseSchema(Schema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True,
-                         validate=[OneOf(ScriptType.__dict__.keys())])
+                         validate=[OneOf(list(ScriptType.__dict__.keys()))])
     enabled = fields.Boolean(required=True)
     description = fields.String(required=True)
     body = fields.String(required=True)
@@ -776,7 +776,7 @@ class TaskListResponseSchema(Schema):
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
-                                validate=[OneOf(DiagramEnvironment.__dict__.keys())])
+                                validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
     width = fields.Integer(required=True, missing=0)
     height = fields.Integer(required=True, missing=0)
@@ -806,7 +806,7 @@ class TaskCreateRequestSchema(Schema):
     z_index = fields.Integer(required=True)
     forms = fields.Dict(required=True)
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
-                                validate=[OneOf(DiagramEnvironment.__dict__.keys())])
+                                validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
     width = fields.Integer(required=True, missing=0)
     height = fields.Integer(required=True, missing=0)
@@ -834,7 +834,7 @@ class TaskItemResponseSchema(Schema):
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
-                                validate=[OneOf(DiagramEnvironment.__dict__.keys())])
+                                validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
     width = fields.Integer(required=True, missing=0)
     height = fields.Integer(required=True, missing=0)
@@ -865,7 +865,7 @@ class TaskExecuteRequestSchema(Schema):
     forms = fields.String(required=True)
     version = fields.Integer(required=True)
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
-                                validate=[OneOf(DiagramEnvironment.__dict__.keys())])
+                                validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
     width = fields.Integer(required=True, missing=0)
     height = fields.Integer(required=True, missing=0)
@@ -1104,7 +1104,7 @@ class WorkflowPermissionListResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     permission = fields.String(required=True,
-                               validate=[OneOf(PermissionType.__dict__.keys())])
+                               validate=[OneOf(list(PermissionType.__dict__.keys()))])
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -1123,7 +1123,7 @@ class WorkflowPermissionItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     permission = fields.String(required=True,
-                               validate=[OneOf(PermissionType.__dict__.keys())])
+                               validate=[OneOf(list(PermissionType.__dict__.keys()))])
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -1142,7 +1142,7 @@ class WorkflowPermissionCreateRequestSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     permission = fields.String(required=True,
-                               validate=[OneOf(PermissionType.__dict__.keys())])
+                               validate=[OneOf(list(PermissionType.__dict__.keys()))])
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)

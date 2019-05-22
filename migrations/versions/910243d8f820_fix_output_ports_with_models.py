@@ -34,7 +34,7 @@ def _insert_operation_port():
     all_ops = [
         (15, 'OUTPUT', None, 52, 3, 'MANY', 'vector-model'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -52,7 +52,7 @@ def _insert_operation_port_translation():
         (15, 'en', 'vector model', 'Vector model'),
         (15, 'pt', 'modelo de vetores', 'Modelo de vetores'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -69,7 +69,7 @@ def _insert_operation_port_interface_operation_port():
         (15, 20),
         (83, 20),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -112,7 +112,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -132,7 +132,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

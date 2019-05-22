@@ -41,7 +41,7 @@ def upgrade():
     connection.execute("""UPDATE operation_form_field
         SET `order` = 3 WHERE id = 201""")
 
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Attribute with value',
@@ -49,7 +49,7 @@ def upgrade():
             'Attribute with value'
         WHERE locale = 'en' AND id = 200
         """)
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Atributo com o valor',
@@ -110,7 +110,7 @@ def upgrade():
         [310, 'legend', 'INTEGER', 0, 5, '1', 'checkbox', None, None,
          'EXECUTION', 85],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -133,17 +133,17 @@ def upgrade():
         [310, 'en', 'Display legend', 'Display legend'],
 
         [305, 'pt',
-         u'Atributo usado como rótulo (vazio: usar o valor como rótulo)',
-         u'Atributo usado para o rótulo'],
-        [307, 'pt', u'Formato para eixo X', u'Formato para valores eixo X'],
-        [308, 'pt', u'Prefixo para eixo X',
-         u'Prefixo para eixo X (adicionado ao valor ao exibi-lo)'],
-        [309, 'pt', u'Sufixo para eixo X',
-         u'Sufixo para eixo X (adicionado ao valor ao exibi-lo)'],
-        [310, 'pt', u'Exibir legenda', u'Exibir legenda'],
+         'Atributo usado como rótulo (vazio: usar o valor como rótulo)',
+         'Atributo usado para o rótulo'],
+        [307, 'pt', 'Formato para eixo X', 'Formato para valores eixo X'],
+        [308, 'pt', 'Prefixo para eixo X',
+         'Prefixo para eixo X (adicionado ao valor ao exibi-lo)'],
+        [309, 'pt', 'Sufixo para eixo X',
+         'Sufixo para eixo X (adicionado ao valor ao exibi-lo)'],
+        [310, 'pt', 'Exibir legenda', 'Exibir legenda'],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
     session.commit()
 
@@ -169,7 +169,7 @@ def downgrade():
     connection.execute("""UPDATE operation_form_field
         SET `order` = 2 WHERE id = 201""")
 
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Column names, comma separated (empty = use data source names)',
@@ -177,7 +177,7 @@ def downgrade():
             'Column names, comma separated (empty = use data source names)'
         WHERE locale = 'en' AND id = 200
         """)
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Nomes das colunas, separadas por vírgula (vazio = usar nomes da fonte de dados)',

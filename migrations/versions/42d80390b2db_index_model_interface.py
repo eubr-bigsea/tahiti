@@ -31,7 +31,7 @@ def _insert_operation_form():
     data = [
         (117, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -49,7 +49,7 @@ def _insert_operation_form_translation():
         (117, 'en', 'Execution'),
         (117, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -64,7 +64,7 @@ def _insert_operation_operation_form():
     data = [
         (24, 117),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -91,7 +91,7 @@ def _insert_operation_form_field():
         [363, 'aliases', 'TEXT', 0, 4, 'ds0_, ds1_', 'text',
          None, None, 'EXECUTION', 117],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -116,7 +116,7 @@ def _insert_operation_form_field_translation():
          'Prefixo para os atributos (2 valores, separados por vírgula)',
          'Os atributos são prefixados a fim de evitar colisão de nomes'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -892,7 +892,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -912,7 +912,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

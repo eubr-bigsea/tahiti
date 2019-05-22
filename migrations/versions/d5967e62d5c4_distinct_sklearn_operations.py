@@ -38,7 +38,7 @@ def _insert_operation():
     (4005, 'perceptron-classifier',	1,'TRANSFORMATION','fa-angle-double-down'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -53,7 +53,7 @@ def _insert_operation_category():
         (4001, 'technology'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_category_translation():
@@ -69,7 +69,7 @@ def _insert_operation_category_translation():
         (4001, 'pt', 'Scikit-learn'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_new_operation_platform():
@@ -87,7 +87,7 @@ def _insert_new_operation_platform():
         (4005, 4),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_category_operation():
@@ -120,7 +120,7 @@ def _insert_operation_category_operation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -141,7 +141,7 @@ def _insert_operation_form():
 		(4005, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 def _insert_operation_form_translation():
@@ -164,7 +164,7 @@ def _insert_operation_form_translation():
 		(4005, 'en', 'Execution'),
         (4005, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -212,7 +212,7 @@ def _insert_operation_operation_form():
 		(4005, 4005),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -243,7 +243,7 @@ def _insert_operation_translation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -268,7 +268,7 @@ def _insert_operation_port():
         (4005, 'OUTPUT', None, 4005, 1, 'MANY', 'algorithm'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -295,7 +295,7 @@ def _insert_operation_port_translation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -315,7 +315,7 @@ def _insert_operation_port_interface_operation_port():
         (4005, 5),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -385,7 +385,7 @@ def _insert_operation_form_field():
         (4026, 'seed', 'INTEGER', 0, 6, None, 'integer', None, None, 'EXECUTION', 4005),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -462,7 +462,7 @@ def _insert_operation_form_field_translation():
         (4025, 'pt', 'Shuffle', 'Se os dados de treinamento devem ou não ser embaralhados após cada época.'),
         (4026, 'pt', 'Semente', 'A semente do gerador de números pseudo-aleatórios a ser usada ao embaralhar os dados.'),
 	]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -492,7 +492,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -513,7 +513,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

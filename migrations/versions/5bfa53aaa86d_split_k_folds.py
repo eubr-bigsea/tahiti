@@ -33,7 +33,7 @@ def _insert_operation():
         (121, 'split-k-fold', 1, 'TRANSFORMATION', 'fa-code-branch'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -47,7 +47,7 @@ def _insert_new_operation_platform():
     data = [
         (121, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -63,7 +63,7 @@ def _insert_operation_category_operation():
         (121, 38),  # amostragem
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -80,7 +80,7 @@ def _insert_operation_form():
         (130, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -96,7 +96,7 @@ def _insert_operation_form_translation():
         (130, 'en', 'Execution'),
         (130, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -113,7 +113,7 @@ def _insert_operation_operation_form():
         (121, 110),  # results
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -134,7 +134,7 @@ def _insert_operation_translation():
          'Esta operação realiza a divisão do conjunto de dados em k partições ou grupos de tamanho aproximadamente igual'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -154,7 +154,7 @@ def _insert_operation_port():
         (290, 'INPUT', None, 121, 1, 'ONE', 'input data'),
         (291, 'OUTPUT', None, 121, 1, 'MANY', 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -174,7 +174,7 @@ def _insert_operation_port_translation():
         (291, 'pt', 'dados de saída', 'Dados de saída'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -189,7 +189,7 @@ def _insert_operation_port_interface_operation_port():
         (290, 1),  # data
         (291, 1),  # data
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -225,7 +225,7 @@ def _insert_operation_form_field():
         (483, 'seed', 'INTEGER', 0, 5, None, 'integer', None, None, 'EXECUTION',
          130),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -257,7 +257,7 @@ def _insert_operation_form_field_translation():
          'Semente usada pelo gerador de números aleatórios. Também usado para reprodutibilidade.'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -295,7 +295,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -315,7 +315,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

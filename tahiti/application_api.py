@@ -4,8 +4,8 @@ import logging
 from flask import request, current_app
 from flask_restful import Resource
 
-from app_auth import requires_auth
-from schema import *
+from tahiti.app_auth import requires_auth
+from tahiti.schema import *
 
 log = logging.getLogger(__name__)
 
@@ -42,7 +42,7 @@ class ApplicationListApi(Resource):
                     db.session.commit()
                     result, result_code = response_schema.dump(
                         application).data, 200
-                except Exception, e:
+                except Exception as e:
                     log.exception('Error in POST')
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
@@ -76,7 +76,7 @@ class ApplicationDetailApi(Resource):
                 db.session.delete(application)
                 db.session.commit()
                 result, result_code = dict(status="OK", message="Deleted"), 200
-            except Exception, e:
+            except Exception as e:
                 log.exception('Error in DELETE')
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
@@ -109,7 +109,7 @@ class ApplicationDetailApi(Resource):
                             data=response_schema.dump(application).data), 200
                     else:
                         result = dict(status="ERROR", message="Not found")
-                except Exception, e:
+                except Exception as e:
                     log.exception('Error in PATCH')
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500

@@ -39,7 +39,7 @@ def _insert_operation_platform():
         (5026, KERAS_PLATAFORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -61,7 +61,7 @@ def _insert_operation():
         # SpatialDropout3D
         (5026, "spatialDropout3D", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -84,7 +84,7 @@ def _insert_operation_category():
         # SpatialDropout3D
         (5026, "subgroup", 9, 9),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -104,7 +104,7 @@ def _insert_operation_category_operation():
         # Core Layers - SpatialDropout3D
         (5010, 5026),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -151,7 +151,7 @@ def _insert_operation_translation():
                                          'SpatialDropout3D will help promote independence between '
                                          'feature maps and should be used instead.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -179,7 +179,7 @@ def _insert_operation_port():
         (5126, 'INPUT', '', 1, 'ONE', 5026, 'input data'),
         (5226, 'OUTPUT', '', 1, 'ONE', 5026, 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -202,7 +202,7 @@ def _insert_operation_port_interface_operation_port():
         (5126, 1),
         (5226, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -227,7 +227,7 @@ def _insert_operation_port_translation():
         (5126, "en", 'input data', 'Input data'),
         (5226, "en", 'output data', 'Output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -246,7 +246,7 @@ def _insert_operation_form():
         (5142, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -263,7 +263,7 @@ def _insert_operation_form_translation():
         (5142, 'en', 'Execution'),
         (5142, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -285,7 +285,7 @@ def _insert_operation_operation_form():
         (5026, 5142),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -311,7 +311,7 @@ def _insert_operation_form_field():
         # SpatialDropout1D - rate
         (5142, 'rate', 'DECIMAL', 1, 1, 0.0, 'decimal', None, None, 'EXECUTION', 5142),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -329,7 +329,7 @@ def _insert_operation_form_field_translation():
         # SpatialDropout1D - rate
         (5142, 'en', 'Rate', 'Float between 0 and 1. Fraction of the input units to drop.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -374,7 +374,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -394,7 +394,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

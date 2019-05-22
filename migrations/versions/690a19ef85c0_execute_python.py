@@ -29,7 +29,7 @@ def _insert_operation():
         (82, 'execute-python', 1, 'TRANSFORMATION', 'fa-code'),
         (83, 'entity-matching', 1, 'TRANSFORMATION', 'fa-vcard-o'),
     )
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -49,7 +49,7 @@ def _insert_operation_translation():
         (83, 'en', 'Entity matching', 'Entity matching'),
         (83, 'pt', 'Resolução de entidades', 'Resolução de entidades'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -65,7 +65,7 @@ def _insert_operation_platform():
         (82, 1),
         (83, 1),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -91,7 +91,7 @@ def _insert_operation_port():
         (182, 'INPUT', None, 83, 2, 'ONE'),
         (183, 'OUTPUT', None, 83, 1, 'MANY'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -125,7 +125,7 @@ def _insert_operation_port_translation():
         (182, 'pt', 'dados entrada 2', 'Entrada 2'),
         (183, 'pt', 'dados saída 1', 'Saída 1'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -148,7 +148,7 @@ def _insert_operation_port_interface_operation_port():
         (182, 1),
         (183, 1),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -164,7 +164,7 @@ def _insert_operation_category_operation():
         (82, 13),
         (83, 13),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -182,7 +182,7 @@ def _insert_operation_form():
         (97, 1, 1, 'execution'),
         (98, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -201,7 +201,7 @@ def _insert_operation_operation_form():
         (83, 98),
         (83, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -222,7 +222,7 @@ def _insert_operation_form_translation():
         (98, 'en', 'Execution'),
         (98, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -255,7 +255,7 @@ def _insert_operation_form_field():
          None, '[{"key": "BULMA", "value": "Geospatial Data - Bulma"}]',
             'EXECUTION', 98),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -275,7 +275,7 @@ def _insert_operation_form_field_translation():
         (230, 'en', 'Algorithm', 'Algorithm'),
         (230, 'pt', 'Algoritmo', 'Algoritmo'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 

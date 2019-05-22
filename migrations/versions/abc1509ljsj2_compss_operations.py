@@ -26,13 +26,13 @@ def _update_platform():
     op.execute(text('UPDATE platform SET enabled = 1 WHERE id = 3'))
     #op.execute(text('UPDATE platform SET icon = "" WHERE id = 3'))
 
-    op.execute(text(u"""
+    op.execute(text("""
 		UPDATE platform_translation
 		SET description = 'COMPSs 2.1 Bougainvillea - Execution platform'
 		WHERE id = 3 and locale = 'en'
 		"""))
 
-    op.execute(text(u"""
+    op.execute(text("""
 		UPDATE platform_translation
 		SET description = 'COMPSs 2.1 Bougainvillea - Plataforma de execução'
 		WHERE id = 3 and locale = 'pt'
@@ -72,7 +72,7 @@ def _add_operations_platform_from_spark():
 		(55, 3),#'within'
 		(85, 3),#'association-rules'
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -112,7 +112,7 @@ def _insert_operation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_category():
@@ -128,7 +128,7 @@ def _insert_operation_category():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_category_translation():
@@ -146,7 +146,7 @@ def _insert_operation_category_translation():
 		(3002, 'pt', 'Grafo'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -184,7 +184,7 @@ def _insert_new_operation_platform():
 		(3022, 3),#normalize
 		(3023, 3),#change-attribute
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -287,7 +287,7 @@ def _insert_operation_category_operation():
 			(3023, 3001),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_form():
@@ -325,7 +325,7 @@ def _insert_operation_form():
 		(3023, 1, 1, 'execution'),#change-attribute
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -385,7 +385,7 @@ def _insert_operation_form_translation():
 		(3023, 'en', 'Execution'),
 		(3023, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -541,7 +541,7 @@ def _insert_operation_operation_form():
 		(3023,3023),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_translation():
@@ -625,7 +625,7 @@ def _insert_operation_translation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port():
@@ -718,7 +718,7 @@ def _insert_operation_port():
 
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_translation():
@@ -855,7 +855,7 @@ def _insert_operation_port_translation():
 			(3047, 'pt', 'dados de saída','Dados de saída'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_interface_operation_port():
@@ -934,7 +934,7 @@ def _insert_operation_port_interface_operation_port():
 
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -1105,7 +1105,7 @@ def _insert_operation_form_field():
 
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_form_field_translation():
@@ -1313,7 +1313,7 @@ def _insert_operation_form_field_translation():
 
 
 	]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -1351,7 +1351,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -1372,7 +1372,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

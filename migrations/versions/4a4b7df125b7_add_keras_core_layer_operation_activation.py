@@ -36,7 +36,7 @@ def _insert_operation_platform():
         (5014, KERAS_PLATAFORM_ID),# Activation
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -53,7 +53,7 @@ def _insert_operation():
     data = [
         (5014, "activation", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -71,7 +71,7 @@ def _insert_operation_category():
     data = [
         (5014, "subgroup", 7, 7),# Activation
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -87,7 +87,7 @@ def _insert_operation_category_operation():
         #Core Layers
         (5010, 5014),# Activation
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -104,7 +104,7 @@ def _insert_operation_translation():
     data = [
         (5014, "en", 'Activation', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -126,7 +126,7 @@ def _insert_operation_port():
         (5114, 'INPUT', '', 1, 'ONE', 5014, 'input data'),
         (5214, 'OUTPUT', '', 1, 'ONE', 5014, 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -143,7 +143,7 @@ def _insert_operation_port_interface_operation_port():
         (5114, 1),
         (5214, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -162,7 +162,7 @@ def _insert_operation_port_translation():
         (5114, "en", 'input data', 'Input data'),
         (5214, "en", 'output data', 'Output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -181,7 +181,7 @@ def _insert_operation_form():
         (5131, 1, 1, 'execution'), #activation
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -198,7 +198,7 @@ def _insert_operation_form_translation():
         (5131, 'en', 'Execution'),
         (5131, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -216,7 +216,7 @@ def _insert_operation_operation_form():
         (5014, 5131),  # own execution form
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -256,7 +256,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 5131),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -277,7 +277,7 @@ def _insert_operation_form_field_translation():
                                             'no activation is applied (ie. \"linear\" '
                                             'activation: a(x) = x).'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -320,7 +320,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -340,7 +340,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

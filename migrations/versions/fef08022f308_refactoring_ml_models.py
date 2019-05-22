@@ -65,7 +65,7 @@ def _insert_operation():
         (120, "gaussian-mixture-clustering-model", 1, "TRANSFORMATION",
          "fa-bullseye"),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -142,7 +142,7 @@ def _insert_operation_translation():
         (120, "pt", "Agrupamento Gaussian Mix.", "Agrupamento Gaussian Mix."),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -173,7 +173,7 @@ def _insert_operation_platform():
         (119, 1),
         (120, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -245,7 +245,7 @@ def _insert_operation_port():
         (289, "OUTPUT", None, 1, "MANY", 120, "output data"),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -369,7 +369,7 @@ def _insert_operation_port_translation():
         (289, "pt", "dados de saída", "Dados de saída"),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -386,7 +386,7 @@ def _insert_operation_port_interface_operation_port():
     data = sorted(list(itertools.product(data_ports, [1])) + list(
         itertools.product(models_ports, [2])), key=lambda x: x[0])
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -404,7 +404,7 @@ def _insert_operation_category_operation():
                               if int(x) <= 111],
                              [1, 4, 18, 8])
 
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -412,7 +412,7 @@ def _insert_operation_category_operation():
     data = itertools.product([int(x) for x in OPERATIONS.split(',')
                               if 118 > int(x) > 111],
                              [1, 21, 8])
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
     # Clustering
@@ -420,11 +420,11 @@ def _insert_operation_category_operation():
                               if (121 > int(x) > 117) and (int(x) != 119)],
                              [1, 19, 8])
 
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
     data = [(119, 32), (119, 37),]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -523,7 +523,7 @@ def _insert_operation_operation_form():
         [120, 71],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -810,7 +810,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -831,7 +831,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

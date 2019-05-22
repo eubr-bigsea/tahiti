@@ -36,7 +36,7 @@ def _insert_operation_platform():
         (5023, KERAS_PLATAFORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -54,7 +54,7 @@ def _insert_operation():
         # Masking
         (5023, "masking", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -73,7 +73,7 @@ def _insert_operation_category():
         # Masking
         (5023, "subgroup", 9, 9),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -89,7 +89,7 @@ def _insert_operation_category_operation():
         # Core Layers - Masking
         (5010, 5023),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -112,7 +112,7 @@ def _insert_operation_translation():
                                 'If any downstream layer does not support masking yet receives '
                                 'such an input mask, an exception will be raised.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -134,7 +134,7 @@ def _insert_operation_port():
         (5120, 'INPUT', '', 1, 'ONE', 5023, 'input data'),
         (5220, 'OUTPUT', '', 1, 'ONE', 5023, 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -151,7 +151,7 @@ def _insert_operation_port_interface_operation_port():
         (5120, 1),
         (5220, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -170,7 +170,7 @@ def _insert_operation_port_translation():
         (5120, "en", 'input data', 'Input data'),
         (5220, "en", 'output data', 'Output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -189,7 +189,7 @@ def _insert_operation_form():
         (5141, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -206,7 +206,7 @@ def _insert_operation_form_translation():
         (5141, 'en', 'Execution'),
         (5141, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -223,7 +223,7 @@ def _insert_operation_operation_form():
         (5023, 5141),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -249,7 +249,7 @@ def _insert_operation_form_field():
         # Masking - mask_value
         (5141, 'mask_value', 'DECIMAL', 1, 2, 0.0, 'decimal', None, None, 'EXECUTION', 5141),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -267,7 +267,7 @@ def _insert_operation_form_field_translation():
         # Masking - mask_value
         (5141, 'en', 'Mask value', 'Masks a sequence by using a mask_value to skip timesteps.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -310,7 +310,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -330,7 +330,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

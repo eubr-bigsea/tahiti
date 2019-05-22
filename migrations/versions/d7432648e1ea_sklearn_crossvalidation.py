@@ -35,7 +35,7 @@ def _insert_operation():
         (4020, 'mlp-regressor', 1, 'TRANSFORMATION', 'fa-code-branch'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -56,7 +56,7 @@ def _insert_new_operation_platform():
         (4020, 4),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -80,7 +80,7 @@ def _insert_operation_category_operation():
         (4020, 4001),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -99,7 +99,7 @@ def _insert_operation_form():
         (4020, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -119,7 +119,7 @@ def _insert_operation_form_translation():
         (4020, 'en', 'Execution'),
         (4020, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -142,7 +142,7 @@ def _insert_operation_operation_form():
         (4020, 4020),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -173,7 +173,7 @@ def _insert_operation_translation():
          'Multi-layer Perceptron Regressor.')
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -199,7 +199,7 @@ def _insert_operation_port():
 
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -228,7 +228,7 @@ def _insert_operation_port_translation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -246,7 +246,7 @@ def _insert_operation_port_interface_operation_port():
         (4028, 5),  # ClassificationAlgorithm
         (4029, 17),  # IRegressionAlgorithm
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -320,7 +320,7 @@ def _insert_operation_form_field():
 
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -399,7 +399,7 @@ def _insert_operation_form_field_translation():
          'Semente usada pelo gerador de números aleatórios.'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -462,8 +462,11 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
-                connection.execute(cmd[0])
+            if isinstance(cmd[0], str):
+                cmds = cmd[0].split(';')
+                for new_cmd in cmds:
+                    if new_cmd.strip():
+                        connection.execute(new_cmd)
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
                     connection.execute(row)
@@ -482,8 +485,11 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
-                connection.execute(cmd[1])
+            if isinstance(cmd[1], str):
+                cmds = cmd[1].split(';')
+                for new_cmd in cmds:
+                    if new_cmd.strip():
+                        connection.execute(new_cmd)
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:
                     connection.execute(row)

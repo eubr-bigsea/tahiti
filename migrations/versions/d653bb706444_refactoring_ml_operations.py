@@ -11,6 +11,7 @@ import json
 from alembic import op
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.sql import table, column, text
+import collections
 
 # revision identifiers, used by Alembic.
 revision = 'd653bb706444'
@@ -42,7 +43,7 @@ def _insert_operation_category_translation():
         (25, 'pt', 'Avaliação'),
         (26, 'pt', 'Modelos'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -73,7 +74,7 @@ def _insert_operation_form_field():
         (238, 'prediction', 'TEXT', 1, 1, 'prediction', 'text',
          None, None, 'EXECUTION', FORM_ID_2),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -108,9 +109,9 @@ all_commands = [
 
     ("UPDATE operation_port_translation SET name = 'modelo avaliado', "
      "description = 'Modelo avaliado' WHERE id = 39 and locale = 'pt'",
-     u"UPDATE operation_port_translation SET name = 'metric', "
-     u"description ='Métrica usada para a avaliação' "
-     u"WHERE id = 39 and locale = 'pt'"),
+     "UPDATE operation_port_translation SET name = 'metric', "
+     "description ='Métrica usada para a avaliação' "
+     "WHERE id = 39 and locale = 'pt'"),
 
     # Associate port interface
     ("UPDATE operation_port_interface_operation_port "
@@ -133,8 +134,8 @@ all_commands = [
 
     ("UPDATE operation_port_translation SET name = 'modelo avaliado', "
      "description = 'Melhor modelo' WHERE id = 98 and locale = 'pt'",
-     u"UPDATE operation_port_translation SET name = 'metric', "
-     u"description ='Avaliação' WHERE id = 98 and locale = 'pt'"),
+     "UPDATE operation_port_translation SET name = 'metric', "
+     "description ='Avaliação' WHERE id = 98 and locale = 'pt'"),
 
     # Associate port interface
     ("UPDATE operation_port_interface_operation_port "
@@ -170,9 +171,9 @@ all_commands = [
      "DELETE FROM operation_form_field_translation "
      "WHERE id = 237 AND locale='en'"),
 
-    (u"INSERT INTO operation_form_field_translation "
-     u"VALUES(237, 'pt', 'Ação caso modelo já exista', "
-     u"'Ação caso modelo já exista')",
+    ("INSERT INTO operation_form_field_translation "
+     "VALUES(237, 'pt', 'Ação caso modelo já exista', "
+     "'Ação caso modelo já exista')",
      "DELETE FROM operation_form_field_translation "
      "WHERE id = 237 AND locale='pt'"),
 
@@ -182,9 +183,9 @@ all_commands = [
      "DELETE FROM operation_form_field_translation "
      "WHERE id = 238 AND locale='en'"),
 
-    (u"INSERT INTO operation_form_field_translation "
-     u"VALUES(238, 'pt', 'Atributo com a predição (novo)', "
-     u"'Atributo com a predição (novo)')",
+    ("INSERT INTO operation_form_field_translation "
+     "VALUES(238, 'pt', 'Atributo com a predição (novo)', "
+     "'Atributo com a predição (novo)')",
      "DELETE FROM operation_form_field_translation "
      "WHERE id = 238 AND locale='pt'"),
 
@@ -222,16 +223,16 @@ def upgrade():
         for cmd in all_commands:
             assert isinstance(cmd, tuple)
             last = cmd[0]
-            if callable(cmd[0]):
+            if isinstance(cmd[0], collections.Callable):
                 cmd[0]()
             else:
                 op.execute(text(cmd[0]))
         op.execute(text('COMMIT'))
     except:
         op.execute(text('ROLLBACK'))
-        print '-' * 20
-        print 'Last', last
-        print '-' * 20
+        print('-' * 20)
+        print('Last', last)
+        print('-' * 20)
         raise
 
 
@@ -241,14 +242,14 @@ def downgrade():
         op.execute(text('START TRANSACTION'))
         for cmd in reversed(all_commands):
             last = cmd[1]
-            if callable(cmd[1]):
+            if isinstance(cmd[1], collections.Callable):
                 cmd[1]()
             else:
                 op.execute(text(cmd[1]))
         op.execute(text('COMMIT'))
     except:
         op.execute(text('ROLLBACK'))
-        print '-' * 20
-        print 'Last', last
-        print '-' * 20
+        print('-' * 20)
+        print('Last', last)
+        print('-' * 20)
         raise

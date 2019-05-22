@@ -44,7 +44,7 @@ def _insert_operation():
         (LSH_ID, 'lsh', 1, 'TRANSFORMATION',
          'hashtag'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -65,14 +65,14 @@ def _insert_operation_translation():
          'values of linearly uncorrelated variables called principal '
          'components. A PCA operation trains a model to project vectors to '
          'a low-dimensional space using PCA.'),
-        (PCA_ID, 'pt', u'Análise de componentes principais',
-         u'Análise de componentes principais ou ACP/PCA (Principal component '
-         u'analysis) é um procedimento estatístico que usa uma transformação '
-         u'ortogonal para converter um conjunto de observações de variáveis '
-         u'possivelmente correlacionadas em um conjunto de valores de '
-         u'variáveis linearmente não-correlacionadas, chamadas de componentes '
-         u'principais. Uma operação ACP treina um modelo para projetar vetores '
-         u'para um espaço de menor dimensionalidade usando ACP.'),
+        (PCA_ID, 'pt', 'Análise de componentes principais',
+         'Análise de componentes principais ou ACP/PCA (Principal component '
+         'analysis) é um procedimento estatístico que usa uma transformação '
+         'ortogonal para converter um conjunto de observações de variáveis '
+         'possivelmente correlacionadas em um conjunto de valores de '
+         'variáveis linearmente não-correlacionadas, chamadas de componentes '
+         'principais. Uma operação ACP treina um modelo para projetar vetores '
+         'para um espaço de menor dimensionalidade usando ACP.'),
         (LSH_ID, 'en', 'Locality-sensitive hashing',
          'Locality-sensitive hashing (LSH) reduces the dimensionality of '
          'high-dimensional data. LSH hashes input items so that similar items '
@@ -81,17 +81,17 @@ def _insert_operation_translation():
          'items). LSH differs from conventional and cryptographic hash '
          'functions because it aims to maximize the probability of a '
          '"collision" for similar items.'),
-        (LSH_ID, 'pt', u'Locality-sensitive hashing',
-         u'Locality-sensitive hashing (LSH) reduz a quantidade de dimensões de '
-         u'dados com alta dimensionalidade. LSH hashes analisa os itess de '
-         u'forma que itens similares sejam mapeados para os mesmos "buckets" '
-         u'com alta probabilidade (sendo o número de de buckets muito menor '
-         u'que o universo de possíveis itens). LSH difere das funções '
-         u'tradicionais de hash convencionais e daquelas usadas para '
-         u'criptografiahash porque busca maximizar a probabilidade de uma '
-         u'"colisão" para itens similares.'),
+        (LSH_ID, 'pt', 'Locality-sensitive hashing',
+         'Locality-sensitive hashing (LSH) reduz a quantidade de dimensões de '
+         'dados com alta dimensionalidade. LSH hashes analisa os itess de '
+         'forma que itens similares sejam mapeados para os mesmos "buckets" '
+         'com alta probabilidade (sendo o número de de buckets muito menor '
+         'que o universo de possíveis itens). LSH difere das funções '
+         'tradicionais de hash convencionais e daquelas usadas para '
+         'criptografiahash porque busca maximizar a probabilidade de uma '
+         '"colisão" para itens similares.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -106,7 +106,7 @@ def _insert_operation_platform():
         (PCA_ID, 1),
         (LSH_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -123,7 +123,7 @@ def _insert_operation_form():
         (PCA_FORM_ID, 1, 1, 'execution'),
         (LSH_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -143,7 +143,7 @@ def _insert_operation_operation_form():
         (LSH_ID, APPEARANCE_FORM_ID),
         (PCA_ID, RESULTS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -164,7 +164,7 @@ def _insert_operation_form_translation():
         (LSH_FORM_ID, 'en', 'Execution'),
         (LSH_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -217,7 +217,7 @@ def _insert_operation_form_field():
          LSH_FORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -233,8 +233,8 @@ def _insert_operation_form_field_translation():
     data = [
         (420, 'en', 'Number of principal components',
          'Number of principal components.'),
-        (420, 'pt', u'Número de componentes principais',
-         u'Número de componentes principais'),
+        (420, 'pt', 'Número de componentes principais',
+         'Número de componentes principais'),
 
         (421, 'en', 'Attribute with features vector',
          'Attribute with features vector.'),
@@ -279,7 +279,7 @@ def _insert_operation_form_field_translation():
         (428, 'pt', 'Semente para números aleatórios',
          'Semente para números aleatórios.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -299,7 +299,7 @@ def _insert_operation_category_operation():
         (LSH_ID, 8),
         (LSH_ID, 23),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -325,7 +325,7 @@ def _insert_operation_port():
         (220, 'INPUT', None, LSH_ID, 1, 'ONE', 'input data'),
         (221, 'OUTPUT', None, LSH_ID, 2, 'MANY', 'model')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -353,7 +353,7 @@ def _insert_operation_port_translation():
         (221, 'en', 'model', 'Model'),
         (221, 'pt', 'model', 'Modelo'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -372,7 +372,7 @@ def _insert_operation_port_interface_operation_port():
         (220, 1),
         (221, 21),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -466,7 +466,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -486,7 +486,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

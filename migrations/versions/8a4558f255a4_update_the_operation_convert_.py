@@ -34,7 +34,7 @@ def _insert_operation():
     data = [
         (122, "vector-indexer", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -50,7 +50,7 @@ def _insert_operation_category_operation():
         (32, 122),
         (33, 122),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -66,7 +66,7 @@ def _insert_operation_platform():
         (122, SPARK_PLATAFORM_ID),  # Vector indexer
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -85,7 +85,7 @@ def _insert_operation_translation():
         (122, "pt", 'Indexador de vetor',
          'Indexa categorical features representadas por um vetor.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -108,7 +108,7 @@ def _insert_operation_port():
         (293, 'OUTPUT', '', 1, 'MANY', 122, 'output data'),
         (294, 'OUTPUT', '', 2, 'MANY', 122, 'indexer models'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -125,7 +125,7 @@ def _insert_operation_port_interface_operation_port():
         (293, 1),
         (294, 4),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -152,7 +152,7 @@ def _insert_operation_port_translation():
         (294, "en", 'model', 'Indexer model generated'),
         (294, "pt", 'modelo', 'Modelo de indexação gerado'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -170,7 +170,7 @@ def _insert_operation_form():
         (131, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -186,7 +186,7 @@ def _insert_operation_form_translation():
         (131, 'en', 'Execution'),
         (131, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -203,7 +203,7 @@ def _insert_operation_operation_form():
         (122, 110),  # results
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -233,7 +233,7 @@ def _insert_operation_form_field():
         (486, 'max_categories', 'INTEGER', 0, 3, '20', 'integer',
          None, None, 'EXECUTION', 131),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -261,7 +261,7 @@ def _insert_downgrade_operation_form_field():
          '{"en": "Vector", "key": "vector", "value": "Vector", "pt": "Vetor"}]',
          "EXECUTION", 50),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -291,7 +291,7 @@ def _insert_operation_form_field_translation():
          '(>= 2). Se uma feature tem mais categorias que esse valor, '
          'ela é declarada contínua.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -383,7 +383,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -404,7 +404,7 @@ def downgrade():
     connection.execute('SET FOREIGN_KEY_CHECKS=0;')
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

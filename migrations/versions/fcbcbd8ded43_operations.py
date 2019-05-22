@@ -443,7 +443,7 @@ def insert_operation_form_field_translation():
         (192, 'en', 'Orientation', 'Orientation'),
         (192, 'pt', 'Orientação', 'Orientação')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -616,7 +616,7 @@ def insert_operation_form_translation():
         (86, 'en', 'Execution'),
         (86, 'pt', 'Execução')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -943,7 +943,7 @@ def insert_operation_operation_form():
         (71, 40),
         (71, 86)
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -1021,7 +1021,7 @@ def insert_operation_platform():
         (70, 1),
         (71, 1)
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -1040,7 +1040,7 @@ def insert_platform():
         (2, 'ophidia', 0, ''),
         (3, 'compss', 0, '')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -1321,7 +1321,7 @@ def insert_operation_translation():
         (71, 'es', None, None),
         (71, 'pt', 'Gráfico de área', 'Gráfico de área')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -1343,7 +1343,7 @@ def insert_platform_translation():
         (3, 'en', 'COMPSs', 'COMPSs'),
         (3, 'pt', 'COMPSs', 'COMPSs'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 

@@ -56,7 +56,7 @@ def _insert_operation():
         (OUTLIER_DETECTION_ID, 'outlier-detection', 1, 'TRANSFORMATION',
          'fa-user-secret'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -87,7 +87,7 @@ def _insert_operation_translation():
         (OUTLIER_DETECTION_ID, 'pt', 'Detecção de anomalias',
          'Determina se uma observação deve ser considerada anômala ou não.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -103,7 +103,7 @@ def _insert_operation_platform():
         (OUTLIER_DETECTION_ID, 1),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -121,7 +121,7 @@ def _insert_operation_form():
         (QUANTILE_DISCRETIZER_FORM_ID, 1, 1, 'execution'),
         (OUTLIER_DETECTION_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -146,7 +146,7 @@ def _insert_operation_operation_form():
         (OUTLIER_DETECTION_ID, APPEARANCE_FORM_ID),
         (OUTLIER_DETECTION_ID, RESULTS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -170,7 +170,7 @@ def _insert_operation_form_translation():
         (OUTLIER_DETECTION_FORM_ID, 'en', 'Execution'),
         (OUTLIER_DETECTION_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -223,7 +223,7 @@ def _insert_operation_form_field():
         (469, 'min_points', 'INTEGER', 1, 2, None, 'integer', None, None,
          'EXECUTION', OUTLIER_DETECTION_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -296,7 +296,7 @@ def _insert_operation_form_field_translation():
         (469, 'pt', 'Número mínimo de pontos',
          'Número mínimo de pontos.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -319,7 +319,7 @@ def _insert_operation_category_operation():
         (OUTLIER_DETECTION_ID, 8),
         (OUTLIER_DETECTION_ID, 27),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -357,7 +357,7 @@ def _insert_operation_port():
         (236, 'OUTPUT', None, OUTLIER_DETECTION_ID, 1, 'MANY',
          'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -392,7 +392,7 @@ def _insert_operation_port_translation():
         (236, 'pt', 'dados de saída', 'Dados de saída'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -416,7 +416,7 @@ def _insert_operation_port_interface_operation_port():
         (235, 1),
         (236, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -495,7 +495,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -516,7 +516,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

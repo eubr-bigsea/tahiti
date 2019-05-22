@@ -810,18 +810,18 @@ all_commands = [
     ('''
     DELETE FROM operation_form_field_translation WHERE id IN (75, 76);
     ''', '''
-        INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-         `help`) VALUES('75','en','Use first line as header',
-         'Does file first line contain header information about attributes?');
-        INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-         `help`) VALUES('75','pt','Usar a primeira linha como cabeçalho',
-         'Arquivo contém cabeçalho com informações sobre atributos?');
-        INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-         `help`) VALUES('76','en','Attribute separator',
-         'Character used as attribute separator');
-        INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-         `help`) VALUES('76','pt','Separador de atributos',
-         'Caractere usado como separador de atributo (pode usar {tab} ou {new_line}).');
+        INSERT INTO
+            operation_form_field_translation(`id`, `locale`, `label`,`help`)
+            VALUES
+            ('75','en','Use first line as header',
+                'Does file first line contain header information about attributes?');
+                INSERT INTO `operation_form_field_translation`
+            ('75','pt','Usar a primeira linha como cabeçalho',
+                'Arquivo contém cabeçalho com informações sobre atributos?'),
+            ('76','en','Attribute separator',
+                'Character used as attribute separator'),
+            ('76','pt','Separador de atributos',
+                'Caractere usado como separador de atributo (pode usar {tab} ou {new_line}).');
 
     '''),
     ('''
@@ -829,12 +829,10 @@ all_commands = [
     ''', '''
     INSERT INTO `operation_form_field` (`id`, `name`, `type`, `required`,
         `order`, `default`, `suggested_widget`, `values_url`, `values`,
-        `scope`, `form_id`) VALUES('75','header','INTEGER','0','2','0',
-        'checkbox',NULL,NULL,'EXECUTION','18');
-    INSERT INTO `operation_form_field` (`id`, `name`, `type`, `required`,
-    `order`, `default`, `suggested_widget`, `values_url`, `values`, `scope`,
-    `form_id`) VALUES('76','separator','TEXT','0','3',',','text',NULL,NULL,
-    'EXECUTION','18');
+        `scope`, `form_id`)
+        VALUES
+        ('75','header','INTEGER','0','2','0', 'checkbox',NULL,NULL,'EXECUTION','18'),
+        ('76','separator','TEXT','0','3',',','text',NULL,NULL, 'EXECUTION','18'),
     '''),
     ('''INSERT INTO `operation_form_field` (`id`, `name`, `type`, `required`,
         `order`, `default`, `suggested_widget`, `values_url`, `values`,
@@ -843,9 +841,9 @@ all_commands = [
      'DELETE FROM operation_form_field WHERE id = 455'),
     ('''
     INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-        `help`) VALUES(455,'en','Features attribute','Features attribute');
-    INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-        `help`) VALUES(455,'pt','Atributo com features',
+        `help`) VALUES
+        (455,'en','Features attribute','Features attribute'),
+        (455,'pt','Atributo com features',
         'Atributo com features');''',
      'DELETE FROM operation_form_field_translation WHERE id = 455'),
 
@@ -857,11 +855,11 @@ all_commands = [
      'DELETE FROM operation_form_field WHERE id = 456'),
     ('''
     INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-        `help`) VALUES(456,'en','Polygons boundaries (Geo JSON)',
-        'Polygons boundaries (Geo JSON)');
-    INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-        `help`) VALUES(456,'pt','Limites do polígono(s) (Geo JSON)',
-        'Limite do polígono(s) (Geo JSON)');''',
+        `help`) VALUES
+        (456,'en','Polygons boundaries (Geo JSON)',
+        'Polygons boundaries (Geo JSON)'),
+        (456,'pt','Limites do polígono(s) (Geo JSON)',
+            'Limite do polígono(s) (Geo JSON)');''',
      'DELETE FROM operation_form_field_translation WHERE id = 456'),
     # --
     ('''INSERT INTO `operation_form_field` (`id`, `name`, `type`, `required`,
@@ -874,9 +872,8 @@ all_commands = [
     INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
         `help`) VALUES(457,'en',
         'Name of the property in Geo JSON used to relate data',
-        'Name of the property in Geo JSON used to relate data.');
-    INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-        `help`) VALUES(457,'pt',
+        'Name of the property in Geo JSON used to relate data.'),
+        (457,'pt',
         'Nome da propriedade no Geo JSON usada para relacionar os dados',
         'Nome da propriedade no Geo JSON usada para relacionar os dados.');''',
      'DELETE FROM operation_form_field_translation WHERE id = 457'),
@@ -890,11 +887,9 @@ all_commands = [
      'DELETE FROM operation_form_field WHERE id = 458'),
     ('''
     INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-        `help`) VALUES(458,'en','Extra data (Geo JSON)',
-        'Extra data (Geo JSON)');
-    INSERT INTO `operation_form_field_translation` (`id`, `locale`, `label`,
-        `help`) VALUES(458,'pt','Dados extras (Geo JSON)',
-        'Dados extras (Geo JSON)');''',
+        `help`) VALUES
+        (458,'en','Extra data (Geo JSON)', 'Extra data (Geo JSON)'),
+        (458,'pt','Dados extras (Geo JSON)', 'Dados extras (Geo JSON)');''',
      'DELETE FROM operation_form_field_translation WHERE id = 458'),
     # ---
     [update_values_field, revert_values_fields],
@@ -969,7 +964,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -990,7 +985,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

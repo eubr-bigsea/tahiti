@@ -33,7 +33,7 @@ def _insert_operation_category_translation():
     data = [
         (5060, "en", 'Functions'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -49,7 +49,7 @@ def _insert_operation_platform():
         (5061, KERAS_PLATAFORM_ID),#loss functions
         (5062, KERAS_PLATAFORM_ID),#optimizer functions
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -68,7 +68,7 @@ def _insert_operation_category():
         (5061, "subgroup", 1, 1),
         (5062, "subgroup", 2, 2),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -87,7 +87,7 @@ def _insert_operation():
         (5061, "loss", 1, 'ACTION', ''),
         (5062, "optimizer", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -104,7 +104,7 @@ def _insert_operation_category_operation():
         (5060, 5061),
         (5060, 5062),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -122,7 +122,7 @@ def _insert_operation_translation():
         (5061, "en", "Loss", ''),
         (5062, "en", "Optimizer", ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -155,7 +155,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -175,7 +175,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

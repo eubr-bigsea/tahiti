@@ -34,7 +34,7 @@ def upgrade():
 
     connection.execute("""UPDATE operation_form_field
         SET suggested_widget = 'attribute-selector' WHERE id = 194""")
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Atributos (vazio significa todos os atributos da fonte de dados)',
@@ -42,7 +42,7 @@ def upgrade():
             'Atributos (vazio significa todos os atributos da fonte de dados)'
         WHERE locale = 'pt' AND id = 194
         """)
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Attributes (empty = all attributes from data source)',
@@ -68,11 +68,11 @@ def upgrade():
     #         VALUES(25, 'pt', 'Cor', 'Cor')
     #     """)
 
-    connection.execute(u"""
+    connection.execute("""
         DELETE FROM operation_form_field_translation
         WHERE id in (207, 253, 258, 280, 246)
         """)
-    connection.execute(u"""
+    connection.execute("""
         DELETE FROM operation_form_field
         WHERE id in (207, 253, 258, 280, 246)
         """)
@@ -86,7 +86,7 @@ def upgrade():
         INSERT INTO operation_form_translation(id, locale, name)
             VALUES(110, 'en', 'Results')
         """)
-    connection.execute(u"""
+    connection.execute("""
         INSERT INTO operation_form_translation(id, locale, name)
             VALUES(110, 'pt', 'Resultados')
         """)
@@ -128,7 +128,7 @@ def upgrade():
          None,
          'EXECUTION', 110],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -149,16 +149,16 @@ def upgrade():
         [295, 'en', 'Display images and charts (if available)',
          'Display images and charts (if available)'],
 
-        [292, 'pt', u'Exibir amostra(s) da(s) saída(s) (máx. 50 registros)',
-         u'Exibir amostra(s) da(s) saída(s) (máx. 50 registros)'],
-        [293, 'pt', u'Exibir esquema/dicionário da(s) saída(s)',
-         u'Exibir esquema/dicionário da(s) saída(s)', ],
-        [294, 'pt', u'Exibir relatórios textuais (se disponíveis)',
-         u'Exibir relatórios textuais (se disponíveis)'],
-        [295, 'pt', u'Exibir imagens e gráficos (se disponíveis)',
-         u'Exibir imagens e gráficos (se disponíveis)'],
+        [292, 'pt', 'Exibir amostra(s) da(s) saída(s) (máx. 50 registros)',
+         'Exibir amostra(s) da(s) saída(s) (máx. 50 registros)'],
+        [293, 'pt', 'Exibir esquema/dicionário da(s) saída(s)',
+         'Exibir esquema/dicionário da(s) saída(s)', ],
+        [294, 'pt', 'Exibir relatórios textuais (se disponíveis)',
+         'Exibir relatórios textuais (se disponíveis)'],
+        [295, 'pt', 'Exibir imagens e gráficos (se disponíveis)',
+         'Exibir imagens e gráficos (se disponíveis)'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
     session.commit()
 
@@ -168,7 +168,7 @@ def downgrade():
     session = sessionmaker(bind=cntxt.bind)()
     connection = session.connection()
 
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Nomes das colunas, separadas por vírgula (vazio = usar nomes da fonte de dados)',
@@ -176,7 +176,7 @@ def downgrade():
             'Nomes das colunas, separadas por vírgula (vazio = usar nomes da fonte de dados)'
         WHERE locale = 'pt' AND id = 194
         """)
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Column names, comma separated (empty = use data source names)',
@@ -232,7 +232,7 @@ def downgrade():
         [246, 'weight', 'TEXT', 0, 5, None, 'attribute-selector', None, None,
          'EXECUTION', 102],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -256,6 +256,6 @@ def downgrade():
         [280, 'pt', 'Peso', 'Peso'],
         [246, 'pt', 'Peso', 'Peso'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
     session.commit()

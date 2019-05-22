@@ -11,6 +11,7 @@ from tahiti.models import Operation, OperationTranslation, OperationCategory, \
     OperationForm, OperationFormTranslation, OperationPort, \
     OperationPortInterface, OperationPortTranslation, OperationFormField, db, \
     Platform
+import collections
 
 app = create_app(log_level=logging.WARNING)
 manager = Manager(app)
@@ -112,7 +113,7 @@ def create_op(config):
 
     associated_forms = []
     if not all([appearance_form, qos_form, logging_form, security_form]):
-        print 'At least one required form does not exist'
+        print('At least one required form does not exist')
         return
     else:
         associated_forms.extend(appearance_form)
@@ -120,13 +121,13 @@ def create_op(config):
         associated_forms.extend(logging_form)
         associated_forms.extend(security_form)
 
-    print '#' * 20
-    print '1 - Create a new operation'
-    print '#' * 20
+    print('#' * 20)
+    print('1 - Create a new operation')
+    print('#' * 20)
     result = {}
     for name, options in create_op_fields:
         while True:
-            v = raw_input(
+            v = input(
                 '{}\n({}) > '.format(options['label'],
                                      options.get('default'))).decode('utf8')
             valid = options['validation'](options, v)
@@ -138,21 +139,19 @@ def create_op(config):
                     result[name] = default
                     break
                 else:
-                    print 'Invalid value for {}'.format(name)
+                    print('Invalid value for {}'.format(name))
             else:
                 result[name] = v
                 break
-    constructor_params = filter(
-        lambda pair: pair[0] in ['name', 'description', 'slug', 'type', 'icon'],
-        result.iteritems())
+    constructor_params = [pair for pair in iter(result.items()) if pair[0] in ['name', 'description', 'slug', 'type', 'icon']]
 
-    print 'Creating operation'
+    print('Creating operation')
     operation = Operation(enabled=True, **dict(constructor_params))
     db.session.add(operation)
     db.session.flush()
-    print 'Operation received Id={}'.format(operation.id)
+    print('Operation received Id={}'.format(operation.id))
 
-    print 'Updating operation translation'
+    print('Updating operation translation')
     op_translation_en = OperationTranslation.query.get((operation.id, 'en'))
     op_translation_en.name = result['name']
     op_translation_en.description = result['description']
@@ -165,25 +164,25 @@ def create_op(config):
     db.session.add(op_translation_pt)
     db.session.flush()
 
-    print 'Creating form'
-    form = OperationForm(name=u'Execution',
+    print('Creating form')
+    form = OperationForm(name='Execution',
                          enabled=True, order=1, category='execution')
 
     db.session.add(form)
     db.session.flush()
 
-    print 'Inserting form translation'
+    print('Inserting form translation')
     form_translation_en = OperationFormTranslation.query.get((form.id, 'en'))
-    form_translation_en.name = u'Execution'
+    form_translation_en.name = 'Execution'
 
     form_translation_pt = OperationFormTranslation.query.get((form.id, 'pt'))
-    form_translation_pt.name = u'Execução'
+    form_translation_pt.name = 'Execução'
 
     db.session.add(form_translation_en)
     db.session.add(form_translation_pt)
     db.session.flush()
 
-    print 'Associating forms (including common ones) to operation'
+    print('Associating forms (including common ones) to operation')
     associated_forms.append(form)
 
     operation.forms.extend(associated_forms)
@@ -193,10 +192,10 @@ def create_op(config):
     db.session.commit()
     define_op_platform(None, operation.id)
     define_op_categ(None, operation.id)
-    if raw_input('Would you like to add ports? \n (y, N) >').lower() == 'y':
+    if input('Would you like to add ports? \n (y, N) >').lower() == 'y':
         define_op_ports(None, operation.id)
 
-    print 'DONE!'
+    print('DONE!')
 
 
 @manager.option('-c', '--config', help='Config file')
@@ -205,14 +204,14 @@ def define_op_platform(config, op_id):
     operation = Operation.query.get(op_id)
     platforms = Platform.query.all()
     if operation:
-        print '-' * 40
-        print 'Platforms'
+        print('-' * 40)
+        print('Platforms')
         all_platforms = {}
         for c in platforms:
             all_platforms[c.id] = c
-            print '{} - {}'.format(c.id, c.name)
-        print '-' * 40
-        c = raw_input('Inform ids separated by comma and press ENTER\n> ')
+            print('{} - {}'.format(c.id, c.name))
+        print('-' * 40)
+        c = input('Inform ids separated by comma and press ENTER\n> ')
         ids = [x.strip() for x in c.split(',')]
         for _id in ids:
             if _id.isdigit():
@@ -222,9 +221,9 @@ def define_op_platform(config, op_id):
 
         db.session.add(operation)
         db.session.commit()
-        print 'DONE!'
+        print('DONE!')
     else:
-        print "Operation {} does not exist".format(op_id)
+        print("Operation {} does not exist".format(op_id))
 
 
 @manager.option('-c', '--config', help='Config file')
@@ -233,14 +232,14 @@ def define_op_categ(config, op_id):
     operation = Operation.query.get(op_id)
     categories = OperationCategory.query.all()
     if operation:
-        print '-' * 40
-        print 'Categories'
+        print('-' * 40)
+        print('Categories')
         all_categ = {}
         for c in categories:
             all_categ[c.id] = c
-            print '{} - {} ({})'.format(c.id, c.name, c.type)
-        print '-' * 40
-        c = raw_input('Inform ids separated by comma and press ENTER\n> ')
+            print('{} - {} ({})'.format(c.id, c.name, c.type))
+        print('-' * 40)
+        c = input('Inform ids separated by comma and press ENTER\n> ')
         ids = [x.strip() for x in c.split(',')]
         for _id in ids:
             if _id.isdigit():
@@ -250,9 +249,9 @@ def define_op_categ(config, op_id):
 
         db.session.add(operation)
         db.session.commit()
-        print 'DONE!'
+        print('DONE!')
     else:
-        print "Operation {} does not exist".format(op_id)
+        print("Operation {} does not exist".format(op_id))
 
 
 @manager.option('-c', '--config', help='Config file')
@@ -260,12 +259,12 @@ def define_op_categ(config, op_id):
 @manager.option('--cat', help='Form category')
 def define_form_field(config, op_id, cat='execution'):
     operation = Operation.query.get(op_id)
-    forms = filter(lambda f: f.category == cat, operation.forms)
+    forms = [f for f in operation.forms if f.category == cat]
     if len(forms) == 1:
-        print '-' * 40
-        print 'Adding fiels for operation {}- {}'.format(operation.id,
-                                                         operation.name)
-        print '-' * 40
+        print('-' * 40)
+        print('Adding fiels for operation {}- {}'.format(operation.id,
+                                                         operation.name))
+        print('-' * 40)
         form = forms[0]
 
         counter = 1
@@ -275,7 +274,7 @@ def define_form_field(config, op_id, cat='execution'):
                 while True:
                     values = ', '.join(options.get('values', []))
 
-                    v = raw_input('{}\n({})[{}] > '.format(
+                    v = input('{}\n({})[{}] > '.format(
                         options['label'], options.get('default'),
                         values)).decode('utf8')
                     valid = options['validation'](options, v)
@@ -288,14 +287,13 @@ def define_form_field(config, op_id, cat='execution'):
                             result[name] = default
                             break
                         else:
-                            print 'Invalid value for {}'.format(name)
+                            print('Invalid value for {}'.format(name))
                     else:
                         result[name] = v
                         break
 
-            constructor_params = filter(
-                lambda pair: pair[0] not in ['label_pt',
-                                             'help_pt'], result.iteritems())
+            constructor_params = [pair for pair in iter(result.items()) if pair[0] not in ['label_pt',
+                                             'help_pt']]
 
             field = OperationFormField(**dict(constructor_params))
             field.scope = 'EXECUTION'
@@ -312,11 +310,11 @@ def define_form_field(config, op_id, cat='execution'):
             db.session.flush()
             db.session.commit()
 
-            if raw_input('Add another field?\n (Y,n)> ') in ['n', 'N']:
+            if input('Add another field?\n (Y,n)> ') in ['n', 'N']:
                 break
     else:
-        print "Form for operation {} execution is not configured correctly".format(
-            operation.name)
+        print("Form for operation {} execution is not configured correctly".format(
+            operation.name))
 
 
 @manager.option('-c', '--config', help='Config file')
@@ -324,18 +322,18 @@ def define_form_field(config, op_id, cat='execution'):
 def define_op_ports(config, op_id):
     operation = Operation.query.get(op_id)
     if operation:
-        print '-' * 40
-        print 'Adding ports for operation {} - {}'.format(operation.id,
-                                                          operation.name)
-        print '-' * 40
+        print('-' * 40)
+        print('Adding ports for operation {} - {}'.format(operation.id,
+                                                          operation.name))
+        print('-' * 40)
         result = {}
 
         while True:
             for name, options in create_port_fields:
                 while True:
                     d = options.get('default')
-                    default = d(result['type']) if callable(d) else d
-                    v = raw_input(
+                    default = d(result['type']) if isinstance(d, collections.Callable) else d
+                    v = input(
                         '{}\n({}) > '.format(options['label'],
                                              default)).decode(
                         'utf8')
@@ -348,24 +346,22 @@ def define_op_ports(config, op_id):
                             result[name] = default
                             break
                         else:
-                            print 'Invalid value for {}'.format(name)
+                            print('Invalid value for {}'.format(name))
                     else:
                         result[name] = v
                         break
 
-            constructor_params = filter(
-                lambda pair: pair[0] not in ['name', 'description', 'name_pt',
-                                             'description_pt'],
-                result.iteritems())
+            constructor_params = [pair for pair in iter(result.items()) if pair[0] not in ['name', 'description', 'name_pt',
+                                             'description_pt']]
 
-            print 'Creating port {}'.format(result['name'])
+            print('Creating port {}'.format(result['name']))
             port = OperationPort(**dict(constructor_params))
 
             port.operation = operation
             db.session.add(port)
             db.session.flush()
 
-            print 'Inserting port translation'
+            print('Inserting port translation')
             port_en = OperationPortTranslation.query.get((port.id, 'en'))
             port_en.name = result['name']
             port_en.description = result['description']
@@ -378,18 +374,18 @@ def define_op_ports(config, op_id):
             db.session.add(port_pt)
             db.session.flush()
 
-            print 'Port interfaces'
+            print('Port interfaces')
             interfaces = OperationPortInterface.query.all()
-            print '-' * 40
+            print('-' * 40)
 
             all_interfaces = {}
             for i in interfaces:
                 all_interfaces[i.id] = i
-                print '{} - {}'.format(i.id, i.name)
-            print '-' * 40
+                print('{} - {}'.format(i.id, i.name))
+            print('-' * 40)
 
             ids = [x.strip() for x in
-                   raw_input('Which interfaces does the port support? Inform a '
+                   input('Which interfaces does the port support? Inform a '
                              'list of ids, separated by comma\n> ').split(',')]
 
             for _id in ids:
@@ -402,10 +398,10 @@ def define_op_ports(config, op_id):
             db.session.add(port)
             db.session.flush()
             db.session.commit()
-            if raw_input('Add another port?\n (Y,n)> ') in ['n', 'N']:
+            if input('Add another port?\n (Y,n)> ') in ['n', 'N']:
                 break
     else:
-        print "Operation {} does not exist".format(op_id)
+        print("Operation {} does not exist".format(op_id))
 
 
 if __name__ == "__main__":

@@ -38,7 +38,7 @@ def _insert_operation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -52,7 +52,7 @@ def _insert_new_operation_platform():
     data = [
         (3032, 3),#pca
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_category_operation():
@@ -67,7 +67,7 @@ def _insert_operation_category_operation():
 			(3032, 23),
 			(3032, 3001),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -83,7 +83,7 @@ def _insert_operation_form():
     data = [
         (3032, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(operation_form_table, rows)
 
@@ -98,7 +98,7 @@ def _insert_operation_form_translation():
     data = [
 		(3032, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -121,7 +121,7 @@ def _insert_operation_operation_form():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_translation():
@@ -140,7 +140,7 @@ def _insert_operation_translation():
             'Principal componente de análise (PCA) é um procedimento estatistico capaz de reduzir a dimensionalidade dos dados.'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port():
@@ -159,7 +159,7 @@ def _insert_operation_port():
             (3064, 'INPUT', None, 3032, 1, 'ONE','input data'),
             (3065, 'OUTPUT', None, 3032, 1, 'MANY','output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_translation():
@@ -179,7 +179,7 @@ def _insert_operation_port_translation():
             (3065, 'en', 'output data','Output Data'),
 			(3065, 'pt', 'dados de saída','Dados de saída'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_interface_operation_port():
@@ -194,7 +194,7 @@ def _insert_operation_port_interface_operation_port():
         (3065, 1),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -222,7 +222,7 @@ def _insert_operation_form_field():
         (3110,'NComponents','INTEGER',1,3,2,'integer',None,None,'EXECUTION',3032),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_form_field_translation():
@@ -246,7 +246,7 @@ def _insert_operation_form_field_translation():
             'O algoritmo PCA irá tentar reduzir a dimensionalidade para esse valor.'),
 
 	]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -293,7 +293,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -314,7 +314,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

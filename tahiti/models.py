@@ -28,7 +28,7 @@ class OperationType:
 
     @staticmethod
     def values():
-        return [n for n in OperationType.__dict__.keys()
+        return [n for n in list(OperationType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -39,7 +39,7 @@ class DiagramEnvironment:
 
     @staticmethod
     def values():
-        return [n for n in DiagramEnvironment.__dict__.keys()
+        return [n for n in list(DiagramEnvironment.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -50,7 +50,7 @@ class ScriptType:
 
     @staticmethod
     def values():
-        return [n for n in ScriptType.__dict__.keys()
+        return [n for n in list(ScriptType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -61,7 +61,7 @@ class OperationPortType:
 
     @staticmethod
     def values():
-        return [n for n in OperationPortType.__dict__.keys()
+        return [n for n in list(OperationPortType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -72,7 +72,7 @@ class OperationPortMultiplicity:
 
     @staticmethod
     def values():
-        return [n for n in OperationPortMultiplicity.__dict__.keys()
+        return [n for n in list(OperationPortMultiplicity.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -83,7 +83,7 @@ class ApplicationType:
 
     @staticmethod
     def values():
-        return [n for n in ApplicationType.__dict__.keys()
+        return [n for n in list(ApplicationType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -95,7 +95,7 @@ class OperationFieldScope:
 
     @staticmethod
     def values():
-        return [n for n in OperationFieldScope.__dict__.keys()
+        return [n for n in list(OperationFieldScope.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -119,7 +119,7 @@ class DataType:
 
     @staticmethod
     def values():
-        return [n for n in DataType.__dict__.keys()
+        return [n for n in list(DataType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -131,7 +131,7 @@ class PermissionType:
 
     @staticmethod
     def values():
-        return [n for n in PermissionType.__dict__.keys()
+        return [n for n in list(PermissionType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -156,7 +156,7 @@ class TaskGroupType:
 
     @staticmethod
     def values():
-        return [n for n in TaskGroupType.__dict__.keys()
+        return [n for n in list(TaskGroupType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -170,7 +170,7 @@ class Application(db.Model):
     description = Column(String(200), nullable=False)
     enabled = Column(Boolean,
                      default=True, nullable=False)
-    type = Column(Enum(*ApplicationType.values(),
+    type = Column(Enum(*list(ApplicationType.values()),
                        name='ApplicationTypeEnumType'), nullable=False)
     execution_parameters = Column(String(16000000))
     __mapper_args__ = {
@@ -194,7 +194,7 @@ class Flow(db.Model):
     target_port = Column(Integer, nullable=False)
     source_port_name = Column(String(200))
     target_port_name = Column(String(200))
-    environment = Column(Enum(*DiagramEnvironment.values(),
+    environment = Column(Enum(*list(DiagramEnvironment.values()),
                               name='DiagramEnvironmentEnumType'),
                          default=DiagramEnvironment.DESIGN, nullable=False)
 
@@ -237,7 +237,7 @@ class Operation(db.Model, Translatable):
     id = Column(Integer, primary_key=True)
     slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    type = Column(Enum(*OperationType.values(),
+    type = Column(Enum(*list(OperationType.values()),
                        name='OperationTypeEnumType'), nullable=False)
     icon = Column(String(200), nullable=False)
     cssClass = Column(String(250), nullable=True)
@@ -370,7 +370,7 @@ class OperationFormField(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    type = Column(Enum(*DataType.values(),
+    type = Column(Enum(*list(DataType.values()),
                        name='DataTypeEnumType'), nullable=False)
     required = Column(Boolean, nullable=False)
     order = Column(Integer,
@@ -379,7 +379,7 @@ class OperationFormField(db.Model, Translatable):
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
     values = Column(String(16000000))
-    scope = Column(Enum(*OperationFieldScope.values(),
+    scope = Column(Enum(*list(OperationFieldScope.values()),
                         name='OperationFieldScopeEnumType'),
                    default='BOTH', nullable=False)
     enable_conditions = Column(String(2000))
@@ -418,11 +418,11 @@ class OperationPort(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     slug = Column(String(50), nullable=False)
-    type = Column(Enum(*OperationPortType.values(),
+    type = Column(Enum(*list(OperationPortType.values()),
                        name='OperationPortTypeEnumType'), nullable=False)
     tags = Column(String(16000000))
     order = Column(Integer)
-    multiplicity = Column(Enum(*OperationPortMultiplicity.values(),
+    multiplicity = Column(Enum(*list(OperationPortMultiplicity.values()),
                                name='OperationPortMultiplicityEnumType'),
                           default=1, nullable=False)
     __mapper_args__ = {
@@ -493,7 +493,7 @@ class OperationScript(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    type = Column(Enum(*ScriptType.values(),
+    type = Column(Enum(*list(ScriptType.values()),
                        name='ScriptTypeEnumType'), nullable=False)
     enabled = Column(Boolean, nullable=False)
     body = Column(String(16000000), nullable=False)
@@ -568,7 +568,7 @@ class Task(db.Model):
     z_index = Column(Integer, nullable=False)
     forms = Column(String(16000000), nullable=False)
     version = Column(Integer, nullable=False)
-    environment = Column(Enum(*DiagramEnvironment.values(),
+    environment = Column(Enum(*list(DiagramEnvironment.values()),
                               name='DiagramEnvironmentEnumType'),
                          default=DiagramEnvironment.DESIGN, nullable=False)
     enabled = Column(Boolean,
@@ -614,7 +614,7 @@ class TaskGroup(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    type = Column(Enum(*TaskGroupType.values(),
+    type = Column(Enum(*list(TaskGroupType.values()),
                        name='TaskGroupTypeEnumType'), nullable=False)
     color = Column(String(200))
 
@@ -712,7 +712,7 @@ class WorkflowPermission(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    permission = Column(Enum(*PermissionType.values(),
+    permission = Column(Enum(*list(PermissionType.values()),
                              name='PermissionTypeEnumType'), nullable=False)
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)

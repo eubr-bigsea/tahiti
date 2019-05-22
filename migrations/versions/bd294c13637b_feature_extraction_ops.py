@@ -35,7 +35,7 @@ def _insert_operation():
         (92, 'max-abs-scaler', 1, 'TRANSFORMATION', 'fa-lemon-o'),
 
     )
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -54,29 +54,29 @@ def _insert_operation_translation():
          ('Transforms the input (vector rows), normalizing each feature to '
           'have unit standard deviation and/or zero mean.')),
         (90, 'pt', 'Escalador padrão',
-         (u'Transforma a entrada (linhas com vetores), normalizando-os '
-          u'de forma que cada caracteristica (feature) tenha desvio-padrão '
-          u'unitário e/ou média zero.')),
+         ('Transforma a entrada (linhas com vetores), normalizando-os '
+          'de forma que cada caracteristica (feature) tenha desvio-padrão '
+          'unitário e/ou média zero.')),
 
         (91, 'en', 'Min-max scaler',
          ('Transforms the input (vector rows), rescaling each feature to a '
           'specific range (often [0, 1]). ')),
-        (91, 'pt', u'Escalador min-máx',
-         (u'Transforma a entrada (linhas com vetores), reescalando cada '
-          u'caracteristica (feature) para uma faixa específica '
-          u'(geralmente [0, 1])')),
+        (91, 'pt', 'Escalador min-máx',
+         ('Transforma a entrada (linhas com vetores), reescalando cada '
+          'caracteristica (feature) para uma faixa específica '
+          '(geralmente [0, 1])')),
 
         (92, 'en', 'Max-abs scaler',
          ('Transforms the input (vector rows), rescaling each value (feature) '
           'to range [-1, 1] by dividing through the maximum absolute value '
           'in each value (feature(.')),
         (92, 'pt', 'Escalador máx-abs',
-         (u'Transforma a entrada (linhas com vetores), reescalando cada '
-          u'caracteristica(feature) para a faixa [-1, 1], '
-          u'através da divisão pelo valor absoluto máximo de cada '
-          u'caracteristica (feature)')),
+         ('Transforma a entrada (linhas com vetores), reescalando cada '
+          'caracteristica(feature) para a faixa [-1, 1], '
+          'através da divisão pelo valor absoluto máximo de cada '
+          'caracteristica (feature)')),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -93,7 +93,7 @@ def _insert_operation_platform():
         (91, 1),
         (92, 1),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -123,7 +123,7 @@ def _insert_operation_port():
         (210, 'OUTPUT', None, 92, 1, 'MANY', 'output data'),
         (211, 'OUTPUT', None, 92, 2, 'MANY', 'transformation model'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -166,7 +166,7 @@ def _insert_operation_port_translation():
         (211, 'pt', 'modelo de transformação', 'Modelo de transformação'),
 
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -181,7 +181,7 @@ def _insert_operation_port_interface():
     data = [
         (20, '#ED254E'),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -195,7 +195,7 @@ def _insert_operation_port_interface():
         (20, 'en', 'TransformationModel'),
         (20, 'pt', 'TransformationModel'),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
 
@@ -221,7 +221,7 @@ def _insert_operation_script():
         (32, 'JS_CLIENT', 1, "copyInputAddField(task, 'alias', false, null);",
          92),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -245,7 +245,7 @@ def _insert_operation_port_interface_operation_port():
         (208, 20),
         (211, 20),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -266,7 +266,7 @@ def _insert_operation_category_operation():
         (91, 23),
         (92, 23),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -286,7 +286,7 @@ def _insert_operation_form():
         (116, 1, 1, 'execution'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -311,7 +311,7 @@ def _insert_operation_operation_form():
         (92, 110),
         (92, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -335,7 +335,7 @@ def _insert_operation_form_translation():
         (116, 'en', 'Execution'),
         (116, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -400,7 +400,7 @@ def _insert_operation_form_field():
         [360, 'pivot_values', 'TEXT', 0, 4, None, 'textarea', None, None,
          'EXECUTION', 15],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -485,7 +485,7 @@ def _insert_operation_form_field_translation():
 
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -592,7 +592,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -612,7 +612,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

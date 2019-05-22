@@ -36,7 +36,7 @@ def _insert_operation():
     data = [
         (BOX_PLOT_ID, 'box-plot', 1, 'TRANSFORMATION', 'fa-chart'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -57,7 +57,7 @@ def _insert_operation_translation():
          'plot é uma ferramenta gráfica para representar a variação de dados '
          'observados de uma variável numérica por meio de quartis.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -70,7 +70,7 @@ def _insert_operation_platform():
     data = [
         (BOX_PLOT_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -86,7 +86,7 @@ def _insert_operation_form():
     data = [
         (BOX_PLOT_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -103,7 +103,7 @@ def _insert_operation_operation_form():
         (BOX_PLOT_ID, APPEARANCE_FORM_ID),
         (BOX_PLOT_ID, RESULTS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -121,7 +121,7 @@ def _insert_operation_form_translation():
         (BOX_PLOT_FORM_ID, 'en', 'Execution'),
         (BOX_PLOT_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -158,7 +158,7 @@ def _insert_operation_form_field():
          BOX_PLOT_FORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -198,7 +198,7 @@ def _insert_operation_form_field_translation():
         (495, 'pt', 'Título para o eixo Y', 'Título para o eixo Y.'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -213,7 +213,7 @@ def _insert_operation_category_operation():
         (BOX_PLOT_ID, 1),
         (BOX_PLOT_ID, 15),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -235,7 +235,7 @@ def _insert_operation_port():
         (295, 'OUTPUT', None, BOX_PLOT_ID, 1, 'MANY', 'visualization'),
         (296, 'INPUT', None, BOX_PLOT_ID, 1, 'ONE', 'input data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -257,7 +257,7 @@ def _insert_operation_port_translation():
         (296, 'pt', 'dados de entrada', 'Dados de entrada'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -273,7 +273,7 @@ def _insert_operation_port_interface_operation_port():
         (295, 19),
         (296, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -326,7 +326,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -347,7 +347,7 @@ def downgrade():
     connection.execute('SET FOREIGN_KEY_CHECKS=0;')
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

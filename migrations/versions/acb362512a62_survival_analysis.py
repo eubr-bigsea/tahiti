@@ -40,7 +40,7 @@ def _insert_operation_category_translation():
         (27, 'en', 'Experimental'),
         (27, 'pt', 'Experimental'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -53,7 +53,7 @@ def _insert_operation_category():
     all_categories = [
         (27, 'subgroup'),
     ]
-    rows = [dict(zip(columns, cat)) for cat in all_categories]
+    rows = [dict(list(zip(columns, cat))) for cat in all_categories]
 
     op.bulk_insert(operation_category_table, rows)
 
@@ -72,7 +72,7 @@ def _insert_operation():
         (COX_PROPORTIONAL_HAZARDS_ID, 'cox-proportional-hazards', 1,
          'TRANSFORMATION', 'fa-space-shuttle'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -87,14 +87,14 @@ def _insert_operation_translation():
     data = [
         (KAPLAN_MEIER_SURVIVAL, 'en', 'Kaplan-Meier survival',
          'Kaplan-Meier survival'),
-        (KAPLAN_MEIER_SURVIVAL, 'pt', u'Kaplan-Meier survival',
-         u'Kaplan-Meier survival'),
+        (KAPLAN_MEIER_SURVIVAL, 'pt', 'Kaplan-Meier survival',
+         'Kaplan-Meier survival'),
         (COX_PROPORTIONAL_HAZARDS_ID, 'en', 'Cox proportional hazards',
          'Cox proportional hazards'),
         (COX_PROPORTIONAL_HAZARDS_ID, 'pt', 'Cox proportional hazards',
          'Cox proportional hazards'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -108,7 +108,7 @@ def _insert_operation_platform():
         (KAPLAN_MEIER_SURVIVAL, 1),
         (COX_PROPORTIONAL_HAZARDS_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -125,7 +125,7 @@ def _insert_operation_form():
         (KAPLAN_MEIER_SURVIVAL_FORM_ID, 1, 1, 'execution'),
         (COX_PROPORTIONAL_HAZARDS_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -146,7 +146,7 @@ def _insert_operation_operation_form():
         (KAPLAN_MEIER_SURVIVAL, RESULTS_FORM_ID),
         (COX_PROPORTIONAL_HAZARDS_ID, RESULTS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -167,7 +167,7 @@ def _insert_operation_form_translation():
         (COX_PROPORTIONAL_HAZARDS_FORM_ID, 'en', 'Execution'),
         (COX_PROPORTIONAL_HAZARDS_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -211,7 +211,7 @@ def _insert_operation_form_field():
          None, None, 'EXECUTION', COX_PROPORTIONAL_HAZARDS_FORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -262,7 +262,7 @@ def _insert_operation_form_field_translation():
          'gerados automaticamente.'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -282,7 +282,7 @@ def _insert_operation_category_operation():
         (COX_PROPORTIONAL_HAZARDS_ID, 8),
         (COX_PROPORTIONAL_HAZARDS_ID, 27),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -309,7 +309,7 @@ def _insert_operation_port():
         (226, 'INPUT', None, COX_PROPORTIONAL_HAZARDS_ID, 1, 'ONE',
          'input data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -335,7 +335,7 @@ def _insert_operation_port_translation():
         (226, 'pt', 'dados de entrada', 'Dados de entrada'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -353,7 +353,7 @@ def _insert_operation_port_interface_operation_port():
         (225, 1),
         (226, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -436,7 +436,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -456,7 +456,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

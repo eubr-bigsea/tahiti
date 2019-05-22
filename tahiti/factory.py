@@ -87,7 +87,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
-    for path, view in mappings.iteritems():
+    for path, view in mappings.items():
         api.add_resource(view, path)
 
     # Cache configuration for API

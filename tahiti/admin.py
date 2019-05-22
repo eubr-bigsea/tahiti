@@ -1,6 +1,6 @@
 from flask_admin.contrib.sqla import ModelView
 
-from models import OperationForm, OperationPort
+from tahiti.models import OperationForm, OperationPort
 
 
 class BaseModelView(ModelView):

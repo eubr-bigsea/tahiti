@@ -41,7 +41,7 @@ def _insert_operation_port():
             (3067, 'INPUT', None, 3020, 1, 'ONE','input data'),
             (3068, 'OUTPUT', None, 3020, 1, 'MANY','output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_back():
@@ -59,7 +59,7 @@ def _insert_operation_port_back():
     data = [
             (3041, "OUTPUT", None, 3020, 1, "ONE", "algorithm")
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_translation():
@@ -79,7 +79,7 @@ def _insert_operation_port_translation():
             (3068, 'en', 'output data','Output Data'),
 			(3068, 'pt', 'dados de saída','Dados de saída'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_translation_back():
@@ -97,7 +97,7 @@ def _insert_operation_port_translation_back():
             (3041, "en", "algorithm", "Clustering model"),
             (3041, "pt", "algoritmo", "Modelo de agrupamento")
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_interface_operation_port():
@@ -112,7 +112,7 @@ def _insert_operation_port_interface_operation_port():
         (3068, 1),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_port_interface_operation_port_back():
@@ -125,7 +125,7 @@ def _insert_operation_port_interface_operation_port_back():
     data = [
         (3041, 11),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_form_field():
@@ -151,7 +151,7 @@ def _insert_operation_form_field():
 		(3112, 'prediction', 'TEXT', 0, 4, 'prediction', 'text', None, None, 'EXECUTION', 3020),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _insert_operation_form_field_translation():
@@ -170,7 +170,7 @@ def _insert_operation_form_field_translation():
 		(3112, 'pt', 'Atributo para predição', 'Atributo para predição'),
 
 	]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -215,7 +215,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -236,7 +236,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

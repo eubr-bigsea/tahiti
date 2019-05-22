@@ -40,7 +40,7 @@ def _insert_operation_form_field():
         (476, 'layers', 'TEXT', 1, 1, '2,2,2', 'text', None, None,
          'EXECUTION', 68),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -66,7 +66,7 @@ def _insert_operation_form_field_translation():
          'Ex.: "780, 100, 10" (sem aspas) significa 780 entradas, uma camada '
          'oculta com 100 neurônios e uma camada de saída com 10 neurônios.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -85,7 +85,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -105,7 +105,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

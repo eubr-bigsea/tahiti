@@ -35,7 +35,7 @@ def _insert_operation_port():
         (45, 'INPUT', None, 22, 2, 'ONE', 'input data'),
         (47, 'INPUT', None, 22, 1, 'ONE', 'model'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -56,7 +56,7 @@ def _insert_operation_port_translation():
         (47, 'en', 'model', 'Model'),
         (47, 'pt', 'modelo', 'Modelo'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -72,7 +72,7 @@ def _insert_operation_port_interface_operation_port():
     data = [
         (45, 1),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -98,7 +98,7 @@ def _insert_operation_form_field():
          '`${LIMONERO_URL}/models?simple=true&list=true&enabled=1`', None,
          'EXECUTION', 21],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -115,7 +115,7 @@ def _insert_operation_form_field_translation():
         [361, 'en', 'Model', 'Model to be loaded (previously saved).'],
         [361, 'pt', 'Modelo', 'Modelo anteriormente salvo a ser carregado'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -210,7 +210,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -230,7 +230,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

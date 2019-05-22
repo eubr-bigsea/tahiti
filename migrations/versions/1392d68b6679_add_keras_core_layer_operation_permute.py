@@ -34,7 +34,7 @@ def _insert_operation_platform():
         (5016, KERAS_PLATAFORM_ID),# Permute
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -51,7 +51,7 @@ def _insert_operation():
     data = [
         (5016, "permute", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -69,7 +69,7 @@ def _insert_operation_category():
     data = [
         (5016, "subgroup", 8, 8),# Permute
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -85,7 +85,7 @@ def _insert_operation_category_operation():
         #Core Layers
         (5010, 5016),# Permute
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -102,7 +102,7 @@ def _insert_operation_translation():
     data = [
         (5016, "en", 'Permute', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -124,7 +124,7 @@ def _insert_operation_port():
         (5116, 'INPUT', '', 1, 'ONE', 5016, 'input data'),
         (5216, 'OUTPUT', '', 1, 'ONE', 5016, 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -141,7 +141,7 @@ def _insert_operation_port_interface_operation_port():
         (5116, 1),
         (5216, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -160,7 +160,7 @@ def _insert_operation_port_translation():
         (5116, "en", 'input data', 'Input data'),
         (5216, "en", 'output data', 'Output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -179,7 +179,7 @@ def _insert_operation_form():
         (5134, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -196,7 +196,7 @@ def _insert_operation_form_translation():
         (5134, 'en', 'Execution'),
         (5134, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -213,7 +213,7 @@ def _insert_operation_operation_form():
         (5016, 5134),  # own execution form
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -239,7 +239,7 @@ def _insert_operation_form_field():
         #Permute - dims
         (5134, 'dims', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5134),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -260,7 +260,7 @@ def _insert_operation_form_field_translation():
                              'Indexing starts at 1. For instance, (2, 1) '
                              'permutes the first and second dimension of the input.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -303,7 +303,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -323,7 +323,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

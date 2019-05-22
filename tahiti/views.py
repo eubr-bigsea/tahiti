@@ -3,7 +3,7 @@ from flask import render_template, make_response, request
 from flask.views import MethodView
 from sqlalchemy.orm import joinedload, Load
 
-from cache import cache
+from tahiti.cache import cache
 from tahiti.models import Operation, OperationScript, db, ScriptType
 
 

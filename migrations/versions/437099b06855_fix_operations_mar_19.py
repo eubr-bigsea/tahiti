@@ -115,7 +115,7 @@ def _insert_operation_form():
         (133, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -133,7 +133,7 @@ def _insert_operation_form_translation():
         (133, 'en', 'Execution'),
         (133, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -175,7 +175,7 @@ def _insert_operation_operation_form():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -244,7 +244,7 @@ def _insert_operation_form_field():
         (489, 'one_vs_rest', 'INTEGER', 0, 12, None, 'checkbox',
          None, None, 'EXECUTION', 133),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -276,7 +276,7 @@ def _insert_operation_form_field_translation():
          'Permite executar um classificador com dados de entrada multi rótulos')
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -326,7 +326,7 @@ def _insert_operation_script():
         (65, 'JS_CLIENT', 1,
          'copyInputAddField(task, "prediction", false, null);', 120),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -419,7 +419,7 @@ def upgrade():
     connection = session.connection()
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 if cmd[0] != '':
                     connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
@@ -439,7 +439,7 @@ def downgrade():
     connection = session.connection()
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 if cmd[1] != '':
                     connection.execute(cmd[1])
             elif isinstance(cmd[1], list):

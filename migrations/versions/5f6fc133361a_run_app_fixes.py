@@ -50,7 +50,7 @@ def upgrade():
                 VALUES(81, 'en', 'Summary statistics', 'Summary statistics')
             """,
             """"""
-            u""" INSERT INTO operation_translation(id, locale, name, description)
+            """ INSERT INTO operation_translation(id, locale, name, description)
                 VALUES(81, 'pt', 'Sumário estatístico', 'Sumário estatístico')
             """,
             """

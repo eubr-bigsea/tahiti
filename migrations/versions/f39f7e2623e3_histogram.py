@@ -36,7 +36,7 @@ def _insert_operation():
     data = [
         (HISTOGRAM_ID, 'histogram', 1, 'TRANSFORMATION', 'fa-chart'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -62,7 +62,7 @@ def _insert_operation_translation():
          'Isso permite a inspeção dos dados para sua distribuição subjacente '
          '(por exemplo, distribuição normal), outliers, assimetria, etc.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -75,7 +75,7 @@ def _insert_operation_platform():
     data = [
         (HISTOGRAM_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -91,7 +91,7 @@ def _insert_operation_form():
     data = [
         (HISTOGRAM_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -108,7 +108,7 @@ def _insert_operation_operation_form():
         (HISTOGRAM_ID, APPEARANCE_FORM_ID),
         (HISTOGRAM_ID, RESULTS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -126,7 +126,7 @@ def _insert_operation_form_translation():
         (HISTOGRAM_FORM_ID, 'en', 'Execution'),
         (HISTOGRAM_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -161,7 +161,7 @@ def _insert_operation_form_field():
          HISTOGRAM_FORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -195,7 +195,7 @@ def _insert_operation_form_field_translation():
         (500, 'pt', 'Título para o eixo Y', 'Título para o eixo Y.'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -210,7 +210,7 @@ def _insert_operation_category_operation():
         (HISTOGRAM_ID, 1),
         (HISTOGRAM_ID, 15),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -232,7 +232,7 @@ def _insert_operation_port():
         (297, 'OUTPUT', None, HISTOGRAM_ID, 1, 'MANY', 'visualization'),
         (298, 'INPUT', None, HISTOGRAM_ID, 1, 'ONE', 'input data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -254,7 +254,7 @@ def _insert_operation_port_translation():
         (298, 'pt', 'dados de entrada', 'Dados de entrada'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -270,7 +270,7 @@ def _insert_operation_port_interface_operation_port():
         (297, 19),
         (298, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -323,7 +323,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -344,7 +344,7 @@ def downgrade():
     connection.execute('SET FOREIGN_KEY_CHECKS=0;')
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

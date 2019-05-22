@@ -38,7 +38,7 @@ def _insert_operation_form():
         (5122, 1, 1, 'execution'), #seed
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -63,7 +63,7 @@ def _insert_operation_form_translation():
         (5122, 'en', 'Execution'),
         (5122, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -87,7 +87,7 @@ def _insert_operation_operation_form():
         (5012, 5122),  # own execution form
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -118,7 +118,7 @@ def _insert_operation_form_field():
         #Dropout - seed
         (5122, 'seed', 'INTEGER', 0, 3, None, 'integer', None, None, 'EXECUTION', 5122),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -145,7 +145,7 @@ def _insert_operation_form_field_translation():
         #Dense - seed
         (5122, 'en', 'Seed', 'A Python integer to use as random seed.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -171,7 +171,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -191,7 +191,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:
