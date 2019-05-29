@@ -76,6 +76,10 @@ def _insert_operation_platform():
         (5114, KERAS_PLATAFORM_ID),# Evaluate Model
         (5115, KERAS_PLATAFORM_ID),# Load Model
         (5116, KERAS_PLATAFORM_ID),# Image Generator
+
+        (5117, KERAS_PLATAFORM_ID),# Image reader
+        (5118, KERAS_PLATAFORM_ID),# Text reader
+        (5119, KERAS_PLATAFORM_ID),# Sequence reader
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -151,6 +155,11 @@ def _insert_operation():
 
         # Image Generator
         (5116, "image-generator", 1, 'ACTION', ''),
+
+        # Input and output data
+        (5117, "image-reader", 1, 'ACTION', ''),
+        (5118, "text-reader", 1, 'ACTION', ''),
+        (5119, "sequence-reader", 1, 'ACTION', ''),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -173,6 +182,7 @@ def _insert_operation_category():
         (5062, "group", 9, 10),# Merge Layers
         (5063, "group", 11, 10),# Model
         (5064, "group", 11, 10),# Preprocessing
+        (5065, "group", 1, 1),# Input and output data
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -232,6 +242,9 @@ def _insert_operation_category_operation():
         (5063, 5114),
         (5063, 5115),
         (5064, 5116),
+        (5065, 5117),
+        (5065, 5118),
+        (5065, 5119),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -252,6 +265,7 @@ def _insert_operation_category_translation():
         (5062, "en", 'Merge Layers'),
         (5063, "en", 'Model'),
         (5064, "en", 'Preprocessing'),
+        (5065, "en", 'Input and output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -503,6 +517,11 @@ def _insert_operation_translation():
         (5116, 'en', 'Image generator', 'Takes the dataset of images and '
                                         'generates batches of tensor image data'
                                         ' with real-time data augmentation.'),
+
+        (5117, 'en', 'Image reader', 'Reads images from a data source.'),
+        (5118, 'en', 'Text reader', 'Reads texts from a data source.'),
+        (5119, 'en', 'Sequence reader', 'Reads sequences of any data type '
+                                        'from a data source.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -563,12 +582,14 @@ def _insert_operation_port():
 
         (5227, 'INPUT', '', 1, 'ONE', 5110, 'input data'),
         (5228, 'INPUT', '', 1, 'ONE', 5111, 'input data'),
-        (5229, 'INPUT', '', 2, 'ONE', 5112, 'generator'),
+        (5229, 'INPUT', '', 4, 'ONE', 5112, 'train generator'),
         (5230, 'INPUT', '', 1, 'ONE', 5113, 'model'), #save model
         (5232, 'INPUT', '', 1, 'ONE', 5114, 'model'), #evaluate model
-        (5233, 'INPUT', '', 2, 'ONE', 5116, 'image data'), #image-generator
-        (5234, 'INPUT', '', 1, 'ONE', 5116, 'image data'), #image-generator
-        (5235, 'INPUT', '', 1, 'ONE', 5112, 'generator'),
+        (5233, 'INPUT', '', 1, 'ONE', 5116, 'image data'), #image-generator
+        #(5234, 'INPUT', '', 1, 'ONE', 5116, 'validation-image'), #image-generator
+        #(5235, 'INPUT', '', 3, 'ONE', 5112, 'validation generator'),
+        (5236, 'INPUT', '', 2, 'ONE', 5112, 'input data'), #model inputs
+        (5237, 'INPUT', '', 1, 'ONE', 5112, 'input data'), #model outputs
 
         (5273, 'OUTPUT', '', 1, 'MANY', 5073, 'output data'),
         (5274, 'OUTPUT', '', 1, 'MANY', 5074, 'output data'),
@@ -611,8 +632,15 @@ def _insert_operation_port():
         (5311, 'OUTPUT', '', 1, 'MANY', 5111, 'output data'),
         (5312, 'OUTPUT', '', 1, 'MANY', 5112, 'model'),# model
         (5313, 'OUTPUT', '', 1, 'MANY', 5115, 'model'),# load model
-        (5314, 'OUTPUT', '', 2, 'MANY', 5116, 'generator'),# image generator
-        (5315, 'OUTPUT', '', 1, 'MANY', 5116, 'generator'),# image generator
+        (5314, 'OUTPUT', '', 1, 'MANY', 5116, 'generator'),# image generator
+        #(5315, 'OUTPUT', '', 1, 'MANY', 5116, 'generator'),# image generator
+
+        (5316, 'OUTPUT', '', 2, 'ONE', 5117, 'train-image'), #image-reader
+        (5317, 'OUTPUT', '', 1, 'ONE', 5117, 'validation-image'), #image-reader
+        (5318, 'OUTPUT', '', 2, 'ONE', 5118, 'train-text'), #text-reader
+        (5319, 'OUTPUT', '', 1, 'ONE', 5118, 'validation-text'), #text-reader
+        (5320, 'OUTPUT', '', 2, 'ONE', 5119, 'train-sequence'), #sequence-reader
+        (5321, 'OUTPUT', '', 1, 'ONE', 5119, 'validation-sequence'), #sequence-reader
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -630,6 +658,8 @@ def _insert_operation_port_interface():
         (22, '#FF2A00'),
         (23, '#009900'),
         (24, '#CCCC00'),
+        (25, '#276cce'),
+        (26, '#a867af'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -649,8 +679,12 @@ def _insert_operation_port_interface_translation():
         (22, 'pt', 'Model'),
         (23, 'en', 'Generator'),
         (23, 'pt', 'Generator'),
-        (24, 'en', 'Image Data'),
-        (24, 'pt', 'Image Data'),
+        (24, 'en', 'ImageData'),
+        (24, 'pt', 'ImageData'),
+        (25, 'en', 'TextData'),
+        (25, 'pt', 'TextData'),
+        (26, 'en', 'SequenceData'),
+        (26, 'pt', 'SequenceData'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -710,8 +744,10 @@ def _insert_operation_port_interface_operation_port():
         (5230, 22),
         (5232, 22),
         (5233, 24),
-        (5234, 24),
-        (5235, 23),
+        #(5234, 24),
+        #(5235, 23),
+        (5236, 1),
+        (5237, 1),
 
         (5273, 1),
         (5274, 1),
@@ -755,7 +791,13 @@ def _insert_operation_port_interface_operation_port():
         (5312, 22),
         (5313, 22),
         (5314, 23),
-        (5315, 23),
+        #(5315, 23),
+        (5316, 24),
+        (5317, 24),
+        (5318, 25),
+        (5319, 25),
+        (5320, 26),
+        (5321, 26),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -812,12 +854,15 @@ def _insert_operation_port_translation():
         (5210, 'en', 'input data', 'Input data'),
         (5227, 'en', 'input data', 'Input data'),
         (5228, 'en', 'input data', 'Input data'),
-        (5229, 'en', 'generator', 'Generator'),
+        (5229, 'en', 'train generator', 'Generator'),
         (5230, 'en', 'model', 'Model'),
         (5232, 'en', 'model', 'Model'),
         (5233, 'en', 'image data', 'Image Data'),
-        (5234, 'en', 'validation image data', 'Image Data'),
-        (5235, 'en', 'validation generator', 'Generator'),
+        #(5234, 'en', 'validation image data', 'Image Data'),
+        #(5235, 'en', 'validation generator', 'Generator'),
+        (5236, 'en', 'input layers', 'Input data'),
+        (5237, 'en', 'output layers', 'Input data'),
+
         (5273, 'en', 'output data', 'Output data'),
         (5274, 'en', 'output data', 'Output data'),
         (5275, 'en', 'output data', 'Output data'),
@@ -860,7 +905,14 @@ def _insert_operation_port_translation():
         (5312, 'en', 'model', 'Model'),
         (5313, 'en', 'model', 'Model'),
         (5314, 'en', 'generator', 'Generator'),
-        (5315, 'en', 'validation generator', 'Generator'),
+        #(5315, 'en', 'validation generator', 'Generator'),
+
+        (5316, 'en', 'train image data', 'Image Data'),
+        (5317, 'en', 'validation image data', 'Image Data'),
+        (5318, 'en', 'text data', 'Text Data'),
+        (5319, 'en', 'validation text data', 'Text Data'),
+        (5320, 'en', 'sequence data', 'Sequence Data'),
+        (5321, 'en', 'validation sequence data', 'Sequence Data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -925,6 +977,10 @@ def _insert_operation_form():
         (5235, 1, 1, 'execution'),
         (5236, 1, 1, 'execution'),
         (5237, 1, 1, 'execution'),
+
+        (5238, 1, 1, 'execution'),
+        (5239, 1, 1, 'execution'),
+        (5240, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -988,6 +1044,9 @@ def _insert_operation_form_translation():
         (5235, 'en', 'Execution'),
         (5236, 'en', 'Execution'),
         (5237, 'en', 'Execution'),
+        (5238, 'en', 'Execution'),
+        (5239, 'en', 'Execution'),
+        (5240, 'en', 'Execution'),
         (5143, 'pt', 'Execução'),
         (5144, 'pt', 'Execução'),
         (5145, 'pt', 'Execução'),
@@ -1036,6 +1095,9 @@ def _insert_operation_form_translation():
         (5235, 'pt', 'Execução'),
         (5236, 'pt', 'Execução'),
         (5237, 'pt', 'Execução'),
+        (5238, 'pt', 'Execução'),
+        (5239, 'pt', 'Execução'),
+        (5240, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -1097,6 +1159,9 @@ def _insert_operation_operation_form():
         (5114, 41),
         (5115, 41),
         (5116, 41),
+        (5117, 41),
+        (5118, 41),
+        (5119, 41),
         (5021, 5143),
         (5022, 5144),
         (5073, 5145),
@@ -1145,6 +1210,9 @@ def _insert_operation_operation_form():
         (5114, 5235),
         (5115, 5236),
         (5116, 5237),
+        (5117, 5238),
+        (5118, 5239),
+        (5119, 5240),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -2596,8 +2664,8 @@ def _insert_operation_form_field():
         (5491, 'zca_epsilon', 'DECIMAL', 0, 5, 1e-6, 'decimal', None, None, 'EXECUTION', 5237),
         (5492, 'zca_whitening', 'INTEGER', 0, 6, 0, 'checkbox', None, None, 'EXECUTION', 5237),
         (5493, 'rotation_range', 'INTEGER', 0, 7, 0, 'integer', None, None, 'EXECUTION', 5237),
-        (5494, 'width_shift_range', 'DECIMAL', 0, 8, 0.0, 'decimal', None, None, 'EXECUTION', 5237),
-        (5495, 'height_shift_range', 'DECIMAL', 0, 9, 0.0, 'decimal', None, None, 'EXECUTION', 5237),
+        (5494, 'width_shift_range', 'TEXT', 0, 8, "0.0", 'text', None, None, 'EXECUTION', 5237),
+        (5495, 'height_shift_range', 'TEXT', 0, 9, "0.0", 'text', None, None, 'EXECUTION', 5237),
         (5496, 'brightness_range', 'TEXT', 0, 10, None, 'text', None, None, 'EXECUTION', 5237),
         (5497, 'shear_range', 'DECIMAL', 0, 11, 0.0, 'decimal', None, None, 'EXECUTION', 5237),
         (5498, 'zoom_range', 'DECIMAL', 0, 12, 0.0, 'decimal', None, None, 'EXECUTION', 5237),
@@ -2621,6 +2689,18 @@ def _insert_operation_form_field():
          ]), 'EXECUTION', 5237),
         (5507, 'validation_split', 'DECIMAL', 0, 21, 0.0, 'decimal', None, None, 'EXECUTION', 5237),
         (5508, 'dtype', 'TEXT', 0, 22, None, 'text', None, None, 'EXECUTION', 5237),
+
+        # image reader
+        (5509, 'train_images', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5238),
+        (5510, 'validation_images', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5238),
+
+        # text reader
+        (5511, 'train_text', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5239),
+        (5512, 'validation_text', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5239),
+
+        # Sequence reader
+        (5513, 'train_sequence', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5240),
+        (5514, 'validation_sequence', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5240),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -3259,7 +3339,7 @@ def _insert_operation_form_field_translation():
         (5491, 'en', 'ZCA epsilon', ''),
         (5492, 'en', 'ZCA whitening', ''),
         (5493, 'en', 'Rotation range', ''),
-        (5494, 'en', 'Width shift_range', ''),
+        (5494, 'en', 'Width shift range', ''),
         (5495, 'en', 'Height shift range', ''),
         (5496, 'en', 'Brightness range', ''),
         (5497, 'en', 'Shear range', ''),
@@ -3274,6 +3354,15 @@ def _insert_operation_form_field_translation():
         (5506, 'en', 'Data format', ''),
         (5507, 'en', 'Validation split', ''),
         (5508, 'en', 'Dtype', ''),
+
+        (5509, 'en', 'Train images', ''),
+        (5510, 'en', 'Validation images', ''),
+        (5511, 'en', 'Train texts', ''),
+        (5512, 'en', 'Validation texts', ''),
+        (5513, 'en', 'Train sequences', ''),
+        (5514, 'en', 'Validation sequences', ''),
+
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -3281,44 +3370,44 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id BETWEEN 5073 AND 5116'),
+     'DELETE FROM operation WHERE id BETWEEN 5073 AND 5119'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id BETWEEN 5073 AND 5116'),
+     'DELETE FROM operation_translation WHERE id BETWEEN 5073 AND 5119'),
 
     (_insert_operation_category,
-     'DELETE FROM operation_category WHERE id BETWEEN 5060 AND 5064'),
+     'DELETE FROM operation_category WHERE id BETWEEN 5060 AND 5065'),
     (_insert_operation_category_translation,
-     'DELETE FROM operation_category_translation WHERE id BETWEEN 5060 AND 5064'),
+     'DELETE FROM operation_category_translation WHERE id BETWEEN 5060 AND 5065'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 5073 AND 5116'),
+     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 5073 AND 5119'),
 
     (_insert_operation_platform,
      'DELETE FROM operation_platform '
-     'WHERE operation_id BETWEEN 5073 AND 5116 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
+     'WHERE operation_id BETWEEN 5073 AND 5119 AND platform_id = {}'.format(KERAS_PLATAFORM_ID)),
 
     (_insert_operation_port_interface,
-     'DELETE FROM operation_port_interface WHERE id BETWEEN 22 AND 24'),
+     'DELETE FROM operation_port_interface WHERE id BETWEEN 22 AND 26'),
     (_insert_operation_port_interface_translation,
-     'DELETE FROM operation_port_interface_translation WHERE id BETWEEN 22 AND 24'),
+     'DELETE FROM operation_port_interface_translation WHERE id BETWEEN 22 AND 26'),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5315) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5235)'),
+     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5321) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5237)'),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port '
-     'WHERE (operation_port_id BETWEEN 5173 AND 5210) OR (operation_port_id BETWEEN 5273 AND 5315) OR (operation_port_id BETWEEN 5227 AND 5230) OR (operation_port_id BETWEEN 5232 AND 5235)'),
+     'WHERE (operation_port_id BETWEEN 5173 AND 5210) OR (operation_port_id BETWEEN 5273 AND 5321) OR (operation_port_id BETWEEN 5227 AND 5230) OR (operation_port_id BETWEEN 5232 AND 5237)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5315) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5235)'),
+     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5321) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5237)'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5237'),
+     'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5240'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5508'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5514'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5237'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5240'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5508'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5514'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5116))'),
+     'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5119))'),
 
     ('UPDATE operation_port SET multiplicity = "MANY" WHERE type = "OUTPUT"',
      'UPDATE operation_port SET multiplicity = "ONE" WHERE type = "OUTPUT" AND id NOT BETWEEN 5092 AND 5100'),
