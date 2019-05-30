@@ -582,14 +582,14 @@ def _insert_operation_port():
 
         (5227, 'INPUT', '', 1, 'ONE', 5110, 'input data'),
         (5228, 'INPUT', '', 1, 'ONE', 5111, 'input data'),
-        (5229, 'INPUT', '', 4, 'ONE', 5112, 'train generator'),
+        (5229, 'INPUT', '', 4, 'ONE', 5112, 'train-generator'),
         (5230, 'INPUT', '', 1, 'ONE', 5113, 'model'), #save model
         (5232, 'INPUT', '', 1, 'ONE', 5114, 'model'), #evaluate model
         (5233, 'INPUT', '', 1, 'ONE', 5116, 'image data'), #image-generator
         #(5234, 'INPUT', '', 1, 'ONE', 5116, 'validation-image'), #image-generator
-        #(5235, 'INPUT', '', 3, 'ONE', 5112, 'validation generator'),
-        (5236, 'INPUT', '', 2, 'ONE', 5112, 'input data'), #model inputs
-        (5237, 'INPUT', '', 1, 'ONE', 5112, 'input data'), #model outputs
+        #(5235, 'INPUT', '', 3, 'ONE', 5112, 'validation-generator'),
+        (5236, 'INPUT', '', 2, 'ONE', 5112, 'input-layer'), #model inputs
+        (5237, 'INPUT', '', 1, 'ONE', 5112, 'output-layer'), #model outputs
 
         (5273, 'OUTPUT', '', 1, 'MANY', 5073, 'output data'),
         (5274, 'OUTPUT', '', 1, 'MANY', 5074, 'output data'),
@@ -1352,6 +1352,7 @@ def _insert_operation_form_field():
         (5236, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5143),
         (5237, 'kernel_size', 'TEXT', 1, 2, 0, 'text', None, None, 'EXECUTION', 5143),
         (5238, 'strides', 'TEXT', 1, 3, "(1, 1)", 'text', None, None, 'EXECUTION', 5143),
+        (5478, 'input_shape', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', 5143),
         (5239, 'padding', 'TEXT', 0, 4, None, 'dropdown', None,
          json.dumps([
              {'key': 'valid', 'value': 'valid'},
@@ -2646,7 +2647,6 @@ def _insert_operation_form_field():
              {"value": "TensorBoard", "key": "TensorBoard"},
              {"value": "TerminateOnNaN", "key": "TerminateOnNaN"},
          ]), 'EXECUTION', 5233),
-        (5478, 'validation_data', 'TEXT', 0, 14, None, 'text', None, None, 'EXECUTION', 5233),
         (5479, 'validation_steps', 'DECIMAL', 0, 15, None, 'decimal', None, None, 'EXECUTION', 5233),
         (5480, 'validation_freq', 'INTEGER', 0, 16, None, 'integer', None, None, 'EXECUTION', 5233),
         (5481, 'class_weight', 'TEXT', 0, 17, None, 'text', None, None, 'EXECUTION', 5233),
@@ -2701,6 +2701,40 @@ def _insert_operation_form_field():
         # Sequence reader
         (5513, 'train_sequence', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5240),
         (5514, 'validation_sequence', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5240),
+
+        #Flow from directory add to Image Generator Operation
+        (5515, 'target_size', 'TEXT', 1, 23, "(256, 256)", 'text', None, None, 'EXECUTION', 5237),
+        (5516, 'color_mode', 'TEXT', 0, 24, 'nearest', 'dropdown', None,
+         json.dumps([
+             {"key": "grayscale", "value": "grayscale"},
+             {"key": "rgb", "value": "rgb"},
+             {"key": "rgba", "value": "rgba"},
+         ]), 'EXECUTION', 5237),
+        (5517, 'class_mode', 'TEXT', 0, 25, None, 'dropdown', None,
+         json.dumps([
+             {"key": "binary", "value": "binary"},
+             {"key": "categorical", "value": "categorical"},
+             {"key": "input", "value": "input"},
+             {"key": "sparse", "value": "sparse"},
+         ]), 'EXECUTION', 5237),
+        (5518, 'batch_size', 'INTEGER', 1, 26, 32, 'integer', None, None, 'EXECUTION', 5237),
+        (5519, 'shuffle', 'INTEGER', 0, 27, 1, 'checkbox', None, None, 'EXECUTION', 5237),
+        (5520, 'seed', 'INTEGER', 0, 28, None, 'integer', None, None, 'EXECUTION', 5237),
+        (5521, 'subset', 'TEXT', 0, 29, None, 'dropdown', None,
+         json.dumps([
+             {"key": "training", "value": "training"},
+             {"key": "validation", "value": "validation"},
+         ]), 'EXECUTION', 5237),
+        (5522, 'interpolation', 'TEXT', 0, 30, "nearest", 'dropdown', None,
+         json.dumps([
+             {"key": "bicubic", "value": "bicubic"},
+             {"key": "bilinear", "value": "bilinear"},
+             {"key": "nearest", "value": "nearest"},
+             #{"key": "lanczos", "value": "lanczos"},
+             #{"key": "box", "value": "box"},
+             #{"key": "hamming", "value": "hamming"},
+         ]), 'EXECUTION', 5237),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -2735,6 +2769,7 @@ def _insert_operation_form_field_translation():
         (5235, 'en', 'Bias constraint', 'Constraint function applied to the bias vector.'),
 
         #Conv2D
+        (5478, 'en', 'Input shape', '3D tensor with shape: (batch, steps, channels).'),
         (5236, 'en', 'Filters', 'Integer, the dimensionality of the output space (i.e. the number of output filters in the convolution).'),
         (5237, 'en', 'Kernel size', 'An integer or tuple/list of a single integer, specifying the length of the 1D convolution window.'),
         (5238, 'en', 'Strides', 'An integer or tuple/list of a single integer, specifying the stride length of the convolution. Specifying any stride value != 1 is incompatible with specifying any dilation_rate value != 1.'),
@@ -3271,10 +3306,6 @@ def _insert_operation_form_field_translation():
                                   'Sequential or  Model classes. The relevant '
                                   'methods of the callbacks will then be '
                                   'called at each stage of the training.'),
-        (5478, 'en', 'Validation data', 'This can be either a generator or a '
-                                        'Sequence object for the validation '
-                                        'data tuple (x_val, y_val) tuple '
-                                        '(x_val, y_val, val_sample_weights).'),
         (5479, 'en', 'Validation steps', 'Only relevant if validation_data is a'
                                          ' generator. Total number of steps '
                                          '(batches of samples) to yield from '
@@ -3332,28 +3363,95 @@ def _insert_operation_form_field_translation():
                                       '(useful for resuming a previous '
                                       'training run).'),
 
-        (5487, 'en', 'Featurewise center', ''),
-        (5488, 'en', 'Samplewise center', ''),
-        (5489, 'en', 'Featurewise std normalization', ''),
-        (5490, 'en', 'Samplewise std normalization', ''),
-        (5491, 'en', 'ZCA epsilon', ''),
-        (5492, 'en', 'ZCA whitening', ''),
-        (5493, 'en', 'Rotation range', ''),
-        (5494, 'en', 'Width shift range', ''),
-        (5495, 'en', 'Height shift range', ''),
-        (5496, 'en', 'Brightness range', ''),
-        (5497, 'en', 'Shear range', ''),
-        (5498, 'en', 'Zoom range', ''),
-        (5499, 'en', 'Channel shift range', ''),
-        (5500, 'en', 'Fill mode', ''),
-        (5501, 'en', 'Cval', ''),
-        (5502, 'en', 'Horizontal flip', ''),
-        (5503, 'en', 'Vertical flip', ''),
-        (5504, 'en', 'Rescale', ''),
-        (5505, 'en', 'Preprocessing function', ''),
-        (5506, 'en', 'Data format', ''),
-        (5507, 'en', 'Validation split', ''),
-        (5508, 'en', 'Dtype', ''),
+        (5487, 'en', 'Featurewise center', 'Set input mean to 0 over the '
+                                           'dataset, feature-wise.'),
+        (5488, 'en', 'Samplewise center', 'Set each sample mean to 0.'),
+        (5489, 'en', 'Featurewise std normalization', 'Divide inputs by std of '
+                                                      'the dataset, '
+                                                      'feature-wise.'),
+        (5490, 'en', 'Samplewise std normalization', 'Divide each input by its '
+                                                     'std.'),
+        (5491, 'en', 'ZCA epsilon', 'Epsilon for ZCA whitening. Default is '
+                                    '1e-6.'),
+        (5492, 'en', 'ZCA whitening', 'Apply ZCA whitening.'),
+        (5493, 'en', 'Rotation range', 'Degree range for random rotations.'),
+        (5494, 'en', 'Width shift range', 'Float, 1-D array-like or int float: '
+                                          'fraction of total width, if < 1, or '
+                                          'pixels if >= 1. 1-D array-like: '
+                                          'random elements from the array. int:'
+                                          ' integer number of pixels from '
+                                          'interval (-width_shift_range, '
+                                          '+width_shift_range) With '
+                                          'width_shift_range=2 possible values'
+                                          ' are integers [-1, 0, +1], same as '
+                                          'with width_shift_range=[-1, 0, +1], '
+                                          'while with width_shift_range=1.0 '
+                                          'possible values are floats in the '
+                                          'half-open interval [-1.0, +1.0[.'),
+        (5495, 'en', 'Height shift range', 'Float, 1-D array-like or int float:'
+                                           ' fraction of total height, if < 1, '
+                                           'or pixels if >= 1. 1-D array-like: '
+                                           'random elements from the array. '
+                                           'int: integer number of pixels from '
+                                           'interval (-height_shift_range, '
+                                           '+height_shift_range) With '
+                                           'height_shift_range=2 possible '
+                                           'values are integers [-1, 0, +1], '
+                                           'same as with height_shift_range='
+                                           '[-1, 0, +1], while with '
+                                           'height_shift_range=1.0 possible '
+                                           'values are floats in the half-open '
+                                           'interval [-1.0, +1.0[.'),
+        (5496, 'en', 'Brightness range', 'Tuple or list of two floats. Range '
+                                         'for picking a brightness shift value '
+                                         'from.'),
+        (5497, 'en', 'Shear range', 'Float. Shear Intensity (Shear angle in '
+                                    'counter-clockwise direction in degrees)'),
+        (5498, 'en', 'Zoom range', 'Float or [lower, upper]. Range for random '
+                                   'zoom. If a float, [lower, upper] = '
+                                   '[1-zoom_range, 1+zoom_range].'),
+        (5499, 'en', 'Channel shift range', 'Float. Range for random channel '
+                                            'shifts.'),
+        (5500, 'en', 'Fill mode', 'One of {"constant", "nearest", "reflect" or'
+                                  ' "wrap"}. Default is "nearest". Points '
+                                  'outside the boundaries of the input are '
+                                  'filled according to the given mode: '
+                                  '"constant": kkkkkkkk|abcd|kkkkkkkk (cval=k) '
+                                  '"nearest": aaaaaaaa|abcd|dddddddd "reflect":'
+                                  ' abcddcba|abcd|dcbaabcd "wrap": '
+                                  'abcdabcd|abcd|abcdabcd'),
+        (5501, 'en', 'Cval', 'Float or Int. Value used for points outside the '
+                             'boundaries when fill_mode = "constant".'),
+        (5502, 'en', 'Horizontal flip', 'Randomly flip inputs horizontally.'),
+        (5503, 'en', 'Vertical flip', 'Randomly flip inputs vertically.'),
+        (5504, 'en', 'Rescale', 'Rescaling factor. Defaults to None. If None '
+                                'or 0, no rescaling is applied, otherwise we '
+                                'multiply the data by the value provided (after'
+                                ' applying all other transformations).'),
+        (5505, 'en', 'Preprocessing function', 'function that will be implied '
+                                               'on each input. The function '
+                                               'will run after the image is '
+                                               'resized and augmented. The '
+                                               'function should take one '
+                                               'argument: one image (Numpy '
+                                               'tensor with rank 3), and should'
+                                               ' output a Numpy tensor with '
+                                               'the same shape.'),
+        (5506, 'en', 'Data format', 'Image data format, either "channels_first"'
+                                    ' or "channels_last". "channels_last" mode'
+                                    ' means that the images should have shape '
+                                    '(samples, height, width, channels), '
+                                    '"channels_first" mode means that the '
+                                    'images should have shape  (samples, '
+                                    'channels, height, width). It defaults to '
+                                    'the image_data_format value found in your '
+                                    'Keras config file at ~/.keras/keras.json. '
+                                    'If you never set it, then it will be '
+                                    '"channels_last".'),
+        (5507, 'en', 'Validation split', 'Float. Fraction of images reserved '
+                                         'for validation (strictly between 0 '
+                                         'and 1).'),
+        (5508, 'en', 'Dtype', 'Data type to use for the generated arrays.'),
 
         (5509, 'en', 'Train images', ''),
         (5510, 'en', 'Validation images', ''),
@@ -3361,6 +3459,45 @@ def _insert_operation_form_field_translation():
         (5512, 'en', 'Validation texts', ''),
         (5513, 'en', 'Train sequences', ''),
         (5514, 'en', 'Validation sequences', ''),
+
+        (5515, 'en', 'Target size', 'Tuple of integers (height, width), '
+                                    'default: (256, 256). The dimensions to '
+                                    'which all images found will be resized.'),
+        (5516, 'en', 'Color mode', 'One of "grayscale", "rgb", "rgba". '
+                                   'Whether the images will be converted to '
+                                   'have 1, 3, or 4 channels.'),
+        (5517, 'en', 'Class mode', 'One of "categorical", "binary", "sparse", '
+                                   '"input", or None. Default: "categorical". '
+                                   'Determines the type of label arrays that '
+                                   'are returned: "categorical" will be 2D '
+                                   'one-hot encoded labels, "binary" will be '
+                                   '1D binary labels, "sparse" will be 1D '
+                                   'integer labels, "input" will be images '
+                                   'identical to input images (mainly used to '
+                                   'work with autoencoders). If None, no '
+                                   'labels are returned (the generator will '
+                                   'only yield batches of image data, which '
+                                   'is useful to use with '
+                                   'model.predict_generator()). Please note '
+                                   'that in case of class_mode None, the '
+                                   'data still needs to reside in a '
+                                   'subdirectory of directory for it to work '
+                                   'correctly.'),
+        (5518, 'en', 'Batch size', 'Size of the batches of data (default: 32).'),
+        (5519, 'en', 'Shuffle', 'Whether to shuffle the data (default: True) '
+                                'If set to False, sorts the data in '
+                                'alphanumeric order.'),
+        (5520, 'en', 'Seed', 'Optional random seed for shuffling and '
+                             'transformations.'),
+        (5521, 'en', 'Subset', 'Subset of data ("training" or "validation") if'
+                               '  validation_split is set in '
+                               'ImageDataGenerator.'),
+        (5522, 'en', 'Interpolation', 'Interpolation method used to resample '
+                                      'the image if the target size is '
+                                      'different from that of the loaded image.'
+                                      ' Supported methods are "nearest", '
+                                      '"bilinear", and "bicubic". '),
+
 
 
     ]
@@ -3401,11 +3538,11 @@ all_commands = [
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5240'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5514'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5522'),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5240'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5514'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5522'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5119))'),
 
