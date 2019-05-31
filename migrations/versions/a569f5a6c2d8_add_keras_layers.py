@@ -641,6 +641,7 @@ def _insert_operation_port():
         (5319, 'OUTPUT', '', 1, 'ONE', 5118, 'validation-text'), #text-reader
         (5320, 'OUTPUT', '', 2, 'ONE', 5119, 'train-sequence'), #sequence-reader
         (5321, 'OUTPUT', '', 1, 'ONE', 5119, 'validation-sequence'), #sequence-reader
+        (5322, 'OUTPUT', '', 2, 'MANY', 5112, 'output data'),# model output data
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -798,6 +799,7 @@ def _insert_operation_port_interface_operation_port():
         (5319, 25),
         (5320, 26),
         (5321, 26),
+        (5322, 1),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -913,6 +915,7 @@ def _insert_operation_port_translation():
         (5319, 'en', 'validation text data', 'Text Data'),
         (5320, 'en', 'sequence data', 'Sequence Data'),
         (5321, 'en', 'validation sequence data', 'Sequence Data'),
+        (5322, 'en', 'output data', 'Output data'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -2704,7 +2707,7 @@ def _insert_operation_form_field():
 
         #Flow from directory add to Image Generator Operation
         (5515, 'target_size', 'TEXT', 1, 23, "(256, 256)", 'text', None, None, 'EXECUTION', 5237),
-        (5516, 'color_mode', 'TEXT', 0, 24, 'nearest', 'dropdown', None,
+        (5516, 'color_mode', 'TEXT', 0, 24, 'rgb', 'dropdown', None,
          json.dumps([
              {"key": "grayscale", "value": "grayscale"},
              {"key": "rgb", "value": "rgb"},
@@ -3528,12 +3531,12 @@ all_commands = [
      'DELETE FROM operation_port_interface_translation WHERE id BETWEEN 22 AND 26'),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5321) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5237)'),
+     'DELETE FROM operation_port WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5322) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5237)'),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port '
-     'WHERE (operation_port_id BETWEEN 5173 AND 5210) OR (operation_port_id BETWEEN 5273 AND 5321) OR (operation_port_id BETWEEN 5227 AND 5230) OR (operation_port_id BETWEEN 5232 AND 5237)'),
+     'WHERE (operation_port_id BETWEEN 5173 AND 5210) OR (operation_port_id BETWEEN 5273 AND 5322) OR (operation_port_id BETWEEN 5227 AND 5230) OR (operation_port_id BETWEEN 5232 AND 5237)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5321) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5237)'),
+     'DELETE FROM operation_port_translation WHERE (id BETWEEN 5173 AND 5210) OR (id BETWEEN 5273 AND 5322) OR (id BETWEEN 5227 AND 5230) OR (id BETWEEN 5232 AND 5237)'),
 
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5240'),
@@ -3562,6 +3565,11 @@ all_commands = [
      'UPDATE operation SET enabled = 1, slug = "input" WHERE id = 5071'),
     ('UPDATE operation SET enabled = 0, slug = "output-old" WHERE id = 5072',
      'UPDATE operation SET enabled = 1, slug = "output" WHERE id = 5072'),
+
+    ('DELETE FROM platform_form WHERE operation_form_id IN (5161)',
+     'INSERT INTO platform_form (`platform_id`, `operation_form_id`) VALUES (5, 5161)'),
+    ('DELETE FROM platform_form WHERE operation_form_id IN (5162)',
+     'INSERT INTO platform_form (`platform_id`, `operation_form_id`) VALUES (5, 5162)'),
 ]
 
 
