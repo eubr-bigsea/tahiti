@@ -240,6 +240,7 @@ class Operation(db.Model, Translatable):
     type = Column(Enum(*OperationType.values(),
                        name='OperationTypeEnumType'), nullable=False)
     icon = Column(String(200), nullable=False)
+    cssClass = Column(String(250), nullable=True)
 
     # Associations
     # noinspection PyUnresolvedReferences

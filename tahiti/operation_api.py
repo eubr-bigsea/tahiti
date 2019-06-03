@@ -194,7 +194,7 @@ class OperationDetailApi(Resource):
         def result():
             operation = optimize_operation_query(
                 Operation.query.filter_by(
-                    id=operation_id).order_by('1')).first()
+                    id=operation_id)).first()
             if operation is not None:
                 return OperationItemResponseSchema().dump(operation).data
             else:
