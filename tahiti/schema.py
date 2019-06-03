@@ -173,6 +173,7 @@ class OperationListResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
+    cssClass = fields.String(required=False)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryListResponseSchema',
         required=True,
@@ -210,6 +211,7 @@ class OperationCreateRequestSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
+    cssClass = fields.String(required=False)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryCreateRequestSchema',
         required=True,
@@ -251,6 +253,7 @@ class OperationItemResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=True)
+    cssClass = fields.String(required=False)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryItemResponseSchema',
         required=True,
@@ -291,6 +294,7 @@ class OperationUpdateRequestSchema(Schema):
     type = fields.String(required=False, allow_none=True,
                          validate=[OneOf(OperationType.__dict__.keys())])
     icon = fields.String(required=False, allow_none=True)
+    cssClass = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryUpdateRequestSchema',
         required=True,
