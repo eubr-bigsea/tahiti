@@ -19,10 +19,12 @@ db = SQLAlchemy()
 
 # noinspection PyClassHasNoInit
 class OperationType:
-    ACTION = 'ACTION'
     VISUALIZATION = 'VISUALIZATION'
     SHUFFLE = 'SHUFFLE'
+    USER_META_OPERATION = 'USER_META_OPERATION'
+    ACTION = 'ACTION'
     TRANSFORMATION = 'TRANSFORMATION'
+    SYSTEM_META_OPERATION = 'SYSTEM_META_OPERATION'
 
     @staticmethod
     def values():
@@ -130,6 +132,19 @@ class PermissionType:
     @staticmethod
     def values():
         return [n for n in PermissionType.__dict__.keys()
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
+class WorkflowType:
+    SUB_FLOW = 'SUB_FLOW'
+    USER_TEMPLATE = 'USER_TEMPLATE'
+    SYSTEM_TEMPLATE = 'SYSTEM_TEMPLATE'
+    WORKFLOW = 'WORKFLOW'
+
+    @staticmethod
+    def values():
+        return [n for n in WorkflowType.__dict__.keys()
                 if n[0] != '_' and n != 'values']
 
 
@@ -557,6 +572,10 @@ class Task(db.Model):
                          default=DiagramEnvironment.DESIGN, nullable=False)
     enabled = Column(Boolean,
                      default=True, nullable=False)
+    width = Column(Integer,
+                   default=0, nullable=False)
+    height = Column(Integer,
+                    default=0, nullable=False)
     __mapper_args__ = {
         'version_id_col': version,
     }
@@ -574,6 +593,11 @@ class Task(db.Model):
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
+    group_id = Column(String(250),
+                      ForeignKey("task.id"))
+    group = relationship(
+        "Task",
+        foreign_keys=[group_id])
 
     def __unicode__(self):
         return self.name
@@ -630,6 +654,9 @@ class Workflow(db.Model):
     forms = Column(String(16000000))
     deployment_enabled = Column(Boolean,
                                 default=False, nullable=False)
+    type = Column(Enum(*WorkflowType.values(),
+                       name='WorkflowTypeEnumType'),
+                  default=WorkflowType.WORKFLOW, nullable=False)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }
