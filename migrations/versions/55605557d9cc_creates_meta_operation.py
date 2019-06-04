@@ -12,7 +12,6 @@ from sqlalchemy import String, Integer, Text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 
-
 # revision identifiers, used by Alembic.
 revision = '55605557d9cc'
 down_revision = '54dff15ea3f9'
@@ -27,6 +26,7 @@ KERAS_PLATAFORM_ID = 5
 
 META_OPERATION_ID = 125
 META_OPERATION_FORM_ID = 136
+
 
 def _insert_operation():
     tb = table(
@@ -207,8 +207,10 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
     data = [
 
-        (502, 'quantity_input_ports', 'INTEGER', 1, 1, 2, 'text', None, None, 'EXECUTION', META_OPERATION_FORM_ID),
-        (503, 'quantity_output_ports', 'INTEGER', 1, 2, 2, 'text', None, None, 'EXECUTION', META_OPERATION_FORM_ID),
+        (502, 'quantity_input_ports', 'INTEGER', 1, 1, 2, 'text', None, None,
+         'EXECUTION', META_OPERATION_FORM_ID),
+        (503, 'quantity_output_ports', 'INTEGER', 1, 2, 2, 'text', None, None,
+         'EXECUTION', META_OPERATION_FORM_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -225,11 +227,15 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
 
-        (502, 'en', 'Input ports', 'Number of input ports for the meta-operation [0:N].'),
-        (502, 'pt', 'Portas de entrada', 'Número de portas de entrada para a meta-operação [0:N].'),
+        (502, 'en', 'Input ports',
+         'Number of input ports for the meta-operation [0:N].'),
+        (502, 'pt', 'Portas de entrada',
+         'Número de portas de entrada para a meta-operação [0:N].'),
 
-        (503, 'en', 'Output ports', 'Number of output ports for the meta-operation [0:N].'),
-        (503, 'pt', 'Portas de saída', 'Número de portas de saída para a meta-operação [0:N].'),
+        (503, 'en', 'Output ports',
+         'Number of output ports for the meta-operation [0:N].'),
+        (503, 'pt', 'Portas de saída',
+         'Número de portas de saída para a meta-operação [0:N].'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -238,24 +244,29 @@ def _insert_operation_form_field_translation():
 all_commands = [
 
     (_insert_operation,
-     'DELETE FROM operation WHERE id = META_OPERATION_ID'),
+     'DELETE FROM operation WHERE id = {}'.format(META_OPERATION_ID)),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id = META_OPERATION_ID'),
+     'DELETE FROM operation_translation WHERE id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id = META_OPERATION_ID'),
+     'DELETE FROM operation_platform WHERE operation_id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_category,
      'DELETE FROM operation_category WHERE ID = 43'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id = META_OPERATION_ID'),
+     'DELETE FROM operation_category_operation WHERE operation_id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_category_translation,
      'DELETE FROM operation_category_translation WHERE id = 43'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id = META_OPERATION_FORM_ID'),
+     'DELETE FROM operation_form WHERE id = {}'.format(META_OPERATION_ID)),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id = META_OPERATION_FORM_ID'),
+     'DELETE FROM operation_form_translation WHERE id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = META_OPERATION_ID'),
+     'DELETE FROM operation_operation_form WHERE operation_id = {}'.format(
+         META_OPERATION_ID)),
     (_insert_operation_form_field,
      'DELETE FROM operation_form_field WHERE id BETWEEN 502 and 503'),
     (_insert_operation_form_field_translation,
@@ -270,6 +281,7 @@ def upgrade():
     connection = session.connection()
 
     try:
+
         for cmd in all_commands:
             if isinstance(cmd[0], (unicode, str)):
                 connection.execute(cmd[0])
@@ -290,6 +302,7 @@ def downgrade():
     connection = session.connection()
 
     try:
+        connection.execute('SET FOREIGN_KEY_CHECKS=0;')
         for cmd in reversed(all_commands):
             if isinstance(cmd[1], (unicode, str)):
                 connection.execute(cmd[1])
@@ -298,6 +311,7 @@ def downgrade():
                     connection.execute(row)
             else:
                 cmd[1]()
+        connection.execute('SET FOREIGN_KEY_CHECKS=1;')
     except:
         session.rollback()
         raise
