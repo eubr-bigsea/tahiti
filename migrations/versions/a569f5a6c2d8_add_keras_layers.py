@@ -587,9 +587,9 @@ def _insert_operation_port():
         (5232, 'INPUT', '', 1, 'ONE', 5114, 'model'), #evaluate model
         (5233, 'INPUT', '', 1, 'ONE', 5116, 'image data'), #image-generator
         #(5234, 'INPUT', '', 1, 'ONE', 5116, 'validation-image'), #image-generator
-        #(5235, 'INPUT', '', 3, 'ONE', 5112, 'validation-generator'),
-        (5236, 'INPUT', '', 2, 'ONE', 5112, 'input-layer'), #model inputs
-        (5237, 'INPUT', '', 1, 'ONE', 5112, 'output-layer'), #model outputs
+        (5235, 'INPUT', '', 3, 'ONE', 5112, 'validation-generator'),
+        (5236, 'INPUT', '', 2, 'MANY', 5112, 'input-layer'), #model inputs
+        (5237, 'INPUT', '', 1, 'MANY', 5112, 'output-layer'), #model outputs
 
         (5273, 'OUTPUT', '', 1, 'MANY', 5073, 'output data'),
         (5274, 'OUTPUT', '', 1, 'MANY', 5074, 'output data'),
@@ -746,7 +746,7 @@ def _insert_operation_port_interface_operation_port():
         (5232, 22),
         (5233, 24),
         #(5234, 24),
-        #(5235, 23),
+        (5235, 23),
         (5236, 1),
         (5237, 1),
 
@@ -861,7 +861,7 @@ def _insert_operation_port_translation():
         (5232, 'en', 'model', 'Model'),
         (5233, 'en', 'image data', 'Image Data'),
         #(5234, 'en', 'validation image data', 'Image Data'),
-        #(5235, 'en', 'validation generator', 'Generator'),
+        (5235, 'en', 'validation generator', 'Generator'),
         (5236, 'en', 'input layers', 'Input data'),
         (5237, 'en', 'output layers', 'Input data'),
 
@@ -3599,6 +3599,7 @@ def downgrade():
     connection = session.connection()
 
     try:
+        connection.execute('SET FOREIGN_KEY_CHECKS=0;')
         for cmd in reversed(all_commands):
             if isinstance(cmd[1], (unicode, str)):
                 connection.execute(cmd[1])
@@ -3607,6 +3608,7 @@ def downgrade():
                     connection.execute(row)
             else:
                 cmd[1]()
+        connection.execute('SET FOREIGN_KEY_CHECKS=1;')
     except:
         session.rollback()
         raise
