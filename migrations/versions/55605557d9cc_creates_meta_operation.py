@@ -260,17 +260,17 @@ all_commands = [
      'DELETE FROM operation_category_translation WHERE id = 43'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id = {}'.format(META_OPERATION_ID)),
+     'DELETE FROM operation_form WHERE id = {}'.format(META_OPERATION_FORM_ID)),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation WHERE id = {}'.format(
-         META_OPERATION_ID)),
+         META_OPERATION_FORM_ID)),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE operation_id = {}'.format(
          META_OPERATION_ID)),
     (_insert_operation_form_field,
      'DELETE FROM operation_form_field WHERE id BETWEEN 502 and 503'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 502 and 503'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 502 and 503'),
 
 ]
 
