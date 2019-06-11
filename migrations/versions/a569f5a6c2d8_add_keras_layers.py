@@ -1486,7 +1486,7 @@ def _insert_operation_form_field():
          ]), 'EXECUTION', 5146),
         (5258, 'dilation_rate', 'TEXT', 0, 6, "1", 'text', None, None, 'EXECUTION', 5146),
         (5259, 'depth_multiplier', 'INTEGER', 0, 7, 1, 'integer', None, None, 'EXECUTION', 5146),
-        (5260, 'activation', 'TEXT', 1, 8, None, 'dropdown', None,
+        (5260, 'activation', 'TEXT', 0, 8, None, 'dropdown', None,
          json.dumps([
              {"key": "elu", "value": "elu"},
              {"key": "exponential", "value": "exponential"},
@@ -2738,6 +2738,38 @@ def _insert_operation_form_field():
              #{"key": "hamming", "value": "hamming"},
          ]), 'EXECUTION', 5237),
 
+        # Conv1D
+        (5523, 'trainable', 'INTEGER', 0, 16, 0, 'checkbox', None, None, 'EXECUTION', 5145),
+        (5524, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5145),
+
+        # SeparableConv1D
+        (5525, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5146),
+
+        # SeparableConv2D
+        (5526, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5147),
+
+        # DepthwiseConv2D
+        (5527, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5148),
+
+        # Conv2DTranspose
+        (5528, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5149),
+
+        # Conv3D
+        (5529, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5150),
+
+        # Conv3DTranspose
+        (5530, 'input_shape', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', 5151),
+
+        # Cropping1D
+        (5531, 'input_shape', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5152),
+
+        # Cropping2D
+        (5532, 'input_shape', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5153),
+
+        # Cropping3D
+        (5533, 'input_shape', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5154),
+
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -3500,8 +3532,79 @@ def _insert_operation_form_field_translation():
                                       'different from that of the loaded image.'
                                       ' Supported methods are "nearest", '
                                       '"bilinear", and "bicubic". '),
+        # Conv1D
+        (5523, 'en', 'Trainable', 'Indicates whether the layer in the model is '
+                                  'trainable.'),
+        (5524, 'en', 'Input shape', '3D tensor with shape: (batch, steps, '
+                                    'channels).'),
 
+        # SeparableConv1D
+        (5525, 'en', 'Input shape', '3D tensor with shape: (batch, channels, '
+                                    'steps) if data_format is "channels_first" '
+                                    'or 3D tensor with shape: (batch, steps, '
+                                    'channels) if data_format is '
+                                    '"channels_last".'),
 
+        # SeparableConv2D
+        (5526, 'en', 'Input shape', '4D tensor with shape: (batch, channels, '
+                                    'rows, cols) if data_format is '
+                                    '"channels_first" or 4D tensor with '
+                                    'shape: (batch, rows, cols, channels) '
+                                    'if data_format is "channels_last".'),
+
+        # DepthwiseConv2D
+        (5527, 'en', 'Input shape', '4D tensor with shape: (batch, channels, '
+                                    'rows, cols) if data_format is '
+                                    '"channels_first" or 4D tensor with '
+                                    'shape: (batch, rows, cols, channels) '
+                                    'if data_format is "channels_last".'),
+
+        # Conv2DTranspose
+        (5528, 'en', 'Input shape', '4D tensor with shape: (batch, channels, '
+                                    'rows, cols) if data_format is '
+                                    '"channels_first" or 4D tensor with '
+                                    'shape: (batch, rows, cols, channels) '
+                                    'if data_format is "channels_last".'),
+
+        # Conv3D
+        (5529, 'en', 'Input shape', '5D tensor with shape: (batch, channels, '
+                                    'conv_dim1, conv_dim2, conv_dim3) if '
+                                    'data_format is "channels_first" or 5D '
+                                    'tensor with shape: (batch, conv_dim1, '
+                                    'conv_dim2, conv_dim3, channels) if '
+                                    'data_format is "channels_last".s) '
+                                    'if data_format is "channels_last".'),
+
+        # Conv3DTranspose
+        (5530, 'en', 'Input shape', '5D tensor with shape: (batch, filters, '
+                                     'new_depth, new_rows, new_cols) if '
+                                     'data_format is "channels_first" or 5D '
+                                     'tensor with shape: (batch, new_depth, '
+                                     'new_rows, new_cols, filters) if '
+                                     'data_format is "channels_last". depth '
+                                     'and rows and cols values might have '
+                                     'changed due to padding. If output_padding'
+                                     ' is specified'),
+
+        # Cropping1D
+        (5531, 'en', 'Input shape', '3D tensor with shape (batch, axis_to_crop,'
+                                    ' features)'),
+
+        # Cropping2D
+        (5532, 'en', 'Input shape', '4D tensor with shape: - If data_format is '
+                                    '"channels_last":  (batch, rows, cols, '
+                                    'channels) - If data_format is '
+                                    '"channels_first": (batch, channels, rows, '
+                                    'cols)'),
+
+        # Cropping3D
+        (5533, 'en', 'Input shape', '5D tensor with shape: - If data_format is '
+                                    '"channels_last": (batch, '
+                                    'first_axis_to_crop, second_axis_to_crop, '
+                                    'third_axis_to_crop, depth) - If '
+                                    'data_format is "channels_first": (batch, '
+                                    'depth, first_axis_to_crop, '
+                                    'second_axis_to_crop, third_axis_to_crop)'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -3541,11 +3644,11 @@ all_commands = [
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5240'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5522'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5221 AND 5533'),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation WHERE id BETWEEN 5143 AND 5160 OR id BETWEEN 5163 AND 5175 OR id BETWEEN 5221 AND 5240'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5522'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5221 AND 5533'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE (operation_id IN (5021, 5022, 5031, 5051) OR (operation_id BETWEEN 5073 AND 5119))'),
 
