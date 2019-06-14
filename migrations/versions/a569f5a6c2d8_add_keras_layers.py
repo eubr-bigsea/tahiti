@@ -1240,6 +1240,9 @@ def _insert_operation_form_field():
     columns = ('id', 'name', 'type', 'required', 'order', 'default',
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
 
+    LIMONERO_IMAGE = "`${LIMONERO_URL}/datasources?simple=true&list=" \
+                     "true&enabled=1&formats=TAR_IMAGE_FOLDER,HAR_IMAGE_FOLDER`"
+
     data = [
         # Conv1D
         (5221, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5145),
@@ -2694,16 +2697,16 @@ def _insert_operation_form_field():
         (5508, 'dtype', 'TEXT', 0, 22, None, 'text', None, None, 'EXECUTION', 5237),
 
         # image reader
-        (5509, 'train_images', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5238),
-        (5510, 'validation_images', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5238),
+        (5509, 'train_images', 'INTEGER', 1, 1, None, 'lookup', LIMONERO_IMAGE, None, 'EXECUTION', 5238),
+        (5510, 'validation_images', 'INTEGER', 0, 2, None, 'lookup', LIMONERO_IMAGE, None, 'EXECUTION', 5238),
 
         # text reader
-        (5511, 'train_text', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5239),
-        (5512, 'validation_text', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5239),
+        (5511, 'train_text', 'INTEGER', 1, 1, None, 'lookup', LIMONERO_IMAGE, None, 'EXECUTION', 5239),
+        (5512, 'validation_text', 'INTEGER', 0, 2, None, 'lookup', LIMONERO_IMAGE, None, 'EXECUTION', 5239),
 
         # Sequence reader
-        (5513, 'train_sequence', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 5240),
-        (5514, 'validation_sequence', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5240),
+        (5513, 'train_sequence', 'INTEGER', 1, 1, None, 'lookup', LIMONERO_IMAGE, None, 'EXECUTION', 5240),
+        (5514, 'validation_sequence', 'INTEGER', 0, 2, None, 'lookup', LIMONERO_IMAGE, None, 'EXECUTION', 5240),
 
         #Flow from directory add to Image Generator Operation
         (5515, 'target_size', 'TEXT', 1, 23, "(256, 256)", 'text', None, None, 'EXECUTION', 5237),
@@ -2713,13 +2716,13 @@ def _insert_operation_form_field():
              {"key": "rgb", "value": "rgb"},
              {"key": "rgba", "value": "rgba"},
          ]), 'EXECUTION', 5237),
-        (5517, 'class_mode', 'TEXT', 0, 25, None, 'dropdown', None,
-         json.dumps([
-             {"key": "binary", "value": "binary"},
-             {"key": "categorical", "value": "categorical"},
-             {"key": "input", "value": "input"},
-             {"key": "sparse", "value": "sparse"},
-         ]), 'EXECUTION', 5237),
+        # (5517, 'class_mode', 'TEXT', 0, 25, None, 'dropdown', None,
+        #  json.dumps([
+        #      {"key": "binary", "value": "binary"},
+        #      {"key": "categorical", "value": "categorical"},
+        #      {"key": "input", "value": "input"},
+        #      {"key": "sparse", "value": "sparse"},
+        #  ]), 'EXECUTION', 5237),
         (5518, 'batch_size', 'INTEGER', 1, 26, 32, 'integer', None, None, 'EXECUTION', 5237),
         (5519, 'shuffle', 'INTEGER', 0, 27, 1, 'checkbox', None, None, 'EXECUTION', 5237),
         (5520, 'seed', 'INTEGER', 0, 28, None, 'integer', None, None, 'EXECUTION', 5237),
@@ -3501,23 +3504,23 @@ def _insert_operation_form_field_translation():
         (5516, 'en', 'Color mode', 'One of "grayscale", "rgb", "rgba". '
                                    'Whether the images will be converted to '
                                    'have 1, 3, or 4 channels.'),
-        (5517, 'en', 'Class mode', 'One of "categorical", "binary", "sparse", '
-                                   '"input", or None. Default: "categorical". '
-                                   'Determines the type of label arrays that '
-                                   'are returned: "categorical" will be 2D '
-                                   'one-hot encoded labels, "binary" will be '
-                                   '1D binary labels, "sparse" will be 1D '
-                                   'integer labels, "input" will be images '
-                                   'identical to input images (mainly used to '
-                                   'work with autoencoders). If None, no '
-                                   'labels are returned (the generator will '
-                                   'only yield batches of image data, which '
-                                   'is useful to use with '
-                                   'model.predict_generator()). Please note '
-                                   'that in case of class_mode None, the '
-                                   'data still needs to reside in a '
-                                   'subdirectory of directory for it to work '
-                                   'correctly.'),
+        # (5517, 'en', 'Class mode', 'One of "categorical", "binary", "sparse", '
+        #                            '"input", or None. Default: "categorical". '
+        #                            'Determines the type of label arrays that '
+        #                            'are returned: "categorical" will be 2D '
+        #                            'one-hot encoded labels, "binary" will be '
+        #                            '1D binary labels, "sparse" will be 1D '
+        #                            'integer labels, "input" will be images '
+        #                            'identical to input images (mainly used to '
+        #                            'work with autoencoders). If None, no '
+        #                            'labels are returned (the generator will '
+        #                            'only yield batches of image data, which '
+        #                            'is useful to use with '
+        #                            'model.predict_generator()). Please note '
+        #                            'that in case of class_mode None, the '
+        #                            'data still needs to reside in a '
+        #                            'subdirectory of directory for it to work '
+        #                            'correctly.'),
         (5518, 'en', 'Batch size', 'Size of the batches of data (default: 32).'),
         (5519, 'en', 'Shuffle', 'Whether to shuffle the data (default: True) '
                                 'If set to False, sorts the data in '
@@ -3673,6 +3676,9 @@ all_commands = [
      'INSERT INTO platform_form (`platform_id`, `operation_form_id`) VALUES (5, 5161)'),
     ('DELETE FROM platform_form WHERE operation_form_id IN (5162)',
      'INSERT INTO platform_form (`platform_id`, `operation_form_id`) VALUES (5, 5162)'),
+
+    ("""UPDATE operation SET cssClass = 'circle-layout' WHERE id IN (SELECT operation_id FROM `operation_platform` WHERE platform_id = 5)""",
+     ""),
 ]
 
 
@@ -3704,13 +3710,14 @@ def downgrade():
     try:
         connection.execute('SET FOREIGN_KEY_CHECKS=0;')
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
-                connection.execute(cmd[1])
-            elif isinstance(cmd[1], list):
-                for row in cmd[1]:
-                    connection.execute(row)
-            else:
-                cmd[1]()
+            if cmd[1]:
+                if isinstance(cmd[1], (unicode, str)):
+                    connection.execute(cmd[1])
+                elif isinstance(cmd[1], list):
+                    for row in cmd[1]:
+                        connection.execute(row)
+                else:
+                    cmd[1]()
         connection.execute('SET FOREIGN_KEY_CHECKS=1;')
     except:
         session.rollback()
