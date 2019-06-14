@@ -778,11 +778,6 @@ class TaskListResponseSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.__dict__.keys())])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
-    group = fields.Nested(
-        'tahiti.schema.TaskListResponseSchema',
-        allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
@@ -808,10 +803,7 @@ class TaskCreateRequestSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.__dict__.keys())])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
     operation_id = fields.Integer(required=True)
-    group_id = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -836,11 +828,6 @@ class TaskItemResponseSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.__dict__.keys())])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
-    group = fields.Nested(
-        'tahiti.schema.TaskItemResponseSchema',
-        allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
@@ -867,15 +854,10 @@ class TaskExecuteRequestSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.__dict__.keys())])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
     next_task_id = fields.String(allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationExecuteRequestSchema',
         required=True)
-    group = fields.Nested(
-        'tahiti.schema.TaskExecuteRequestSchema',
-        allow_none=True)
     parameters = fields.Nested(
         'tahiti.schema.KeyValuePairExecuteRequestSchema',
         allow_none=True,
@@ -910,8 +892,6 @@ class WorkflowExecuteRequestSchema(Schema):
     template_code = fields.String(required=False, allow_none=True)
     forms = fields.String(required=False, allow_none=True)
     deployment_enabled = fields.Boolean(required=True, missing=False)
-    type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
     tasks = fields.Nested(
         'tahiti.schema.TaskExecuteRequestSchema',
         allow_none=True,
@@ -948,8 +928,6 @@ class WorkflowListResponseSchema(Schema):
     is_system_template = fields.Boolean(required=True, missing=False)
     is_public = fields.Boolean(required=True, missing=False)
     deployment_enabled = fields.Boolean(required=True, missing=False)
-    type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
     tasks = fields.Nested(
         'tahiti.schema.TaskListResponseSchema',
         allow_none=True,
@@ -991,8 +969,6 @@ class WorkflowCreateRequestSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False)
     forms = fields.String(required=False, allow_none=True)
     deployment_enabled = fields.Boolean(required=True, missing=False)
-    type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
     tasks = fields.Nested(
         'tahiti.schema.TaskCreateRequestSchema',
         allow_none=True,
@@ -1031,8 +1007,6 @@ class WorkflowItemResponseSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False)
     forms = fields.Function(lambda x: load_json(x.forms))
     deployment_enabled = fields.Boolean(required=True, missing=False)
-    type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
     tasks = fields.Nested(
         'tahiti.schema.TaskItemResponseSchema',
         allow_none=True,
