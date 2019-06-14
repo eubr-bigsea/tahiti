@@ -117,5 +117,5 @@ def downgrade():
     [T_PREFIX, 't_prefix', 'TEXT', 0, 8, 'text', None, None, 'EXECUTION', 111]
   ]
 
-  rows = [dict(zip(columns, row)) for row in data]
+  rows = [dict(list(zip(columns, row))) for row in data]
   op.bulk_insert(tb, rows)

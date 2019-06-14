@@ -86,7 +86,7 @@ def insert_operation_category_translation():
         (25, 'en', 'Evaluation'),
         (26, 'en', 'ML: Models'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -242,7 +242,7 @@ def insert_operation_category_operation():
         (43, 26),
         (3, 22),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -281,7 +281,7 @@ def insert_operation_category():
         (25, 'parent'),
         (26, 'parent'),
     ]
-    rows = [dict(zip(columns, cat)) for cat in all_categories]
+    rows = [dict(list(zip(columns, cat))) for cat in all_categories]
 
     op.bulk_insert(operation_category_table, rows)
 
@@ -380,7 +380,7 @@ def insert_operation():
         (80, 'scatter-plot', 1, 'VISUALIZATION', 'fa-square'),
         (81, 'summary-statistics', 1, 'VISUALIZATION', 'fa-calculator'),
     )
-    rows = [dict(zip(columns, operation)) for operation in all_ops]
+    rows = [dict(list(zip(columns, operation))) for operation in all_ops]
 
     op.bulk_insert(operation_table, rows)
 
@@ -485,7 +485,7 @@ def insert_operation_form():
         (95, 1, 1, 'execution'),
         (96, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(operation_form_table, rows)
 
@@ -1022,7 +1022,7 @@ def insert_operation_form_field():
         (228, 'attribute', 'TEXT', 0, 1, None, 'attribute-selector', None, None,
          'EXECUTION', 3)
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_field_table, rows)
 
 

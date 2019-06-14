@@ -1,9 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+# noinspection PyBroadException
+try:
+    import eventlet
+
+    eventlet.monkey_patch(all=True, thread=False)
+except:
+    pass
 from flask import request, g
 from flask_babel import get_locale
 
-from factory import create_app, create_babel_i18n
+from tahiti.factory import create_app, create_babel_i18n
 
 app = create_app()
 babel = create_babel_i18n(app)

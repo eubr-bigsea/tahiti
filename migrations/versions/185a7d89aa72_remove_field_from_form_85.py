@@ -75,7 +75,7 @@ def downgrade():
     [LEGEND_ID, 'legend', 'INTEGER', 0, 5, 1, 'checkbox', None, None, 'EXECUTION', FORM_ID],
   ]
 
-  rows = [dict(zip(columns, row)) for row in data]
+  rows = [dict(list(zip(columns, row))) for row in data]
   op.bulk_insert(tb, rows)
 
   tb = table(
@@ -94,5 +94,5 @@ def downgrade():
       [LEGEND_ID, 'pt', 'Exibir Legenda', 'Exibir Legenda'],
   ]
 
-  rows = [dict(zip(columns, row)) for row in data]
+  rows = [dict(list(zip(columns, row))) for row in data]
   op.bulk_insert(tb, rows)

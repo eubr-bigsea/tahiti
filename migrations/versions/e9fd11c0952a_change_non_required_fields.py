@@ -7,6 +7,7 @@ Create Date: 2019-02-05 09:00:10.098050
 """
 from alembic import op
 from sqlalchemy.sql import text
+import collections
 
 # revision identifiers, used by Alembic.
 revision = 'e9fd11c0952a'
@@ -60,16 +61,13 @@ def upgrade():
         for cmd in all_commands:
             assert isinstance(cmd, tuple)
             last = cmd[0]
-            if callable(cmd[0]):
+            if isinstance(cmd[0], collections.Callable):
                 cmd[0]()
             else:
                 op.execute(text(cmd[0]))
         op.execute(text('COMMIT'))
     except:
         op.execute(text('ROLLBACK'))
-        print '-' * 20
-        print 'Last', last
-        print '-' * 20
         raise
 
 
@@ -79,14 +77,14 @@ def downgrade():
         op.execute(text('START TRANSACTION'))
         for cmd in reversed(all_commands):
             last = cmd[1]
-            if callable(cmd[1]):
+            if isinstance(cmd[1], collections.Callable):
                 cmd[1]()
             else:
                 op.execute(text(cmd[1]))
         op.execute(text('COMMIT'))
     except:
         op.execute(text('ROLLBACK'))
-        print '-' * 20
-        print 'Last', last
-        print '-' * 20
+        print('-' * 20)
+        print('Last', last)
+        print('-' * 20)
         raise

@@ -41,7 +41,7 @@ def _insert_operation():
     data = [
         (META_OPERATION_ID, "meta-operation", 0, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -65,7 +65,7 @@ def _insert_operation_translation():
          'no fluxo de trabalho eles se parecem com uma única operação, embora '
          'possam conter muitas operações e também outras meta-operações.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -85,7 +85,7 @@ def _insert_operation_platform():
         (META_OPERATION_ID, KERAS_PLATAFORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -101,7 +101,7 @@ def _insert_operation_category():
     data = [
         (43, 'group', 0, 8),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -116,7 +116,7 @@ def _insert_operation_category_operation():
     data = [
         (43, META_OPERATION_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -133,7 +133,7 @@ def _insert_operation_category_translation():
         (43, 'en', 'Meta-operation'),
         (43, 'pt', 'Meta-operação'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -151,7 +151,7 @@ def _insert_operation_form():
         (META_OPERATION_FORM_ID, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -167,7 +167,7 @@ def _insert_operation_form_translation():
         (META_OPERATION_FORM_ID, 'en', 'Execution'),
         (META_OPERATION_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -184,7 +184,7 @@ def _insert_operation_operation_form():
         (META_OPERATION_ID, 110),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -212,7 +212,7 @@ def _insert_operation_form_field():
         (503, 'quantity_output_ports', 'INTEGER', 1, 2, 2, 'text', None, None,
          'EXECUTION', META_OPERATION_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -237,7 +237,7 @@ def _insert_operation_form_field_translation():
         (503, 'pt', 'Portas de saída',
          'Número de portas de saída para a meta-operação [0:N].'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -283,7 +283,7 @@ def upgrade():
     try:
 
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -304,7 +304,7 @@ def downgrade():
     try:
         connection.execute('SET FOREIGN_KEY_CHECKS=0;')
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

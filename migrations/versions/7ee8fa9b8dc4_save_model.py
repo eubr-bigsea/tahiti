@@ -11,6 +11,7 @@ import json
 from alembic import op
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.sql import table, column, text
+import collections
 
 # revision identifiers, used by Alembic.
 revision = '7ee8fa9b8dc4'
@@ -37,7 +38,7 @@ def _insert_operation():
         (VOTING_CLASS_ID, 'voting-classifier', 1, 'TRANSFORMATION',
          'fa-hand-peace-o'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -55,7 +56,7 @@ def _insert_operation_translation():
         (VOTING_CLASS_ID, 'pt', 'Classificador por votos',
          'Classificador por votos'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -69,7 +70,7 @@ def _insert_operation_platform():
     data = [
         (VOTING_CLASS_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -86,7 +87,7 @@ def _insert_operation_form():
         (SAVE_MODEL_FORM_ID, 1, 1, 'execution'),
         (VOTING_CLASS_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -103,7 +104,7 @@ def _insert_operation_operation_form():
         (VOTING_CLASS_ID, VOTING_CLASS_FORM_ID),
         (VOTING_CLASS_ID, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -124,7 +125,7 @@ def _insert_operation_form_translation():
         (VOTING_CLASS_FORM_ID, 'en', 'Execution'),
         (VOTING_CLASS_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -164,7 +165,7 @@ def _insert_operation_form_field():
         (236, 'weights', 'TEXT', 0, 3, None, 'text',
          None, None, 'EXECUTION', VOTING_CLASS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -251,7 +252,7 @@ def _insert_operation_form_field_translation():
                     'se vazio, os estimadores terão o mesmo peso)',
          'Pesos (se vazio, os estimadores terão o mesmo peso).'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -267,7 +268,7 @@ def _insert_operation_category_operation():
         (VOTING_CLASS_ID, 8),
         (VOTING_CLASS_ID, 18),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -290,7 +291,7 @@ def _insert_operation_port():
         (185, 'INPUT', None, VOTING_CLASS_ID, 2, 'MANY', 'models'),
         (186, 'INPUT', None, VOTING_CLASS_ID, 1, 'ONE', 'input data')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -312,7 +313,7 @@ def _insert_operation_port_translation():
         (186, 'en', 'input data', 'Input data'),
         (186, 'pt', 'dados de entrada', 'Dados de entrada'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -330,7 +331,7 @@ def _insert_operation_port_interface_operation_port():
         (185, 7),
         (186, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -392,7 +393,7 @@ def downgrade():
     try:
         op.execute(text('START TRANSACTION'))
         for cmd in reversed(all_commands):
-            if callable(cmd[1]):
+            if isinstance(cmd[1], collections.Callable):
                 cmd[1]()
             else:
                 op.execute(text(cmd[1]))

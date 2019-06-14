@@ -61,7 +61,7 @@ def _insert_operation_port():
         (5151, 'INPUT', '', 1, 'ONE', 5051, 'input data'),
         (5251, 'OUTPUT', '', 1, 'ONE', 5051, 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -102,7 +102,7 @@ def _insert_operation_port_interface_operation_port():
         (5151, 1),
         (5251, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -140,7 +140,7 @@ def _insert_operation_port_translation():
         (5151, "en", 'input data', 'Input data'),
         (5251, "en", 'output data', 'Output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -162,7 +162,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -182,7 +182,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

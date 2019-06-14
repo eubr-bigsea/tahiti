@@ -30,7 +30,7 @@ def _insert_operation():
     all_ops = (
         (89, 'donut-chart', 1, 'TRANSFORMATION', 'fa-circle-o-notch '),
     )
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -48,7 +48,7 @@ def _insert_operation_translation():
         (89, 'en', 'Donut chart', 'Donut chart'),
         (89, 'pt', 'Gráfico de rosca (donut)', 'Gráfico de rosca (donut)'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -63,7 +63,7 @@ def _insert_operation_platform():
     all_ops = [
         (89, 1),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -87,7 +87,7 @@ def _insert_operation_port():
         # Freq itemset
         (199, 'OUTPUT', None, 3, 2, 'MANY', 'rules output'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -106,13 +106,13 @@ def _insert_operation_port_translation():
         (198, 'en', 'visualization', 'Visualization'),
 
         (197, 'pt', 'dados de entrada', 'Dados de entrada'),
-        (198, 'pt', u'visualização', u'Visualização'),
+        (198, 'pt', 'visualização', 'Visualização'),
 
         # Freq itemset
         (199, 'en', 'rules output', 'Rules output'),
-        (199, 'pt', u'saída das regras', u'Saída das regras'),
+        (199, 'pt', 'saída das regras', 'Saída das regras'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -131,7 +131,7 @@ def _insert_operation_port_interface_operation_port():
 
         (199, 1),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -146,7 +146,7 @@ def _insert_operation_category_operation():
     data = [
         (89, 15),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -163,7 +163,7 @@ def _insert_operation_form():
     data = [
         (113, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -179,7 +179,7 @@ def _insert_operation_operation_form():
         (89, 113),
         (89, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -197,7 +197,7 @@ def _insert_operation_form_translation():
         (113, 'en', 'Execution'),
         (113, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -264,7 +264,7 @@ def _insert_operation_form_field():
         [344, 'min_confidence', 'FLOAT', 0, 2, '0.9', 'decimal', None, None,
          'EXECUTION', 3],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -291,26 +291,26 @@ def _insert_operation_form_field_translation():
 
         [338, 'pt', 'Atributo com o valor', 'Atributo com o valor'],
         [339, 'pt',
-         u'Atributo usado como rótulo (vazio: usar o valor como rótulo)',
-         u'Atributo usado para o rótulo'],
-        [340, 'pt', u'Título', u'Título'],
-        [341, 'pt', u'Formato para eixo X', u'Formato para valores eixo X'],
-        [342, 'pt', u'Prefixo para eixo X',
-         u'Prefixo para eixo X (adicionado ao valor ao exibi-lo)'],
-        [343, 'pt', u'Sufixo para eixo X',
-         u'Sufixo para eixo X (adicionado ao valor ao exibi-lo)'],
+         'Atributo usado como rótulo (vazio: usar o valor como rótulo)',
+         'Atributo usado para o rótulo'],
+        [340, 'pt', 'Título', 'Título'],
+        [341, 'pt', 'Formato para eixo X', 'Formato para valores eixo X'],
+        [342, 'pt', 'Prefixo para eixo X',
+         'Prefixo para eixo X (adicionado ao valor ao exibi-lo)'],
+        [343, 'pt', 'Sufixo para eixo X',
+         'Sufixo para eixo X (adicionado ao valor ao exibi-lo)'],
 
-        [344, 'en', u'Min. confidence (for rules generation)',
-         u'Min. confidence (for rules generation)'],
-        [344, 'pt', u'Confiança mínima (para geração das regras)',
-         u'Confiança mínima (para geração das regras)'],
+        [344, 'en', 'Min. confidence (for rules generation)',
+         'Min. confidence (for rules generation)'],
+        [344, 'pt', 'Confiança mínima (para geração das regras)',
+         'Confiança mínima (para geração das regras)'],
 
-        [345, 'en', u'Inner title',
-         u'Inner title displayed in the center of the donut'],
-        [345, 'pt', u'Título interno',
-         u'Título interno, exibido no centro.'],
+        [345, 'en', 'Inner title',
+         'Inner title displayed in the center of the donut'],
+        [345, 'pt', 'Título interno',
+         'Título interno, exibido no centro.'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 

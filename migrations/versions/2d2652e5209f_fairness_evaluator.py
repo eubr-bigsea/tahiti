@@ -47,7 +47,7 @@ def _insert_operation_category_translation():
         (28, 'en', 'Trustworthiness'),
         (28, 'pt', 'Confiabilidade'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -60,7 +60,7 @@ def _insert_operation_category():
     all_categories = [
         (28, 'group'),
     ]
-    rows = [dict(zip(columns, cat)) for cat in all_categories]
+    rows = [dict(list(zip(columns, cat))) for cat in all_categories]
 
     op.bulk_insert(operation_category_table, rows)
 
@@ -77,7 +77,7 @@ def _insert_operation():
         (FAIRNESS_EVALUATOR_ID, 'fairness-evaluator', 1, 'TRANSFORMATION',
          'fa-balance-scale'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -97,7 +97,7 @@ def _insert_operation_translation():
          'Avalia se o resultado de um classificador é justo segundo diferentes '
          'critérios.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -110,7 +110,7 @@ def _insert_operation_platform():
     data = [
         (FAIRNESS_EVALUATOR_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -126,7 +126,7 @@ def _insert_operation_form():
     data = [
         (FAIRNESS_EVALUATOR_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -143,7 +143,7 @@ def _insert_operation_operation_form():
         (FAIRNESS_EVALUATOR_ID, APPEARANCE_FORM_ID),
         (FAIRNESS_EVALUATOR_ID, RESULTS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -161,7 +161,7 @@ def _insert_operation_form_translation():
         (FAIRNESS_EVALUATOR_FORM_ID, 'en', 'Execution'),
         (FAIRNESS_EVALUATOR_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -201,7 +201,7 @@ def _insert_operation_form_field():
         (475, 'baseline', 'TEXT', 1, 5, None, 'textarea', None, None,
          'EXECUTION', FAIRNESS_EVALUATOR_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -246,7 +246,7 @@ def _insert_operation_form_field_translation():
          )''',
          'Valor de referência usado para contrastar com os outros valores.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -260,7 +260,7 @@ def _insert_operation_category_operation():
     data = [
         (FAIRNESS_EVALUATOR_ID, 28),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -284,7 +284,7 @@ def _insert_operation_port():
         (238, 'OUTPUT', None, FAIRNESS_EVALUATOR_ID, 1, 'MANY',
          'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -305,7 +305,7 @@ def _insert_operation_port_translation():
         (238, 'pt', 'dados de saída', 'Dados de saída'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -321,7 +321,7 @@ def _insert_operation_port_interface_operation_port():
         (237, 1),
         (238, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -385,7 +385,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -406,7 +406,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

@@ -40,7 +40,7 @@ def upgrade():
     connection.execute("""UPDATE operation_form_field
         SET suggested_widget = 'attribute-selector', required = 1
         WHERE id = 196""")
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Atributos para eixo Y (cada um será uma série)',
@@ -48,7 +48,7 @@ def upgrade():
             'Atributos para eixo Y (cada um será uma série)'
         WHERE locale = 'pt' AND id = 196
         """)
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Attributes for Y-axis (each one will be a series)',
@@ -57,7 +57,7 @@ def upgrade():
         WHERE locale = 'en' AND id = 196
         """)
 
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field
         SET values_url =
           '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`'
@@ -128,7 +128,7 @@ def upgrade():
          None, None, 'EXECUTION',
          83],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -156,23 +156,23 @@ def upgrade():
          'Y-axis suffix (added to the value display)'],
         [304, 'en', 'X-axis attribute', 'Attribute used for X-axis'],
 
-        [296, 'pt', u'Título para eixo X', u'Título a ser exibido para eixo X'],
-        [297, 'pt', u'Título para eixo Y',
-         u'Título a ser exibido  para eixo Y'],
-        [298, 'pt', u'Formato para eixo X', u'Formato para valores eixo X'],
-        [299, 'pt', u'Formato para eixo Y', u'Formato para valores  eixo Y'],
-        [300, 'pt', u'Prefixo para eixo X',
-         u'Prefixo para eixo X (adicionado ao valor ao exibi-lo)'],
-        [301, 'pt', u'Prefixo para eixo Y',
-         u'Prefixo para eixo Y (adicionado ao valor ao exibi-lo)'],
-        [302, 'pt', u'Sufixo para eixo X',
-         u'Sufixo para eixo X (adicionado ao valor ao exibi-lo)'],
-        [303, 'pt', u'Sufixo para eixo Y',
-         u'Sufixo para eixo Y (adicionado ao valor ao exibi-lo)'],
-        [304, 'pt', u'Atributo para eixo X', u'Atributo usado para eixo X'],
+        [296, 'pt', 'Título para eixo X', 'Título a ser exibido para eixo X'],
+        [297, 'pt', 'Título para eixo Y',
+         'Título a ser exibido  para eixo Y'],
+        [298, 'pt', 'Formato para eixo X', 'Formato para valores eixo X'],
+        [299, 'pt', 'Formato para eixo Y', 'Formato para valores  eixo Y'],
+        [300, 'pt', 'Prefixo para eixo X',
+         'Prefixo para eixo X (adicionado ao valor ao exibi-lo)'],
+        [301, 'pt', 'Prefixo para eixo Y',
+         'Prefixo para eixo Y (adicionado ao valor ao exibi-lo)'],
+        [302, 'pt', 'Sufixo para eixo X',
+         'Sufixo para eixo X (adicionado ao valor ao exibi-lo)'],
+        [303, 'pt', 'Sufixo para eixo Y',
+         'Sufixo para eixo Y (adicionado ao valor ao exibi-lo)'],
+        [304, 'pt', 'Atributo para eixo X', 'Atributo usado para eixo X'],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
     session.commit()
 
@@ -256,14 +256,14 @@ def downgrade():
         (id, locale, label, help)
         VALUES (199, 'pt', 'Título', 'Título')""")
     #
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field
         SET values_url =
           '`${LIMONERO_URL}/datasources?simple=true&list=true`'
         WHERE id = '1';
         """)
 
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Nomes das colunas, separadas por vírgula (vazio = usar nomes da fonte de dados)',
@@ -271,7 +271,7 @@ def downgrade():
             'Nomes das colunas, separadas por vírgula (vazio = usar nomes da fonte de dados)'
         WHERE locale = 'pt' AND id = 196
         """)
-    connection.execute(u"""
+    connection.execute("""
         UPDATE operation_form_field_translation
         SET label =
             'Column names, comma separated (empty = use data source names)',

@@ -95,7 +95,7 @@ def insert_operation_translation():
         (79, 'pt', 'Regressor Linear Generalizado',
          'Regressor Linear Generalizado'),
     ]
-    rows = [dict(zip(columns, row)) for row in rows_data]
+    rows = [dict(list(zip(columns, row))) for row in rows_data]
 
     op.bulk_insert(tb, rows)
 
@@ -117,7 +117,7 @@ def insert_operation_platform():
         (79, 1),
 
     ]
-    rows = [dict(zip(columns, row)) for row in rows_data]
+    rows = [dict(list(zip(columns, row))) for row in rows_data]
 
     op.bulk_insert(tb, rows)
 
@@ -132,7 +132,7 @@ def insert_operation_port_interface():
     interface_data = [
         (19, '#AACC22')
     ]
-    rows = [dict(zip(columns, row)) for row in interface_data]
+    rows = [dict(list(zip(columns, row))) for row in interface_data]
 
     op.bulk_insert(tb, rows)
 
@@ -149,7 +149,7 @@ def insert_operation_port_interface_translation():
         (19, 'pt', 'Visualização'),
         (19, 'en', 'Visualization'),
     ]
-    rows = [dict(zip(columns, row)) for row in interface_data]
+    rows = [dict(list(zip(columns, row))) for row in interface_data]
 
     op.bulk_insert(tb, rows)
 
@@ -162,7 +162,7 @@ def insert_operation_port_interface_operation_port():
 
     columns = ('operation_port_id', 'operation_port_interface_id')
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 

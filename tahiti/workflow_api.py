@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-}
 import logging
 import os
-import urllib2
 import uuid
 
+import urllib.error
+import urllib.parse
+import urllib.request
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.elements import and_
 
-from app_auth import requires_auth
-from schema import *
+from tahiti.app_auth import requires_auth
+from tahiti.schema import *
 
 log = logging.getLogger(__name__)
 
@@ -133,7 +135,7 @@ class WorkflowListApi(Resource):
 
             return result
 
-        except Exception, e:
+        except Exception as e:
             log.exception(e)
             result = dict(status="ERROR", message="Internal error")
             if current_app.debug:
@@ -163,15 +165,15 @@ class WorkflowListApi(Resource):
 
             request_schema = WorkflowCreateRequestSchema()
             form = request_schema.load(cloned)
-        elif request.data is not None:
-            data = json.loads(request.data)
+        elif request.json:
+            data = request.json
             if 'user' in data:
                 data.pop('user')
             request_schema = WorkflowCreateRequestSchema()
             response_schema = WorkflowItemResponseSchema()
             for task in data.get('tasks', {}):
                 task['operation_id'] = task['operation']['id']
-                task['forms'] = {k: v for k, v in task['forms'].iteritems()
+                task['forms'] = {k: v for k, v in task['forms'].items()
                                  if v.get('value') is not None}
             params = {}
             params.update(data)
@@ -202,7 +204,7 @@ class WorkflowListApi(Resource):
                     workflow.template_code = result
                     db.session.add(workflow)
                     db.session.commit()
-            except Exception, e:
+            except Exception as e:
                 log.exception('Error in POST')
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
@@ -244,7 +246,7 @@ class WorkflowDetailApi(Resource):
                 workflow.enabled = False
                 db.session.commit()
                 result, result_code = dict(status="OK", message="Deleted"), 200
-            except Exception, e:
+            except Exception as e:
                 log.exception('Error in DELETE')
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
@@ -259,12 +261,12 @@ class WorkflowDetailApi(Resource):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 404
         try:
-            if request.data:
-                data = json.loads(request.data)
+            if request.json:
+                data = request.json
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
                 for task in data.get('tasks', {}):
-                    task['forms'] = {k: v for k, v in task['forms'].iteritems()
+                    task['forms'] = {k: v for k, v in task['forms'].items()
                                      if v.get('value') is not None}
                     task['operation_id'] = task['operation']['id']
 
@@ -278,8 +280,10 @@ class WorkflowDetailApi(Resource):
                     params['user_id'] = user['id']
                     params['user_login'] = user['login']
                     params['user_name'] = user['name']
-                if params.get('forms'):
+                if params.get('forms') is not None:
                     params['forms'] = json.dumps(params['forms'])
+                else:
+                    params['forms'] = '{}'
                 form = request_schema.load(params, partial=True)
                 response_schema = WorkflowItemResponseSchema()
                 if not form.errors:
@@ -311,7 +315,7 @@ class WorkflowDetailApi(Resource):
                                 data=response_schema.dump(workflow).data), 200
                         else:
                             result = dict(status="ERROR", message="Not found")
-                    except Exception, e:
+                    except Exception as e:
                         log.exception('Error in PATCH')
                         result, result_code = dict(
                             status="ERROR", message="Internal error"), 500
@@ -343,11 +347,11 @@ class WorkflowImportApi(Resource):
                 return {'error': 'Missing url or token parameter',
                         'status': 'ERROR'}, 400
 
-            r = urllib2.Request(url, headers={"X-Auth-Token": token})
-            contents = urllib2.urlopen(r).read()
+            r = urllib.request.Request(url, headers={"X-Auth-Token": token})
+            contents = urllib.request.urlopen(r).read()
         # noinspection PyBroadException
         try:
-            original = json.loads(contents)
+            original = json.loads(contents.decode("utf-8"))
             platform = original.pop('platform')
 
             user = g.user
@@ -388,7 +392,7 @@ class WorkflowImportApi(Resource):
                     db.session.commit()
                     result, result_code = response_schema.dump(
                         workflow).data, 200
-                except Exception, e:
+                except Exception as e:
                     log.exception('Error in POST')
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500

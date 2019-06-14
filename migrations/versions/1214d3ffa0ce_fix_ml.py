@@ -30,32 +30,32 @@ def _add_classifiers_fields_translations():
 
     columns = [c.name for c in tb.columns]
     data = [
-        [134, 'en', u'Features', u'Features'],
-        [135, 'en', u'Label', u'Label'],
-        [135, 'pt', u'Rótulo', u'Rótulo'],
-        [137, 'en', u'Features', u'Label'],
-        [137, 'pt', u'Features', u'Features'],
-        [138, 'en', u'Label', u'Label'],
-        [138, 'pt', u'Rótulo', u'Rótulo'],
-        [140, 'en', u'Features', u'Label'],
-        [140, 'pt', u'Features', u'Features'],
-        [141, 'en', u'Label', u'Label'],
-        [141, 'pt', u'Rótulo', u'Rótulo'],
-        [143, 'en', u'Features', u'Label'],
-        [143, 'pt', u'Features', u'Features'],
-        [144, 'en', u'Label', u'Label'],
-        [144, 'pt', u'Rótulo', u'Rótulo'],
-        [146, 'en', u'Features', u'Features'],
-        [146, 'pt', u'Features', u'Features'],
-        [147, 'en', u'Label', u'Label'],
-        [147, 'pt', u'Rótulo', u'Rótulo'],
+        [134, 'en', 'Features', 'Features'],
+        [135, 'en', 'Label', 'Label'],
+        [135, 'pt', 'Rótulo', 'Rótulo'],
+        [137, 'en', 'Features', 'Label'],
+        [137, 'pt', 'Features', 'Features'],
+        [138, 'en', 'Label', 'Label'],
+        [138, 'pt', 'Rótulo', 'Rótulo'],
+        [140, 'en', 'Features', 'Label'],
+        [140, 'pt', 'Features', 'Features'],
+        [141, 'en', 'Label', 'Label'],
+        [141, 'pt', 'Rótulo', 'Rótulo'],
+        [143, 'en', 'Features', 'Label'],
+        [143, 'pt', 'Features', 'Features'],
+        [144, 'en', 'Label', 'Label'],
+        [144, 'pt', 'Rótulo', 'Rótulo'],
+        [146, 'en', 'Features', 'Features'],
+        [146, 'pt', 'Features', 'Features'],
+        [147, 'en', 'Label', 'Label'],
+        [147, 'pt', 'Rótulo', 'Rótulo'],
 
-        [183, 'pt', u'Features', u'Features'],
-        [183, 'en', u'Label', u'Label'],
-        [184, 'en', u'Label', u'Label'],
-        [184, 'pt', u'Rótulo', u'Rótulo'],
+        [183, 'pt', 'Features', 'Features'],
+        [183, 'en', 'Label', 'Label'],
+        [184, 'en', 'Label', 'Label'],
+        [184, 'pt', 'Rótulo', 'Rótulo'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -102,7 +102,7 @@ def _add_classifiers_fields():
          'EXECUTION', 34],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -129,7 +129,7 @@ def _add_field_apply_model():
         [347, 'prediction', 'TEXT', 0, 2, 'prediction', 'text', None, None,
          'EXECUTION', 10],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -141,16 +141,16 @@ def _add_field_apply_model():
 
     columns = [c.name for c in tb.columns]
     data = [
-        [346, 'en', u'Features attribute', u'Features attribute'],
-        [346, 'pt', u'Atributo com as features', u'Atributo com as features'],
+        [346, 'en', 'Features attribute', 'Features attribute'],
+        [346, 'pt', 'Atributo com as features', 'Atributo com as features'],
 
         # Clustering model
-        [347, 'en', u'Prediction (new attribute)',
-         u'Prediction (new attribute)'],
-        [347, 'pt', u'Atributo com a predição (novo)',
-         u'Atributo com a predição (novo)'],
+        [347, 'en', 'Prediction (new attribute)',
+         'Prediction (new attribute)'],
+        [347, 'pt', 'Atributo com a predição (novo)',
+         'Atributo com a predição (novo)'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -171,7 +171,7 @@ def _add_output_to_classification_and_clustering_models():
         ],
         [202, 'OUTPUT', None, 10, 3, 'MANY', 'cluster centroids'],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -184,7 +184,7 @@ def _add_output_to_classification_and_clustering_models():
         [200, 1],
         [202, 1]
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -197,12 +197,12 @@ def _add_output_to_classification_and_clustering_models():
     columns = [c.name for c in tb.columns]
     data = [
         (200, 'en', 'output data', 'Output data'),
-        (200, 'pt', u'dados de saída', u'Dados de saída'),
+        (200, 'pt', 'dados de saída', 'Dados de saída'),
 
         (202, 'en', 'cluster centroids', 'Cluster centroids'),
-        (202, 'pt', u'centroides do agrupamento', u'Centroides do agrupamento'),
+        (202, 'pt', 'centroides do agrupamento', 'Centroides do agrupamento'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -222,7 +222,7 @@ def _add_outputs_to_clustering_algorithms():
             201, 'OUTPUT', None, 56, 1, 'MANY', 'algorithm'
         ]
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -234,7 +234,7 @@ def _add_outputs_to_clustering_algorithms():
     data = [
         [201, 11]
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -247,9 +247,9 @@ def _add_outputs_to_clustering_algorithms():
     columns = [c.name for c in tb.columns]
     data = [
         (201, 'en', 'algorithm', 'Algorithm'),
-        (201, 'pt', u'algoritmo', u'Algoritmo'),
+        (201, 'pt', 'algoritmo', 'Algoritmo'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 all_commands = [
@@ -266,12 +266,12 @@ all_commands = [
         """
     ],
     [
-        u"""
+        """
             UPDATE operation_translation SET name = 'Publicar como dashboard',
             description = 'Publica os resultados como um dashboard'
              WHERE id = 26 AND locale = 'pt'
         """,
-        u"""
+        """
             UPDATE operation_translation
             SET name = 'Publicar como visualização',
             description = 'Publica o resultado como uma visualização'
@@ -379,7 +379,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             else:
                 cmd[0]()
@@ -396,7 +396,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

@@ -34,7 +34,7 @@ def _insert_operation_form():
         (5130, 1, 1, 'execution'), #data_format
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -51,7 +51,7 @@ def _insert_operation_form_translation():
         (5130, 'en', 'Execution'),
         (5130, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -68,7 +68,7 @@ def _insert_operation_operation_form():
         (5013, 5130),  # own execution form
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -93,7 +93,7 @@ def _insert_operation_form_field():
         #Flatten - data_format
         (5130, 'data_format', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', 5130),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -118,7 +118,7 @@ def _insert_operation_form_field_translation():
                                          'config file at ~/.keras/keras.json. If you never set it, then '
                                          'it will be "channels_last".'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -144,7 +144,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -164,7 +164,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

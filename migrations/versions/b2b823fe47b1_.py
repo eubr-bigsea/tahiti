@@ -32,7 +32,7 @@ def _insert_operation_form():
     data = [
         (99, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -47,7 +47,7 @@ def _insert_operation_operation_form():
     data = [
         (81, 99),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -65,7 +65,7 @@ def _insert_operation_form_translation():
         (99, 'en', 'Execution'),
         (99, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -94,7 +94,7 @@ def _insert_operation_form_field():
          '', 'attribute-selector', None, None,
          'EXECUTION', 99),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -114,7 +114,7 @@ def _insert_operation_form_field_translation():
         (232, 'en', 'Attributes (empty=all)', 'Attributes'),
         (232, 'pt', 'Atributos (vazio=todos)', 'Atributos'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 

@@ -33,7 +33,7 @@ def _insert_operation():
         (93, 'execute-sql', 1, 'TRANSFORMATION', 'fa-flash'),
 
     )
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in
             rows]
 
     op.bulk_insert(tb, rows)
@@ -53,7 +53,7 @@ def _insert_operation_translation():
         (93, 'pt', 'Executar consulta SQL',
          'Executa uma consulta usando a linguagem SQL disponível no Spark.'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
     op.bulk_insert(tb, rows)
 
@@ -67,7 +67,7 @@ def _insert_operation_platform():
     rows = [
         (93, 1),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
     op.bulk_insert(tb, rows)
 
@@ -88,7 +88,7 @@ def _insert_operation_port():
         (213, 'INPUT', None, 93, 1, 'ONE', 'input data 2'),
         (214, 'OUTPUT', None, 93, 1, 'MANY', 'output data'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
     op.bulk_insert(tb, rows)
 
@@ -112,7 +112,7 @@ def _insert_operation_port_translation():
         (214, 'pt', 'dados de saída', 'Dados de saída'),
 
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
     op.bulk_insert(tb, rows)
 
@@ -129,7 +129,7 @@ def _insert_operation_port_interface_operation_port():
         (213, 1),
         (214, 1),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -148,7 +148,7 @@ def _insert_operation_script():
         [33, 'JS_CLIENT', 1, "copyAllInputsRemoveDuplicated(task, 'names');",
          93],
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -164,7 +164,7 @@ def _insert_operation_category_operation():
         (93, 1),
         (93, 7),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -181,7 +181,7 @@ def _insert_operation_form():
     data = [
         (118, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -198,7 +198,7 @@ def _insert_operation_operation_form():
         (93, 110),
         (93, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -216,7 +216,7 @@ def _insert_operation_form_translation():
         (118, 'en', 'Execution'),
         (118, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -244,7 +244,7 @@ def _insert_operation_form_field():
         [365, 'names', 'TEXT', 0, 2, None, 'text', None, None,
          'EXECUTION', 118],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -278,7 +278,7 @@ def _insert_operation_form_field_translation():
          ('Nome dos novos atributos após executar a consulta '
           '(opcional. auxilia na sugestão de atributos).')],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -400,7 +400,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -420,7 +420,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

@@ -32,7 +32,7 @@ def _insert_operation():
     rows = [
         (94, 'one-vs-rest-classifier', 1, 'TRANSFORMATION', 'fa-window-close-o')
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in
             rows]
 
     op.bulk_insert(tb, rows)
@@ -52,7 +52,7 @@ def _insert_operation_translation():
         (94, 'pt', 'Classificador 1 vs. resto',
          'Redução da classificação multiclasse para a classificação binária.'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
     op.bulk_insert(tb, rows)
 
@@ -66,7 +66,7 @@ def _insert_operation_platform():
     rows = [
         (94, 1),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
     op.bulk_insert(tb, rows)
 
@@ -86,7 +86,7 @@ def _insert_operation_port():
         (215, 'INPUT', None, 94, 1, 'ONE', 'algorithm'),
         (216, 'OUTPUT', None, 94, 1, 'MANY', 'algorithm'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
     op.bulk_insert(tb, rows)
 
@@ -107,7 +107,7 @@ def _insert_operation_port_translation():
         (216, 'pt', 'algoritmo', 'Algoritmo'),
 
     ]
-    rows = [dict(zip([c.name for c in tb.columns], row)) for row in rows]
+    rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
     op.bulk_insert(tb, rows)
 
 
@@ -122,7 +122,7 @@ def _insert_operation_port_interface_operation_port():
         (215, 5),
         (216, 5),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
 
@@ -140,7 +140,7 @@ def _insert_operation_script():
         [42, 'JS_CLIENT', 1,
          "copyInputAddField(task, 'prediction', false, null);", 94],
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -156,7 +156,7 @@ def _insert_operation_category_operation():
         (94, 8),
         (94, 18),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -173,7 +173,7 @@ def _insert_operation_form():
     data = [
         (119, 1, 1, 'paramgrid'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -190,7 +190,7 @@ def _insert_operation_operation_form():
         (94, 110),
         (94, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -208,7 +208,7 @@ def _insert_operation_form_translation():
         (119, 'en', 'Param grid'),
         (119, 'pt', 'Grade de parâmetros'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -358,7 +358,7 @@ def _insert_operation_form_field():
          34],
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -567,7 +567,7 @@ def _insert_operation_form_field_translation():
          'de predizer cada classe'],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -681,7 +681,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -701,7 +701,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

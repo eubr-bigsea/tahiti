@@ -71,7 +71,7 @@ def downgrade():
     [X_FORMAT_ID, 'x_format', 'TEXT', 0, 8, None, 'select2', None, json.dumps(supported_formats), 'EXECUTION', FORM_ID],
   ]
 
-  rows = [dict(zip(columns, row)) for row in data]
+  rows = [dict(list(zip(columns, row))) for row in data]
   op.bulk_insert(tb, rows)
 
   tb = table(
@@ -88,5 +88,5 @@ def downgrade():
       [X_FORMAT_ID, 'pt', 'Formato para eixo X', 'Formato para eixo X'],
   ]
 
-  rows = [dict(zip(columns, row)) for row in data]
+  rows = [dict(list(zip(columns, row))) for row in data]
   op.bulk_insert(tb, rows)

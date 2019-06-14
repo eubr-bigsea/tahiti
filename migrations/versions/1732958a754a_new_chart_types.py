@@ -31,7 +31,7 @@ def _insert_operation():
         (87, 'plot-chart', 1, 'TRANSFORMATION', 'fa-lemon-o'),
         (88, 'map-chart', 1, 'TRANSFORMATION', 'fa-map-marker'),
     )
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -51,7 +51,7 @@ def _insert_operation_translation():
         (88, 'en', 'Map visualization', 'Map visualization'),
         (88, 'pt', 'Visualização em mapa', 'Visualização em mapa'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -67,7 +67,7 @@ def _insert_operation_platform():
         (87, 1),
         (88, 1),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -91,7 +91,7 @@ def _insert_operation_port():
         (193, 'INPUT', None, 88, 1, 'ONE', 'input data'),
         (194, 'OUTPUT', None, 88, 1, 'MANY', 'visualization'),
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -118,7 +118,7 @@ def _insert_operation_port_translation():
         (194, 'pt', 'visualização', 'Visualização'),
 
     ]
-    rows = [dict(zip([c.name for c in tb.columns], operation)) for operation in
+    rows = [dict(list(zip([c.name for c in tb.columns], operation))) for operation in
             all_ops]
 
     op.bulk_insert(tb, rows)
@@ -138,7 +138,7 @@ def _insert_operation_port_interface_operation_port():
         (192, 19),
         (194, 19),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -154,7 +154,7 @@ def _insert_operation_category_operation():
         (87, 15),
         (88, 15),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -172,7 +172,7 @@ def _insert_operation_form():
         (111, 1, 1, 'execution'),
         (112, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -191,7 +191,7 @@ def _insert_operation_operation_form():
         (88, 112),
         (88, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -212,7 +212,7 @@ def _insert_operation_form_translation():
         (112, 'en', 'Execution'),
         (112, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -337,7 +337,7 @@ def _insert_operation_form_field():
          112],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -366,15 +366,15 @@ def _insert_operation_form_field_translation():
          'Atributo para tamanho'],
 
         [315, 'en', 'X-axis title', 'X-axis title'],
-        [315, 'pt', u'Título para o eixo X', u'Título para o eixo X'],
+        [315, 'pt', 'Título para o eixo X', 'Título para o eixo X'],
         [316, 'en', 'Y-axis title', 'Y-axis title'],
-        [316, 'pt', u'Título para o eixo Y', u'Título para o eixo Y'],
+        [316, 'pt', 'Título para o eixo Y', 'Título para o eixo Y'],
         [317, 'en', 'Z-axis title(optional)', 'Z-axis title'],
         [317, 'pt', 'Título para o eixo Z (opcional)',
-         u'Título para o eixo Z'],
+         'Título para o eixo Z'],
         [318, 'en', 'Size title (optional)', 'Size title'],
-        [318, 'pt', u'Título para o tamanho (opcional)',
-         u'Título para o tamanho'],
+        [318, 'pt', 'Título para o tamanho (opcional)',
+         'Título para o tamanho'],
 
         [319, 'en', 'X-axis format', 'X-axis format'],
         [319, 'pt', 'Formato para eixo X', 'Formato para eixo X'],
@@ -407,28 +407,28 @@ def _insert_operation_form_field_translation():
          'Sufixo para tamanho'],
 
         [331, 'en', 'Title', 'Title'],
-        [331, 'pt', u'Título', u'Título'],
+        [331, 'pt', 'Título', 'Título'],
 
         [332, 'en', 'Map type', 'Map type'],
-        [332, 'pt', u'Tipo de mapa', u'Tipo de mapa'],
+        [332, 'pt', 'Tipo de mapa', 'Tipo de mapa'],
         [333, 'en', 'Attribute with the latitude',
          'Attribute with the latitude'],
-        [333, 'pt', u'Atributo com a latitude', u'Atributo com a latitude'],
+        [333, 'pt', 'Atributo com a latitude', 'Atributo com a latitude'],
         [334, 'en', 'Attribute with the longitude',
          'Attribute with the longitude'],
-        [334, 'pt', u'Atributo com a longitude', u'Atributo com a longitude'],
+        [334, 'pt', 'Atributo com a longitude', 'Atributo com a longitude'],
         [335, 'en', 'Attribute for the value (optional)',
          'Attribute for the value (optional)'],
-        [335, 'pt', u'Atributo usado para o valor (opcional)',
-         u'Atributo usado para o valor (opcional)'],
+        [335, 'pt', 'Atributo usado para o valor (opcional)',
+         'Atributo usado para o valor (opcional)'],
         [336, 'en', 'Label attribute (optional)', 'Label attribute (optional)'],
-        [336, 'pt', u'Atributo para rótulo (opcional)',
-         u'Atributo para rótulo (opcional)'],
+        [336, 'pt', 'Atributo para rótulo (opcional)',
+         'Atributo para rótulo (opcional)'],
         [337, 'en', 'Title', 'Title'],
-        [337, 'pt', u'Título', u'Título'],
+        [337, 'pt', 'Título', 'Título'],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 

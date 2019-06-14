@@ -34,7 +34,7 @@ def _insert_platform():
     data = [
         (KERAS_PLATAFORM_ID, 'keras', 1, ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -55,7 +55,7 @@ def _insert_platform_translation():
         (KERAS_PLATAFORM_ID, 'pt', 'Keras', 'Keras é uma API de mais alto nível para redes neurais, escrita em Python '
                                             'capaz de executar sobre o TensorFlow, CNTK ou Theano.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -78,7 +78,7 @@ def _insert_operation_platform():
         (5051, KERAS_PLATAFORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -103,7 +103,7 @@ def _insert_operation():
         (5042, "simple-rnn", 1, 'ACTION', ''),
         (5051, "batch-normalization", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -134,7 +134,7 @@ def _insert_operation_category():
         (5050, "group", 5, 5),
             (5051, "subgroup", 1, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -162,7 +162,7 @@ def _insert_operation_category_operation():
          #Normalization Layers
          (5050, 5051),
      ]
-     rows = [dict(zip(columns, row)) for row in data]
+     rows = [dict(list(zip(columns, row))) for row in data]
 
      op.bulk_insert(tb, rows)
 
@@ -182,7 +182,7 @@ def _insert_operation_category_translation():
         (5040, "en", 'Recurrent Layers'),
         (5050, "en", 'Normalization Layers'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -224,7 +224,7 @@ def _insert_operation_translation():
                                            'mean activation close to 0 and the activation '
                                            'standard deviation close to 1.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -256,7 +256,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -276,7 +276,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

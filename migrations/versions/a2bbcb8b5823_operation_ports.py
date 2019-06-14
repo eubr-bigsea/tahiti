@@ -202,7 +202,7 @@ def insert_operation_operation_port():
         (175, 'OUTPUT', None, 81, 1, 'MANY'),
         (176, 'INPUT', None, 3, 1, 'ONE')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -234,7 +234,7 @@ def insert_operation_port_interface():
         (17, 'pink'),
         (18, 'purple')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -397,7 +397,7 @@ def insert_operation_port_interface_operation_port():
         (175, 1),
         (176, 1)
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -448,7 +448,7 @@ def insert_operation_port_interface_translation():
         (18, 'en', 'IRegressionModel'),
         (18, 'pt', 'IRegressionModel')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -794,7 +794,7 @@ def insert_operation_port_translation():
         (176, 'en', 'input data', 'Input data'),
         (176, 'pt', 'dados de entrada', 'Dados de entrada')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 

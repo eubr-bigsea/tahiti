@@ -10,6 +10,7 @@ Create Date: 2017-07-20 11:06:20.366248
 from alembic import op
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.sql import table, column, text
+import collections
 
 # revision identifiers, used by Alembic.
 revision = '146dc5127e5e'
@@ -38,7 +39,7 @@ def _insert_operation():
         (SEQUENCE_MINING_ID, 'sequence-mining', 1, 'TRANSFORMATION',
          'fa-diamond'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -53,13 +54,13 @@ def _insert_operation_translation():
     columns = [c.name for c in tb.columns]
     data = [
         (ASSOCIATION_RULES_ID, 'en', 'Association rules', 'Association rules'),
-        (ASSOCIATION_RULES_ID, 'pt', u'Regras de associação',
-         u'Regras de associação'),
+        (ASSOCIATION_RULES_ID, 'pt', 'Regras de associação',
+         'Regras de associação'),
         (SEQUENCE_MINING_ID, 'en', 'Sequence mining', 'Sequence mining'),
-        (SEQUENCE_MINING_ID, 'pt', u'Mineração de sequências',
-         u'Mineração de sequências'),
+        (SEQUENCE_MINING_ID, 'pt', 'Mineração de sequências',
+         'Mineração de sequências'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -74,7 +75,7 @@ def _insert_operation_platform():
         (ASSOCIATION_RULES_ID, 1),
         (SEQUENCE_MINING_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -91,7 +92,7 @@ def _insert_operation_form():
         (ASSOCIATION_RULES_FORM_ID, 1, 1, 'execution'),
         (SEQUENCE_MINING_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -109,7 +110,7 @@ def _insert_operation_operation_form():
         (SEQUENCE_MINING_ID, SEQUENCE_MINING_FORM_ID),
         (SEQUENCE_MINING_ID, 41),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -130,7 +131,7 @@ def _insert_operation_form_translation():
         (SEQUENCE_MINING_FORM_ID, 'en', 'Execution'),
         (SEQUENCE_MINING_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -169,7 +170,7 @@ def _insert_operation_form_field():
          'EXECUTION', SEQUENCE_MINING_FORM_ID)
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -184,7 +185,7 @@ def _insert_operation_form_field_translation():
     columns = [c.name for c in tb.columns]
     data = [
         (286, 'en', 'Min. confidence', 'Min. confidence'),
-        (286, 'pt', u'Confiança mímina', u'Confiança mímina'),
+        (286, 'pt', 'Confiança mímina', 'Confiança mímina'),
 
         (287, 'en', 'Number of rules to generate',
          'Number of rules to generate'),
@@ -192,24 +193,24 @@ def _insert_operation_form_field_translation():
          'Quantidade de regras a serem geradas'),
 
         (288, 'en', 'Min. support', 'Min. support'),
-        (288, 'pt', u'Suporte mínimo', u'Suporte mínimo'),
+        (288, 'pt', 'Suporte mínimo', 'Suporte mínimo'),
 
         (289, 'en', 'Max. sequence length', 'Max. sequence length'),
-        (289, 'pt', u'Tamanho máx. da sequência', u'Tamanho máx. da sequência'),
+        (289, 'pt', 'Tamanho máx. da sequência', 'Tamanho máx. da sequência'),
 
         (290, 'en', 'Attribute with transactions (empty = first attribute)',
          ' Attribute with transactions (empty = first attribute)'),
 
-        (290, 'pt', u'Atributo com transações (vazio = primeiro atributo)',
-         u'Atributo com transações (vazio = primeiro atributo)'),
+        (290, 'pt', 'Atributo com transações (vazio = primeiro atributo)',
+         'Atributo com transações (vazio = primeiro atributo)'),
 
         (291, 'en', 'Attribute with transactions (empty = first attribute)',
          ' Attribute with transactions (empty = first attribute)'),
 
-        (291, 'pt', u'Atributo com transações (vazio = primeiro atributo)',
-         u'Atributo com transações (vazio = primeiro atributo)'),
+        (291, 'pt', 'Atributo com transações (vazio = primeiro atributo)',
+         'Atributo com transações (vazio = primeiro atributo)'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -229,7 +230,7 @@ def _insert_operation_category_operation():
         (SEQUENCE_MINING_ID, 8),
         (SEQUENCE_MINING_ID, 22),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -253,7 +254,7 @@ def _insert_operation_port():
         (189, 'OUTPUT', None, SEQUENCE_MINING_ID, 1, 'MANY', 'output data'),
         (190, 'INPUT', None, SEQUENCE_MINING_ID, 1, 'ONE', 'input data')
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -278,7 +279,7 @@ def _insert_operation_port_translation():
         (190, 'en', 'input data', 'Input data'),
         (190, 'pt', 'dados de entrada', 'Dados de entrada'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -296,7 +297,7 @@ def _insert_operation_port_interface_operation_port():
         (189, 1),
         (190, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -362,7 +363,7 @@ def downgrade():
     try:
         op.execute(text('START TRANSACTION'))
         for cmd in reversed(all_commands):
-            if callable(cmd[1]):
+            if isinstance(cmd[1], collections.Callable):
                 cmd[1]()
             else:
                 op.execute(text(cmd[1]))

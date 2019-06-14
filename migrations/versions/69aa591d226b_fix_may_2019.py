@@ -96,7 +96,7 @@ def _insert_operation_form_field():
         (501, 'perform_cross_validation', 'INTEGER', 0, 9, '0', 'checkbox',
          None, None, 'EXECUTION', 132),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -116,7 +116,7 @@ def _insert_operation_form_field_translation():
          'Realizar a validação cruzada (requer um atributo com a informação de partição).')
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -180,7 +180,7 @@ def upgrade():
     connection = session.connection()
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -199,7 +199,7 @@ def downgrade():
     connection = session.connection()
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 if cmd[1]:
                     connection.execute(cmd[1])
             elif isinstance(cmd[1], list):

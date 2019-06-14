@@ -36,7 +36,7 @@ def _insert_operation_platform():
         (5019, KERAS_PLATAFORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -54,7 +54,7 @@ def _insert_operation():
         # ActivityRegularization
         (5019, "activityRegularization", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -73,7 +73,7 @@ def _insert_operation_category():
         # ActivityRegularization
         (5019, "subgroup", 9, 9),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -89,7 +89,7 @@ def _insert_operation_category_operation():
         # Core Layers - ActivityRegularization
         (5010, 5019),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -107,7 +107,7 @@ def _insert_operation_translation():
         (5019, "en", 'ActivityRegularization', 'Layer that applies an update to the cost '
                                                'function based input activity.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -129,7 +129,7 @@ def _insert_operation_port():
         (5119, 'INPUT', '', 1, 'ONE', 5019, 'input data'),
         (5219, 'OUTPUT', '', 1, 'ONE', 5019, 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -146,7 +146,7 @@ def _insert_operation_port_interface_operation_port():
         (5119, 1),
         (5219, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -165,7 +165,7 @@ def _insert_operation_port_translation():
         (5119, "en", 'input data', 'Input data'),
         (5219, "en", 'output data', 'Output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -186,7 +186,7 @@ def _insert_operation_form():
         (5140, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -206,7 +206,7 @@ def _insert_operation_form_translation():
         (5140, 'en', 'Execution'),
         (5140, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -225,7 +225,7 @@ def _insert_operation_operation_form():
         (5019, 5140),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -253,7 +253,7 @@ def _insert_operation_form_field():
         # ActivityRegularization - L2
         (5140, 'l2', 'DECIMAL', 1, 2, 0.0, 'decimal', None, None, 'EXECUTION', 5140),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -273,7 +273,7 @@ def _insert_operation_form_field_translation():
         # ActivityRegularization - L2
         (5140, 'en', 'L2', 'L2 regularization factor (positive float).'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -316,7 +316,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -336,7 +336,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

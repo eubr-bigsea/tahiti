@@ -35,7 +35,7 @@ def _insert_operation_platform():
         (5015, KERAS_PLATAFORM_ID),# Reshape
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -52,7 +52,7 @@ def _insert_operation():
     data = [
         (5015, "reshape", 1, 'ACTION', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -70,7 +70,7 @@ def _insert_operation_category():
     data = [
         (5015, "subgroup", 8, 8),# Reshape
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -86,7 +86,7 @@ def _insert_operation_category_operation():
         #Core Layers
         (5010, 5015),# Reshape
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -103,7 +103,7 @@ def _insert_operation_translation():
     data = [
         (5015, "en", 'Reshape', ''),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -125,7 +125,7 @@ def _insert_operation_port():
         (5115, 'INPUT', '', 1, 'ONE', 5015, 'input data'),
         (5215, 'OUTPUT', '', 1, 'ONE', 5015, 'output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -142,7 +142,7 @@ def _insert_operation_port_interface_operation_port():
         (5115, 1),
         (5215, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -161,7 +161,7 @@ def _insert_operation_port_translation():
         (5115, "en", 'input data', 'Input data'),
         (5215, "en", 'output data', 'Output data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -182,7 +182,7 @@ def _insert_operation_form():
         #(5133, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -202,7 +202,7 @@ def _insert_operation_form_translation():
         #(5133, 'en', 'Execution'),
         #(5133, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -222,7 +222,7 @@ def _insert_operation_operation_form():
         #(5015, 5133),  # own execution form
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -250,7 +250,7 @@ def _insert_operation_form_field():
         #Reshape - input_shape
         #(5133, 'input_shape', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', 5133),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -273,7 +273,7 @@ def _insert_operation_form_field_translation():
         #                            'include the batch axis) when using this layer as the first '
         #                            'layer in a model. Ex.: (12,)'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -316,7 +316,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -336,7 +336,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

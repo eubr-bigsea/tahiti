@@ -39,7 +39,7 @@ def _insert_platform_form():
         (KERAS_PLATAFORM_ID, 5162),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -84,7 +84,7 @@ def _insert_operation_form_field():
         # Batch size
         (5166, 'k', 'INTEGER', 0, 6, 5, 'integer', None, None, 'EXECUTION', 5161),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -116,7 +116,7 @@ def _insert_operation_form_field_translation():
         (5166, 'en', 'K', 'K is a parameter required for the metrics '
                           'related to the Top K Categorical Accuracy functions.'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -135,7 +135,7 @@ def _insert_operation_category():
         (5061, "subgroup", 1, 1),
         (5062, "subgroup", 2, 2),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -152,7 +152,7 @@ def _insert_operation_category_operation():
         (5060, 5061),
         (5060, 5062),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -168,7 +168,7 @@ def _insert_operation_category_translation():
     data = [
         (5060, "en", 'Functions'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -184,7 +184,7 @@ def _insert_operation_platform():
         (5061, KERAS_PLATAFORM_ID),#loss functions
         (5062, KERAS_PLATAFORM_ID),#optimizer functions
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -286,7 +286,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -306,7 +306,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

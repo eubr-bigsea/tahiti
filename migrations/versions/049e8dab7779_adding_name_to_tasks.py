@@ -72,7 +72,7 @@ def _insert_operation_form_field():
         [369, 'language', 'TEXT', 0, 5, None, 'dropdown', None,
          json.dumps(values), 'EXECUTION', 60],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -92,7 +92,7 @@ def _insert_operation_form_field_translation():
          'Se informado, usa o conjunto de stop words padrão para o idioma.'],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -138,7 +138,7 @@ def upgrade():
     connection = session.connection()
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -158,7 +158,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

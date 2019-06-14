@@ -11,6 +11,7 @@ import json
 from alembic import op
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.sql import table, column, text
+import collections
 
 # revision identifiers, used by Alembic.
 revision = '70078039a87a'
@@ -43,7 +44,7 @@ def _insert_operation_form():
         (106, 1, 1, 'execution'),  # random-forest-regressor
         (107, 1, 1, 'execution'),  # generalized-linear-regressor
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -70,7 +71,7 @@ def _insert_operation_operation_form():
         [RANDOM_FOREST_REGRESSOR, 41],
         [GENERALIZED_LINEAR_REGRESSOR, 41],
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -104,7 +105,7 @@ def _insert_operation_form_translation():
         (107, 'pt', 'Execução'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -153,7 +154,7 @@ def _revert_fix_linear_regression_fields():
          'EXECUTION', 8],
         [208, 'prediction', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION',
          8]]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     tb = table(
@@ -171,7 +172,7 @@ def _revert_fix_linear_regression_fields():
         [212, 'pt', 'Features', 'Features'],
         [213, 'pt', 'Label', 'Label'],
         [208, 'pt', 'Prediction', 'Prediction'], ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     op.execute("UPDATE operation_form_field_translation "
@@ -326,7 +327,7 @@ def _insert_operation_form_field():
          107],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -400,23 +401,23 @@ def _insert_operation_form_field_translation():
         [272, 'pt', 'Min. info gain', 'Min. info gain'],
         [273, 'pt', 'Seed', 'Seed'],
 
-        [274, 'pt', u'Profundidade máxima', u'Profundidade máxima'],
-        [275, 'pt', u'Máximo de bins', u'Máximo de bins'],
-        [276, 'pt', u'Ganho de informação (info gain) mínimo',
-         u'Ganho de informação (info gain) mínimo'],
-        [277, 'pt', u'Número de árvores', u'Número de árvores'],
-        [278, 'pt', u'Estratégia para subconjuto de features',
-         u'Estratégia para subconjuto de features'],
+        [274, 'pt', 'Profundidade máxima', 'Profundidade máxima'],
+        [275, 'pt', 'Máximo de bins', 'Máximo de bins'],
+        [276, 'pt', 'Ganho de informação (info gain) mínimo',
+         'Ganho de informação (info gain) mínimo'],
+        [277, 'pt', 'Número de árvores', 'Número de árvores'],
+        [278, 'pt', 'Estratégia para subconjuto de features',
+         'Estratégia para subconjuto de features'],
 
         [280, 'pt', 'Weight', 'Weight'],
         [281, 'pt', 'Max. iterations', 'Maximum number of iterations'],
-        [282, 'pt', u'Família', u'Família'],
+        [282, 'pt', 'Família', 'Família'],
         [283, 'pt', 'Link prediction', 'Link prediction'],
         [284, 'pt', 'Regularization', 'Regularization'],
         [285, 'pt', 'Solver', 'Solver'],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -475,7 +476,7 @@ def upgrade():
     try:
         op.execute(text('START TRANSACTION'))
         for cmd in all_commands:
-            if callable(cmd[0]):
+            if isinstance(cmd[0], collections.Callable):
                 cmd[0]()
             else:
                 op.execute(text(cmd[0]))
@@ -489,7 +490,7 @@ def downgrade():
     try:
         op.execute(text('START TRANSACTION'))
         for cmd in reversed(all_commands):
-            if callable(cmd[1]):
+            if isinstance(cmd[1], collections.Callable):
                 cmd[1]()
             else:
                 # print cmd[1]

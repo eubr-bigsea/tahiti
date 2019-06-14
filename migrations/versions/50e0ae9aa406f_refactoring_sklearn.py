@@ -61,7 +61,7 @@ def _insert_operation():
         (4035, 'mlp-regressor-model', 1, 'TRANSFORMATION', 'fa-code-branch'),
         (4036, 'knn-classifier-model', 1, 'TRANSFORMATION', 'fa-braille'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -134,7 +134,7 @@ def _insert_operation_translation():
         (4036, 'pt', 'Classificador KNN', 'Usa um classificador KNN'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -145,10 +145,10 @@ def _insert_operation_platform():
         column('platform_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        (i, SKLEARN_PLATFORM) for i in xrange(4021, 4037)
+        (i, SKLEARN_PLATFORM) for i in range(4021, 4037)
         ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
     data = [
@@ -158,7 +158,7 @@ def _insert_operation_platform():
         (120, SKLEARN_PLATFORM),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -224,7 +224,7 @@ def _insert_operation_port():
         (4076, "OUTPUT", None, 2, "MANY", 4036, "model"),
         (4077, "OUTPUT", None, 1, "MANY", 4036, "output data"),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -337,7 +337,7 @@ def _insert_operation_port_translation():
         (4077, "pt", "dados de saída", "Dados de saída"),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -353,7 +353,7 @@ def _insert_operation_port_interface_operation_port():
     data = sorted(list(itertools.product(data_ports, [1])) + list(
         itertools.product(models_ports, [2])), key=lambda x: x[0])
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -370,21 +370,21 @@ def _insert_operation_category_operation():
     data = itertools.product([int(x) for x in OPERATIONS_CLASSIFIER.split(',')],
                              [4001, 4, 18, 8])
 
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
     # Regression
     data = itertools.product([int(x) for x in OPERATIONS_REGRESSOR.split(',')],
                              [4001, 21, 8])
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
     # Clustering
     data = itertools.product([int(x) for x in OPERATIONS_CLUSTERING.split(',')],
                              [4001, 19, 8])
 
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
 
@@ -404,7 +404,7 @@ def _insert_operation_form():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -424,7 +424,7 @@ def _insert_operation_form_translation():
         (4023, 'en', 'Execution'),
         (4023, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -539,7 +539,7 @@ def _insert_operation_operation_form():
         [4033, 4013],
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -585,7 +585,7 @@ def _insert_operation_form_field():
          None, 'EXECUTION', 2, None),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -631,7 +631,7 @@ def _insert_operation_form_field_translation():
         (478, 'pt', 'Coluna para o termos do tópico',
          'Coluna para o termos do tópico'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -802,8 +802,11 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
-                connection.execute(cmd[0])
+            if isinstance(cmd[0], str):
+                cmds = cmd[0].split(';')
+                for new_cmd in cmds:
+                    if new_cmd.strip():
+                        connection.execute(new_cmd)
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
                     connection.execute(row)
@@ -819,12 +822,14 @@ def downgrade():
     ctx = context.get_context()
     session = sessionmaker(bind=ctx.bind)()
     connection = session.connection()
-    connection.execute('SET foreign_key_checks = 0;')
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
-                connection.execute(cmd[1])
+            if isinstance(cmd[1], str):
+                cmds = cmd[1].split(';')
+                for new_cmd in cmds:
+                    if new_cmd.strip():
+                        connection.execute(new_cmd)
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:
                     connection.execute(row)
@@ -833,5 +838,4 @@ def downgrade():
     except:
         session.rollback()
         raise
-    connection.execute('SET foreign_key_checks = 1;')
     session.commit()

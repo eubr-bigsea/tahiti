@@ -12,6 +12,7 @@ from alembic import op
 from sqlalchemy import Integer, String, Text
 from sqlalchemy.sql import table, column
 from sqlalchemy.sql import text
+import collections
 
 # revision identifiers, used by Alembic.
 revision = '2af6ef956270'
@@ -33,7 +34,7 @@ def insert_operation_form_field_translation():
         (239, 'pt', 'Atributo com a predição (novo)',
          'Atributo com a predição (novo)'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -57,7 +58,7 @@ def _insert_fields():
         (239, 'prediction', 'TEXT', 0, 3, None, 'text', None, None,
          'EXECUTION', 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -128,7 +129,7 @@ def _insert_scripts():
         (27, 1, "JS_CLIENT", "copyInput(task);", 36),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -137,8 +138,8 @@ all_commands = [
      ('DELETE FROM operation_operation_form WHERE operation_id = 75 AND '
       'operation_form_id = 90')
      ),
-    ((u"INSERT INTO operation_form_translation "
-     u"VALUES(90, 'en', 'Execution'), (90, 'pt', 'Execução')"),
+    (("INSERT INTO operation_form_translation "
+     "VALUES(90, 'en', 'Execution'), (90, 'pt', 'Execução')"),
      'DELETE FROM operation_form_translation WHERE id = 90'
      ),
     (_insert_fields, 'DELETE FROM operation_form_field WHERE id IN '
@@ -167,7 +168,7 @@ def upgrade():
         op.execute(text('START TRANSACTION'))
         for cmd in all_commands:
             assert isinstance(cmd, tuple)
-            if callable(cmd[0]):
+            if isinstance(cmd[0], collections.Callable):
                 cmd[0]()
             else:
                 op.execute(text(cmd[0]))
@@ -181,7 +182,7 @@ def downgrade():
     try:
         op.execute(text('START TRANSACTION'))
         for cmd in reversed(all_commands):
-            if callable(cmd[1]):
+            if isinstance(cmd[1], collections.Callable):
                 cmd[1]()
             else:
                 op.execute(text(cmd[1]))

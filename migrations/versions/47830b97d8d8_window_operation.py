@@ -38,7 +38,7 @@ def _insert_operation():
         (WINDOW_TRANSFORMATION_ID, 'window-transformation', 1,
          'TRANSFORMATION', 'fa-image'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -56,7 +56,7 @@ def _insert_operation_translation():
         (WINDOW_TRANSFORMATION_ID, 'pt', 'Transformação em janela',
          'Transformação em janela'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -69,7 +69,7 @@ def _insert_operation_platform():
     data = [
         (WINDOW_TRANSFORMATION_ID, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -85,7 +85,7 @@ def _insert_operation_form():
     data = [
         (WINDOW_TRANSFORMATION_FORM_ID, 1, 1, 'execution'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -102,7 +102,7 @@ def _insert_operation_operation_form():
         (WINDOW_TRANSFORMATION_ID, APPEARANCE_FORM_ID),
         (WINDOW_TRANSFORMATION_ID, RESULTS_FORM_ID),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -120,7 +120,7 @@ def _insert_operation_form_translation():
         (WINDOW_TRANSFORMATION_FORM_ID, 'en', 'Execution'),
         (WINDOW_TRANSFORMATION_FORM_ID, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -178,7 +178,7 @@ def _insert_operation_form_field():
          None, json.dumps(types), 'EXECUTION', WINDOW_TRANSFORMATION_FORM_ID),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -249,7 +249,7 @@ def _insert_operation_form_field_translation():
 
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -264,7 +264,7 @@ def _insert_operation_category_operation():
         (WINDOW_TRANSFORMATION_ID, 2),
         (WINDOW_TRANSFORMATION_ID, 7),
     ]
-    rows = [dict(zip(columns, cat)) for cat in data]
+    rows = [dict(list(zip(columns, cat))) for cat in data]
 
     op.bulk_insert(tb, rows)
 
@@ -288,7 +288,7 @@ def _insert_operation_port():
         (228, 'INPUT', None, WINDOW_TRANSFORMATION_ID, 1, 'ONE',
          'input data'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -309,7 +309,7 @@ def _insert_operation_port_translation():
         (228, 'pt', 'dados de entrada', 'Dados de entrada'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -325,7 +325,7 @@ def _insert_operation_port_interface_operation_port():
         (227, 1),
         (228, 1),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
@@ -409,7 +409,7 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
+            if isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
@@ -430,7 +430,7 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
+            if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:

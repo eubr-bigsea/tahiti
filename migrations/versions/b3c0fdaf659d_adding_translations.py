@@ -161,7 +161,7 @@ def insert_operation_form_field_translation():
         (228, 'pt', 'Atributo com transações (vazio = primeiro attributo)',
          'Atributo com transações (vazio = primeiro attributo)'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 

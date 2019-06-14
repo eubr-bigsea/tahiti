@@ -36,7 +36,7 @@ def _insert_operation():
         (4017, 'evaluate-model', 1, 'TRANSFORMATION', 'fa-check'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -55,7 +55,7 @@ def _insert_new_operation_platform():
         (4017, 4),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -80,7 +80,7 @@ def _insert_operation_category_operation():
 
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -99,7 +99,7 @@ def _insert_operation_form():
         (4017, 1, 1, 'execution'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
 
@@ -119,7 +119,7 @@ def _insert_operation_form_translation():
         (4017, 'en', 'Execution'),
         (4017, 'pt', 'Execução'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -144,7 +144,7 @@ def _insert_operation_operation_form():
         (4017, 4017),  # own execution form
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -175,7 +175,7 @@ def _insert_operation_translation():
          'Avalia um modelo de aprendizado de máquina'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -207,7 +207,7 @@ def _insert_operation_port():
         (4024, 'INPUT', None, 4017, 2, 'ONE', 'model'),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -243,7 +243,7 @@ def _insert_operation_port_translation():
         (4024, 'pt', 'modelo', 'Model to be evaluated'),
     ]
 
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -274,7 +274,7 @@ def _insert_operation_port_interface_operation_port():
         (4024, 20),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -354,7 +354,7 @@ def _insert_operation_form_field():
          '{"multiple": false}', 'EXECUTION', 4017),
 
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -422,7 +422,7 @@ def _insert_operation_form_field_translation():
         (4088, 'pt', 'Atributo de features',
          'Atributo usado como features (apenas se é modelo de agrupamento).'),
     ]
-    rows = [dict(zip(columns, row)) for row in data]
+    rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -499,8 +499,11 @@ def upgrade():
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], (unicode, str)):
-                connection.execute(cmd[0])
+            if isinstance(cmd[0], str):
+                cmds = cmd[0].split(';')
+                for new_cmd in cmds:
+                    if new_cmd.strip():
+                        connection.execute(new_cmd)
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:
                     connection.execute(row)
@@ -519,8 +522,11 @@ def downgrade():
 
     try:
         for cmd in reversed(all_commands):
-            if isinstance(cmd[1], (unicode, str)):
-                connection.execute(cmd[1])
+            if isinstance(cmd[1], str):
+                cmds = cmd[1].split(';')
+                for new_cmd in cmds:
+                    if new_cmd.strip():
+                        connection.execute(new_cmd)
             elif isinstance(cmd[1], list):
                 for row in cmd[1]:
                     connection.execute(row)
