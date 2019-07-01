@@ -1241,7 +1241,8 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
 
     LIMONERO_IMAGE = "`${LIMONERO_URL}/datasources?simple=true&list=" \
-                     "true&enabled=1&formats=TAR_IMAGE_FOLDER,HAR_IMAGE_FOLDER`"
+                     "true&enabled=1&formats=TAR_IMAGE_FOLDER," \
+                     "HAR_IMAGE_FOLDER,IMAGE_FOLDER`"
 
     data = [
         # Conv1D
@@ -1355,7 +1356,7 @@ def _insert_operation_form_field():
          'EXECUTION', 5145),
 
         # Conv2D
-        (5236, 'filters', 'INTEGER', 1, 1, 0, 'integer', None, None, 'EXECUTION', 5143),
+        (5236, 'filters', 'TEXT', 1, 1, 0, 'text', None, None, 'EXECUTION', 5143),
         (5237, 'kernel_size', 'TEXT', 1, 2, 0, 'text', None, None, 'EXECUTION', 5143),
         (5238, 'strides', 'TEXT', 1, 3, "(1, 1)", 'text', None, None, 'EXECUTION', 5143),
         (5478, 'input_shape', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', 5143),
@@ -2638,7 +2639,7 @@ def _insert_operation_form_field():
              {"key": 1, "value": "progress bar"},
              {"key": 2, "value": "one line per epoch"},
          ]), 'EXECUTION', 5233),
-        (5477, 'callbacks', 'TEXT', 0, 13, None, 'select2', None,
+        (5477, 'callbacks', 'TEXT', 0, 13, "TensorBoard", 'select2', None,
          json.dumps([
              {"value": "BaseLogger", "key": "BaseLogger"},
              {"value": "CSVLogger", "key": "CSVLogger"},
@@ -3679,6 +3680,9 @@ all_commands = [
 
     ("""UPDATE operation SET cssClass = 'circle-layout' WHERE id IN (SELECT operation_id FROM `operation_platform` WHERE platform_id = 5)""",
      ""),
+
+    ("""UPDATE operation SET enabled = 0 WHERE id = 5091""",
+     """UPDATE operation SET enabled = 1 WHERE id = 5091"""),
 ]
 
 
