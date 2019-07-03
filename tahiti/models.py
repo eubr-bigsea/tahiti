@@ -144,7 +144,7 @@ class WorkflowType:
 
     @staticmethod
     def values():
-        return [n for n in WorkflowType.__dict__.keys()
+        return [n for n in list(WorkflowType.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 
@@ -655,7 +655,7 @@ class Workflow(db.Model):
     forms = Column(String(16000000))
     deployment_enabled = Column(Boolean,
                                 default=False, nullable=False)
-    type = Column(Enum(*WorkflowType.values(),
+    type = Column(Enum(*list(WorkflowType.values()),
                        name='WorkflowTypeEnumType'),
                   default=WorkflowType.WORKFLOW, nullable=False)
     __mapper_args__ = {

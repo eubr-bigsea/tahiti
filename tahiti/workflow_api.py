@@ -173,7 +173,7 @@ class WorkflowListApi(Resource):
             response_schema = WorkflowItemResponseSchema()
             for task in data.get('tasks', {}):
                 task['operation_id'] = task['operation']['id']
-                task['forms'] = {k: v for k, v in task['forms'].items()
+                task['forms'] = {k: v for k, v in list(task['forms'].items())
                                  if v.get('value') is not None}
             params = {}
             params.update(data)
@@ -266,7 +266,7 @@ class WorkflowDetailApi(Resource):
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
                 for task in data.get('tasks', {}):
-                    task['forms'] = {k: v for k, v in task['forms'].items()
+                    task['forms'] = {k: v for k, v in list(task['forms'].items())
                                      if v.get('value') is not None}
                     task['operation_id'] = task['operation']['id']
 

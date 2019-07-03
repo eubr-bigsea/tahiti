@@ -911,7 +911,7 @@ class WorkflowExecuteRequestSchema(Schema):
     forms = fields.String(required=False, allow_none=True)
     deployment_enabled = fields.Boolean(required=True, missing=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
+                         validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
         'tahiti.schema.TaskExecuteRequestSchema',
         allow_none=True,
@@ -949,7 +949,7 @@ class WorkflowListResponseSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False)
     deployment_enabled = fields.Boolean(required=True, missing=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
+                         validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
         'tahiti.schema.TaskListResponseSchema',
         allow_none=True,
@@ -992,7 +992,7 @@ class WorkflowCreateRequestSchema(Schema):
     forms = fields.String(required=False, allow_none=True)
     deployment_enabled = fields.Boolean(required=True, missing=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
+                         validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
         'tahiti.schema.TaskCreateRequestSchema',
         allow_none=True,
@@ -1032,7 +1032,7 @@ class WorkflowItemResponseSchema(Schema):
     forms = fields.Function(lambda x: load_json(x.forms))
     deployment_enabled = fields.Boolean(required=True, missing=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
-                         validate=[OneOf(WorkflowType.__dict__.keys())])
+                         validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
         'tahiti.schema.TaskItemResponseSchema',
         allow_none=True,
