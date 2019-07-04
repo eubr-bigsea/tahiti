@@ -173,7 +173,7 @@ class OperationListResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=True)
-    cssClass = fields.String(required=False)
+    css_class = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryListResponseSchema',
         required=True,
@@ -211,7 +211,7 @@ class OperationCreateRequestSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=True)
-    cssClass = fields.String(required=False)
+    css_class = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryCreateRequestSchema',
         required=True,
@@ -253,7 +253,7 @@ class OperationItemResponseSchema(Schema):
     type = fields.String(required=True,
                          validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=True)
-    cssClass = fields.String(required=False)
+    css_class = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryItemResponseSchema',
         required=True,
@@ -294,7 +294,7 @@ class OperationUpdateRequestSchema(Schema):
     type = fields.String(required=False, allow_none=True,
                          validate=[OneOf(list(OperationType.__dict__.keys()))])
     icon = fields.String(required=False, allow_none=True)
-    cssClass = fields.String(required=False, allow_none=True)
+    css_class = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryUpdateRequestSchema',
         required=True,
@@ -778,11 +778,9 @@ class TaskListResponseSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
-    group = fields.Nested(
-        'tahiti.schema.TaskListResponseSchema',
-        allow_none=True)
+    width = fields.Integer(required=False, allow_none=True, missing=0)
+    height = fields.Integer(required=False, allow_none=True, missing=0)
+    group_id = fields.String(required=False, allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
@@ -808,10 +806,10 @@ class TaskCreateRequestSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
-    operation_id = fields.Integer(required=True)
+    width = fields.Integer(required=False, allow_none=True, missing=0)
+    height = fields.Integer(required=False, allow_none=True, missing=0)
     group_id = fields.String(required=False, allow_none=True)
+    operation_id = fields.Integer(required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -836,11 +834,9 @@ class TaskItemResponseSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
-    group = fields.Nested(
-        'tahiti.schema.TaskItemResponseSchema',
-        allow_none=True)
+    width = fields.Integer(required=False, allow_none=True, missing=0)
+    height = fields.Integer(required=False, allow_none=True, missing=0)
+    group_id = fields.String(required=False, allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
         allow_none=True)
@@ -867,15 +863,13 @@ class TaskExecuteRequestSchema(Schema):
     environment = fields.String(required=True, missing=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(list(DiagramEnvironment.__dict__.keys()))])
     enabled = fields.Boolean(required=True, missing=True)
-    width = fields.Integer(required=True, missing=0)
-    height = fields.Integer(required=True, missing=0)
+    width = fields.Integer(required=False, allow_none=True, missing=0)
+    height = fields.Integer(required=False, allow_none=True, missing=0)
+    group_id = fields.String(required=False, allow_none=True)
     next_task_id = fields.String(allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationExecuteRequestSchema',
         required=True)
-    group = fields.Nested(
-        'tahiti.schema.TaskExecuteRequestSchema',
-        allow_none=True)
     parameters = fields.Nested(
         'tahiti.schema.KeyValuePairExecuteRequestSchema',
         allow_none=True,
@@ -989,7 +983,7 @@ class WorkflowCreateRequestSchema(Schema):
     is_template = fields.Boolean(required=True, missing=False)
     is_system_template = fields.Boolean(required=True, missing=False)
     is_public = fields.Boolean(required=True, missing=False)
-    forms = fields.String(required=False, allow_none=True)
+    forms = fields.Function(lambda x: load_json(x.forms))
     deployment_enabled = fields.Boolean(required=True, missing=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])

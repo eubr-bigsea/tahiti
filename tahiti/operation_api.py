@@ -109,8 +109,11 @@ class OperationListApi(Resource):
                 operations = operations.filter(text(
                     'operation_translation_1.name LIKE :param_name',
                     bindparams=[param_name]))
-
-            param_locale = bindparam('param_locale', str(g.locale)[:2],
+            if platform == '5': # FIXME hard coded
+                param_locale = bindparam('param_locale', 'en',
+                                     Unicode)
+            else:
+                param_locale = bindparam('param_locale', str(g.locale)[:2],
                                      Unicode)
 
             operations = operations.filter(text(

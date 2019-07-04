@@ -139,7 +139,7 @@ class WorkflowListApi(Resource):
             log.exception(e)
             result = dict(status="ERROR", message="Internal error")
             if current_app.debug:
-                result['debug_detail'] = e.message
+                result['debug_detail'] = str(e)
             return result, 500
 
     @staticmethod
@@ -209,7 +209,7 @@ class WorkflowListApi(Resource):
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
                 if current_app.debug or True:
-                    result['debug_detail'] = e.message
+                    result['debug_detail'] = str(e)
                 db.session.rollback()
 
         return result, result_code
@@ -251,7 +251,7 @@ class WorkflowDetailApi(Resource):
                 result, result_code = dict(status="ERROR",
                                            message="Internal error"), 500
                 if current_app.debug:
-                    result['debug_detail'] = e.message
+                    result['debug_detail'] = str(e)
                 db.session.rollback()
         return result, result_code
 
@@ -320,7 +320,7 @@ class WorkflowDetailApi(Resource):
                         result, result_code = dict(
                             status="ERROR", message="Internal error"), 500
                         if current_app.debug:
-                            result['debug_detail'] = e.message
+                            result['debug_detail'] = str(e)
                         db.session.rollback()
                 else:
                     result = dict(status="ERROR", message="Invalid data",
@@ -354,6 +354,7 @@ class WorkflowImportApi(Resource):
             original = json.loads(contents.decode("utf-8"))
             platform = original.pop('platform')
 
+            original['form'] = json.dumps(original.pop('forms'))
             user = g.user
             original.pop('user')
             original['platform'] = Platform.query.get(platform['id'])
@@ -397,7 +398,7 @@ class WorkflowImportApi(Resource):
                     result, result_code = dict(status="ERROR",
                                                message="Internal error"), 500
                     if current_app.debug or True:
-                        result['debug_detail'] = e.message
+                        result['debug_detail'] = str(e)
                     db.session.rollback()
 
             return {'status': 'OK', 'message': '',

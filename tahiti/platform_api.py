@@ -14,12 +14,9 @@ class PlatformListApi(Resource):
     def get():
         only = ('id', 'name') \
             if request.args.get('simple', 'false') == 'true' else None
-        enabled_filter = request.args.get('enabled')
-        if enabled_filter:
-            platforms = Platform.query.filter(
-                Platform.enabled == (enabled_filter != 'false'))
-        else:
-            platforms = Platform.query
+        enabled_filter = request.args.get('enabled') in ["true", 1, "1"]
+        platforms = Platform.query.filter(
+            Platform.enabled == (enabled_filter == enabled_filter))
 
         platforms = platforms.order_by(Platform.slug)
 

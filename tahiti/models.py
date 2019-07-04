@@ -5,6 +5,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
     Enum, DateTime, Numeric, Text, Unicode, UnicodeText
 from sqlalchemy import event
+from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.schema import UniqueConstraint
@@ -19,12 +20,12 @@ db = SQLAlchemy()
 
 # noinspection PyClassHasNoInit
 class OperationType:
+    TRANSFORMATION = 'TRANSFORMATION'
+    ACTION = 'ACTION'
     VISUALIZATION = 'VISUALIZATION'
     SHUFFLE = 'SHUFFLE'
-    USER_META_OPERATION = 'USER_META_OPERATION'
-    ACTION = 'ACTION'
-    TRANSFORMATION = 'TRANSFORMATION'
     SYSTEM_META_OPERATION = 'SYSTEM_META_OPERATION'
+    USER_META_OPERATION = 'USER_META_OPERATION'
 
     @staticmethod
     def values():
@@ -45,8 +46,8 @@ class DiagramEnvironment:
 
 # noinspection PyClassHasNoInit
 class ScriptType:
-    PY_SERVER = 'PY_SERVER'
     JS_CLIENT = 'JS_CLIENT'
+    PY_SERVER = 'PY_SERVER'
 
     @staticmethod
     def values():
@@ -67,8 +68,8 @@ class OperationPortType:
 
 # noinspection PyClassHasNoInit
 class OperationPortMultiplicity:
-    MANY = 'MANY'
     ONE = 'ONE'
+    MANY = 'MANY'
 
     @staticmethod
     def values():
@@ -89,9 +90,9 @@ class ApplicationType:
 
 # noinspection PyClassHasNoInit
 class OperationFieldScope:
-    BOTH = 'BOTH'
-    EXECUTION = 'EXECUTION'
     DESIGN = 'DESIGN'
+    EXECUTION = 'EXECUTION'
+    BOTH = 'BOTH'
 
     @staticmethod
     def values():
@@ -102,20 +103,20 @@ class OperationFieldScope:
 # noinspection PyClassHasNoInit
 class DataType:
     BINARY = 'BINARY'
-    FLOAT = 'FLOAT'
-    LAT_LONG = 'LAT_LONG'
-    TIME = 'TIME'
-    DOUBLE = 'DOUBLE'
-    DECIMAL = 'DECIMAL'
-    ENUM = 'ENUM'
     CHARACTER = 'CHARACTER'
-    LONG = 'LONG'
-    DATETIME = 'DATETIME'
-    VECTOR = 'VECTOR'
-    TEXT = 'TEXT'
     DATE = 'DATE'
+    DATETIME = 'DATETIME'
+    DECIMAL = 'DECIMAL'
+    DOUBLE = 'DOUBLE'
+    ENUM = 'ENUM'
+    FLOAT = 'FLOAT'
     INTEGER = 'INTEGER'
+    LAT_LONG = 'LAT_LONG'
+    LONG = 'LONG'
+    TEXT = 'TEXT'
+    TIME = 'TIME'
     TIMESTAMP = 'TIMESTAMP'
+    VECTOR = 'VECTOR'
 
     @staticmethod
     def values():
@@ -137,10 +138,10 @@ class PermissionType:
 
 # noinspection PyClassHasNoInit
 class WorkflowType:
-    SUB_FLOW = 'SUB_FLOW'
+    WORKFLOW = 'WORKFLOW'
     USER_TEMPLATE = 'USER_TEMPLATE'
     SYSTEM_TEMPLATE = 'SYSTEM_TEMPLATE'
-    WORKFLOW = 'WORKFLOW'
+    SUB_FLOW = 'SUB_FLOW'
 
     @staticmethod
     def values():
@@ -151,8 +152,8 @@ class WorkflowType:
 # noinspection PyClassHasNoInit
 class TaskGroupType:
     PIPELINE = 'PIPELINE'
-    TEMPLATE = 'TEMPLATE'
     SERVICE = 'SERVICE'
+    TEMPLATE = 'TEMPLATE'
 
     @staticmethod
     def values():
@@ -172,7 +173,7 @@ class Application(db.Model):
                      default=True, nullable=False)
     type = Column(Enum(*list(ApplicationType.values()),
                        name='ApplicationTypeEnumType'), nullable=False)
-    execution_parameters = Column(String(16000000))
+    execution_parameters = Column(LONGTEXT)
     __mapper_args__ = {
         'order_by': 'name'
     }
@@ -240,7 +241,7 @@ class Operation(db.Model, Translatable):
     type = Column(Enum(*list(OperationType.values()),
                        name='OperationTypeEnumType'), nullable=False)
     icon = Column(String(200), nullable=False)
-    cssClass = Column(String(250), nullable=True)
+    css_class = Column(String(200))
 
     # Associations
     # noinspection PyUnresolvedReferences
@@ -375,10 +376,10 @@ class OperationFormField(db.Model, Translatable):
     required = Column(Boolean, nullable=False)
     order = Column(Integer,
                    default=0, nullable=False)
-    default = Column(String(16000000))
+    default = Column(LONGTEXT)
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
-    values = Column(String(16000000))
+    values = Column(LONGTEXT)
     scope = Column(Enum(*list(OperationFieldScope.values()),
                         name='OperationFieldScopeEnumType'),
                    default='BOTH', nullable=False)
@@ -420,7 +421,7 @@ class OperationPort(db.Model, Translatable):
     slug = Column(String(50), nullable=False)
     type = Column(Enum(*list(OperationPortType.values()),
                        name='OperationPortTypeEnumType'), nullable=False)
-    tags = Column(String(16000000))
+    tags = Column(LONGTEXT)
     order = Column(Integer)
     multiplicity = Column(Enum(*list(OperationPortMultiplicity.values()),
                                name='OperationPortMultiplicityEnumType'),
@@ -496,7 +497,7 @@ class OperationScript(db.Model):
     type = Column(Enum(*list(ScriptType.values()),
                        name='ScriptTypeEnumType'), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    body = Column(String(16000000), nullable=False)
+    body = Column(LONGTEXT, nullable=False)
 
     # Associations
     operation_id = Column(Integer,
@@ -566,7 +567,7 @@ class Task(db.Model):
     left = Column(Integer, nullable=False)
     top = Column(Integer, nullable=False)
     z_index = Column(Integer, nullable=False)
-    forms = Column(String(16000000), nullable=False)
+    forms = Column(LONGTEXT, nullable=False)
     version = Column(Integer, nullable=False)
     environment = Column(Enum(*list(DiagramEnvironment.values()),
                               name='DiagramEnvironmentEnumType'),
@@ -574,9 +575,10 @@ class Task(db.Model):
     enabled = Column(Boolean,
                      default=True, nullable=False)
     width = Column(Integer,
-                   default=0, nullable=False)
+                   default=0)
     height = Column(Integer,
-                    default=0, nullable=False)
+                    default=0)
+    group_id = Column(String(200))
     __mapper_args__ = {
         'version_id_col': version,
     }
@@ -594,11 +596,6 @@ class Task(db.Model):
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
-    group_id = Column(String(250),
-                      ForeignKey("task.id"))
-    group = relationship(
-        "Task",
-        foreign_keys=[group_id])
 
     def __unicode__(self):
         return self.name
@@ -632,7 +629,7 @@ class Workflow(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    description = Column(String(16000000))
+    description = Column(LONGTEXT)
     enabled = Column(Boolean,
                      default=True, nullable=False)
     user_id = Column(Integer, nullable=False)
@@ -651,8 +648,8 @@ class Workflow(db.Model):
                                 default=False, nullable=False)
     is_public = Column(Boolean,
                        default=False, nullable=False)
-    template_code = Column(String(16000000))
-    forms = Column(String(16000000))
+    template_code = Column(LONGTEXT)
+    forms = Column(LONGTEXT)
     deployment_enabled = Column(Boolean,
                                 default=False, nullable=False)
     type = Column(Enum(*list(WorkflowType.values()),
@@ -688,7 +685,7 @@ class WorkflowHistory(db.Model):
     user_name = Column(String(200), nullable=False)
     date = Column(DateTime,
                   default=datetime.datetime.utcnow, nullable=False)
-    content = Column(String(16000000), nullable=False)
+    content = Column(LONGTEXT, nullable=False)
 
     # Associations
     workflow_id = Column(Integer,
