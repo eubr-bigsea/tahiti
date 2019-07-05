@@ -349,6 +349,7 @@ def downgrade():
     connection = session.connection()
 
     try:
+        connection.execute('SET foreign_key_checks = 0;')
         for cmd in reversed(all_commands):
             if isinstance(cmd[1], str):
                 connection.execute(cmd[1])
@@ -357,6 +358,7 @@ def downgrade():
                     connection.execute(row)
             else:
                 cmd[1]()
+        connection.execute('SET foreign_key_checks = 1;')
     except:
         session.rollback()
         raise
