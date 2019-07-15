@@ -284,29 +284,27 @@ def _insert_operation_form_field():
          'EXECUTION', CONV3D_FORM),
 
         # video reader
-        (5543, 'train_images', 'INTEGER', 1, 1, None, 'lookup', LIMONERO_IMAGE,
+        (5543, 'training_videos', 'INTEGER', 1, 1, None, 'lookup', LIMONERO_IMAGE,
          None, 'EXECUTION', VIDEO_READER_FORM),
-        (5544, 'validation_images', 'INTEGER', 0, 2, None, 'lookup',
+        (5544, 'validation_videos', 'INTEGER', 0, 2, None, 'lookup',
          LIMONERO_IMAGE, None, 'EXECUTION', VIDEO_READER_FORM),
 
         # video generator
         (5545, 'dimensions', 'TEXT', 1, 1, None, 'text', None, None,
          'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5546, 'channels', 'INTEGER', 1, 2, None, 'integer', None, None,
+        (5546, 'channels', 'INTEGER', 1, 2, 3, 'integer', None, None,
          'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5547, 'batch_size', 'INTEGER', 1, 3, None, 'integer', None, None,
+        (5547, 'batch_size', 'INTEGER', 1, 4, 16, 'integer', None, None,
          'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5548, 'steps_per_epoch', 'INTEGER', 1, 4, None, 'integer', None, None,
+        (5548, 'shuffle', 'INTEGER', 0, 8, 1, 'checkbox', None, None,
          'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5549, 'validation_steps', 'INTEGER', 1, 4, None, 'integer', None, None,
+        (5549, 'validation_split', 'DECIMAL', 0, 9, 0.0, 'decimal', None, None,
          'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5550, 'epochs', 'INTEGER', 1, 5, None, 'integer', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5551, 'workers', 'INTEGER', 0, 6, 2, 'integer', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5552, 'max_queue_size', 'INTEGER', 0, 7, 10, 'integer', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5553, 'use_multiprocessing', 'INTEGER', 0, 8, 1, 'checkbox', None, None,
+        (5550, 'cropping_strategy', 'TEXT', 0, 3, None, 'dropdown', None,
+         json.dumps([
+             {"key": "random", "value": "random"},
+             {"key": "center", "value": "center"}
+         ]),
          'EXECUTION', VIDEO_GENERATOR_FORM),
 
     ]
@@ -334,13 +332,14 @@ def _insert_operation_form_field_translation():
         # video generator
         (5545, 'en', 'Dimensions', ''),
         (5546, 'en', 'Channels', ''),
-        (5547, 'en', 'Batch size', ''),
-        (5548, 'en', 'Steps per epoch', ''),
-        (5549, 'en', 'Validation steps', ''),
-        (5550, 'en', 'Epochs', ''),
-        (5551, 'en', 'Workers', ''),
-        (5552, 'en', 'Max queue size', ''),
-        (5553, 'en', 'Use multiprocessing', ''),
+        (5547, 'en', 'Batch size', 'Size of the batches of data (default: 16).'),
+        (5548, 'en', 'Shuffle', 'Whether to shuffle the data (default: True) '
+                                'If set to False, it will be processed in the '
+                                'read order of the data set.'),
+        (5549, 'en', 'Validation split', 'Float. Fraction of videos reserved '
+                                         'for validation (strictly between 0 '
+                                         'and 1).'),
+        (5550, 'en', 'Cropping strategy', ''),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -375,11 +374,11 @@ all_commands = [
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id BETWEEN 5242 AND 5243'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5542 AND 5553'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5542 AND 5550'),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation WHERE id BETWEEN 5242 AND 5243'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5542 AND 5553'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5542 AND 5550'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 5120 AND 5121'),
 ]
