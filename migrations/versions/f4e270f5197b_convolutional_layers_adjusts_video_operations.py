@@ -30,6 +30,8 @@ VIDEO_GENERATOR_OPERATION = 5121
 CONV3D_FORM = 5150
 VIDEO_READER_FORM = 5242
 VIDEO_GENERATOR_FORM = 5243
+VIDEO_GENERATOR_TRANSFORMATION_FORM = 5244
+BATCH_NORMALIZATION_FORM = 5160
 APPEARANCE_FORM = 41
 
 PREPROCESSING_CATEGORY = 5064
@@ -213,6 +215,7 @@ def _insert_operation_form():
     data = [
         (VIDEO_READER_FORM, 1, 1, 'execution'),
         (VIDEO_GENERATOR_FORM, 1, 1, 'execution'),
+        (VIDEO_GENERATOR_TRANSFORMATION_FORM, 1, 1, 'transformation'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -233,6 +236,8 @@ def _insert_operation_form_translation():
 
         (VIDEO_GENERATOR_FORM, 'en', 'Execution'),
         (VIDEO_GENERATOR_FORM, 'pt', 'Execução'),
+        (VIDEO_GENERATOR_TRANSFORMATION_FORM, 'en', 'Transformations'),
+        (VIDEO_GENERATOR_TRANSFORMATION_FORM, 'pt', 'Transformações'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -251,6 +256,7 @@ def _insert_operation_operation_form():
 
         (VIDEO_GENERATOR_OPERATION, APPEARANCE_FORM),
         (VIDEO_GENERATOR_OPERATION, VIDEO_GENERATOR_FORM),
+        (VIDEO_GENERATOR_OPERATION, VIDEO_GENERATOR_TRANSFORMATION_FORM),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -270,42 +276,90 @@ def _insert_operation_form_field():
         column('values_url', String),
         column('values', String),
         column('scope', String),
-        column('form_id', Integer), )
+        column('form_id', Integer),
+        column('enable_conditions', String)
+    )
 
     columns = ('id', 'name', 'type', 'required', 'order', 'default',
-               'suggested_widget', 'values_url', 'values', 'scope', 'form_id')
+               'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
+               'enable_conditions')
 
     LIMONERO_IMAGE = "`${LIMONERO_URL}/datasources?simple=true&list=" \
                      "true&enabled=1&formats=VIDEO_FOLDER`"
 
+    enabled_condition_random = 'this.cropping_strategy.internalValue === ' \
+                               '"random" && this.apply_transformations.' \
+                               'internalValue === "1"'
+    enabled_condition_center = 'this.cropping_strategy.internalValue === ' \
+                               '"center" && this.apply_transformations.' \
+                               'internalValue === "1"'
+    enabled_condition_transformation = 'this.apply_transformations.' \
+                                       'internalValue === "1"'
+
     data = [
         # Conv3D
         (5542, 'trainable', 'INTEGER', 0, 8, 0, 'checkbox', None, None,
-         'EXECUTION', CONV3D_FORM),
+         'EXECUTION', CONV3D_FORM, None),
 
         # video reader
         (5543, 'training_videos', 'INTEGER', 1, 1, None, 'lookup', LIMONERO_IMAGE,
-         None, 'EXECUTION', VIDEO_READER_FORM),
+         None, 'EXECUTION', VIDEO_READER_FORM, None),
         (5544, 'validation_videos', 'INTEGER', 0, 2, None, 'lookup',
-         LIMONERO_IMAGE, None, 'EXECUTION', VIDEO_READER_FORM),
+         LIMONERO_IMAGE, None, 'EXECUTION', VIDEO_READER_FORM, None),
 
         # video generator
         (5545, 'dimensions', 'TEXT', 1, 1, None, 'text', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
+         'EXECUTION', VIDEO_GENERATOR_FORM, None),
         (5546, 'channels', 'INTEGER', 1, 2, 3, 'integer', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
-        (5547, 'batch_size', 'INTEGER', 1, 4, 16, 'integer', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
+         'EXECUTION', VIDEO_GENERATOR_FORM, None),
+        (5547, 'batch_size', 'INTEGER', 1, 3, 16, 'integer', None, None,
+         'EXECUTION', VIDEO_GENERATOR_FORM, None),
         (5548, 'shuffle', 'INTEGER', 0, 8, 1, 'checkbox', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
+         'EXECUTION', VIDEO_GENERATOR_FORM, None),
         (5549, 'validation_split', 'DECIMAL', 0, 9, 0.0, 'decimal', None, None,
-         'EXECUTION', VIDEO_GENERATOR_FORM),
+         'EXECUTION', VIDEO_GENERATOR_FORM, None),
+
         (5550, 'cropping_strategy', 'TEXT', 0, 3, None, 'dropdown', None,
          json.dumps([
              {"key": "random", "value": "random"},
              {"key": "center", "value": "center"}
          ]),
-         'EXECUTION', VIDEO_GENERATOR_FORM),
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_transformation),
+
+        # Random
+        (5551, 'random_frames', 'TEXT', 0, 4, None, 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_random),
+        (5552, 'random_height', 'TEXT', 0, 4, '(0, 16)', 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_random),
+        (5553, 'random_width', 'TEXT', 0, 4, '(0, 59)', 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_random),
+        (5554, 'random_channel', 'TEXT', 0, 4, None, 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_random),
+
+        # Center
+        (5555, 'frames', 'TEXT', 0, 4, None, 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_center),
+        (5556, 'height', 'TEXT', 0, 4, '[8:120]', 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_center),
+        (5557, 'width', 'TEXT', 0, 4, '[30:142]', 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_center),
+        (5558, 'channel', 'TEXT', 0, 4, None, 'text', None, None,
+         'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM,
+         enabled_condition_center),
+
+        (5559, 'apply_transformations', 'INTEGER', 0, 0, 0, 'checkbox', None,
+         None, 'EXECUTION', VIDEO_GENERATOR_TRANSFORMATION_FORM, None),
+
+        (5560, 'kwargs', 'TEXT', 0, 30, 'fused=False', 'text', None, None,
+         'EXECUTION', BATCH_NORMALIZATION_FORM, None),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -341,6 +395,90 @@ def _insert_operation_form_field_translation():
                                          'and 1).'),
         (5550, 'en', 'Cropping strategy', ''),
 
+        # Random
+        (5551, 'en', 'Frames', 'Number of frames to apply the cropping. '
+                               'It is necessary to inform a interval containing '
+                               'the range: initial and final value, for example'
+                               ' [0: 1]. After this transformation the video '
+                               'size will change. It is important to inform in '
+                               'the various dimension fields the new dimension '
+                               'after cropping. If this field is empty the '
+                               'cropping transformation will be applied to all '
+                               'channels.'),
+        (5552, 'en', 'Random height', 'Height in number of pixels. '
+                                      'It is necessary to inform a tuple '
+                                      'containing the range: initial and final '
+                                      'value for the random function, for '
+                                      'example (0, 59). After this '
+                                      'transformation the video size will '
+                                      'change. It is important to inform in '
+                                      'the various dimension fields the new '
+                                      'dimension after cropping. If this field '
+                                      'is empty the cropping transformation '
+                                      'will be applied to all channels.'),
+        (5553, 'en', 'Random width', 'It is necessary to inform a tuple '
+                                     'containing the range: initial and final '
+                                     'value for the random function, for '
+                                     'example  (0, 59). After this '
+                                     'transformation the video size  will '
+                                     'change. It is important to inform in the '
+                                     'various dimension fields the new '
+                                     'dimension after  cropping. If this field '
+                                     'is empty the cropping  transformation '
+                                     'will be applied to all  channels.'),
+        (5554, 'en', 'Channel', 'Number of channels to apply the crop. It is '
+                                'necessary to inform a tuple containing the '
+                                'range: initial and final value, for example '
+                                '[0: 1]. After this transformation the video '
+                                'size will change. It is important to inform '
+                                'in the various dimension fields the new '
+                                'dimension after cropping. If this field is '
+                                'empty the cropping transformation will be '
+                                'applied to all channels.'),
+
+        # Center
+        (5555, 'en', 'Frames', 'Number of frames to apply the cropping. '
+                               'It is necessary to inform a interval containing '
+                               'the range: initial and final value, for example'
+                               ' [0: 1]. After this transformation the video '
+                               'size will change. It is important to inform in '
+                               'the various dimension fields the new dimension '
+                               'after cropping. If this field is empty the '
+                               'cropping transformation will be applied to all '
+                               'channels.'),
+        (5556, 'en', 'Height', 'Height in number of pixels. '
+                               'It is necessary to inform a interval containing '
+                               'the range: initial and final value, for example'
+                               ' [0: 1]. After this transformation the video '
+                               'size will change. It is important to inform in '
+                               'the various dimension fields the new dimension '
+                               'after cropping. If this field is empty the '
+                               'cropping transformation will be applied to all '
+                               'channels.'),
+        (5557, 'en', 'Width', 'Width in number of pixels. '
+                              'It is necessary to inform a interval containing '
+                              'the range: initial and final value, for example '
+                              '[0: 1]. After this transformation the video size'
+                              ' will change. It is important to inform in the '
+                              'various dimension fields the new dimension after'
+                              ' cropping. If this field is empty the cropping '
+                              'transformation will be applied to all '
+                              'channels.'),
+        (5558, 'en', 'Channel', 'Number of channels to apply the crop. It is '
+                                'necessary to inform a interval containing the '
+                                'range: initial and final value, for example '
+                                '[0: 1]. After this transformation the video '
+                                'size will change. It is important to inform '
+                                'in the various dimension fields the new '
+                                'dimension after cropping. If this field is '
+                                'empty the cropping transformation will be '
+                                'applied to all channels.'),
+
+        (5559, 'en', 'Apply transformations', 'Turn on to apply transformations'
+                                              ' to the video data set.'),
+
+        (5560, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -372,15 +510,18 @@ all_commands = [
      'DELETE FROM operation_port_translation WHERE id BETWEEN 5388 AND 5391'),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN 5242 AND 5243'),
+     'DELETE FROM operation_form WHERE id BETWEEN 5242 AND 5244'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5542 AND 5550'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5542 AND 5560'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN 5242 AND 5243'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 5242 AND 5244'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5542 AND 5550'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5542 AND 5560'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 5120 AND 5121'),
+
+    ("UPDATE operation SET `enabled`='0' WHERE `id`='5113'",
+     "UPDATE operation SET `enabled`='1' WHERE `id`='5113'")
 ]
 
 
