@@ -1,6 +1,7 @@
 # TMP
 doc/
 examples/
+conf/tahiti-config.yaml
 .idea/
 *.iml
 # Byte-compiled / optimized / DLL files
