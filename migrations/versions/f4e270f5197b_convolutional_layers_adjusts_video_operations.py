@@ -26,6 +26,7 @@ KERAS_PLATAFORM_ID = 5
 
 VIDEO_READER_OPERATION = 5120
 VIDEO_GENERATOR_OPERATION = 5121
+EVALUATE_MODEL_OPERATION = 5114
 
 CONV3D_FORM = 5150
 VIDEO_READER_FORM = 5242
@@ -124,10 +125,12 @@ def _insert_operation_port():
 
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
-        (5388, 'OUTPUT', '', 2, 'ONE', VIDEO_READER_OPERATION, 'train-video'),
-        (5389, 'OUTPUT', '', 1, 'ONE', VIDEO_READER_OPERATION, 'validation-video'),
+        (5388, 'OUTPUT', '', 3, 'MANY', VIDEO_READER_OPERATION, 'train-video'),
+        (5389, 'OUTPUT', '', 2, 'MANY', VIDEO_READER_OPERATION, 'validation-video'),
         (5390, 'INPUT', '', 1, 'ONE', VIDEO_GENERATOR_OPERATION, 'video data'),
-        (5391, 'OUTPUT', '', 1, 'MANY', VIDEO_GENERATOR_OPERATION, 'generator'),
+        (5391, 'OUTPUT', '', 1, 'ONE', VIDEO_GENERATOR_OPERATION, 'generator'),
+        (5392, 'OUTPUT', '', 1, 'MANY', VIDEO_READER_OPERATION, 'test-video'),
+        (5393, 'INPUT', '', 1, 'ONE', EVALUATE_MODEL_OPERATION, 'generator'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -177,6 +180,9 @@ def _insert_operation_port_interface_operation_port():
 
         (5390, 29),
         (5391, 23),
+
+        (5392, 29),
+        (5393, 23),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -198,6 +204,9 @@ def _insert_operation_port_translation():
 
         (5390, 'en', 'video data', 'Video Data'),
         (5391, 'en', 'generator', 'Generator'),
+
+        (5392, 'en', 'test video data', 'Video Data'),
+        (5393, 'en', 'test generator', 'Generator'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -361,6 +370,10 @@ def _insert_operation_form_field():
         (5560, 'kwargs', 'TEXT', 0, 30, 'fused=False', 'text', None, None,
          'EXECUTION', BATCH_NORMALIZATION_FORM, None),
 
+        # video reader
+        (5561, 'test_videos', 'INTEGER', 0, 2, None, 'lookup',
+         LIMONERO_IMAGE, None, 'EXECUTION', VIDEO_READER_FORM, None),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -479,6 +492,9 @@ def _insert_operation_form_field_translation():
 
         (5560, 'en', 'Kwargs', 'Standard layer keyword arguments.'),
 
+        # video reader
+        (5561, 'en', 'Test videos', ''),
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -503,25 +519,28 @@ all_commands = [
      'DELETE FROM operation_port_interface_translation WHERE id BETWEEN 29 AND 29'),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id BETWEEN 5388 AND 5391'),
+     'DELETE FROM operation_port WHERE id BETWEEN 5388 AND 5393'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id BETWEEN 5388 AND 5391'),
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id BETWEEN 5388 AND 5393'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id BETWEEN 5388 AND 5391'),
+     'DELETE FROM operation_port_translation WHERE id BETWEEN 5388 AND 5393'),
 
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id BETWEEN 5242 AND 5244'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5542 AND 5560'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 5542 AND 5561'),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation WHERE id BETWEEN 5242 AND 5244'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5542 AND 5560'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 5542 AND 5561'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 5120 AND 5121'),
 
     ("UPDATE operation SET `enabled`='0' WHERE `id`='5113'",
-     "UPDATE operation SET `enabled`='1' WHERE `id`='5113'")
+     "UPDATE operation SET `enabled`='1' WHERE `id`='5113'"),
+
+    ("UPDATE operation_form SET `order`='1' WHERE `id`='5175'",
+     "UPDATE operation_form SET `order`='5' WHERE `id`='5175'"),
 ]
 
 
