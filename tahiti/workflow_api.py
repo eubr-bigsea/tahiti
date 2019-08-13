@@ -275,11 +275,13 @@ class WorkflowDetailApi(Resource):
                 params.update(data)
                 if 'platform_id' in params and params['platform_id'] is None:
                     params.pop('platform_id')
+
                 if 'user' in params:
-                    user = params.pop('user')
-                    params['user_id'] = user['id']
-                    params['user_login'] = user['login']
-                    params['user_name'] = user['name']
+                    del params['user']
+                params['user_id'] = g.user.id
+                params['user_login'] = g.user.login
+                params['user_name'] = g.user.name
+
                 if params.get('forms') is not None:
                     params['forms'] = json.dumps(params['forms'])
                 else:
