@@ -278,9 +278,10 @@ class WorkflowDetailApi(Resource):
 
                 if 'user' in params:
                     del params['user']
-                params['user_id'] = g.user.id
-                params['user_login'] = g.user.login
-                params['user_name'] = g.user.name
+                # Keeps the same owner
+                # params['user_id'] = g.user.id
+                # params['user_login'] = g.user.login
+                # params['user_name'] = g.user.name
 
                 if params.get('forms') is not None:
                     params['forms'] = json.dumps(params['forms'])
