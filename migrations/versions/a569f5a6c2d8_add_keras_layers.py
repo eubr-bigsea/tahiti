@@ -1164,11 +1164,11 @@ def _insert_operation_form():
         (5168, 1, 1, 'execution'),
         (5169, 1, 1, 'execution'),
         (5170, 1, 1, 'execution'),
-        #(5171, 1, 1, 'execution'),
-        #(5172, 1, 1, 'execution'),
-        #(5173, 1, 1, 'execution'),
-        #(5174, 1, 1, 'execution'),
-        #(5175, 1, 1, 'execution'),
+        (5171, 1, 1, 'execution'),
+        (5172, 1, 1, 'execution'),
+        (5173, 1, 1, 'execution'),
+        (5174, 1, 1, 'execution'),
+        (5175, 1, 1, 'execution'),
         (5221, 1, 1, 'execution'),
         (5222, 1, 1, 'execution'),
         (5223, 1, 1, 'execution'),
@@ -1186,7 +1186,6 @@ def _insert_operation_form():
         (5235, 1, 1, 'execution'),
         (5236, 1, 1, 'execution'),
         (5237, 1, 1, 'execution'),
-
         (5238, 1, 1, 'execution'),
         (5239, 1, 1, 'execution'),
         (5240, 1, 1, 'execution'),
@@ -1231,11 +1230,11 @@ def _insert_operation_form_translation():
         (5168, 'en', 'Execution'),
         (5169, 'en', 'Execution'),
         (5170, 'en', 'Execution'),
-        #(5171, 'en', 'Execution'),
-        # (5172, 'en', 'Execution'),
-        # (5173, 'en', 'Execution'),
-        # (5174, 'en', 'Execution'),
-        # (5175, 'en', 'Execution'),
+        (5171, 'en', 'Execution'),
+        (5172, 'en', 'Execution'),
+        (5173, 'en', 'Execution'),
+        (5174, 'en', 'Execution'),
+        (5175, 'en', 'Execution'),
         (5221, 'en', 'execution'),
         (5222, 'en', 'Execution'),
         (5223, 'en', 'Execution'),
@@ -1282,11 +1281,11 @@ def _insert_operation_form_translation():
         (5168, 'pt', 'Execução'),
         (5169, 'pt', 'Execução'),
         (5170, 'pt', 'Execução'),
-        # (5171, 'pt', 'Execução'),
-        # (5172, 'pt', 'Execução'),
-        # (5173, 'pt', 'Execução'),
-        # (5174, 'pt', 'Execução'),
-        # (5175, 'pt', 'Execução'),
+        (5171, 'pt', 'Execução'),
+        (5172, 'pt', 'Execução'),
+        (5173, 'pt', 'Execução'),
+        (5174, 'pt', 'Execução'),
+        (5175, 'pt', 'Execução'),
         (5221, 'pt', 'Execução'),
         (5222, 'pt', 'Execução'),
         (5223, 'pt', 'Execução'),
@@ -3916,14 +3915,17 @@ def upgrade():
     connection = session.connection()
 
     try:
+        connection.execute('SET FOREIGN_KEY_CHECKS=0;')
         for cmd in all_commands:
-            if isinstance(cmd[0], str):
-                connection.execute(cmd[0])
-            elif isinstance(cmd[0], list):
-                for row in cmd[0]:
-                    connection.execute(row)
-            else:
-                cmd[0]()
+            if cmd[0]:
+                if isinstance(cmd[0], str):
+                    connection.execute(cmd[0])
+                elif isinstance(cmd[0], list):
+                    for row in cmd[0]:
+                        connection.execute(row)
+                else:
+                    cmd[0]()
+        connection.execute('SET FOREIGN_KEY_CHECKS=1;')
     except:
         session.rollback()
         raise
