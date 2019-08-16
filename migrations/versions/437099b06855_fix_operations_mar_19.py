@@ -91,11 +91,11 @@ fold_new = [
      "en": "Random (near exact fold => slower) "},
     {"key": "stratified", "value": "Stratified (approximated fold => faster)",
      "pt": "Estratificada (partição aproximada => mais rápida)",
-     "en": "Stratified"},
+     "en": "Stratified (approximated fold => faster)"},
     {"key": "stratified_exact",
      "value": "Stratified (near exact fold => slower)",
      "pt": "Estratificada (partição quase exata => mais lenta)",
-     "en": "Stratified"}
+     "en": "Stratified (near exact fold => slower)"}
 ]
 
 
