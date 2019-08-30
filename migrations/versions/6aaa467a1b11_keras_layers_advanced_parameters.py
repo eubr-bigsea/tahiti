@@ -255,7 +255,7 @@ all_commands = [
 
     ("""UPDATE operation_form_field 
         SET `required`=1 
-        WHERE `id` IN (5419, 5291, 5253)""",
+        WHERE `id` IN (5419, 5291, 5253, 5237, 5222, 5322)""",
      ""),
 
     ("""UPDATE operation_form_field 
@@ -326,6 +326,13 @@ all_commands = [
      """UPDATE operation
         SET `enabled`=1
         WHERE id IN (5045, 5048, 5044, 5047, 5043, 5046)"""),
+
+    ("""UPDATE operation
+        SET `slug`='convolution-3d'
+        WHERE id = 5078""",
+     """UPDATE operation 
+        SET `slug`='conv-3d'
+        WHERE id = 5078"""),
 ]
 
 
