@@ -3,9 +3,7 @@ import logging
 import os
 import uuid
 
-import urllib.error
-import urllib.parse
-import urllib.request
+import requests
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy import or_
@@ -266,7 +264,8 @@ class WorkflowDetailApi(Resource):
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
                 for task in data.get('tasks', {}):
-                    task['forms'] = {k: v for k, v in list(task['forms'].items())
+                    task['forms'] = {k: v for k, v in
+                                     list(task['forms'].items())
                                      if v.get('value') is not None}
                     task['operation_id'] = task['operation']['id']
 
@@ -349,12 +348,15 @@ class WorkflowImportApi(Resource):
             if not all([url, token]):
                 return {'error': 'Missing url or token parameter',
                         'status': 'ERROR'}, 400
-
-            r = urllib.request.Request(url, headers={"X-Auth-Token": token})
-            contents = urllib.request.urlopen(r).read()
+            r = requests.get(url, headers={"X-Auth-Token": token})
+            if r.status_code == 200:
+                contents = r.text
+            else:
+                return 'Error reading source workflow: ' + \
+                       r.status_code + '\n' + r.text, 400
         # noinspection PyBroadException
         try:
-            original = json.loads(contents.decode("utf-8"))
+            original = json.loads(contents)
             platform = original.pop('platform')
 
             original['form'] = json.dumps(original.pop('forms'))
