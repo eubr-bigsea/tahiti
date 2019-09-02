@@ -116,7 +116,7 @@ class WorkflowListApi(Resource):
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
                 pagination = workflows.paginate(page, page_size, False)
-                if pagination.total < page * page_size and page != 1:
+                if pagination.total < (page -1) * page_size and page != 1:
                     # Nothing in that specified page, return to page 1
                     pagination = workflows.paginate(1, page_size, False)
                 result = {
