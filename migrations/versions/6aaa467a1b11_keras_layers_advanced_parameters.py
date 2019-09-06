@@ -69,6 +69,7 @@ GLOBAL_AVERAGE_POOLING3D_FORM = 5231
 GLOBAL_MAX_POOLING1D_FORM = 5226
 GLOBAL_MAX_POOLING2D_FORM = 5228
 GLOBAL_MAX_POOLING3D_FORM = 5230
+SPATIAL_DROPOUT2D_3D_FORM = 5142
 
 FORMS = (DENSE_FORM, DROPOUT_FORM, INPUT_FORM, LAMBDA_FORM,
          CONV2D_TRANSPOSE_FORM, CONV3D_TRANSPOSE_FORM,
@@ -82,7 +83,8 @@ FORMS = (DENSE_FORM, DROPOUT_FORM, INPUT_FORM, LAMBDA_FORM,
          UP_SAMPLING3D_FORM, ZERO_PADDING2D_FORM, ZERO_PADDING3D_FORM,
          GLOBAL_AVERAGE_POOLING1D_FORM, GLOBAL_AVERAGE_POOLING2D_FORM,
          GLOBAL_AVERAGE_POOLING3D_FORM, GLOBAL_MAX_POOLING1D_FORM,
-         GLOBAL_MAX_POOLING2D_FORM, GLOBAL_MAX_POOLING3D_FORM,)
+         GLOBAL_MAX_POOLING2D_FORM, GLOBAL_MAX_POOLING3D_FORM,
+         SPATIAL_DROPOUT2D_3D_FORM)
 
 
 def _insert_operation_form_field():
@@ -106,8 +108,14 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
 
-    data = []
-    i = 5561
+    data = [(5562, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
+             json.dumps([
+                     {'key': 'channels_last', 'value': 'channels_last'},
+                     {'key': 'channels_first', 'value': 'channels_first'},
+                 ]), 'EXECUTION', SPATIAL_DROPOUT2D_3D_FORM, ENABLED_CONDITION),
+            ]
+
+    i = 5562
     for form in FORMS:
         i += 1
         data.append((i, 'advanced_options', 'INTEGER', 0, 0, 0, 'checkbox',
@@ -131,8 +139,13 @@ def _insert_operation_form_field_translation():
         column('help', String), )
 
     columns = ('id', 'locale', 'label', 'help')
-    data = []
-    for i in range(5562, (5562+len(FORMS))):
+    data = [(5562, 'en', 'Data format', """'channels_first' or 'channels_last'. 
+    In 'channels_first' mode, the channels dimension (the depth) is at index 1, 
+    in 'channels_last' mode is it at index 3. It defaults to the 
+    image_data_format value found in your Keras config file at 
+    ~/.keras/keras.json. If you never set it, then it will be 
+    'channels_last'.""")]
+    for i in range(5563, (5563+len(FORMS))):
         data.append((i, 'en', 'Advanced options',
                      'Enable advanced options.'))
         data.append((i, 'pt', 'Opções avançadas',
