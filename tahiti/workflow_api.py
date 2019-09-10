@@ -101,7 +101,7 @@ class WorkflowListApi(Resource):
             if name_filter:
                 workflows = workflows.filter(
                     Workflow.name.like(
-                        '%%{}%%'.format(name_filter.encode('utf8'))))
+                        '%%{}%%'.format(name_filter)))
             sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
                 sort = 'name'
