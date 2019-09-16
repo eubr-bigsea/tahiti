@@ -413,7 +413,7 @@ def upgrade():
                         connection.execute(row)
                 else:
                     cmd[0]()
-        connection.execute('SET FOREIGN_KEY_CHECKS=1;')
+        connection.execute('SET FOREIGN_KEY_CHECKS=1;') 
     except:
         session.rollback()
         raise
