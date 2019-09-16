@@ -3,9 +3,7 @@ import logging
 import os
 import uuid
 
-import urllib.error
-import urllib.parse
-import urllib.request
+import requests
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy import or_
@@ -103,7 +101,7 @@ class WorkflowListApi(Resource):
             if name_filter:
                 workflows = workflows.filter(
                     Workflow.name.like(
-                        '%%{}%%'.format(name_filter.encode('utf8'))))
+                        '%%{}%%'.format(name_filter)))
             sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
                 sort = 'name'
@@ -118,7 +116,7 @@ class WorkflowListApi(Resource):
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
                 pagination = workflows.paginate(page, page_size, False)
-                if pagination.total < page * page_size and page != 1:
+                if pagination.total < (page -1) * page_size and page != 1:
                     # Nothing in that specified page, return to page 1
                     pagination = workflows.paginate(1, page_size, False)
                 result = {
@@ -266,7 +264,8 @@ class WorkflowDetailApi(Resource):
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
                 for task in data.get('tasks', {}):
-                    task['forms'] = {k: v for k, v in list(task['forms'].items())
+                    task['forms'] = {k: v for k, v in
+                                     list(task['forms'].items())
                                      if v.get('value') is not None}
                     task['operation_id'] = task['operation']['id']
 
@@ -349,12 +348,15 @@ class WorkflowImportApi(Resource):
             if not all([url, token]):
                 return {'error': 'Missing url or token parameter',
                         'status': 'ERROR'}, 400
-
-            r = urllib.request.Request(url, headers={"X-Auth-Token": token})
-            contents = urllib.request.urlopen(r).read()
+            r = requests.get(url, headers={"X-Auth-Token": token})
+            if r.status_code == 200:
+                contents = r.text
+            else:
+                return 'Error reading source workflow: ' + \
+                       r.status_code + '\n' + r.text, 400
         # noinspection PyBroadException
         try:
-            original = json.loads(contents.decode("utf-8"))
+            original = json.loads(contents)
             platform = original.pop('platform')
 
             original['form'] = json.dumps(original.pop('forms'))
