@@ -66,14 +66,14 @@ def _insert_operation_translation():
     columns = ('id', 'locale', 'name', 'description')
     data = [
         (FIT_GENERATOR, 'en', 'Fit generator',
-                                     'Trains the model on data generated batch-'
-                                     'by-batch by a Python generator (or an '
-                                     'instance of Sequence). The generator is '
-                                     'run in parallel to the model, for '
-                                     'efficiency. For instance, this allows you'
-                                     ' to do real-time data augmentation on '
-                                     'images on CPU in parallel to training '
-                                     'your model on GPU.'),
+         'Trains the model on data generated batch-'
+         'by-batch by a Python generator (or an '
+         'instance of Sequence). The generator is '
+         'run in parallel to the model, for '
+         'efficiency. For instance, this allows you'
+         ' to do real-time data augmentation on '
+         'images on CPU in parallel to training '
+         'your model on GPU.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -279,16 +279,16 @@ def _insert_operation_form_field_translation():
                                              'mode. 0 = silent, 1 = progress '
                                              'bar, 2 = one line per epoch.'),
         (FIT_CALLBACKS_FIELD, 'en', 'Callbacks',
-                                  'A callback is a set of functions to be '
-                                  'applied at given stages of the training '
-                                  'procedure. You can use callbacks to get a '
-                                  'view on internal states and statistics of '
-                                  'the model during training. You can pass a '
-                                  'list of callbacks (as the keyword argument '
-                                  'callbacks) to the .fit() method of the '
-                                  'Sequential or  Model classes. The relevant '
-                                  'methods of the callbacks will then be '
-                                  'called at each stage of the training.'),
+         'A callback is a set of functions to be '
+         'applied at given stages of the training '
+         'procedure. You can use callbacks to get a '
+         'view on internal states and statistics of '
+         'the model during training. You can pass a '
+         'list of callbacks (as the keyword argument '
+         'callbacks) to the .fit() method of the '
+         'Sequential or  Model classes. The relevant '
+         'methods of the callbacks will then be '
+         'called at each stage of the training.'),
         (SEED_FIELD, 'en', 'Seed', 'Optional random seed for shuffling and '
                                    'transformations.'),
         (SUBSET_FIELD, 'en', 'Subset', 'Subset of data ("training" or '
@@ -336,13 +336,13 @@ all_commands = [
     ('UPDATE operation_form_field '
      'SET form_id = 5245 '
      'WHERE id IN ('
-        '5474, 5475, 5476, 5477, 5479, 5480, '
-        '5481, 5482, 5483, 5484, 5485, 5486, 5541)',
+     '5474, 5475, 5476, 5477, 5479, 5480, '
+     '5481, 5482, 5483, 5484, 5485, 5486, 5541)',
      'UPDATE operation_form_field '
      'SET form_id = 5233 '
      'WHERE id IN ('
-        '5474, 5475, 5476, 5477, 5479, 5480, '
-        '5481, 5482, 5483, 5484, 5485, 5486, 5541)'),
+     '5474, 5475, 5476, 5477, 5479, 5480, '
+     '5481, 5482, 5483, 5484, 5485, 5486, 5541)'),
 
     ("""UPDATE operation_operation_form 
         SET operation_id = 5122 
@@ -351,8 +351,6 @@ all_commands = [
         SET operation_id = 5112 
         WHERE operation_form_id = 5241"""),
 
-<<<<<<< HEAD
-=======
     ("""UPDATE operation_form_field 
         SET `default` = "(1, 1, 1)" 
         WHERE id IN (5323, 5326)""",
@@ -388,7 +386,6 @@ all_commands = [
         SET `name` = "channel" 
         WHERE id = 5558"""),
 
->>>>>>> e5990e8f498b6d621e6ee137dd9f7b5724aaa1ba
     ("DELETE "
      "FROM operation_form_field "
      "WHERE id IN (5476, 5477, 5520, 5521)",
@@ -416,7 +413,7 @@ def upgrade():
                         connection.execute(row)
                 else:
                     cmd[0]()
-        connection.execute('SET FOREIGN_KEY_CHECKS=1;') 
+        connection.execute('SET FOREIGN_KEY_CHECKS=1;')
     except:
         session.rollback()
         raise
