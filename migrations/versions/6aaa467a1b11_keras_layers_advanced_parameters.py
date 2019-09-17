@@ -69,10 +69,9 @@ GLOBAL_AVERAGE_POOLING3D_FORM = 5231
 GLOBAL_MAX_POOLING1D_FORM = 5226
 GLOBAL_MAX_POOLING2D_FORM = 5228
 GLOBAL_MAX_POOLING3D_FORM = 5230
-<<<<<<< HEAD
-=======
 SPATIAL_DROPOUT2D_3D_FORM = 5142
->>>>>>> e5990e8f498b6d621e6ee137dd9f7b5724aaa1ba
+
+FIT_GENERATOR_FORM = 5245
 
 FORMS = (DENSE_FORM, DROPOUT_FORM, INPUT_FORM, LAMBDA_FORM,
          CONV2D_TRANSPOSE_FORM, CONV3D_TRANSPOSE_FORM,
@@ -86,12 +85,8 @@ FORMS = (DENSE_FORM, DROPOUT_FORM, INPUT_FORM, LAMBDA_FORM,
          UP_SAMPLING3D_FORM, ZERO_PADDING2D_FORM, ZERO_PADDING3D_FORM,
          GLOBAL_AVERAGE_POOLING1D_FORM, GLOBAL_AVERAGE_POOLING2D_FORM,
          GLOBAL_AVERAGE_POOLING3D_FORM, GLOBAL_MAX_POOLING1D_FORM,
-<<<<<<< HEAD
-         GLOBAL_MAX_POOLING2D_FORM, GLOBAL_MAX_POOLING3D_FORM,)
-=======
          GLOBAL_MAX_POOLING2D_FORM, GLOBAL_MAX_POOLING3D_FORM,
-         SPATIAL_DROPOUT2D_3D_FORM)
->>>>>>> e5990e8f498b6d621e6ee137dd9f7b5724aaa1ba
+         SPATIAL_DROPOUT2D_3D_FORM, FIT_GENERATOR_FORM)
 
 
 def _insert_operation_form_field():
@@ -115,19 +110,14 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
 
-<<<<<<< HEAD
-    data = []
-    i = 5561
-=======
     data = [(5562, 'data_format', 'TEXT', 0, 1, None, 'dropdown', None,
              json.dumps([
-                     {'key': 'channels_last', 'value': 'channels_last'},
-                     {'key': 'channels_first', 'value': 'channels_first'},
-                 ]), 'EXECUTION', SPATIAL_DROPOUT2D_3D_FORM, ENABLED_CONDITION),
+                 {'key': 'channels_last', 'value': 'channels_last'},
+                 {'key': 'channels_first', 'value': 'channels_first'},
+             ]), 'EXECUTION', SPATIAL_DROPOUT2D_3D_FORM, ENABLED_CONDITION),
             ]
 
     i = 5562
->>>>>>> e5990e8f498b6d621e6ee137dd9f7b5724aaa1ba
     for form in FORMS:
         i += 1
         data.append((i, 'advanced_options', 'INTEGER', 0, 0, 0, 'checkbox',
@@ -151,10 +141,6 @@ def _insert_operation_form_field_translation():
         column('help', String), )
 
     columns = ('id', 'locale', 'label', 'help')
-<<<<<<< HEAD
-    data = []
-    for i in range(5562, (5562+len(FORMS))):
-=======
     data = [(5562, 'en', 'Data format', """'channels_first' or 'channels_last'. 
     In 'channels_first' mode, the channels dimension (the depth) is at index 1, 
     in 'channels_last' mode is it at index 3. It defaults to the 
@@ -162,7 +148,6 @@ def _insert_operation_form_field_translation():
     ~/.keras/keras.json. If you never set it, then it will be 
     'channels_last'.""")]
     for i in range(5563, (5563+len(FORMS))):
->>>>>>> e5990e8f498b6d621e6ee137dd9f7b5724aaa1ba
         data.append((i, 'en', 'Advanced options',
                      'Enable advanced options.'))
         data.append((i, 'pt', 'Opções avançadas',
@@ -232,16 +217,16 @@ all_commands = [
         WHERE operation_form_id BETWEEN 5179 AND 5200""",
      ""),
 
-    ("""UPDATE tahiti2.operation_form_field AS A
-        INNER JOIN tahiti2.operation_form_field_translation AS B ON A.id = B.id
+    ("""UPDATE operation_form_field AS A
+        INNER JOIN operation_form_field_translation AS B ON A.id = B.id
         SET A.required = 0
         WHERE 
             B.label = "Kernel size" 
             AND A.required = 1 AND 
             A.id > 5000 AND 
             A.id < 6000""",
-     """UPDATE tahiti2.operation_form_field AS A
-        INNER JOIN tahiti2.operation_form_field_translation AS B ON A.id = B.id
+     """UPDATE operation_form_field AS A
+        INNER JOIN operation_form_field_translation AS B ON A.id = B.id
         SET A.required = 1
         WHERE 
             B.label = "Kernel size" AND 
@@ -249,16 +234,16 @@ all_commands = [
             A.id > 5000 AND 
             A.id < 6000"""),
 
-    ("""UPDATE tahiti2.operation_form_field AS A
-        INNER JOIN tahiti2.operation_form_field_translation AS B ON A.id = B.id
+    ("""UPDATE operation_form_field AS A
+        INNER JOIN operation_form_field_translation AS B ON A.id = B.id
         SET A.required = 0
         WHERE 
             B.label = "Strides" AND 
             A.required = 1 AND 
             A.id > 5000 AND 
             A.id < 6000""",
-     """UPDATE tahiti2.operation_form_field AS A
-        INNER JOIN tahiti2.operation_form_field_translation AS B ON A.id = B.id
+     """UPDATE operation_form_field AS A
+        INNER JOIN operation_form_field_translation AS B ON A.id = B.id
         SET A.required = 1
         WHERE 
             B.label = "Strides" AND 
@@ -266,16 +251,16 @@ all_commands = [
             A.id > 5000 AND 
             A.id < 6000"""),
 
-    ("""UPDATE tahiti2.operation_form_field AS A
-        INNER JOIN tahiti2.operation_form_field_translation AS B ON A.id = B.id
+    ("""UPDATE operation_form_field AS A
+        INNER JOIN operation_form_field_translation AS B ON A.id = B.id
         SET A.required = 0
         WHERE 
             B.label = "Activation" AND 
             A.required = 1 AND 
             A.id > 5000 AND 
             A.id < 6000""",
-     """UPDATE tahiti2.operation_form_field AS A
-        INNER JOIN tahiti2.operation_form_field_translation AS B ON A.id = B.id
+     """UPDATE operation_form_field AS A
+        INNER JOIN operation_form_field_translation AS B ON A.id = B.id
         SET A.required = 1
         WHERE 
             B.label = "Activation" AND 
@@ -298,35 +283,37 @@ all_commands = [
         WHERE `id` = 5438""",
      ""),
 
-    ('''UPDATE tahiti2.operation_form_field
+    ('''UPDATE operation_form_field
         SET enable_conditions = '{enabled_condition}'
         WHERE 
             form_id IN {forms} AND 
-            required = 0'''.format(
-                                    enabled_condition=ENABLED_CONDITION,
-                                    forms=FORMS),
-     '''UPDATE tahiti2.operation_form_field
+            required = 0 AND 
+            `name` NOT IN ("advanced_options")'''.format(
+        enabled_condition=ENABLED_CONDITION,
+        forms=FORMS),
+     '''UPDATE operation_form_field
         SET enable_conditions = NULL
         WHERE 
             form_id IN {forms} AND 
-            required = 0'''.format(forms=FORMS)),
+            required = 0 AND 
+            `name` NOT IN ("advanced_options")'''.format(forms=FORMS)),
 
-    ('''UPDATE tahiti2.operation_form_field
+    ('''UPDATE operation_form_field
         SET enable_conditions = '{enabled_condition}'
         WHERE 
-            ID NOT IN (5386, 5387, 5392) AND form_id = 5164'''.format(
-                                    enabled_condition=ENABLED_CONDITION),
-     '''UPDATE tahiti2.operation_form_field
+            id NOT IN (5386, 5387, 5392) AND form_id = 5164'''.format(
+        enabled_condition=ENABLED_CONDITION),
+     '''UPDATE operation_form_field
         SET enable_conditions = NULL
         WHERE 
             ID NOT IN (5386, 5387, 5392) AND form_id = 5164'''),
 
-    ('''UPDATE tahiti2.operation_form_field
+    ('''UPDATE operation_form_field
         SET enable_conditions = '{enabled_condition}'
         WHERE 
             ID NOT IN (5379, 5380, 5385) AND form_id = 5163'''.format(
         enabled_condition=ENABLED_CONDITION),
-     '''UPDATE tahiti2.operation_form_field
+     '''UPDATE operation_form_field
         SET enable_conditions = NULL
         WHERE 
             ID NOT IN (5379, 5380, 5385) AND form_id = 5163'''),
@@ -375,6 +362,7 @@ def upgrade():
         connection.execute('SET FOREIGN_KEY_CHECKS=0;')
         for cmd in all_commands:
             if cmd[0]:
+                print(cmd[0])
                 if isinstance(cmd[0], str):
                     connection.execute(cmd[0])
                 elif isinstance(cmd[0], list):
