@@ -351,6 +351,44 @@ all_commands = [
         SET operation_id = 5112 
         WHERE operation_form_id = 5241"""),
 
+<<<<<<< HEAD
+=======
+    ("""UPDATE operation_form_field 
+        SET `default` = "(1, 1, 1)" 
+        WHERE id IN (5323, 5326)""",
+     """UPDATE operation_form_field 
+        SET `default` = "(1, 1)" 
+        WHERE id IN (5323, 5326)"""),
+
+    ("""UPDATE operation_form_field 
+        SET `name` = "video_frames" 
+        WHERE id = 5555""",
+     """UPDATE operation_form_field 
+        SET `name` = "frames" 
+        WHERE id = 5555"""),
+
+    ("""UPDATE operation_form_field 
+        SET `name` = "video_height" 
+        WHERE id = 5556""",
+     """UPDATE operation_form_field 
+        SET `name` = "height" 
+        WHERE id = 5556"""),
+
+    ("""UPDATE operation_form_field 
+        SET `name` = "video_width" 
+        WHERE id = 5557""",
+     """UPDATE operation_form_field 
+        SET `name` = "width" 
+        WHERE id = 5557"""),
+
+    ("""UPDATE operation_form_field 
+        SET `name` = "video_channel" 
+        WHERE id = 5558""",
+     """UPDATE operation_form_field 
+        SET `name` = "channel" 
+        WHERE id = 5558"""),
+
+>>>>>>> e5990e8f498b6d621e6ee137dd9f7b5724aaa1ba
     ("DELETE "
      "FROM operation_form_field "
      "WHERE id IN (5476, 5477, 5520, 5521)",
