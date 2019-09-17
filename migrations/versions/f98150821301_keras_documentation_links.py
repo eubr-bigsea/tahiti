@@ -97,17 +97,6 @@ all_commands = [
 
 ]
 
-# for _id, slug in CORE_LIST:
-#     all_commands.append(
-#         (
-#         """
-#             UPDATE operation
-#             SET doc_link = concat('{url}', '{slug}')
-#             WHERE id = {operation_id}
-#          """.format(url=CORE_BASE_URL, slug=slug, operation_id=_id), ""),
-#     )
-#     print(all_commands[-1])
-
 
 def upgrade():
     ctx = context.get_context()
