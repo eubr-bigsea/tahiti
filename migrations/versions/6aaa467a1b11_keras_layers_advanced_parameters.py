@@ -362,7 +362,6 @@ def upgrade():
         connection.execute('SET FOREIGN_KEY_CHECKS=0;')
         for cmd in all_commands:
             if cmd[0]:
-                print(cmd[0])
                 if isinstance(cmd[0], str):
                     connection.execute(cmd[0])
                 elif isinstance(cmd[0], list):
