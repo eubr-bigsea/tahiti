@@ -183,7 +183,7 @@ def _insert_operation_form_field():
         (4144, 'label', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4028, None),
         (4145, 'attribute', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', 4028, None),
         (4146, 'stratified', 'TEXT', 0, 1, 0, 'checkbox', None, None, 'EXECUTION', 4028, None),
-        (4147, 'column', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4028, enable_condition2),
+        (4147, 'column', 'TEXT', 0, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4028, enable_condition2),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
