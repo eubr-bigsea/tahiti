@@ -21,7 +21,10 @@ down_revision = 'f98150821301'
 branch_labels = None
 depends_on = None
 
+KERAS_PLATAFORM_ID = 5
+
 PREDICTION_LAYER = 5123
+FIT_GENERATOR = 5122
 
 
 def _insert_operation():
@@ -31,14 +34,29 @@ def _insert_operation():
         column('slug', String),
         column('enabled', Integer),
         column('type', String),
-        column('icon', Integer), )
+        column('icon', Integer),
+        column('css_class', Integer),)
 
-    columns = ('id', 'slug', 'enabled', 'type', 'icon')
+    columns = ('id', 'slug', 'enabled', 'type', 'icon', 'css_class')
     data = [
-        (PREDICTION_LAYER, "convolution-1d", 1, 'ACTION', ''),
+        (PREDICTION_LAYER, "predict", 1, 'ACTION', '', 'circle-layout'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_platform():
+    tb = table(
+        'operation_platform',
+        column('operation_id', Integer),
+        column('platform_id', Integer), )
+
+    columns = ('operation_id', 'platform_id')
+    data = [
+        (PREDICTION_LAYER, KERAS_PLATAFORM_ID),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
@@ -93,6 +111,7 @@ def _insert_operation_port():
         (5397, 'INPUT', '', 2, 'ONE', PREDICTION_LAYER, 'model'),
         (5398, 'INPUT', '', 1, 'ONE', PREDICTION_LAYER, 'generator'),
         (5399, 'OUTPUT', '', 1, 'MANY', PREDICTION_LAYER, 'output data'),
+        (5400, 'OUTPUT', '', 1, 'MANY', FIT_GENERATOR, 'model'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -111,6 +130,7 @@ def _insert_operation_port_interface_operation_port():
         (5397, 22),
         (5398, 23),
         (5399, 1),
+        (5400, 22),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -130,6 +150,7 @@ def _insert_operation_port_translation():
         (5397, 'en', 'model', 'Model'),
         (5398, 'en', 'generator', 'Generator'),
         (5399, 'en', 'output data', 'Output data'),
+        (5400, 'en', 'model', 'Model'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -155,31 +176,78 @@ all_commands = [
     (_insert_operation,
      'DELETE '
      'FROM operation '
-     'WHERE id BETWEEN 5073 AND 5119'),
+     'WHERE id BETWEEN {0} AND {0}'.format(PREDICTION_LAYER)),
+    (_insert_operation_platform,
+     'DELETE '
+     'FROM operation_platform '
+     'WHERE operation_id BETWEEN {0} AND {0} '
+     'AND platform_id = {1}'.format(PREDICTION_LAYER, KERAS_PLATAFORM_ID)),
     (_insert_operation_translation,
      'DELETE '
      'FROM operation_translation '
-     'WHERE id BETWEEN 5073 AND 5119'),
+     'WHERE id BETWEEN {0} AND {0}'.format(PREDICTION_LAYER)),
     (_insert_operation_category_operation,
      'DELETE '
      'FROM operation_category_operation '
-     'WHERE operation_id BETWEEN 5073 AND 5119'),
+     'WHERE operation_id BETWEEN {0} AND {0}'.format(PREDICTION_LAYER)),
     (_insert_operation_port,
      'DELETE '
      'FROM operation_port '
-     'WHERE id BETWEEN 5173 AND 5210'),
+     'WHERE id BETWEEN 5397 AND 5400'),
     (_insert_operation_port_interface_operation_port,
      'DELETE '
      'FROM operation_port_interface_operation_port '
-     'WHERE operation_port_id BETWEEN 5173 AND 5210'),
+     'WHERE operation_port_id BETWEEN 5397 AND 5400'),
     (_insert_operation_port_translation,
      'DELETE '
      'FROM operation_port_translation '
-     'WHERE id BETWEEN 5173 AND 5210'),
+     'WHERE id BETWEEN 5397 AND 5400'),
     (_insert_operation_operation_form,
      'DELETE '
      'FROM operation_operation_form '
-     'WHERE operation_id IN (5021, 5022, 5031, 5051)'),
+     'WHERE operation_id IN ({})'.format(PREDICTION_LAYER)),
+
+    ('''
+        UPDATE operation_form_field 
+        SET `required` = 0 
+        WHERE id = 5509    
+     ''',
+     '''
+        UPDATE operation_form_field 
+        SET `required` = 1 
+        WHERE id = 5509
+     '''),
+
+    ('''
+        UPDATE operation_port 
+        SET `order` = 3 
+        WHERE id = 5394    
+     ''',
+     '''
+        UPDATE operation_port 
+        SET `order` = 1 
+        WHERE id = 5394
+     '''),
+    ('''
+        UPDATE operation_port 
+        SET `order` = 2 
+        WHERE id = 5229    
+     ''',
+     '''
+        UPDATE operation_port 
+        SET `order` = 3 
+        WHERE id = 5229
+     '''),
+    ('''
+        UPDATE operation_port 
+        SET `order` = 1 
+        WHERE id = 5235    
+     ''',
+     '''
+        UPDATE operation_port 
+        SET `order` = 2 
+        WHERE id = 5235
+     '''),
 ]
 
 
