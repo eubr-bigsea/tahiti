@@ -47,7 +47,7 @@ def _insert_operation_form_field():
 
     data = [
         #Flatten - data_format
-        (4148, 'features', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4025, None),
+        (4148, 'features_atr', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4025, None),
         (4149, 'alias', 'TEXT', 1, 1, "prediction", 'text', None, None, 'EXECUTION', 4025, None),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -87,7 +87,7 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4090, 'OUTPUT', '', 2, 'MANY', 4038, 'model'),
+        (4082, 'OUTPUT', '', 2, 'MANY', 4038, 'model'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -102,7 +102,7 @@ def _insert_operation_port_interface_operation_port():
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
         #Reshape
-        (4090, 2),
+        (4082, 2),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -120,26 +120,26 @@ def _insert_operation_port_translation():
     columns = ('id', 'locale', 'name', 'description')
     data = [
         #Reshape
-        (4090, "en", 'model', 'model'),
-        (4090, "pt", 'modelo', 'modelo'),
+        (4082, "en", 'model', 'model'),
+        (4082, "pt", 'modelo', 'modelo'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
 
 all_commands = [
-    ('DELETE FROM operation_port WHERE id = 4082',
+    (_insert_operation_port,
      'DELETE FROM operation_port WHERE id = 4082'),
+    (_insert_operation_port_interface_operation_port,
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id = 4082'),
+    (_insert_operation_port_translation,
+     'DELETE FROM operation_port_translation WHERE id = 4082'),
     (_insert_operation_form_field,
      'DELETE FROM operation_form_field WHERE id BETWEEN 4148 AND 4149'),
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4148 AND 4149'),
-    (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id = 4090'),
-    (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id = 4090'),
-    (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id = 4090'),
+    ("""UPDATE operation_form_field SET name = 'labels' WHERE id = 4122""",
+     """UPDATE operation_form_field SET name = 'labels' WHERE id = 4122"""),
 ]
 
 def upgrade():
