@@ -108,10 +108,10 @@ def _insert_operation_port():
 
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
-        (5397, 'INPUT', '', 2, 'ONE', PREDICTION_LAYER, 'model'),
-        (5398, 'INPUT', '', 1, 'ONE', PREDICTION_LAYER, 'generator'),
-        (5399, 'OUTPUT', '', 1, 'MANY', PREDICTION_LAYER, 'output data'),
-        (5400, 'OUTPUT', '', 1, 'MANY', FIT_GENERATOR, 'model'),
+        (5397, 'INPUT', '', 3, 'ONE', PREDICTION_LAYER, 'model'),
+        (5398, 'INPUT', '', 2, 'ONE', PREDICTION_LAYER, 'generator'),
+        (5399, 'OUTPUT', '', 1, 'MANY', FIT_GENERATOR, 'model'),
+        (5400, 'INPUT', '', 1, 'ONE', PREDICTION_LAYER, 'examples'),
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -129,8 +129,8 @@ def _insert_operation_port_interface_operation_port():
     data = [
         (5397, 22),
         (5398, 23),
-        (5399, 1),
-        (5400, 22),
+        (5399, 22),
+        (5400, 24),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -149,8 +149,8 @@ def _insert_operation_port_translation():
     data = [
         (5397, 'en', 'model', 'Model'),
         (5398, 'en', 'generator', 'Generator'),
-        (5399, 'en', 'output data', 'Output data'),
-        (5400, 'en', 'model', 'Model'),
+        (5399, 'en', 'model', 'Model'),
+        (5400, 'en', 'image data', 'Examples to classify'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
