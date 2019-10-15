@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 """Update isotonic regression
 
 Revision ID: b4a88e0c224e
@@ -21,17 +23,64 @@ down_revision = '3e10f106043c'
 branch_labels = None
 depends_on = None
 
+def _insert_operation_form_field():
+    tb = table(
+        'operation_form_field',
+        column('id', Integer),
+        column('name', String),
+        column('type', String),
+        column('required', Integer),
+        column('order', Integer),
+        column('default', Text),
+        column('suggested_widget', String),
+        column('values_url', String),
+        column('values', String),
+        column('scope', String),
+        column('form_id', Integer),
+        column('enable_conditions', String),
+    )
 
+    columns = ('id', 'name', 'type', 'required', 'order', 'default',
+               'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
+               'enable_conditions')
+    data = [
+        #Flatten - data_format
+        (245, 'y_min', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', 103, None),
+        (248, 'y_max', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', 103, None),
+        (487, 'out_of_bounds', 'TEXT', 0, 3, "nan", 'text', None, None, 'EXECUTION', 103, None),
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+    op.bulk_insert(tb, rows)
+
+def _insert_operation_form_field_translation():
+    tb = table(
+        'operation_form_field_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('label', String),
+        column('help', String), )
+
+    columns = ('id', 'locale', 'label', 'help')
+    data = [
+        #Flatten - data_format
+        (245, 'en', 'Y min', 'Y min.'),
+        (245, 'pt', 'Y min', 'Y min.'),
+
+        (248, 'en', 'Y max', 'Y max.'),
+        (248, 'pt', 'Y max', 'Y max.'),
+
+        (487, 'en', 'Out of bounds', 'Out of bounds.'),
+        (487, 'pt', 'Out of bounds', 'Out of bounds.'),
+
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+    op.bulk_insert(tb, rows)
 
 all_commands = [
-    ("""UPDATE operation_form_field SET enable_conditions = 'this.perform_cross_validation.internalValue === "1"' 
-     WHERE id = 487""",
-     """UPDATE operation_form_field SET enable_conditions = 'this.perform_cross_validation.internalValue === "1"' 
-     WHERE id = 487"""),
-    ("""UPDATE operation_form_field SET enable_conditions = 'this.perform_cross_validation.internalValue === "1"' 
-     WHERE id = 488""",
-     """UPDATE operation_form_field SET enable_conditions = 'this.perform_cross_validation.internalValue === "1"'
-     WHERE id = 488"""),
+    (_insert_operation_form_field,
+     'DELETE FROM operation_form_field WHERE id IN (245, 248, 487)'),
+    (_insert_operation_form_field_translation,
+     'DELETE FROM operation_form_field_translation WHERE id IN (245, 248, 487)'),
 ]
 
 def upgrade():
