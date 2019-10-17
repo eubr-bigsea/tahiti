@@ -47,7 +47,13 @@ def _insert_operation_form_field():
         #Flatten - data_format
         (245, 'y_min', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', 103, None),
         (248, 'y_max', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', 103, None),
-        (487, 'out_of_bounds', 'TEXT', 0, 3, "nan", 'text', None, None, 'EXECUTION', 103, None),
+        (487, 'out_of_bounds', 'TEXT', 0, 3, "nan", 'dropdown', None,
+         json.dumps([
+             {"key": "nan", "value": "nan"},
+             {"key": "clip", "value": "clip"},
+             {"key": "raise", "value": "raise"}
+         ]),
+         'EXECUTION', 103, None),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
