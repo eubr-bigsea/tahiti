@@ -87,6 +87,8 @@ all_commands = [
      'DELETE FROM operation_form_field WHERE id IN (245, 248, 487)'),
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id IN (245, 248, 487)'),
+    ("""UPDATE operation_form_field SET `default` = 'prediction' WHERE id = 244""",
+     """UPDATE operation_form_field SET `default` = 'None' WHERE id = 244"""),
 ]
 
 def upgrade():
