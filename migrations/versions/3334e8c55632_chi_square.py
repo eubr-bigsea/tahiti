@@ -161,7 +161,7 @@ def _insert_operation_form_field():
          "pt": "Valor de p-value para que a feature seja mantida (FPR)"},
         {"key": "fdr", "value": "False-discovery rate (FDR)",
          "en": "False-discovery rate (FDR)",
-         "pt": "Taxa de falsas descobertas"},
+         "pt": "Taxa de falsas descobertas (FDR)"},
         {"key": "fwe", "value": "Family-wise error (FWE)",
          "en": "Family-wise error (FWE)",
          "pt": "Taxa do erro conjunto (FWE)"},
