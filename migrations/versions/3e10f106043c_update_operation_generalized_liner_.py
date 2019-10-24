@@ -17,12 +17,12 @@ from sqlalchemy.sql import table, column, text
 import json
 
 
-
 # revision identifiers, used by Alembic.
 revision = '3e10f106043c'
 down_revision = '86dfd72f87d9'
 branch_labels = None
 depends_on = None
+
 
 def _insert_operation_form_field():
     tb = table(
@@ -53,6 +53,7 @@ def _insert_operation_form_field():
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _insert_operation_form_field_translation():
     tb = table(
         'operation_form_field_translation',
@@ -73,6 +74,7 @@ def _insert_operation_form_field_translation():
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _insert_operation_port():
     tb = table(
         'operation_port',
@@ -92,6 +94,7 @@ def _insert_operation_port():
     rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
+
 
 def _insert_operation_port_interface_operation_port():
     tb = table(
@@ -127,6 +130,7 @@ def _insert_operation_port_translation():
 
     op.bulk_insert(tb, rows)
 
+
 all_commands = [
     (_insert_operation_port,
      'DELETE FROM operation_port WHERE id = 4082'),
@@ -141,6 +145,7 @@ all_commands = [
     ("""UPDATE operation_form_field SET name = 'labels' WHERE id = 4122""",
      """UPDATE operation_form_field SET name = 'labels' WHERE id = 4122"""),
 ]
+
 
 def upgrade():
     ctx = context.get_context()
