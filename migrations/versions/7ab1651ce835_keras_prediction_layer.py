@@ -27,6 +27,9 @@ PREDICTION_LAYER = 5123
 FIT_GENERATOR = 5122
 LOAD = 5115
 MODEL_FORM_ID = 5233
+SEQUENCE_GENERATOR = 5124
+SEQUENCE_READER = 5119
+SEQUENCE_GENERATOR_FORM_ID = 5247
 
 
 def _insert_operation():
@@ -42,6 +45,8 @@ def _insert_operation():
     columns = ('id', 'slug', 'enabled', 'type', 'icon', 'css_class')
     data = [
         (PREDICTION_LAYER, "predict", 1, 'ACTION', '', 'circle-layout'),
+        (SEQUENCE_GENERATOR, "sequence-generator", 1, 'ACTION', '',
+            'circle-layout'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -57,6 +62,7 @@ def _insert_operation_platform():
     columns = ('operation_id', 'platform_id')
     data = [
         (PREDICTION_LAYER, KERAS_PLATAFORM_ID),
+        (SEQUENCE_GENERATOR, KERAS_PLATAFORM_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -72,9 +78,13 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (PREDICTION_LAYER, 'en', 'Predict', 'Generates predictions for '
-                                                  'the input samples from a '
-                                                  'data generator.'),
+        (PREDICTION_LAYER, 'en', 'Predict', 'Generates predictions for the '
+                                            'input samples from a data '
+                                            'generator.'),
+        (SEQUENCE_GENERATOR, 'en', 'Sequence generator', 'Takes any type of '
+                                                         'data and generates '
+                                                         'batches of tensor '
+                                                         'data.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -91,6 +101,7 @@ def _insert_operation_category_operation():
     data = [
         # Convolutional Layers
         (5063, PREDICTION_LAYER),
+        (5064, SEQUENCE_GENERATOR),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -114,8 +125,13 @@ def _insert_operation_port():
         (5398, 'INPUT', '', 2, 'ONE', PREDICTION_LAYER, 'generator'),
         (5399, 'OUTPUT', '', 1, 'MANY', FIT_GENERATOR, 'model'),
         (5400, 'INPUT', '', 1, 'ONE', PREDICTION_LAYER, 'examples'),
-        (5401, 'OUTPUT', '', 1, 'ONE', LOAD, 'python code'),
+        (5401, 'OUTPUT', '', 1, 'MANY', LOAD, 'python code'),
+        (5402, 'INPUT', '', 1, 'MANY', LOAD, 'python code'),
 
+        (5403, 'INPUT', '', 1, 'ONE', SEQUENCE_GENERATOR, 'sequence data'),
+        (5404, 'OUTPUT', '', 1, 'MANY', SEQUENCE_GENERATOR, 'generator'),
+
+        (5405, 'OUTPUT', '', 1, 'ONE', SEQUENCE_READER, 'test-sequence'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -134,7 +150,12 @@ def _insert_operation_port_interface_operation_port():
         (5398, 23),
         (5399, 22),
         (5400, 24),
+        (5400, 29),
         (5401, 28),
+        (5402, 28),
+        (5403, 26),
+        (5404, 23),
+        (5405, 26),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -156,10 +177,48 @@ def _insert_operation_port_translation():
         (5399, 'en', 'model', 'Model'),
         (5400, 'en', 'image data', 'Examples to classify'),
         (5401, 'en', 'python code', 'Python code'),
+        (5402, 'en', 'python code', 'Python code'),
+        (5403, 'en', 'sequence data', 'Sequence data'),
+        (5404, 'en', 'generator', 'Generator'),
+        (5405, 'en', 'test sequence data', 'Sequence data'),
     ]
+
     rows = [dict(zip(columns, row)) for row in data]
 
     op.bulk_insert(tb, rows)
+
+
+def _insert_operation_form_translation():
+    tb = table(
+        'operation_form_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String))
+
+    columns = ('id', 'locale', 'name')
+    data = [
+        (SEQUENCE_GENERATOR_FORM_ID, 'en', 'Execution'),
+        (SEQUENCE_GENERATOR_FORM_ID, 'pt', 'Execução'),
+    ]
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(tb, rows)
+
+
+def _insert_operation_form():
+    operation_form_table = table(
+        'operation_form',
+        column('id', Integer),
+        column('enabled', Integer),
+        column('order', Integer),
+        column('category', String), )
+
+    columns = ('id', 'enabled', 'order', 'category')
+    data = [
+        (SEQUENCE_GENERATOR_FORM_ID, 1, 1, 'execution'),
+    ]
+
+    rows = [dict(zip(columns, row)) for row in data]
+    op.bulk_insert(operation_form_table, rows)
 
 
 def _insert_operation_operation_form():
@@ -171,6 +230,8 @@ def _insert_operation_operation_form():
     columns = ('operation_id', 'operation_form_id')
     data = [
         (PREDICTION_LAYER, 41),
+        (SEQUENCE_GENERATOR, 41),
+        (SEQUENCE_GENERATOR, SEQUENCE_GENERATOR_FORM_ID),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -227,68 +288,86 @@ def _insert_operation_form_field():
     optimizer_condition_nadam = 'this.optimizer.internalValue === "nadam" && ' \
                                  'this.advanced_optimizer.internalValue === "1"'
 
+    LIMONERO_IMAGE = "`${LIMONERO_URL}/datasources?simple=true&list=true&" \
+                     "enabled=1&formats=IMAGE_FOLDER,SEQUENCE_FOLDER," \
+                     "VIDEO_FOLDER`"
+
     data = [
         # Model
-        (5611, 'advanced_optimizer', 'INTEGER', 0, 2, 0, 'checkbox', None, None,
+        (5612, 'advanced_optimizer', 'INTEGER', 0, 2, 0, 'checkbox', None, None,
          'EXECUTION', MODEL_FORM_ID, empty_optimizer),
 
         # All optimizers
-        (5612, 'clipnorm', 'DECIMAL', 0, 4, 1.0, 'decimal', None, None,
+        (5613, 'clipnorm', 'DECIMAL', 0, 4, 1.0, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, advanced_optimizer),
-        (5613, 'clipvalue', 'DECIMAL', 0, 5, 0.5, 'decimal', None, None,
+        (5614, 'clipvalue', 'DECIMAL', 0, 5, 0.5, 'decimal', None, None,
         'EXECUTION', MODEL_FORM_ID, advanced_optimizer),
 
         # SGD optimizer
-        (5614, 'learning_rate_sgd', 'DECIMAL', 0, 3, 0.01, 'decimal', None, None,
+        (5615, 'learning_rate_sgd', 'DECIMAL', 0, 3, 0.01, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_sgd),
-        (5615, 'decay_sgd', 'DECIMAL', 0, 6, 1e-6, 'decimal', None, None,
+        (5616, 'decay_sgd', 'DECIMAL', 0, 6, 1e-6, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_sgd),
-        (5616, 'momentum_sgd', 'DECIMAL', 0, 7, 0.9, 'decimal', None, None,
+        (5617, 'momentum_sgd', 'DECIMAL', 0, 7, 0.9, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_sgd),
-        (5617, 'nesterov_sgd', 'INTEGER', 0, 8, 1, 'checkbox', None, None,
+        (5618, 'nesterov_sgd', 'INTEGER', 0, 8, 1, 'checkbox', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_sgd),
 
         # RMSprop optimizer
-        (5618, 'learning_rate_rmsprop', 'DECIMAL', 0, 3, 0.001, 'decimal',
+        (5619, 'learning_rate_rmsprop', 'DECIMAL', 0, 3, 0.001, 'decimal',
          None, None, 'EXECUTION', MODEL_FORM_ID, optimizer_condition_rmsprop),
-        (5619, 'rho_rmsprop', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
+        (5620, 'rho_rmsprop', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_rmsprop),
 
         # Adagrad
-        (5620, 'learning_rate_adagrad', 'DECIMAL', 0, 3, 0.01, 'decimal',
+        (5621, 'learning_rate_adagrad', 'DECIMAL', 0, 3, 0.01, 'decimal',
          None, None, 'EXECUTION', MODEL_FORM_ID, optimizer_condition_adagrad),
 
         # Adadelta
-        (5621, 'learning_rate_adadelta', 'DECIMAL', 0, 3, 1.0, 'decimal',
+        (5622, 'learning_rate_adadelta', 'DECIMAL', 0, 3, 1.0, 'decimal',
          None, None, 'EXECUTION', MODEL_FORM_ID, optimizer_condition_adadelta),
-        (5622, 'rho_adadelta', 'DECIMAL', 0, 6, 0.95, 'decimal', None, None,
+        (5623, 'rho_adadelta', 'DECIMAL', 0, 6, 0.95, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_adadelta),
 
         # Adam
-        (5623, 'learning_rate_adam', 'DECIMAL', 0, 3, 0.001, 'decimal',
+        (5624, 'learning_rate_adam', 'DECIMAL', 0, 3, 0.001, 'decimal',
          None, None, 'EXECUTION', MODEL_FORM_ID, optimizer_condition_adam),
-        (5624, 'beta_1_adam', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
+        (5625, 'beta_1_adam', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_adam),
-        (5625, 'beta_2_adam', 'DECIMAL', 0, 7, 0.999, 'decimal', None, None,
+        (5626, 'beta_2_adam', 'DECIMAL', 0, 7, 0.999, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_adam),
-        (5626, 'amsgrad_adam', 'INTEGER', 0, 8, 0, 'checkbox', None, None,
+        (5627, 'amsgrad_adam', 'INTEGER', 0, 8, 0, 'checkbox', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_adam),
 
         # Adamax
-        (5627, 'learning_rate_adamax', 'DECIMAL', 0, 3, 0.002, 'decimal',
+        (5628, 'learning_rate_adamax', 'DECIMAL', 0, 3, 0.002, 'decimal',
          None, None, 'EXECUTION', MODEL_FORM_ID, optimizer_condition_adamax),
-        (5628, 'beta_1_adamax', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
+        (5629, 'beta_1_adamax', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_adamax),
-        (5629, 'beta_2_adamax', 'DECIMAL', 0, 7, 0.999, 'decimal', None, None,
+        (5630, 'beta_2_adamax', 'DECIMAL', 0, 7, 0.999, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_adamax),
 
         # Nadam
-        (5630, 'learning_rate_nadam', 'DECIMAL', 0, 3, 0.002, 'decimal',
+        (5631, 'learning_rate_nadam', 'DECIMAL', 0, 3, 0.002, 'decimal',
          None, None, 'EXECUTION', MODEL_FORM_ID, optimizer_condition_nadam),
-        (5631, 'beta_1_nadam', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
+        (5632, 'beta_1_nadam', 'DECIMAL', 0, 6, 0.9, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_nadam),
-        (5632, 'beta_2_nadam', 'DECIMAL', 0, 7, 0.999, 'decimal', None, None,
+        (5633, 'beta_2_nadam', 'DECIMAL', 0, 7, 0.999, 'decimal', None, None,
          'EXECUTION', MODEL_FORM_ID, optimizer_condition_nadam),
+
+        # Sequence reader
+        (5634, 'test_sequence', 'INTEGER', 0, 3, None, 'lookup',
+         LIMONERO_IMAGE, None, 'EXECUTION', 5240, None),
+
+        # Sequence generator
+        (5635, 'batch_size', 'INTEGER', 1, 1, 32, 'integer', None, None,
+         'EXECUTION', SEQUENCE_GENERATOR_FORM_ID, None),
+        (5636, 'shuffle', 'INTEGER', 0, 3, 1, 'checkbox', None, None,
+         'EXECUTION', SEQUENCE_GENERATOR_FORM_ID, None),
+        (5637, 'validation_split', 'DECIMAL', 0, 4, 0.0, 'decimal', None, None,
+         'EXECUTION', SEQUENCE_GENERATOR_FORM_ID, None),
+        (5638, 'shape', 'TEXT', 1, 2, None, 'text', None, None,
+         'EXECUTION', SEQUENCE_GENERATOR_FORM_ID, None),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -305,35 +384,47 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
         # Model
-        (5611, 'en', 'Advanced optimizer options', 'Advanced option for the '
+        (5612, 'en', 'Advanced optimizer options', 'Advanced option for the '
                                                    'optimazer parameters.'),
-        (5612, 'en', 'Clip norm', 'All parameter gradients will be clipped to '
+        (5613, 'en', 'Clip norm', 'All parameter gradients will be clipped to '
                                   'a maximum norm of 1.'),
-        (5613, 'en', 'Clip value', 'All parameter gradients will be clipped to'
+        (5614, 'en', 'Clip value', 'All parameter gradients will be clipped to'
                                    ' a maximum value of 0.5 and a minimum '
                                    'value of -0.5.'),
-        (5614, 'en', 'Learning rate', 'Learning rate.'),
-        (5615, 'en', 'Decay', 'Learning rate decay'),
-        (5616, 'en', 'Momentum', 'Parameter that accelerates SGD in the rele'
+        (5615, 'en', 'Learning rate', 'Learning rate.'),
+        (5616, 'en', 'Decay', 'Learning rate decay'),
+        (5617, 'en', 'Momentum', 'Parameter that accelerates SGD in the rele'
                                  'vant direction and dampens oscillations.'),
-        (5617, 'en', 'Nesterov', 'Whether to apply Nesterov momentum.'),
-        (5618, 'en', 'Learning rate', 'Learning rate.'),
-        (5619, 'en', 'Rho', 'Rho'),
-        (5620, 'en', 'Learning rate', 'Learning rate.'),
+        (5618, 'en', 'Nesterov', 'Whether to apply Nesterov momentum.'),
+        (5619, 'en', 'Learning rate', 'Learning rate.'),
+        (5620, 'en', 'Rho', 'Rho'),
         (5621, 'en', 'Learning rate', 'Learning rate.'),
-        (5622, 'en', 'Rho', 'Rho'),
-        (5623, 'en', 'Learning rate', 'Learning rate.'),
-        (5624, 'en', 'Beta 1', ' 0 < beta < 1. Generally close to 1.'),
-        (5625, 'en', 'Beta 2', '0 < beta < 1. Generally close to 1.'),
-        (5626, 'en', 'Amsgrad', 'Whether to apply the AMSGrad variant of this '
+        (5622, 'en', 'Learning rate', 'Learning rate.'),
+        (5623, 'en', 'Rho', 'Rho'),
+        (5624, 'en', 'Learning rate', 'Learning rate.'),
+        (5625, 'en', 'Beta 1', ' 0 < beta < 1. Generally close to 1.'),
+        (5626, 'en', 'Beta 2', '0 < beta < 1. Generally close to 1.'),
+        (5627, 'en', 'Amsgrad', 'Whether to apply the AMSGrad variant of this '
                                 'algorithm from the paper "On the Convergence '
                                 'of Adam and Beyond".'),
-        (5627, 'en', 'Learning rate', 'Learning rate.'),
-        (5628, 'en', 'Beta 1', ' 0 < beta < 1. Generally close to 1.'),
-        (5629, 'en', 'Beta 2', '0 < beta < 1. Generally close to 1.'),
-        (5630, 'en', 'Learning rate', 'Learning rate.'),
-        (5631, 'en', 'Beta 1', ' 0 < beta < 1. Generally close to 1.'),
-        (5632, 'en', 'Beta 2', '0 < beta < 1. Generally close to 1.'),
+        (5628, 'en', 'Learning rate', 'Learning rate.'),
+        (5629, 'en', 'Beta 1', ' 0 < beta < 1. Generally close to 1.'),
+        (5630, 'en', 'Beta 2', '0 < beta < 1. Generally close to 1.'),
+        (5631, 'en', 'Learning rate', 'Learning rate.'),
+        (5632, 'en', 'Beta 1', ' 0 < beta < 1. Generally close to 1.'),
+        (5633, 'en', 'Beta 2', '0 < beta < 1. Generally close to 1.'),
+        (5634, 'en', 'Test sequences', ''),
+        (5635, 'en', 'Batch size', 'Size of the batches of data '
+                                   '(default: 32).'),
+        (5636, 'en', 'Shuffle', 'Whether to shuffle the order of the batches at'
+                                ' the beginning of each epoch. '),
+        (5637, 'en', 'Validation split', 'Float. Fraction of data reserved '
+                                         'for validation (strictly between 0 '
+                                         'and 1).'),
+        (5638, 'en', 'Shape', 'A shape tuple (integer), not including the '
+                              'batch size. For instance, shape=(32,) indicates '
+                              'that the expected input will be batches of '
+                              '32-dimensional vectors.'),
 
 
     ]
@@ -345,45 +436,58 @@ all_commands = [
     (_insert_operation,
      'DELETE '
      'FROM operation '
-     'WHERE id BETWEEN {0} AND {0}'.format(PREDICTION_LAYER)),
+     'WHERE id IN ({0}, {1})'.format(PREDICTION_LAYER, SEQUENCE_GENERATOR)),
     (_insert_operation_platform,
      'DELETE '
      'FROM operation_platform '
-     'WHERE operation_id BETWEEN {0} AND {0} '
-     'AND platform_id = {1}'.format(PREDICTION_LAYER, KERAS_PLATAFORM_ID)),
+     'WHERE operation_id IN ({0}, {1}) '
+     'AND platform_id = {2}'.format(PREDICTION_LAYER,
+                                    SEQUENCE_GENERATOR,
+                                    KERAS_PLATAFORM_ID)),
     (_insert_operation_translation,
      'DELETE '
      'FROM operation_translation '
-     'WHERE id BETWEEN {0} AND {0}'.format(PREDICTION_LAYER)),
+     'WHERE id IN ({0}, {1})'.format(PREDICTION_LAYER, SEQUENCE_GENERATOR)),
     (_insert_operation_category_operation,
      'DELETE '
      'FROM operation_category_operation '
-     'WHERE operation_id BETWEEN {0} AND {0}'.format(PREDICTION_LAYER)),
+     'WHERE operation_id IN ({0}, {1})'.format(PREDICTION_LAYER,
+                                               SEQUENCE_GENERATOR)),
     (_insert_operation_port,
      'DELETE '
      'FROM operation_port '
-     'WHERE id BETWEEN 5397 AND 5401'),
+     'WHERE id BETWEEN 5397 AND 5405'),
     (_insert_operation_port_interface_operation_port,
      'DELETE '
      'FROM operation_port_interface_operation_port '
-     'WHERE operation_port_id BETWEEN 5397 AND 5401'),
+     'WHERE operation_port_id BETWEEN 5397 AND 5405'),
     (_insert_operation_port_translation,
      'DELETE '
      'FROM operation_port_translation '
-     'WHERE id BETWEEN 5397 AND 5401'),
+     'WHERE id BETWEEN 5397 AND 5405'),
     (_insert_operation_operation_form,
      'DELETE '
      'FROM operation_operation_form '
-     'WHERE operation_id IN ({})'.format(PREDICTION_LAYER)),
+     'WHERE operation_id IN ({0}, {1})'.format(PREDICTION_LAYER,
+                                               SEQUENCE_GENERATOR)),
+
+    (_insert_operation_form,
+     'DELETE '
+     'FROM operation_form '
+     'WHERE id IN ({0})'.format(SEQUENCE_GENERATOR_FORM_ID)),
+    (_insert_operation_form_translation,
+     'DELETE '
+     'FROM operation_form_translation '
+     'WHERE id IN ({0})'.format(SEQUENCE_GENERATOR_FORM_ID)),
 
     (_insert_operation_form_field,
      'DELETE '
      'FROM operation_form_field '
-     'WHERE id BETWEEN 5611 AND 5632'),
+     'WHERE id BETWEEN 5612 AND 5638'),
     (_insert_operation_form_field_translation,
      'DELETE '
      'FROM operation_form_field_translation '
-     'WHERE id BETWEEN 5611 AND 5632'),
+     'WHERE id BETWEEN 5612 AND 5638'),
 
     ('''
         UPDATE operation_form_field 
@@ -515,6 +619,13 @@ all_commands = [
         SET `order` =  7
         WHERE id = 5473
      '''),
+
+    ('''
+        UPDATE operation_port_translation 
+        SET `name` =  'train sequence data'
+        WHERE id = 5320
+     ''',
+     ''''''),
 ]
 
 

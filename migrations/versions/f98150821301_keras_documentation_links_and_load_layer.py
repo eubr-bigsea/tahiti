@@ -327,7 +327,8 @@ all_commands = [
     (_insert_operation_form,
      'DELETE FROM operation_form WHERE id BETWEEN 5246 AND 5246'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 5609 AND 5611'),
+     'DELETE FROM operation_form_field '
+     'WHERE id BETWEEN 5609 AND 5611'),
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation '
      'WHERE id BETWEEN 5609 AND 5611'),
