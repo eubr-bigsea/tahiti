@@ -42,7 +42,7 @@ def _insert_operation_operation_form():
     op.bulk_insert(tb, rows)
 
 
-def _insert_operation_form(): #ok
+def _insert_operation_form():
     operation_form_table = table(
         'operation_form',
         column('id', Integer),
@@ -113,7 +113,7 @@ def _insert_operation_form_field():
          'EXECUTION', 4006, None),
         (4161, 'subsample', 'FLOAT', 0, 8, 1.0, 'decimal', None, None, 'EXECUTION', 4006, None),
         (4162, 'alpha', 'FLOAT', 0, 9, 0.9, 'attribute-selector', None, None, 'EXECUTION', 4006, enabled_condition),
-        (4163, 'presort', 'TEXT', 0, 10, None, 'text', None, None, 'EXECUTION', 4006, None), #falta
+        (4163, 'presort', 'INTEGER', 0, 10, 0, 'checkbox', None, None, 'EXECUTION', 4006, None),
         (4164, 'validation_fraction', 'FLOAT', 0, 11, 0.1, 'decimal', None, None, 'EXECUTION', 4006, enabled_condition2),
         (4165, 'n_iter_no_change', 'INTEGER', 0, 12, None, 'int', None, None, 'EXECUTION', 4006, None),
         (4166, 'tol', 'FLOAT', 0, 13, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
