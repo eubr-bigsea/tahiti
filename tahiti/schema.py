@@ -960,6 +960,10 @@ class WorkflowListResponseSchema(Schema):
             "id": x.user_id,
             "name": x.user_name,
             "login": x.user_login})
+    permissions = fields.Nested(
+        'tahiti.schema.WorkflowPermissionListResponseSchema',
+        allow_none=True,
+        many=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -999,6 +1003,10 @@ class WorkflowCreateRequestSchema(Schema):
     user = fields.Nested(
         'tahiti.schema.UserCreateRequestSchema',
         allow_none=True)
+    permissions = fields.Nested(
+        'tahiti.schema.WorkflowPermissionCreateRequestSchema',
+        allow_none=True,
+        many=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1043,6 +1051,10 @@ class WorkflowItemResponseSchema(Schema):
             "id": x.user_id,
             "name": x.user_name,
             "login": x.user_login})
+    permissions = fields.Nested(
+        'tahiti.schema.WorkflowPermissionItemResponseSchema',
+        allow_none=True,
+        many=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
