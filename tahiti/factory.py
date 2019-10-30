@@ -20,7 +20,7 @@ from tahiti.operation_api import OperationListApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi, \
-    WorkflowAddFromTemplateApi
+    WorkflowAddFromTemplateApi, WorkflowPermissionApi
 from tahiti.workflow_api import WorkflowListApi, WorkflowHistoryApi
 
 
@@ -82,6 +82,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/platforms/<int:platform_id>': PlatformDetailApi,
         '/workflows': WorkflowListApi,
         '/workflows/<int:workflow_id>': WorkflowDetailApi,
+        '/workflows/<int:workflow_id>/permission/<int:user_id>': WorkflowPermissionApi,
         '/workflows/import': WorkflowImportApi,
         '/workflows/from-template': WorkflowAddFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,

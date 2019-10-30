@@ -9,6 +9,7 @@ from flask_restful import Resource
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.elements import and_
+from flask_babel import gettext
 
 from tahiti.app_auth import requires_auth
 from tahiti.schema import *
@@ -38,13 +39,17 @@ def update_port_name_in_flows(session, workflow_id):
 
 
 def get_workflow(workflow_id):
-    workflow = optimize_workflow_query(
+    workflows = optimize_workflow_query(
         Workflow.query.filter_by(id=workflow_id).order_by(
             Workflow.name))
-    workflow = workflow.options(
+
+    workflows = _filter_by_permissions(workflows, list(PermissionType.values()))
+
+    workflows = workflows.options(
         joinedload('tasks.operation.forms')).options(
         joinedload('tasks.operation.forms.fields'))
-    workflow = workflow.first()
+
+    workflow = workflows.first()
     if workflow is not None:
         # Set the json form for operations
         for task in workflow.tasks:
@@ -56,6 +61,22 @@ def get_workflow(workflow_id):
                             'value': field.default}
             task.forms = json.dumps(current_form)
     return workflow
+
+
+def _filter_by_permissions(workflows, permissions, consider_public=True):
+    if g.user.id not in (0, 1):  # It is not a inter service call
+        sub_query = WorkflowPermission.query.with_entities(
+            WorkflowPermission.id).filter(
+            WorkflowPermission.permission.in_(permissions),
+            WorkflowPermission.user_id == g.user.id)
+        conditions = [
+            Workflow.user_id == g.user.id,
+            Workflow.id.in_(sub_query)
+        ]
+        if consider_public:
+            conditions.append(Workflow.is_public)
+        workflows = workflows.filter(or_(*conditions))
+    return workflows
 
 
 class WorkflowListApi(Resource):
@@ -70,7 +91,7 @@ class WorkflowListApi(Resource):
                 only = [x.strip() for x in
                         request.args.get('fields').split(',')]
             else:
-                only = ('id', 'name', 'platform.id') \
+                only = ('id', 'name', 'platform.id', 'permissions') \
                     if request.args.get('simple', 'false') == 'true' else None
 
             platform = request.args.get('platform', None)
@@ -88,6 +109,9 @@ class WorkflowListApi(Resource):
                 template_only = template_only in ['1', 'true', 'True']
             else:
                 template_only = False
+
+            workflows = _filter_by_permissions(
+                workflows, list(PermissionType.values()))
 
             if template_only:
                 workflows = workflows.filter(
@@ -121,6 +145,7 @@ class WorkflowListApi(Resource):
                     pagination = workflows.paginate(1, page_size, False)
                 result = {
                     'data': WorkflowListResponseSchema(many=True,
+                                                       exclude=('permissions',),
                                                        only=only).dump(
                         pagination.items).data,
                     'pagination': {'page': page, 'size': page_size,
@@ -236,7 +261,10 @@ class WorkflowDetailApi(Resource):
     def delete(workflow_id):
         result, result_code = dict(status="ERROR", message="Not found"), 404
 
-        workflow = Workflow.query.get(workflow_id)
+        filtered = _filter_by_permissions(
+            Workflow.query, [PermissionType.EXECUTE, PermissionType.WRITE])
+
+        workflow = filtered.filter(Workflow.id == workflow_id).first()
         if workflow is not None:
             try:
                 # db.session.delete(workflow)
@@ -290,33 +318,38 @@ class WorkflowDetailApi(Resource):
                 response_schema = WorkflowItemResponseSchema()
                 if not form.errors:
                     try:
-                        form.data.id = workflow_id
-                        form.data.updated = datetime.datetime.utcnow()
+                        filtered = _filter_by_permissions(
+                            Workflow.query, [PermissionType.EXECUTE, PermissionType.WRITE])
+                        temp_workflow = filtered.filter(Workflow.id == workflow_id).first()
 
-                        workflow = db.session.merge(form.data)
-                        db.session.flush()
-                        update_port_name_in_flows(db.session, workflow.id)
-                        db.session.commit()
+                        if temp_workflow is not None:
+                            form.data.id = workflow_id
+                            form.data.updated = datetime.datetime.utcnow()
 
-                        historical_data = json.dumps(
-                            response_schema.dump(workflow).data)
-                        # if workflow.is_template:
-                        #     workflow.template_code = historical_data
+                            workflow = db.session.merge(form.data)
+                            db.session.flush()
+                            update_port_name_in_flows(db.session, workflow.id)
+                            db.session.commit()
 
-                        history = WorkflowHistory(
-                            user_id=g.user.id, user_name=g.user.name,
-                            user_login=g.user.login,
-                            version=workflow.version,
-                            workflow=workflow, content=historical_data)
-                        db.session.add(history)
-                        db.session.commit()
+                            historical_data = json.dumps(
+                                response_schema.dump(workflow).data)
+                            # if workflow.is_template:
+                            #     workflow.template_code = historical_data
 
-                        if workflow is not None:
-                            result, result_code = dict(
-                                status="OK", message="Updated",
-                                data=response_schema.dump(workflow).data), 200
-                        else:
-                            result = dict(status="ERROR", message="Not found")
+                            history = WorkflowHistory(
+                                user_id=g.user.id, user_name=g.user.name,
+                                user_login=g.user.login,
+                                version=workflow.version,
+                                workflow=workflow, content=historical_data)
+                            db.session.add(history)
+                            db.session.commit()
+
+                            if workflow is not None:
+                                result, result_code = dict(
+                                    status="OK", message="Updated",
+                                    data=response_schema.dump(workflow).data), 200
+                            else:
+                                result = dict(status="ERROR", message="Not found")
                     except Exception as e:
                         log.exception('Error in PATCH')
                         result, result_code = dict(
@@ -536,3 +569,111 @@ class WorkflowAddFromTemplateApi(Resource):
         only = ('id', 'date', 'version', 'user_name')
         return {'data': WorkflowHistoryListResponseSchema(
             many=True, only=only).dump(history).data}
+
+class WorkflowPermissionApi(Resource):
+    """ REST API for sharing a Workflow """
+
+    @staticmethod
+    @requires_auth
+    def post(workflow_id, user_id):
+        result, result_code = dict(
+            status="ERROR",
+            message=gettext('Missing json in the request body')), 400
+
+        if request.json is not None:
+            form = request.json
+            to_validate = ['permission', 'user_name', 'user_login']
+            error = False
+            for check in to_validate:
+                if check not in form or form.get(check, '').strip() == '':
+                    result, result_code = dict(
+                        status="ERROR", message=gettext('Validation error'),
+                        errors={'Missing': check}), 400
+                    error = True
+                    break
+                if check == 'permission' and form.get(
+                        'permission') not in list(PermissionType.values()):
+                    result, result_code = dict(
+                        status="ERROR", message=gettext('Validation error'),
+                        errors={'Invalid': check}), 400
+                    error = True
+                    break
+            if not error:
+                try:
+                    filtered = _filter_by_permissions(
+                        Workflow.query, [PermissionType.EXECUTE])
+                    workflow = filtered.filter(
+                        Workflow.id == workflow_id).first()
+
+                    if workflow is not None:
+                        conditions = [WorkflowPermission.workflow_id ==
+                                      workflow_id,
+                                      WorkflowPermission.user_id == user_id]
+                        permission = WorkflowPermission.query.filter(
+                            *conditions).first()
+
+                        action_performed = 'Added'
+                        if permission is not None:
+                            action_performed = 'Updated'
+                            permission.permission = form['permission']
+                        else:
+                            permission = WorkflowPermission(
+                                workflow=workflow, user_id=user_id,
+                                user_name=form['user_name'],
+                                user_login=form['user_login'],
+                                permission=form['permission'])
+
+                        db.session.add(permission)
+                        db.session.commit()
+                        result, result_code = {'message': action_performed,
+                                               'status': 'OK'}, 200
+                    else:
+                        result, result_code = dict(
+                            status="ERROR",
+                            message=gettext("%(type)s not found.",
+                                            type=gettext('Data source'))), 404
+                except Exception as e:
+                    log.exception('Error in POST')
+                    result, result_code = dict(status="ERROR",
+                                               message=gettext(
+                                                   "Internal error")), 500
+                    if current_app.debug:
+                        result['debug_detail'] = str(e)
+                    db.session.rollback()
+
+        return result, result_code
+
+    @staticmethod
+    @requires_auth
+    def delete(workflow_id, user_id):
+        result, result_code = dict(status="ERROR",
+                                   message=gettext("%(type)s not found.",
+                                                   type=gettext(
+                                                       'Data source'))), 404
+
+        filtered = _filter_by_permissions(Workflow.query,
+                                          [PermissionType.EXECUTE])
+        workflow = filtered.filter(Workflow.id == workflow_id).first()
+        if workflow is not None:
+            permission = WorkflowPermission.query.filter(
+                WorkflowPermission.workflow_id == workflow_id,
+                WorkflowPermission.user_id == user_id).first()
+            if permission is not None:
+                try:
+                    db.session.delete(permission)
+                    db.session.commit()
+                    result, result_code = dict(
+                        status="OK",
+                        message=gettext("%(what)s was successfuly deleted",
+                                        what=gettext('Workflow'))), 200
+                except Exception as e:
+                    log.exception('Error in DELETE')
+                    result, result_code = dict(status="ERROR",
+                                               message=gettext(
+                                                   "Internal error")), 500
+                    if current_app.debug:
+                        result['debug_detail'] = str(e)
+                    db.session.rollback()
+        return result, result_code
+
+
