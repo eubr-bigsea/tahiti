@@ -115,17 +115,14 @@ class WorkflowListApi(Resource):
 
             if template_only:
                 workflows = workflows.filter(
-                    or_(and_(Workflow.user_id == g.user.id,
-                             Workflow.is_template),
+                    or_(Workflow.is_template,
                         Workflow.is_system_template))
-            else:
-                workflows = workflows.filter(Workflow.user_id == g.user.id)
 
             name_filter = request.args.get('name')
             if name_filter:
                 workflows = workflows.filter(
                     Workflow.name.like(
-                        '%%{}%%'.format(name_filter)))
+                        '%%{}%%'.format(name_filter.encode('utf8'))))
             sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
                 sort = 'name'
@@ -153,6 +150,7 @@ class WorkflowListApi(Resource):
                                    'pages': pagination.total / page_size + 1}}
             else:
                 result = {'data': WorkflowListResponseSchema(many=True,
+                                                             exclude=('permissions',),
                                                              only=only).dump(
                     workflows).data}
 
@@ -675,5 +673,3 @@ class WorkflowPermissionApi(Resource):
                         result['debug_detail'] = str(e)
                     db.session.rollback()
         return result, result_code
-
-
