@@ -43,7 +43,8 @@ def get_workflow(workflow_id):
         Workflow.query.filter_by(id=workflow_id).order_by(
             Workflow.name))
 
-    workflows = _filter_by_permissions(workflows, list(PermissionType.values()))
+    workflows = _filter_by_permissions(
+        workflows, list(PermissionType.values()))
 
     workflows = workflows.options(
         joinedload('tasks.operation.forms')).options(
@@ -113,16 +114,19 @@ class WorkflowListApi(Resource):
             workflows = _filter_by_permissions(
                 workflows, list(PermissionType.values()))
 
-            if template_only:
-                workflows = workflows.filter(
-                    and_(Workflow.is_template,
-                        Workflow.is_system_template))
+            # if template_only:
+            #     workflows = workflows.filter(
+            #         or_(and_(Workflow.user_id == g.user.id,
+            #                  Workflow.is_template),
+            #             Workflow.is_system_template))
+            # else:
+            #     workflows = workflows.filter(Workflow.user_id == g.user.id)
 
             name_filter = request.args.get('name')
             if name_filter:
                 workflows = workflows.filter(
                     Workflow.name.like(
-                        '%%{}%%'.format(name_filter.encode('utf8'))))
+                        '%%{}%%'.format(name_filter)))
             sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
                 sort = 'name'
@@ -137,12 +141,13 @@ class WorkflowListApi(Resource):
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
                 pagination = workflows.paginate(page, page_size, False)
-                if pagination.total < (page -1) * page_size and page != 1:
+                if pagination.total < (page - 1) * page_size and page != 1:
                     # Nothing in that specified page, return to page 1
                     pagination = workflows.paginate(1, page_size, False)
                 result = {
                     'data': WorkflowListResponseSchema(many=True,
-                                                       exclude=('permissions',),
+                                                       exclude=(
+                                                           'permissions',),
                                                        only=only).dump(
                         pagination.items).data,
                     'pagination': {'page': page, 'size': page_size,
@@ -150,7 +155,6 @@ class WorkflowListApi(Resource):
                                    'pages': pagination.total / page_size + 1}}
             else:
                 result = {'data': WorkflowListResponseSchema(many=True,
-                                                             exclude=('permissions',),
                                                              only=only).dump(
                     workflows).data}
 
@@ -318,7 +322,8 @@ class WorkflowDetailApi(Resource):
                     try:
                         filtered = _filter_by_permissions(
                             Workflow.query, [PermissionType.EXECUTE, PermissionType.WRITE])
-                        temp_workflow = filtered.filter(Workflow.id == workflow_id).first()
+                        temp_workflow = filtered.filter(
+                            Workflow.id == workflow_id).first()
 
                         if temp_workflow is not None:
                             form.data.id = workflow_id
@@ -347,7 +352,8 @@ class WorkflowDetailApi(Resource):
                                     status="OK", message="Updated",
                                     data=response_schema.dump(workflow).data), 200
                             else:
-                                result = dict(status="ERROR", message="Not found")
+                                result = dict(status="ERROR",
+                                              message="Not found")
                     except Exception as e:
                         log.exception('Error in PATCH')
                         result, result_code = dict(
@@ -555,7 +561,8 @@ class WorkflowAddFromTemplateApi(Resource):
                 result, result_code = dict(status="ERROR",
                                            message="Not authorized"), 401
         else:
-            result, result_code = dict(status="ERROR", message="Not found"), 404
+            result, result_code = dict(
+                status="ERROR", message="Not found"), 404
         return result, result_code
 
     @staticmethod
@@ -567,6 +574,7 @@ class WorkflowAddFromTemplateApi(Resource):
         only = ('id', 'date', 'version', 'user_name')
         return {'data': WorkflowHistoryListResponseSchema(
             many=True, only=only).dump(history).data}
+
 
 class WorkflowPermissionApi(Resource):
     """ REST API for sharing a Workflow """
