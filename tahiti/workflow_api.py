@@ -115,7 +115,7 @@ class WorkflowListApi(Resource):
 
             if template_only:
                 workflows = workflows.filter(
-                    or_(Workflow.is_template,
+                    and_(Workflow.is_template,
                         Workflow.is_system_template))
 
             name_filter = request.args.get('name')
