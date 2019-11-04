@@ -97,8 +97,8 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
 
-    enabled_condition = 'this.loss.internalValue === "huber"' or 'this.loss.internalValue === "quantile"'
-    enabled_condition2 = 'this.n_iter_no_change.internalValue !== "None"'
+    enabled_condition = 'this.loss.internalValue === "huber" or this.loss.internalValue === "quantile"'
+    enabled_condition2 = 'this.n_iter_no_change.internalValue !== "0"'
 
     data = [
         #Flatten - data_format
@@ -106,14 +106,14 @@ def _insert_operation_form_field():
         (4028, 'label', 'TEXT', 1, 2, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
         (4029, 'prediction', 'TEXT', 0, 3, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
         (4030, 'presort', 'INTEGER', 0, 4, 0, 'checkbox', None, None, 'EXECUTION', 4006, None),
-        (4031, 'validation_fraction', 'FLOAT', 0, 5, 0.1, 'decimal', None, None, 'EXECUTION', 4006, enabled_condition2),
-        (4160, 'learning_rate', 'FLOAT', 0, 6, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
+        (4031, 'validation_fraction', 'FLOAT', 0, 6, 0.1, 'decimal', None, None, 'EXECUTION', 4006, enabled_condition2),
+        (4160, 'learning_rate', 'DECIMAL', 0, 6, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
         (4161, 'n_estimators', 'INTEGER', 0, 7, 0, 'integer', None, None, 'EXECUTION', 4006, None),
         (4162, 'max_depth', 'INTEGER', 0, 8, 0, 'integer', None, None, 'EXECUTION', 4006, None),
         (4163, 'min_samples_split', 'INTEGER', 0, 9, 0, 'integer', None, None, 'EXECUTION', 4006, None),
         (4164, 'min_samples_leaf', 'INTEGER', 0, 10, 0, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4165, 'n_iter_no_change', 'INTEGER', 0, 11, None, 'int', None, None, 'EXECUTION', 4006, None),
-        (4166, 'tol', 'FLOAT', 0, 12, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
+        (4165, 'n_iter_no_change', 'INTEGER', 0, 5, 0, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4166, 'tol', 'DECIMAL', 0, 12, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
         (4167, 'criterion', 'TEXT', 0, 13, 'friedman_mse', 'dropdown', None,
          json.dumps([
              {"key": "friedman_mse", "value": "Mean squared error with improvement score by Friedman"},
@@ -121,7 +121,7 @@ def _insert_operation_form_field():
              {"key": "mae", "value": "Mean absolute error"},
          ]),
          'EXECUTION', 4006, None),
-        (4168, 'loss', 'TEXT', 0, 14, 'ls', 'dropdown', None,
+        (4168, 'loss', 'TEXT', 0, 13, 'ls', 'dropdown', None,
          json.dumps([
              {"key": "ls", "value": "Least squares regression"},
              {"key": "lad", "value": "Least absolute deviation"},
@@ -129,15 +129,15 @@ def _insert_operation_form_field():
              {"key": "quantile", "value": "Quantile regression"},
          ]),
          'EXECUTION', 4006, None),
-        (4169, 'subsample', 'FLOAT', 0, 15, 1.0, 'decimal', None, None, 'EXECUTION', 4006, None),
-        (4170, 'alpha', 'FLOAT', 0, 16, 0.9, 'attribute-selector', None, None, 'EXECUTION', 4006, enabled_condition),
-        (4171, 'min_weight_fraction_leaf', 'FLOAT', 0, 17, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
-        (4172, 'max_leaf_nodes', 'INTEGER', 0, 18, None, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4173, 'min_impurity_decrease', 'FLOAT', 0, 19, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
-        (4174, 'random_state', 'INTEGER', 0, 20, None, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4175, 'verbose', 'INTEGER', 0, 21, 0, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4176, 'warm_start', 'INTEGER', 0, 22, 0, 'checkbox', None, None, 'EXECUTION', 4006, None),
-        (4177, 'max_features', 'TEXT', 0, 23, None, 'dropdown', None,
+        (4169, 'subsample', 'DECIMAL', 0, 14, 1.0, 'decimal', None, None, 'EXECUTION', 4006, None),
+        (4170, 'alpha', 'DECIMAL', 0, 15, 0.9, 'attribute-selector', None, None, 'EXECUTION', 4006, enabled_condition),
+        (4171, 'min_weight_fraction_leaf', 'DECIMAL', 0, 16, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
+        (4172, 'max_leaf_nodes', 'INTEGER', 0, 17, None, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4173, 'min_impurity_decrease', 'DECIMAL', 0, 18, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
+        (4174, 'random_state', 'INTEGER', 0, 19, None, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4175, 'verbose', 'INTEGER', 0, 20, 0, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4176, 'warm_start', 'INTEGER', 0, 21, 0, 'checkbox', None, None, 'EXECUTION', 4006, None),
+        (4177, 'max_features', 'TEXT', 0, 22, None, 'dropdown', None,
          json.dumps([
              {"key": "auto", "value": "auto"},
              {"key": "sqrt", "value": "sqrt"},
@@ -261,7 +261,7 @@ all_commands = [
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4160 AND 4178 OR id BETWEEN 4027 AND 4031'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 4026 AND operation_form_id = 4006'),
+     'DELETE FROM operation_operation_form WHERE operation_id = 4026'),
     (_insert_operation_form_translation,
      'DELETE FROM operation_form_translation WHERE id = 4026'),
     (_insert_operation_form,
