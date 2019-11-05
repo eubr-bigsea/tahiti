@@ -97,22 +97,22 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
 
-    enabled_condition = 'this.loss.internalValue === "huber" or this.loss.internalValue === "quantile"'
+    enabled_condition = 'this.loss.internalValue === "huber" || this.loss.internalValue === "quantile"'
     enabled_condition2 = 'this.n_iter_no_change.internalValue !== "0"'
 
     data = [
         #Flatten - data_format
-        (4027, 'features', 'TEXT', 1, 1, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
-        (4028, 'label', 'TEXT', 1, 2, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
-        (4029, 'prediction', 'TEXT', 0, 3, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
+        (4027, 'features', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4006, None),
+        (4028, 'label', 'TEXT', 1, 2, None, 'attribute-selector', None, None, 'EXECUTION', 4006, None),
+        (4029, 'prediction', 'TEXT', 0, 3, 'prediction', 'text', None, None, 'EXECUTION', 4006, None),
         (4030, 'presort', 'INTEGER', 0, 4, 0, 'checkbox', None, None, 'EXECUTION', 4006, None),
         (4031, 'validation_fraction', 'FLOAT', 0, 6, 0.1, 'decimal', None, None, 'EXECUTION', 4006, enabled_condition2),
-        (4160, 'learning_rate', 'DECIMAL', 0, 6, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
-        (4161, 'n_estimators', 'INTEGER', 0, 7, 0, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4162, 'max_depth', 'INTEGER', 0, 8, 0, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4163, 'min_samples_split', 'INTEGER', 0, 9, 0, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4164, 'min_samples_leaf', 'INTEGER', 0, 10, 0, 'integer', None, None, 'EXECUTION', 4006, None),
-        (4165, 'n_iter_no_change', 'INTEGER', 0, 5, 0, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4160, 'learning_rate', 'DECIMAL', 0, 6, 0.1, 'decimal', None, None, 'EXECUTION', 4006, None),
+        (4161, 'n_estimators', 'INTEGER', 0, 7, 100, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4162, 'max_depth', 'INTEGER', 0, 8, 3, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4163, 'min_samples_split', 'INTEGER', 0, 9, 2, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4164, 'min_samples_leaf', 'INTEGER', 0, 10, 1, 'integer', None, None, 'EXECUTION', 4006, None),
+        (4165, 'n_iter_no_change', 'INTEGER', 0, 5, None, 'integer', None, None, 'EXECUTION', 4006, None),
         (4166, 'tol', 'DECIMAL', 0, 12, 1e-4, 'decimal', None, None, 'EXECUTION', 4006, None),
         (4167, 'criterion', 'TEXT', 0, 13, 'friedman_mse', 'dropdown', None,
          json.dumps([
@@ -130,7 +130,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 4006, None),
         (4169, 'subsample', 'DECIMAL', 0, 14, 1.0, 'decimal', None, None, 'EXECUTION', 4006, None),
-        (4170, 'alpha', 'DECIMAL', 0, 15, 0.9, 'attribute-selector', None, None, 'EXECUTION', 4006, enabled_condition),
+        (4170, 'alpha', 'DECIMAL', 0, 15, 0.9, 'decimal', None, None, 'EXECUTION', 4006, enabled_condition),
         (4171, 'min_weight_fraction_leaf', 'DECIMAL', 0, 16, 0, 'decimal', None, None, 'EXECUTION', 4006, None),
         (4172, 'max_leaf_nodes', 'INTEGER', 0, 17, None, 'integer', None, None, 'EXECUTION', 4006, None),
         (4173, 'min_impurity_decrease', 'DECIMAL', 0, 18, 0, 'decimal', None, None, 'EXECUTION', 4006, None),

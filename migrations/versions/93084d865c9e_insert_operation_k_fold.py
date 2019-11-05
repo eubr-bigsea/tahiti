@@ -118,7 +118,7 @@ def _insert_operation_operation_form():
     op.bulk_insert(tb, rows)
 
 
-def _insert_operation_form(): #ok
+def _insert_operation_form():
     operation_form_table = table(
         'operation_form',
         column('id', Integer),
