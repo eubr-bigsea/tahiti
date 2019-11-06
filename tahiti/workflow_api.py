@@ -5,11 +5,11 @@ import uuid
 
 import requests
 from flask import request, current_app, g
+from flask_babel import gettext
 from flask_restful import Resource
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.elements import and_
-from flask_babel import gettext
 
 from tahiti.app_auth import requires_auth
 from tahiti.schema import *
@@ -66,7 +66,7 @@ def get_workflow(workflow_id):
 def _filter_by_permissions(workflows, permissions, consider_public=True):
     if g.user.id not in (0, 1):  # It is not a inter service call
         sub_query = WorkflowPermission.query.with_entities(
-            WorkflowPermission.id).filter(
+            WorkflowPermission.workflow_id).filter(
             WorkflowPermission.permission.in_(permissions),
             WorkflowPermission.user_id == g.user.id)
         conditions = [
@@ -118,8 +118,6 @@ class WorkflowListApi(Resource):
                     or_(and_(Workflow.user_id == g.user.id,
                              Workflow.is_template),
                         Workflow.is_system_template))
-            else:
-                workflows = workflows.filter(Workflow.user_id == g.user.id)
 
             name_filter = request.args.get('name')
             if name_filter:
@@ -140,7 +138,7 @@ class WorkflowListApi(Resource):
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
                 pagination = workflows.paginate(page, page_size, False)
-                if pagination.total < (page -1) * page_size and page != 1:
+                if pagination.total < (page - 1) * page_size and page != 1:
                     # Nothing in that specified page, return to page 1
                     pagination = workflows.paginate(1, page_size, False)
                 result = {
@@ -319,8 +317,10 @@ class WorkflowDetailApi(Resource):
                 if not form.errors:
                     try:
                         filtered = _filter_by_permissions(
-                            Workflow.query, [PermissionType.EXECUTE, PermissionType.WRITE])
-                        temp_workflow = filtered.filter(Workflow.id == workflow_id).first()
+                            Workflow.query,
+                            [PermissionType.EXECUTE, PermissionType.WRITE])
+                        temp_workflow = filtered.filter(
+                            Workflow.id == workflow_id).first()
 
                         if temp_workflow is not None:
                             form.data.id = workflow_id
@@ -347,9 +347,11 @@ class WorkflowDetailApi(Resource):
                             if workflow is not None:
                                 result, result_code = dict(
                                     status="OK", message="Updated",
-                                    data=response_schema.dump(workflow).data), 200
+                                    data=response_schema.dump(
+                                        workflow).data), 200
                             else:
-                                result = dict(status="ERROR", message="Not found")
+                                result = dict(status="ERROR",
+                                              message="Not found")
                     except Exception as e:
                         log.exception('Error in PATCH')
                         result, result_code = dict(
@@ -570,6 +572,7 @@ class WorkflowAddFromTemplateApi(Resource):
         return {'data': WorkflowHistoryListResponseSchema(
             many=True, only=only).dump(history).data}
 
+
 class WorkflowPermissionApi(Resource):
     """ REST API for sharing a Workflow """
 
@@ -675,5 +678,3 @@ class WorkflowPermissionApi(Resource):
                         result['debug_detail'] = str(e)
                     db.session.rollback()
         return result, result_code
-
-
