@@ -260,7 +260,7 @@ class WorkflowDetailApi(Resource):
         result, result_code = dict(status="ERROR", message="Not found"), 404
 
         filtered = _filter_by_permissions(
-            Workflow.query, [PermissionType.EXECUTE, PermissionType.WRITE])
+            Workflow.query, [PermissionType.WRITE])
 
         workflow = filtered.filter(Workflow.id == workflow_id).first()
         if workflow is not None:
@@ -317,8 +317,7 @@ class WorkflowDetailApi(Resource):
                 if not form.errors:
                     try:
                         filtered = _filter_by_permissions(
-                            Workflow.query,
-                            [PermissionType.EXECUTE, PermissionType.WRITE])
+                            Workflow.query, [PermissionType.WRITE])
                         temp_workflow = filtered.filter(
                             Workflow.id == workflow_id).first()
 
@@ -604,7 +603,7 @@ class WorkflowPermissionApi(Resource):
             if not error:
                 try:
                     filtered = _filter_by_permissions(
-                        Workflow.query, [PermissionType.EXECUTE])
+                        Workflow.query, [PermissionType.WRITE])
                     workflow = filtered.filter(
                         Workflow.id == workflow_id).first()
 
@@ -655,7 +654,7 @@ class WorkflowPermissionApi(Resource):
                                                        'Data source'))), 404
 
         filtered = _filter_by_permissions(Workflow.query,
-                                          [PermissionType.EXECUTE])
+                                          [PermissionType.WRITE])
         workflow = filtered.filter(Workflow.id == workflow_id).first()
         if workflow is not None:
             permission = WorkflowPermission.query.filter(
@@ -667,7 +666,7 @@ class WorkflowPermissionApi(Resource):
                     db.session.commit()
                     result, result_code = dict(
                         status="OK",
-                        message=gettext("%(what)s was successfuly deleted",
+                        message=gettext("%(what)s was successively deleted",
                                         what=gettext('Workflow'))), 200
                 except Exception as e:
                     log.exception('Error in DELETE')
