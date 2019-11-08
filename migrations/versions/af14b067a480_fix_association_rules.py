@@ -1,5 +1,5 @@
 # coding=utf-8
-"""pca
+"""updating association rules
 Revision ID: af14b067a480
 Revises: 3334e8c55632
 Create Date: 2019-11-08 15:50:29.883138
