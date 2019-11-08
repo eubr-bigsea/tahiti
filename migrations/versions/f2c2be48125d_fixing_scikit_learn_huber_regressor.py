@@ -19,7 +19,7 @@ import json
 
 # revision identifiers, used by Alembic.
 revision = 'f2c2be48125d'
-down_revision = 'ba0fe62f7174'
+down_revision = '4c1ebd8863a8'
 branch_labels = None
 depends_on = None
 
