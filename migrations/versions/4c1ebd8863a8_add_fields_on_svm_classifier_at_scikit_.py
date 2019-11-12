@@ -55,8 +55,7 @@ def _insert_operation_form_field():
              {'key': 'ovr', 'value': 'ovr'},
              {'key': 'ovo', 'value': 'ovo'}
          ]),
-         'EXECUTION', 4011, None),
-        (4184, 'random_state', 'INTEGER', 0, 13, None, 'integer', None, None, 'EXECUTION', 4011, None)
+         'EXECUTION', 4011, None)
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -77,20 +76,17 @@ def _insert_operation_form_field_translation():
         (4179, 'en', 'Independent term in kernel function.', 'Independent term in kernel function. It is only significant in "poly" and "sigmoid".'),
         (4179, 'pt', 'Termo independente da função do kernel.', 'Termp independente da função do kernel. É significativo apenas nas métricas "poly" e "sigmoid".'),
 
-        (4180, 'en', 'Whether to use the shrinking heuristic.', 'Whether to use the shrinking heuristic.'),
-        (4180, 'pt', 'Necessidade de usar a heurística shrinking.', 'Necessidade de usar a heurística shrinking'),
+        (4180, 'en', 'Use the shrinking heuristic.', 'Whether to use the shrinking heuristic.'),
+        (4180, 'pt', 'Usar a heurística shrinking.', 'Necessidade de usar a heurística shrinking'),
 
-        (4181, 'en', 'Whether to enable probability estimates.', 'Whether to enable probability estimates.'),
+        (4181, 'en', 'Enable probability estimates.', 'Whether to enable probability estimates.'),
         (4181, 'pt', 'Habilitar estimativas probailísticas.', 'Habilitar estimativas probailísticas.'),
 
-        (4182, 'en', 'Specify the size of the kernel cache (in MB).', 'Specify the size of the kernel cache (in MB).'),
-        (4182, 'pt', 'Especificação do tamanho do cache em MB.', 'Especificação do tamanho do cache em MB.'),
+        (4182, 'en', 'Size of the kernel cache (in MB).', 'Specify the size of the kernel cache (in MB).'),
+        (4182, 'pt', 'Tamanho do cache em MB.', 'Especificação do tamanho do cache em MB.'),
 
-        (4183, 'en', 'Return (one-vs-rest) "ovr" or (one-vs-one) "ovo" decision funcion.', 'Return (one-vs-rest) "ovr" or (one-vs-one) "ovo" decision funcion.'),
-        (4183, 'pt', 'Decisão de retorno "ovr" (one-vs-rest : um por todos) ou "ovo" (one-vs-one: um por um).' , 'Decisão de retorno "ovr" (one-vs-rest : um por todos) ou "ovo" (one-vs-one: um por um).'),
-
-        (4184, 'en', 'The seed of the pseudo random number generator', 'The seed of the pseudo random number generator used when shuffling the data for probability estimates.'),
-        (4184, 'pt', 'Raiz geradora da função pseudo aleatória', 'Raiz geradora da função pseudo aleatória usada para as permutações de estimativas probabiísticas.')
+        (4183, 'en', 'Return decision.', 'Return (one-vs-rest) "ovr" or (one-vs-one) "ovo" decision funcion.'),
+        (4183, 'pt', 'Decisão de retorno.' , 'Decisão de retorno "ovr" (one-vs-rest : um por todos) ou "ovo" (one-vs-one: um por um).')
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -98,9 +94,9 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 4178 AND 4184'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4178 AND 4183'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4178 AND 4184')
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4178 AND 4183')
 
 ]
 
