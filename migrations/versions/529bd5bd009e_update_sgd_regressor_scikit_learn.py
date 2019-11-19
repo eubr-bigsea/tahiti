@@ -179,8 +179,8 @@ def _insert_operation_form_field_translation():
         (4220, 'en', 'Average', 'If set to an int greater than 1, averaging will begin once the total number of samples'
                                 ' seen reaches average. So average=10 will begin averaging after seeing 10 samples.'),
         (4220, 'pt', 'Média', 'Se definido como um int maior que 1, a média começará assim que o número total de'
-                                ' amostras vistas atingir a média. Então a média = 10 começará a média depois de ver 10'
-                                ' amostras.'),
+                              ' amostras vistas atingir a média. Então a média = 10 começará a média depois de ver 10'
+                              ' amostras.'),
 
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
