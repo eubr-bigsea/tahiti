@@ -81,7 +81,7 @@ def _insert_operation_form_field():
              {'key': 'squared_epsilon_insensitive', 'value': 'squared_epsilon_insensitive'},
          ]),
          'EXECUTION', 4009, None),
-        (4213, 'epsilon', 'DECIMAL', 1, 10, None, 'decimal', None, None, 'EXECUTION', 4009, enable_condition),
+        (4213, 'epsilon', 'DECIMAL', 0, 10, 0.1, 'decimal', None, None, 'EXECUTION', 4009, enable_condition),
         (4214, 'n_iter_no_change', 'INTEGER', 1, 11, 5, 'integer', None, None, 'EXECUTION', 4009, None),
         (4216, 'penalty', 'TEXT', 1, 12, 'l2', 'dropdown', None,
          json.dumps([
@@ -94,7 +94,7 @@ def _insert_operation_form_field():
         (4217, 'fit_intercept', 'INTEGER', 1, 13, 1, 'integer', None, None, 'EXECUTION', 4009, None),
         (4219, 'eta0', 'DECIMAL', 0, 20, 0.01, 'decimal', None, None, 'EXECUTION', 4009, enable_condition2),
         (4210, 'warm_start', 'INTEGER', 0, 17, 0, 'checkbox', None, None, 'EXECUTION', 4009, None),
-        (4218, 'verbose', 'INTEGER', 0, 18, None, 'integer', None, None, 'EXECUTION', 4009, None),
+        (4218, 'verbose', 'INTEGER', 0, 18, 0, 'integer', None, None, 'EXECUTION', 4009, None),
         (4220, 'average', 'INTEGER', 0, 19, 1, 'integer', None, None, 'EXECUTION', 4009, None),
         (4207, 'learning_rate', 'TEXT', 0, 14, 'invscaling', 'dropdown', None,
          json.dumps([
