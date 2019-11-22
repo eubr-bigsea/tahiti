@@ -376,8 +376,9 @@ class WorkflowImportApi(Resource):
     def post():
         url = request.form.get('url')
         token = request.form.get('token')
-        contents = request.form.get('source')
+        contents = request.json if request.json else None
 
+        # Imports from URL
         if not contents:
             if not all([url, token]):
                 return {'error': 'Missing url or token parameter',
@@ -385,12 +386,14 @@ class WorkflowImportApi(Resource):
             r = requests.get(url, headers={"X-Auth-Token": token})
             if r.status_code == 200:
                 contents = r.text
+                original = json.loads(contents)
             else:
                 return 'Error reading source workflow: ' + \
                        r.status_code + '\n' + r.text, 400
+        else:
+            original = json.loads(contents.get('content'))
         # noinspection PyBroadException
         try:
-            original = json.loads(contents)
             platform = original.pop('platform')
 
             original['form'] = json.dumps(original.pop('forms'))
@@ -430,8 +433,7 @@ class WorkflowImportApi(Resource):
                     db.session.flush()
                     update_port_name_in_flows(db.session, workflow.id)
                     db.session.commit()
-                    result, result_code = response_schema.dump(
-                        workflow).data, 200
+                    result, result_code = workflow.id, 200
                 except Exception as e:
                     log.exception('Error in POST')
                     result, result_code = dict(status="ERROR",
