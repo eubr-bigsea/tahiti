@@ -30,6 +30,14 @@ MODEL_FORM_ID = 5233
 SEQUENCE_GENERATOR = 5124
 SEQUENCE_READER = 5119
 SEQUENCE_GENERATOR_FORM_ID = 5247
+MAX_POOLING_3D_FORM_ID = 5222
+ZERO_PADDING_3D_FORM_ID = 5159
+DENSE_FORM_ID = 5100
+DROPOUT_FORM_ID = 5120
+FLATTEN_FORM_ID = 5130
+FIT_GENERATOR_FORM_ID = 5245
+FILE_READER = 5125
+FILE_READER_FORM_ID = 5248
 
 
 def _insert_operation():
@@ -47,6 +55,7 @@ def _insert_operation():
         (PREDICTION_LAYER, "predict", 1, 'ACTION', '', 'circle-layout'),
         (SEQUENCE_GENERATOR, "sequence-generator", 1, 'ACTION', '',
             'circle-layout'),
+        (FILE_READER, "file-reader", 1, 'ACTION', '', 'circle-layout'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -63,6 +72,7 @@ def _insert_operation_platform():
     data = [
         (PREDICTION_LAYER, KERAS_PLATAFORM_ID),
         (SEQUENCE_GENERATOR, KERAS_PLATAFORM_ID),
+        (FILE_READER, KERAS_PLATAFORM_ID),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -85,6 +95,7 @@ def _insert_operation_translation():
                                                          'data and generates '
                                                          'batches of tensor '
                                                          'data.'),
+        (FILE_READER, 'en', 'File reader', 'Provides access to any file type.'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -102,6 +113,7 @@ def _insert_operation_category_operation():
         # Convolutional Layers
         (5063, PREDICTION_LAYER),
         (5064, SEQUENCE_GENERATOR),
+        (5065, FILE_READER),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -132,6 +144,9 @@ def _insert_operation_port():
         (5404, 'OUTPUT', '', 1, 'MANY', SEQUENCE_GENERATOR, 'generator'),
 
         (5405, 'OUTPUT', '', 1, 'ONE', SEQUENCE_READER, 'test-sequence'),
+        (5406, 'OUTPUT', '', 1, 'ONE', PREDICTION_LAYER, 'python code'),
+
+        (5407, 'OUTPUT', '', 1, 'ONE', FILE_READER, 'python code'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -156,6 +171,8 @@ def _insert_operation_port_interface_operation_port():
         (5403, 26),
         (5404, 23),
         (5405, 26),
+        (5406, 28),
+        (5407, 28),
     ]
     rows = [dict(zip(columns, row)) for row in data]
 
@@ -181,6 +198,8 @@ def _insert_operation_port_translation():
         (5403, 'en', 'sequence data', 'Sequence data'),
         (5404, 'en', 'generator', 'Generator'),
         (5405, 'en', 'test sequence data', 'Sequence data'),
+        (5406, 'en', 'python code', 'Python code'),
+        (5407, 'en', 'python code', 'Python code'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -199,6 +218,8 @@ def _insert_operation_form_translation():
     data = [
         (SEQUENCE_GENERATOR_FORM_ID, 'en', 'Execution'),
         (SEQUENCE_GENERATOR_FORM_ID, 'pt', 'Execução'),
+        (FILE_READER_FORM_ID, 'en', 'Execution'),
+        (FILE_READER_FORM_ID, 'pt', 'Execução'),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -215,6 +236,7 @@ def _insert_operation_form():
     columns = ('id', 'enabled', 'order', 'category')
     data = [
         (SEQUENCE_GENERATOR_FORM_ID, 1, 1, 'execution'),
+        (FILE_READER_FORM_ID, 1, 1, 'execution'),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -232,6 +254,8 @@ def _insert_operation_operation_form():
         (PREDICTION_LAYER, 41),
         (SEQUENCE_GENERATOR, 41),
         (SEQUENCE_GENERATOR, SEQUENCE_GENERATOR_FORM_ID),
+        (FILE_READER, 41),
+        (FILE_READER, FILE_READER_FORM_ID),
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -291,6 +315,31 @@ def _insert_operation_form_field():
     LIMONERO_IMAGE = "`${LIMONERO_URL}/datasources?simple=true&list=true&" \
                      "enabled=1&formats=IMAGE_FOLDER,SEQUENCE_FOLDER," \
                      "VIDEO_FOLDER`"
+
+    LIMONERO_NPY_IMAGE = "`${LIMONERO_URL}/datasources?simple=true&list=true&" \
+                     "enabled=1&formats=SAV,NPY,DATA_FOLDER`"
+
+    ENABLED_CONDITION = 'this.advanced_options.internalValue === "1"'
+
+    ENABLED_EARLY_STOPPING = 'this.early_stopping.internalValue === "1" && ' \
+                                'this.advanced_options.internalValue === "1"'
+
+    monitor_metrics = [
+        {"value": "Binary accuracy", "key": "binary_accuracy"},
+        {"value": "Categorical accuracy", "key": "categorical_accuracy"},
+        {"value": "Loss", "key": "loss"},
+        {"value": "Sparse categorical accuracy", "key": "sparse_categorical_"
+                                                        "accuracy"},
+        {"value": "Validation loss", "key": "val_loss"},
+        {"value": "Validation categorical accuracy", "key": "val_categorical_"
+                                                            "accuracy"}
+    ]
+
+    mode = [
+        {"value": "Automatic", "key": "auto"},
+        {"value": "Minimum", "key": "min"},
+        {"value": "Maximum", "key": "max"}
+    ]
 
     data = [
         # Model
@@ -368,6 +417,50 @@ def _insert_operation_form_field():
          'EXECUTION', SEQUENCE_GENERATOR_FORM_ID, None),
         (5638, 'shape', 'TEXT', 1, 2, None, 'text', None, None,
          'EXECUTION', SEQUENCE_GENERATOR_FORM_ID, None),
+
+        # File reader
+        (5639, 'file_or_folder', 'INTEGER', 1, 1, None, 'lookup',
+         LIMONERO_NPY_IMAGE, None, 'EXECUTION', FILE_READER_FORM_ID, None),
+        (5640, 'out_code', 'INTEGER', 0, 2, None, 'checkbox', None, None,
+         'EXECUTION', FILE_READER_FORM_ID, None),
+
+        # MaxPooling3D
+        (5641, 'trainable', 'INTEGER', 0, 1, 1, 'checkbox', None, None,
+         'EXECUTION', MAX_POOLING_3D_FORM_ID, None),
+
+        # ZeroPadding3D
+        (5642, 'trainable', 'INTEGER', 0, 1, 1, 'checkbox', None, None,
+         'EXECUTION', ZERO_PADDING_3D_FORM_ID, None),
+
+        # ZeroPadding3D
+        (5643, 'trainable', 'INTEGER', 0, 1, 1, 'checkbox', None, None,
+         'EXECUTION', DENSE_FORM_ID, None),
+
+        # Dropout
+        (5644, 'trainable', 'INTEGER', 0, 1, 1, 'checkbox', None, None,
+         'EXECUTION', DROPOUT_FORM_ID, None),
+
+        # Flatten
+        (5645, 'trainable', 'INTEGER', 0, 1, 1, 'checkbox', None, None,
+         'EXECUTION', FLATTEN_FORM_ID, None),
+
+        # Fit generator
+        (5646, 'early_stopping', 'INTEGER', 0, 2, 0, 'checkbox', None, None,
+         'EXECUTION', FIT_GENERATOR_FORM_ID, ENABLED_CONDITION),
+        (5647, 'monitor', 'TEXT', 0, 2, "val_loss", 'dropdown', None,
+         json.dumps(monitor_metrics), 'EXECUTION', FIT_GENERATOR_FORM_ID,
+         ENABLED_EARLY_STOPPING),
+        (5648, 'min_delta', 'DECIMAL', 0, 2, 0, 'decimal', None, None,
+         'EXECUTION', FIT_GENERATOR_FORM_ID, ENABLED_EARLY_STOPPING),
+        (5649, 'patience', 'INTEGER', 0, 2, 0, 'integer', None, None,
+         'EXECUTION', FIT_GENERATOR_FORM_ID, ENABLED_EARLY_STOPPING),
+        (5650, 'mode', 'TEXT', 0, 2, "auto", 'dropdown', None,
+         json.dumps(mode), 'EXECUTION', FIT_GENERATOR_FORM_ID,
+         ENABLED_EARLY_STOPPING),
+        (5651, 'baseline', 'DECIMAL', 0, 2, None, 'decimal', None, None,
+         'EXECUTION', FIT_GENERATOR_FORM_ID, ENABLED_EARLY_STOPPING),
+        (5652, 'restore_best_weights', 'INTEGER', 0, 2, 0, 'checkbox', None,
+         None, 'EXECUTION', FIT_GENERATOR_FORM_ID, ENABLED_EARLY_STOPPING),
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -425,6 +518,49 @@ def _insert_operation_form_field_translation():
                               'batch size. For instance, shape=(32,) indicates '
                               'that the expected input will be batches of '
                               '32-dimensional vectors.'),
+        (5639, 'en', 'File or folder', 'Allow access to .npy, .sav files and'
+                                       ' data folder.'),
+        (5640, 'en', 'Out code', 'Code used out of the method to generate the '
+                                 'Keras layers.'),
+        (5641, 'en', 'Trainable', 'Indicates whether the layer in the model is '
+                                  'trainable.'),
+        (5642, 'en', 'Trainable', 'Indicates whether the layer in the model is '
+                                  'trainable.'),
+        (5643, 'en', 'Trainable', 'Indicates whether the layer in the model is '
+                                  'trainable.'),
+        (5644, 'en', 'Trainable', 'Indicates whether the layer in the model is '
+                                  'trainable.'),
+        (5645, 'en', 'Trainable', 'Indicates whether the layer in the model is '
+                                  'trainable.'),
+        (5646, 'en', 'Early stopping', 'Stop training when a monitored '
+                                       'quantity has stopped improving.'),
+        (5647, 'en', 'Monitor', 'Quantity to be monitored.'),
+        (5648, 'en', 'Minimum delta', 'Minimum change in the monitored quantity'
+                                      ' to qualify as an improvement, i.e. an '
+                                      'absolute change of less than min_delta, '
+                                      'will count as no improvement.'),
+        (5649, 'en', 'Patience', 'Number of epochs that produced the monitored '
+                                 'quantity with no improvement after which '
+                                 'training will be stopped. Validation '
+                                 'quantities may not be produced for every '
+                                 'epoch, if the validation frequency (model.fit'
+                                 '(validation_freq=5)) is greater than one.'),
+        (5650, 'en', 'Mode', 'One of {auto, min, max}. In min mode, training '
+                             'will stop when the quantity monitored has stopped'
+                             ' decreasing; in max mode it will stop when the '
+                             'quantity monitored has stopped increasing; in '
+                             'auto mode, the direction is automatically '
+                             'inferred from the name of the monitored '
+                             'quantity.'),
+        (5651, 'en', 'Baseline', 'Baseline value for the monitored quantity to '
+                                 'reach. Training will stop if the model '
+                                 'doesn\'t show improvement over the baseline.'),
+        (5652, 'en', 'Restore best weights', 'Whether to restore model weights '
+                                             'from the epoch with the best '
+                                             'value of the monitored quantity. '
+                                             'If False, the model weights '
+                                             'obtained at the last step of '
+                                             'training are used.'),
 
 
     ]
@@ -436,58 +572,65 @@ all_commands = [
     (_insert_operation,
      'DELETE '
      'FROM operation '
-     'WHERE id IN ({0}, {1})'.format(PREDICTION_LAYER, SEQUENCE_GENERATOR)),
+     'WHERE id IN ({0}, {1}, {2})'.format(PREDICTION_LAYER, SEQUENCE_GENERATOR,
+                                          FILE_READER)),
     (_insert_operation_platform,
      'DELETE '
      'FROM operation_platform '
-     'WHERE operation_id IN ({0}, {1}) '
-     'AND platform_id = {2}'.format(PREDICTION_LAYER,
+     'WHERE operation_id IN ({0}, {1}, {2}) '
+     'AND platform_id = {3}'.format(PREDICTION_LAYER,
                                     SEQUENCE_GENERATOR,
+                                    FILE_READER,
                                     KERAS_PLATAFORM_ID)),
     (_insert_operation_translation,
      'DELETE '
      'FROM operation_translation '
-     'WHERE id IN ({0}, {1})'.format(PREDICTION_LAYER, SEQUENCE_GENERATOR)),
+     'WHERE id IN ({0}, {1}, {2})'.format(PREDICTION_LAYER, SEQUENCE_GENERATOR,
+                                          FILE_READER)),
     (_insert_operation_category_operation,
      'DELETE '
      'FROM operation_category_operation '
-     'WHERE operation_id IN ({0}, {1})'.format(PREDICTION_LAYER,
-                                               SEQUENCE_GENERATOR)),
+     'WHERE operation_id IN ({0}, {1}, {2})'.format(PREDICTION_LAYER,
+                                                    SEQUENCE_GENERATOR,
+                                                    FILE_READER)),
     (_insert_operation_port,
      'DELETE '
      'FROM operation_port '
-     'WHERE id BETWEEN 5397 AND 5405'),
+     'WHERE id BETWEEN 5397 AND 5407'),
     (_insert_operation_port_interface_operation_port,
      'DELETE '
      'FROM operation_port_interface_operation_port '
-     'WHERE operation_port_id BETWEEN 5397 AND 5405'),
+     'WHERE operation_port_id BETWEEN 5397 AND 5407'),
     (_insert_operation_port_translation,
      'DELETE '
      'FROM operation_port_translation '
-     'WHERE id BETWEEN 5397 AND 5405'),
+     'WHERE id BETWEEN 5397 AND 5407'),
     (_insert_operation_operation_form,
      'DELETE '
      'FROM operation_operation_form '
-     'WHERE operation_id IN ({0}, {1})'.format(PREDICTION_LAYER,
-                                               SEQUENCE_GENERATOR)),
+     'WHERE operation_id IN ({0}, {1}, {2})'.format(PREDICTION_LAYER,
+                                                    SEQUENCE_GENERATOR,
+                                                    FILE_READER)),
 
     (_insert_operation_form,
      'DELETE '
      'FROM operation_form '
-     'WHERE id IN ({0})'.format(SEQUENCE_GENERATOR_FORM_ID)),
+     'WHERE id IN ({0}, {1})'.format(SEQUENCE_GENERATOR_FORM_ID,
+                                     FILE_READER_FORM_ID)),
     (_insert_operation_form_translation,
      'DELETE '
      'FROM operation_form_translation '
-     'WHERE id IN ({0})'.format(SEQUENCE_GENERATOR_FORM_ID)),
+     'WHERE id IN ({0}, {1})'.format(SEQUENCE_GENERATOR_FORM_ID,
+                                     FILE_READER_FORM_ID)),
 
     (_insert_operation_form_field,
      'DELETE '
      'FROM operation_form_field '
-     'WHERE id BETWEEN 5612 AND 5638'),
+     'WHERE id BETWEEN 5612 AND 5652'),
     (_insert_operation_form_field_translation,
      'DELETE '
      'FROM operation_form_field_translation '
-     'WHERE id BETWEEN 5612 AND 5638'),
+     'WHERE id BETWEEN 5612 AND 5652'),
 
     ('''
         UPDATE operation_form_field 
@@ -624,8 +767,24 @@ all_commands = [
         UPDATE operation_port_translation 
         SET `name` =  'train sequence data'
         WHERE id = 5320
+     ''', ''),
+
+    ('''
+        UPDATE operation_port 
+        SET `multiplicity` = 'MANY' 
+        WHERE `id` = 5190;
      ''',
-     ''''''),
+     '''
+        UPDATE operation_port 
+        SET `multiplicity` = 'ONE' 
+        WHERE `id` = 5190;
+     '''),
+
+    ('''
+        UPDATE operation_form_field 
+        SET `order` = 0, `enable_conditions` = NULL 
+        WHERE `id` = 5542
+     ''', ''),
 ]
 
 
