@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Keras: split model into model and fit generator.
 
 Revision ID: cb687f5f7b55

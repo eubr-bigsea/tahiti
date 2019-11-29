@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Keras - prediction layer
 
 Revision ID: 7ab1651ce835

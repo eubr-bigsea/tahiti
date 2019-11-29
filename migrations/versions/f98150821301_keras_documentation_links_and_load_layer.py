@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """Keras documentation links.
 
 Revision ID: f98150821301
