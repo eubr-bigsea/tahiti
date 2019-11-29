@@ -17,12 +17,12 @@ from sqlalchemy.sql import table, column, text
 import json
 
 
-
 # revision identifiers, used by Alembic.
 revision = '529bd5bd009e'
 down_revision = 'eff0acabf4fe'
 branch_labels = None
 depends_on = None
+
 
 def _insert_operation_operation_form():
     tb = table(
