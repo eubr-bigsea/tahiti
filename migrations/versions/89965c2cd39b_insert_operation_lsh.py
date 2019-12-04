@@ -61,7 +61,6 @@ def _insert_operation():
     op.bulk_insert(tb, rows)
 
 
-
 def _insert_operation_category_operation():
     tb = table(
         'operation_category_operation',
@@ -98,6 +97,7 @@ def _insert_operation_translation():
 
     op.bulk_insert(tb, rows)
 
+
 def _insert_operation_operation_form():
     tb = table(
         'operation_operation_form',
@@ -114,6 +114,7 @@ def _insert_operation_operation_form():
 
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
+
 
 def _insert_operation_form():
     operation_form_table = table(
@@ -132,6 +133,7 @@ def _insert_operation_form():
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(operation_form_table, rows)
 
+
 def _insert_operation_form_translation():
     tb = table(
         'operation_form_translation',
@@ -147,6 +149,7 @@ def _insert_operation_form_translation():
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
+
 
 def _insert_operation_form_field():
     tb = table(

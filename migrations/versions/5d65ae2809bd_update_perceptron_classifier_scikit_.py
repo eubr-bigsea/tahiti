@@ -74,7 +74,6 @@ def _insert_operation_form_field():
          enable_condition),
         (4272, 'n_iter_no_change', 'INTEGER', 0, 13, 5, 'integer', None,  None, 'EXECUTION', 4005, None),
         (4273, 'class_weight', 'TEXT', 0, 14, None, 'text', None,  None, 'EXECUTION', 4005, None),
-        (4274, 'warm_start', 'INTEGER', 0, 15, 0, 'integer', None,  None, 'EXECUTION', 4005, None),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -122,12 +121,6 @@ def _insert_operation_form_field_translation():
 
         (4273, 'en', 'Class weight', 'Preset for the class_weight fit parameter (dictionary).'),
         (4273, 'pt', 'Peso da classe', 'Predefinição para o parâmetro de ajuste class_weight (dicionário).'),
-
-        (4274, 'en', 'Warm start', 'When set to True, reuse the solution of the previous call to fit as initialization,'
-                                   ' otherwise, just erase the previous solution.'),
-        (4274, 'pt', 'Começo pré-definido', 'Quando definido como True, reutilize a solução da chamada anterior para'
-                                            ' caber como inicialização, caso contrário, apenas apague a solução'
-                                            ' anterior.'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -138,9 +131,9 @@ all_commands = [
      """UPDATE operation_form_field SET `type` = 'FLOAT' WHERE id = 4022 OR id = 4024"""),
 
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 4266 AND 4274'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4266 AND 4273'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4266 AND 4274'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4266 AND 4273'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE operation_id = 4025 AND operation_form_id = 41'),
 ]
