@@ -63,7 +63,7 @@ def _insert_operation_form_field():
 
     enable_condition = 'this.solver.internalValue === "sgd" || this.solver.internalValue === "adam"'
     enable_condition2 = 'this.solver.internalValue === "sgd"'
-    enable_condition3 = 'this.solver.internalValue === "sgd" && this.momentum.internalValue >== 0'
+    enable_condition3 = 'this.solver.internalValue === "sgd" && this.momentum.internalValue > "0"'
     enable_condition4 = 'this.early_stopping.internalValue === "1"'
     enable_condition5 = 'this.solver.internalValue === "adam"'
 
