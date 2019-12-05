@@ -45,11 +45,11 @@ def _insert_operation_form_field():
                'enable_conditions')
 	
     data = [
-        (4178, 'gamma', 'FLOAT', 0, 7, 'auto', 'decimal', None, None, 'EXECUTION', 4011, None),
-        (4179, 'coef0', 'FLOAT', 0, 8, 0.0, 'decimal', None, None, 'EXECUTION', 4011, None),
+        (4178, 'gamma', 'DECIMAL', 0, 7, 'auto', 'decimal', None, None, 'EXECUTION', 4011, None),
+        (4179, 'coef0', 'DECIMAL', 0, 8, 0.0, 'decimal', None, None, 'EXECUTION', 4011, None),
         (4180, 'shrinking', 'INTEGER', 0, 9, 1, 'checkbox', None, None, 'EXECUTION', 4011, None),
         (4181, 'probability', 'INTEGER', 0, 10, 0, 'checkbox', None, None, 'EXECUTION', 4011, None),
-        (4182, 'cache_size', 'FLOAT', 0, 11, 200, 'decimal', None, None, 'EXECUTION', 4011, None),
+        (4182, 'cache_size', 'DECIMAL', 0, 11, 200, 'decimal', None, None, 'EXECUTION', 4011, None),
         (4183, 'decision_function_shape', 'TEXT', 0, 12, 'ovr', 'dropdown', None,
          json.dumps([
              {'key': 'ovr', 'value': 'ovr'},

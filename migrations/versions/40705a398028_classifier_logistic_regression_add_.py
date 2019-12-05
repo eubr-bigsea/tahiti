@@ -66,7 +66,7 @@ def _insert_operation_form_field():
         'EXECUTION', 4001, None),
         (4232, 'dual', 'INTEGER', 0, 7, 0, 'checkbox', None, None, 'EXECUTION', 4001, None),
         (4233, 'fit_intercept', 'INTEGER', 0, 8, 1, 'checkbox', None, None, 'EXECUTION', 4001, None),
-        (4234, 'intercept_scaling', 'FLOAT', 0, 9, 1.0, 'decimal', None, None, 'EXECUTION', 4001, None),
+        (4234, 'intercept_scaling', 'DECIMAL', 0, 9, 1.0, 'decimal', None, None, 'EXECUTION', 4001, None),
         (4235, 'warm_start', 'INTEGER', 0, 10, 0, 'checkbox', None, None, 'EXECUTION', 4001, None),
         (4236, 'multi_class', 'TEXT', 0, 11, 'ovr', 'dropdown', None,
          json.dumps([
@@ -76,7 +76,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 4001, None),
         (4237, 'n_jobs', 'INTEGER', 0, 12, None, 'integer', None, None, 'EXECUTION', 4001, None),
-        (4238, 'l1_ratio', 'FLOAT', 0, 13, None, 'decimal', None, None, 'EXECUTION', 4001, None),
+        (4238, 'l1_ratio', 'DECIMAL', 0, 13, None, 'decimal', None, None, 'EXECUTION', 4001, None),
         (4239, 'verbose', 'INTEGER', 0, 14, 0, 'integer', None, None, 'EXECUTION', 4001, None)
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
