@@ -27,6 +27,7 @@ depends_on = None
 SCIKIT_LEARN_PLATAFORM_ID = 4
 ID_OPERATION = 4038
 
+
 def _insert_operation_platform():
     tb = table(
         'operation_platform',
@@ -59,7 +60,6 @@ def _insert_operation():
     rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
-
 
 
 def _insert_operation_category_operation():
@@ -98,6 +98,7 @@ def _insert_operation_translation():
     rows = [dict(list(zip(columns, row))) for row in data]
 
     op.bulk_insert(tb, rows)
+
 
 def _insert_operation_operation_form():
     tb = table(

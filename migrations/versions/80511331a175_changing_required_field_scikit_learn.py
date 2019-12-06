@@ -23,11 +23,102 @@ down_revision = '1c688e5c61f3'
 branch_labels = None
 depends_on = None
 
+
+def _insert_operation_operation_form():
+    tb = table(
+        'operation_operation_form',
+        column('operation_id', Integer),
+        column('operation_form_id', Integer))
+
+    columns = ('operation_id', 'operation_form_id')
+    data = [
+        #Flatten - data_format
+        (4038, 41), #appearance
+        (4037, 41), #appearance
+        (4041, 41), #appearance
+        (112, 41), #appearance
+        (4027, 41), #appearance
+    ]
+
+    rows = [dict(list(zip(columns, row))) for row in data]
+    op.bulk_insert(tb, rows)
+
+
 all_commands = [
     ("""UPDATE operation_form_field SET `required` = '0' 
         WHERE id IN (4045, 4046, 4208, 4211, 4212, 4214, 4215, 4216, 4217)""",
      """UPDATE operation_form_field SET `required` = '1' 
         WHERE id IN (4045, 4046, 4208, 4211, 4212, 4214, 4215, 4216, 4217)"""),
+
+    (_insert_operation_operation_form,
+     'DELETE FROM operation_operation_form WHERE operation_id IN (4038, 4037, 4041, 112, 4027)  '
+     'AND operation_form_id = 41'),
+
+    ("""UPDATE operation_form_field SET `required` = '0' WHERE id = 4149""",
+     """UPDATE operation_form_field SET `required` = '1' WHERE id = 4149"""),
+
+    ("""UPDATE operation_form_field SET `order` = '2' WHERE id = 4122""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4122"""),
+
+    ("""UPDATE operation_form_field SET `order` = '3' WHERE id = 4149""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4149"""),
+
+    ("""UPDATE operation_form_field SET `order` = '4' WHERE id = 4126""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4126"""),
+
+    ("""UPDATE operation_form_field SET `order` = '5' WHERE id = 4123""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4123"""),
+
+    ("""UPDATE operation_form_field SET `order` = '6' WHERE id = 4124""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4124"""),
+
+    ("""UPDATE operation_form_field SET `order` = '7' WHERE id = 4125""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4125"""),
+
+    ("""UPDATE operation_form_field SET `order` = '2' WHERE id = 4113""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4113"""),
+
+    ("""UPDATE operation_form_field SET `order` = '3' WHERE id = 4114""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4114"""),
+
+    ("""UPDATE operation_form_field SET `order` = '5' WHERE id = 4115""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4115"""),
+
+    ("""UPDATE operation_form_field SET `order` = '6' WHERE id = 4116""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4116"""),
+
+    ("""UPDATE operation_form_field SET `order` = '7' WHERE id = 4117""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4117"""),
+
+    ("""UPDATE operation_form_field SET `order` = '8' WHERE id = 4118""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4118"""),
+
+    ("""UPDATE operation_form_field SET `order` = '9' WHERE id = 4119""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4119"""),
+
+    ("""UPDATE operation_form_field SET `order` = '10' WHERE id = 4120""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4120"""),
+
+    ("""UPDATE operation_form_field SET `order` = '11' WHERE id = 4121""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4121"""),
+
+    ("""UPDATE operation_form_field SET `order` = '2' WHERE id = 4145""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4145"""),
+
+    ("""UPDATE operation_form_field SET `order` = '3' WHERE id = 4141""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4141"""),
+
+    ("""UPDATE operation_form_field SET `order` = '4' WHERE id = 4142""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4142"""),
+
+    ("""UPDATE operation_form_field SET `order` = '5' WHERE id = 4143""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4143"""),
+
+    ("""UPDATE operation_form_field SET `order` = '6' WHERE id = 4146""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4146"""),
+
+    ("""UPDATE operation_form_field SET `order` = '7' WHERE id = 4147""",
+     """UPDATE operation_form_field SET `order` = '1' WHERE id = 4147"""),
 ]
 
 
