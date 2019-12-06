@@ -79,6 +79,9 @@ all_commands = [
     ("""UPDATE operation_form_field SET `type` = 'DECIMAL' WHERE id = 4116""",
      """UPDATE operation_form_field SET `type` = 'FLOAT' WHERE id = 4116"""),
 
+    ("""UPDATE operation_port SET `slug` = 'output data' WHERE id = 4089""",
+     """UPDATE operation_port SET `slug` = 'input data' WHERE id = 4089"""),
+
     (_insert_operation_form_field,
      'DELETE FROM operation_form_field WHERE id BETWEEN 4288 AND 4289'),
     (_insert_operation_form_field_translation,
