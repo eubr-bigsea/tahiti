@@ -72,7 +72,8 @@ def _insert_operation_form_field():
         (4223, 'prediction', 'TEXT', 0, 3, 'prediction', 'text', None, None, 'EXECUTION', 4009, None),
         (4208, 'power_t', 'DECIMAL', 1, 6, 0.5, 'decimal', None, None, 'EXECUTION', 4009, None),
         (4211, 'early_stopping', 'INTEGER', 1, 7, 0, 'checkbox', None, None, 'EXECUTION', 4009, None),
-        (4212, 'validation_fraction', 'DECIMAL', 1, 8, 0.1, 'decimal', None, None, 'EXECUTION', 4009, enable_condition3),
+        (4212, 'validation_fraction', 'DECIMAL', 1, 8, 0.1, 'decimal', None, None, 'EXECUTION', 4009,
+         enable_condition3),
         (4215, 'loss', 'TEXT', 1, 9, 'squared_loss', 'dropdown', None,
          json.dumps([
              {'key': 'squared_loss', 'value': 'squared_loss'},

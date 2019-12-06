@@ -181,6 +181,7 @@ def _insert_operation_form_field():
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _insert_operation_form_field_translation():
     tb = table(
         'operation_form_field_translation',
@@ -210,6 +211,7 @@ def _insert_operation_form_field_translation():
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
+
 
 def _insert_operation_port():
     tb = table(
@@ -303,6 +305,7 @@ all_commands = [
      'DELETE FROM operation_port_translation WHERE id BETWEEN 4080 AND 4082'),
 
 ]
+
 
 def upgrade():
     ctx = context.get_context()
