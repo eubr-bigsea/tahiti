@@ -46,14 +46,6 @@ def _insert_operation_form_field():
     columns = ('id', 'name', 'type', 'required', 'order', 'default',
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
-	
-	#PENALTY_PARAM = 'penalty'
-    #DUAL_PARAM = 'dual'
-    # FIT_INTERCEPT_PARAM = 'fit_intercept'
-    # INTERCEPT_SCALING_PARAM = 'intercept_scaling'
-    # WARM_START_PARAM = 'warm_start'
-    # N_JOBS_PARAM = 'n_jobs'
-    L1_RATIO_PARAM = 'l1_ratio'
 
     data = [
         (4231, 'penalty', 'TEXT', 0, 6, 'l2', 'dropdown', None, 
@@ -67,7 +59,6 @@ def _insert_operation_form_field():
         (4232, 'dual', 'INTEGER', 0, 7, 0, 'checkbox', None, None, 'EXECUTION', 4001, None),
         (4233, 'fit_intercept', 'INTEGER', 0, 8, 1, 'checkbox', None, None, 'EXECUTION', 4001, None),
         (4234, 'intercept_scaling', 'DECIMAL', 0, 9, 1.0, 'decimal', None, None, 'EXECUTION', 4001, None),
-        (4235, 'warm_start', 'INTEGER', 0, 10, 0, 'checkbox', None, None, 'EXECUTION', 4001, None),
         (4236, 'multi_class', 'TEXT', 0, 11, 'ovr', 'dropdown', None,
          json.dumps([
              {'key': 'ovr', 'value': 'ovr'},
@@ -103,9 +94,6 @@ def _insert_operation_form_field_translation():
 
         (4234, 'en', 'Intercept scaling', 'Useful only when the solver "liblinear" is used and "Fit intercept" is set to True.'),
         (4234, 'pt', 'Escala do intercepto', 'Usado apenas se o Solver "liblinear" for utilizado com o atributo "Considerar intercepto" habilitado.' ),
-
-        (4235, 'en', 'Warm start', 'When set to True, reuse the solution of the previous call to fit as initialization, otherwise, just erase the previous solution.'),
-        (4235, 'pt', 'Warm start', 'Quando habilitado, reutiliza a solução da ultima chamada ao "fit" como na inicialização, do contrário apenas apaga a solução anterior.'),
 
         (4236, 'en', 'Multi class', 'If the option chosen is "ovr", then a binary problem is fit for each label. For "multinomial" the loss minimised is the multinomial loss fit across the entire probability distribution, even when the data is binary.'),
         (4236, 'pt', 'Mutiplas classes' , 'Se a opção selecionada é "ovr", então um problema binário é moldado para cada label. Para o atributo "multinomial" a minização de perda é o ajuste de perda multinomial das funções de probabilidade, mesmo com atributos binários.'),
