@@ -74,7 +74,7 @@ all_commands = [
     ('DELETE FROM operation_platform '
      'WHERE operation_id IN (3026, 3027) AND platform_id = 4',
      _downgrade_operation_platform),
-    ('DELETE operation_port_interface_operation_port '
+    ('DELETE FROM operation_port_interface_operation_port '
      'WHERE operation_port_id IN (4014, 4015, 4016)', ''),
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port '
