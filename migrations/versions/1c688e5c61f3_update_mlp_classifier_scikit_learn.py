@@ -111,7 +111,7 @@ def _insert_operation_form_field_translation():
     data = [
         #Flatten - data_format
         (4274, 'en', 'Batch size', 'Size of minibatches for stochastic optimizers.'),
-        (4274, 'pt', 'Tamanho do batch', 'Tamanho de minibatches para otimizadores estocásticos'),
+        (4274, 'pt', 'Tamanho do batch', 'Tamanho de minibatches para otimizadores estocásticos.'),
 
         (4275, 'en', 'Learning rate', 'Learning rate schedule for weight updates.'),
         (4275, 'pt', 'Taxa de Aprendizagem', 'Programação da taxa de aprendizado para atualizações de peso.'),
