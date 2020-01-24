@@ -61,13 +61,13 @@ def _insert_operation_form_field():
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
 
-    enable_condition = 'this.type.internalValue == "K-Means"'
-    enable_condition2 = 'this.type.internalValue == "Mini-Batch K-Means"'
+    enable_condition = 'this.type.internalValue === "K-Means"'
+    enable_condition2 = 'this.type.internalValue === "Mini-Batch K-Means"'
 
     data = [
         #Flatten - data_format
-        (4301, 'n_init', 'INTEGER', 0, 7, 10, 'int', None,  None, 'EXECUTION', 4013, enable_condition),
-        (4302, 'n_init_mb', 'INTEGER', 0, 8, 3, 'int', None,  None, 'EXECUTION', 4013, enable_condition2),
+        (4301, 'n_init', 'INTEGER', 0, 8, 10, 'integer', None,  None, 'EXECUTION', 4013, enable_condition),
+        (4302, 'n_init_mb', 'INTEGER', 0, 10, 3, 'integer', None,  None, 'EXECUTION', 4013, enable_condition2),
         (4303, 'precompute_distances', 'TEXT', 0, 9, 'auto', 'dropdown', None,
          json.dumps([
              {'key': 'auto', 'value': 'auto'},
@@ -75,9 +75,9 @@ def _insert_operation_form_field():
              {'key': 'false', 'value': 'False'},
          ]),
          'EXECUTION', 4013, enable_condition),
-        (4304, 'verbose', 'INTEGER', 0, 10, 0, 'int', None,  None, 'EXECUTION', 4013, None),
-        (4305, 'copy_x', 'INTEGER', 0, 11, 1, 'int', None,  None, 'EXECUTION', 4013, enable_condition),
-        (4306, 'n_jobs', 'INTEGER', 0, 12, None, 'int', None,  None, 'EXECUTION', 4013, enable_condition),
+        (4304, 'verbose', 'INTEGER', 0, 7, 0, 'integer', None,  None, 'EXECUTION', 4013, None),
+        (4305, 'copy_x', 'INTEGER', 0, 11, 1, 'integer', None,  None, 'EXECUTION', 4013, enable_condition),
+        (4306, 'n_jobs', 'INTEGER', 0, 12, None, 'integer', None,  None, 'EXECUTION', 4013, enable_condition),
         (4307, 'algorithm', 'TEXT', 0, 13, 'auto', 'dropdown', None,
          json.dumps([
              {'key': 'auto', 'value': 'auto'},
@@ -85,11 +85,11 @@ def _insert_operation_form_field():
              {'key': 'elkan', 'value': 'elkan'},
          ]),
          'EXECUTION', 4013, enable_condition),
-        (4308, 'batch_size', 'INTEGER', 0, 14, 100, 'int', None,  None, 'EXECUTION', 4013, enable_condition2),
-        (4309, 'compute_labels', 'INTEGER', 0, 15, 1, 'int', None,  None, 'EXECUTION', 4013, enable_condition2),
+        (4308, 'batch_size', 'INTEGER', 0, 14, 100, 'integer', None,  None, 'EXECUTION', 4013, enable_condition2),
+        (4309, 'compute_labels', 'INTEGER', 0, 15, 1, 'integer', None,  None, 'EXECUTION', 4013, enable_condition2),
         (4310, 'tol', 'DECIMAL', 0, 16, 0.0, 'decimal', None,  None, 'EXECUTION', 4013, enable_condition2),
-        (4311, 'max_no_improvement', 'INTEGER', 0, 17, 10, 'int', None,  None, 'EXECUTION', 4013, enable_condition2),
-        (4312, 'init_size', 'INTEGER', 0, 18, None, 'int', None,  None, 'EXECUTION', 4013, enable_condition2),
+        (4311, 'max_no_improvement', 'INTEGER', 0, 17, 10, 'integer', None,  None, 'EXECUTION', 4013, enable_condition2),
+        (4312, 'init_size', 'INTEGER', 0, 18, None, 'integer', None,  None, 'EXECUTION', 4013, enable_condition2),
         (4313, 'reassignment_ratio', 'DECIMAL', 0, 19, 0.01, 'decimal', None,  None, 'EXECUTION', 4013,
          enable_condition2),
     ]
