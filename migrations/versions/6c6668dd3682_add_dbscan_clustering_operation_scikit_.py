@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
-"""Add Gaussian Mixture Clustering Operation (scikit_learn).
+"""Add DBSCAN Clustering Operation (scikit_learn).
 
-Revision ID: 6d765dcaf192
-Revises: 2b87a7f6e8fb
-Create Date: 2020-01-23 16:48:08.244366
+Revision ID: 6c6668dd3682
+Revises: 6d765dcaf192
+Create Date: 2020-01-28 09:03:16.033929
 
 """
 from alembic import op
@@ -16,9 +16,10 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column, text
 import json
 
+
 # revision identifiers, used by Alembic.
-revision = '6d765dcaf192'
-down_revision = '2b87a7f6e8fb'
+revision = '6c6668dd3682'
+down_revision = '6d765dcaf192'
 branch_labels = None
 depends_on = None
 
@@ -32,7 +33,7 @@ def _insert_operation_platform():
     columns = ('operation_id', 'platform_id')
 
     data = [
-        (4042, 4)
+        (4043, 4)
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -50,7 +51,7 @@ def _insert_operation():
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
 
     data = [
-        (4042, "gaussian-mixture", 1, 'ACTION', ''),
+        (4043, "dbscan-clustering", 1, 'ACTION', ''),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -66,8 +67,8 @@ def _insert_operation_category_operation():
     columns = ('operation_category_id', 'operation_id')
     data = [
         #Core Layers
-        (8, 4042),
-        (19, 4042)
+        (8, 4043),
+        (19, 4043)
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -84,8 +85,8 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (4042, "pt", 'Mistura de Gaussianas', 'Agrupamento Mistura de Gaussianas.'),
-        (4042, "en", 'Gaussian Mixture', 'Gaussian Mixture Clustering.')
+        (4043, "pt", 'Agrupamento DBSCAN', 'Usa o algoritmo DBSCAN para agrupamento.'),
+        (4043, "en", 'DBSCAN Clustering', 'Uses DBSCAN algorithm for clustering.')
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -101,9 +102,9 @@ def _insert_operation_operation_form():
     columns = ('operation_id', 'operation_form_id')
     data = [
         #Flatten - data_format
-        (4042, 41),  #appearance
-        (4042, 4031),  # own execution form
-        (4042, 110)
+        (4043, 41),  #appearance
+        (4043, 4032),  # own execution form
+        (4043, 110)
     ]
 
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -121,7 +122,7 @@ def _insert_operation_form():
     columns = ('id', 'enabled', 'order', 'category')
     data = [
         #Flatten
-        (4031, 1, 1, 'execution'), #data_format
+        (4032, 1, 1, 'execution'), #data_format
     ]
 
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -138,8 +139,8 @@ def _insert_operation_form_translation():
     columns = ('id', 'locale', 'name')
     data = [
         #Flatten - data_format
-        (4031, 'en', 'Execution'),
-        (4031, 'pt', 'Execução'),
+        (4032, 'en', 'Execution'),
+        (4032, 'pt', 'Execução'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -165,33 +166,35 @@ def _insert_operation_form_field():
     columns = ('id', 'name', 'type', 'required', 'order', 'default',
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
+    enable_condition = 'this.algorithm.internalValue === "ball_tree" or this.algorithm.internalValue === "kd_tree"'
     data = [
         #Flatten - data_format
-        (4314, 'features', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4031, None),
-        (4315, 'prediction', 'TEXT', 0, 2, 'prediction', 'text', None, None, 'EXECUTION', 4031, None),
-        (4316, 'n_components', 'INTEGER', 1, 3, 1, 'integer', None, None, 'EXECUTION', 4031, None),
-        (4317, 'covariance_type', 'TEXT', 0, 7, 'full', 'dropdown', None,
+        (4327, 'features', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', 4032, None),
+        (4328, 'prediction', 'TEXT', 0, 2, 'prediction', 'text', None, None, 'EXECUTION', 4032, None),
+        (4329, 'eps', 'DECIMAL', 0, 3, 0.5, 'decimal', None, None, 'EXECUTION', 4032, None),
+        (4330, 'min_samples', 'INTEGER ', 0, 4, 5, 'integer', None, None, 'EXECUTION', 4032, None),
+        (4331, 'metric', 'TEXT', 0, 5, 'euclidean', 'dropdown', None,
          json.dumps([
-             {'key': 'tied', 'value': 'tied'},
-             {'key': 'full', 'value': 'full'},
-             {'key': 'diag', 'value': 'diag'},
-             {'key': 'spherical', 'value': 'spherical'},
+             {'key': 'euclidean', 'value': 'euclidean'},
+             {'key': 'cityblock', 'value': 'cityblock'},
+             {'key': 'cosine', 'value': 'cosine'},
+             {'key': 'l1', 'value': 'l1'},
+             {'key': 'l2', 'value': 'l2'},
+             {'key': 'manhattan', 'value': 'manhattan'},
          ]),
-         'EXECUTION', 4031, None),
-        (4318, 'tol', 'DECIMAL', 0, 5, 1e-3, 'decimal', None, None, 'EXECUTION', 4031, None),
-        (4319, 'reg_covar', 'DECIMAL', 0, 6, 1e-6, 'text', None, None, 'EXECUTION', 4031, None),
-        (4320, 'max_iter', 'INTEGER', 1, 4, 100, 'integer', None, None, 'EXECUTION', 4031, None),
-        (4321, 'n_init', 'INTEGER', 0, 8, 1, 'integer', None, None, 'EXECUTION', 4031, None),
-        (4322, 'init_params', 'TEXT', 0, 9, 'kmeans', 'dropdown', None,
+         'EXECUTION', 4032, None),
+        (4332, 'metric_params', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', 4032, None),
+        (4333, 'algorithm', 'TEXT', 0, 7, 'auto', 'dropdown', None,
          json.dumps([
-             {'key': 'kmeans', 'value': 'kmeans'},
-             {'key': 'random', 'value': 'random'},
+             {'key': 'auto', 'value': 'auto'},
+             {'key': 'ball_tree', 'value': 'ball_tree'},
+             {'key': 'kd_tree', 'value': 'kd_tree'},
+             {'key': 'brute', 'value': 'brute'},
          ]),
-         'EXECUTION', 4031, None),
-        (4323, 'weights_init', 'TEXT', 0, 10, None, 'text', None, None, 'EXECUTION', 4031, None),
-        (4324, 'means_init', 'TEXT', 0, 11, None, 'text', None, None, 'EXECUTION', 4031, None),
-        (4325, 'precisions_init', 'TEXT', 0, 12, None, 'text', None, None, 'EXECUTION', 4031, None),
-        (4326, 'random_state', 'INTEGER', 0, 13, None, 'integer', None, None, 'EXECUTION', 4031, None),
+         'EXECUTION', 4032, None),
+        (4334, 'leaf_size', 'INTEGER', 0, 8, 30, 'integer', None, None, 'EXECUTION', 4032, enable_condition),
+        (4335, 'p', 'DECIMAL', 0, 9, None, 'decimal', None, None, 'EXECUTION', 4032, None),
+        (4336, 'n_jobs', 'INTEGER', 0, 10, None, 'integer', None, None, 'EXECUTION', 4032, None),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -208,49 +211,43 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
         #Flatten - data_format
-        (4314, 'en', 'Features', 'Features.'),
-        (4314, 'pt', 'Atributo(s) previsor(es)', 'Atributo(s) previsor(es).'),
+        (4327, 'en', 'Features', 'Features.'),
+        (4327, 'pt', 'Atributo(s) previsor(es)', 'Atributo(s) previsor(es).'),
 
-        (4315, 'en', 'Prediction (new attribute)', 'Prediction (new attribute).'),
-        (4315, 'pt', 'Atributo com a predição (novo)', 'Atributo com a predição (novo).'),
+        (4328, 'en', 'Prediction (new attribute)', 'Prediction (new attribute).'),
+        (4328, 'pt', 'Atributo com a predição (novo)', 'Atributo com a predição (novo).'),
 
-        (4316, 'en', 'Number of components', 'The number of mixture components.'),
-        (4316, 'pt', 'Número de agrupamentos (K)', 'Número de agrupamentos (K).'),
+        (4329, 'en', 'Max. distance', 'The maximum distance between two samples for one to be considered as in the '
+                                      'neighborhood of the other.'),
+        (4329, 'pt', 'Distância máxima', 'A distância máxima entre duas amostras para uma ser considerada como na '
+                                         'vizinhança da outra.'),
 
-        (4317, 'en', 'Covariance type', 'String describing the type of covariance parameters to use.'),
-        (4317, 'pt', 'Tipo de covariância', 'String descrevendo o tipo de parâmetros de covariância a serem usados.'),
+        (4330, 'en', 'Number of samples', 'The number of samples (or total weight) in a neighborhood for a point to be'
+                                          ' considered as a core point.'),
+        (4330, 'pt', 'Número de amostras', 'O número de amostras (ou peso total) em uma vizinhança para um ponto a ser'
+                                           ' considerado como um ponto central.'),
 
-        (4318, 'en', 'Tolerance', 'The convergence threshold.'),
-        (4318, 'pt', 'Tolerância', ' Tolerância de convergência para as somas das distâncias intra-cluster do ponto ao'
-                                   ' centroide.'),
+        (4331, 'en', 'Metric', 'The metric to use when calculating distance between instances in a feature array.'),
+        (4331, 'pt', 'Métrica', 'A métrica a ser usada ao calcular a distância entre instâncias em uma matriz de '
+                                'features.'),
 
-        (4319, 'en', 'Regularization of covariance', 'Non-negative regularization added to the diagonal of '
-                                                     'covariance.'),
-        (4319, 'pt', 'Regularização da covariância', 'Regularização não negativa adicionada à diagonal da '
-                                                     'covariância.'),
+        (4332, 'en', 'Metric params', 'Additional keyword arguments for the metric function.'),
+        (4332, 'pt', 'Parâmetros da métrica', 'Argumentos adicionais para a função métrica.'),
 
-        (4320, 'en', 'Max. number of iterations', 'The number of EM iterations to perform.'),
-        (4320, 'pt', 'Número máx. de iterações', 'Número máx. de iterações'),
+        (4333, 'en', 'Algorithm', 'The algorithm to be used by the NearestNeighbors module to compute pointwise '
+                                  'distances and find nearest neighbors.'),
+        (4333, 'pt', 'Algoritmo', 'O algoritmo a ser usado pelo módulo NearestNeighbors para calcular distâncias em '
+                                  'pontos e encontrar os vizinhos mais próximos.'),
 
-        (4321, 'en', 'Number of initializations', 'The number of initializations to perform.'),
-        (4321, 'pt', 'Número de inicializações', 'O número de inicializações a serem executadas.'),
+        (4334, 'en', 'Leaf size', 'Leaf size passed to BallTree or KDTree.'),
+        (4334, 'pt', 'Tamanho da folha', 'Tamanho da folha passado para o BallTree ou KDTree.'),
 
-        (4322, 'en', 'Method', 'The method used to initialize the weights, the means and the precisions.'),
-        (4322, 'pt', 'Método', 'O método usado para inicializar os pesos, os meios e as precisões.'),
+        (4335, 'en', 'Power', 'The power of the Minkowski metric to be used to calculate distance between points.'),
+        (4335, 'pt', 'Potência', 'A potência da métrica de Minkowski a ser usada para calcular a distância entre '
+                                 'pontos.'),
 
-        (4323, 'en', 'Initial weights', 'The user-provided initial weights.'),
-        (4323, 'pt', 'Pesos iniciais', 'Os pesos iniciais fornecidos pelo usuário.'),
-
-        (4324, 'en', 'Initial means', 'The user-provided initial means.'),
-        (4324, 'pt', 'Meios iniciais', 'Os meios iniciais fornecidos pelo usuário.'),
-
-        (4325, 'en', 'Initial precisions', 'The user-provided initial precisions (inverse of the covariance '
-                                           'matrices).'),
-        (4325, 'pt', 'Precisões iniciais', 'As precisões iniciais fornecidas pelo usuário (inversa das matrizes de '
-                                           'covariância).'),
-
-        (4326, 'en', 'Seed', 'The seed used by the random number generator.'),
-        (4326, 'pt', 'Semente', 'A semente usada pelo gerador de números aleatórios.'),
+        (4336, 'en', 'Number of jobs', 'The number of parallel jobs to run.'),
+        (4336, 'pt', 'Número de tarefas', 'O número de tarefas paralelas a serem executadas.'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -270,9 +267,9 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4090, 'INPUT', '', 1, 'ONE', 4042, 'train input data'),
-        (4091, 'OUTPUT', '', 1, 'ONE', 4042, 'output data'),
-        (4092, 'OUTPUT', '', 2, 'MANY', 4042, 'model'),
+        (4093, 'INPUT', '', 1, 'ONE', 4043, 'train input data'),
+        (4094, 'OUTPUT', '', 1, 'ONE', 4043, 'output data'),
+        (4095, 'OUTPUT', '', 2, 'MANY', 4043, 'model'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -288,9 +285,9 @@ def _insert_operation_port_interface_operation_port():
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
         #Reshape
-        (4090, 1),
-        (4091, 1),
-        (4092, 2),
+        (4093, 1),
+        (4094, 1),
+        (4095, 2),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -308,12 +305,12 @@ def _insert_operation_port_translation():
     columns = ('id', 'locale', 'name', 'description')
     data = [
         #Reshape
-        (4090, "en", 'input data', 'Input data'),
-        (4090, "pt", 'dados de entrada', 'Dados de entrada'),
-        (4091, "en", 'output data', 'Output data'),
-        (4091, "pt", 'dados de saída', 'Dados de saída'),
-        (4092, "en", 'model', 'Model'),
-        (4092, "pt", 'modelo', 'Modelo'),
+        (4093, "en", 'input data', 'Input data'),
+        (4093, "pt", 'dados de entrada', 'Dados de entrada'),
+        (4094, "en", 'output data', 'Output data'),
+        (4094, "pt", 'dados de saída', 'Dados de saída'),
+        (4095, "en", 'model', 'Model'),
+        (4095, "pt", 'modelo', 'Modelo'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -322,30 +319,30 @@ def _insert_operation_port_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id = 4042'),
+     'DELETE FROM operation WHERE id = 4043'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id = 4042'),
+     'DELETE FROM operation_translation WHERE id = 4043'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id = 4042'),
+     'DELETE FROM operation_category_operation WHERE operation_id = 4043'),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id = 4042 AND platform_id = 4'),
+     'DELETE FROM operation_platform WHERE operation_id = 4043 AND platform_id = 4'),
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id = 4031'),
+     'DELETE FROM operation_form WHERE id = 4032'),
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 4314 AND 4326'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4327 AND 4336'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id = 4031'),
+     'DELETE FROM operation_form_translation WHERE id = 4032'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4314 AND 4326'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4327 AND 4336'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id = 4042'),
+     'DELETE FROM operation_operation_form WHERE operation_id = 4043'),
 
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id BETWEEN 4090 AND 4092'),
+     'DELETE FROM operation_port WHERE id BETWEEN 4093 AND 4095'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id BETWEEN 4090 AND 4092'),
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id BETWEEN 4093 AND 4095'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id BETWEEN 4090 AND 4092'),
+     'DELETE FROM operation_port_translation WHERE id BETWEEN 4093 AND 4095'),
 
 ]
 
