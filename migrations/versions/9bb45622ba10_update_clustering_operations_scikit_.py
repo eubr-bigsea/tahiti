@@ -36,6 +36,15 @@ all_commands = [
 
     ("""UPDATE operation_form_field SET `form_id` =  4030 WHERE id IN (4337, 4338, 4339, 4340) """,
      """UPDATE operation_form_field SET `form_id` = 4015  WHERE id IN (4337, 4338, 4339, 4340) """),
+
+    ('DELETE FROM operation_port_translation WHERE id IN (4096, 4095)',
+     'DELETE FROM operation_port_translation WHERE id IN (4096, 4095)'),
+
+    ('DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (4096, 4095)',
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (4096, 4095)'),
+
+    ('DELETE FROM operation_port WHERE id IN (4096, 4095)',
+     'DELETE FROM operation_port WHERE id IN (4096, 4095)'),
 ]
 
 
