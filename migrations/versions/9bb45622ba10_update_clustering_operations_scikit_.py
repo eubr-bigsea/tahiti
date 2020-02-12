@@ -45,6 +45,9 @@ all_commands = [
 
     ('DELETE FROM operation_port WHERE id IN (4096, 4095)',
      'DELETE FROM operation_port WHERE id IN (4096, 4095)'),
+
+    ("""UPDATE operation_form_field SET `default` = 'clusters' WHERE id IN (4112, 4315, 4328)""",
+     """UPDATE operation_form_field SET `default` = 'prediction' WHERE id IN (4112, 4315, 4328)"""),
 ]
 
 
