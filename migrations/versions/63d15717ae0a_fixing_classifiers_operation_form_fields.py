@@ -20,13 +20,12 @@ down_revision = '9bb45622ba10'
 branch_labels = None
 depends_on = None
 
-
 all_commands = [
-    #KNN Classifier
+    #KNN
     ("""UPDATE operation_form_field SET required = 1 WHERE id = 4254""",
     """UPDATE operation_form_field SET required = 0 WHERE id = 4254"""),
 
-    #Naive Bayes Classifier
+    #Naive Bayes
     ("""UPDATE operation_form_field SET `default` = '1.0' WHERE id = 4061""",
     """UPDATE operation_form_field SET `default` = '1' WHERE id = 4061"""),
     ("""UPDATE operation_form_field SET suggested_widget = 'checkbox' WHERE id = 4264""",
@@ -34,11 +33,56 @@ all_commands = [
     ("""UPDATE operation_form_field SET `default` = '0.0' WHERE id = 4265""",
     """UPDATE operation_form_field SET `default` = '0' WHERE id = 4265"""),
 
-    #Perceptron Classifier
+    #Perceptron
 	("""UPDATE operation_form_field SET suggested_widget = 'checkbox' WHERE id = 4266""",
     """UPDATE operation_form_field SET suggested_widget = 'integer' WHERE id = 4266"""),
-]
 
+    #MLP
+    ("""UPDATE operation_form_field 
+    	SET type = 'INTEGER',
+    	    `default` = NULL,
+    	    suggested_widget = 'integer'
+    	WHERE id = 4274""",
+    """UPDATE operation_form_field 
+    	SET type = 'TEXT',
+    	    `default` = 'auto',
+    	    suggested_widget = 'text'
+    	WHERE id = 4274"""),
+
+   	# Logistic Regression
+   	("""UPDATE operation_form_field
+   		SET enable_conditions = 'this.solver.internalValue === "liblinear"'
+   		WHERE id = 4233""",
+   	"""UPDATE operation_form_field
+   		SET enable_conditions = NULL
+   		WHERE id = 4233"""),
+   	("""UPDATE operation_form_field
+   		SET enable_conditions = 'this.solver.internalValue === "liblinear"'
+   		WHERE id = 4234""",
+   	"""UPDATE operation_form_field
+   		SET enable_conditions = NULL
+   		WHERE id = 4234"""),
+   	("""UPDATE operation_form_field
+   		SET enable_conditions = 'this.penalty.internalValue === "elasticnet"'
+   		WHERE id = 4238""",
+   	"""UPDATE operation_form_field
+   		SET enable_conditions = NULL
+   		WHERE id = 4238"""),
+
+   	# Support Vector Machine
+   	("""UPDATE operation_form_field
+   		SET enable_conditions = 'this.kernel.internalValue != "linear"'
+   		WHERE id = 4178""",
+   	"""UPDATE operation_form_field
+   		SET enable_conditions = NULL
+   		WHERE id = 4178"""),
+   	("""UPDATE operation_form_field
+   		SET enable_conditions = 'this.kernel.internalValue === "sigmoid" || this.kernel.internalValue === "poly"'
+   		WHERE id = 4179""",
+   	"""UPDATE operation_form_field
+   		SET enable_conditions = NULL
+   		WHERE id = 4179""")
+]
 
 def upgrade():
     ctx = context.get_context()
@@ -60,7 +104,6 @@ def upgrade():
         session.rollback()
         raise
     session.commit()
-
 
 def downgrade():
     ctx = context.get_context()
