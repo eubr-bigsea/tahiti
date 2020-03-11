@@ -75,69 +75,9 @@ def _insert_operation_form_field_translation():
     op.bulk_insert(tb, rows)
 
 
-def _insert_operation_port():
-    tb = table(
-        'operation_port',
-        column('id', Integer),
-        column('type', String),
-        column('tags', String),
-        column('order', Integer),
-        column('multiplicity', String),
-        column('operation_id', Integer),
-        column('slug', String),)
-
-    columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
-    data = [
-        #Reshape
-        (4082, 'OUTPUT', '', 2, 'MANY', 4038, 'model'),
-    ]
-    rows = [dict(list(zip(columns, row))) for row in data]
-
-    op.bulk_insert(tb, rows)
-
-
-def _insert_operation_port_interface_operation_port():
-    tb = table(
-        'operation_port_interface_operation_port',
-        column('operation_port_id', Integer),
-        column('operation_port_interface_id', Integer))
-
-    columns = ('operation_port_id', 'operation_port_interface_id')
-    data = [
-        #Reshape
-        (4082, 2),
-    ]
-    rows = [dict(list(zip(columns, row))) for row in data]
-
-    op.bulk_insert(tb, rows)
-
-
-def _insert_operation_port_translation():
-    tb = table(
-        'operation_port_translation',
-        column('id', Integer),
-        column('locale', String),
-        column('name', String),
-        column('description', String))
-
-    columns = ('id', 'locale', 'name', 'description')
-    data = [
-        #Reshape
-        (4082, "en", 'model', 'model'),
-        (4082, "pt", 'modelo', 'modelo'),
-    ]
-    rows = [dict(list(zip(columns, row))) for row in data]
-
-    op.bulk_insert(tb, rows)
-
-
 all_commands = [
-    (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id = 4082'),
-    (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id = 4082'),
-    (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id = 4082'),
+    ('UPDATE operation_port SET `slug` = "model" WHERE id = 4082;',
+     'UPDATE operation_port SET `slug` = "output model" WHERE id = 4082;'),
     (_insert_operation_form_field,
      'DELETE FROM operation_form_field WHERE id BETWEEN 4148 AND 4149'),
     (_insert_operation_form_field_translation,
