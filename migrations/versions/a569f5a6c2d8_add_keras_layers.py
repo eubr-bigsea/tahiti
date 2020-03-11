@@ -362,19 +362,19 @@ def _insert_operation_translation():
                                        'for 128x128 RGB pictures in data_format'
                                        '="channels_last".'),
         (5078, 'en', 'Convolution3D', '3D convolution layer (e.g. spatial convolution '
-                               'over volumes). This layer creates a convolution'
-                               ' kernel that is convolved with the layer input'
-                               ' to produce a tensor of outputs. If use_bias '
-                               'is True, a bias vector is created and added to'
-                               ' the outputs. Finally, if activation is not '
-                               'None, it is applied to the outputs as well. '
-                               'When using this layer as the first layer in a '
-                               'model, provide the keyword argument '
-                               'input_shape (tuple of integers, does not '
-                               'include the batch axis), e.g. input_shape=(128,'
-                               ' 128, 128, 1) for 128x128x128 volumes with a '
-                               'single channel, in data_format='
-                               '"channels_last".'),
+                                      'over volumes). This layer creates a convolution'
+                                      ' kernel that is convolved with the layer input'
+                                      ' to produce a tensor of outputs. If use_bias '
+                                      'is True, a bias vector is created and added to'
+                                      ' the outputs. Finally, if activation is not '
+                                      'None, it is applied to the outputs as well. '
+                                      'When using this layer as the first layer in a '
+                                      'model, provide the keyword argument '
+                                      'input_shape (tuple of integers, does not '
+                                      'include the batch axis), e.g. input_shape=(128,'
+                                      ' 128, 128, 1) for 128x128x128 volumes with a '
+                                      'single channel, in data_format='
+                                      '"channels_last".'),
         (5079, 'en', 'Conv3DTranpose', 'Transposed convolution layer '
                                        '(sometimes called Deconvolution). '
                                        'The need for transposed convolutions '
@@ -504,14 +504,14 @@ def _insert_operation_translation():
                                                'operation for 3D data.'),
 
         (5112, 'en', 'Model', 'Given some input tensor(s) and output '
-                                        'tensor(s), you can instantiate a '
-                                        'Model. This model will include all '
-                                        'layers required in the computation and'
-                                        ' trains the model on data generated '
-                                        'batch-by-batch by'),
+                              'tensor(s), you can instantiate a '
+                              'Model. This model will include all '
+                              'layers required in the computation and'
+                              ' trains the model on data generated '
+                              'batch-by-batch by'),
         (5113, 'en', 'Save model', 'Saves the model.'),
         (5114, 'en', 'Evaluate model', 'Evaluates the model on a data'
-                                                 ' generator.'),
+                                       ' generator.'),
         (5115, 'en', 'Load model', 'Load a pre existing model.'),
 
         (5116, 'en', 'Image generator', 'Takes the dataset of images and '
@@ -1752,23 +1752,23 @@ def _insert_operation_form_field():
          ), 'EXECUTION', 5146),
         (5264, 'bias_initializer', 'TEXT', 0, 12, None, 'dropdown', None,
          json.dumps([
-              {"key": "constant", "value": "constant"},
-              {"key": "glorot_normal", "value": "glorot_normal"},
-              {"key": "glorot_uniform", "value": "glorot_uniform"},
-              {"key": "he_normal", "value": "he_normal"},
-              {"key": "he_uniform", "value": "he_uniform"},
-              {"key": "identity", "value": "identity"},
-              {"key": "initializer", "value": "initializer"},
-              {"key": "lecun_normal", "value": "lecun_normal"},
-              {"key": "lecun_uniform", "value": "lecun_uniform"},
-              {"key": "ones", "value": "ones"},
-              {"key": "orthogonal", "value": "orthogonal"},
-              {"key": "randomNormal", "value": "randomNormal"},
-              {"key": "randomUniform", "value": "randomUniform"},
-              {"key": "truncatedNormal", "value": "truncatedNormal"},
-              {"key": "varianceScaling", "value": "varianceScaling"},
-              {"key": "zeros", "value": "zeros"}]
-          ), 'EXECUTION', 5146),
+             {"key": "constant", "value": "constant"},
+             {"key": "glorot_normal", "value": "glorot_normal"},
+             {"key": "glorot_uniform", "value": "glorot_uniform"},
+             {"key": "he_normal", "value": "he_normal"},
+             {"key": "he_uniform", "value": "he_uniform"},
+             {"key": "identity", "value": "identity"},
+             {"key": "initializer", "value": "initializer"},
+             {"key": "lecun_normal", "value": "lecun_normal"},
+             {"key": "lecun_uniform", "value": "lecun_uniform"},
+             {"key": "ones", "value": "ones"},
+             {"key": "orthogonal", "value": "orthogonal"},
+             {"key": "randomNormal", "value": "randomNormal"},
+             {"key": "randomUniform", "value": "randomUniform"},
+             {"key": "truncatedNormal", "value": "truncatedNormal"},
+             {"key": "varianceScaling", "value": "varianceScaling"},
+             {"key": "zeros", "value": "zeros"}]
+         ), 'EXECUTION', 5146),
         (5265, 'depthwise_regularizer', 'TEXT', 0, 13, None, 'dropdown', None,
          json.dumps([
              {"key": "l1", "value": "l1"},
@@ -3786,14 +3786,14 @@ def _insert_operation_form_field_translation():
 
         # Conv3DTranspose
         (5530, 'en', 'Input shape', '5D tensor with shape: (batch, filters, '
-                                     'new_depth, new_rows, new_cols) if '
-                                     'data_format is "channels_first" or 5D '
-                                     'tensor with shape: (batch, new_depth, '
-                                     'new_rows, new_cols, filters) if '
-                                     'data_format is "channels_last". depth '
-                                     'and rows and cols values might have '
-                                     'changed due to padding. If output_padding'
-                                     ' is specified'),
+                                    'new_depth, new_rows, new_cols) if '
+                                    'data_format is "channels_first" or 5D '
+                                    'tensor with shape: (batch, new_depth, '
+                                    'new_rows, new_cols, filters) if '
+                                    'data_format is "channels_last". depth '
+                                    'and rows and cols values might have '
+                                    'changed due to padding. If output_padding'
+                                    ' is specified'),
 
         # Cropping1D
         (5531, 'en', 'Input shape', '3D tensor with shape (batch, axis_to_crop,'
