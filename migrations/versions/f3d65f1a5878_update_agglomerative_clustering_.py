@@ -131,23 +131,7 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', 4015, None),
         (4340, 'distance_threshold', 'DECIMAL', 0, 9, None, 'decimal', None, None, 'EXECUTION', 4015, None),
-        (4078, 'linkage', 'TEXT', 0, 4, 'ward', 'dropdown', None,
-         json.dumps([
-             {"key": "ward", "value": "ward"},
-             {"key": "complete", "value": "complete"},
-             {"key": "average", "value": "average"},
-             {"key": "single", "value": "single"}
-         ]),
-         'EXECUTION', 4015, None),
-        (4079, 'affinity', 'TEXT', 0, 5, 'euclidean', 'dropdown', None,
-         json.dumps([
-             {"key": "euclidean", "value": "euclidean"},
-             {"key": "l1", "value": "l1"}, {"key": "l2", "value": "l2"},
-             {"key": "manhattan", "value": "manhattan"},
-             {"key": "cosine", "value": "cosine"},
-             {"key": "precomputed", "value": "precomputed"}
-         ]),
-         'EXECUTION', 4015, None),
+
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -177,11 +161,6 @@ def _insert_operation_form_field_translation():
         (4340, 'pt', 'Limiar de distância', 'O limite da distância de ligação acima do qual os clusters não serão '
                                             'mesclados.'),
 
-        (4078, 'en', 'Linkage', 'The linkage criterion determines which distance to use between sets of observation.'),
-        (4078, 'pt', 'Ligação', 'O critério de ligação determina qual distância usar entre conjuntos de observação.'),
-
-        (4079, 'en', 'Affinity', 'Metric used to compute the linkage.'),
-        (4079, 'pt', 'Afinidade', 'Métrica usada para calcular a ligação.'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -190,6 +169,9 @@ def _insert_operation_form_field_translation():
 all_commands = [
     ("""UPDATE operation_form_field SET `default` = 'euclidean' WHERE id = 4079""",
      """UPDATE operation_form_field SET `default` = 'ward' WHERE id = 4079"""),
+    (
+    """UPDATE operation_form_field SET `default` = 'ward' WHERE id = 4078""",
+    """UPDATE operation_form_field SET `default` = 'euclidean' WHERE id = 4078"""),
 
     ("""UPDATE operation_form_field_translation SET `label` = 'Atributo(s) previsor(es)' WHERE id = 4075 
     AND `locale` LIKE '%%pt%%'""",
@@ -202,9 +184,9 @@ all_commands = [
     AND `locale` LIKE '%%pt%%'"""),
 
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id BETWEEN 4337 AND 4340 OR id IN (4078, 4079)'),
+     'DELETE FROM operation_form_field WHERE id BETWEEN 4337 AND 4340'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4337 AND 4340 OR id IN (4078, 4079)'),
+     'DELETE FROM operation_form_field_translation WHERE id BETWEEN 4337 AND 4340'),
     (_insert_operation_operation_form,
      'DELETE FROM operation_operation_form WHERE operation_id = 4015'),
 

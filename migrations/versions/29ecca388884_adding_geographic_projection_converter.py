@@ -1,7 +1,7 @@
 """Adding geographic projection converter.
 
 Revision ID: 29ecca388884
-Revises: 54147db30380
+Revises: b4a88e0c224e
 Create Date: 2020-02-20 12:48:10.392917
 
 """
@@ -14,7 +14,7 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = '29ecca388884'
-down_revision = '54147db30380'
+down_revision = 'b4a88e0c224e'
 branch_labels = None
 depends_on = None
 

@@ -3,7 +3,7 @@
 """Update random forest regressor form fields (scikit_learn).
 
 Revision ID: 02edf9a6f289
-Revises: b4a88e0c224e
+Revises: 3e10f106043c
 Create Date: 2019-10-24 14:07:25.529478
 
 """
@@ -19,7 +19,7 @@ import json
 
 # revision identifiers, used by Alembic.
 revision = '02edf9a6f289'
-down_revision = 'b4a88e0c224e'
+down_revision = '3e10f106043c'
 branch_labels = None
 depends_on = None
 
