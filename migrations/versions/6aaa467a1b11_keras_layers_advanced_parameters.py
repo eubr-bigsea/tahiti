@@ -287,18 +287,11 @@ all_commands = [
         SET enable_conditions = '{enabled_condition}'
         WHERE 
             form_id IN {forms} AND 
-<<<<<<< HEAD
             required = 0 AND 
             `name` NOT IN ("advanced_options")'''.format(
                                     enabled_condition=ENABLED_CONDITION,
                                     forms=FORMS),
      '''UPDATE operation_form_field
-=======
-            required = 0'''.format(
-        enabled_condition=ENABLED_CONDITION,
-        forms=FORMS),
-     '''UPDATE tahiti2.operation_form_field
->>>>>>> 5c0aadf3027bd1403e4210dee0768fbc24fa2c44
         SET enable_conditions = NULL
         WHERE 
             form_id IN {forms} AND 
@@ -308,15 +301,9 @@ all_commands = [
     ('''UPDATE operation_form_field
         SET enable_conditions = '{enabled_condition}'
         WHERE 
-<<<<<<< HEAD
             id NOT IN (5386, 5387, 5392) AND form_id = 5164'''.format(
                                     enabled_condition=ENABLED_CONDITION),
      '''UPDATE operation_form_field
-=======
-            ID NOT IN (5386, 5387, 5392) AND form_id = 5164'''.format(
-        enabled_condition=ENABLED_CONDITION),
-     '''UPDATE tahiti2.operation_form_field
->>>>>>> 5c0aadf3027bd1403e4210dee0768fbc24fa2c44
         SET enable_conditions = NULL
         WHERE 
             ID NOT IN (5386, 5387, 5392) AND form_id = 5164'''),
