@@ -4,6 +4,9 @@ examples/
 conf/tahiti-config.yaml
 .idea/
 *.iml
+*.swp
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
