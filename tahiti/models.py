@@ -480,7 +480,7 @@ class OperationPortInterface(db.Model, Translatable):
 
 
 class OperationPortInterfaceTranslation(
-        translation_base(OperationPortInterface)):
+    translation_base(OperationPortInterface)):
     """ Translation table for OperationPortInterface """
     __tablename__ = 'operation_port_interface_translation'
 
@@ -729,4 +729,3 @@ class WorkflowPermission(db.Model):
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
-
