@@ -111,9 +111,13 @@ var TahitiAttributeSuggester = (function () {
     var copyAddExpressionAlias = function(task, field, alias){
 
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
-        var valid = (task.forms[field].value || []).filter(function(item){return item.alias});
-        Array.prototype.push.apply(task.uiPorts.output,
+	if (task.forms[field] && task.forms[field].value){
+            var valid = (task.forms[field].value || []).filter(function(item){return item.alias});
+            Array.prototype.push.apply(task.uiPorts.output,
             valid.map(function(v){return v[alias].trim()}));
+        } else {
+            task.uiPorts.output = [];
+        }
     }
     var copyInputAddField = function(task, field, many, defaultValue){
         if (many === undefined || !many ) {
@@ -191,7 +195,7 @@ var TahitiAttributeSuggester = (function () {
         Array.prototype.push.apply(task.uiPorts.output, aliases);
         task.uiPorts.output.sort(caseInsensitiveComparator);
     }
-    var repeatFromAlias = function(task, count, alias) {
+    var repeatFromAlias = function(task, alias, count) {
         var result = [];
         var aliasValue;
         if (task.forms[alias] && task.forms[alias].value){
@@ -201,10 +205,11 @@ var TahitiAttributeSuggester = (function () {
         }
         if (task.forms[count] && task.forms[count].value){
             var total = parseInt(task.forms[count].value);
-            for (int i = 1; i <= total; i++) {
+            for (var i = 1; i <= total; i++) {
                 result.push(aliasValue + '' + i)
             }
         }
+
         task.uiPorts.output = result;
     }
     var copyFromOnlyOneInput = function(task, id) {

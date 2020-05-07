@@ -27,7 +27,7 @@ FORM_FIELD_RANGE = [515, 517]
 
 def _insert_operation():
     T1.execute(T1.OPERATION, rows=[
-        T1.operation(SLIDING, 'sliding_window', 1, 'TRANSFORMATION', 'fa-window-close-o')
+        T1.operation(SLIDING, 'sliding-window', 1, 'TRANSFORMATION', 'fa-window-close-o')
     ])
 
 
@@ -223,13 +223,13 @@ def _insert_operation_form_field():
         column('form_id', Integer), )
 
     data = [
-        [515, 'attribute', 'TEXT', 1, 2, None,
+        [515, 'attribute', 'TEXT', 1, 1, None,
          'attribute-selector', None, None, 'EXECUTION', FORM_ID],
-        [516, 'window_size', 'INTEGER', 1, 2, None, 'integer', None, None,
+        [516, 'window_size', 'INTEGER', 0, 2, '10', 'integer', None, None,
          'EXECUTION', FORM_ID],
-        [517, 'window_offset', 'INTEGER', 1, 3, 1, 'integer', None, None,
+        [517, 'window_gap', 'INTEGER', 0, 3, 1, 'integer', None, None,
          'EXECUTION', FORM_ID],
-        [518, 'alias', 'TEXT', 1, 4, 'attr_', 'text', None, None,
+        [518, 'alias', 'TEXT', 0, 4, 'attr_', 'text', None, None,
          'EXECUTION', FORM_ID],
     ]
     columns = [c.name for c in tb.columns]
@@ -257,8 +257,8 @@ def _insert_operation_form_field_translation():
          'Window size (>=0).'],
         [516, 'pt', 'Tamanho da janela',
          'Tamanho da janela (>=0).'],
-        [517, 'en', 'Offset', 'Offset (> 0) defines the next start of window.'],
-        [517, 'pt', 'Deslocamento',
+        [517, 'en', 'Gap', 'Gap (> 0) defines the next start of window.'],
+        [517, 'pt', 'Deslocamento (lacuna)',
          'Deslocamento (>0) determina o próximo início da janela.'],
         [518, 'en', 'Name prefix for new attributes', 'Name for new attributes (optional).'],
         [518, 'pt', 'Prefixo para nome dos atributos',
