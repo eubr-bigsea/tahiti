@@ -191,7 +191,22 @@ var TahitiAttributeSuggester = (function () {
         Array.prototype.push.apply(task.uiPorts.output, aliases);
         task.uiPorts.output.sort(caseInsensitiveComparator);
     }
-
+    var repeatFromAlias = function(task, count, alias) {
+        var result = [];
+        var aliasValue;
+        if (task.forms[alias] && task.forms[alias].value){
+            aliasValue = task.forms[alias].value;
+        } else {
+            aliasValue = 'attr_';
+        }
+        if (task.forms[count] && task.forms[count].value){
+            var total = parseInt(task.forms[count].value);
+            for (int i = 1; i <= total; i++) {
+                result.push(aliasValue + '' + i)
+            }
+        }
+        task.uiPorts.output = result;
+    }
     var copyFromOnlyOneInput = function(task, id) {
         var inputs = task.uiPorts.inputs.filter(
             function(input) {

@@ -5,13 +5,11 @@ import os
 import jinja2
 import sqlalchemy_utils
 from flask import Flask
-from flask_admin import Admin
 from flask_babel import Babel
 from flask_babel import get_locale
 from flask_cors import CORS
 from flask_restful import Api
 
-from tahiti.admin import OperationModelView, OperationCategoryModelView
 from tahiti.application_api import ApplicationListApi, ApplicationDetailApi
 from tahiti.cache import cache
 from tahiti.models import db, Operation, OperationCategory
@@ -62,7 +60,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     db.init_app(app)
 
     # Flask Admin
-    admin = Admin(app, name='Tahiti', template_mode='bootstrap3')
+    # admin = Admin(app, name='Tahiti', template_mode='bootstrap3')
 
     # Logging configuration
     logging.config.fileConfig('logging_config.ini')
@@ -95,10 +93,10 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     app.config['CACHE_TYPE'] = 'simple'
     cache.init_app(app)
 
-    if config.get('environment', 'dev') == 'dev':
-        admin.add_view(OperationModelView(Operation, db.session))
-        admin.add_view(
-            OperationCategoryModelView(OperationCategory, db.session))
+    #if config.get('environment', 'dev') == 'dev':
+        # admin.add_view(OperationModelView(Operation, db.session))
+        #admin.add_view(
+        #     OperationCategoryModelView(OperationCategory, db.session))
 
     return app
 
