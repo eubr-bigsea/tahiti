@@ -109,6 +109,7 @@ class DataType:
     DECIMAL = 'DECIMAL'
     DOUBLE = 'DOUBLE'
     ENUM = 'ENUM'
+    FILE = 'FILE'
     FLOAT = 'FLOAT'
     INTEGER = 'INTEGER'
     LAT_LONG = 'LAT_LONG'
@@ -161,6 +162,58 @@ class TaskGroupType:
                 if n[0] != '_' and n != 'values']
 
 
+# noinspection PyClassHasNoInit
+class PluginStatus:
+    PENDING = 'PENDING'
+    INSTALLED = 'INSTALLED'
+    OUTDATED = 'OUTDATED'
+    ERROR = 'ERROR'
+    DISABLED = 'DISABLED'
+
+    @staticmethod
+    def values():
+        return [n for n in list(PluginStatus.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
+# Association tables definition
+    # noinspection PyUnresolvedReferences
+operation_category_operation = db.Table(
+    'operation_category_operation',
+    Column('operation_id', Integer,
+           ForeignKey('operation.id'), nullable=False),
+    Column('operation_category_id', Integer,
+           ForeignKey('operation_category.id'), nullable=False))
+# noinspection PyUnresolvedReferences
+operation_platform = db.Table(
+    'operation_platform',
+    Column('operation_id', Integer,
+           ForeignKey('operation.id'), nullable=False),
+    Column('platform_id', Integer,
+           ForeignKey('platform.id'), nullable=False))
+# noinspection PyUnresolvedReferences
+operation_operation_form = db.Table(
+    'operation_operation_form',
+    Column('operation_id', Integer,
+           ForeignKey('operation.id'), nullable=False),
+    Column('operation_form_id', Integer,
+           ForeignKey('operation_form.id'), nullable=False))
+# noinspection PyUnresolvedReferences
+operation_port_interface_operation_port = db.Table(
+    'operation_port_interface_operation_port',
+    Column('operation_port_id', Integer,
+           ForeignKey('operation_port.id'), nullable=False),
+    Column('operation_port_interface_id', Integer,
+           ForeignKey('operation_port_interface.id'), nullable=False))
+# noinspection PyUnresolvedReferences
+platform_form = db.Table(
+    'platform_form',
+    Column('platform_id', Integer,
+           ForeignKey('platform.id'), nullable=False),
+    Column('operation_form_id', Integer,
+           ForeignKey('operation_form.id'), nullable=False))
+
+
 class Application(db.Model):
     """ Any external application that can be ran by Juicer """
     __tablename__ = 'application'
@@ -178,7 +231,7 @@ class Application(db.Model):
         'order_by': 'name'
     }
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -222,7 +275,7 @@ class Flow(db.Model):
         backref=backref("flows",
                         cascade="all, delete-orphan"))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.source_port
 
     def __repr__(self):
@@ -242,25 +295,12 @@ class Operation(db.Model, Translatable):
                        name='OperationTypeEnumType'), nullable=False)
     icon = Column(String(200), nullable=False)
     css_class = Column(String(200))
+    doc_link = Column(String(200))
 
     # Associations
-    # noinspection PyUnresolvedReferences
-    operation_category_operation = db.Table(
-        'operation_category_operation',
-        Column('operation_id', Integer,
-               ForeignKey('operation.id'), nullable=False),
-        Column('operation_category_id', Integer,
-               ForeignKey('operation_category.id'), nullable=False))
     categories = relationship(
         "OperationCategory",
         secondary=operation_category_operation)
-    # noinspection PyUnresolvedReferences
-    operation_platform = db.Table(
-        'operation_platform',
-        Column('operation_id', Integer,
-               ForeignKey('operation.id'), nullable=False),
-        Column('platform_id', Integer,
-               ForeignKey('platform.id'), nullable=False))
     platforms = relationship(
         "Platform",
         secondary=operation_platform,
@@ -268,13 +308,6 @@ class Operation(db.Model, Translatable):
             "and_("
             "Platform.id==operation_platform.c.platform_id,"
             "Platform.enabled==1)"))
-    # noinspection PyUnresolvedReferences
-    operation_operation_form = db.Table(
-        'operation_operation_form',
-        Column('operation_id', Integer,
-               ForeignKey('operation.id'), nullable=False),
-        Column('operation_form_id', Integer,
-               ForeignKey('operation_form.id'), nullable=False))
     forms = relationship(
         "OperationForm",
         secondary=operation_operation_form,
@@ -285,7 +318,7 @@ class Operation(db.Model, Translatable):
     ports = relationship("OperationPort", back_populates="operation")
     scripts = relationship("OperationScript", back_populates="operation")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -314,7 +347,7 @@ class OperationCategory(db.Model, Translatable):
     default_order = Column(Integer,
                            default=1, nullable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -348,7 +381,7 @@ class OperationForm(db.Model, Translatable):
     fields = relationship("OperationFormField",
                           order_by="OperationFormField.order")
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -390,12 +423,12 @@ class OperationFormField(db.Model, Translatable):
 
     # Associations
     form_id = Column(Integer,
-                     ForeignKey("operation_form.id"), nullable=False)
+                     ForeignKey("operation_form.id"))
     form = relationship(
         "OperationForm",
         foreign_keys=[form_id])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -431,13 +464,6 @@ class OperationPort(db.Model, Translatable):
     }
 
     # Associations
-    # noinspection PyUnresolvedReferences
-    operation_port_interface_operation_port = db.Table(
-        'operation_port_interface_operation_port',
-        Column('operation_port_id', Integer,
-               ForeignKey('operation_port.id'), nullable=False),
-        Column('operation_port_interface_id', Integer,
-               ForeignKey('operation_port_interface.id'), nullable=False))
     interfaces = relationship(
         "OperationPortInterface",
         secondary=operation_port_interface_operation_port)
@@ -447,7 +473,7 @@ class OperationPort(db.Model, Translatable):
         "Operation",
         foreign_keys=[operation_id])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -472,7 +498,7 @@ class OperationPortInterface(db.Model, Translatable):
     id = Column(Integer, primary_key=True)
     color = Column(String(50), nullable=False)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -480,7 +506,7 @@ class OperationPortInterface(db.Model, Translatable):
 
 
 class OperationPortInterfaceTranslation(
-    translation_base(OperationPortInterface)):
+        translation_base(OperationPortInterface)):
     """ Translation table for OperationPortInterface """
     __tablename__ = 'operation_port_interface_translation'
 
@@ -506,7 +532,7 @@ class OperationScript(db.Model):
         "Operation",
         foreign_keys=[operation_id])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -523,15 +549,12 @@ class Platform(db.Model, Translatable):
     slug = Column(String(200), nullable=False)
     enabled = Column(Boolean, nullable=False)
     icon = Column(String(200), nullable=False)
+    version = Column(String(200),
+                     default=1.0)
+    plugin = Column(Boolean,
+                    default=False, nullable=False)
 
     # Associations
-    # noinspection PyUnresolvedReferences
-    platform_form = db.Table(
-        'platform_form',
-        Column('platform_id', Integer,
-               ForeignKey('platform.id'), nullable=False),
-        Column('operation_form_id', Integer,
-               ForeignKey('operation_form.id'), nullable=False))
     forms = relationship(
         "OperationForm",
         secondary=platform_form,
@@ -540,7 +563,7 @@ class Platform(db.Model, Translatable):
             "OperationForm.id==platform_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -554,6 +577,44 @@ class PlatformTranslation(translation_base(Platform)):
     # Fields
     name = Column(Unicode(200))
     description = Column(Unicode(200))
+
+
+class PlatformPlugin(db.Model):
+    """ Plugin for a platform """
+    __tablename__ = 'platform_plugin'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    version = Column(String(200))
+    copyright = Column(String(200))
+    status = Column(Enum(*list(PluginStatus.values()),
+                         name='PluginStatusEnumType'))
+    message = Column(LONGTEXT)
+    manifest = Column(LONGTEXT)
+    ids_offset = Column(Integer, nullable=False)
+    uuid = Column(String(200), nullable=False)
+    url = Column(String(200))
+    use_compiler = Column(Boolean,
+                          default=False, nullable=False)
+    use_executor = Column(Boolean,
+                          default=False, nullable=False)
+
+    # Associations
+    platform_id = Column(Integer,
+                         ForeignKey("platform.id"), nullable=False)
+    platform = relationship(
+        "Platform",
+        foreign_keys=[platform_id],
+        backref=backref("plugins",
+                        cascade="all, delete-orphan"))
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
 class Task(db.Model):
@@ -578,6 +639,8 @@ class Task(db.Model):
                    default=0)
     height = Column(Integer,
                     default=0)
+    display_order = Column(Integer,
+                           default=0)
     group_id = Column(String(200))
     __mapper_args__ = {
         'version_id_col': version,
@@ -597,7 +660,7 @@ class Task(db.Model):
         "Operation",
         foreign_keys=[operation_id])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -615,7 +678,7 @@ class TaskGroup(db.Model):
                        name='TaskGroupTypeEnumType'), nullable=False)
     color = Column(String(200))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -666,7 +729,7 @@ class Workflow(db.Model):
         "Platform",
         foreign_keys=[platform_id])
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def __repr__(self):
@@ -696,7 +759,7 @@ class WorkflowHistory(db.Model):
         backref=backref("versions",
                         cascade="all, delete-orphan"))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.version
 
     def __repr__(self):
@@ -724,8 +787,43 @@ class WorkflowPermission(db.Model):
         backref=backref("permissions",
                         cascade="all, delete-orphan"))
 
-    def __unicode__(self):
+    def __str__(self):
         return self.permission
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class WorkflowVariable(db.Model):
+    """ Variables for workflow """
+    __tablename__ = 'workflow_variable'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(LONGTEXT)
+    type = Column(Enum(*list(DataType.values()),
+                       name='DataTypeEnumType'), nullable=False)
+    multiplicity = Column(Integer,
+                          default=1, nullable=False)
+    suggested_widget = Column(String(200))
+    default_value = Column(LONGTEXT)
+    __mapper_args__ = {
+        'order_by': 'name'
+    }
+
+    # Associations
+    workflow_id = Column(Integer,
+                         ForeignKey("workflow.id"), nullable=False)
+    workflow = relationship(
+        "Workflow",
+        foreign_keys=[workflow_id],
+        backref=backref("variables",
+                        cascade="all, delete-orphan"))
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
