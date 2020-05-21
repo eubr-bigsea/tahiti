@@ -46,7 +46,7 @@ def requires_auth(f):
                 login, email, name, locale = user_data.split(';')
                 parts = name.split(' ', 1)
                 setattr(flask_g, 'user', 
-                        User(user_id, login, email, name, parts[0], 
+                        User(int(user_id), login, email, name, parts[0], 
                             parts[1].strip() if len(parts)> 1 else '', 
                             locale, (permissions or '').split(',')))
                 return f(*_args, **kwargs)
