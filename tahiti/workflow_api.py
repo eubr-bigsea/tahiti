@@ -303,6 +303,12 @@ class WorkflowDetailApi(Resource):
 
                 if 'user' in params:
                     del params['user']
+
+                # Only with permission
+                if not ('ADMINISTRATOR' in g.user.permissions) and \
+                        'is_system_template' in params:
+                    del params['is_system_template']
+
                 # Keeps the same owner
                 # params['user_id'] = g.user.id
                 # params['user_login'] = g.user.login
