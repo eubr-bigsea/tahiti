@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-}
 import itertools
+import locale
+import unicodedata
 import logging
-from functools import reduce
+from functools import reduce, cmp_to_key
 
 from flask import request, current_app, g
 from flask_restful import Resource
@@ -68,7 +70,6 @@ class OperationListApi(Resource):
     def get():
         @cache.memoize(3600 * 24, make_name=lambda f: request.url)
         def result():
-
             config = current_app.config['TAHITI_CONFIG']
 
             if request.args.get('fields'):
@@ -251,3 +252,69 @@ class OperationClearCacheApi(Resource):
     def post():
         cache.clear()
         return '{"msg": "Cache cleaned"}', 200
+
+class OperationTreeApi(Resource):
+    @staticmethod
+    #@requires_auth
+    def get(platform_id):
+        operations = Operation.query.filter(Operation.enabled).filter( 
+            Operation.platforms.any(enabled=True, id=platform_id))
+        current_translation = db.aliased(Operation.current_translation)
+        operations = operations \
+            .join(current_translation) \
+            .options(db.contains_eager(Operation.current_translation,
+                                       alias=current_translation)) \
+            .options(joinedload('categories.current_translation')) \
+            .options(joinedload('categories'))
+        extract_group = lambda c: {'id': c.id, 'name': c.name, 'order': c.order or c.default_order}
+        filter_group = lambda c: c.type == 'group'
+        filter_subgroup = lambda c: c.type == 'subgroup'
+
+        ops = []
+        for op in operations:
+            group = next(map(extract_group, filter(filter_group, op.categories)), None)
+            subgroup = next(map(extract_group, filter(filter_subgroup, op.categories)), None)
+            item = { 
+                 'group_id': group['id'] if group is not None else None,
+                 'subgroup_id': subgroup['id'] if subgroup is not None else None,
+                 'group': group['name'] if group is not None else None,
+                 'operation': {'id': op.id, 'name': op.name, 'slug': op.slug},
+                 'subgroup': subgroup['name'] if subgroup is not None else None,
+                 'order': group['order'] if group is not None else None, 
+                 'subgroupOrder': subgroup['order'] if subgroup is not None else None
+            }
+            ops.append(item)
+            def cmp_groups(a, b):
+                    if a['order'] is None: return -1
+                    if b['order'] is None: return 1
+                    if a['order'] < b['order']: return -1
+                    if a['order'] > b['order']: return 1
+                    text_cmp = locale.strcoll(unicodedata.normalize('NFC', a['group'] or ''),
+                                unicodedata.normalize('NFC', b['group'] or ''))
+                    if text_cmp != 0:
+                        return text_cmp
+                    text_cmp= locale.strcoll(
+                            unicodedata.normalize('NFC', a['subgroup'] or ''),
+                            unicodedata.normalize('NFC', b['subgroup'] or ''))
+                    if text_cmp != 0:
+                        return text_cmp
+                    return locale.strcoll(
+                            unicodedata.normalize('NFC', a['operation']['name']),
+                            unicodedata.normalize('NFC', b['operation']['name']))
+
+                    
+            ops = sorted(ops, key=cmp_to_key(cmp_groups))
+            groups = []
+            for k, g in itertools.groupby(ops, key=lambda x: x['group_id']):
+                for i, nested in enumerate(g):
+                   if i == 0:
+                       g = {'id': nested['group_id'], 'name': nested['group'], 'operations':[]}
+                       groups.append(g)
+                   g['operations'].append(nested['operation'])
+
+        only = None
+        exclude = ['forms', 'platforms', 'ports']
+        result = OperationListResponseSchema(
+                    many=True, only=only, exclude=exclude).dump(operations).data
+
+        return groups, 200

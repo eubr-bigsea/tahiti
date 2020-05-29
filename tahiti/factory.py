@@ -14,7 +14,7 @@ from tahiti.application_api import ApplicationListApi, ApplicationDetailApi
 from tahiti.cache import cache
 from tahiti.models import db, Operation, OperationCategory
 from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
-from tahiti.operation_api import OperationListApi
+from tahiti.operation_api import OperationListApi, OperationTreeApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi, \
@@ -75,6 +75,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/applications/<int:application_id>': ApplicationDetailApi,
         '/operations': OperationListApi,
         '/operations/clear-cache': OperationClearCacheApi,
+        '/operations/tree/<int:platform_id>': OperationTreeApi,
         '/operations/<int:operation_id>': OperationDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
