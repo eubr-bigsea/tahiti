@@ -569,6 +569,14 @@ class OperationSubset(db.Model):
         foreign_keys=[platform_id],
         backref=backref("subsets",
                         cascade="all, delete-orphan"))
+    platform_id = Column(Integer,
+                         ForeignKey("platform.id",
+                                    name="fk_platform_id"), nullable=False)
+    platform = relationship(
+        "Platform",
+        foreign_keys=[platform_id],
+        backref=backref("subsets",
+                        cascade="all, delete-orphan"))
     operations = relationship(
         "Operation",
         secondary=operation_subset_operation,
