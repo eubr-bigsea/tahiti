@@ -218,6 +218,10 @@ class OperationCreateRequestSchema(Schema):
         'tahiti.schema.OperationCategoryCreateRequestSchema',
         required=True,
         many=True)
+    subsets = fields.Nested(
+        'tahiti.schema.OperationSubsetCreateRequestSchema',
+        required=True,
+        many=True)
     platforms = fields.Nested(
         'tahiti.schema.PlatformCreateRequestSchema',
         required=True,
@@ -259,6 +263,10 @@ class OperationItemResponseSchema(Schema):
     doc_link = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryItemResponseSchema',
+        required=True,
+        many=True)
+    subsets = fields.Nested(
+        'tahiti.schema.OperationSubsetItemResponseSchema',
         required=True,
         many=True)
     platforms = fields.Nested(
@@ -718,9 +726,6 @@ class OperationSubsetListResponseSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformListResponseSchema',
         required=True)
-    platform = fields.Nested(
-        'tahiti.schema.PlatformListResponseSchema',
-        required=True)
     operations = fields.Nested(
         'tahiti.schema.OperationListResponseSchema',
         required=True,
@@ -743,9 +748,6 @@ class OperationSubsetCreateRequestSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformCreateRequestSchema',
         required=True)
-    platform = fields.Nested(
-        'tahiti.schema.PlatformCreateRequestSchema',
-        required=True)
     operations = fields.Nested(
         'tahiti.schema.OperationCreateRequestSchema',
         required=True,
@@ -765,9 +767,6 @@ class OperationSubsetItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
-    platform = fields.Nested(
-        'tahiti.schema.PlatformItemResponseSchema',
-        required=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformItemResponseSchema',
         required=True)
@@ -812,7 +811,7 @@ class PlatformListResponseSchema(Schema):
         'tahiti.schema.OperationSubsetListResponseSchema',
         allow_none=True,
         many=True,
-        exclude=['platform'])
+        only=['id', 'name'])
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -844,7 +843,8 @@ class PlatformCreateRequestSchema(Schema):
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetCreateRequestSchema',
         allow_none=True,
-        many=True)
+        many=True,
+        only=['id', 'name'])
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -881,7 +881,8 @@ class PlatformItemResponseSchema(Schema):
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetItemResponseSchema',
         allow_none=True,
-        many=True)
+        many=True,
+        only=['id', 'name'])
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1196,9 +1197,9 @@ class WorkflowExecuteRequestSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformExecuteRequestSchema',
         required=True)
-    platform = fields.Nested(
-        'tahiti.schema.PlatformExecuteRequestSchema',
-        required=True)
+    subset = fields.Nested(
+        'tahiti.schema.OperationSubsetExecuteRequestSchema',
+        allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1245,9 +1246,9 @@ class WorkflowListResponseSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformListResponseSchema',
         required=True)
-    platform = fields.Nested(
-        'tahiti.schema.PlatformListResponseSchema',
-        required=True)
+    subset = fields.Nested(
+        'tahiti.schema.OperationSubsetListResponseSchema',
+        allow_none=True)
     user = fields.Function(
         lambda x: {
             "id": x.user_id,
@@ -1291,7 +1292,7 @@ class WorkflowCreateRequestSchema(Schema):
         allow_none=True,
         many=True)
     platform_id = fields.Integer(required=True)
-    platform_id = fields.Integer(required=True)
+    subset_id = fields.Integer(required=False, allow_none=True)
     user = fields.Nested(
         'tahiti.schema.UserCreateRequestSchema',
         allow_none=True)
@@ -1341,10 +1342,12 @@ class WorkflowItemResponseSchema(Schema):
         many=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformItemResponseSchema',
-        required=True)
-    platform = fields.Nested(
-        'tahiti.schema.PlatformItemResponseSchema',
-        required=True)
+        required=True,
+        only=['id', 'name'])
+    subset = fields.Nested(
+        'tahiti.schema.OperationSubsetItemResponseSchema',
+        allow_none=True,
+        only=['id', 'name'])
     user = fields.Function(
         lambda x: {
             "id": x.user_id,

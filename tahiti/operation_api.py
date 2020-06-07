@@ -85,6 +85,11 @@ class OperationListApi(Resource):
             if not disabled_filter:
                 operations = operations.filter(Operation.enabled)
 
+            subset_filter = request.args.get('subset')
+            if subset_filter and subset_filter.isdigit():
+                operations = operations.filter(
+                    Operation.subsets.any(id=int(subset_filter)))
+
             platform = request.args.get('platform', None)
             if platform:
                 if platform.isdigit():

@@ -203,7 +203,7 @@ class WorkflowListApi(Resource):
             params['user_name'] = g.user.name
             params['platform_id'] = params.get('platform', {}).get(
                 'id') or params.get('platform_id')
-
+            params['subset_id'] = params.get('subset_id')
             form = request_schema.load(params)
         else:
             return result, result_code
@@ -218,13 +218,12 @@ class WorkflowListApi(Resource):
                 db.session.add(workflow)
                 db.session.flush()
                 update_port_name_in_flows(db.session, workflow.id)
-                db.session.commit()
                 result, result_code = response_schema.dump(
                     workflow).data, 200
                 if workflow.is_template:
                     workflow.template_code = result
                     db.session.add(workflow)
-                    db.session.commit()
+                db.session.commit()
             except Exception as e:
                 log.exception('Error in POST')
                 result, result_code = dict(status="ERROR",

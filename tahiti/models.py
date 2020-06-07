@@ -311,6 +311,9 @@ class Operation(db.Model, Translatable):
     categories = relationship(
         "OperationCategory",
         secondary=operation_category_operation)
+    subsets = relationship(
+        "OperationSubset",
+        secondary=operation_subset_operation)
     platforms = relationship(
         "Platform",
         secondary=operation_platform,
@@ -811,6 +814,12 @@ class Workflow(db.Model):
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id])
+    subset_id = Column(Integer,
+                       ForeignKey("operation_subset.id",
+                                  name="fk_operation_subset_id"))
+    subset = relationship(
+        "OperationSubset",
+        foreign_keys=[subset_id])
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
                                     name="fk_platform_id"), nullable=False)
