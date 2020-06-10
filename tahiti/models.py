@@ -800,6 +800,8 @@ class Workflow(db.Model):
     forms = Column(LONGTEXT)
     deployment_enabled = Column(Boolean,
                                 default=False, nullable=False)
+    publishing_enabled = Column(Boolean,
+                                default=False, nullable=False)
     type = Column(Enum(*list(WorkflowType.values()),
                        name='WorkflowTypeEnumType'),
                   default=WorkflowType.WORKFLOW, nullable=False)

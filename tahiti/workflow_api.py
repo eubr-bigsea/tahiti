@@ -99,6 +99,11 @@ class WorkflowListApi(Resource):
                 workflows = workflows.filter(
                     Workflow.platform.has(slug=platform))
 
+            is_track_filter = request.args.get('track')
+            if is_track_filter:
+                workflows = workflows.filter(
+                    Workflow.publishing_enabled == (is_track_filter != 'false'))
+
             enabled_filter = request.args.get('enabled')
             if enabled_filter:
                 workflows = workflows.filter(

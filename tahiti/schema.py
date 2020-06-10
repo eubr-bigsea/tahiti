@@ -1184,6 +1184,8 @@ class WorkflowExecuteRequestSchema(Schema):
     forms = fields.String(required=False, allow_none=True)
     deployment_enabled = fields.Boolean(
         required=True, missing=False, default=False)
+    publishing_enabled = fields.Boolean(
+        required=True, missing=False, default=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
@@ -1233,6 +1235,8 @@ class WorkflowListResponseSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False, default=False)
     deployment_enabled = fields.Boolean(
         required=True, missing=False, default=False)
+    publishing_enabled = fields.Boolean(
+        required=True, missing=False, default=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
@@ -1280,6 +1284,8 @@ class WorkflowCreateRequestSchema(Schema):
     is_public = fields.Boolean(required=True, missing=False, default=False)
     forms = fields.Function(lambda x: load_json(x.forms))
     deployment_enabled = fields.Boolean(
+        required=True, missing=False, default=False)
+    publishing_enabled = fields.Boolean(
         required=True, missing=False, default=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
@@ -1330,6 +1336,8 @@ class WorkflowItemResponseSchema(Schema):
     forms = fields.Function(lambda x: load_json(x.forms))
     deployment_enabled = fields.Boolean(
         required=True, missing=False, default=False)
+    publishing_enabled = fields.Boolean(
+        required=True, missing=False, default=False)
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
@@ -1343,7 +1351,7 @@ class WorkflowItemResponseSchema(Schema):
     platform = fields.Nested(
         'tahiti.schema.PlatformItemResponseSchema',
         required=True,
-        only=['id', 'name'])
+        only=['id', 'name', 'slug'])
     subset = fields.Nested(
         'tahiti.schema.OperationSubsetItemResponseSchema',
         allow_none=True,
