@@ -1196,6 +1196,10 @@ class WorkflowExecuteRequestSchema(Schema):
         'tahiti.schema.FlowExecuteRequestSchema',
         allow_none=True,
         many=True)
+    variables = fields.Nested(
+        'tahiti.schema.WorkflowVariableExecuteRequestSchema',
+        allow_none=True,
+        many=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformExecuteRequestSchema',
         required=True)
@@ -1245,6 +1249,10 @@ class WorkflowListResponseSchema(Schema):
         many=True)
     flows = fields.Nested(
         'tahiti.schema.FlowListResponseSchema',
+        allow_none=True,
+        many=True)
+    variables = fields.Nested(
+        'tahiti.schema.WorkflowVariableListResponseSchema',
         allow_none=True,
         many=True)
     platform = fields.Nested(
@@ -1297,6 +1305,10 @@ class WorkflowCreateRequestSchema(Schema):
         'tahiti.schema.FlowCreateRequestSchema',
         allow_none=True,
         many=True)
+    variables = fields.Nested(
+        'tahiti.schema.WorkflowVariableCreateRequestSchema',
+        allow_none=True,
+        many=True)
     platform_id = fields.Integer(required=True)
     subset_id = fields.Integer(required=False, allow_none=True)
     user = fields.Nested(
@@ -1346,6 +1358,10 @@ class WorkflowItemResponseSchema(Schema):
         many=True)
     flows = fields.Nested(
         'tahiti.schema.FlowItemResponseSchema',
+        allow_none=True,
+        many=True)
+    variables = fields.Nested(
+        'tahiti.schema.WorkflowVariableItemResponseSchema',
         allow_none=True,
         many=True)
     platform = fields.Nested(
@@ -1470,6 +1486,72 @@ class WorkflowPermissionCreateRequestSchema(Schema):
     def make_object(self, data):
         """ Deserialize data into an instance of WorkflowPermission"""
         return WorkflowPermission(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowVariableListResponseSchema(Schema):
+    """ JSON schema for listing """
+    name = fields.String(required=True)
+    label = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(list(DataType.__dict__.keys()))])
+    multiplicity = fields.Integer(required=True, missing=1, default=1)
+    suggested_widget = fields.String(required=False, allow_none=True)
+    default_value = fields.String(required=False, allow_none=True)
+    parameters = fields.String(required=False, allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowVariable"""
+        return WorkflowVariable(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowVariableItemResponseSchema(Schema):
+    """ JSON schema for listing """
+    name = fields.String(required=True)
+    label = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(list(DataType.__dict__.keys()))])
+    multiplicity = fields.Integer(required=True, missing=1, default=1)
+    suggested_widget = fields.String(required=False, allow_none=True)
+    default_value = fields.String(required=False, allow_none=True)
+    parameters = fields.String(required=False, allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowVariable"""
+        return WorkflowVariable(**data)
+
+    class Meta:
+        ordered = True
+
+
+class WorkflowVariableCreateRequestSchema(Schema):
+    """ JSON schema for new instance """
+    name = fields.String(required=True)
+    label = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(list(DataType.__dict__.keys()))])
+    multiplicity = fields.Integer(required=True, missing=1, default=1)
+    suggested_widget = fields.String(required=False, allow_none=True)
+    default_value = fields.String(required=False, allow_none=True)
+    parameters = fields.String(required=False, allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data):
+        """ Deserialize data into an instance of WorkflowVariable"""
+        return WorkflowVariable(**data)
 
     class Meta:
         ordered = True

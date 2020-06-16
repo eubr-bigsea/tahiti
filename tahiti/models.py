@@ -903,6 +903,7 @@ class WorkflowVariable(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
+    label = Column(String(200), nullable=False)
     description = Column(LONGTEXT)
     type = Column(Enum(*list(DataType.values()),
                        name='DataTypeEnumType'), nullable=False)
@@ -910,6 +911,7 @@ class WorkflowVariable(db.Model):
                           default=1, nullable=False)
     suggested_widget = Column(String(200))
     default_value = Column(LONGTEXT)
+    parameters = Column(LONGTEXT)
     __mapper_args__ = {
         'order_by': 'name'
     }

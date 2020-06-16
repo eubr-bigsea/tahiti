@@ -200,7 +200,8 @@ class WorkflowListApi(Resource):
             for task in data.get('tasks', {}):
                 task['operation_id'] = task['operation']['id']
                 task['forms'] = {k: v for k, v in list(task['forms'].items())
-                                 if v.get('value') is not None}
+                                 if v.get('value') is not None or 
+                                 v.get('publishing_enabled') == True}
             params = {}
             params.update(data)
             params['user_id'] = g.user.id
@@ -246,13 +247,7 @@ class WorkflowDetailApi(Resource):
     @staticmethod
     @requires_auth
     def get(workflow_id):
-        hack_path = '/var/tmp/{}.json'.format(workflow_id)
-        if os.path.exists(hack_path):
-            with open(hack_path) as f:
-                return json.loads(f.read())
-        else:
-            workflow = get_workflow(workflow_id)
-
+        workflow = get_workflow(workflow_id)
         if workflow is not None:
             return WorkflowItemResponseSchema().dump(workflow).data
         else:
@@ -296,7 +291,8 @@ class WorkflowDetailApi(Resource):
                 for task in data.get('tasks', {}):
                     task['forms'] = {k: v for k, v in
                                      list(task['forms'].items())
-                                     if v.get('value') is not None}
+                                     if v.get('value') is not None or 
+                                     v.get('publishing_enabled') == True}
                     task['operation_id'] = task['operation']['id']
 
                 # Ignore missing fields to allow partial updates
