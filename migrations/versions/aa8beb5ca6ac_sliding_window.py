@@ -22,7 +22,7 @@ depends_on = None
 SLIDING = 127
 PORT_RANGE = [302, 303]
 FORM_ID = 138
-FORM_FIELD_RANGE = [515, 517]
+FORM_FIELD_RANGE = [515, 518]
 
 
 def _insert_operation():
