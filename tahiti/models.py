@@ -151,6 +151,18 @@ class WorkflowType:
 
 
 # noinspection PyClassHasNoInit
+class PublishingStatus:
+    EDITING = 'EDITING'
+    PUBLISHED = 'PUBLISHED'
+    DISABLED = 'DISABLED'
+
+    @staticmethod
+    def values():
+        return [n for n in list(PublishingStatus.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
 class TaskGroupType:
     PIPELINE = 'PIPELINE'
     SERVICE = 'SERVICE'
@@ -802,6 +814,8 @@ class Workflow(db.Model):
                                 default=False, nullable=False)
     publishing_enabled = Column(Boolean,
                                 default=False, nullable=False)
+    publishing_status = Column(Enum(*list(PublishingStatus.values()),
+                                    name='PublishingStatusEnumType'))
     type = Column(Enum(*list(WorkflowType.values()),
                        name='WorkflowTypeEnumType'),
                   default=WorkflowType.WORKFLOW, nullable=False)
@@ -903,7 +917,7 @@ class WorkflowVariable(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    label = Column(String(200), nullable=False)
+    label = Column(String(200))
     description = Column(LONGTEXT)
     type = Column(Enum(*list(DataType.values()),
                        name='DataTypeEnumType'), nullable=False)

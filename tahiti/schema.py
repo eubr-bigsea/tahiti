@@ -1186,6 +1186,8 @@ class WorkflowExecuteRequestSchema(Schema):
         required=True, missing=False, default=False)
     publishing_enabled = fields.Boolean(
         required=True, missing=False, default=False)
+    publishing_status = fields.String(required=False, allow_none=True,
+                                      validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
@@ -1241,6 +1243,8 @@ class WorkflowListResponseSchema(Schema):
         required=True, missing=False, default=False)
     publishing_enabled = fields.Boolean(
         required=True, missing=False, default=False)
+    publishing_status = fields.String(required=False, allow_none=True,
+                                      validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
@@ -1295,6 +1299,8 @@ class WorkflowCreateRequestSchema(Schema):
         required=True, missing=False, default=False)
     publishing_enabled = fields.Boolean(
         required=True, missing=False, default=False)
+    publishing_status = fields.String(required=False, allow_none=True,
+                                      validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
@@ -1350,6 +1356,8 @@ class WorkflowItemResponseSchema(Schema):
         required=True, missing=False, default=False)
     publishing_enabled = fields.Boolean(
         required=True, missing=False, default=False)
+    publishing_status = fields.String(required=False, allow_none=True,
+                                      validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
     tasks = fields.Nested(
@@ -1494,7 +1502,7 @@ class WorkflowPermissionCreateRequestSchema(Schema):
 class WorkflowVariableListResponseSchema(Schema):
     """ JSON schema for listing """
     name = fields.String(required=True)
-    label = fields.String(required=True)
+    label = fields.String(required=False, allow_none=True)
     description = fields.String(required=False, allow_none=True)
     type = fields.String(required=True,
                          validate=[OneOf(list(DataType.__dict__.keys()))])
@@ -1516,7 +1524,7 @@ class WorkflowVariableListResponseSchema(Schema):
 class WorkflowVariableItemResponseSchema(Schema):
     """ JSON schema for listing """
     name = fields.String(required=True)
-    label = fields.String(required=True)
+    label = fields.String(required=False, allow_none=True)
     description = fields.String(required=False, allow_none=True)
     type = fields.String(required=True,
                          validate=[OneOf(list(DataType.__dict__.keys()))])
@@ -1538,7 +1546,7 @@ class WorkflowVariableItemResponseSchema(Schema):
 class WorkflowVariableCreateRequestSchema(Schema):
     """ JSON schema for new instance """
     name = fields.String(required=True)
-    label = fields.String(required=True)
+    label = fields.String(required=False, allow_none=True)
     description = fields.String(required=False, allow_none=True)
     type = fields.String(required=True,
                          validate=[OneOf(list(DataType.__dict__.keys()))])
