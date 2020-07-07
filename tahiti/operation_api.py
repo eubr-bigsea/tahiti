@@ -102,6 +102,12 @@ class OperationListApi(Resource):
                 operations = operations.filter(
                     Operation.platforms.any(enabled=True))
 
+            workflow = request.args.get('workflow', None)
+            if workflow:
+                tasks = db.session.query(Task.operation_id).filter(
+                        Task.workflow_id == int(workflow)).subquery()
+                operations = operations.filter(Operation.id.in_(tasks))
+
             name = request.args.get('name', '')
             # SqlAlchemy-i18n is not working when a filter
             # is used in where clause with a translation table field.
