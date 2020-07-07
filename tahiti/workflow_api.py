@@ -78,6 +78,12 @@ def _filter_by_permissions(workflows, permissions, consider_public=True):
         workflows = workflows.filter(or_(*conditions))
     return workflows
 
+def test_and_apply_filter(request, arg, workflow, condition):
+    result = workflow
+    value = request.args.get(arg)
+    if value:
+        result = workflow.filter(condition(value))
+    return result    
 
 class WorkflowListApi(Resource):
     """ REST API for listing class Workflow """
@@ -94,41 +100,60 @@ class WorkflowListApi(Resource):
                 only = ('id', 'name', 'platform.id', 'permissions') \
                     if request.args.get('simple', 'false') == 'true' else None
 
-            platform = request.args.get('platform', None)
-            if platform:
-                workflows = workflows.filter(
-                    Workflow.platform.has(slug=platform))
+            workflows = test_and_apply_filter(request, 'platform', workflows, 
+                lambda v: Workflow.platform.has(slug=v))
 
-            is_track_filter = request.args.get('track')
-            if is_track_filter:
-                workflows = workflows.filter(
-                    Workflow.publishing_enabled == (is_track_filter != 'false'))
+            # platform = request.args.get('platform', None)
+            # if platform:
+            #    workflows = workflows.filter(
+            #        Workflow.platform.has(slug=platform))
+            workflows = test_and_apply_filter(request, 'track', workflows, 
+                lambda v: Workflow.publishing_enabled == (v != 'false'))
+            workflows = test_and_apply_filter(request, 'published', workflows, 
+                lambda v: Workflow.publishing_status == PublishingStatus.PUBLISHED)
+            # is_track_filter = request.args.get('track')
+            # if is_track_filter:
+            #     workflows = workflows.filter(
+            #         Workflow.publishing_enabled == (is_track_filter != 'false'))
+            #     is_published = request.args.get('published')
+            #     if is_published:
+            #         workflows = workflows.filter(
+            #             Workflow.publishing_status == PublishingStatus.PUBLISHED)
 
-            enabled_filter = request.args.get('enabled')
-            if enabled_filter:
-                workflows = workflows.filter(
-                    Workflow.enabled == (enabled_filter != 'false'))
+            workflows = test_and_apply_filter(request, 'enabled', workflows, 
+                lambda v: Workflow.enabled == (v != 'false'))
+            # enabled_filter = request.args.get('enabled')
+            # if enabled_filter:
+            #    workflows = workflows.filter(
+            #        Workflow.enabled == (enabled_filter != 'false'))
 
-            template_only = request.args.get('template')
-            if template_only is not None:
-                template_only = template_only in ['1', 'true', 'True']
-            else:
-                template_only = False
+            workflows = test_and_apply_filter(request, 'template', workflows, 
+                lambda v: or_(and_(Workflow.user_id == g.user.id,
+                              Workflow.is_template),
+                         Workflow.is_system_template))
+            # template_only = request.args.get('template')
+            # if template_only is not None:
+            #     template_only = template_only in ['1', 'true', 'True']
+            # else:
+            #     template_only = False
+
+            # if template_only:
+            #     workflows = workflows.filter(
+            #         or_(and_(Workflow.user_id == g.user.id,
+            #                  Workflow.is_template),
+            #             Workflow.is_system_template))
+
+
+            workflows = test_and_apply_filter(request, 'name', workflows, 
+                lambda v: Workflow.name.like('%%{}%%'.format(v)))
+            # name_filter = request.args.get('name')
+            # if name_filter:
+            #     workflows = workflows.filter(
+            #         Workflow.name.like(
+            #             '%%{}%%'.format(name_filter)))
 
             workflows = _filter_by_permissions(
                 workflows, list(PermissionType.values()))
-
-            if template_only:
-                workflows = workflows.filter(
-                    or_(and_(Workflow.user_id == g.user.id,
-                             Workflow.is_template),
-                        Workflow.is_system_template))
-
-            name_filter = request.args.get('name')
-            if name_filter:
-                workflows = workflows.filter(
-                    Workflow.name.like(
-                        '%%{}%%'.format(name_filter)))
             sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
                 sort = 'name'
@@ -332,6 +357,9 @@ class WorkflowDetailApi(Resource):
                             form.data.updated = datetime.datetime.utcnow()
 
                             workflow = db.session.merge(form.data)
+                            if (workflow.publishing_enabled and 
+                                    workflow.publishing_status is None):
+                                workflow.publishing_status = PublishingStatus.EDITING
                             db.session.flush()
                             update_port_name_in_flows(db.session, workflow.id)
                             db.session.commit()
