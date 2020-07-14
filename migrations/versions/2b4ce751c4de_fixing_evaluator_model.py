@@ -1,7 +1,7 @@
 """fixing evaluator model
 
 Revision ID: 2b4ce751c4de
-Revises: 05985c3f83ca
+Revises: aea8dea22277
 Create Date: 2020-07-14 16:36:06.492737
 
 """
@@ -14,7 +14,7 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = '2b4ce751c4de'
-down_revision = '05985c3f83ca'
+down_revision = 'aea8dea22277'
 branch_labels = None
 depends_on = None
 
