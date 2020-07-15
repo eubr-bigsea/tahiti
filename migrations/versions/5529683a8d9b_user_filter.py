@@ -1,7 +1,7 @@
 """ user filter  
 
 Revision ID: 5529683a8d9b
-Revises: 54a6de142d33
+Revises: aea8dea22277
 Create Date: 2020-06-18 20:06:05.438946
 
 """
@@ -14,14 +14,14 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '5529683a8d9b'
-down_revision = '54a6de142d33'
+down_revision = 'aea8dea22277'
 branch_labels = None
 depends_on = None
 
-USER_FILTER = 128
-PORT_RANGE = [304, 305]
-FORM_ID = 139
-FORM_FIELD_RANGE = [519, 521]
+USER_FILTER = 129
+PORT_RANGE = [306, 307]
+FORM_ID = 140
+FORM_FIELD_RANGE = [524, 526]
 
 
 def _insert_operation():
@@ -87,8 +87,8 @@ def _insert_operation_port():
         column('slug', String))
 
     rows = [
-        (304, 'INPUT', None, USER_FILTER, 1, 'ONE', 'input data'),
-        (305, 'OUTPUT', None, USER_FILTER, 1, 'MANY', 'output data'),
+        (306, 'INPUT', None, USER_FILTER, 1, 'ONE', 'input data'),
+        (307, 'OUTPUT', None, USER_FILTER, 1, 'MANY', 'output data'),
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
@@ -104,11 +104,11 @@ def _insert_operation_port_translation():
         column('description', String), )
 
     rows = [
-        (304, 'en', 'input data', 'Input data'),
-        (304, 'pt', 'dados de entrada', 'Dados de entrada'),
+        (306, 'en', 'input data', 'Input data'),
+        (306, 'pt', 'dados de entrada', 'Dados de entrada'),
 
-        (305, 'en', 'output data', 'Output data'),
-        (305, 'pt', 'dados de saída', 'Dados de saída'),
+        (307, 'en', 'output data', 'Output data'),
+        (307, 'pt', 'dados de saída', 'Dados de saída'),
 
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
@@ -123,8 +123,8 @@ def _insert_operation_port_interface_operation_port():
 
     columns = [c.name for c in tb.columns]
     data = [
-        (304, 1),
-        (305, 1),
+        (306, 1),
+        (307, 1),
     ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
@@ -141,7 +141,7 @@ def _insert_operation_script():
 
     columns = [c.name for c in tb.columns]
     data = [
-        [71, 'JS_CLIENT', 1,
+        [72, 'JS_CLIENT', 1,
          "copyInput(task);", USER_FILTER],
     ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
@@ -233,11 +233,11 @@ def _insert_operation_form_field():
         column('form_id', Integer), )
 
     data = [
-        [519, 'filters', 'TEXT', 1, 1, None,
+        [524, 'filters', 'TEXT', 1, 1, None,
          'filter', None, None, 'EXECUTION', FORM_ID],
-        [520, 'ignore', 'INTEGER', 0, 2, None,
+        [525, 'ignore', 'INTEGER', 0, 2, None,
          'checkbox', None, None, 'EXECUTION', FORM_ID],
-        [521, 'use_advanced_editor', 'INTEGER', 0, 3, None,
+        [526, 'use_advanced_editor', 'INTEGER', 0, 3, None,
          'checkbox', None, None, 'EXECUTION', FORM_ID],
     ]
     columns = [c.name for c in tb.columns]
@@ -255,13 +255,13 @@ def _insert_operation_form_field_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        [519, 'en', 'Filters', 'Filters to be applied to the input.'],
-        [519, 'pt', 'Filtros', 'Filtros a serem aplicados à entrada.'],
-        [520, 'en', 'Ignore in design', 'In design/editing mode, filters are ignored.'],
-        [520, 'pt', 'Ignore ao executar em ambiente de edição', 
+        [524, 'en', 'Filters', 'Filters to be applied to the input.'],
+        [524, 'pt', 'Filtros', 'Filtros a serem aplicados à entrada.'],
+        [525, 'en', 'Ignore in design', 'In design/editing mode, filters are ignored.'],
+        [525, 'pt', 'Ignore ao executar em ambiente de edição', 
             'Filtros são ignorados durante a edição do workflow.'],
-        [521, 'en', 'User can use advanced query editor', 'Users can define custom filters using an advanced query editor.'],
-        [521, 'pt', 'Disponibilizar editor de consulta', 'Usuários podem editar os filtros usando um editor avançado de consultas.'],
+        [526, 'en', 'User can use advanced query editor', 'Users can define custom filters using an advanced query editor.'],
+        [526, 'pt', 'Disponibilizar editor de consulta', 'Usuários podem editar os filtros usando um editor avançado de consultas.'],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)

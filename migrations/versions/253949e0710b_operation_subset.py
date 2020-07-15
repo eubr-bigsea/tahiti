@@ -1,7 +1,7 @@
 """ operation subset  
 
 Revision ID: 253949e0710b
-Revises: 95394e5f8107
+Revises: 54a6de142d33
 Create Date: 2020-05-28 18:13:11.526901
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '253949e0710b'
-down_revision = '95394e5f8107'
+down_revision = '54a6de142d33'
 branch_labels = None
 depends_on = None
 
@@ -41,7 +41,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
 
-    # op.add_column('workflow', sa.Column('subset_id', sa.Integer(), nullable=True))
+    op.add_column('workflow', sa.Column('subset_id', sa.Integer(), nullable=True))
     op.create_foreign_key('fk_workflow_operation_subset_id', 'workflow', 'operation_subset', ['subset_id'], ['id'])
     # ### end Alembic commands ###
 
