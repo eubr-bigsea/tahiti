@@ -329,6 +329,8 @@ def _insert_operation_form_field():
         [534, 'delta_relative', 'TEXT', 0, 4, None, 'checkbox', None, None, 'EXECUTION', 
             'this.display_delta.internalValue && this.display_delta.internalValue == 1', 
             BASE_FORM_ID + 1],
+        [568, 'display_gauge', 'INTEGER', 0, 5, '0', 'checkbox', None, None, 'EXECUTION', None, 
+            BASE_FORM_ID + 1],
         [535, 'footer', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', None, 
             BASE_FORM_ID + 1],
         
@@ -409,7 +411,7 @@ def _insert_operation_form_field():
             BASE_FORM_ID + 8],
 
         # BARCHART
-        [MODE_ID, 'mode', 'TEXT', 0, 0, 'vertical', 'dropdown', None, json.dumps(bar_chart_mode), 'EXECUTION', None, 
+        [MODE_ID, 'display_mode', 'TEXT', 0, 0, 'vertical', 'dropdown', None, json.dumps(bar_chart_mode), 'EXECUTION', None, 
             83],
     ]
     columns = [c.name for c in tb.columns]
@@ -427,13 +429,103 @@ def _insert_operation_form_field_translation():
 
     columns = [c.name for c in tb.columns]
     data = [
-        [524, 'en', 'Filters', 'Filters to be applied to the input.'],
-        [524, 'pt', 'Filtros', 'Filtros a serem aplicados à entrada.'],
-        [525, 'en', 'Ignore in design', 'In design/editing mode, filters are ignored.'],
-        [525, 'pt', 'Ignore ao executar em ambiente de edição', 
-            'Filtros são ignorados durante a edição do workflow.'],
-        [526, 'en', 'User can use advanced query editor', 'Users can define custom filters using an advanced query editor.'],
-        [526, 'pt', 'Disponibilizar editor de consulta', 'Usuários podem editar os filtros usando um editor avançado de consultas.'],
+        # Indicator
+        [529, 'en', 'Title', 'Title for the indicator.'],
+        [529, 'pt', 'Tiítulo', 'Título do indicador.'],
+        [530, 'en', 'Display value', 'Displays the value in the indicator.'],
+        [530, 'pt', 'Exibir valor', 'Exibe o valor no indicador.'],
+        [531, 'en', 'Value', 'Attribute used for the value.'],
+        [531, 'pt', 'Valor', 'Atributo usado para o valor.'],
+        [532, 'en', 'Display delta', 'Displays delta variation in the indicator.'],
+        [532, 'pt', 'Exibir delta', 'Exibe o delta (variação) no indicador.'],
+        [533, 'en', 'Reference value (for delta)', 'Attribute used for calculating the delta value.'],
+        [533, 'pt', 'Valor de referência (para o delta)', 'Atributo usado para calcular o delta (variação).'],
+        [534, 'en', 'Relative (%) delta', 'Uses a relative value for delta (percentage of value). If false, delta is calculated using the difference.'],
+        [534, 'pt', 'Delta relativo (%)', 'Usa um valor relativo para o delta (percentual do valor). Se falso, delta é calculado usando a diferença..'],
+        [568, 'en', 'Display gauge', 'Displays a gauge in the indicator.'],
+        [568, 'pt', 'Exibir medidor', 'Exibe um meditor no indicador.'],
+        [535, 'en', 'Footer', 'Text to be displayed in the footer of the indicator.'],
+        [535, 'pt', 'Rodapé', 'Texto exibido na parte de baixo do indicador.'],
+        
+        # MARKDOWN
+        [536, 'en', 'Text (Markdown)', 'Rich text encoded in Markdown language.'],
+        [536, 'pt', 'Texto (Markdown)', 'Text formatado na linguagem Markdown.'],
+
+        # WORD_CLOUD 
+        [537, 'en', 'Title', 'Title for the word cloud.'],
+        [537, 'pt', 'Título', 'Título para a nuvem de palavras.'],
+        [538, 'en', 'Attribute with words', 'Attributes with words used in the cloud.'],
+        [538, 'pt', 'Atributo com as palavras', 'Atributo com as palavras usadas na nuvem.'],
+        [539, 'en', 'Attribute with weights (optional)', 'Attributes with weights for the words used in the cloud.'],
+        [539, 'pt', 'Atributo com os pesos (opcional)', 'Atributo com os pesos das palavras usadas na nuvem.'],
+        [540, 'en', 'Normalization scale', 'Scale used to normalize values.'],
+        [540, 'pt', 'Escala de normalização', 'Escala usada para normalizar os valores.'],
+
+        # HEATMAP, 
+        [541, 'en', 'Title', 'Title for the heatmap'],
+        [541, 'pt', 'Título', 'Título para o mapa de calor.'],
+        [542, 'en', 'Attribute used in the rows', 'Attribute used in the rows of heatmap.'],
+        [542, 'pt', 'Atributo usado nas linhas', 'Atributo usado nas linhas do heatmap.'],
+        [543, 'en', 'Attribute used in the columns', 'Attribute used in the columns of heatmap.'],
+        [543, 'pt', 'Atributo usado nas colunas', 'Atributo usado nas colunas do heatmap.'],
+        [544, 'en', 'Attribute used as  value', 'Attribute used as value for the intensity (heat).'],
+        [544, 'pt', 'Atributo usado como valor', 'Atributo usado como valor para a intensidade (calor).'],
+       
+        # BUBBLE_CHART
+        [545, 'en', 'Title', 'Title for the bubble chart.'],
+        [545, 'pt', 'Título', 'Título para o gráfico de bolhas.'],
+        [546, 'en', 'x-axis attribute', 'Attribute used for the x-axis.'],
+        [546, 'pt', 'Atributo para o eixo X', 'Atributo usado para o eixo X.'],
+        [547, 'en', 'y-axis attributes', 'Attributes used for the y-axis (each one creates a serie).'],
+        [547, 'pt', 'Atributos para o eixo Y', 'Atributos usados para o eixo Y (cada um cria uma série).'],
+        [548, 'en', 'Size attribute', 'Attribute used for the bubble size.'],
+        [548, 'pt', 'Atributo para o tamanho', 'Atributo usado para o tamanho da bolha.'],
+        [549, 'en', 'Color attribute', 'Attribute used for the bubble color.'],
+        [549, 'pt', 'Atributo para a cor', 'Atributo usado para a cor da bolha.'],
+        [550, 'en', 'Title for x-axis', 'Title for the x-axis.'],
+        [550, 'pt', 'Título para o eixo x', 'Título para o eixo x.'],
+        [551, 'en', 'Title for y-axis', 'Title for the y-axis.'],
+        [551, 'pt', 'Título para o eixo y', 'Título para o eixo y.'],
+
+        # FORCE_DIRECT 
+        [552, 'en', 'Title', 'Title for the visualization.'], 
+        [552, 'pt', 'Título', 'Título para a visualização.'],
+        [553, 'en', 'Source attribute', 'Source attribute (source node).'],
+        [553, 'pt', 'Atributo com o nó de origem', 'Atributo com o nó de origem.'],
+        [554, 'en', 'Target attribute', 'Target attribute (target node).'],
+        [554, 'pt', 'Atributo com o nó de destino', 'Atributo com o nó de destino.'],
+        [555, 'en', 'Edge label attribute', 'Edge label attribute.'],
+        [555, 'pt', 'Atributo com o rótulo da aresta', 'Atributo com o rótulo da aresta.'],
+        [556, 'en', 'Edge size attribute', 'Edge size attribute.'],
+        [556, 'pt', 'Atributo com o tamanho da aresta', 'Atributo com o tamanho da aresta.'],
+        [557, 'en', 'Source label attribute', 'Source node label attribute.'],
+        [557, 'pt', 'Atributo com o rótulo do nó de origem', 'Atributo com o rótulo do nó de origem.'],
+        [558, 'en', 'Target label attribute', 'Target node label attribute.'],
+        [558, 'pt', 'Atributo com o rótulo do nó de destino', 'Atributo com o rótulo do nó de destino.'],
+
+        # IFRAME 
+        [559, 'en', 'Link for the page', 'Link for the page displayed in the iframe element.'],
+        [559, 'pt', 'Link para a página', 'Link para a página exibida no iframe.'],
+
+        # TREEMAP
+        [560, 'en', 'Title', 'Title for the visualization.'], 
+        [560, 'pt', 'Título', 'Título para a visualização.'],
+        [561, 'en', 'Cell label attribute', 'Cell label attribute used in the treemap.'],
+        [561, 'pt', 'Atributo com o rótulo para a célula', 'Atributo com o rótulo para a célula.'],
+        [562, 'en', 'Parent attribute', 'Cell parent used to build the hierarchy.'],
+        [562, 'pt', 'Atributo com o pai da célula', 'Atributo com o pai da célula.'],
+        [563, 'en', 'Value attribute', 'Attribute with the cell value.'],
+        [563, 'pt', 'Atributo com o valor', 'Atributo com o valor da célula.'],
+        [564, 'en', 'Display value', 'Displays the cell value.'],
+        [564, 'pt', 'Exibir o valor da célula', 'Exibe o valor da célula.'],
+        [565, 'en', 'Display cell\'s percentage', 'Display cell\'s percentage in relation to its parent.'],
+        [565, 'pt', 'Exibir o % para a célula', 'Exibe o percentual do valor da célula em relação à célula pai.'],
+        [566, 'en', 'Display parent\'s percentage', 'Display parent\'s percentage.'],
+        [566, 'pt', 'Exibir o percentual da célula pai', 'Exibe o percentual da célula pai.'],
+
+        # BARCHART
+        [MODE_ID, 'en', 'Display mode', 'How to display the bar chart.'],
+        [MODE_ID, 'pt', 'Modo de exibição', 'Como exibir o gráfico de barras.'],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -477,9 +569,9 @@ all_commands = [
      (_insert_operation_form_field, """DELETE FROM operation_form_field 
           WHERE form_id BETWEEN {s} AND {e} OR id = {n} """.format(s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), n=MODE_ID)),
  
-#     (_insert_operation_form_field_translation,
-#      'DELETE FROM operation_form_field_translation WHERE id IN (' +
-#      'SELECT id FROM operation_form_field WHERE form_id BETWEEN {s} AND {e})'.format(s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
+     (_insert_operation_form_field_translation,
+      'DELETE FROM operation_form_field_translation WHERE id IN (' +
+      'SELECT id FROM operation_form_field WHERE form_id BETWEEN {s} AND {e}) or id ={m}'.format(s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID)),
 ]
 
 
