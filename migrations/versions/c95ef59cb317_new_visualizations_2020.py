@@ -19,7 +19,8 @@ down_revision = '124773e2d0b1'
 branch_labels = None
 depends_on = None
 
-BASE_FORM_ID = 141
+COLOR_FORM_ID=142
+BASE_FORM_ID = 142
 BASE_FORM_FIELD_ID = 528
 BASE_PORT_ID = 307
 MODE_ID = 567
@@ -48,14 +49,14 @@ def _insert_operation():
         )
 
     rows = [
-            (INDICATOR, 'indicator', 1, 'TRANSFORMATION', ' ', None),
-            (MARKDOWN, 'markdown', 1, 'TRANSFORMATION', ' ', None),
-            (WORD_CLOUD, 'word-cloud', 1, 'TRANSFORMATION', ' ', None),
-            (HEATMAP, 'heatmap', 1, 'TRANSFORMATION', ' ', None),
-            (BUBBLE_CHART, 'bubble-chart', 1, 'TRANSFORMATION', ' ', None),
-            (FORCE_DIRECT, 'force-direct', 1, 'TRANSFORMATION', ' ', None),
-            (IFRAME, 'iframe', 1, 'TRANSFORMATION', ' ', None),
-            (TREEMAP, 'treemap', 1, 'TRANSFORMATION', ' ', None),
+            (INDICATOR, 'indicator', 1, 'VISUALIZATION', ' ', None),
+            (MARKDOWN, 'markdown', 1, 'VISUALIZATION', ' ', None),
+            (WORD_CLOUD, 'word-cloud', 1, 'VISUALIZATION', ' ', None),
+            (HEATMAP, 'heatmap', 1, 'VISUALIZATION', ' ', None),
+            (BUBBLE_CHART, 'bubble-chart', 1, 'VISUALIZATION', ' ', None),
+            (FORCE_DIRECT, 'force-direct', 1, 'VISUALIZATION', ' ', None),
+            (IFRAME, 'iframe', 1, 'VISUALIZATION', ' ', None),
+            (TREEMAP, 'treemap', 1, 'VISUALIZATION', ' ', None),
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
@@ -228,6 +229,7 @@ def _insert_operation_form():
 
     form_id = BASE_FORM_ID + 1
     data = []
+    data.append([COLOR_FORM_ID, 1, 10, 'execution'])
     for op_id in ALL_OPS:
         data.append([form_id, 1, 1, 'execution'])
         form_id += 1
@@ -271,6 +273,9 @@ def _insert_operation_form_translation():
 
     form_id = BASE_FORM_ID + 1
     data = []
+    data.append([COLOR_FORM_ID, 'en', 'Execution'])
+    data.append([COLOR_FORM_ID, 'pt', 'Execução'])
+
     for op_id in ALL_OPS:
         data.append([form_id, 'en', 'Execution'])
         data.append([form_id, 'pt', 'Execução'])
@@ -413,6 +418,8 @@ def _insert_operation_form_field():
         # BARCHART
         [MODE_ID, 'display_mode', 'TEXT', 0, 0, 'vertical', 'dropdown', None, json.dumps(bar_chart_mode), 'EXECUTION', None, 
             83],
+
+        [569, 'colors', 'TEXT', 0, 10, None, 'color-pallete', None, None, 'EXECUTION', None, COLOR_FORM_ID],
     ]
     columns = [c.name for c in tb.columns]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -526,10 +533,17 @@ def _insert_operation_form_field_translation():
         # BARCHART
         [MODE_ID, 'en', 'Display mode', 'How to display the bar chart.'],
         [MODE_ID, 'pt', 'Modo de exibição', 'Como exibir o gráfico de barras.'],
+
+        [569, 'en', 'Color palette', 'Choose the color palette used in the visualization.'],
+        [569, 'pt', 'Paleta de cores', 'Escolha a paleta de cores usada na visualização.'],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+VISUALIZATIONS_WITH_COLOR=[68, 69, 70, 71, 80, 87, 88, 89, 123, 124, 132, 133, 134, 135, 137, 4040]
+# operations and COLOR form
+PAIRS=list(zip(VISUALIZATIONS_WITH_COLOR, [COLOR_FORM_ID]*len(VISUALIZATIONS_WITH_COLOR))) 
+INSERT_PAIRS= ','.join(['({}, {})'.format(*x) for x in PAIRS])
 
 all_commands = [
     (_insert_operation, 'DELETE FROM operation WHERE id BETWEEN {s} AND {e}'.format(s=INDICATOR, e=TREEMAP)),
@@ -559,19 +573,30 @@ all_commands = [
                                  'WHERE operation_id BETWEEN {s} AND {e}'.format(s=INDICATOR, e=TREEMAP)),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN {s} AND {e}'.format(s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
+     'DELETE FROM operation_form WHERE id BETWEEN {s} AND {e} OR id = {n}'.format(
+         n=COLOR_FORM_ID, s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
 
     (_insert_operation_operation_form, 'DELETE FROM operation_operation_form '
-                                       'WHERE operation_id BETWEEN {s} AND {e}'.format(s=INDICATOR, e=TREEMAP)),
+                                       'WHERE operation_id BETWEEN {s} AND {e} OR operation_id = {n}'.format(
+                                           s=INDICATOR, e=TREEMAP, n=COLOR_FORM_ID)),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN {s} AND {e}'.format(s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN {s} AND {e} OR id = {n}'.format(
+         n=COLOR_FORM_ID, s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
 
      (_insert_operation_form_field, """DELETE FROM operation_form_field 
-          WHERE form_id BETWEEN {s} AND {e} OR id = {n} """.format(s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), n=MODE_ID)),
+          WHERE form_id BETWEEN {s} AND {e} OR id = {m} OR form_id IN ({n}) """.format(
+              s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID, n=COLOR_FORM_ID)),
  
      (_insert_operation_form_field_translation,
       'DELETE FROM operation_form_field_translation WHERE id IN (' +
-      'SELECT id FROM operation_form_field WHERE form_id BETWEEN {s} AND {e}) or id ={m}'.format(s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID)),
+      'SELECT id FROM operation_form_field WHERE form_id BETWEEN {s} AND {e} OR id={m} OR form_id IN ({n}))'.format(
+          s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID, n=COLOR_FORM_ID)),
+
+     ("UPDATE operation set type = 'VISUALIZATION' WHERE id IN (87, 88, 89, 123, 124, 4040)" , 
+        "UPDATE operation set type = 'ACTION' WHERE id IN (87, 88, 89, 123, 124, 4040)"),
+
+     ("INSERT INTO operation_operation_form values {}".format(INSERT_PAIRS) , 
+        "DELETE FROM operation_operation_form WHERE operation_form_id = {}".format(COLOR_FORM_ID)),
 ]
 
 

@@ -70,7 +70,7 @@ def _insert_operation_form_field_translation():
 all_commands = [
     ('UPDATE operation_form_field_translation '
      'SET label = "Deslocamento (tamanho do passo)" '
-     'WHERE id = 517 and locale = "pt"', ""),
+     'WHERE id = 517 and locale = "pt"', "SELECT 1"),
     ('UPDATE operation_form_field SET name = "window_pass" WHERE id = 517',
      'UPDATE operation_form_field SET name = "window_gap" WHERE id = 517'),
     ('UPDATE operation_form_field SET `order`=5 WHERE id=518',
