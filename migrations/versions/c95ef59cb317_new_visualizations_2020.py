@@ -317,6 +317,15 @@ def _insert_operation_form_field():
             {"en": "Stacked horizontal bars", "value": "stacked-horizontal", "key": "stacked-horizontal", "pt": "Barras horizontais empilhadas"},
     ]
 
+    aggregation = [
+        {"key": "count", "en": "Number of occurencies", "pt": "Número de ocorrências"}, 
+        {"key": "first", "en": "First value", "pt": "Primeiro valor"}, 
+        {"key": "last", "en": "Last value", "pt": "Último valor"}, 
+        {"key": "max", "en": "Maximum value", "pt": "Valor máximo"}, 
+        {"key": "min", "en": "Minimum value", "pt": "Valor mínimo"}, 
+        {"key": "avg", "en": "Average value", "pt": "Valor médio"}, 
+        {"key": "sum", "en": "Sum of values", "pt": "Soma dos valores"}, 
+    ]
     data = [
         # INDICATOR
         [529, 'title', 'TEXT', 0, 0, None, 'text', None, None, 'EXECUTION', None, 
@@ -362,8 +371,10 @@ def _insert_operation_form_field():
             BASE_FORM_ID + 4],
         [544, 'value_attribute', 'TEXT', 1, 3, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', None, 
             BASE_FORM_ID + 4],
+        [571, 'aggregation_function', 'TEXT', 1, 4, 'sum', 'dropdown', None, json.dumps(aggregation), 'EXECUTION', None, 
+            BASE_FORM_ID + 4],
        
-        # B5BBLE_CHART
+        # BUBBLE_CHART
         [545, 'title', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', None, 
             BASE_FORM_ID + 5],
         [546, 'x_axis_attribute', 'TEXT', 1, 2, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', None, 
@@ -372,11 +383,13 @@ def _insert_operation_form_field():
             BASE_FORM_ID + 5],
         [548, 'size_attribute', 'TEXT', 0, 4, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', None, 
             BASE_FORM_ID + 5],
-        [549, 'color', 'TEXT', 0, 4, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', None, 
+        [549, 'color_attribute', 'TEXT', 0, 4, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', None, 
             BASE_FORM_ID + 5],
-        [550, 'x_title', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', None, 
+        [570, 'text_attribute', 'TEXT', 0, 5, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', None, 
             BASE_FORM_ID + 5],
-        [551, 'y_title', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', None, 
+        [550, 'x_title', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', None, 
+            BASE_FORM_ID + 5],
+        [551, 'y_title', 'TEXT', 0, 7, None, 'text', None, None, 'EXECUTION', None, 
             BASE_FORM_ID + 5],
 
         # FORCE_DIRECT 
@@ -419,7 +432,7 @@ def _insert_operation_form_field():
         [MODE_ID, 'display_mode', 'TEXT', 0, 0, 'vertical', 'dropdown', None, json.dumps(bar_chart_mode), 'EXECUTION', None, 
             83],
 
-        [569, 'colors', 'TEXT', 0, 10, None, 'color-pallete', None, None, 'EXECUTION', None, COLOR_FORM_ID],
+        [569, 'color_palette', 'TEXT', 0, 10, None, 'color-palette', None, None, 'EXECUTION', None, COLOR_FORM_ID],
     ]
     columns = [c.name for c in tb.columns]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -475,20 +488,24 @@ def _insert_operation_form_field_translation():
         [542, 'pt', 'Atributo usado nas linhas', 'Atributo usado nas linhas do heatmap.'],
         [543, 'en', 'Attribute used in the columns', 'Attribute used in the columns of heatmap.'],
         [543, 'pt', 'Atributo usado nas colunas', 'Atributo usado nas colunas do heatmap.'],
-        [544, 'en', 'Attribute used as  value', 'Attribute used as value for the intensity (heat).'],
+        [544, 'en', 'Attribute used as value', 'Attribute used as value for the intensity (heat).'],
         [544, 'pt', 'Atributo usado como valor', 'Atributo usado como valor para a intensidade (calor).'],
+        [571, 'en', 'Compute values using', 'Compute values using specified function.'],
+        [571, 'pt', 'Computar valores usando', 'Computar valores usando a função especificada.'],
        
         # BUBBLE_CHART
         [545, 'en', 'Title', 'Title for the bubble chart.'],
         [545, 'pt', 'Título', 'Título para o gráfico de bolhas.'],
         [546, 'en', 'x-axis attribute', 'Attribute used for the x-axis.'],
         [546, 'pt', 'Atributo para o eixo X', 'Atributo usado para o eixo X.'],
-        [547, 'en', 'y-axis attributes', 'Attributes used for the y-axis (each one creates a serie).'],
-        [547, 'pt', 'Atributos para o eixo Y', 'Atributos usados para o eixo Y (cada um cria uma série).'],
+        [547, 'en', 'y-axis attribute', 'Attributs used for the y-axis.'],
+        [547, 'pt', 'Atributo para o eixo Y', 'Atributo usado para o eixo Y.'],
         [548, 'en', 'Size attribute', 'Attribute used for the bubble size.'],
         [548, 'pt', 'Atributo para o tamanho', 'Atributo usado para o tamanho da bolha.'],
         [549, 'en', 'Color attribute', 'Attribute used for the bubble color.'],
         [549, 'pt', 'Atributo para a cor', 'Atributo usado para a cor da bolha.'],
+        [570, 'en', 'Text attribute', 'Attribute used for the bubble text displayed when pointing with cursor.'],
+        [570, 'pt', 'Atributo para o texto', 'Atributo usado para o texto da bolha ao apontar com o mouse.'],
         [550, 'en', 'Title for x-axis', 'Title for the x-axis.'],
         [550, 'pt', 'Título para o eixo x', 'Título para o eixo x.'],
         [551, 'en', 'Title for y-axis', 'Title for the y-axis.'],
