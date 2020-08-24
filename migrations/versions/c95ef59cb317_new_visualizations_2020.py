@@ -20,7 +20,8 @@ branch_labels = None
 depends_on = None
 
 COLOR_FORM_ID=142
-BASE_FORM_ID = 142
+COLOR_SCALE_FORM_ID=143
+BASE_FORM_ID = 143
 BASE_FORM_FIELD_ID = 528
 BASE_PORT_ID = 307
 MODE_ID = 567
@@ -230,6 +231,7 @@ def _insert_operation_form():
     form_id = BASE_FORM_ID + 1
     data = []
     data.append([COLOR_FORM_ID, 1, 10, 'execution'])
+    data.append([COLOR_SCALE_FORM_ID, 1, 10, 'execution'])
     for op_id in ALL_OPS:
         data.append([form_id, 1, 1, 'execution'])
         form_id += 1
@@ -373,6 +375,11 @@ def _insert_operation_form_field():
             BASE_FORM_ID + 4],
         [571, 'aggregation_function', 'TEXT', 1, 4, 'sum', 'dropdown', None, json.dumps(aggregation), 'EXECUTION', None, 
             BASE_FORM_ID + 4],
+        [573, 'row_title', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', None, 
+            BASE_FORM_ID + 4],
+        [574, 'column_title', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', None, 
+            BASE_FORM_ID + 4],
+
        
         # BUBBLE_CHART
         [545, 'title', 'TEXT', 0, 1, None, 'text', None, None, 'EXECUTION', None, 
@@ -433,6 +440,7 @@ def _insert_operation_form_field():
             83],
 
         [569, 'color_palette', 'TEXT', 0, 10, None, 'color-palette', None, None, 'EXECUTION', None, COLOR_FORM_ID],
+        [572, 'color_scale', 'TEXT', 0, 10, None, 'color-scale', None, None, 'EXECUTION', None, COLOR_SCALE_FORM_ID],
     ]
     columns = [c.name for c in tb.columns]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -492,7 +500,12 @@ def _insert_operation_form_field_translation():
         [544, 'pt', 'Atributo usado como valor', 'Atributo usado como valor para a intensidade (calor).'],
         [571, 'en', 'Compute values using', 'Compute values using specified function.'],
         [571, 'pt', 'Computar valores usando', 'Computar valores usando a função especificada.'],
-       
+        [573, 'en', 'Title for the rows axis', 'Title for the rows axis.'],
+        [573, 'pt', 'Título para o eixo das linhas', 'Título para o eixo das linhas.'],
+        [574, 'en', 'Title for the column axis', 'Title for the column axis.'],
+        [574, 'pt', 'Título para o eixo das colunas', 'Título para o eixo das colunas.'],
+
+      
         # BUBBLE_CHART
         [545, 'en', 'Title', 'Title for the bubble chart.'],
         [545, 'pt', 'Título', 'Título para o gráfico de bolhas.'],
@@ -553,13 +566,18 @@ def _insert_operation_form_field_translation():
 
         [569, 'en', 'Color palette', 'Choose the color palette used in the visualization.'],
         [569, 'pt', 'Paleta de cores', 'Escolha a paleta de cores usada na visualização.'],
+
+        [572, 'en', 'Color scale', 'Choose the color scale used in the visualization.'],
+        [572, 'pt', 'Escala de cores', 'Escolha a escala de cores usada na visualização.'],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
-VISUALIZATIONS_WITH_COLOR=[68, 69, 70, 71, 80, 87, 88, 89, 123, 124, 132, 133, 134, 135, 137, 4040]
+VISUALIZATIONS_WITH_COLOR_PALETTE=[68, 69, 70, 71, 80, 87, 88, 89, 123, 124, 132, 134, 135, 137, 4040]
+VISUALIZATIONS_WITH_COLOR_SCALE=[133]
 # operations and COLOR form
-PAIRS=list(zip(VISUALIZATIONS_WITH_COLOR, [COLOR_FORM_ID]*len(VISUALIZATIONS_WITH_COLOR))) 
+PAIRS=list(zip(VISUALIZATIONS_WITH_COLOR_PALETTE, [COLOR_FORM_ID]*len(VISUALIZATIONS_WITH_COLOR_PALETTE))) 
+PAIRS.extend(list(zip(VISUALIZATIONS_WITH_COLOR_SCALE, [COLOR_SCALE_FORM_ID]*len(VISUALIZATIONS_WITH_COLOR_SCALE))))
 INSERT_PAIRS= ','.join(['({}, {})'.format(*x) for x in PAIRS])
 
 all_commands = [
@@ -590,30 +608,30 @@ all_commands = [
                                  'WHERE operation_id BETWEEN {s} AND {e}'.format(s=INDICATOR, e=TREEMAP)),
 
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN {s} AND {e} OR id = {n}'.format(
-         n=COLOR_FORM_ID, s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
+     'DELETE FROM operation_form WHERE id BETWEEN {s} AND {e} OR id = {n} or id = {p}'.format(
+         n=COLOR_FORM_ID, p=COLOR_SCALE_FORM_ID, s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
 
     (_insert_operation_operation_form, 'DELETE FROM operation_operation_form '
                                        'WHERE operation_id BETWEEN {s} AND {e} OR operation_id = {n}'.format(
                                            s=INDICATOR, e=TREEMAP, n=COLOR_FORM_ID)),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN {s} AND {e} OR id = {n}'.format(
-         n=COLOR_FORM_ID, s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN {s} AND {e} OR id = {n} OR id = {p}'.format(
+         n=COLOR_FORM_ID, p=COLOR_SCALE_FORM_ID, s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS))),
 
      (_insert_operation_form_field, """DELETE FROM operation_form_field 
-          WHERE form_id BETWEEN {s} AND {e} OR id = {m} OR form_id IN ({n}) """.format(
-              s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID, n=COLOR_FORM_ID)),
+          WHERE form_id BETWEEN {s} AND {e} OR id = {m} OR form_id IN ({n}, {p}) """.format(
+              s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID, n=COLOR_FORM_ID, p=COLOR_SCALE_FORM_ID)),
  
      (_insert_operation_form_field_translation,
       'DELETE FROM operation_form_field_translation WHERE id IN (' +
-      'SELECT id FROM operation_form_field WHERE form_id BETWEEN {s} AND {e} OR id={m} OR form_id IN ({n}))'.format(
-          s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID, n=COLOR_FORM_ID)),
+      'SELECT id FROM operation_form_field WHERE form_id BETWEEN {s} AND {e} OR id={m} OR form_id IN ({n}, {p}))'.format(
+          s=BASE_FORM_ID + 1, e=BASE_FORM_ID + 1 + len(ALL_OPS), m=MODE_ID, n=COLOR_FORM_ID, p=COLOR_SCALE_FORM_ID)),
 
      ("UPDATE operation set type = 'VISUALIZATION' WHERE id IN (87, 88, 89, 123, 124, 4040)" , 
         "UPDATE operation set type = 'ACTION' WHERE id IN (87, 88, 89, 123, 124, 4040)"),
 
      ("INSERT INTO operation_operation_form values {}".format(INSERT_PAIRS) , 
-        "DELETE FROM operation_operation_form WHERE operation_form_id = {}".format(COLOR_FORM_ID)),
+        "DELETE FROM operation_operation_form WHERE operation_form_id IN ({}, {})".format(COLOR_FORM_ID, COLOR_SCALE_FORM_ID)),
 ]
 
 
