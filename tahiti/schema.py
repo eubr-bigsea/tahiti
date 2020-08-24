@@ -1190,6 +1190,7 @@ class WorkflowExecuteRequestSchema(Schema):
                                       validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
+    preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
         'tahiti.schema.TaskExecuteRequestSchema',
         allow_none=True,
@@ -1247,6 +1248,7 @@ class WorkflowListResponseSchema(Schema):
                                       validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
+    preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
         'tahiti.schema.TaskListResponseSchema',
         allow_none=True,
@@ -1303,6 +1305,7 @@ class WorkflowCreateRequestSchema(Schema):
                                       validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
+    preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
         'tahiti.schema.TaskCreateRequestSchema',
         allow_none=True,
@@ -1360,6 +1363,7 @@ class WorkflowItemResponseSchema(Schema):
                                       validate=[OneOf(list(PublishingStatus.__dict__.keys()))])
     type = fields.String(required=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
                          validate=[OneOf(list(WorkflowType.__dict__.keys()))])
+    preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
         'tahiti.schema.TaskItemResponseSchema',
         allow_none=True,

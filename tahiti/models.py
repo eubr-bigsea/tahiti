@@ -819,6 +819,7 @@ class Workflow(db.Model):
     type = Column(Enum(*list(WorkflowType.values()),
                        name='WorkflowTypeEnumType'),
                   default=WorkflowType.WORKFLOW, nullable=False)
+    preferred_cluster_id = Column(Integer)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }
