@@ -46,9 +46,11 @@ def _insert_operation_translation():
 
     rows = [
         (OFFSET_OP, 'en', 'K-Modes Clustering',
-         'Uses K-Modes algorithm for clustering'),
-        (OFFSET_OP, 'pt', 'Agrupamento K-Modes',
-         'Usa o algoritmo K-Modes para agrupamento'),
+         'Uses a distributed version of K-Modes algorithm '
+         '(Ensemble-based incremental distributed K-Modes) for clustering'),
+        (OFFSET_OP, 'pt', 'Agrupamento por K-Modes',
+         'Usa uma versão distribuída do algoritmo K-Modes '
+         '(Ensemble-based incremental distributed K-Modes) para agrupamento'),
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
 
