@@ -7,12 +7,13 @@ from functools import reduce, cmp_to_key
 
 from flask import request, current_app, g
 from flask_restful import Resource
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, load_only
 from sqlalchemy.sql.expression import bindparam, text
 
 from tahiti.app_auth import requires_auth
 from tahiti.cache import cache
 from tahiti.schema import *
+from tahiti.models import *
 
 log = logging.getLogger(__name__)
 
@@ -41,25 +42,27 @@ def deep_merge(d1, d2, in_conflict=lambda v1, v2: v2):
     return d1
 
 
-def optimize_operation_query(operations):
+def optimize_operation_query(operations, only_translation=False):
     current_translation = db.aliased(Operation.current_translation)
     fallback_translation = db.aliased(Operation.fallback_translation)
-    return operations \
+    op = operations \
         .join(current_translation) \
         .options(db.contains_eager(Operation.current_translation,
-                                   alias=current_translation)) \
-        .options(joinedload('forms.current_translation')) \
-        .options(joinedload('ports.current_translation')) \
-        .options(joinedload('ports.interfaces.current_translation')) \
-        .options(joinedload('forms.fields.current_translation')) \
-        .options(joinedload('categories.current_translation')) \
-        .options(joinedload('forms')) \
-        .options(joinedload('platforms')) \
-        .options(joinedload('platforms.current_translation')) \
-        .options(joinedload('ports')) \
-        .options(joinedload('ports.interfaces')) \
-        .options(joinedload('forms.fields')) \
-        .options(joinedload('categories'))
+                                   alias=current_translation))
+    if not only_translation:    
+        op = op.options(joinedload('forms.current_translation')) \
+            .options(joinedload('ports.current_translation')) \
+            .options(joinedload('ports.interfaces.current_translation')) \
+            .options(joinedload('forms.fields.current_translation')) \
+            .options(joinedload('categories.current_translation')) \
+            .options(joinedload('forms')) \
+            .options(joinedload('platforms')) \
+            .options(joinedload('platforms.current_translation')) \
+            .options(joinedload('ports')) \
+            .options(joinedload('ports.interfaces')) \
+            .options(joinedload('forms.fields')) \
+            .options(joinedload('categories'))
+    return op
 
 
 class OperationListApi(Resource):
@@ -79,7 +82,16 @@ class OperationListApi(Resource):
                 only = ('id', 'name') \
                     if request.args.get('simple', 'false') == 'true' else None
 
-            operations = optimize_operation_query(Operation.query)
+            exclude = []
+            if request.args.get('partial') in ('true', 1, '1'):
+                operations = optimize_operation_query(Operation.query, True)\
+                    .options(joinedload('subsets'))\
+                    .options(joinedload('categories.current_translation')) \
+                    .options(joinedload('categories'))
+
+                exclude = ['forms', 'ports', 'platforms']
+            else:
+                operations = optimize_operation_query(Operation.query)
 
             disabled_filter = request.args.get('disabled')
             if not disabled_filter:
@@ -132,8 +144,8 @@ class OperationListApi(Resource):
                 'operation_translation_1.locale = :param_locale',
                 bindparams=[param_locale]))
 
-            exclude = ('platforms.forms', 'platforms.icon',
-                       'platforms.description')
+            exclude.extend(['platforms.forms', 'platforms.icon',
+                       'platforms.description'])
 
             page = request.args.get('page')
 
@@ -160,6 +172,7 @@ class OperationListApi(Resource):
                             item.enabled = False
                     results = {
                         'data': OperationListResponseSchema(many=True,
+                                                            exclude=exclude,
                                                             only=only).dump(
                             items).data,
                         'pagination': {'page': page, 'size': page_size,
@@ -174,6 +187,7 @@ class OperationListApi(Resource):
                 items = operations
                 for item in items:
                     if item.id in disabled_ops:
+                        db.session.expunge(item)
                         item.enabled = False
 
                 data = OperationListResponseSchema(
@@ -183,8 +197,9 @@ class OperationListApi(Resource):
                 if only is None or 'forms' in only:
                     for op in data:
                         groups = itertools.groupby(
-                            sorted(op['forms'], key=lambda f: f['category']),
-                            lambda f: f['category'])
+                            sorted(op.get('forms', {}), 
+                                key=lambda f: f.get('category')),
+                            lambda f: f.get('category'))
 
                         op['forms'] = []
 
@@ -329,3 +344,37 @@ class OperationTreeApi(Resource):
                     many=True, only=only, exclude=exclude).dump(operations).data
 
         return groups, 200
+
+class OperationSubsetApi(Operation):
+    human_name = 'OperationSubset'
+
+    def post():
+        result = {'status': 'ERROR', 'message': gettext('Insufficient data.')}
+        return_code = 400
+
+        if request.json:
+            try:
+                op_id = request.json.get('operation_id')
+                subset_id = request.json.get('subset_id')
+                if op_id and subset_id:
+                    op = Operation.filter.get(op_id)
+                    subset = OperationSubset.query.get(subset_id)
+
+                    if op.platform.id == subset.platform_id:
+                        oso = OperationSubsetOperation(operation=op, subset=subset)
+                        db.session.add(oso)
+                        db.session.commit();
+                        result = {
+                            'status': 'OK',
+                            'message': gettext(
+                                '%(n)s (id=%(id)s) was updated with success!',
+                                n=self.human_name,
+                                id=platform_id)
+                        }
+            except Exception as e:
+                result = {'status': 'ERROR',
+                              'message': gettext("Internal error")}
+                return_code = 500
+                db.session.rollback()
+
+        return result, return_code

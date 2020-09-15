@@ -26,6 +26,7 @@ class OperationType:
     SHUFFLE = 'SHUFFLE'
     SYSTEM_META_OPERATION = 'SYSTEM_META_OPERATION'
     USER_META_OPERATION = 'USER_META_OPERATION'
+    SHORTCUT = 'SHORTCUT'
 
     @staticmethod
     def values():
@@ -442,6 +443,8 @@ class OperationFormField(db.Model, Translatable):
                         name='OperationFieldScopeEnumType'),
                    default='BOTH', nullable=False)
     enable_conditions = Column(String(2000))
+    editable = Column(Boolean,
+                      default=True, nullable=False)
     __mapper_args__ = {
         'order_by': 'order'
     }

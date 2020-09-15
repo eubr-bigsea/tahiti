@@ -179,6 +179,11 @@ class OperationListResponseSchema(Schema):
         'tahiti.schema.OperationCategoryListResponseSchema',
         required=True,
         many=True)
+    subsets = fields.Nested(
+        'tahiti.schema.OperationSubsetListResponseSchema',
+        required=True,
+        many=True,
+        only=['id'])
     platforms = fields.Nested(
         'tahiti.schema.PlatformListResponseSchema',
         required=True,
@@ -470,6 +475,7 @@ class OperationFormFieldListResponseSchema(Schema):
     scope = fields.String(required=True, missing='BOTH', default='BOTH',
                           validate=[OneOf(list(OperationFieldScope.__dict__.keys()))])
     enable_conditions = fields.String(required=False, allow_none=True)
+    editable = fields.Boolean(required=True, missing=True, default=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -497,6 +503,7 @@ class OperationFormFieldCreateRequestSchema(Schema):
     scope = fields.String(required=True, missing='BOTH', default='BOTH',
                           validate=[OneOf(list(OperationFieldScope.__dict__.keys()))])
     enable_conditions = fields.String(required=False, allow_none=True)
+    editable = fields.Boolean(required=True, missing=True, default=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -524,6 +531,7 @@ class OperationFormFieldItemResponseSchema(Schema):
     scope = fields.String(required=True, missing='BOTH', default='BOTH',
                           validate=[OneOf(list(OperationFieldScope.__dict__.keys()))])
     enable_conditions = fields.String(required=False, allow_none=True)
+    editable = fields.Boolean(required=True, missing=True, default=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -751,7 +759,8 @@ class OperationSubsetCreateRequestSchema(Schema):
     operations = fields.Nested(
         'tahiti.schema.OperationCreateRequestSchema',
         required=True,
-        many=True)
+        many=True,
+        only=['id'])
 
     # noinspection PyUnresolvedReferences
     @post_load

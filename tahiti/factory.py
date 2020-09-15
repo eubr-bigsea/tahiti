@@ -15,6 +15,7 @@ from tahiti.cache import cache
 from tahiti.models import db, Operation, OperationCategory
 from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi, OperationTreeApi
+from tahiti.operation_api import OperationSubsetApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi, \
