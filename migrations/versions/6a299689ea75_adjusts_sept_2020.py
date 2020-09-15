@@ -1,7 +1,7 @@
 """ Adjusts sept 2020  
 
 Revision ID: 6a299689ea75
-Revises: b7442131c810
+Revises: 86699b2e6672
 Create Date: 2020-09-02 15:26:43.422785
 
 """
@@ -19,16 +19,16 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '6a299689ea75'
-down_revision = 'b7442131c810'
+down_revision = '86699b2e6672'
 branch_labels = None
 depends_on = None
 
 
-BASE_FORM_ID = 151
-BASE_FORM_FIELD_ID = 574
+BASE_FORM_ID = 152
+BASE_FORM_FIELD_ID = 578
 
-BASE_PORT_ID = 321
-DATA_SOURCE = 138
+BASE_PORT_ID = 324
+DATA_SOURCE = 139
 
 ALL_OPS = [DATA_SOURCE]
 
@@ -249,7 +249,7 @@ def _insert_operation_form_field():
     ]
     data = [
         # DATA SOURCE
-        [575, 'data_source', 'INTEGER', 1, 0, None, 'lookup', 
+        [BASE_FORM_ID + 1, 'data_source', 'INTEGER', 1, 0, None, 'lookup', 
             '`${LIMONERO_URL}/datasources?uiw=1&simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 
             BASE_FORM_ID + 1, 0],
 
@@ -278,8 +278,8 @@ def _insert_operation_form_field_translation():
     columns = [c.name for c in tb.columns]
     data = [
         # Data Source
-        [575, 'en', 'Data source', 'Data source.'],
-        [575, 'pt', 'Fonte de dados', 'Fonte de dados.']
+        [BASE_FORM_ID  + 1, 'en', 'Data source', 'Data source.'],
+        [BASE_FORM_ID  + 1, 'pt', 'Fonte de dados', 'Fonte de dados.']
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -290,10 +290,10 @@ all_commands = [
          "ALTER TABLE operation MODIFY COLUMN `type` enum('ACTION','SHUFFLE','TRANSFORMATION','VISUALIZATION', 'SHORTCUT') COLLATE utf8_unicode_ci NOT NULL",
          "ALTER TABLE operation MODIFY COLUMN `type` enum('ACTION','SHUFFLE','TRANSFORMATION','VISUALIZATION') COLLATE utf8_unicode_ci NOT NULL"
      ),
-     (
-         "ALTER TABLE operation_form_field ADD COLUMN editable TINYINT(1) NOT NULL DEFAULT 1",
-         "ALTER TABLE operation_form_field DROP COLUMN editable",
-    ),
+   #  (
+   #       "ALTER TABLE operation_form_field ADD COLUMN editable TINYINT(1) NOT NULL DEFAULT 1",
+   #       "ALTER TABLE operation_form_field DROP COLUMN editable",
+   #  ),
     (_insert_operation, 'DELETE FROM operation WHERE id BETWEEN {s} AND {e}'.format(s=DATA_SOURCE, e=DATA_SOURCE)),
 
     (_insert_operation_translation,

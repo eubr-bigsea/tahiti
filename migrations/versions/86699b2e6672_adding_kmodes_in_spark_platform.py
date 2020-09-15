@@ -1,7 +1,7 @@
 """Adding Kmodes in Spark platform
 
 Revision ID: 86699b2e6672
-Revises: ed920c727112
+Revises: b7442131c810
 Create Date: 2020-09-09 14:44:51.915594
 
 """
@@ -18,15 +18,15 @@ from migrations.utils import TablesV1 as T1
 
 # revision identifiers, used by Alembic.
 revision = '86699b2e6672'
-down_revision = 'ed920c727112'
+down_revision = 'b7442131c810'
 branch_labels = None
 depends_on = None
 
 
 OFFSET_OP = 138
-OFFSET_FORM = 151
+OFFSET_FORM = 152
 OFFSET_PORT = 322
-OFFSET_FIELD = 570
+OFFSET_FIELD = 575
 
 
 def _insert_operation():
