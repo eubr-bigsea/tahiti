@@ -23,10 +23,10 @@ branch_labels = None
 depends_on = None
 
 
-OFFSET_OP = 129
-OFFSET_FORM = 140
-OFFSET_PORT = 306
-OFFSET_FIELD = 524
+OFFSET_OP = 138
+OFFSET_FORM = 151
+OFFSET_PORT = 322
+OFFSET_FIELD = 570
 
 
 def _insert_operation():
