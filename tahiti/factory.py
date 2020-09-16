@@ -15,7 +15,8 @@ from tahiti.cache import cache
 from tahiti.models import db, Operation, OperationCategory
 from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi, OperationTreeApi
-from tahiti.operation_api import OperationSubsetApi
+from tahiti.operation_subset_api import OperationSubsetDetailApi, \
+        OperationSubsetListApi, OperationSubsetOperationApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi, \
@@ -80,6 +81,9 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/<int:operation_id>': OperationDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
+        '/subsets': OperationSubsetListApi,
+        '/subsets/<int:subset_id>': OperationSubsetDetailApi,
+        '/subsets/<int:subset_id>/<int:operation_id>': OperationSubsetOperationApi,
         '/workflows': WorkflowListApi,
         '/workflows/<int:workflow_id>': WorkflowDetailApi,
         '/workflows/<int:workflow_id>/permission/<int:user_id>': WorkflowPermissionApi,

@@ -736,7 +736,7 @@ class OperationSubsetListResponseSchema(Schema):
         required=True)
     operations = fields.Nested(
         'tahiti.schema.OperationListResponseSchema',
-        required=True,
+        allow_none=True,
         many=True)
 
     # noinspection PyUnresolvedReferences
@@ -751,14 +751,14 @@ class OperationSubsetListResponseSchema(Schema):
 
 class OperationSubsetCreateRequestSchema(Schema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
     name = fields.String(required=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformCreateRequestSchema',
-        required=True)
+        required=True,
+        only=['id'])
     operations = fields.Nested(
         'tahiti.schema.OperationCreateRequestSchema',
-        required=True,
+        allow_none=True,
         many=True,
         only=['id'])
 
@@ -781,7 +781,7 @@ class OperationSubsetItemResponseSchema(Schema):
         required=True)
     operations = fields.Nested(
         'tahiti.schema.OperationItemResponseSchema',
-        required=True,
+        allow_none=True,
         many=True)
 
     # noinspection PyUnresolvedReferences

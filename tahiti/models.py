@@ -592,9 +592,7 @@ class OperationSubset(db.Model):
                                     name="fk_platform_id"), nullable=False)
     platform = relationship(
         "Platform",
-        foreign_keys=[platform_id],
-        backref=backref("subsets",
-                        cascade="all, delete-orphan"))
+        foreign_keys=[platform_id])
     operations = relationship(
         "Operation",
         secondary=operation_subset_operation,
@@ -633,6 +631,9 @@ class Platform(db.Model, Translatable):
             "and_("
             "OperationForm.id==platform_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
+    subsets = relationship("OperationSubset", back_populates="platform",
+                           cascade="all, delete-orphan",
+                           order_by="OperationSubset.name")
 
     def __str__(self):
         return self.name

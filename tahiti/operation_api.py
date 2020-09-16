@@ -10,7 +10,7 @@ from flask_restful import Resource
 from sqlalchemy.orm import joinedload, load_only
 from sqlalchemy.sql.expression import bindparam, text
 
-from tahiti.app_auth import requires_auth
+from tahiti.app_auth import requires_auth, requires_permission
 from tahiti.cache import cache
 from tahiti.schema import *
 from tahiti.models import *
@@ -236,6 +236,7 @@ class OperationDetailApi(Resource):
 
     @staticmethod
     @requires_auth
+    @requires_permission('ADMINISTRATOR')
     def patch(operation_id):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 400
@@ -269,7 +270,29 @@ class OperationDetailApi(Resource):
                 result = dict(status="ERROR", message="Invalid data",
                               errors=form.errors)
         return result, result_code
+    @staticmethod
+    @requires_auth
+    @requires_permission('ADMINISTRATOR')
+    def delete(operation_id):
+        result, result_code = dict(status="ERROR", message="Not found"), 404
 
+        operation = optimize_operation_query(
+            Operation.query.filter_by(id=operation_id)).first()
+
+        if operation is not None:
+            try:
+                operation.enabled = not operation.enabled
+                db.session.add(operation)
+                db.session.commit()
+                result, result_code = dict(status="OK", message="Disabled"), 200
+            except Exception as e:
+                log.exception('Error in DELETE')
+                result, result_code = dict(status="ERROR",
+                                           message="Internal error"), 500
+                if current_app.debug:
+                    result['debug_detail'] = str(e)
+                db.session.rollback()
+        return result, result_code
 
 class OperationClearCacheApi(Resource):
     # noinspection PyMethodMayBeStatic
