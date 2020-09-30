@@ -21,6 +21,7 @@ depends_on = None
 
 OFFSET_FIELD = 579
 OFFSET_FORM = 152
+FORM_KMEANS = 27
 
 
 def _insert_operation_form_field():
@@ -44,6 +45,8 @@ def _insert_operation_form_field():
          None, None,  'EXECUTION', OFFSET_FORM],
         [OFFSET_FIELD+1, 'seed', 'INTEGER', 0, 8, None, 'integer',
          None, None, 'EXECUTION', OFFSET_FORM],
+        [OFFSET_FIELD + 2, 'seed', 'INTEGER', 0, 8, None, 'integer',
+         None, None, 'EXECUTION', FORM_KMEANS],
 
     ]
     columns = [c.name for c in tb.columns]
@@ -69,6 +72,9 @@ def _insert_operation_form_field_translation():
         [OFFSET_FIELD + 1, "en", "Seed", "Seed"],
         [OFFSET_FIELD + 1, "pt", "Semente", "Semente aleatória"],
 
+        [OFFSET_FIELD + 2, "en", "Seed", "Seed"],
+        [OFFSET_FIELD + 2, "pt", "Semente", "Semente aleatória"],
+
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -77,11 +83,11 @@ def _insert_operation_form_field_translation():
 all_commands = [
 
     (_insert_operation_form_field, """DELETE FROM operation_form_field
-         WHERE id BETWEEN {} AND {}""".format(OFFSET_FIELD, OFFSET_FIELD+1)),
+         WHERE id BETWEEN {} AND {}""".format(OFFSET_FIELD, OFFSET_FIELD+2)),
 
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id BETWEEN {} AND {}'
-     .format(OFFSET_FIELD, OFFSET_FIELD+1)),
+     .format(OFFSET_FIELD, OFFSET_FIELD+2)),
 ]
 
 
