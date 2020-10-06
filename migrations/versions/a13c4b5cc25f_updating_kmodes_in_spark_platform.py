@@ -1,5 +1,6 @@
 """Updating Kmodes in Spark platform
 
+
 Revision ID: a13c4b5cc25f
 Revises: 6a299689ea75
 Create Date: 2020-09-21 09:05:00.976893
