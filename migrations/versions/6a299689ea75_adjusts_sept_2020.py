@@ -290,10 +290,10 @@ all_commands = [
          "ALTER TABLE operation MODIFY COLUMN `type` enum('ACTION','SHUFFLE','TRANSFORMATION','VISUALIZATION', 'SHORTCUT') COLLATE utf8_unicode_ci NOT NULL",
          "ALTER TABLE operation MODIFY COLUMN `type` enum('ACTION','SHUFFLE','TRANSFORMATION','VISUALIZATION') COLLATE utf8_unicode_ci NOT NULL"
      ),
-   #  (
-   #       "ALTER TABLE operation_form_field ADD COLUMN editable TINYINT(1) NOT NULL DEFAULT 1",
-   #       "ALTER TABLE operation_form_field DROP COLUMN editable",
-   #  ),
+    (
+          "ALTER TABLE operation_form_field ADD COLUMN editable TINYINT(1) NOT NULL DEFAULT 1",
+          "ALTER TABLE operation_form_field DROP COLUMN editable",
+     ),
     (_insert_operation, 'DELETE FROM operation WHERE id BETWEEN {s} AND {e}'.format(s=DATA_SOURCE, e=DATA_SOURCE)),
 
     (_insert_operation_translation,
