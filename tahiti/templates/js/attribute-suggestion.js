@@ -227,7 +227,7 @@ var TahitiAttributeSuggester = (function () {
                     break;
             }
         }
-        return result;
+        task.uiPorts.output = result.sort(caseInsensitiveComparator);
     };
     var copyInputAddAttributesSplitAlias = function(task, attributes, alias, suffix){
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
