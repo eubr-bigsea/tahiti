@@ -61,13 +61,14 @@ var TahitiAttributeSuggester = (function () {
       workflow.flows.forEach(function(flow){
           if (topological.info[flow.source_id]){
               const op = topological.info[flow.target_id].task.operation;
+              const target = op.ports.find(p => p.id === flow.target_port)
               topological.info[flow.source_id].targets.push(
               {
                   target: flow.target_id,
                   targetPortId: flow.target_port,
                   source: flow.source_id,
                   sourcePortId: flow.source_port,
-                  order: op.ports.find(p => p.id === flow.target_port).order
+                  order: target ? target.order : 0,
               });
           }
       });
@@ -195,7 +196,7 @@ var TahitiAttributeSuggester = (function () {
             function(a, b) {return a.order - b.order}
         );
  
-        if (sorted_ports.length == 2) {
+        if (value && sorted_ports.length == 2) {
             switch(value.firstSelectionType){
                 case 1: //all attributes, with prefix
                     for(var i=0; i < sorted_ports[0].attributes.length; i++){
@@ -276,7 +277,7 @@ var TahitiAttributeSuggester = (function () {
         var dataSources = [];
         workflow.tasks.forEach(function(task){
             task.uiPorts = {inputs: [], output: [], refs: []}
-            var isDataSource = [18, 53].indexOf(parseInt(task.operation.id)) > -1;
+            var isDataSource = [18, 53, 139].includes(parseInt(task.operation.id));
             if (isDataSource) {
                 dataSources.push(task);
             }
