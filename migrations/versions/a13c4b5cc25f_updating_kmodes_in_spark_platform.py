@@ -1,7 +1,8 @@
 """Updating Kmodes in Spark platform
 
+
 Revision ID: a13c4b5cc25f
-Revises: 86699b2e6672
+Revises: 6a299689ea75
 Create Date: 2020-09-21 09:05:00.976893
 
 """
@@ -15,7 +16,7 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = 'a13c4b5cc25f'
-down_revision = '86699b2e6672'
+down_revision = '6a299689ea75'
 branch_labels = None
 depends_on = None
 

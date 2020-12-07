@@ -26,6 +26,7 @@ class OperationType:
     SHUFFLE = 'SHUFFLE'
     SYSTEM_META_OPERATION = 'SYSTEM_META_OPERATION'
     USER_META_OPERATION = 'USER_META_OPERATION'
+    SHORTCUT = 'SHORTCUT'
 
     @staticmethod
     def values():
@@ -151,6 +152,18 @@ class WorkflowType:
 
 
 # noinspection PyClassHasNoInit
+class PublishingStatus:
+    EDITING = 'EDITING'
+    PUBLISHED = 'PUBLISHED'
+    DISABLED = 'DISABLED'
+
+    @staticmethod
+    def values():
+        return [n for n in list(PublishingStatus.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
 class TaskGroupType:
     PIPELINE = 'PIPELINE'
     SERVICE = 'SERVICE'
@@ -206,6 +219,13 @@ operation_port_interface_operation_port = db.Table(
     Column('operation_port_interface_id', Integer,
            ForeignKey('operation_port_interface.id'), nullable=False))
 # noinspection PyUnresolvedReferences
+operation_subset_operation = db.Table(
+    'operation_subset_operation',
+    Column('operation_subset_id', Integer,
+           ForeignKey('operation_subset.id'), nullable=False),
+    Column('operation_id', Integer,
+           ForeignKey('operation.id'), nullable=False))
+# noinspection PyUnresolvedReferences
 platform_form = db.Table(
     'platform_form',
     Column('platform_id', Integer,
@@ -254,21 +274,24 @@ class Flow(db.Model):
 
     # Associations
     source_id = Column(String(250),
-                       ForeignKey("task.id"), nullable=False)
+                       ForeignKey("task.id",
+                                  name="fk_task_id"), nullable=False)
     source = relationship(
         "Task",
         foreign_keys=[source_id],
         backref=backref("sources",
                         cascade="all, delete-orphan"))
     target_id = Column(String(250),
-                       ForeignKey("task.id"), nullable=False)
+                       ForeignKey("task.id",
+                                  name="fk_task_id"), nullable=False)
     target = relationship(
         "Task",
         foreign_keys=[target_id],
         backref=backref("targets",
                         cascade="all, delete-orphan"))
     workflow_id = Column(Integer,
-                         ForeignKey("workflow.id"), nullable=False)
+                         ForeignKey("workflow.id",
+                                    name="fk_workflow_id"), nullable=False)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
@@ -301,6 +324,9 @@ class Operation(db.Model, Translatable):
     categories = relationship(
         "OperationCategory",
         secondary=operation_category_operation)
+    subsets = relationship(
+        "OperationSubset",
+        secondary=operation_subset_operation)
     platforms = relationship(
         "Platform",
         secondary=operation_platform,
@@ -417,13 +443,16 @@ class OperationFormField(db.Model, Translatable):
                         name='OperationFieldScopeEnumType'),
                    default='BOTH', nullable=False)
     enable_conditions = Column(String(2000))
+    editable = Column(Boolean,
+                      default=True, nullable=False)
     __mapper_args__ = {
         'order_by': 'order'
     }
 
     # Associations
     form_id = Column(Integer,
-                     ForeignKey("operation_form.id"))
+                     ForeignKey("operation_form.id",
+                                name="fk_operation_form_id"))
     form = relationship(
         "OperationForm",
         foreign_keys=[form_id])
@@ -468,7 +497,8 @@ class OperationPort(db.Model, Translatable):
         "OperationPortInterface",
         secondary=operation_port_interface_operation_port)
     operation_id = Column(Integer,
-                          ForeignKey("operation.id"), nullable=False)
+                          ForeignKey("operation.id",
+                                     name="fk_operation_id"), nullable=False)
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
@@ -527,10 +557,49 @@ class OperationScript(db.Model):
 
     # Associations
     operation_id = Column(Integer,
-                          ForeignKey("operation.id"), nullable=False)
+                          ForeignKey("operation.id",
+                                     name="fk_operation_id"), nullable=False)
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class OperationSubset(db.Model):
+    """ A subset of operations in a platform """
+    __tablename__ = 'operation_subset'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(50), nullable=False)
+
+    # Associations
+    platform_id = Column(Integer,
+                         ForeignKey("platform.id",
+                                    name="fk_platform_id"), nullable=False)
+    platform = relationship(
+        "Platform",
+        foreign_keys=[platform_id],
+        backref=backref("subsets",
+                        cascade="all, delete-orphan"))
+    platform_id = Column(Integer,
+                         ForeignKey("platform.id",
+                                    name="fk_platform_id"), nullable=False)
+    platform = relationship(
+        "Platform",
+        foreign_keys=[platform_id])
+    operations = relationship(
+        "Operation",
+        secondary=operation_subset_operation,
+        secondaryjoin=(
+            "and_("
+            "Operation.id==operation_subset_operation.c.operation_id,"
+            "Operation.enabled==1)"))
 
     def __str__(self):
         return self.name
@@ -562,6 +631,9 @@ class Platform(db.Model, Translatable):
             "and_("
             "OperationForm.id==platform_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
+    subsets = relationship("OperationSubset", back_populates="platform",
+                           cascade="all, delete-orphan",
+                           order_by="OperationSubset.name")
 
     def __str__(self):
         return self.name
@@ -603,7 +675,8 @@ class PlatformPlugin(db.Model):
 
     # Associations
     platform_id = Column(Integer,
-                         ForeignKey("platform.id"), nullable=False)
+                         ForeignKey("platform.id",
+                                    name="fk_platform_id"), nullable=False)
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id],
@@ -612,6 +685,32 @@ class PlatformPlugin(db.Model):
 
     def __str__(self):
         return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class RoleOperationSubset(db.Model):
+    """ Role associated to a subset of operations in a platform """
+    __tablename__ = 'role_operation_subset'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    role_name = Column(String(50), nullable=False)
+    role_id = Column(Integer, nullable=False)
+
+    # Associations
+    subset_id = Column(Integer,
+                       ForeignKey("operation_subset.id",
+                                  name="fk_operation_subset_id"), nullable=False)
+    subset = relationship(
+        "OperationSubset",
+        foreign_keys=[subset_id],
+        backref=backref("roles",
+                        cascade="all, delete-orphan"))
+
+    def __str__(self):
+        return self.role_name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
@@ -648,14 +747,16 @@ class Task(db.Model):
 
     # Associations
     workflow_id = Column(Integer,
-                         ForeignKey("workflow.id"), nullable=False)
+                         ForeignKey("workflow.id",
+                                    name="fk_workflow_id"), nullable=False)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
         backref=backref("tasks",
                         cascade="all, delete-orphan"))
     operation_id = Column(Integer,
-                          ForeignKey("operation.id"), nullable=False)
+                          ForeignKey("operation.id",
+                                     name="fk_operation_id"), nullable=False)
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
@@ -715,16 +816,34 @@ class Workflow(db.Model):
     forms = Column(LONGTEXT)
     deployment_enabled = Column(Boolean,
                                 default=False, nullable=False)
+    publishing_enabled = Column(Boolean,
+                                default=False, nullable=False)
+    publishing_status = Column(Enum(*list(PublishingStatus.values()),
+                                    name='PublishingStatusEnumType'))
     type = Column(Enum(*list(WorkflowType.values()),
                        name='WorkflowTypeEnumType'),
                   default=WorkflowType.WORKFLOW, nullable=False)
+    preferred_cluster_id = Column(Integer)
     __mapper_args__ = {
         'version_id_col': version, 'order_by': 'name'
     }
 
     # Associations
     platform_id = Column(Integer,
-                         ForeignKey("platform.id"), nullable=False)
+                         ForeignKey("platform.id",
+                                    name="fk_platform_id"), nullable=False)
+    platform = relationship(
+        "Platform",
+        foreign_keys=[platform_id])
+    subset_id = Column(Integer,
+                       ForeignKey("operation_subset.id",
+                                  name="fk_operation_subset_id"))
+    subset = relationship(
+        "OperationSubset",
+        foreign_keys=[subset_id])
+    platform_id = Column(Integer,
+                         ForeignKey("platform.id",
+                                    name="fk_platform_id"), nullable=False)
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id])
@@ -752,7 +871,8 @@ class WorkflowHistory(db.Model):
 
     # Associations
     workflow_id = Column(Integer,
-                         ForeignKey("workflow.id"), nullable=False)
+                         ForeignKey("workflow.id",
+                                    name="fk_workflow_id"), nullable=False)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
@@ -780,7 +900,8 @@ class WorkflowPermission(db.Model):
 
     # Associations
     workflow_id = Column(Integer,
-                         ForeignKey("workflow.id"), nullable=False)
+                         ForeignKey("workflow.id",
+                                    name="fk_workflow_id"), nullable=False)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
@@ -801,6 +922,7 @@ class WorkflowVariable(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
+    label = Column(String(200))
     description = Column(LONGTEXT)
     type = Column(Enum(*list(DataType.values()),
                        name='DataTypeEnumType'), nullable=False)
@@ -808,13 +930,15 @@ class WorkflowVariable(db.Model):
                           default=1, nullable=False)
     suggested_widget = Column(String(200))
     default_value = Column(LONGTEXT)
+    parameters = Column(LONGTEXT)
     __mapper_args__ = {
         'order_by': 'name'
     }
 
     # Associations
     workflow_id = Column(Integer,
-                         ForeignKey("workflow.id"), nullable=False)
+                         ForeignKey("workflow.id",
+                                    name="fk_workflow_id"), nullable=False)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],

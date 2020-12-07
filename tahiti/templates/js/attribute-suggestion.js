@@ -60,10 +60,15 @@ var TahitiAttributeSuggester = (function () {
       });
       workflow.flows.forEach(function(flow){
           if (topological.info[flow.source_id]){
+              const op = topological.info[flow.target_id].task.operation;
+              const target = op.ports.find(p => p.id === flow.target_port)
               topological.info[flow.source_id].targets.push(
               {
                   target: flow.target_id,
                   targetPortId: flow.target_port,
+                  source: flow.source_id,
+                  sourcePortId: flow.source_port,
+                  order: target ? target.order : 0,
               });
           }
       });
@@ -167,7 +172,7 @@ var TahitiAttributeSuggester = (function () {
         }
         var result = [];
         sorted_ports = task.uiPorts.inputs.sort(
-            function(a, b) {return a.targetPortId - b.targetPortId}
+            function(a, b) {return a.order - b.order}
         );
         if (sorted_ports.length == 2) {
             for(var p = 0; p < sorted_ports.length; p++){
@@ -178,6 +183,53 @@ var TahitiAttributeSuggester = (function () {
             task.uiPorts.output = result.sort(caseInsensitiveComparator);
         }
     }
+
+    var joinSuffixDuplicatedAttributes2 = function(task) {
+        var parameters = task.forms['join_parameters'];
+        if (! parameters){ //old parameters set
+            return joinSuffixDuplicatedAttributes(task);
+        }
+        var value = parameters.value;
+        var result = [];
+
+        sorted_ports = task.uiPorts.inputs.sort(
+            function(a, b) {return a.order - b.order}
+        );
+ 
+        if (value && sorted_ports.length == 2) {
+            switch(value.firstSelectionType){
+                case 1: //all attributes, with prefix
+                    for(var i=0; i < sorted_ports[0].attributes.length; i++){
+                        result.push(value.firstPrefix + sorted_ports[0].attributes[i]);
+                    }
+                    break;
+                case 2:
+                    value.firstSelect.filter(function(s){return s.select;})
+                        .forEach(function(item){
+                            result.push(item.alias || item.attribute);
+                        });
+                    break;
+                case 3: // no attribute selected
+                    break
+            }
+            switch(value.secondSelectionType){
+                case 1: //all attributes, with prefix
+                    for(var i=0; i < sorted_ports[1].attributes.length; i++){
+                        result.push(value.secondPrefix + sorted_ports[1].attributes[i]);
+                    }
+                    break;
+                case 2:
+                    value.secondSelect.filter(function(s){return s.select;})
+                        .forEach(function(item){
+                            result.push(item.alias || item.attribute);
+                        });
+                    break;
+                case 3: // no attribute selected
+                    break;
+            }
+        }
+        task.uiPorts.output = result.sort(caseInsensitiveComparator);
+    };
     var copyInputAddAttributesSplitAlias = function(task, attributes, alias, suffix){
         task.uiPorts.output = flatArrayOfArrays(task.uiPorts.inputs);
         var aliases = [];
@@ -225,7 +277,7 @@ var TahitiAttributeSuggester = (function () {
         var dataSources = [];
         workflow.tasks.forEach(function(task){
             task.uiPorts = {inputs: [], output: [], refs: []}
-            var isDataSource = [18, 53].indexOf(parseInt(task.operation.id)) > -1;
+            var isDataSource = [18, 53, 139].includes(parseInt(task.operation.id));
             if (isDataSource) {
                 dataSources.push(task);
             }
@@ -238,7 +290,7 @@ var TahitiAttributeSuggester = (function () {
             {%- endfor -%}
             };
 
-            var result = {};
+            const result = {};
             topological.order.forEach(function(k){
                 var task = topological.info[k].task;
                 result[task.id] = task;
@@ -251,10 +303,11 @@ var TahitiAttributeSuggester = (function () {
                 }
                 // Update next tasks' inputs with current output
                 topological.info[k].targets.forEach(function(follow){
-                    topological.info[follow.target].task.uiPorts.inputs.push(
-                        {targetPortId: follow.targetPortId,
-                            attributes: (task.uiPorts.output)});
-                    // Some operations requires access attribute information
+                    const newInput = Object.assign({}, follow);
+                    newInput['attributes'] = task.uiPorts.output;
+                    topological.info[follow.target].task.uiPorts.inputs.push(newInput);
+
+                    // Some operations require access to attribute information
                     // from their subsequent tasks. For example, all operations
                     // that are algorithms don't have information about attributes
                     // and must query such information from model producers operations

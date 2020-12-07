@@ -1,16 +1,19 @@
 # -*- coding: utf-8 -*-}
 import itertools
+import locale
+import unicodedata
 import logging
-from functools import reduce
+from functools import reduce, cmp_to_key
 
 from flask import request, current_app, g
 from flask_restful import Resource
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import joinedload, load_only
 from sqlalchemy.sql.expression import bindparam, text
 
-from tahiti.app_auth import requires_auth
+from tahiti.app_auth import requires_auth, requires_permission
 from tahiti.cache import cache
 from tahiti.schema import *
+from tahiti.models import *
 
 log = logging.getLogger(__name__)
 
@@ -39,25 +42,27 @@ def deep_merge(d1, d2, in_conflict=lambda v1, v2: v2):
     return d1
 
 
-def optimize_operation_query(operations):
+def optimize_operation_query(operations, only_translation=False):
     current_translation = db.aliased(Operation.current_translation)
     fallback_translation = db.aliased(Operation.fallback_translation)
-    return operations \
+    op = operations \
         .join(current_translation) \
         .options(db.contains_eager(Operation.current_translation,
-                                   alias=current_translation)) \
-        .options(joinedload('forms.current_translation')) \
-        .options(joinedload('ports.current_translation')) \
-        .options(joinedload('ports.interfaces.current_translation')) \
-        .options(joinedload('forms.fields.current_translation')) \
-        .options(joinedload('categories.current_translation')) \
-        .options(joinedload('forms')) \
-        .options(joinedload('platforms')) \
-        .options(joinedload('platforms.current_translation')) \
-        .options(joinedload('ports')) \
-        .options(joinedload('ports.interfaces')) \
-        .options(joinedload('forms.fields')) \
-        .options(joinedload('categories'))
+                                   alias=current_translation))
+    if not only_translation:    
+        op = op.options(joinedload('forms.current_translation')) \
+            .options(joinedload('ports.current_translation')) \
+            .options(joinedload('ports.interfaces.current_translation')) \
+            .options(joinedload('forms.fields.current_translation')) \
+            .options(joinedload('categories.current_translation')) \
+            .options(joinedload('forms')) \
+            .options(joinedload('platforms')) \
+            .options(joinedload('platforms.current_translation')) \
+            .options(joinedload('ports')) \
+            .options(joinedload('ports.interfaces')) \
+            .options(joinedload('forms.fields')) \
+            .options(joinedload('categories'))
+    return op
 
 
 class OperationListApi(Resource):
@@ -68,7 +73,6 @@ class OperationListApi(Resource):
     def get():
         @cache.memoize(3600 * 24, make_name=lambda f: request.url)
         def result():
-
             config = current_app.config['TAHITI_CONFIG']
 
             if request.args.get('fields'):
@@ -78,11 +82,25 @@ class OperationListApi(Resource):
                 only = ('id', 'name') \
                     if request.args.get('simple', 'false') == 'true' else None
 
-            operations = optimize_operation_query(Operation.query)
+            exclude = []
+            if request.args.get('partial') in ('true', 1, '1'):
+                operations = optimize_operation_query(Operation.query, True)\
+                    .options(joinedload('subsets'))\
+                    .options(joinedload('categories.current_translation')) \
+                    .options(joinedload('categories'))
+
+                exclude = ['forms', 'ports', 'platforms']
+            else:
+                operations = optimize_operation_query(Operation.query)
 
             disabled_filter = request.args.get('disabled')
             if not disabled_filter:
                 operations = operations.filter(Operation.enabled)
+
+            subset_filter = request.args.get('subset')
+            if subset_filter and subset_filter.isdigit():
+                operations = operations.filter(
+                    Operation.subsets.any(id=int(subset_filter)))
 
             platform = request.args.get('platform', None)
             if platform:
@@ -95,6 +113,12 @@ class OperationListApi(Resource):
             else:
                 operations = operations.filter(
                     Operation.platforms.any(enabled=True))
+
+            workflow = request.args.get('workflow', None)
+            if workflow:
+                tasks = db.session.query(Task.operation_id).filter(
+                        Task.workflow_id == int(workflow)).subquery()
+                operations = operations.filter(Operation.id.in_(tasks))
 
             name = request.args.get('name', '')
             # SqlAlchemy-i18n is not working when a filter
@@ -120,8 +144,8 @@ class OperationListApi(Resource):
                 'operation_translation_1.locale = :param_locale',
                 bindparams=[param_locale]))
 
-            exclude = ('platforms.forms', 'platforms.icon',
-                       'platforms.description')
+            exclude.extend(['platforms.forms', 'platforms.icon',
+                       'platforms.description'])
 
             page = request.args.get('page')
 
@@ -148,6 +172,7 @@ class OperationListApi(Resource):
                             item.enabled = False
                     results = {
                         'data': OperationListResponseSchema(many=True,
+                                                            exclude=exclude,
                                                             only=only).dump(
                             items).data,
                         'pagination': {'page': page, 'size': page_size,
@@ -162,6 +187,7 @@ class OperationListApi(Resource):
                 items = operations
                 for item in items:
                     if item.id in disabled_ops:
+                        db.session.expunge(item)
                         item.enabled = False
 
                 data = OperationListResponseSchema(
@@ -171,8 +197,9 @@ class OperationListApi(Resource):
                 if only is None or 'forms' in only:
                     for op in data:
                         groups = itertools.groupby(
-                            sorted(op['forms'], key=lambda f: f['category']),
-                            lambda f: f['category'])
+                            sorted(op.get('forms', {}), 
+                                key=lambda f: f.get('category')),
+                            lambda f: f.get('category'))
 
                         op['forms'] = []
 
@@ -209,6 +236,7 @@ class OperationDetailApi(Resource):
 
     @staticmethod
     @requires_auth
+    @requires_permission('ADMINISTRATOR')
     def patch(operation_id):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 400
@@ -242,7 +270,29 @@ class OperationDetailApi(Resource):
                 result = dict(status="ERROR", message="Invalid data",
                               errors=form.errors)
         return result, result_code
+    @staticmethod
+    @requires_auth
+    @requires_permission('ADMINISTRATOR')
+    def delete(operation_id):
+        result, result_code = dict(status="ERROR", message="Not found"), 404
 
+        operation = optimize_operation_query(
+            Operation.query.filter_by(id=operation_id)).first()
+
+        if operation is not None:
+            try:
+                operation.enabled = not operation.enabled
+                db.session.add(operation)
+                db.session.commit()
+                result, result_code = dict(status="OK", message="Disabled"), 200
+            except Exception as e:
+                log.exception('Error in DELETE')
+                result, result_code = dict(status="ERROR",
+                                           message="Internal error"), 500
+                if current_app.debug:
+                    result['debug_detail'] = str(e)
+                db.session.rollback()
+        return result, result_code
 
 class OperationClearCacheApi(Resource):
     # noinspection PyMethodMayBeStatic
@@ -251,3 +301,103 @@ class OperationClearCacheApi(Resource):
     def post():
         cache.clear()
         return '{"msg": "Cache cleaned"}', 200
+
+class OperationTreeApi(Resource):
+    @staticmethod
+    #@requires_auth
+    def get(platform_id):
+        operations = Operation.query.filter(Operation.enabled).filter( 
+            Operation.platforms.any(enabled=True, id=platform_id))
+        current_translation = db.aliased(Operation.current_translation)
+        operations = operations \
+            .join(current_translation) \
+            .options(db.contains_eager(Operation.current_translation,
+                                       alias=current_translation)) \
+            .options(joinedload('categories.current_translation')) \
+            .options(joinedload('categories'))
+        extract_group = lambda c: {'id': c.id, 'name': c.name, 'order': c.order or c.default_order}
+        filter_group = lambda c: c.type == 'group'
+        filter_subgroup = lambda c: c.type == 'subgroup'
+
+        ops = []
+        for op in operations:
+            group = next(map(extract_group, filter(filter_group, op.categories)), None)
+            subgroup = next(map(extract_group, filter(filter_subgroup, op.categories)), None)
+            item = { 
+                 'group_id': group['id'] if group is not None else None,
+                 'subgroup_id': subgroup['id'] if subgroup is not None else None,
+                 'group': group['name'] if group is not None else None,
+                 'operation': {'id': op.id, 'name': op.name, 'slug': op.slug},
+                 'subgroup': subgroup['name'] if subgroup is not None else None,
+                 'order': group['order'] if group is not None else None, 
+                 'subgroupOrder': subgroup['order'] if subgroup is not None else None
+            }
+            ops.append(item)
+            def cmp_groups(a, b):
+                    if a['order'] is None: return -1
+                    if b['order'] is None: return 1
+                    if a['order'] < b['order']: return -1
+                    if a['order'] > b['order']: return 1
+                    text_cmp = locale.strcoll(unicodedata.normalize('NFC', a['group'] or ''),
+                                unicodedata.normalize('NFC', b['group'] or ''))
+                    if text_cmp != 0:
+                        return text_cmp
+                    text_cmp= locale.strcoll(
+                            unicodedata.normalize('NFC', a['subgroup'] or ''),
+                            unicodedata.normalize('NFC', b['subgroup'] or ''))
+                    if text_cmp != 0:
+                        return text_cmp
+                    return locale.strcoll(
+                            unicodedata.normalize('NFC', a['operation']['name']),
+                            unicodedata.normalize('NFC', b['operation']['name']))
+
+                    
+            ops = sorted(ops, key=cmp_to_key(cmp_groups))
+            groups = []
+            for k, g in itertools.groupby(ops, key=lambda x: x['group_id']):
+                for i, nested in enumerate(g):
+                   if i == 0:
+                       g = {'id': nested['group_id'], 'name': nested['group'], 'operations':[]}
+                       groups.append(g)
+                   g['operations'].append(nested['operation'])
+
+        only = None
+        exclude = ['forms', 'platforms', 'ports']
+        result = OperationListResponseSchema(
+                    many=True, only=only, exclude=exclude).dump(operations).data
+
+        return groups, 200
+
+class OperationSubsetApi(Operation):
+    human_name = 'OperationSubset'
+
+    def post():
+        result = {'status': 'ERROR', 'message': gettext('Insufficient data.')}
+        return_code = 400
+
+        if request.json:
+            try:
+                op_id = request.json.get('operation_id')
+                subset_id = request.json.get('subset_id')
+                if op_id and subset_id:
+                    op = Operation.filter.get(op_id)
+                    subset = OperationSubset.query.get(subset_id)
+
+                    if op.platform.id == subset.platform_id:
+                        oso = OperationSubsetOperation(operation=op, subset=subset)
+                        db.session.add(oso)
+                        db.session.commit();
+                        result = {
+                            'status': 'OK',
+                            'message': gettext(
+                                '%(n)s (id=%(id)s) was updated with success!',
+                                n=self.human_name,
+                                id=platform_id)
+                        }
+            except Exception as e:
+                result = {'status': 'ERROR',
+                              'message': gettext("Internal error")}
+                return_code = 500
+                db.session.rollback()
+
+        return result, return_code

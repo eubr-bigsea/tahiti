@@ -178,7 +178,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id', 'locale')
     )
     op.create_table('task',
-    sa.Column('id', sa.String(length=250), autoincrement=False, nullable=False),
+    sa.Column('id', sa.String(length=100), autoincrement=False, nullable=False),
     sa.Column('left', sa.Integer(), nullable=False),
     sa.Column('top', sa.Integer(), nullable=False),
     sa.Column('z_index', sa.Integer(), nullable=False),
@@ -196,8 +196,8 @@ def upgrade():
     sa.Column('target_port', sa.Integer(), nullable=False),
     sa.Column('source_port_name', sa.String(length=200), nullable=False),
     sa.Column('target_port_name', sa.String(length=200), nullable=False),
-    sa.Column('source_id', sa.String(length=250), nullable=False),
-    sa.Column('target_id', sa.String(length=250), nullable=False),
+    sa.Column('source_id', sa.String(length=100), nullable=False),
+    sa.Column('target_id', sa.String(length=100), nullable=False),
     sa.Column('workflow_id', sa.Integer(), nullable=False),
     sa.ForeignKeyConstraint(['source_id'], ['task.id'], ),
     sa.ForeignKeyConstraint(['target_id'], ['task.id'], ),
