@@ -4,9 +4,9 @@
 try:
     import eventlet
 
-    eventlet.monkey_patch(all=True, thread=False)
+    eventlet.monkey_patch(all=True, thread=True)
 except:
-    pass
+    print('Error in monkey patch')
 import argparse
 
 import eventlet.wsgi
