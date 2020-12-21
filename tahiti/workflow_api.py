@@ -46,6 +46,8 @@ def get_workflow(workflow_id):
     workflows = _filter_by_permissions(workflows, list(PermissionType.values()))
 
     workflows = workflows.options(
+
+        joinedload('tasks.operation.forms')).options(
         joinedload('tasks.operation.forms')).options(
         joinedload('tasks.operation.forms.fields'))
 
@@ -59,6 +61,7 @@ def get_workflow(workflow_id):
                     if field.name not in current_form:
                         current_form[field.name] = {
                             'value': field.default}
+            db.session.expunge(task) # in order to avoid unnecessary updates
             task.forms = json.dumps(current_form)
     return workflow
 
@@ -97,8 +100,8 @@ class WorkflowListApi(Resource):
                 only = [x.strip() for x in
                         request.args.get('fields').split(',')]
             else:
-                only = ('id', 'name', 'platform.id', 'permissions') \
-                    if request.args.get('simple', 'false') == 'true' else None
+                only = ('id', 'name', 'platform.id', 'permissions')
+
 
             workflows = test_and_apply_filter(request, 'platform', workflows, 
                 lambda v: Workflow.platform.has(slug=v))
@@ -162,28 +165,22 @@ class WorkflowListApi(Resource):
                 sort_option = sort_option.desc()
             workflows = optimize_workflow_query(
                 workflows.order_by(sort_option))
-            page = request.args.get('page')
+            page = int(request.args.get('page', 1))
 
-            if page is not None and page.isdigit():
-                page_size = int(request.args.get('size', 20))
-                page = int(page)
-                pagination = workflows.paginate(page, page_size, False)
-                if pagination.total < (page - 1) * page_size and page != 1:
-                    # Nothing in that specified page, return to page 1
-                    pagination = workflows.paginate(1, page_size, False)
-                result = {
-                    'data': WorkflowListResponseSchema(many=True,
-                                                       exclude=('permissions',),
-                                                       only=only).dump(
-                        pagination.items).data,
-                    'pagination': {'page': page, 'size': page_size,
-                                   'total': pagination.total,
-                                   'pages': pagination.total / page_size + 1}}
-            else:
-                result = {'data': WorkflowListResponseSchema(many=True,
-                                                             only=only).dump(
-                    workflows).data}
-
+            page_size = int(request.args.get('size', 20))
+            page = int(page)
+            pagination = workflows.paginate(page, page_size, False)
+            if pagination.total < (page - 1) * page_size and page != 1:
+                # Nothing in that specified page, return to page 1
+                pagination = workflows.paginate(1, page_size, False)
+            result = {
+                'data': WorkflowListResponseSchema(many=True,
+                                                   exclude=('permissions',),
+                                                   only=only).dump(
+                    pagination.items).data,
+                'pagination': {'page': page, 'size': page_size,
+                               'total': pagination.total,
+                               'pages': pagination.total / page_size + 1}}
             return result
 
         except Exception as e:
@@ -512,8 +509,6 @@ class WorkflowHistoryApi(Resource):
                                                       i)
 
                 rw = WorkflowCreateRequestSchema().load(old)
-                # import pdb
-                # pdb.set_trace()
                 if rw.errors:
                     result_code = 400
                     result = dict(

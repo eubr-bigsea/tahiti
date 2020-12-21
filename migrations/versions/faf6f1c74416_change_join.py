@@ -105,7 +105,7 @@ def upgrade():
                 'value': {
                     'joinType': form.get('join_type', {}).get('value', 'inner'),
                     'firstPrefix': aliases[0],
-                    'secondPrefix': aliases[1],
+                    'secondPrefix': aliases[1] if len(aliases) > 1 else '',
                     'firstSelect': [],
                     'conditions': conditions,
                     'firstSelectionType': 1,
