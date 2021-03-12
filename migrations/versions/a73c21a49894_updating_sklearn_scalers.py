@@ -313,7 +313,7 @@ def _insert_operation_form_field():
 
         (FIELD_ID, "attributes", "TEXT", 1, 1, None, "attribute-selector",
          None, None, "EXECUTION", FORM_ID),
-        (FIELD_ID + 1, "suffix", "TEXT", 0, 2, '_norm', "text", None, None,
+        (FIELD_ID + 1, "alias", "TEXT", 0, 2, None, "text", None, None,
          "EXECUTION", FORM_ID),
         (FIELD_ID + 2, "with_mean", "INTEGER", 1, 3, 0, "checkbox", None, None,
          "EXECUTION", FORM_ID),
@@ -322,7 +322,7 @@ def _insert_operation_form_field():
 
         (FIELD_ID + 4, "attributes", "TEXT", 1, 1, None, "attribute-selector",
          None, None, "EXECUTION", FORM_ID + 1),
-        (FIELD_ID + 5, "suffix", "TEXT", 0, 2, '_norm', "text", None,
+        (FIELD_ID + 5, "alias", "TEXT", 0, 2, None, "text", None,
          None, "EXECUTION", FORM_ID + 1),
         (FIELD_ID + 6, "min", "FLOAT", 0, 3, 0.0, "decimal", None, None,
          "EXECUTION", FORM_ID + 1),
@@ -331,7 +331,7 @@ def _insert_operation_form_field():
 
         (FIELD_ID + 8, "attributes",  "TEXT", 1, 1, None, "attribute-selector",
          None, None, "EXECUTION", FORM_ID + 2),
-        (FIELD_ID + 9, "suffix", "TEXT", 0, 2, '_norm', "text", None, None,
+        (FIELD_ID + 9, "alias", "TEXT", 0, 2, None, "text", None, None,
          "EXECUTION", FORM_ID + 2),
 
     ]
@@ -352,10 +352,14 @@ def _insert_operation_form_field_translation():
         (FIELD_ID, "en", "Features", "Features"),
         (FIELD_ID, "pt", "Atributo(s) previsor(es)",
          "Atributo(s) previsor(es)"),
-        (FIELD_ID + 1, "en", "Column suffix",
-         "Suffix to use in the transformed data."),
-        (FIELD_ID + 1, "pt", "Sufixo para a(s) coluna(s)",
-         "Sufixo a ser usado nos dados transformados."),
+
+        (FIELD_ID + 1, "en", "Name(s) for new attribute(s)",
+         "Name(s) for new attribute(s). If omitted, the name of original "
+         "attribute with a suffix will be used."),
+        (FIELD_ID + 1, "pt", "Nome do(s) novo(s) attributo(s)",
+         "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo "
+         "original com um sufixo será usado."),
+
         (FIELD_ID + 2, "en", "Center data with mean",
          "Center data with mean (default: false)."),
         (FIELD_ID + 2, "pt", "Centralizar os dados com a média",
@@ -369,10 +373,12 @@ def _insert_operation_form_field_translation():
         (FIELD_ID + 4, "en", "Features", "Features"),
         (FIELD_ID + 4, "pt", "Atributo(s) previsor(es)",
          "Atributo(s) previsor(es)"),
-        (FIELD_ID + 5, "en", "Column suffix",
-         "Suffix to use in the transformed data."),
-        (FIELD_ID + 5, "pt", "Sufixo para a(s) coluna(s)",
-         "Sufixo a ser usado nos dados transformados"),
+        (FIELD_ID + 5, "en", "Name(s) for new attribute(s)",
+         "Name(s) for new attribute(s). If omitted, the "
+         "name of original attribute with a suffix will be used."),
+        (FIELD_ID + 5, "pt", "Nome do(s) novo(s) attributo(s)",
+         "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo "
+         "original com um sufixo será usado."),
         (FIELD_ID + 6, "en", "Lower bound of the output feature range",
          "Lower bound of the output feature range (default: 0.0)."),
         (FIELD_ID + 6, "pt", "Limite inferior para a faixa",
@@ -385,10 +391,12 @@ def _insert_operation_form_field_translation():
         (FIELD_ID + 8, "en", "Features", "Features"),
         (FIELD_ID + 8, "pt", "Atributo(s) previsor(es)",
          "Atributo(s) previsor(es)"),
-        (FIELD_ID + 9, "en", "Column suffix",
-         "Suffix to use in the transformed data."),
-        (FIELD_ID + 9, "pt", "Sufixo para a(s) coluna(s)",
-         "Sufixo a ser usado nos dados transformados."),
+        (FIELD_ID + 9, "en", "Name(s) for new attribute(s)",
+         "Name(s) for new attribute(s). If omitted, the "
+         "name of original attribute with a suffix will be used."),
+        (FIELD_ID + 9, "pt", "Nome do(s) novo(s) attributo(s)",
+         "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo "
+         "original com um sufixo será usado."),
 
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -407,17 +415,21 @@ def _insert_operation_script():
     columns = [c.name for c in tb.columns]
     data = [
         (SCRIPT_ID, "JS_CLIENT", 1,
-         "copyInputAddAttributesSplitAlias(task, 'attributes', 'suffix', "
+         "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', "
          "'_norm');",
          OPERATION_ID),
         (SCRIPT_ID + 1, "JS_CLIENT", 1,
-         "copyInputAddAttributesSplitAlias(task, 'attributes', 'suffix', "
+         "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', "
          "'_norm');",
          OPERATION_ID+1),
         (SCRIPT_ID + 2, "JS_CLIENT", 1,
-         "copyInputAddAttributesSplitAlias(task, 'attributes', 'suffix', "
+         "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', "
          "'_norm');",
          OPERATION_ID + 2),
+        (SCRIPT_ID + 3, "JS_CLIENT", 1,
+         "copyInputAddAttributesSplitAlias(task, 'attribute', 'alias', "
+         "'_norm');",
+         4014),
     ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
 
@@ -468,8 +480,97 @@ all_commands = [
      "operation_id IN (90, 91, 92)",
      "INSERT INTO operation_platform VALUES (90, 4), (91, 4), (92, 4) "),
     (_insert_operation_script,
-     'DELETE FROM operation_script WHERE operation_id BETWEEN {} AND {}'
-     .format(OPERATION_ID, OPERATION_ID + 2)),
+     'DELETE FROM operation_script WHERE id BETWEEN {} AND {}'
+     .format(SCRIPT_ID, SCRIPT_ID + 3)),
+
+    # updating quantile-discretizer field
+    ("""
+         UPDATE operation_form_field_translation 
+         SET `label` = 'The number of bins to produce', 
+             `help` = 'The number of bins to produce. n_bins > 2'  
+         WHERE id = 4072 AND locale = 'en'
+     """,
+     """
+          UPDATE operation_form_field_translation 
+          SET `label` = 'Number of quantiles', 
+              `help` = 'Number of quantiles to be computed. It corresponds '
+              'to the number of landmarks used to discretize the cumulative '
+              'density function' 
+          WHERE id = 4072 AND locale = 'en'
+          """
+     ),
+    ("""
+         UPDATE operation_form_field_translation 
+         SET `label` = 'Número de bins', 
+             `help` = 'Número de bin para ser transformado. n_bins > 2'  
+         WHERE id = 4072 AND locale = 'pt'
+    """, """
+         UPDATE operation_form_field_translation 
+         SET `label` = 'Número de quantis', 
+              `help` = 'Número de quantis a serem calculados. Corresponde ao '
+              'número de pontos de referência usados para discretizar a '
+              'função de densidade acumulada' 
+         WHERE id = 4072 AND locale = 'pt'
+    """),
+
+    # updating quantile-discretizer alias
+    ("""
+         UPDATE operation_form_field_translation 
+         SET `label` = 'Name(s) for new attribute(s)', 
+             `help` = 'Name(s) for new attribute(s). If omitted, the name '
+             'of original attribute with a suffix will be used.'  
+         WHERE id = 4071 AND locale = 'en'
+     """,
+     """
+          UPDATE operation_form_field_translation 
+          SET `label` = 'Alias', 
+              `help` = 'Alias for generated indexed fields.' 
+          WHERE id = 4071 AND locale = 'en'
+          """
+     ),
+    ("""
+        UPDATE operation_form_field_translation 
+        SET `label` = 'Nome do(s) novo(s) attributo(s)', 
+            `help` = 'Nome do(s) novo(s) atributo(s). ' 
+        'Se omitido, o nome do atributo original com um sufixo será usado.'   
+        WHERE id = 4071 AND locale = 'pt';
+     """, """
+        UPDATE operation_form_field_translation 
+        SET `label` = 'Alias', 
+            `help` = 'Alias para os campos indexados gerados.' 
+        WHERE id = 4071 AND locale = 'pt';
+     """),
+
+    # updating quantile-discretizer slug to kbins-discretizer
+    ("UPDATE operation SET `slug` = 'kbins-discretizer' WHERE id = 4014;",
+     "UPDATE operation SET `slug` = 'quantile-discretizer' WHERE id = 4014;"),
+
+    # updating quantile-discretizer translation
+    ("""
+        UPDATE operation_translation 
+        SET `name` = 'KBins discretizer', 
+            `description` = 'Bin continuous data into intervals.' 
+        WHERE id = 4014 AND locale = 'en'
+    """, """
+        UPDATE operation_translation 
+        SET `name` = 'Quantile discretizer', 
+            `description` = 'Quantile discretizer takes an attribute with '
+            'continuous features and outputs an attribute with binned '
+            'categorical features.' 
+        WHERE id = 4014 AND locale = 'en'
+    """),
+    ("""
+        UPDATE operation_translation 
+        SET `name` = 'Discretizador KBins', 
+            `description` = 'Divide dados contínuos em intervalos.' 
+        WHERE id = 4014 AND locale = 'pt'
+    """, """
+        UPDATE operation_translation 
+        SET `name` = 'Discretizador em quantis', 
+            `description` = 'Discretizador em quantis recebe um atributo e '
+            'associa-o a quantis especificados em faixas de valores.' 
+        WHERE id = 4014 AND locale = 'pt'
+     """)
 
 ]
 
