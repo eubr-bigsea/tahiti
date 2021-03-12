@@ -428,7 +428,7 @@ def _insert_operation_script():
          OPERATION_ID + 2),
         (SCRIPT_ID + 3, "JS_CLIENT", 1,
          "copyInputAddAttributesSplitAlias(task, 'attribute', 'alias', "
-         "'_norm');",
+         "'_disc');",
          4014),
     ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
