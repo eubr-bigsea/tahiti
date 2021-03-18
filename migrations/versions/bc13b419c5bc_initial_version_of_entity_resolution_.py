@@ -49,7 +49,7 @@ def _insert_operation_category():
 
     columns = ('id', 'type', 'order', 'default_order')
     data = [
-        (OPERATION_ID, "group", 0, 0),
+        (OPERATION_ID, "group", 0, 8),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
