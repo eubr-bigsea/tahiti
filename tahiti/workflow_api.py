@@ -308,6 +308,8 @@ class WorkflowDetailApi(Resource):
         try:
             if request.json:
                 data = request.json
+                save_history = data.get('history', '1') == '1'
+
                 request_schema = partial_schema_factory(
                     WorkflowCreateRequestSchema)
                 for task in data.get('tasks', {}):
@@ -365,14 +367,15 @@ class WorkflowDetailApi(Resource):
                                 response_schema.dump(workflow).data)
                             # if workflow.is_template:
                             #     workflow.template_code = historical_data
-
-                            history = WorkflowHistory(
-                                user_id=g.user.id, user_name=g.user.name,
-                                user_login=g.user.login,
-                                version=workflow.version,
-                                workflow=workflow, content=historical_data)
-                            db.session.add(history)
-                            db.session.commit()
+                            
+                            if save_history:
+                                history = WorkflowHistory(
+                                    user_id=g.user.id, user_name=g.user.name,
+                                    user_login=g.user.login,
+                                    version=workflow.version,
+                                    workflow=workflow, content=historical_data)
+                                db.session.add(history)
+                                db.session.commit()
 
                             if workflow is not None:
                                 result, result_code = dict(
