@@ -103,17 +103,17 @@ def _insert_operation_translation():
     columns = ('id', 'locale', 'name', 'description')
     data = [
         (PREPROCESSING_ID, "pt", '0 - Pré-processamento', ''),
-        (PREPROCESSING_ID, "en", '0 - Preprocessing', 'Preprocessing data, like cleaning and standardising, may increase'
-                                                  'your record linkage accuracy.'),
+        (PREPROCESSING_ID, "en", '0 - Preprocessing', 'Preprocessing data, like cleaning and standardising, may'
+                                                      'increase your record linkage accuracy.'),
 
         (INDEXING_ID, "pt", '1 - Blocagem', ''),
-        (INDEXING_ID, "en", '1 - Indexing', 'The indexing module is used to make pairs of records. These pairs are called'
-                                        'candidate links or candidate matches.'),
+        (INDEXING_ID, "en", '1 - Indexing', 'The indexing module is used to make pairs of records. These pairs are'
+                                            'called candidate links or candidate matches.'),
 
         (COMPARING_ID, "pt", '2 - Comparação', ''),
-        (COMPARING_ID, "en", '2 - Comparing', 'A set of informative, discriminating and independent features is important'
-                                          'for a good classification of record pairs into matching and distinct'
-                                          'pairs.'),
+        (COMPARING_ID, "en", '2 - Comparing', 'A set of informative, discriminating and independent features is'
+                                              'important for a good classification of record pairs into matching and'
+                                              'distinct pairs.'),
 
         (CLASSIFICATION_ID, "pt", '3 - Classificação', ''),
         (CLASSIFICATION_ID, "en", '3 - Classification', 'Classification is the step in the record linkage process were'
@@ -122,10 +122,10 @@ def _insert_operation_translation():
                                                     'unsupervised (with or without training data).'),
 
         (EVALUATION_ID, "pt", '4 - Avaliação', ''),
-        (EVALUATION_ID, "en", '4 - Evaluation', 'Evaluation of classifications plays an important role in record linkage.'
-                                            ' Express your classification quality in terms accuracy, recall and F-score'
-                                            'based on true positives, false positives, true negatives and false'
-                                            'negatives.'),
+        (EVALUATION_ID, "en", '4 - Evaluation', 'Evaluation of classifications plays an important role in record'
+                                                'linkage. Express your classification quality in terms accuracy,'
+                                                'recall and F-score based on true positives, false positives, true'
+                                                'negatives and false negatives.'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -227,20 +227,20 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4112, 'INPUT', '', 1, 'MANY', PREPROCESSING_ID, 'input data'),
-        (4113, 'OUTPUT', '', 1, 'MANY', PREPROCESSING_ID, 'output data'),
+        (4112, 'INPUT', '', 1, 'ONE', PREPROCESSING_ID, 'input data'),
+        (4113, 'OUTPUT', '', 1, 'ONE', PREPROCESSING_ID, 'output data'),
 
-        (4114, 'INPUT', '', 1, 'MANY', INDEXING_ID, 'input data'),
-        (4115, 'OUTPUT', '', 1, 'MANY', INDEXING_ID, 'output data'),
+        (4114, 'INPUT', '', 1, 'ONE', INDEXING_ID, 'input data'),
+        (4115, 'OUTPUT', '', 1, 'ONE', INDEXING_ID, 'output data'),
 
-        (4116, 'INPUT', '', 1, 'MANY', COMPARING_ID, 'input data'),
-        (4117, 'OUTPUT', '', 1, 'MANY', COMPARING_ID, 'output data'),
+        (4116, 'INPUT', '', 1, 'ONE', COMPARING_ID, 'input data'),
+        (4117, 'OUTPUT', '', 1, 'ONE', COMPARING_ID, 'output data'),
 
-        (4118, 'INPUT', '', 1, 'MANY', CLASSIFICATION_ID, 'input data'),
-        (4119, 'OUTPUT', '', 1, 'MANY', CLASSIFICATION_ID, 'output data'),
+        (4118, 'INPUT', '', 1, 'ONE', CLASSIFICATION_ID, 'input data'),
+        (4119, 'OUTPUT', '', 1, 'ONE', CLASSIFICATION_ID, 'output data'),
 
-        (4120, 'INPUT', '', 1, 'MANY', EVALUATION_ID, 'input data'),
-        (4121, 'OUTPUT', '', 1, 'MANY', EVALUATION_ID, 'output data'),
+        (4120, 'INPUT', '', 1, 'ONE', EVALUATION_ID, 'input data'),
+        (4121, 'OUTPUT', '', 1, 'ONE', EVALUATION_ID, 'output data'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
