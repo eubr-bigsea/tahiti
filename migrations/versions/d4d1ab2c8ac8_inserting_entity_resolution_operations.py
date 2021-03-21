@@ -21,17 +21,17 @@ down_revision = 'bc13b419c5bc'
 branch_labels = None
 depends_on = None
 
-PREPROCESSING_ID = 4050
+EVALUATION_ID = 4050
 INDEXING_ID = 4051
 COMPARING_ID = 4052
 CLASSIFICATION_ID = 4053
-EVALUATION_ID = 4054
+
 PLATFORM_ID = 4
-PREPROCESSING_FORM_ID = 4051
+
+EVALUATION_FORM_ID = 4051
 INDEXING_FORM_ID = 4052
 COMPARING_FORM_ID = 4053
 CLASSIFICATION_FORM_ID = 4054
-EVALUATION_FORM_ID = 4055
 
 def _insert_operation_platform():
     tb = table(
@@ -42,7 +42,6 @@ def _insert_operation_platform():
     columns = ('operation_id', 'platform_id')
 
     data = [
-        (PREPROCESSING_ID, PLATFORM_ID),
         (INDEXING_ID, PLATFORM_ID),
         (COMPARING_ID, PLATFORM_ID),
         (CLASSIFICATION_ID, PLATFORM_ID),
@@ -63,7 +62,6 @@ def _insert_operation():
     columns = ('id', 'slug', 'enabled', 'type', 'icon')
 
     data = [
-        (PREPROCESSING_ID, "preprocessing", 1, 'ACTION', ''),
         (INDEXING_ID, "indexing", 1, 'ACTION', ''),
         (COMPARING_ID, "comparing", 1, 'ACTION', ''),
         (CLASSIFICATION_ID, "classification", 1, 'ACTION', ''),
@@ -82,7 +80,6 @@ def _insert_operation_category_operation():
     columns = ('operation_category_id', 'operation_id')
     data = [
         #Core Layers
-        (4003, PREPROCESSING_ID),
         (4003, INDEXING_ID),
         (4003, COMPARING_ID),
         (4003, CLASSIFICATION_ID),
@@ -102,10 +99,6 @@ def _insert_operation_translation():
 
     columns = ('id', 'locale', 'name', 'description')
     data = [
-        (PREPROCESSING_ID, "pt", '0 - Pré-processamento', ''),
-        (PREPROCESSING_ID, "en", '0 - Preprocessing', 'Preprocessing data, like cleaning and standardising, may'
-                                                      'increase your record linkage accuracy.'),
-
         (INDEXING_ID, "pt", '1 - Blocagem', ''),
         (INDEXING_ID, "en", '1 - Indexing', 'The indexing module is used to make pairs of records. These pairs are'
                                             'called candidate links or candidate matches.'),
@@ -140,10 +133,6 @@ def _insert_operation_operation_form():
     columns = ('operation_id', 'operation_form_id')
     data = [
         #Flatten - data_format
-        (PREPROCESSING_ID, 41),  #appearance
-        (PREPROCESSING_ID, PREPROCESSING_FORM_ID),  # own execution form
-        (PREPROCESSING_ID, 110),
-
         (INDEXING_ID, 41),  #appearance
         (INDEXING_ID, INDEXING_FORM_ID),  # own execution form
         (INDEXING_ID, 110),
@@ -175,7 +164,6 @@ def _insert_operation_form():
     columns = ('id', 'enabled', 'order', 'category')
     data = [
         #Flatten
-        (PREPROCESSING_FORM_ID, 1, 1, 'execution'), #data_format
         (INDEXING_FORM_ID, 1, 1, 'execution'), #data_format
         (COMPARING_FORM_ID, 1, 1, 'execution'), #data_format
         (CLASSIFICATION_FORM_ID, 1, 1, 'execution'), #data_format
@@ -195,9 +183,6 @@ def _insert_operation_form_translation():
     columns = ('id', 'locale', 'name')
     data = [
         #Flatten - data_format
-        (PREPROCESSING_FORM_ID, 'en', 'Execution'),
-        (PREPROCESSING_FORM_ID, 'pt', 'Execução'),
-
         (INDEXING_FORM_ID, 'en', 'Execution'),
         (INDEXING_FORM_ID, 'pt', 'Execução'),
 
@@ -227,9 +212,6 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4112, 'INPUT', '', 1, 'ONE', PREPROCESSING_ID, 'input data'),
-        (4113, 'OUTPUT', '', 1, 'ONE', PREPROCESSING_ID, 'output data'),
-
         (4114, 'INPUT', '', 1, 'ONE', INDEXING_ID, 'input data'),
         (4115, 'OUTPUT', '', 1, 'ONE', INDEXING_ID, 'output data'),
 
@@ -239,8 +221,8 @@ def _insert_operation_port():
         (4118, 'INPUT', '', 1, 'ONE', CLASSIFICATION_ID, 'input data'),
         (4119, 'OUTPUT', '', 1, 'ONE', CLASSIFICATION_ID, 'output data'),
 
-        (4120, 'INPUT', '', 1, 'ONE', EVALUATION_ID, 'input data'),
-        (4121, 'OUTPUT', '', 1, 'ONE', EVALUATION_ID, 'output data'),
+        (4112, 'INPUT', '', 1, 'ONE', EVALUATION_ID, 'input data'),
+        (4113, 'OUTPUT', '', 1, 'ONE', EVALUATION_ID, 'output data'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -266,10 +248,6 @@ def _insert_operation_port_interface_operation_port():
 
         (4118, 1),
         (4119, 1),
-
-        (4120, 1),
-        (4121, 1),
-
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -305,11 +283,6 @@ def _insert_operation_port_translation():
         (4118, "pt", 'dados de entrada', 'Dados de entrada'),
         (4119, "en", 'output data', 'Output data'),
         (4119, "pt", 'dados de saída', 'Dados de saída'),
-
-        (4120, "en", 'input data', 'Input data'),
-        (4120, "pt", 'dados de entrada', 'Dados de entrada'),
-        (4121, "en", 'output data', 'Output data'),
-        (4121, "pt", 'dados de saída', 'Dados de saída'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -317,25 +290,25 @@ def _insert_operation_port_translation():
 
 all_commands = [
     (_insert_operation,
-     'DELETE FROM operation WHERE id BETWEEN 4050 AND 4054'),
+     'DELETE FROM operation WHERE id BETWEEN 4050 AND 4053'),
     (_insert_operation_translation,
-     'DELETE FROM operation_translation WHERE id BETWEEN 4050 AND 4054'),
+     'DELETE FROM operation_translation WHERE id BETWEEN 4050 AND 4053'),
     (_insert_operation_category_operation,
-     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 4050 AND 4054'),
+     'DELETE FROM operation_category_operation WHERE operation_id BETWEEN 4050 AND 4053'),
     (_insert_operation_platform,
-     'DELETE FROM operation_platform WHERE operation_id BETWEEN 4050 AND 4054 AND platform_id = {}'.format(PLATFORM_ID)),
+     'DELETE FROM operation_platform WHERE operation_id BETWEEN 4050 AND 4053 AND platform_id = {}'.format(PLATFORM_ID)),
     (_insert_operation_form,
-     'DELETE FROM operation_form WHERE id BETWEEN 4051 AND 4055'),
+     'DELETE FROM operation_form WHERE id BETWEEN 4051 AND 4054'),
     (_insert_operation_form_translation,
-     'DELETE FROM operation_form_translation WHERE id BETWEEN 4051 AND 4055'),
+     'DELETE FROM operation_form_translation WHERE id BETWEEN 4051 AND 4054'),
     (_insert_operation_operation_form,
-     'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 4050 AND 4054'),
+     'DELETE FROM operation_operation_form WHERE operation_id BETWEEN 4050 AND 4053'),
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id BETWEEN 4112 AND 4121'),
+     'DELETE FROM operation_port WHERE id BETWEEN 4112 AND 4119'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id BETWEEN 4112 AND 4121'),
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id BETWEEN 4112 AND 4119'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id BETWEEN 4112 AND 4121'),
+     'DELETE FROM operation_port_translation WHERE id BETWEEN 4112 AND 4119'),
 ]
 
 def upgrade():

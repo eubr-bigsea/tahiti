@@ -94,7 +94,7 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4122, 'INPUT', '', 2, 'ONE', INDEXING_ID, 'input data'),
+        (4120, 'INPUT', '', 2, 'ONE', INDEXING_ID, 'input data'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -109,7 +109,7 @@ def _insert_operation_port_interface_operation_port():
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
         #Reshape
-        (4122, 1),
+        (4120, 1),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -126,8 +126,8 @@ def _insert_operation_port_translation():
     columns = ('id', 'locale', 'name', 'description')
     data = [
         #Reshape
-        (4122, "en", 'input data', 'Input data'),
-        (4122, "pt", 'dados de entrada', 'Dados de entrada'),
+        (4120, "en", 'input data', 'Input data'),
+        (4120, "pt", 'dados de entrada', 'Dados de entrada'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -139,11 +139,11 @@ all_commands = [
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id IN (4393,4394)'),
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id=4122'),
+     'DELETE FROM operation_port WHERE id=4120'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id=4122'),
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id=4120'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id=4122'),
+     'DELETE FROM operation_port_translation WHERE id=4120'),
 ]
 
 def upgrade():
