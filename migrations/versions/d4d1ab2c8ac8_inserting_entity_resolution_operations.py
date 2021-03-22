@@ -212,7 +212,7 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4114, 'INPUT', '', 1, 'ONE', INDEXING_ID, 'input data'),
+        (4114, 'INPUT', '', 1, 'ONE', INDEXING_ID, 'input data 1'),
         (4115, 'OUTPUT', '', 1, 'ONE', INDEXING_ID, 'output data'),
 
         (4116, 'INPUT', '', 1, 'ONE', COMPARING_ID, 'input data'),

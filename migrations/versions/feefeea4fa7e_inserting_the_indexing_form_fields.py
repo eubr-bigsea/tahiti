@@ -94,7 +94,7 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4120, 'INPUT', '', 2, 'ONE', INDEXING_ID, 'input data'),
+        (4120, 'INPUT', '', 2, 'ONE', INDEXING_ID, 'input data 2'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
