@@ -83,8 +83,8 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4123, 'INPUT', '', 2, 'ONE', COMPARING_ID, 'input data'),
-        (4124, 'INPUT', '', 3, 'ONE', COMPARING_ID, 'input data'),
+        (4121, 'INPUT', '', 2, 'ONE', COMPARING_ID, 'input data'),
+        (4122, 'INPUT', '', 3, 'ONE', COMPARING_ID, 'input data'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -99,8 +99,8 @@ def _insert_operation_port_interface_operation_port():
     columns = ('operation_port_id', 'operation_port_interface_id')
     data = [
         #Reshape
-        (4123, 1),
-        (4124, 1),
+        (4121, 1),
+        (4122, 1),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -117,11 +117,11 @@ def _insert_operation_port_translation():
     columns = ('id', 'locale', 'name', 'description')
     data = [
         #Reshape
-        (4123, "en", 'input data', 'Input data'),
-        (4123, "pt", 'dados de entrada', 'Dados de entrada'),
+        (4121, "en", 'input data', 'Input data'),
+        (4121, "pt", 'dados de entrada', 'Dados de entrada'),
 
-        (4124, "en", 'input data', 'Input data'),
-        (4124, "pt", 'dados de entrada', 'Dados de entrada'),
+        (4122, "en", 'input data', 'Input data'),
+        (4122, "pt", 'dados de entrada', 'Dados de entrada'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -133,11 +133,11 @@ all_commands = [
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id=4395'),
     (_insert_operation_port,
-     'DELETE FROM operation_port WHERE id IN (4123, 4124)'),
+     'DELETE FROM operation_port WHERE id IN (4121, 4122)'),
     (_insert_operation_port_interface_operation_port,
-     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (4123, 4124)'),
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (4121, 4122)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id IN (4123, 4124)'),
+     'DELETE FROM operation_port_translation WHERE id IN (4122, 4122)'),
 ]
 
 def upgrade():
