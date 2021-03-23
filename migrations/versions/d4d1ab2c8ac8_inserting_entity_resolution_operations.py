@@ -215,7 +215,7 @@ def _insert_operation_port():
         (4114, 'INPUT', '', 1, 'ONE', INDEXING_ID, 'input data 1'),
         (4115, 'OUTPUT', '', 1, 'ONE', INDEXING_ID, 'output data'),
 
-        (4116, 'INPUT', '', 1, 'ONE', COMPARING_ID, 'input data'),
+        (4116, 'INPUT', '', 1, 'ONE', COMPARING_ID, 'input data 1'),
         (4117, 'OUTPUT', '', 1, 'ONE', COMPARING_ID, 'output data'),
 
         (4118, 'INPUT', '', 1, 'ONE', CLASSIFICATION_ID, 'input data'),

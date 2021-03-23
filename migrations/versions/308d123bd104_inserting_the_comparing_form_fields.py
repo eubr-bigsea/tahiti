@@ -83,8 +83,8 @@ def _insert_operation_port():
     columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
     data = [
         #Reshape
-        (4121, 'INPUT', '', 2, 'ONE', COMPARING_ID, 'input data'),
-        (4122, 'INPUT', '', 3, 'ONE', COMPARING_ID, 'input data'),
+        (4121, 'INPUT', '', 2, 'ONE', COMPARING_ID, 'input data 2'),
+        (4122, 'INPUT', '', 3, 'ONE', COMPARING_ID, 'input data 3'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
 
@@ -137,7 +137,7 @@ all_commands = [
     (_insert_operation_port_interface_operation_port,
      'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (4121, 4122)'),
     (_insert_operation_port_translation,
-     'DELETE FROM operation_port_translation WHERE id IN (4122, 4122)'),
+     'DELETE FROM operation_port_translation WHERE id IN (4121, 4122)'),
 ]
 
 def upgrade():
