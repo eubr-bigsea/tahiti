@@ -44,7 +44,7 @@ def _insert_operation_form_field():
     columns = ('id', 'name', 'type', 'required', 'order', 'default',
                'suggested_widget', 'values_url', 'values', 'scope', 'form_id',
                'enable_conditions')
-
+    enable_condition = 'this.algorithm.internalValue == "sorted-neighbourhood"'
     data = [
         #Flatten - data_format
         (4393, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', INDEXING_FORM_ID, None),
@@ -56,6 +56,7 @@ def _insert_operation_form_field():
                      {'key': 'random', 'value': 'Random'},
                  ]),
                  'EXECUTION', INDEXING_FORM_ID, None),
+        (4395, 'window', 'INTEGER', 0, 3, 3, 'integer', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -76,6 +77,9 @@ def _insert_operation_form_field_translation():
 
         (4394, 'en', 'Algorithm', 'Algorithm used in the indexing.'),
         (4394, 'pt', 'Algoritmo', 'Atributos para a blocagem.'),
+
+        (4395, 'en', 'Window', 'The width of the window.'),
+        (4395, 'pt', 'Janela', 'O tamanho da janela.'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -135,9 +139,9 @@ def _insert_operation_port_translation():
 
 all_commands = [
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id IN (4393,4394)'),
+     'DELETE FROM operation_form_field WHERE id IN (4393,4394,4395)'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id IN (4393,4394)'),
+     'DELETE FROM operation_form_field_translation WHERE id IN (4393,4394,4395)'),
     (_insert_operation_port,
      'DELETE FROM operation_port WHERE id=4120'),
     (_insert_operation_port_interface_operation_port,

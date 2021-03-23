@@ -47,7 +47,7 @@ def _insert_operation_form_field():
 
     data = [
         #Flatten - data_format
-        (4395, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', COMPARING_FORM_ID, None),
+        (4396, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', COMPARING_FORM_ID, None),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -63,8 +63,8 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
         #Flatten - data_format
-        (4395, 'en', 'Attributes', 'Attributes that will be compared.'),
-        (4395, 'pt', 'Atributos', 'Atributos que serão comparados.'),
+        (4396, 'en', 'Attributes', 'Attributes that will be compared.'),
+        (4396, 'pt', 'Atributos', 'Atributos que serão comparados.'),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -129,9 +129,9 @@ def _insert_operation_port_translation():
 
 all_commands = [
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id=4395'),
+     'DELETE FROM operation_form_field WHERE id=4396'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id=4395'),
+     'DELETE FROM operation_form_field_translation WHERE id=4396'),
     (_insert_operation_port,
      'DELETE FROM operation_port WHERE id IN (4121, 4122)'),
     (_insert_operation_port_interface_operation_port,
