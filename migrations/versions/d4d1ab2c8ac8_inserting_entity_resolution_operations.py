@@ -215,7 +215,7 @@ def _insert_operation_port():
         (4114, 'INPUT', '', 1, 'ONE', INDEXING_ID, 'input data 1'),
         (4115, 'OUTPUT', '', 1, 'ONE', INDEXING_ID, 'output data'),
 
-        (4116, 'INPUT', '', 1, 'ONE', COMPARING_ID, 'input data 1'),
+        (4116, 'INPUT', '', 1, 'ONE', COMPARING_ID, 'indexing data'),
         (4117, 'OUTPUT', '', 1, 'ONE', COMPARING_ID, 'output data'),
 
         (4118, 'INPUT', '', 1, 'ONE', CLASSIFICATION_ID, 'input data'),
@@ -274,8 +274,8 @@ def _insert_operation_port_translation():
         (4115, "en", 'output data', 'Output data'),
         (4115, "pt", 'dados de saída', 'Dados de saída'),
 
-        (4116, "en", 'input data', 'Input data'),
-        (4116, "pt", 'dados de entrada', 'Dados de entrada'),
+        (4116, "en", 'indexing data', 'Indexing data'),
+        (4116, "pt", 'dados da blocagem', 'Dados da blocagem'),
         (4117, "en", 'output data', 'Output data'),
         (4117, "pt", 'dados de saída', 'Dados de saída'),
 
