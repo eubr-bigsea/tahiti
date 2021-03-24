@@ -60,15 +60,12 @@ scripts = [str(SCRIPT_ID_SPARK + i) for i in range(3)] + \
           [str(SCRIPT_ID_SKLEARN)]
 
 all_commands = [
-    # Aglomerative Clustering
-    ("""
-    UPDATE operation_form_field SET `enable_conditions` = '' WHERE id = 4075;
-    """, """
-        UPDATE operation_form_field SET `enable_conditions` = '{json}' 
-        WHERE id = 4075;
-    """.format(json=json.dumps({"multiple": False}))),
+    # Agglomerative Clustering
+    ("UPDATE operation_form_field SET `values` = NULL WHERE id = 4075;",
+     "UPDATE operation_form_field SET `values` = '{json}' WHERE id = 4075;"
+     .format(json=json.dumps({"multiple": False}))),
     # Gaussian Mixture clustering
-    ("UPDATE operation_form_field SET `default` = 3 WHERE id = 4075",
+    ("UPDATE operation_form_field SET `default` = 3 WHERE id = 4316",
      "UPDATE operation_form_field SET `default` = 1 WHERE id = 4316"),
 
     # Cross-validation
