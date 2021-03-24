@@ -67,7 +67,7 @@ def _insert_operation_form_field_translation():
     data = [
         #Flatten - data_format
         (4397, 'en', 'Intercept', 'The interception value.'),
-        (4397, 'pt', 'intercept', 'O valor de interceptação.'),
+        (4397, 'pt', 'Intercept', 'O valor de interceptação.'),
 
         (4398, 'en', 'Coefficients (Enter values separated by commas)',
          'The coefficients of the logistic regression.'),
