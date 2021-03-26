@@ -83,11 +83,76 @@ def _insert_operation_form_field_translation():
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+def _insert_operation_port():
+    tb = table(
+        'operation_port',
+        column('id', Integer),
+        column('type', String),
+        column('tags', String),
+        column('order', Integer),
+        column('multiplicity', String),
+        column('operation_id', Integer),
+        column('slug', String),)
+
+    columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
+    data = [
+        #Reshape
+        (4122, 'INPUT', '', 2, 'ONE', EVALUATION_ID, 'indexing data'),
+        (4123, 'INPUT', '', 3, 'ONE', EVALUATION_ID, 'classification data'),
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+def _insert_operation_port_interface_operation_port():
+    tb = table(
+        'operation_port_interface_operation_port',
+        column('operation_port_id', Integer),
+        column('operation_port_interface_id', Integer))
+
+    columns = ('operation_port_id', 'operation_port_interface_id')
+    data = [
+        #Reshape
+        (4122, 1),
+        (4123, 1),
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+def _insert_operation_port_translation():
+    tb = table(
+        'operation_port_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String),
+        column('description', String))
+
+    columns = ('id', 'locale', 'name', 'description')
+    data = [
+        #Reshape
+        (4122, "en", 'indexing data', 'Indexing data'),
+        (4122, "pt", 'dados da blocagem', 'Dados da blocagem'),
+
+        (4123, "en", 'classification data', 'classification data'),
+        (4123, "pt", 'dados da classificação', 'Dados da classificação'),
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+
+    op.bulk_insert(tb, rows)
+
 all_commands = [
     (_insert_operation_form_field,
      'DELETE FROM operation_form_field WHERE id IN (4399, 4400, 4401, 4402)'),
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id IN (4399, 4400, 4401, 4402)'),
+
+    (_insert_operation_port,
+     'DELETE FROM operation_port WHERE id IN (4122, 4123)'),
+    (_insert_operation_port_interface_operation_port,
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (4122, 4123)'),
+    (_insert_operation_port_translation,
+     'DELETE FROM operation_port_translation WHERE id IN (4122, 4123)'),
 ]
 
 def upgrade():
