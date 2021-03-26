@@ -153,6 +153,9 @@ all_commands = [
      'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id IN (4122, 4123)'),
     (_insert_operation_port_translation,
      'DELETE FROM operation_port_translation WHERE id IN (4122, 4123)'),
+
+    ("""UPDATE operation_port SET `multiplicity` = 'MANY' WHERE id=4115""",
+     """UPDATE operation_port SET `multiplicity` = 'ONE' WHERE id=4115"""),
 ]
 
 def upgrade():
