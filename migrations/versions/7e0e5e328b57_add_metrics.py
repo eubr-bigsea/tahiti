@@ -51,7 +51,6 @@ def _insert_operation_form_field():
         #Flatten - data_format
         (4403, 'accuracy', 'INTEGER', 0, 4, 1, 'checkbox', None, None, 'EXECUTION', EVALUATION_FORM_ID, None),
         (4404, 'specificity', 'INTEGER', 0, 5, 1, 'checkbox', None, None, 'EXECUTION', EVALUATION_FORM_ID, None),
-        (4405, 'reduction_ratio', 'INTEGER', 0, 6, 1, 'checkbox', None, None, 'EXECUTION', EVALUATION_FORM_ID, None),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -72,9 +71,6 @@ def _insert_operation_form_field_translation():
 
         (4404, 'en', 'Specificity', ''),
         (4404, 'pt', 'Especificidade', ''),
-
-        (4405, 'en', 'Reduction ratio', ''),
-        (4405, 'pt', 'Taxa de redução', ''),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -82,9 +78,9 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id IN (4403, 4404, 4405)'),
+     'DELETE FROM operation_form_field WHERE id IN (4403, 4404)'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id IN (4403, 4404, 4405)'),
+     'DELETE FROM operation_form_field_translation WHERE id IN (4403, 4404)'),
 ]
 
 

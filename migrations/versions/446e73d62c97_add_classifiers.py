@@ -51,16 +51,16 @@ def _insert_operation_form_field():
 
     data = [
         #Flatten - data_format
-        (4406, 'algorithm', 'TEXT', 1, 1, 'logistic-regression', 'dropdown', None,
+        (4405, 'algorithm', 'TEXT', 1, 1, 'logistic-regression', 'dropdown', None,
          json.dumps([
              {'key': 'logistic-regression', 'value': 'Logistic Regression'},
              {'key': 'svm', 'value': 'SVM'},
              {'key': 'naive-bayes', 'value': 'Naive Bayes'},
          ]),
          'EXECUTION', CLASSIFICATION_FORM_ID, None),
-        (4407, 'binarize', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
-        (4408, 'alpha', 'FLOAT', 1, 5, 1e-4, 'decimal', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
-        (4409, 'use_col_names', 'INTEGER', 1, 6, 1, 'checkbox', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
+        (4406, 'binarize', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
+        (4407, 'alpha', 'FLOAT', 1, 5, 1e-4, 'decimal', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
+        (4408, 'use_col_names', 'INTEGER', 1, 6, 1, 'checkbox', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -76,17 +76,17 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
         #Flatten - data_format
-        (4406, 'en', 'Algorithm', ''),
-        (4406, 'pt', 'Algoritmo', ''),
+        (4405, 'en', 'Algorithm', ''),
+        (4405, 'pt', 'Algoritmo', ''),
 
-        (4407, 'en', 'Binarize', ''),
-        (4407, 'pt', 'Binarize', ''),
+        (4406, 'en', 'Binarize', ''),
+        (4406, 'pt', 'Binarize', ''),
 
-        (4408, 'en', 'Alpha', ''),
-        (4408, 'pt', 'Alpha', ''),
+        (4407, 'en', 'Alpha', ''),
+        (4407, 'pt', 'Alpha', ''),
 
-        (4409, 'en', 'Use column names', ''),
-        (4409, 'pt', 'Usar os nomes das colunas', ''),
+        (4408, 'en', 'Use column names', ''),
+        (4408, 'pt', 'Usar os nomes das colunas', ''),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -94,9 +94,9 @@ def _insert_operation_form_field_translation():
 
 all_commands = [
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id IN (4406, 4407, 4408, 4409)'),
+     'DELETE FROM operation_form_field WHERE id IN (4405, 4406, 4407, 4408)'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id IN (4406, 4407, 4408, 4409)'),
+     'DELETE FROM operation_form_field_translation WHERE id IN (4405, 4406, 4407, 4408)'),
 
     ("""UPDATE operation_form_field SET `order` = 3 WHERE id = 4397""",
      """UPDATE operation_form_field SET `order` = 1 WHERE id = 4397"""),
