@@ -91,6 +91,59 @@ def _insert_operation_form_field_translation():
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+def _insert_operation_port():
+    tb = table(
+        'operation_port',
+        column('id', Integer),
+        column('type', String),
+        column('tags', String),
+        column('order', Integer),
+        column('multiplicity', String),
+        column('operation_id', Integer),
+        column('slug', String),)
+
+    columns = ('id', 'type', 'tags', 'order', 'multiplicity', 'operation_id', 'slug')
+    data = [
+        #Reshape
+        (4124, 'INPUT', '', 1, 'ONE', CLASSIFICATION_ID, 'input data'),
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+def _insert_operation_port_interface_operation_port():
+    tb = table(
+        'operation_port_interface_operation_port',
+        column('operation_port_id', Integer),
+        column('operation_port_interface_id', Integer))
+
+    columns = ('operation_port_id', 'operation_port_interface_id')
+    data = [
+        #Reshape
+        (4124, 1),
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+
+    op.bulk_insert(tb, rows)
+
+def _insert_operation_port_translation():
+    tb = table(
+        'operation_port_translation',
+        column('id', Integer),
+        column('locale', String),
+        column('name', String),
+        column('description', String))
+
+    columns = ('id', 'locale', 'name', 'description')
+    data = [
+        #Reshape
+        (4124, "en", 'input data', 'Input data'),
+        (4124, "pt", 'dados de entrada', 'Dados de entrada'),
+    ]
+    rows = [dict(list(zip(columns, row))) for row in data]
+
+    op.bulk_insert(tb, rows)
+
 
 all_commands = [
     (_insert_operation_form_field,
@@ -98,12 +151,32 @@ all_commands = [
     (_insert_operation_form_field_translation,
      'DELETE FROM operation_form_field_translation WHERE id IN (4405, 4406, 4407, 4408)'),
 
+    (_insert_operation_port,
+     'DELETE FROM operation_port WHERE id = 4124'),
+    (_insert_operation_port_interface_operation_port,
+     'DELETE FROM operation_port_interface_operation_port WHERE operation_port_id = 4124'),
+    (_insert_operation_port_translation,
+     'DELETE FROM operation_port_translation WHERE id = 4124'),
+
     ("""UPDATE operation_form_field SET `order` = 3 WHERE id = 4397""",
      """UPDATE operation_form_field SET `order` = 1 WHERE id = 4397"""),
     ("""UPDATE operation_form_field SET `enable_conditions` = 'this.algorithm.internalValue == "logistic-regression"' WHERE id = 4397""",
      """UPDATE operation_form_field SET `enable_conditions` = NULL WHERE id = 4397"""),
     ("""UPDATE operation_form_field SET `enable_conditions` = 'this.algorithm.internalValue == "logistic-regression"' WHERE id = 4398""",
      """UPDATE operation_form_field SET `enable_conditions` = NULL WHERE id = 4398"""),
+
+    ("""UPDATE operation_port SET `order` = 2 WHERE id = 4118""",
+     """UPDATE operation_port SET `order` = 1 WHERE id = 4118"""),
+    ("""UPDATE operation_port SET `slug` = 'comparing data' WHERE id = 4118""",
+     """UPDATE operation_port SET `slug` = 'input data' WHERE id = 4118"""),
+    ("""UPDATE operation_port_translation SET `name` = 'dados da comparação' WHERE id = 4118 AND `locale` = 'pt'""",
+     """UPDATE operation_port_translation SET `name` = 'dados de entrada' WHERE id = 4118 AND `locale` = 'pt'"""),
+    ("""UPDATE operation_port_translation SET `description` = 'Dados da comparação' WHERE id = 4118 AND `locale` = 'pt'""",
+     """UPDATE operation_port_translation SET `description` = 'Dados de entrada' WHERE id = 4118 AND `locale` = 'pt'"""),
+    ("""UPDATE operation_port_translation SET `name` = 'comparing data' WHERE id = 4118 AND `locale` = 'en'""",
+     """UPDATE operation_port_translation SET `name` = 'input data' WHERE id = 4118 AND `locale` = 'en'"""),
+    ("""UPDATE operation_port_translation SET `description` = 'Comparing data' WHERE id = 4118 AND `locale` = 'en'""",
+     """UPDATE operation_port_translation SET `description` = 'Input data' WHERE id = 4118 AND `locale` = 'en'"""),
 ]
 
 
