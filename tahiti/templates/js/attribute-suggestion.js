@@ -61,7 +61,7 @@ var TahitiAttributeSuggester = (function () {
       workflow.flows.forEach(function(flow){
           if (topological.info[flow.source_id]){
               const op = topological.info[flow.target_id].task.operation;
-              const target = op.ports.find(p => p.id === flow.target_port)
+              const target = op.ports.find(p => p.id === parseInt(flow.target_port))
               topological.info[flow.source_id].targets.push(
               {
                   target: flow.target_id,
