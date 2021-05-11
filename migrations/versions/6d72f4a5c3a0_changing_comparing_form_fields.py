@@ -41,6 +41,9 @@ all_commands = [
 
     ("""UPDATE operation_form_field_translation SET `label` = 'Expressão para filtro (avançado)' WHERE id = 4396 AND `locale` LIKE 'pt'""",
      """UPDATE operation_form_field_translation SET `label` = 'Atributos' WHERE id = 4396 AND `locale` LIKE 'pt'"""),
+
+    ("""UPDATE operation_form_field SET `required` = 0 WHERE id IN (4397, 4398)""",
+     """UPDATE operation_form_field SET `required` = 1 WHERE id IN (4397, 4398)"""),
 ]
 
 
