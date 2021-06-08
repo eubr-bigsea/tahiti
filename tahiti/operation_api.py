@@ -61,7 +61,8 @@ def optimize_operation_query(operations, only_translation=False):
             .options(joinedload('ports')) \
             .options(joinedload('ports.interfaces')) \
             .options(joinedload('forms.fields')) \
-            .options(joinedload('categories'))
+            .options(joinedload('categories')) \
+            .options(joinedload('subsets'))
     return op
 
 
