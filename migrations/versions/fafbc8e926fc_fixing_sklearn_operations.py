@@ -1,7 +1,7 @@
 """Fixing sklearn operations.
 
 Revision ID: fafbc8e926fc
-Revises: faf6f1c74416
+Revises: a73c21a49894
 Create Date: 2020-12-21 15:58:29.018770
 
 """
@@ -17,7 +17,7 @@ import json
 
 # revision identifiers, used by Alembic.
 revision = 'fafbc8e926fc'
-down_revision = 'faf6f1c74416'
+down_revision = 'a73c21a49894'
 branch_labels = None
 depends_on = None
 

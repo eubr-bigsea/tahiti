@@ -1,7 +1,7 @@
 """ Fix join port order  
 
 Revision ID: 386bda3601d2
-Revises: ea5b31a667ff
+Revises: e60c72ccb127
 Create Date: 2021-05-10 17:44:12.392757
 
 """
@@ -17,7 +17,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '386bda3601d2'
-down_revision = 'ea5b31a667ff'
+down_revision = 'e60c72ccb127'
 branch_labels = None
 depends_on = None
 

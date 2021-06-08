@@ -1,7 +1,7 @@
 """adding cross evaluation in sklearn
 
 Revision ID: 21de6c275230
-Revises: e60c72ccb127
+Revises: ea5b31a667ff
 Create Date: 2021-03-09 16:47:05.549578
 
 """
@@ -17,7 +17,7 @@ import json
 
 # revision identifiers, used by Alembic.
 revision = '21de6c275230'
-down_revision = 'e60c72ccb127'
+down_revision = 'ea5b31a667ff'
 branch_labels = None
 depends_on = None
 
