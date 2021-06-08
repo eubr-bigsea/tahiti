@@ -12,6 +12,8 @@ class AttributeSuggestionView(MethodView):
     @staticmethod
     @cache.memoize(600, make_name=lambda f: request.url)
     def get():
+
+
         operations = db.session.query(Operation, OperationScript) \
             .join(Operation.scripts) \
             .options(joinedload(Operation.scripts),
@@ -20,6 +22,11 @@ class AttributeSuggestionView(MethodView):
             .filter(Operation.enabled) \
             .filter(OperationScript.enabled) \
             .filter(OperationScript.type == ScriptType.JS_CLIENT)
+        
+        platform_id=request.args.get('platform')
+        if platform_id:
+            operations = operations.filter(
+                    Operation.platforms.any(enabled=True, id=int(platform_id)))
 
         # data_sources = Operation.query.join(Operation.categories)\
         #     .options(Load(Operation).load_only('id'))\
