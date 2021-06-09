@@ -26,7 +26,12 @@ all_commands = [
     [
         'UPDATE operation_port set `order` = 2 WHERE id = 12',
         'UPDATE operation_port set `order` = 1 WHERE id = 12',
+        ],
+    [
+        'UPDATE operation_form_field SET `values` = NULL WHERE id = 352',
+        'UPDATE operation_form_field SET `values` = \'{"multiple": false}\' WHERE id = 352'
         ]
+
 ]
 
 
