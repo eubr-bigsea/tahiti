@@ -1,7 +1,7 @@
 """updating sklearn ml
 
 Revision ID: c4b87364ce33
-Revises: a73c21a49894
+Revises: 386bda3601d2
 Create Date: 2021-03-24 09:12:31.884160
 
 """
@@ -17,7 +17,7 @@ import json
 
 # revision identifiers, used by Alembic.
 revision = 'c4b87364ce33'
-down_revision = 'a73c21a49894'
+down_revision = '386bda3601d2'
 branch_labels = None
 depends_on = None
 
