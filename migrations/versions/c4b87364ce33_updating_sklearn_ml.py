@@ -46,6 +46,9 @@ def _insert_operation_script():
         # sequence-mining
         (SCRIPT_ID_SPARK + 2, 'JS_CLIENT', 1,
          'task.uiPorts.output = ["sequence", "freq"];', 86),
+        # Quantile
+         (SCRIPT_ID_SPARK + 3, 'JS_CLIENT', 1,
+         'copyInputAddAttributesSplitAlias(task, "attributes", "alias", "_quantile");', 101),
         # k-fold
         (SCRIPT_ID_SKLEARN, "JS_CLIENT", 1,
          "copyInputAddField(task, 'alias', false, 'fold');", 4041)
@@ -56,7 +59,7 @@ def _insert_operation_script():
     op.bulk_insert(tb, rows)
 
 
-scripts = [str(SCRIPT_ID_SPARK + i) for i in range(3)] + \
+scripts = [str(SCRIPT_ID_SPARK + i) for i in range(4)] + \
           [str(SCRIPT_ID_SKLEARN)]
 
 all_commands = [
