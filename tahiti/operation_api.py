@@ -142,8 +142,8 @@ class OperationListApi(Resource):
                                      Unicode)
 
             operations = operations.filter(text(
-                'operation_translation_1.locale = :param_locale',
-                bindparams=[param_locale]))
+                'operation_translation_1.locale = :param_locale').bindparams(
+                    param_locale=str(g.locale)[:2]))
 
             exclude.extend(['platforms.forms', 'platforms.icon',
                        'platforms.description'])
@@ -175,7 +175,7 @@ class OperationListApi(Resource):
                         'data': OperationListResponseSchema(many=True,
                                                             exclude=exclude,
                                                             only=only).dump(
-                            items).data,
+                            items),
                         'pagination': {'page': page, 'size': page_size,
                                        'total': pagination.total,
                                        'pages': pagination.total / page_size + 1
@@ -192,7 +192,7 @@ class OperationListApi(Resource):
                         item.enabled = False
 
                 data = OperationListResponseSchema(
-                    many=True, only=only, exclude=exclude).dump(items).data
+                    many=True, only=only, exclude=exclude).dump(items)
 
                 # Group forms with same type
                 if only is None or 'forms' in only:
@@ -229,7 +229,7 @@ class OperationDetailApi(Resource):
                 Operation.query.filter_by(
                     id=operation_id)).first()
             if operation is not None:
-                return OperationItemResponseSchema().dump(operation).data
+                return OperationItemResponseSchema().dump(operation)
             else:
                 return dict(status="ERROR", message="Not found"), 404
 
@@ -249,14 +249,14 @@ class OperationDetailApi(Resource):
             response_schema = OperationItemResponseSchema()
             if not form.errors:
                 try:
-                    form.data.id = operation_id
-                    operation = db.session.merge(form.data)
+                    form.id = operation_id
+                    operation = db.session.merge(form)
                     db.session.commit()
 
                     if operation is not None:
                         result, result_code = dict(
                             status="OK", message="Updated",
-                            data=response_schema.dump(operation).data), 200
+                            data=response_schema.dump(operation)), 200
                         cache.clear()
                     else:
                         result = dict(status="ERROR", message="Not found")
@@ -365,7 +365,7 @@ class OperationTreeApi(Resource):
         only = None
         exclude = ['forms', 'platforms', 'ports']
         result = OperationListResponseSchema(
-                    many=True, only=only, exclude=exclude).dump(operations).data
+                    many=True, only=only, exclude=exclude).dump(operations)
 
         return groups, 200
 

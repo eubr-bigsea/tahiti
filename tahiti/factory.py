@@ -9,18 +9,19 @@ from flask_babel import Babel
 from flask_babel import get_locale
 from flask_cors import CORS
 from flask_restful import Api
+from flask_migrate import Migrate
 
 from tahiti.application_api import ApplicationListApi, ApplicationDetailApi
 from tahiti.cache import cache
 from tahiti.models import db, Operation, OperationCategory
 from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi, OperationTreeApi
-from tahiti.operation_subset_api import OperationSubsetDetailApi, \
-        OperationSubsetListApi, OperationSubsetOperationApi
+from tahiti.operation_subset_api import (OperationSubsetDetailApi,
+        OperationSubsetListApi, OperationSubsetOperationApi)
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
-from tahiti.workflow_api import WorkflowDetailApi, WorkflowImportApi, \
-    WorkflowAddFromTemplateApi, WorkflowPermissionApi
+from tahiti.workflow_api import (WorkflowDetailApi, WorkflowImportApi,
+    WorkflowAddFromTemplateApi, WorkflowPermissionApi)
 from tahiti.workflow_api import WorkflowListApi, WorkflowHistoryApi
 
 
@@ -60,10 +61,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         app.config.update(settings_override)
 
     db.init_app(app)
-
-    # Flask Admin
-    # admin = Admin(app, name='Tahiti', template_mode='bootstrap3')
-
+    
+    migrate = Migrate(app, db)
     # Logging configuration
     logging.config.fileConfig('logging_config.ini')
 
