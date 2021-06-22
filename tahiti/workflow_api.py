@@ -11,6 +11,7 @@ from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.elements import and_
 
+from marshmallow.exceptions import ValidationError
 from tahiti.app_auth import requires_auth
 from tahiti.schema import *
 
@@ -175,9 +176,8 @@ class WorkflowListApi(Resource):
                 pagination = workflows.paginate(1, page_size, False)
             result = {
                 'data': WorkflowListResponseSchema(many=True,
-                                                   exclude=('permissions',),
                                                    only=only).dump(
-                    pagination.items).data,
+                    pagination.items),
                 'pagination': {'page': page, 'size': page_size,
                                'total': pagination.total,
                                'pages': pagination.total / page_size + 1}}
@@ -198,7 +198,7 @@ class WorkflowListApi(Resource):
         if request.args.get('source'):
             original = Workflow.query.get(int(request.args.get('source')))
             response_schema = WorkflowItemResponseSchema()
-            cloned = response_schema.dump(original).data
+            cloned = response_schema.dump(original)
             # User field is not present in constructor
             platform = cloned.pop('platform')
             cloned['platform'] = Platform.query.get(platform['id'])
@@ -230,35 +230,35 @@ class WorkflowListApi(Resource):
             params['user_login'] = g.user.login
             params['user_name'] = g.user.name
             params['platform_id'] = params.get('platform', {}).get(
-                'id') or params.get('platform_id')
+                'id') or params.get('platform_id'),
             params['subset_id'] = params.get('subset_id')
-            form = request_schema.load(params)
         else:
             return result, result_code
 
-        if form.errors:
-            result, result_code = dict(
-                status="ERROR", message="Validation error",
-                errors=form.errors), 400
-        else:
-            try:
-                workflow = form.data
+        try:
+            workflow = request_schema.load(params)
+            db.session.add(workflow)
+            db.session.flush()
+            update_port_name_in_flows(db.session, workflow.id)
+            result, result_code = response_schema.dump(
+                workflow), 200
+            if workflow.is_template:
+                workflow.template_code = result
                 db.session.add(workflow)
-                db.session.flush()
-                update_port_name_in_flows(db.session, workflow.id)
-                result, result_code = response_schema.dump(
-                    workflow).data, 200
-                if workflow.is_template:
-                    workflow.template_code = result
-                    db.session.add(workflow)
-                db.session.commit()
-            except Exception as e:
-                log.exception('Error in POST')
-                result, result_code = dict(status="ERROR",
-                                           message="Internal error"), 500
-                if current_app.debug or True:
-                    result['debug_detail'] = str(e)
-                db.session.rollback()
+            db.session.commit()
+        except ValidationError as e:
+            result= {
+               'status': 'ERROR', 
+               'message': gettext('Validation error'),
+               'errors': e.messages
+            }
+        except Exception as e:
+            log.exception('Error in POST')
+            result, result_code = dict(status="ERROR",
+                                       message="Internal error"), 500
+            if current_app.debug or True:
+                result['debug_detail'] = str(e)
+            db.session.rollback()
 
         return result, result_code
 
@@ -271,7 +271,7 @@ class WorkflowDetailApi(Resource):
     def get(workflow_id):
         workflow = get_workflow(workflow_id)
         if workflow is not None:
-            return WorkflowItemResponseSchema().dump(workflow).data
+            return WorkflowItemResponseSchema().dump(workflow)
         else:
             return dict(status="ERROR", message="Not found"), 404
 
@@ -355,10 +355,10 @@ class WorkflowDetailApi(Resource):
                             Workflow.id == workflow_id).first()
 
                         if temp_workflow is not None:
-                            form.data.id = workflow_id
-                            form.data.updated = datetime.datetime.utcnow()
+                            form.id = workflow_id
+                            form.updated = datetime.datetime.utcnow()
 
-                            workflow = db.session.merge(form.data)
+                            workflow = db.session.merge(form)
                             if (workflow.publishing_enabled and 
                                     workflow.publishing_status is None):
                                 workflow.publishing_status = PublishingStatus.EDITING
@@ -367,7 +367,7 @@ class WorkflowDetailApi(Resource):
                             db.session.commit()
 
                             historical_data = json.dumps(
-                                response_schema.dump(workflow).data)
+                                response_schema.dump(workflow))
                             # if workflow.is_template:
                             #     workflow.template_code = historical_data
                             
@@ -384,7 +384,7 @@ class WorkflowDetailApi(Resource):
                                 result, result_code = dict(
                                     status="OK", message="Updated",
                                     data=response_schema.dump(
-                                        workflow).data), 200
+                                        workflow)), 200
                             else:
                                 result = dict(status="ERROR",
                                               message="Not found")
@@ -465,7 +465,7 @@ class WorkflowImportApi(Resource):
                     errors=form.errors), 400
             else:
                 try:
-                    workflow = form.data
+                    workflow = form
                     db.session.add(workflow)
                     db.session.flush()
                     update_port_name_in_flows(db.session, workflow.id)
@@ -538,7 +538,7 @@ class WorkflowHistoryApi(Resource):
             WorkflowHistory.date.desc()).limit(20)
         only = ('id', 'date', 'version', 'user_name')
         return {'data': WorkflowHistoryListResponseSchema(
-            many=True, only=only).dump(history).data}
+            many=True, only=only).dump(history)}
 
 
 class WorkflowAddFromTemplateApi(Resource):
@@ -555,7 +555,7 @@ class WorkflowAddFromTemplateApi(Resource):
                 # clone workflow
                 response_schema = WorkflowItemResponseSchema()
                 cloned = json.loads(
-                    json.dumps(response_schema.dump(workflow).data))
+                    json.dumps(response_schema.dump(workflow)))
                 cloned['platform_id'] = cloned['platform']['id']
                 cloned['user_id'] = g.user.id
                 cloned['user_login'] = g.user.login
@@ -586,12 +586,12 @@ class WorkflowAddFromTemplateApi(Resource):
                 request_schema = WorkflowCreateRequestSchema()
                 form = request_schema.load(cloned)
                 if not form.errors:
-                    new_workflow = form.data
+                    new_workflow = form
                     db.session.add(new_workflow)
                     db.session.flush()
                     db.session.commit()
                     result, result_code = response_schema.dump(
-                        new_workflow).data, 200
+                        new_workflow), 200
                 else:
                     result, result_code = dict(status="ERROR",
                                                message="Not authorized"), 401
@@ -610,7 +610,7 @@ class WorkflowAddFromTemplateApi(Resource):
             WorkflowHistory.date.desc()).limit(20)
         only = ('id', 'date', 'version', 'user_name')
         return {'data': WorkflowHistoryListResponseSchema(
-            many=True, only=only).dump(history).data}
+            many=True, only=only).dump(history)}
 
 
 class WorkflowPermissionApi(Resource):

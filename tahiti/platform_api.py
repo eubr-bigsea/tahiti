@@ -7,6 +7,8 @@ from flask_babel import gettext
 from tahiti.app_auth import requires_auth
 from tahiti.schema import *
 
+from marshmallow.exceptions import ValidationError
+
 log = logging.getLogger(__name__)
 
 class PlatformListApi(Resource):
@@ -26,7 +28,7 @@ class PlatformListApi(Resource):
         platforms = platforms.order_by(Platform.slug)
 
         return PlatformListResponseSchema(
-            many=True, only=only).dump(platforms).data
+            many=True, only=only).dump(platforms)
 
 
 class PlatformDetailApi(Resource):
@@ -37,7 +39,7 @@ class PlatformDetailApi(Resource):
     def get(platform_id):
         platform = Platform.query.get(platform_id)
         if platform is not None:
-            return PlatformItemResponseSchema().dump(platform).data
+            return PlatformItemResponseSchema().dump(platform)
         else:
             return dict(status="ERROR", message="Not found"), 404
 
@@ -52,39 +54,35 @@ class PlatformDetailApi(Resource):
             request_schema = partial_schema_factory(
                 PlatformCreateRequestSchema)
             # Ignore missing fields to allow partial updates
-            form = request_schema.load(request.json, partial=True)
             response_schema = PlatformItemResponseSchema()
-            if not form.errors:
-                try:
-                    form.data.id = platform_id
-                    platform = db.session.merge(form.data)
-                    db.session.commit()
+            try:
+                platform = request_schema.load(request.json, partial=True)
+                platform.id = platform_id
+                platform = db.session.merge(platform)
+                db.session.commit()
 
-                    if platform is not None:
-                        return_code = 200
-                        result = {
-                            'status': 'OK',
-                            'message': gettext(
-                                '%(n)s (id=%(id)s) was updated with success!',
-                                n=self.human_name,
-                                id=platform_id),
-                            'data': [response_schema.dump(
-                                platform).data]
-                        }
-                except Exception as e:
-                    result = {'status': 'ERROR',
-                              'message': gettext("Internal error")}
-                    return_code = 500
-                    if current_app.debug:
-                        result['debug_detail'] = str(e)
-                    db.session.rollback()
-            else:
-                result = {
-                    'status': 'ERROR',
-                    'message': gettext('Invalid data for %(name)s (id=%(id)s)',
+                if platform is not None:
+                    return_code = 200
+                    result = {
+                        'status': 'OK',
+                        'message': gettext('Invalid data for %(name)s (id=%(id)s)',
                                        name=self.human_name,
                                        id=platform_id),
-                    'errors': form.errors
+                        'data': [response_schema.dump(
+                            platform)]
+                    }
+            except ValidationError as e:
+                result= {
+                   'status': 'ERROR', 
+                   'message': gettext('Validation error'),
+                   'errors': e.messages
                 }
+            except Exception as e:
+                result = {'status': 'ERROR',
+                          'message': gettext("Internal error")}
+                return_code = 500
+                if current_app.debug:
+                    result['debug_detail'] = str(e)
+                db.session.rollback()
         return result, return_code
  

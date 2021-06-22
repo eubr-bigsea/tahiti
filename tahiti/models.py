@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 import json
 from flask_sqlalchemy import SQLAlchemy
@@ -194,44 +193,44 @@ class PluginStatus:
 operation_category_operation = db.Table(
     'operation_category_operation',
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False),
+           ForeignKey('operation.id'), nullable=False, index=True),
     Column('operation_category_id', Integer,
-           ForeignKey('operation_category.id'), nullable=False))
+           ForeignKey('operation_category.id'), nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_platform = db.Table(
     'operation_platform',
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False),
+           ForeignKey('operation.id'), nullable=False, index=True),
     Column('platform_id', Integer,
-           ForeignKey('platform.id'), nullable=False))
+           ForeignKey('platform.id'), nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_operation_form = db.Table(
     'operation_operation_form',
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False),
+           ForeignKey('operation.id'), nullable=False, index=True),
     Column('operation_form_id', Integer,
-           ForeignKey('operation_form.id'), nullable=False))
+           ForeignKey('operation_form.id'), nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_port_interface_operation_port = db.Table(
     'operation_port_interface_operation_port',
     Column('operation_port_id', Integer,
-           ForeignKey('operation_port.id'), nullable=False),
+           ForeignKey('operation_port.id'), nullable=False, index=True),
     Column('operation_port_interface_id', Integer,
-           ForeignKey('operation_port_interface.id'), nullable=False))
+           ForeignKey('operation_port_interface.id'), nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_subset_operation = db.Table(
     'operation_subset_operation',
     Column('operation_subset_id', Integer,
-           ForeignKey('operation_subset.id'), nullable=False),
+           ForeignKey('operation_subset.id'), nullable=False, index=True),
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False))
+           ForeignKey('operation.id'), nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 platform_form = db.Table(
     'platform_form',
     Column('platform_id', Integer,
-           ForeignKey('platform.id'), nullable=False),
+           ForeignKey('platform.id'), nullable=False, index=True),
     Column('operation_form_id', Integer,
-           ForeignKey('operation_form.id'), nullable=False))
+           ForeignKey('operation_form.id'), nullable=False, index=True))
 
 
 class Application(db.Model):
@@ -247,9 +246,6 @@ class Application(db.Model):
     type = Column(Enum(*list(ApplicationType.values()),
                        name='ApplicationTypeEnumType'), nullable=False)
     execution_parameters = Column(LONGTEXT)
-    __mapper_args__ = {
-        'order_by': 'name'
-    }
 
     def __str__(self):
         return self.name
@@ -275,7 +271,8 @@ class Flow(db.Model):
     # Associations
     source_id = Column(String(250),
                        ForeignKey("task.id",
-                                  name="fk_task_id"), nullable=False)
+                                  name="fk_flow_source_id"), nullable=False,
+                       index=True)
     source = relationship(
         "Task",
         foreign_keys=[source_id],
@@ -283,7 +280,8 @@ class Flow(db.Model):
                         cascade="all, delete-orphan"))
     target_id = Column(String(250),
                        ForeignKey("task.id",
-                                  name="fk_task_id"), nullable=False)
+                                  name="fk_flow_target_id"), nullable=False,
+                       index=True)
     target = relationship(
         "Task",
         foreign_keys=[target_id],
@@ -291,7 +289,8 @@ class Flow(db.Model):
                         cascade="all, delete-orphan"))
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_id"), nullable=False)
+                                    name="fk_flow_workflow_id"), nullable=False,
+                         index=True)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
@@ -341,8 +340,8 @@ class Operation(db.Model, Translatable):
             "and_("
             "OperationForm.id==operation_operation_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
-    ports = relationship("OperationPort", back_populates="operation")
-    scripts = relationship("OperationScript", back_populates="operation")
+    ports = relationship("OperationPort")
+    scripts = relationship("OperationScript")
 
     def __str__(self):
         return self.name
@@ -357,7 +356,7 @@ class OperationTranslation(translation_base(Operation)):
 
     # Fields
     name = Column(Unicode(200))
-    description = Column(Unicode(200))
+    description = Column(Unicode(800))
 
 
 class OperationCategory(db.Model, Translatable):
@@ -399,9 +398,6 @@ class OperationForm(db.Model, Translatable):
                      default=True, nullable=False)
     order = Column(Integer, nullable=False)
     category = Column(String(200), nullable=False)
-    __mapper_args__ = {
-        'order_by': 'order'
-    }
 
     # Associations
     fields = relationship("OperationFormField",
@@ -445,14 +441,12 @@ class OperationFormField(db.Model, Translatable):
     enable_conditions = Column(String(2000))
     editable = Column(Boolean,
                       default=True, nullable=False)
-    __mapper_args__ = {
-        'order_by': 'order'
-    }
 
     # Associations
     form_id = Column(Integer,
                      ForeignKey("operation_form.id",
-                                name="fk_operation_form_id"))
+                                name="fk_operation_form_field_form_id"),
+                     index=True)
     form = relationship(
         "OperationForm",
         foreign_keys=[form_id])
@@ -488,9 +482,6 @@ class OperationPort(db.Model, Translatable):
     multiplicity = Column(Enum(*list(OperationPortMultiplicity.values()),
                                name='OperationPortMultiplicityEnumType'),
                           default=1, nullable=False)
-    __mapper_args__ = {
-        'order_by': 'order'
-    }
 
     # Associations
     interfaces = relationship(
@@ -498,7 +489,8 @@ class OperationPort(db.Model, Translatable):
         secondary=operation_port_interface_operation_port)
     operation_id = Column(Integer,
                           ForeignKey("operation.id",
-                                     name="fk_operation_id"), nullable=False)
+                                     name="fk_operation_port_operation_id"), nullable=False,
+                          index=True)
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
@@ -558,7 +550,8 @@ class OperationScript(db.Model):
     # Associations
     operation_id = Column(Integer,
                           ForeignKey("operation.id",
-                                     name="fk_operation_id"), nullable=False)
+                                     name="fk_operation_script_operation_id"), nullable=False,
+                          index=True)
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
@@ -581,7 +574,8 @@ class OperationSubset(db.Model):
     # Associations
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_platform_id"), nullable=False)
+                                    name="fk_operation_subset_platform_id"), nullable=False,
+                         index=True)
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id],
@@ -589,7 +583,8 @@ class OperationSubset(db.Model):
                         cascade="all, delete-orphan"))
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_platform_id"), nullable=False)
+                                    name="fk_operation_subset_platform_id"), nullable=False,
+                         index=True)
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id])
@@ -631,7 +626,7 @@ class Platform(db.Model, Translatable):
             "and_("
             "OperationForm.id==platform_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
-    subsets = relationship("OperationSubset", back_populates="platform",
+    subsets = relationship("OperationSubset",
                            cascade="all, delete-orphan",
                            order_by="OperationSubset.name")
 
@@ -676,7 +671,8 @@ class PlatformPlugin(db.Model):
     # Associations
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_platform_id"), nullable=False)
+                                    name="fk_platform_plugin_platform_id"), nullable=False,
+                         index=True)
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id],
@@ -702,7 +698,8 @@ class RoleOperationSubset(db.Model):
     # Associations
     subset_id = Column(Integer,
                        ForeignKey("operation_subset.id",
-                                  name="fk_operation_subset_id"), nullable=False)
+                                  name="fk_role_operation_subset_subset_id"), nullable=False,
+                       index=True)
     subset = relationship(
         "OperationSubset",
         foreign_keys=[subset_id],
@@ -748,7 +745,8 @@ class Task(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_id"), nullable=False)
+                                    name="fk_task_workflow_id"), nullable=False,
+                         index=True)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
@@ -756,7 +754,8 @@ class Task(db.Model):
                         cascade="all, delete-orphan"))
     operation_id = Column(Integer,
                           ForeignKey("operation.id",
-                                     name="fk_operation_id"), nullable=False)
+                                     name="fk_task_operation_id"), nullable=False,
+                          index=True)
     operation = relationship(
         "Operation",
         foreign_keys=[operation_id])
@@ -825,25 +824,28 @@ class Workflow(db.Model):
                   default=WorkflowType.WORKFLOW, nullable=False)
     preferred_cluster_id = Column(Integer)
     __mapper_args__ = {
-        'version_id_col': version, 'order_by': 'name'
+        'version_id_col': version,
     }
 
     # Associations
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_platform_id"), nullable=False)
+                                    name="fk_workflow_platform_id"), nullable=False,
+                         index=True)
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id])
     subset_id = Column(Integer,
                        ForeignKey("operation_subset.id",
-                                  name="fk_operation_subset_id"))
+                                  name="fk_workflow_subset_id"),
+                       index=True)
     subset = relationship(
         "OperationSubset",
         foreign_keys=[subset_id])
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_platform_id"), nullable=False)
+                                    name="fk_workflow_platform_id"), nullable=False,
+                         index=True)
     platform = relationship(
         "Platform",
         foreign_keys=[platform_id])
@@ -872,7 +874,8 @@ class WorkflowHistory(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_id"), nullable=False)
+                                    name="fk_workflow_history_workflow_id"), nullable=False,
+                         index=True)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
@@ -901,7 +904,8 @@ class WorkflowPermission(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_id"), nullable=False)
+                                    name="fk_workflow_permission_workflow_id"), nullable=False,
+                         index=True)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
@@ -931,14 +935,12 @@ class WorkflowVariable(db.Model):
     suggested_widget = Column(String(200))
     default_value = Column(LONGTEXT)
     parameters = Column(LONGTEXT)
-    __mapper_args__ = {
-        'order_by': 'name'
-    }
 
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_id"), nullable=False)
+                                    name="fk_workflow_variable_workflow_id"), nullable=False,
+                         index=True)
     workflow = relationship(
         "Workflow",
         foreign_keys=[workflow_id],
