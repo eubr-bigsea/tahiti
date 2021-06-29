@@ -51,9 +51,9 @@ def _insert_operation_form_field():
     data = [
         #Flatten - data_format
         (4409, 'sorting_key_values', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
-        (4410, 'block_on', 'TEXT', 0, 5, None, 'text', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
-        (4411, 'block_right_on', 'TEXT', 0, 6, None, 'text', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
-        (4412, 'block_left_on', 'TEXT', 0, 7, None, 'text', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
+        (4410, 'block_on', 'TEXT', 0, 5, None, 'attribute-selector', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
+        (4411, 'block_right_on', 'TEXT', 0, 6, None, 'attribute-selector', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
+        (4412, 'block_left_on', 'TEXT', 0, 7, None, 'attribute-selector', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition),
 
         (4413, 'n', 'INTEGER', 0, 8, None, 'integer', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition_2),
         (4414, 'replace', 'INTEGER', 0, 9, 1, 'checkbox', None, None, 'EXECUTION', INDEXING_FORM_ID, enable_condition_2),
@@ -74,8 +74,8 @@ def _insert_operation_form_field_translation():
     columns = ('id', 'locale', 'label', 'help')
     data = [
         #Flatten - data_format
-        (4409, 'en', 'Sorting key values', 'A list of sorting key values.'),
-        (4409, 'pt', 'Sorting key values', ''),
+        (4409, 'en', 'Sorting key values (Inform the values separated by a comma)', 'A list of sorting key values.'),
+        (4409, 'pt', 'Sorting key values (Informe os valores separados por vírgula)', ''),
 
         (4410, 'en', 'Block on', 'Additional columns to apply standard blocking on.'),
         (4410, 'pt', 'Block on', ''),
