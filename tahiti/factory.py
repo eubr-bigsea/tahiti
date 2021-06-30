@@ -6,23 +6,26 @@ import jinja2
 import sqlalchemy_utils
 from flask import Flask
 from flask_babel import Babel
-from flask_babel import get_locale
+from flask_babel import get_locale, Babel
 from flask_cors import CORS
 from flask_restful import Api
 from flask_migrate import Migrate
 
 from tahiti.application_api import ApplicationListApi, ApplicationDetailApi
 from tahiti.cache import cache
-from tahiti.models import db, Operation, OperationCategory
+from tahiti.models import db
 from tahiti.operation_api import OperationDetailApi, OperationClearCacheApi
 from tahiti.operation_api import OperationListApi, OperationTreeApi
 from tahiti.operation_subset_api import (OperationSubsetDetailApi,
-        OperationSubsetListApi, OperationSubsetOperationApi)
+        OperationSubsetListApi)
+from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.views import AttributeSuggestionView
-from tahiti.workflow_api import (WorkflowDetailApi, WorkflowImportApi,
-    WorkflowAddFromTemplateApi, WorkflowPermissionApi)
-from tahiti.workflow_api import WorkflowListApi, WorkflowHistoryApi
+from tahiti.workflow_api import WorkflowDetailApi, WorkflowListApi
+from tahiti.workflow_from_template_api import WorkflowFromTemplateApi
+from tahiti.workflow_permission_api import WorkflowPermissionApi
+from tahiti.import_workflow_api import ImportWorkflowApi
+from tahiti.workflow_history_api import  WorkflowHistoryApi
 
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
@@ -69,6 +72,9 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     # CORS configuration
     CORS(app, resources={r"/*": {"origins": "*"}})
 
+    
+    babel = Babel(app)
+
     # API configuration
     api = Api(app)
     mappings = {
@@ -86,8 +92,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows': WorkflowListApi,
         '/workflows/<int:workflow_id>': WorkflowDetailApi,
         '/workflows/<int:workflow_id>/permission/<int:user_id>': WorkflowPermissionApi,
-        '/workflows/import': WorkflowImportApi,
-        '/workflows/from-template': WorkflowAddFromTemplateApi,
+        '/workflows/import': ImportWorkflowApi,
+        '/workflows/from-template': WorkflowFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }

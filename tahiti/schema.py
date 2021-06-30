@@ -51,6 +51,30 @@ class BaseSchema(Schema):
         }
 
 
+class ApplicationCreateRequestSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=True)
+    enabled = fields.Boolean(
+        required=False,
+        allow_none=True,
+        missing=True,
+        default=True)
+    type = fields.String(required=True,
+                         validate=[OneOf(list(ApplicationType.__dict__.keys()))])
+    execution_parameters = fields.String(required=False, allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of Application"""
+        return Application(**data)
+
+    class Meta:
+        ordered = True
+
+
 class ApplicationListResponseSchema(BaseSchema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
@@ -828,6 +852,7 @@ class OperationSubsetListResponseSchema(BaseSchema):
 
 class OperationSubsetCreateRequestSchema(BaseSchema):
     """ JSON serialization schema """
+    id = fields.Integer(required=True)
     name = fields.String(required=True)
     platform = fields.Nested(
         'tahiti.schema.PlatformCreateRequestSchema',
