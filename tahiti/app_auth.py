@@ -55,7 +55,7 @@ def requires_auth(f):
             # Inter services authentication
             setattr(flask_g, 'user', User(0, 'internal', 
                 'lemonade@lemonade.org.br', 'internal', 'en', '', '', 
-                permissions=[], roles=[]))
+                permissions=['ADMINISTRATOR'], roles=['ADMINISTRATOR']))
             return f(*_args, **kwargs)
         else:
             user_id = request.headers.get('x-user-id')
