@@ -44,7 +44,8 @@ def get_workflow(workflow_id):
         Workflow.query.filter_by(id=workflow_id).order_by(
             Workflow.name))
 
-    workflows = _filter_by_permissions(workflows, list(PermissionType.values()))
+    workflows = filter_by_permissions(
+        workflows, list(PermissionType.values()))
 
     workflows = workflows.options(
 
@@ -62,12 +63,12 @@ def get_workflow(workflow_id):
                     if field.name not in current_form:
                         current_form[field.name] = {
                             'value': field.default}
-            db.session.expunge(task) # in order to avoid unnecessary updates
+            db.session.expunge(task)  # in order to avoid unnecessary updates
             task.forms = json.dumps(current_form)
     return workflow
 
 
-def _filter_by_permissions(workflows, permissions, consider_public=True):
+def filter_by_permissions(workflows, permissions, consider_public=True):
     if g.user.id not in (0, 1):  # It is not a inter service call
         sub_query = WorkflowPermission.query.with_entities(
             WorkflowPermission.workflow_id).filter(
@@ -82,12 +83,14 @@ def _filter_by_permissions(workflows, permissions, consider_public=True):
         workflows = workflows.filter(or_(*conditions))
     return workflows
 
+
 def test_and_apply_filter(request, arg, workflow, condition):
     result = workflow
     value = request.args.get(arg)
     if value:
         result = workflow.filter(condition(value))
-    return result    
+    return result
+
 
 class WorkflowListApi(Resource):
     """ REST API for listing class Workflow """
@@ -103,18 +106,17 @@ class WorkflowListApi(Resource):
             else:
                 only = ('id', 'name', 'platform.id', 'permissions')
 
-
-            workflows = test_and_apply_filter(request, 'platform', workflows, 
-                lambda v: Workflow.platform.has(slug=v))
+            workflows = test_and_apply_filter(request, 'platform', workflows,
+                                              lambda v: Workflow.platform.has(slug=v))
 
             # platform = request.args.get('platform', None)
             # if platform:
             #    workflows = workflows.filter(
             #        Workflow.platform.has(slug=platform))
-            workflows = test_and_apply_filter(request, 'track', workflows, 
-                lambda v: Workflow.publishing_enabled == (v != 'false'))
-            workflows = test_and_apply_filter(request, 'published', workflows, 
-                lambda v: Workflow.publishing_status == PublishingStatus.PUBLISHED)
+            workflows = test_and_apply_filter(request, 'track', workflows,
+                                              lambda v: Workflow.publishing_enabled == (v != 'false'))
+            workflows = test_and_apply_filter(request, 'published', workflows,
+                                              lambda v: Workflow.publishing_status == PublishingStatus.PUBLISHED)
             # is_track_filter = request.args.get('track')
             # if is_track_filter:
             #     workflows = workflows.filter(
@@ -124,17 +126,17 @@ class WorkflowListApi(Resource):
             #         workflows = workflows.filter(
             #             Workflow.publishing_status == PublishingStatus.PUBLISHED)
 
-            workflows = test_and_apply_filter(request, 'enabled', workflows, 
-                lambda v: Workflow.enabled == (v != 'false'))
+            workflows = test_and_apply_filter(request, 'enabled', workflows,
+                                              lambda v: Workflow.enabled == (v != 'false'))
             # enabled_filter = request.args.get('enabled')
             # if enabled_filter:
             #    workflows = workflows.filter(
             #        Workflow.enabled == (enabled_filter != 'false'))
 
-            workflows = test_and_apply_filter(request, 'template', workflows, 
-                lambda v: or_(and_(Workflow.user_id == g.user.id,
-                              Workflow.is_template),
-                         Workflow.is_system_template))
+            workflows = test_and_apply_filter(request, 'template', workflows,
+                                              lambda v: or_(and_(Workflow.user_id == g.user.id,
+                                                                 Workflow.is_template),
+                                                            Workflow.is_system_template))
             # template_only = request.args.get('template')
             # if template_only is not None:
             #     template_only = template_only in ['1', 'true', 'True']
@@ -147,16 +149,15 @@ class WorkflowListApi(Resource):
             #                  Workflow.is_template),
             #             Workflow.is_system_template))
 
-
-            workflows = test_and_apply_filter(request, 'name', workflows, 
-                lambda v: Workflow.name.like('%%{}%%'.format(v)))
+            workflows = test_and_apply_filter(request, 'name', workflows,
+                                              lambda v: Workflow.name.like('%%{}%%'.format(v)))
             # name_filter = request.args.get('name')
             # if name_filter:
             #     workflows = workflows.filter(
             #         Workflow.name.like(
             #             '%%{}%%'.format(name_filter)))
 
-            workflows = _filter_by_permissions(
+            workflows = filter_by_permissions(
                 workflows, list(PermissionType.values()))
             sort = request.args.get('sort', 'name')
             if sort not in ['name', 'id', 'user_name', 'updated', 'created']:
@@ -222,7 +223,7 @@ class WorkflowListApi(Resource):
             for task in data.get('tasks', {}):
                 task['operation_id'] = task['operation']['id']
                 task['forms'] = {k: v for k, v in list(task['forms'].items())
-                                 if v.get('value') is not None or 
+                                 if v.get('value') is not None or
                                  v.get('publishing_enabled') == True}
             params = {}
             params.update(data)
@@ -247,10 +248,10 @@ class WorkflowListApi(Resource):
                 db.session.add(workflow)
             db.session.commit()
         except ValidationError as e:
-            result= {
-               'status': 'ERROR', 
-               'message': gettext('Validation error'),
-               'errors': e.messages
+            result = {
+                'status': 'ERROR',
+                'message': gettext('Validation error'),
+                'errors': e.messages
             }
         except Exception as e:
             log.exception('Error in POST')
@@ -280,7 +281,7 @@ class WorkflowDetailApi(Resource):
     def delete(workflow_id):
         result, result_code = dict(status="ERROR", message="Not found"), 404
 
-        filtered = _filter_by_permissions(
+        filtered = filter_by_permissions(
             Workflow.query, [PermissionType.WRITE])
 
         workflow = filtered.filter(Workflow.id == workflow_id).first()
@@ -315,7 +316,7 @@ class WorkflowDetailApi(Resource):
                 for task in data.get('tasks', {}):
                     task['forms'] = {k: v for k, v in
                                      list(task['forms'].items())
-                                     if v.get('value') is not None or 
+                                     if v.get('value') is not None or
                                      v.get('publishing_enabled') == True}
                     task['operation_id'] = task['operation']['id']
                 
@@ -349,7 +350,7 @@ class WorkflowDetailApi(Resource):
                 response_schema = WorkflowItemResponseSchema()
                 if not form.errors:
                     try:
-                        filtered = _filter_by_permissions(
+                        filtered = filter_by_permissions(
                             Workflow.query, [PermissionType.WRITE])
                         temp_workflow = filtered.filter(
                             Workflow.id == workflow_id).first()
@@ -359,7 +360,7 @@ class WorkflowDetailApi(Resource):
                             form.updated = datetime.datetime.utcnow()
 
                             workflow = db.session.merge(form)
-                            if (workflow.publishing_enabled and 
+                            if (workflow.publishing_enabled and
                                     workflow.publishing_status is None):
                                 workflow.publishing_status = PublishingStatus.EDITING
                             db.session.flush()
@@ -370,7 +371,7 @@ class WorkflowDetailApi(Resource):
                                 response_schema.dump(workflow))
                             # if workflow.is_template:
                             #     workflow.template_code = historical_data
-                            
+
                             if save_history:
                                 history = WorkflowHistory(
                                     user_id=g.user.id, user_name=g.user.name,
@@ -405,6 +406,7 @@ class WorkflowDetailApi(Resource):
             import sys
             result = {'status': "ERROR", 'message': sys.exc_info()[1]}
         return result, result_code
+<<<<<<< HEAD
 
 
 class WorkflowImportApi(Resource):

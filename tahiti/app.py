@@ -13,8 +13,8 @@ from flask_babel import get_locale
 from tahiti.factory import create_app, create_babel_i18n
 
 app = create_app()
-babel = create_babel_i18n(app)
 
+babel = create_babel_i18n(app)
 
 @babel.localeselector
 def get_locale_from_query():
