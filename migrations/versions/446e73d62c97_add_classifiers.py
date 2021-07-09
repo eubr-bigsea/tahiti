@@ -59,8 +59,8 @@ def _insert_operation_form_field():
          ]),
          'EXECUTION', CLASSIFICATION_FORM_ID, None),
         (4406, 'binarize', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
-        (4407, 'alpha', 'FLOAT', 1, 5, 1e-4, 'decimal', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
-        (4408, 'use_col_names', 'INTEGER', 1, 6, 1, 'checkbox', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
+        (4394, 'alpha', 'FLOAT', 1, 5, 1e-4, 'decimal', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
+        (4395, 'use_col_names', 'INTEGER', 1, 6, 1, 'checkbox', None, None, 'EXECUTION', CLASSIFICATION_FORM_ID, enable_condition),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -82,11 +82,11 @@ def _insert_operation_form_field_translation():
         (4406, 'en', 'Binarize', ''),
         (4406, 'pt', 'Binarize', ''),
 
-        (4407, 'en', 'Alpha', ''),
-        (4407, 'pt', 'Alpha', ''),
+        (4394, 'en', 'Alpha', ''),
+        (4394, 'pt', 'Alpha', ''),
 
-        (4408, 'en', 'Use column names', ''),
-        (4408, 'pt', 'Usar os nomes das colunas', ''),
+        (4395, 'en', 'Use column names', ''),
+        (4395, 'pt', 'Usar os nomes das colunas', ''),
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -147,9 +147,9 @@ def _insert_operation_port_translation():
 
 all_commands = [
     (_insert_operation_form_field,
-     'DELETE FROM operation_form_field WHERE id IN (4405, 4406, 4407, 4408)'),
+     'DELETE FROM operation_form_field WHERE id IN (4405, 4406, 4394, 4395)'),
     (_insert_operation_form_field_translation,
-     'DELETE FROM operation_form_field_translation WHERE id IN (4405, 4406, 4407, 4408)'),
+     'DELETE FROM operation_form_field_translation WHERE id IN (4405, 4406, 4394, 4395)'),
 
     (_insert_operation_port,
      'DELETE FROM operation_port WHERE id = 4124'),
