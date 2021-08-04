@@ -318,6 +318,8 @@ class WorkflowDetailApi(Resource):
                                      if v.get('value') is not None or 
                                      v.get('publishing_enabled') == True}
                     task['operation_id'] = task['operation']['id']
+                for variable in data.get('variables'):
+                    variable['parameters'] = json.dumps(variable['parameters'])
 
                 # Ignore missing fields to allow partial updates
                 params = {}

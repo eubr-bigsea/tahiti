@@ -21,7 +21,7 @@ def load_json(str_value):
     try:
         return json.loads(str_value)
     except BaseException:
-        return "Error loading JSON"
+        return None
 
 
 # region Protected
@@ -1522,7 +1522,7 @@ class WorkflowVariableListResponseSchema(Schema):
     multiplicity = fields.Integer(required=True, missing=1, default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.String(required=False, allow_none=True)
+    parameters = fields.Function(lambda x: load_json(x.parameters))
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1544,7 +1544,7 @@ class WorkflowVariableItemResponseSchema(Schema):
     multiplicity = fields.Integer(required=True, missing=1, default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.String(required=False, allow_none=True)
+    parameters = fields.Function(lambda x: load_json(x.parameters))
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1566,7 +1566,8 @@ class WorkflowVariableCreateRequestSchema(Schema):
     multiplicity = fields.Integer(required=True, missing=1, default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.String(required=False, allow_none=True)
+    parameters = fields.Function(lambda x: load_json(x.parameters), 
+        allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
