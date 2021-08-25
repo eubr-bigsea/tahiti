@@ -169,8 +169,11 @@ def get_base_name(name):
         name = 'INTERFACE'
     elif name in ['operation_category', 'operation_category_translation']:
         name = 'CATEGORY'
+<<<<<<< HEAD
     elif name in ['operation_form_field', 'operation_form_field_translation']:
         name = 'CATEGORY'
+=======
+>>>>>>> 3969c37 (Add script to generate migrations)
     else:
         raise ValueError(f'Invalid entity: {name}')
     return name
@@ -183,7 +186,11 @@ def get_placeholder(value, loop, entity):
         return f'BASE_{name} + {counter}'
     elif v in ['Enum']:
         return f"'{value.expression.type.enums[0]}'"
+<<<<<<< HEAD
     elif v in ['String', 'Unicode', 'LONGTEXT', 'UnicodeText']:
+=======
+    elif v in ['String', 'Unicode', 'LONGTEXT']:
+>>>>>>> 3969c37 (Add script to generate migrations)
         return f"'{value.expression.name}'" 
     elif v in ['Integer']:
         return 0
@@ -207,8 +214,11 @@ def get_totals(entity, args):
         return args.interfaces
     elif name in ['operation_category', 'operation_category_translation']:
         return args.categories
+<<<<<<< HEAD
     elif name in ['operation_form_field', 'operation_form_field_translation']:
         return args.fields
+=======
+>>>>>>> 3969c37 (Add script to generate migrations)
     else:
         raise ValueError(f'Invalid entity: {name}')
 
@@ -264,6 +274,10 @@ def main(args):
     env.filters['get_totals'] = get_totals
     env.filters['get_placeholder'] = get_placeholder
     revision_id = rev_id()
+<<<<<<< HEAD
+=======
+    revision_id = 'f1ff40611872'
+>>>>>>> 3969c37 (Add script to generate migrations)
     jinja_template = env.from_string(template)
     data = {
         'offsets': offsets,
