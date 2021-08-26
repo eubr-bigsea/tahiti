@@ -562,6 +562,11 @@ class WorkflowAddFromTemplateApi(Resource):
                 cloned['name'] = params.get('name', 'workflow')
                 cloned['is_template'] = False
                 cloned['is_system_template'] = False
+                
+                # Marshmallow converts JSON value to dict and it causes
+                # problems when saving data (issue #136);
+                cloned['forms'] = workflow.forms
+
                 del cloned['user']
 
                 old_task_ids = {}
@@ -577,7 +582,6 @@ class WorkflowAddFromTemplateApi(Resource):
                 for flow in cloned['flows']:
                     flow['source_id'] = old_task_ids[flow['source_id']]
                     flow['target_id'] = old_task_ids[flow['target_id']]
-
                 request_schema = WorkflowCreateRequestSchema()
                 form = request_schema.load(cloned)
                 if not form.errors:
