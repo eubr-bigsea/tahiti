@@ -406,8 +406,6 @@ class WorkflowDetailApi(Resource):
             import sys
             result = {'status': "ERROR", 'message': sys.exc_info()[1]}
         return result, result_code
-<<<<<<< HEAD
-
 
 class WorkflowImportApi(Resource):
     @staticmethod

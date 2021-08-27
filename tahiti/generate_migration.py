@@ -170,10 +170,15 @@ def get_base_name(name):
     elif name in ['operation_category', 'operation_category_translation']:
         name = 'CATEGORY'
 <<<<<<< HEAD
+<<<<<<< HEAD
     elif name in ['operation_form_field', 'operation_form_field_translation']:
         name = 'CATEGORY'
 =======
 >>>>>>> 3969c37 (Add script to generate migrations)
+=======
+    elif name in ['operation_form_field', 'operation_form_field_translation']:
+        name = 'CATEGORY'
+>>>>>>> d1cd736 (Add support to generate migration for new entities)
     else:
         raise ValueError(f'Invalid entity: {name}')
     return name
@@ -187,10 +192,14 @@ def get_placeholder(value, loop, entity):
     elif v in ['Enum']:
         return f"'{value.expression.type.enums[0]}'"
 <<<<<<< HEAD
+<<<<<<< HEAD
     elif v in ['String', 'Unicode', 'LONGTEXT', 'UnicodeText']:
 =======
     elif v in ['String', 'Unicode', 'LONGTEXT']:
 >>>>>>> 3969c37 (Add script to generate migrations)
+=======
+    elif v in ['String', 'Unicode', 'LONGTEXT', 'UnicodeText']:
+>>>>>>> d1cd736 (Add support to generate migration for new entities)
         return f"'{value.expression.name}'" 
     elif v in ['Integer']:
         return 0
@@ -215,10 +224,15 @@ def get_totals(entity, args):
     elif name in ['operation_category', 'operation_category_translation']:
         return args.categories
 <<<<<<< HEAD
+<<<<<<< HEAD
     elif name in ['operation_form_field', 'operation_form_field_translation']:
         return args.fields
 =======
 >>>>>>> 3969c37 (Add script to generate migrations)
+=======
+    elif name in ['operation_form_field', 'operation_form_field_translation']:
+        return args.fields
+>>>>>>> d1cd736 (Add support to generate migration for new entities)
     else:
         raise ValueError(f'Invalid entity: {name}')
 
@@ -275,9 +289,12 @@ def main(args):
     env.filters['get_placeholder'] = get_placeholder
     revision_id = rev_id()
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
     revision_id = 'f1ff40611872'
 >>>>>>> 3969c37 (Add script to generate migrations)
+=======
+>>>>>>> d1cd736 (Add support to generate migration for new entities)
     jinja_template = env.from_string(template)
     data = {
         'offsets': offsets,
