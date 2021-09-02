@@ -17,7 +17,6 @@ log = logging.getLogger(__name__)
 # region Protected
 # endregion
 
-
 class PlatformListApi(Resource):
     """ REST API for listing class Platform """
 

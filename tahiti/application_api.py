@@ -65,7 +65,7 @@ class ApplicationListApi(Resource):
         result = {'status': 'ERROR',
                   'message': gettext("Missing json in the request body")}
         return_code = HTTPStatus.BAD_REQUEST
-
+        
         if request.json is not None:
             request_schema = ApplicationCreateRequestSchema()
             response_schema = ApplicationItemResponseSchema()
@@ -79,11 +79,11 @@ class ApplicationListApi(Resource):
                 result = response_schema.dump(application)
                 return_code = HTTPStatus.CREATED
             except ValidationError as e:
-                result = {
-                    'status': 'ERROR',
-                    'message': gettext('Invalid data for %(name)s.)',
-                                       name=self.human_name),
-                    'errors': translate_validation(e.messages)
+                result= {
+                   'status': 'ERROR', 
+                   'message': gettext('Invalid data for %(name)s.)',
+                                      name=self.human_name),
+                   'errors': translate_validation(e.messages)
                 }
             except Exception as e:
                 result = {'status': 'ERROR',
@@ -100,7 +100,6 @@ class ApplicationListApi(Resource):
 
 class ApplicationDetailApi(Resource):
     """ REST API for a single instance of class Application """
-
     def __init__(self):
         self.human_name = gettext('Application')
 
@@ -195,12 +194,12 @@ class ApplicationDetailApi(Resource):
                             application)]
                     }
             except ValidationError as e:
-                result = {
-                    'status': 'ERROR',
-                    'message': gettext('Invalid data for %(name)s (id=%(id)s)',
-                                       name=self.human_name,
-                                       id=application_id),
-                    'errors': translate_validation(e.messages)
+                result= {
+                   'status': 'ERROR', 
+                   'message': gettext('Invalid data for %(name)s (id=%(id)s)',
+                                      name=self.human_name,
+                                      id=application_id),
+                   'errors': translate_validation(e.messages)
                 }
             except Exception as e:
                 result = {'status': 'ERROR',

@@ -17,7 +17,6 @@ log = logging.getLogger(__name__)
 # region Protected
 # endregion
 
-
 class OperationSubsetListApi(Resource):
     """ REST API for listing class OperationSubset """
 
