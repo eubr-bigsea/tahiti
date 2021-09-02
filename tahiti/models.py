@@ -193,44 +193,56 @@ class PluginStatus:
 operation_category_operation = db.Table(
     'operation_category_operation',
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False, index=True),
+           ForeignKey('operation.id'),
+           nullable=False, index=True),
     Column('operation_category_id', Integer,
-           ForeignKey('operation_category.id'), nullable=False, index=True))
+           ForeignKey('operation_category.id'),
+           nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_platform = db.Table(
     'operation_platform',
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False, index=True),
+           ForeignKey('operation.id'),
+           nullable=False, index=True),
     Column('platform_id', Integer,
-           ForeignKey('platform.id'), nullable=False, index=True))
+           ForeignKey('platform.id'),
+           nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_operation_form = db.Table(
     'operation_operation_form',
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False, index=True),
+           ForeignKey('operation.id'),
+           nullable=False, index=True),
     Column('operation_form_id', Integer,
-           ForeignKey('operation_form.id'), nullable=False, index=True))
+           ForeignKey('operation_form.id'),
+           nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_port_interface_operation_port = db.Table(
     'operation_port_interface_operation_port',
     Column('operation_port_id', Integer,
-           ForeignKey('operation_port.id'), nullable=False, index=True),
+           ForeignKey('operation_port.id'),
+           nullable=False, index=True),
     Column('operation_port_interface_id', Integer,
-           ForeignKey('operation_port_interface.id'), nullable=False, index=True))
+           ForeignKey('operation_port_interface.id'),
+           nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 operation_subset_operation = db.Table(
     'operation_subset_operation',
     Column('operation_subset_id', Integer,
-           ForeignKey('operation_subset.id'), nullable=False, index=True),
+           ForeignKey('operation_subset.id'),
+           nullable=False, index=True),
     Column('operation_id', Integer,
-           ForeignKey('operation.id'), nullable=False, index=True))
+           ForeignKey('operation.id'),
+           nullable=False, index=True))
 # noinspection PyUnresolvedReferences
 platform_form = db.Table(
     'platform_form',
     Column('platform_id', Integer,
-           ForeignKey('platform.id'), nullable=False, index=True),
+           ForeignKey('platform.id'),
+           nullable=False, index=True),
     Column('operation_form_id', Integer,
-           ForeignKey('operation_form.id'), nullable=False, index=True))
+           ForeignKey('operation_form.id'),
+           nullable=False, index=True))
 
 
 class Application(db.Model):
@@ -271,28 +283,34 @@ class Flow(db.Model):
     # Associations
     source_id = Column(String(250),
                        ForeignKey("task.id",
-                                  name="fk_flow_source_id"), nullable=False,
+                                  name="fk_flow_source_id"),
+                       nullable=False,
                        index=True)
     source = relationship(
         "Task",
+        overlaps='sources',
         foreign_keys=[source_id],
         backref=backref("sources",
                         cascade="all, delete-orphan"))
     target_id = Column(String(250),
                        ForeignKey("task.id",
-                                  name="fk_flow_target_id"), nullable=False,
+                                  name="fk_flow_target_id"),
+                       nullable=False,
                        index=True)
     target = relationship(
         "Task",
+        overlaps='targets',
         foreign_keys=[target_id],
         backref=backref("targets",
                         cascade="all, delete-orphan"))
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_flow_workflow_id"), nullable=False,
+                                    name="fk_flow_workflow_id"),
+                         nullable=False,
                          index=True)
     workflow = relationship(
         "Workflow",
+        overlaps='flows',
         foreign_keys=[workflow_id],
         backref=backref("flows",
                         cascade="all, delete-orphan"))
@@ -322,12 +340,15 @@ class Operation(db.Model, Translatable):
     # Associations
     categories = relationship(
         "OperationCategory",
+        overlaps="operations",
         secondary=operation_category_operation)
     subsets = relationship(
         "OperationSubset",
+        overlaps="operations",
         secondary=operation_subset_operation)
     platforms = relationship(
         "Platform",
+        overlaps="operations",
         secondary=operation_platform,
         secondaryjoin=(
             "and_("
@@ -335,6 +356,7 @@ class Operation(db.Model, Translatable):
             "Platform.enabled==1)"))
     forms = relationship(
         "OperationForm",
+        overlaps="operations",
         secondary=operation_operation_form,
         secondaryjoin=(
             "and_("
@@ -449,6 +471,7 @@ class OperationFormField(db.Model, Translatable):
                      index=True)
     form = relationship(
         "OperationForm",
+        overlaps='fields',
         foreign_keys=[form_id])
 
     def __str__(self):
@@ -486,13 +509,16 @@ class OperationPort(db.Model, Translatable):
     # Associations
     interfaces = relationship(
         "OperationPortInterface",
+        overlaps="operation_ports",
         secondary=operation_port_interface_operation_port)
     operation_id = Column(Integer,
                           ForeignKey("operation.id",
-                                     name="fk_operation_port_operation_id"), nullable=False,
+                                     name="fk_operation_port_operation_id"),
+                          nullable=False,
                           index=True)
     operation = relationship(
         "Operation",
+        overlaps='ports',
         foreign_keys=[operation_id])
 
     def __str__(self):
@@ -550,10 +576,12 @@ class OperationScript(db.Model):
     # Associations
     operation_id = Column(Integer,
                           ForeignKey("operation.id",
-                                     name="fk_operation_script_operation_id"), nullable=False,
+                                     name="fk_operation_script_operation_id"),
+                          nullable=False,
                           index=True)
     operation = relationship(
         "Operation",
+        overlaps='scripts',
         foreign_keys=[operation_id])
 
     def __str__(self):
@@ -574,22 +602,18 @@ class OperationSubset(db.Model):
     # Associations
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_operation_subset_platform_id"), nullable=False,
+                                    name="fk_operation_subset_platform_id"),
+                         nullable=False,
                          index=True)
     platform = relationship(
         "Platform",
+        overlaps='subsets',
         foreign_keys=[platform_id],
-        backref=backref("subsets",
-                        cascade="all, delete-orphan"))
-    platform_id = Column(Integer,
-                         ForeignKey("platform.id",
-                                    name="fk_operation_subset_platform_id"), nullable=False,
-                         index=True)
-    platform = relationship(
-        "Platform",
-        foreign_keys=[platform_id])
+        back_populates="operation_subsets"
+    )
     operations = relationship(
         "Operation",
+        overlaps="operation_subsets",
         secondary=operation_subset_operation,
         secondaryjoin=(
             "and_("
@@ -621,14 +645,15 @@ class Platform(db.Model, Translatable):
     # Associations
     forms = relationship(
         "OperationForm",
+        overlaps="platforms",
         secondary=platform_form,
         secondaryjoin=(
             "and_("
             "OperationForm.id==platform_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
-    subsets = relationship("OperationSubset",
-                           cascade="all, delete-orphan",
-                           order_by="OperationSubset.name")
+    operation_subsets = relationship("OperationSubset",
+                                     cascade="all, delete-orphan",
+                                     order_by="OperationSubset.name")
 
     def __str__(self):
         return self.name
@@ -671,10 +696,12 @@ class PlatformPlugin(db.Model):
     # Associations
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_platform_plugin_platform_id"), nullable=False,
+                                    name="fk_platform_plugin_platform_id"),
+                         nullable=False,
                          index=True)
     platform = relationship(
         "Platform",
+        overlaps='plugins',
         foreign_keys=[platform_id],
         backref=backref("plugins",
                         cascade="all, delete-orphan"))
@@ -698,10 +725,12 @@ class RoleOperationSubset(db.Model):
     # Associations
     subset_id = Column(Integer,
                        ForeignKey("operation_subset.id",
-                                  name="fk_role_operation_subset_subset_id"), nullable=False,
+                                  name="fk_role_operation_subset_subset_id"),
+                       nullable=False,
                        index=True)
     subset = relationship(
         "OperationSubset",
+        overlaps='roles',
         foreign_keys=[subset_id],
         backref=backref("roles",
                         cascade="all, delete-orphan"))
@@ -745,19 +774,23 @@ class Task(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_task_workflow_id"), nullable=False,
+                                    name="fk_task_workflow_id"),
+                         nullable=False,
                          index=True)
     workflow = relationship(
         "Workflow",
+        overlaps='tasks',
         foreign_keys=[workflow_id],
         backref=backref("tasks",
                         cascade="all, delete-orphan"))
     operation_id = Column(Integer,
                           ForeignKey("operation.id",
-                                     name="fk_task_operation_id"), nullable=False,
+                                     name="fk_task_operation_id"),
+                          nullable=False,
                           index=True)
     operation = relationship(
         "Operation",
+        overlaps='operation',
         foreign_keys=[operation_id])
 
     def __str__(self):
@@ -830,10 +863,12 @@ class Workflow(db.Model):
     # Associations
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_workflow_platform_id"), nullable=False,
+                                    name="fk_workflow_platform_id"),
+                         nullable=False,
                          index=True)
     platform = relationship(
         "Platform",
+        overlaps='platform',
         foreign_keys=[platform_id])
     subset_id = Column(Integer,
                        ForeignKey("operation_subset.id",
@@ -841,13 +876,16 @@ class Workflow(db.Model):
                        index=True)
     subset = relationship(
         "OperationSubset",
+        overlaps='subset',
         foreign_keys=[subset_id])
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
-                                    name="fk_workflow_platform_id"), nullable=False,
+                                    name="fk_workflow_platform_id"),
+                         nullable=False,
                          index=True)
     platform = relationship(
         "Platform",
+        overlaps='platform',
         foreign_keys=[platform_id])
 
     def __str__(self):
@@ -874,10 +912,12 @@ class WorkflowHistory(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_history_workflow_id"), nullable=False,
+                                    name="fk_workflow_history_workflow_id"),
+                         nullable=False,
                          index=True)
     workflow = relationship(
         "Workflow",
+        overlaps='versions',
         foreign_keys=[workflow_id],
         backref=backref("versions",
                         cascade="all, delete-orphan"))
@@ -904,10 +944,12 @@ class WorkflowPermission(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_permission_workflow_id"), nullable=False,
+                                    name="fk_workflow_permission_workflow_id"),
+                         nullable=False,
                          index=True)
     workflow = relationship(
         "Workflow",
+        overlaps='permissions',
         foreign_keys=[workflow_id],
         backref=backref("permissions",
                         cascade="all, delete-orphan"))
@@ -939,10 +981,12 @@ class WorkflowVariable(db.Model):
     # Associations
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
-                                    name="fk_workflow_variable_workflow_id"), nullable=False,
+                                    name="fk_workflow_variable_workflow_id"),
+                         nullable=False,
                          index=True)
     workflow = relationship(
         "Workflow",
+        overlaps='variables',
         foreign_keys=[workflow_id],
         backref=backref("variables",
                         cascade="all, delete-orphan"))
