@@ -1760,7 +1760,7 @@ class WorkflowVariableListResponseSchema(BaseSchema):
         default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.String(required=False, allow_none=True)
+    parameters = fields.Function(lambda x: load_json(x.parameters))
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1786,7 +1786,7 @@ class WorkflowVariableItemResponseSchema(BaseSchema):
         default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.String(required=False, allow_none=True)
+    parameters = fields.Function(lambda x: load_json(x.parameters))
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1812,7 +1812,8 @@ class WorkflowVariableCreateRequestSchema(BaseSchema):
         default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.String(required=False, allow_none=True)
+    parameters = fields.Function(lambda x: load_json(x.parameters), 
+        allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load

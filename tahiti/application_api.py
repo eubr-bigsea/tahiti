@@ -65,7 +65,7 @@ class ApplicationListApi(Resource):
         result = {'status': 'ERROR',
                   'message': gettext("Missing json in the request body")}
         return_code = HTTPStatus.BAD_REQUEST
-
+        
         if request.json is not None:
             request_schema = ApplicationCreateRequestSchema()
             response_schema = ApplicationItemResponseSchema()
@@ -100,7 +100,6 @@ class ApplicationListApi(Resource):
 
 class ApplicationDetailApi(Resource):
     """ REST API for a single instance of class Application """
-
     def __init__(self):
         self.human_name = gettext('Application')
 

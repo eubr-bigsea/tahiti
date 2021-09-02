@@ -319,6 +319,8 @@ class WorkflowDetailApi(Resource):
                                      if v.get('value') is not None or
                                      v.get('publishing_enabled') == True}
                     task['operation_id'] = task['operation']['id']
+                for variable in data.get('variables'):
+                    variable['parameters'] = json.dumps(variable['parameters'])
 
                 # Ignore missing fields to allow partial updates
                 params = {}
@@ -402,4 +404,316 @@ class WorkflowDetailApi(Resource):
             result_code = 500
             import sys
             result = {'status': "ERROR", 'message': sys.exc_info()[1]}
+        return result, result_code
+
+class WorkflowImportApi(Resource):
+    @staticmethod
+    @requires_auth
+    def post():
+        url = request.form.get('url')
+        token = request.form.get('token')
+        contents = request.json if request.json else None
+
+        # Imports from URL
+        if not contents:
+            if not all([url, token]):
+                return {'error': 'Missing url or token parameter',
+                        'status': 'ERROR'}, 400
+            r = requests.get(url, headers={"X-Auth-Token": token})
+            if r.status_code == 200:
+                contents = r.text
+                original = json.loads(contents)
+            else:
+                return 'Error reading source workflow: ' + \
+                       r.status_code + '\n' + r.text, 400
+        else:
+            original = json.loads(contents.get('content'))
+        # noinspection PyBroadException
+        try:
+            platform = original.pop('platform')
+
+            original['form'] = json.dumps(original.pop('forms'))
+            user = g.user
+            original.pop('user')
+            original['platform'] = Platform.query.get(platform['id'])
+            original['user_id'] = user.id
+            original['user_login'] = user.login
+            original['user_name'] = user.name
+            original['platform_id'] = platform['id']
+
+            original_task_ids = {}
+            for task in original['tasks']:
+                task['operation_id'] = task['operation']['id']
+                new_id = str(uuid.uuid4())
+                original_task_ids[task['id']] = new_id
+                task['id'] = new_id
+
+            # updates flows
+            for flow in original['flows']:
+                flow['source_id'] = original_task_ids[flow['source_id']]
+                flow['target_id'] = original_task_ids[flow['target_id']]
+
+            response_schema = WorkflowItemResponseSchema()
+            request_schema = WorkflowCreateRequestSchema()
+
+            form = request_schema.load(original)
+
+            if form.errors:
+                result, result_code = dict(
+                    status="ERROR", message="Validation error",
+                    errors=form.errors), 400
+            else:
+                try:
+                    workflow = form
+                    db.session.add(workflow)
+                    db.session.flush()
+                    update_port_name_in_flows(db.session, workflow.id)
+                    db.session.commit()
+                    result, result_code = workflow.id, 200
+                except Exception as e:
+                    log.exception('Error in POST')
+                    result, result_code = dict(status="ERROR",
+                                               message="Internal error"), 500
+                    if current_app.debug or True:
+                        result['debug_detail'] = str(e)
+                    db.session.rollback()
+
+            return {'status': 'OK', 'message': '',
+                    'workflow': result}, result_code
+
+        except Exception as e:
+            log.exception(e)
+            return 'Invalid workflow', 400
+
+
+class WorkflowHistoryApi(Resource):
+    @staticmethod
+    @requires_auth
+    def post(workflow_id):
+        result, result_code = dict(status="ERROR", message="Not found"), 404
+        params = request.json
+
+        if 'version' in params:
+            workflow = get_workflow(workflow_id)
+            if workflow.user_id == g.user.id:
+                history = WorkflowHistory.query.filter(
+                    WorkflowHistory.workflow_id == workflow_id,
+                    WorkflowHistory.version == int(params['version'])).one()
+                # return json.load(history.content), 200
+                old = json.loads(history.content)
+                old['platform_id'] = old['platform']['id']
+                old['user_id'] = g.user.id
+                old['user_login'] = g.user.login
+                old['user_name'] = g.user.name
+                del old['user']
+
+                for i, task in enumerate(old['tasks']):
+                    task['operation_id'] = task['operation']['id']
+                    if not task.get('name'):
+                        task['name'] = '{} {}'.format(task['operation']['name'],
+                                                      i)
+
+                rw = WorkflowCreateRequestSchema().load(old)
+                if rw.errors:
+                    result_code = 400
+                    result = dict(
+                        status="ERROR",
+                        message="Version {} is not compatible anymore.".format(
+                            params['version']))
+                else:
+                    result = old
+                    result_code = 200
+            else:
+                result, result_code = dict(status="ERROR",
+                                           message="Not authorized"), 401
+
+        return result, result_code
+
+    @staticmethod
+    @requires_auth
+    def get(workflow_id):
+        history = WorkflowHistory.query.filter(
+            WorkflowHistory.workflow_id == workflow_id).order_by(
+            WorkflowHistory.date.desc()).limit(20)
+        only = ('id', 'date', 'version', 'user_name')
+        return {'data': WorkflowHistoryListResponseSchema(
+            many=True, only=only).dump(history)}
+
+
+class WorkflowAddFromTemplateApi(Resource):
+    @staticmethod
+    @requires_auth
+    def post():
+        params = request.json
+
+        if 'template_id' in params and params.get('template_id'):
+            workflow_id = int(params.get('template_id'))
+            workflow = get_workflow(workflow_id)
+
+            if workflow.user_id == g.user.id or workflow.is_system_template:
+                # clone workflow
+                response_schema = WorkflowItemResponseSchema()
+                cloned = json.loads(
+                    json.dumps(response_schema.dump(workflow)))
+                cloned['platform_id'] = cloned['platform']['id']
+                cloned['user_id'] = g.user.id
+                cloned['user_login'] = g.user.login
+                cloned['user_name'] = g.user.name
+                cloned['name'] = params.get('name', 'workflow')
+                cloned['is_template'] = False
+                cloned['is_system_template'] = False
+                
+                # Marshmallow converts JSON value to dict and it causes
+                # problems when saving data (issue #136);
+                cloned['forms'] = workflow.forms
+
+                del cloned['user']
+
+                old_task_ids = {}
+                for i, task in enumerate(cloned['tasks']):
+                    new_task_id = str(uuid.uuid4())
+                    old_task_ids[task['id']] = new_task_id
+                    task['id'] = new_task_id
+                    task['operation_id'] = task['operation']['id']
+                    if not task.get('name'):
+                        task['name'] = '{} {}'.format(task['operation']['name'],
+                                                      i)
+
+                for flow in cloned['flows']:
+                    flow['source_id'] = old_task_ids[flow['source_id']]
+                    flow['target_id'] = old_task_ids[flow['target_id']]
+                request_schema = WorkflowCreateRequestSchema()
+                form = request_schema.load(cloned)
+                if not form.errors:
+                    new_workflow = form
+                    db.session.add(new_workflow)
+                    db.session.flush()
+                    db.session.commit()
+                    result, result_code = response_schema.dump(
+                        new_workflow), 200
+                else:
+                    result, result_code = dict(status="ERROR",
+                                               message="Not authorized"), 401
+            else:
+                result, result_code = dict(status="ERROR",
+                                           message="Not authorized"), 401
+        else:
+            result, result_code = dict(status="ERROR", message="Not found"), 404
+        return result, result_code
+
+    @staticmethod
+    @requires_auth
+    def get(workflow_id):
+        history = WorkflowHistory.query.filter(
+            WorkflowHistory.workflow_id == workflow_id).order_by(
+            WorkflowHistory.date.desc()).limit(20)
+        only = ('id', 'date', 'version', 'user_name')
+        return {'data': WorkflowHistoryListResponseSchema(
+            many=True, only=only).dump(history)}
+
+
+class WorkflowPermissionApi(Resource):
+    """ REST API for sharing a Workflow """
+
+    @staticmethod
+    @requires_auth
+    def post(workflow_id, user_id):
+        result, result_code = dict(
+            status="ERROR",
+            message=gettext('Missing json in the request body')), 400
+
+        if request.json is not None:
+            form = request.json
+            to_validate = ['permission', 'user_name', 'user_login']
+            error = False
+            for check in to_validate:
+                if check not in form or form.get(check, '').strip() == '':
+                    result, result_code = dict(
+                        status="ERROR", message=gettext('Validation error'),
+                        errors={'Missing': check}), 400
+                    error = True
+                    break
+                if check == 'permission' and form.get(
+                        'permission') not in list(PermissionType.values()):
+                    result, result_code = dict(
+                        status="ERROR", message=gettext('Validation error'),
+                        errors={'Invalid': check}), 400
+                    error = True
+                    break
+            if not error:
+                try:
+                    filtered = _filter_by_permissions(
+                        Workflow.query, [PermissionType.WRITE])
+                    workflow = filtered.filter(
+                        Workflow.id == workflow_id).first()
+
+                    if workflow is not None:
+                        conditions = [WorkflowPermission.workflow_id ==
+                                      workflow_id,
+                                      WorkflowPermission.user_id == user_id]
+                        permission = WorkflowPermission.query.filter(
+                            *conditions).first()
+
+                        action_performed = 'Added'
+                        if permission is not None:
+                            action_performed = 'Updated'
+                            permission.permission = form['permission']
+                        else:
+                            permission = WorkflowPermission(
+                                workflow=workflow, user_id=user_id,
+                                user_name=form['user_name'],
+                                user_login=form['user_login'],
+                                permission=form['permission'])
+
+                        db.session.add(permission)
+                        db.session.commit()
+                        result, result_code = {'message': action_performed,
+                                               'status': 'OK'}, 200
+                    else:
+                        result, result_code = dict(
+                            status="ERROR",
+                            message=gettext("%(type)s not found.",
+                                            type=gettext('Data source'))), 404
+                except Exception as e:
+                    log.exception('Error in POST')
+                    result, result_code = dict(status="ERROR",
+                                               message=gettext(
+                                                   "Internal error")), 500
+                    if current_app.debug:
+                        result['debug_detail'] = str(e)
+                    db.session.rollback()
+
+        return result, result_code
+
+    @staticmethod
+    @requires_auth
+    def delete(workflow_id, user_id):
+        result, result_code = dict(status="ERROR",
+                                   message=gettext("%(type)s not found.",
+                                                   type=gettext(
+                                                       'Data source'))), 404
+
+        filtered = _filter_by_permissions(Workflow.query,
+                                          [PermissionType.WRITE])
+        workflow = filtered.filter(Workflow.id == workflow_id).first()
+        if workflow is not None:
+            permission = WorkflowPermission.query.filter(
+                WorkflowPermission.workflow_id == workflow_id,
+                WorkflowPermission.user_id == user_id).first()
+            if permission is not None:
+                try:
+                    db.session.delete(permission)
+                    db.session.commit()
+                    result, result_code = dict(
+                        status="OK",
+                        message=gettext("%(what)s was successively deleted",
+                                        what=gettext('Workflow'))), 200
+                except Exception as e:
+                    log.exception('Error in DELETE')
+                    result, result_code = dict(status="ERROR",
+                                               message=gettext(
+                                                   "Internal error")), 500
+                    if current_app.debug:
+                        result['debug_detail'] = str(e)
+                    db.session.rollback()
         return result, result_code
