@@ -148,6 +148,11 @@ class OperationListApi(Resource):
             exclude.extend(['platforms.forms', 'platforms.icon',
                        'platforms.description'])
 
+            category = request.args.get('category')
+            if category:
+                operations = operations.join(Operation.categories).filter(
+                    OperationCategory.type == category)
+
             page = request.args.get('page')
 
             # Operations disabled in config file
