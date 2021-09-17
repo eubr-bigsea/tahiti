@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-}
 import json
 import logging
-import re
 from collections import namedtuple
 from functools import wraps
 

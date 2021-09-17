@@ -26,7 +26,7 @@ from tahiti.workflow_from_template_api import WorkflowFromTemplateApi
 from tahiti.workflow_permission_api import WorkflowPermissionApi
 from tahiti.import_workflow_api import ImportWorkflowApi
 from tahiti.workflow_history_api import  WorkflowHistoryApi
-
+from flask_swagger_ui import get_swaggerui_blueprint
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     if config_file:
@@ -37,11 +37,11 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     os.chdir(os.environ.get('TAHITI_HOME', '.'))
 
     base_dir = os.path.dirname(os.path.dirname(__file__))
-    static_folder = os.path.join(base_dir, 'public')
+    static_folder = os.path.join(base_dir, 'static')
     tmpl_folder = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                'templates')
-    app = Flask(__name__, static_url_path='/public',
-                static_folder=static_folder, template_folder=tmpl_folder)
+    app = Flask(__name__, static_url_path='',
+                static_folder='static', template_folder=tmpl_folder)
 
     sqlalchemy_utils.i18n.get_locale = get_locale
 
@@ -74,6 +74,17 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
 
     
     babel = Babel(app)
+
+    # Swagger
+    swaggerui_blueprint = get_swaggerui_blueprint(
+        '/api/docs',  
+        '/static/swagger.yaml',
+        config={
+            'app_name': "Lemonade Tahiti"
+        },
+    )
+    
+    app.register_blueprint(swaggerui_blueprint)
 
     # API configuration
     api = Api(app)

@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-}
 import math
 import logging
+import math
 
-from tahiti.app_auth import requires_auth, requires_permission
-from flask import request, current_app, g as flask_globals
+from flask import request, g
 from flask_restful import Resource
-from sqlalchemy import or_
-from http import HTTPStatus
-from marshmallow.exceptions import ValidationError
-
-from tahiti.schema import *
-from tahiti.util import translate_validation
+from sqlalchemy.sql.expression import bindparam, text
 from flask_babel import gettext
+from tahiti.app_auth import requires_auth
+from tahiti.schema import *
+from marshmallow import ValidationError
 
 log = logging.getLogger(__name__)
 # region Protected
 # endregion
+
 
 class PlatformListApi(Resource):
     """ REST API for listing class Platform """
@@ -24,9 +23,12 @@ class PlatformListApi(Resource):
         self.human_name = gettext('Platform')
 
     @requires_auth
-    def get(self):
-        if request.args.get('fields'):
-            only = [f.strip() for f in request.args.get('fields').split(',')]
+    def get():
+        only = ('id', 'slug', 'name') \
+            if request.args.get('simple', 'false') == 'true' else None
+        all_platforms = request.args.get('all') in ["true", 1, "1"]
+        if all_platforms:
+            platforms = Platform.query
         else:
             only = ('id', ) if request.args.get(
                 'simple', 'false') == 'true' else None
@@ -38,12 +40,22 @@ class PlatformListApi(Resource):
             platforms = Platform.query
 
         sort = request.args.get('sort', 'name')
-        if sort not in ['name']:
-            sort = 'name'
-        platforms = platforms.join(Platform.current_translation)
-        sort_option = getattr(PlatformTranslation, sort)
+        if sort not in ['name', 'id', 'slug'] or sort == 'name':
+            current_translation = db.aliased(Platform.current_translation,
+                                             name='platform_translation')
+            sort_option = PlatformTranslation.name
+            platforms = platforms.join(current_translation)
+        else:
+            sort_option = getattr(Workflow, sort)
+
         if request.args.get('asc', 'true') == 'false':
             sort_option = sort_option.desc()
+
+        locale = (str(g.get('locale') or 'en'))[:2]
+        platforms = platforms.filter(text(
+            'platform_translation.locale = :param_locale').bindparams(
+            param_locale=locale))
+
         platforms = platforms.order_by(sort_option)
 
         page = request.args.get('page') or '1'
@@ -65,8 +77,6 @@ class PlatformListApi(Resource):
                     many=True, only=only).dump(
                     platforms)}
 
-        if log.isEnabledFor(logging.DEBUG):
-            log.debug(gettext('Listing %(name)s', name=self.human_name))
         return result
 
 
@@ -74,7 +84,6 @@ class PlatformDetailApi(Resource):
     """ REST API for a single instance of class Platform """
     def __init__(self):
         self.human_name = gettext('Platform')
-
     @requires_auth
     def get(self, platform_id):
 
@@ -113,10 +122,10 @@ class PlatformDetailApi(Resource):
         if request.json:
             request_schema = partial_schema_factory(
                 PlatformCreateRequestSchema)
-            # Ignore missing fields to allow partial updates
-            platform = request_schema.load(request.json, partial=True)
             response_schema = PlatformItemResponseSchema()
             try:
+                # Ignore missing fields to allow partial updates
+                platform = request_schema.load(request.json, partial=True)
                 platform.id = platform_id
                 platform = db.session.merge(platform)
                 db.session.commit()
@@ -140,11 +149,13 @@ class PlatformDetailApi(Resource):
                                       id=platform_id),
                    'errors': translate_validation(e.messages)
                 }
+                result = dict(status="ERROR", message=gettext('Invalid data'),
+                              errors=e.messages)
+                return_code = 400
             except Exception as e:
                 result = {'status': 'ERROR',
                           'message': gettext("Internal error")}
                 return_code = 500
-                if current_app.debug:
-                    result['debug_detail'] = str(e)
+                log.exception("Error in PATCH")
                 db.session.rollback()
         return result, return_code
