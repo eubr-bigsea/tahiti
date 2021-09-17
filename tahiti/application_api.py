@@ -79,11 +79,11 @@ class ApplicationListApi(Resource):
                 result = response_schema.dump(application)
                 return_code = HTTPStatus.CREATED
             except ValidationError as e:
-                result = {
-                    'status': 'ERROR',
-                    'message': gettext('Invalid data for %(name)s.)',
-                                       name=self.human_name),
-                    'errors': translate_validation(e.messages)
+                result= {
+                   'status': 'ERROR', 
+                   'message': gettext('Invalid data for %(name)s.)',
+                                      name=self.human_name),
+                   'errors': translate_validation(e.messages)
                 }
             except Exception as e:
                 result = {'status': 'ERROR',
@@ -194,12 +194,12 @@ class ApplicationDetailApi(Resource):
                             application)]
                     }
             except ValidationError as e:
-                result = {
-                    'status': 'ERROR',
-                    'message': gettext('Invalid data for %(name)s (id=%(id)s)',
-                                       name=self.human_name,
-                                       id=application_id),
-                    'errors': translate_validation(e.messages)
+                result= {
+                   'status': 'ERROR', 
+                   'message': gettext('Invalid data for %(name)s (id=%(id)s)',
+                                      name=self.human_name,
+                                      id=application_id),
+                   'errors': translate_validation(e.messages)
                 }
             except Exception as e:
                 result = {'status': 'ERROR',

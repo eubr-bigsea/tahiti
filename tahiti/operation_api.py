@@ -180,7 +180,7 @@ class OperationListApi(Resource):
                         s += ' ASC '
                     else:
                         s += ' DESC'
-                    operations = operations.order_by(s)
+                    operations = operations.order_by(text(s))
                     pagination = operations.paginate(page, page_size, True)
                     items = pagination.items
                     for item in items:
