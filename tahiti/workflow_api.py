@@ -213,7 +213,7 @@ class WorkflowListApi(Resource):
             cloned['platform_id'] = cloned['platform']['id']
 
             request_schema = WorkflowCreateRequestSchema()
-            form = request_schema.load(cloned)
+            workflow = request_schema.load(cloned)
         elif request.json:
             data = request.json
             if 'user' in data:
@@ -230,14 +230,16 @@ class WorkflowListApi(Resource):
             params['user_id'] = g.user.id
             params['user_login'] = g.user.login
             params['user_name'] = g.user.name
+            
             params['platform_id'] = params.get('platform', {}).get(
-                'id') or params.get('platform_id'),
+                'id') or params.get('platform_id')
             params['subset_id'] = params.get('subset_id')
+            workflow = request_schema.load(params)
         else:
             return result, result_code
 
         try:
-            workflow = request_schema.load(params)
+            
             db.session.add(workflow)
             db.session.flush()
             update_port_name_in_flows(db.session, workflow.id)
@@ -346,60 +348,53 @@ class WorkflowDetailApi(Resource):
                     params['forms'] = json.dumps(params['forms'])
                 else:
                     params['forms'] = '{}'
-                form = request_schema.load(params, partial=True)
                 response_schema = WorkflowItemResponseSchema()
-                if not form.errors:
-                    try:
-                        filtered = filter_by_permissions(
-                            Workflow.query, [PermissionType.WRITE])
-                        temp_workflow = filtered.filter(
-                            Workflow.id == workflow_id).first()
+                workflow  = request_schema.load(params, partial=True)
+                filtered = filter_by_permissions(
+                    Workflow.query, [PermissionType.WRITE])
+                temp_workflow = filtered.filter(
+                    Workflow.id == workflow_id).first()
 
-                        if temp_workflow is not None:
-                            form.id = workflow_id
-                            form.updated = datetime.datetime.utcnow()
+                if temp_workflow is not None:
+                    workflow.id = workflow_id
+                    workflow.updated = datetime.datetime.utcnow()
 
-                            workflow = db.session.merge(form)
-                            if (workflow.publishing_enabled and
-                                    workflow.publishing_status is None):
-                                workflow.publishing_status = PublishingStatus.EDITING
-                            db.session.flush()
-                            update_port_name_in_flows(db.session, workflow.id)
-                            db.session.commit()
+                    workflow = db.session.merge(workflow)
+                    if (workflow.publishing_enabled and
+                            workflow.publishing_status is None):
+                        workflow.publishing_status = PublishingStatus.EDITING
+                    db.session.flush()
+                    update_port_name_in_flows(db.session, workflow.id)
+                    db.session.commit()
 
-                            historical_data = json.dumps(
-                                response_schema.dump(workflow))
-                            # if workflow.is_template:
-                            #     workflow.template_code = historical_data
+                    historical_data = json.dumps(
+                        response_schema.dump(workflow))
+                    # if workflow.is_template:
+                    #     workflow.template_code = historical_data
 
-                            if save_history:
-                                history = WorkflowHistory(
-                                    user_id=g.user.id, user_name=g.user.name,
-                                    user_login=g.user.login,
-                                    version=workflow.version,
-                                    workflow=workflow, content=historical_data)
-                                db.session.add(history)
-                                db.session.commit()
+                    if save_history:
+                        history = WorkflowHistory(
+                            user_id=g.user.id, user_name=g.user.name,
+                            user_login=g.user.login,
+                            version=workflow.version,
+                            workflow=workflow, content=historical_data)
+                        db.session.add(history)
+                        db.session.commit()
 
-                            if workflow is not None:
-                                result, result_code = dict(
-                                    status="OK", message="Updated",
-                                    data=response_schema.dump(
-                                        workflow)), 200
-                            else:
-                                result = dict(status="ERROR",
-                                              message="Not found")
-                    except Exception as e:
-                        log.exception('Error in PATCH')
+                    if workflow is not None:
                         result, result_code = dict(
-                            status="ERROR", message="Internal error"), 500
-                        if current_app.debug:
-                            result['debug_detail'] = str(e)
-                        db.session.rollback()
-                else:
-                    result = dict(status="ERROR", message="Invalid data",
-                                  errors=form.errors)
-                    result_code = 400
+                            status="OK", message="Updated",
+                            data=response_schema.dump(
+                                workflow)), 200
+                    else:
+                        result = dict(status="ERROR",
+                                        message="Not found")
+        except ValidationError as e:
+            result = {
+                'status': 'ERROR',
+                'message': gettext('Validation error'),
+                'errors': e.messages
+            }
         except Exception as e:
             log.exception('Error in PATCH')
             result_code = 500

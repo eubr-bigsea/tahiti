@@ -342,10 +342,6 @@ class Operation(db.Model, Translatable):
         "OperationCategory",
         overlaps="operations",
         secondary=operation_category_operation)
-    subsets = relationship(
-        "OperationSubset",
-        overlaps="operations",
-        secondary=operation_subset_operation)
     platforms = relationship(
         "Platform",
         overlaps="operations",
@@ -609,7 +605,7 @@ class OperationSubset(db.Model):
         "Platform",
         overlaps='subsets',
         foreign_keys=[platform_id],
-        back_populates="operation_subsets"
+        back_populates="subsets"
     )
     operations = relationship(
         "Operation",
@@ -651,9 +647,9 @@ class Platform(db.Model, Translatable):
             "and_("
             "OperationForm.id==platform_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
-    operation_subsets = relationship("OperationSubset",
-                                     cascade="all, delete-orphan",
-                                     order_by="OperationSubset.name")
+    subsets = relationship("OperationSubset",
+                           cascade="all, delete-orphan",
+                           order_by="OperationSubset.name")
 
     def __str__(self):
         return self.name

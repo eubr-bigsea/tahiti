@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-}
 import logging
-import os
-import uuid
 
 from flask import request, g
 from flask_babel import gettext
@@ -25,9 +23,10 @@ class WorkflowHistoryApi(Resource):
         if 'version' in params:
             workflow = get_workflow(workflow_id)
             if workflow.user_id == g.user.id:
+                version = int(params['version'])
                 history = WorkflowHistory.query.filter(
                     WorkflowHistory.workflow_id == workflow_id,
-                    WorkflowHistory.version == int(params['version'])).one()
+                    WorkflowHistory.version == version).one()
                 # return json.load(history.content), 200
                 old = json.loads(history.content)
                 old['platform_id'] = old['platform']['id']
@@ -41,8 +40,35 @@ class WorkflowHistoryApi(Resource):
                     if not task.get('name'):
                         task['name'] = f"{task['operation']['name']} {i}"
                 try:
-                    result = WorkflowCreateRequestSchema().load(old)
                     result_code = 200
+
+                    current_workflow = Workflow.query.get(workflow_id)
+                    current_workflow.version += 1
+
+                    response_schema = WorkflowItemResponseSchema()
+                    historical_data = json.dumps(
+                        response_schema.dump(current_workflow))
+                    db.session.expunge(current_workflow)
+                    #db.session.delete(history)
+                    db.session.flush()
+
+                    new_history = WorkflowHistory(
+                            user_id=g.user.id, user_name=g.user.name,
+                            user_login=g.user.login,
+                            version=workflow.version,
+                            workflow=workflow, content=historical_data)
+                    
+                    workflow = WorkflowCreateRequestSchema().load(old)
+                    workflow.id = workflow_id
+                    db.session.add(new_history)
+                    db.session.flush()
+                    db.session.merge(workflow)
+
+                    db.session.commit()
+                    result = {'status': 'OK', 
+                    'message': gettext(
+                        'Workflow restored to version {}. '
+                        'A new version was created').format(version)}
                 except ValidationError:
                     msg = gettext(
                         "Version %(version)s is not compatible anymore.",
