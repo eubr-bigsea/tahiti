@@ -119,7 +119,6 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         # admin.add_view(OperationModelView(Operation, db.session))
         #admin.add_view(
         #     OperationCategoryModelView(OperationCategory, db.session))
-
     return app
 
 

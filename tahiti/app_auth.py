@@ -52,7 +52,7 @@ def requires_auth(f):
                 'X-Auth-Token'):
             # Inter services authentication
             setattr(flask_g, 'user', User(0, 'internal', 
-                'lemonade@lemonade.org.br', 'internal', 'en', '', '', 
+                'lemonade@lemonade.org.br', 'internal', '', '', 'en', 
                 permissions=['ADMINISTRATOR'], roles=['ADMINISTRATOR']))
             return f(*_args, **kwargs)
         else:

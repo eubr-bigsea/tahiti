@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 # noinspection PyBroadException
 try:
-    import eventlet
+    #import eventlet
 
-    eventlet.monkey_patch(all=True, thread=False)
+    #eventlet.monkey_patch(all=True, thread=False)
+    pass
 except:
     pass
 from flask import request, g

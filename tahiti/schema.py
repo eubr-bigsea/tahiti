@@ -2,8 +2,9 @@
 import datetime
 import json
 from copy import deepcopy
-from marshmallow import Schema, fields, post_load, post_dump
+from marshmallow import Schema, fields, post_load, post_dump, EXCLUDE, INCLUDE
 from marshmallow.validate import OneOf
+from flask_babel import gettext
 from tahiti.models import *
 
 
@@ -15,6 +16,15 @@ def partial_schema_factory(schema_cls):
             new_field.schema.partial = True
             schema.fields[field_name] = new_field
     return schema
+
+
+def translate_validation(validation_errors):
+    for field, errors in list(validation_errors.items()):
+        if isinstance(errors, dict):
+            validation_errors[field] = translate_validation(errors)
+        else:
+            validation_errors[field] = [gettext(error) for error in errors]
+        return validation_errors
 
 
 def load_json(str_value):
@@ -47,7 +57,7 @@ class BaseSchema(Schema):
     def remove_skip_values(self, data, **kwargs):
         return {
             key: value for key, value in data.items()
-            if value is not None and value != []
+            if value is not None  # Empty lists must be kept!
         }
 
 
@@ -73,6 +83,7 @@ class ApplicationCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class ApplicationListResponseSchema(BaseSchema):
@@ -98,6 +109,7 @@ class ApplicationListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class ApplicationItemResponseSchema(BaseSchema):
@@ -123,6 +135,7 @@ class ApplicationItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class FlowListResponseSchema(BaseSchema):
@@ -144,6 +157,7 @@ class FlowListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class FlowItemResponseSchema(BaseSchema):
@@ -165,6 +179,7 @@ class FlowItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class FlowCreateRequestSchema(BaseSchema):
@@ -186,6 +201,7 @@ class FlowCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationSimpleListResponseSchema(BaseSchema):
@@ -202,6 +218,7 @@ class OperationSimpleListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationListResponseSchema(BaseSchema):
@@ -220,11 +237,6 @@ class OperationListResponseSchema(BaseSchema):
         'tahiti.schema.OperationCategoryListResponseSchema',
         required=True,
         many=True)
-    subsets = fields.Nested(
-        'tahiti.schema.OperationSubsetListResponseSchema',
-        required=True,
-        many=True,
-        only=['id'])
     platforms = fields.Nested(
         'tahiti.schema.PlatformListResponseSchema',
         required=True,
@@ -246,6 +258,7 @@ class OperationListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationCreateRequestSchema(BaseSchema):
@@ -262,10 +275,6 @@ class OperationCreateRequestSchema(BaseSchema):
     doc_link = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryCreateRequestSchema',
-        required=True,
-        many=True)
-    subsets = fields.Nested(
-        'tahiti.schema.OperationSubsetCreateRequestSchema',
         required=True,
         many=True)
     platforms = fields.Nested(
@@ -293,6 +302,7 @@ class OperationCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationItemResponseSchema(BaseSchema):
@@ -309,10 +319,6 @@ class OperationItemResponseSchema(BaseSchema):
     doc_link = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryItemResponseSchema',
-        required=True,
-        many=True)
-    subsets = fields.Nested(
-        'tahiti.schema.OperationSubsetItemResponseSchema',
         required=True,
         many=True)
     platforms = fields.Nested(
@@ -340,6 +346,7 @@ class OperationItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationUpdateRequestSchema(BaseSchema):
@@ -382,6 +389,7 @@ class OperationUpdateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationCategoryCreateRequestSchema(BaseSchema):
@@ -408,6 +416,7 @@ class OperationCategoryCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationCategoryListResponseSchema(BaseSchema):
@@ -434,6 +443,7 @@ class OperationCategoryListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationCategoryItemResponseSchema(BaseSchema):
@@ -459,6 +469,7 @@ class OperationCategoryItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationFormListResponseSchema(BaseSchema):
@@ -484,6 +495,7 @@ class OperationFormListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationFormCreateRequestSchema(BaseSchema):
@@ -509,6 +521,7 @@ class OperationFormCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationFormItemResponseSchema(BaseSchema):
@@ -534,6 +547,7 @@ class OperationFormItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationFormFieldListResponseSchema(BaseSchema):
@@ -570,6 +584,7 @@ class OperationFormFieldListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationFormFieldCreateRequestSchema(BaseSchema):
@@ -606,6 +621,7 @@ class OperationFormFieldCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationFormFieldItemResponseSchema(BaseSchema):
@@ -642,6 +658,7 @@ class OperationFormFieldItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationPortListResponseSchema(BaseSchema):
@@ -669,6 +686,7 @@ class OperationPortListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationPortCreateRequestSchema(BaseSchema):
@@ -696,6 +714,7 @@ class OperationPortCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationPortItemResponseSchema(BaseSchema):
@@ -723,6 +742,7 @@ class OperationPortItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationPortInterfaceCreateRequestSchema(BaseSchema):
@@ -739,6 +759,7 @@ class OperationPortInterfaceCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationPortInterfaceListResponseSchema(BaseSchema):
@@ -754,6 +775,7 @@ class OperationPortInterfaceListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationPortInterfaceItemResponseSchema(BaseSchema):
@@ -769,6 +791,7 @@ class OperationPortInterfaceItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationScriptListResponseSchema(BaseSchema):
@@ -788,6 +811,7 @@ class OperationScriptListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationScriptCreateRequestSchema(BaseSchema):
@@ -807,6 +831,7 @@ class OperationScriptCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationScriptItemResponseSchema(BaseSchema):
@@ -826,6 +851,7 @@ class OperationScriptItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationSubsetListResponseSchema(BaseSchema):
@@ -848,6 +874,7 @@ class OperationSubsetListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationSubsetCreateRequestSchema(BaseSchema):
@@ -872,6 +899,7 @@ class OperationSubsetCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class OperationSubsetItemResponseSchema(BaseSchema):
@@ -894,6 +922,7 @@ class OperationSubsetItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class PlatformListResponseSchema(BaseSchema):
@@ -914,14 +943,6 @@ class PlatformListResponseSchema(BaseSchema):
         allow_none=True,
         missing=False,
         default=False)
-    forms = fields.Nested(
-        'tahiti.schema.OperationFormListResponseSchema',
-        required=True,
-        many=True)
-    plugins = fields.Nested(
-        'tahiti.schema.PlatformPluginListResponseSchema',
-        allow_none=True,
-        many=True)
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetListResponseSchema',
         allow_none=True,
@@ -936,6 +957,7 @@ class PlatformListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class PlatformCreateRequestSchema(BaseSchema):
@@ -951,10 +973,6 @@ class PlatformCreateRequestSchema(BaseSchema):
         allow_none=True,
         missing=1.0,
         default=1.0)
-    forms = fields.Nested(
-        'tahiti.schema.OperationFormCreateRequestSchema',
-        required=True,
-        many=True)
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetCreateRequestSchema',
         allow_none=True,
@@ -969,6 +987,7 @@ class PlatformCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class PlatformItemResponseSchema(BaseSchema):
@@ -989,14 +1008,6 @@ class PlatformItemResponseSchema(BaseSchema):
         allow_none=True,
         missing=False,
         default=False)
-    forms = fields.Nested(
-        'tahiti.schema.OperationFormItemResponseSchema',
-        required=True,
-        many=True)
-    plugins = fields.Nested(
-        'tahiti.schema.PlatformPluginItemResponseSchema',
-        allow_none=True,
-        many=True)
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetItemResponseSchema',
         allow_none=True,
@@ -1011,6 +1022,7 @@ class PlatformItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class PlatformPluginItemResponseSchema(BaseSchema):
@@ -1046,6 +1058,7 @@ class PlatformPluginItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class PlatformPluginListResponseSchema(BaseSchema):
@@ -1081,6 +1094,7 @@ class PlatformPluginListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class RoleOperationSubsetCreateRequestSchema(BaseSchema):
@@ -1100,6 +1114,7 @@ class RoleOperationSubsetCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class RoleOperationSubsetItemResponseSchema(BaseSchema):
@@ -1119,6 +1134,7 @@ class RoleOperationSubsetItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class TaskListResponseSchema(BaseSchema):
@@ -1165,6 +1181,7 @@ class TaskListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class TaskCreateRequestSchema(BaseSchema):
@@ -1209,6 +1226,7 @@ class TaskCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class TaskItemResponseSchema(BaseSchema):
@@ -1255,6 +1273,7 @@ class TaskItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class TaskExecuteRequestSchema(BaseSchema):
@@ -1306,6 +1325,7 @@ class TaskExecuteRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowExecuteRequestSchema(BaseSchema):
@@ -1392,6 +1412,7 @@ class WorkflowExecuteRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowListResponseSchema(BaseSchema):
@@ -1478,6 +1499,7 @@ class WorkflowListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowCreateRequestSchema(BaseSchema):
@@ -1550,6 +1572,7 @@ class WorkflowCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowItemResponseSchema(BaseSchema):
@@ -1639,6 +1662,7 @@ class WorkflowItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowHistoryListResponseSchema(BaseSchema):
@@ -1663,6 +1687,7 @@ class WorkflowHistoryListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowHistoryItemResponseSchema(BaseSchema):
@@ -1687,6 +1712,7 @@ class WorkflowHistoryItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowPermissionListResponseSchema(BaseSchema):
@@ -1706,6 +1732,7 @@ class WorkflowPermissionListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowPermissionItemResponseSchema(BaseSchema):
@@ -1725,6 +1752,7 @@ class WorkflowPermissionItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowPermissionCreateRequestSchema(BaseSchema):
@@ -1744,6 +1772,7 @@ class WorkflowPermissionCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowVariableListResponseSchema(BaseSchema):
@@ -1760,7 +1789,7 @@ class WorkflowVariableListResponseSchema(BaseSchema):
         default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.Function(lambda x: load_json(x.parameters))
+    parameters = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1770,6 +1799,7 @@ class WorkflowVariableListResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowVariableItemResponseSchema(BaseSchema):
@@ -1786,7 +1816,7 @@ class WorkflowVariableItemResponseSchema(BaseSchema):
         default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.Function(lambda x: load_json(x.parameters))
+    parameters = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1796,6 +1826,7 @@ class WorkflowVariableItemResponseSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 
 
 class WorkflowVariableCreateRequestSchema(BaseSchema):
@@ -1812,8 +1843,7 @@ class WorkflowVariableCreateRequestSchema(BaseSchema):
         default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
-    parameters = fields.Function(lambda x: load_json(x.parameters), 
-        allow_none=True)
+    parameters = fields.String(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1823,4 +1853,5 @@ class WorkflowVariableCreateRequestSchema(BaseSchema):
 
     class Meta:
         ordered = True
+        unknown = EXCLUDE
 

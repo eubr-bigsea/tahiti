@@ -1,0 +1,2882 @@
+swagger: '2.0'
+info:
+  title: "Lemonade :: Tahiti"
+  description: 
+  termsOfService: http://www.eubra-bigsea.eu/disclaimer-privacy-policy
+  contact:
+    name: Speed Labs/DCC/UFMG
+    url: http://eubra-bigsea.eu
+    email: bigsea@dcc.ufmg.br
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0
+
+# the domain of the service
+# host: dev.lemonade.org.br
+# array of all schemes that your API supports
+schemes:
+  - http    
+  - https
+# will be prefixed to all paths
+# basePath: /tahiti
+consumes:
+  - application/json
+produces:
+  - application/json
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: X-Auth-Token
+    in: header
+paths:
+  /platforms/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of Platform'
+      description: |
+        Retrieves an instance of Platform by using its identifier.
+      tags:
+        - /platforms/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of Platform to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of Platform with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PlatformItemResponseSchema'        
+  
+    patch:
+      summary: 'Updates an instance of Platform'
+      description: |
+        Updates Platform identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Platform to delete
+          required: true
+          type: integer  
+        - name: platform
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/PlatformCreateRequestSchema'
+      tags:
+        - /platforms/{id}
+      responses:
+        200:
+          description: An array of Platform with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PlatformItemResponseSchema'
+  /platforms:
+    get:
+      summary: 'Retrieves the list of Platform'
+      description: |
+        A The /platform endpoint returns informationabout the *Platform*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+        - name: enabled
+          in: query
+          description: Returns only records where enabled equals to parameter.
+          required: false
+          type: boolean
+        - name: sort
+          in: query
+          description: Sort attribute.
+          required: false
+          type: string
+        - name: asc
+          in: query
+          description: Sort ascending.
+          required: false
+          type: boolean
+      tags:
+        - /platforms
+      responses:
+        200:
+          description: An array of Platform
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PlatformItemResponseSchema'
+  /operationsubsets/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of OperationSubset'
+      description: |
+        Retrieves an instance of OperationSubset by using its identifier.
+      tags:
+        - /operationsubsets/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of OperationSubset to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of OperationSubset with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationSubsetItemResponseSchema'        
+  
+    delete:
+      summary: 'Removes an instance of OperationSubset'
+      description: |
+        Removes OperationSubset identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of OperationSubset to delete
+          required: true
+          type: integer  
+      tags:
+        - /operationsubsets/{id}
+      responses:
+        204:
+          description: Instance was removed with success.
+    patch:
+      summary: 'Updates an instance of OperationSubset'
+      description: |
+        Updates OperationSubset identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of OperationSubset to delete
+          required: true
+          type: integer  
+        - name: operationsubset
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/OperationSubsetCreateRequestSchema'
+      tags:
+        - /operationsubsets/{id}
+      responses:
+        200:
+          description: An array of OperationSubset with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationSubsetItemResponseSchema'
+  /operationsubsets:
+    get:
+      summary: 'Retrieves the list of OperationSubset'
+      description: |
+        A The /operationsubset endpoint returns informationabout the *OperationSubset*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+      tags:
+        - /operationsubsets
+      responses:
+        200:
+          description: An array of OperationSubset
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationSubsetItemResponseSchema'
+    post:
+      summary: 'Creates a new instance of OperationSubset'
+      description: |
+        Creates a new instance of OperationSubset
+      security:
+        - Bearer: []
+      parameters:
+        - name: operationsubset
+          in: body
+          description: New item to add to the collection
+          required: true
+          schema:
+            $ref: '#/definitions/OperationSubsetCreateRequestSchema'
+      tags:
+        - /operationsubsets
+      responses:
+        200:
+          description: Successfuly created the instance
+          schema:
+            $ref: '#/definitions/OperationSubsetListResponseSchema'
+        401:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/ValidationErrorSchema'
+
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/DefaultErrorSchema'
+  /operations/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of Operation'
+      description: |
+        Retrieves an instance of Operation by using its identifier.
+      tags:
+        - /operations/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of Operation to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of Operation with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationItemResponseSchema'        
+  
+    delete:
+      summary: 'Removes an instance of Operation'
+      description: |
+        Removes Operation identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Operation to delete
+          required: true
+          type: integer  
+      tags:
+        - /operations/{id}
+      responses:
+        204:
+          description: Instance was removed with success.
+    patch:
+      summary: 'Updates an instance of Operation'
+      description: |
+        Updates Operation identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Operation to delete
+          required: true
+          type: integer  
+        - name: operation
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/OperationCreateRequestSchema'
+      tags:
+        - /operations/{id}
+      responses:
+        200:
+          description: An array of Operation with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationItemResponseSchema'
+  /operations:
+    get:
+      summary: 'Retrieves the list of Operation'
+      description: |
+        A The /operation endpoint returns informationabout the *Operation*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+        - name: enabled
+          in: query
+          description: Returns only records where enabled equals to parameter.
+          required: false
+          type: boolean
+      tags:
+        - /operations
+      responses:
+        200:
+          description: An array of Operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationItemResponseSchema'
+    post:
+      summary: 'Creates a new instance of Operation'
+      description: |
+        Creates a new instance of Operation
+      security:
+        - Bearer: []
+      parameters:
+        - name: operation
+          in: body
+          description: New item to add to the collection
+          required: true
+          schema:
+            $ref: '#/definitions/OperationCreateRequestSchema'
+      tags:
+        - /operations
+      responses:
+        200:
+          description: Successfuly created the instance
+          schema:
+            $ref: '#/definitions/OperationListResponseSchema'
+        401:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/ValidationErrorSchema'
+
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/DefaultErrorSchema'
+  /operationcategorys/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of OperationCategory'
+      description: |
+        Retrieves an instance of OperationCategory by using its identifier.
+      tags:
+        - /operationcategorys/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of OperationCategory to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of OperationCategory with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationCategoryItemResponseSchema'        
+  
+  /operationcategorys:
+    get:
+      summary: 'Retrieves the list of OperationCategory'
+      description: |
+        A The /operationcategory endpoint returns informationabout the *OperationCategory*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+      tags:
+        - /operationcategorys
+      responses:
+        200:
+          description: An array of OperationCategory
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/OperationCategoryItemResponseSchema'
+  /applications/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of Application'
+      description: |
+        Retrieves an instance of Application by using its identifier.
+      tags:
+        - /applications/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of Application to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of Application with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationItemResponseSchema'        
+  
+    delete:
+      summary: 'Removes an instance of Application'
+      description: |
+        Removes Application identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Application to delete
+          required: true
+          type: integer  
+      tags:
+        - /applications/{id}
+      responses:
+        204:
+          description: Instance was removed with success.
+    patch:
+      summary: 'Updates an instance of Application'
+      description: |
+        Updates Application identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Application to delete
+          required: true
+          type: integer  
+        - name: application
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/ApplicationCreateRequestSchema'
+      tags:
+        - /applications/{id}
+      responses:
+        200:
+          description: An array of Application with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationItemResponseSchema'
+  /applications:
+    get:
+      summary: 'Retrieves the list of Application'
+      description: |
+        A The /application endpoint returns informationabout the *Application*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+        - name: enabled
+          in: query
+          description: Returns only records where enabled equals to parameter.
+          required: false
+          type: boolean
+      tags:
+        - /applications
+      responses:
+        200:
+          description: An array of Application
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationItemResponseSchema'
+    post:
+      summary: 'Creates a new instance of Application'
+      description: |
+        Creates a new instance of Application
+      security:
+        - Bearer: []
+      parameters:
+        - name: application
+          in: body
+          description: New item to add to the collection
+          required: true
+          schema:
+            $ref: '#/definitions/ApplicationCreateRequestSchema'
+      tags:
+        - /applications
+      responses:
+        200:
+          description: Successfuly created the instance
+          schema:
+            $ref: '#/definitions/ApplicationListResponseSchema'
+        401:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/ValidationErrorSchema'
+
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/DefaultErrorSchema'
+  /workflows/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of Workflow'
+      description: |
+        Retrieves an instance of Workflow by using its identifier.
+      tags:
+        - /workflows/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of Workflow to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of Workflow with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/WorkflowItemResponseSchema'        
+  
+    delete:
+      summary: 'Removes an instance of Workflow'
+      description: |
+        Removes Workflow identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Workflow to delete
+          required: true
+          type: integer  
+      tags:
+        - /workflows/{id}
+      responses:
+        204:
+          description: Instance was removed with success.
+    patch:
+      summary: 'Updates an instance of Workflow'
+      description: |
+        Updates Workflow identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Workflow to delete
+          required: true
+          type: integer  
+        - name: workflow
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/WorkflowCreateRequestSchema'
+      tags:
+        - /workflows/{id}
+      responses:
+        200:
+          description: An array of Workflow with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/WorkflowItemResponseSchema'
+  /workflows:
+    get:
+      summary: 'Retrieves the list of Workflow'
+      description: |
+        A The /workflow endpoint returns informationabout the *Workflow*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+        - name: enabled
+          in: query
+          description: Returns only records where enabled equals to parameter.
+          required: false
+          type: boolean
+      tags:
+        - /workflows
+      responses:
+        200:
+          description: An array of Workflow
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/WorkflowItemResponseSchema'
+    post:
+      summary: 'Creates a new instance of Workflow'
+      description: |
+        Creates a new instance of Workflow
+      security:
+        - Bearer: []
+      parameters:
+        - name: workflow
+          in: body
+          description: New item to add to the collection
+          required: true
+          schema:
+            $ref: '#/definitions/WorkflowCreateRequestSchema'
+      tags:
+        - /workflows
+      responses:
+        200:
+          description: Successfuly created the instance
+          schema:
+            $ref: '#/definitions/WorkflowListResponseSchema'
+        401:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/ValidationErrorSchema'
+
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/DefaultErrorSchema'
+definitions:
+  DefaultErrorSchema:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Result status
+      message:
+        type: string
+        description: Result description
+      debug_detail:
+        type: string
+        description: 'Debug detail (exception), only available with DEBUG mode enabled'
+        required: false
+  ValidationErrorSchema:
+    type: object
+    properties:
+      status:
+        type: string
+        description: Result status
+      message:
+        type: string
+        description: Result description
+      errors:
+        type: array
+        description: 'List of validation errors'
+        items:
+          type: string
+  PlatformListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Platform identifier"
+      name:
+        type: string
+        description: "Name of platform"
+        required: true
+      slug:
+        type: string
+        description: "Slug of platform"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if execution platform is enabled"
+        required: true
+      description:
+        type: string
+        description: "Description of platform"
+        required: true
+      icon:
+        type: string
+        description: "Icon used to represent platform"
+        required: true
+      version:
+        type: string
+        description: "Platform version"
+        required: false
+      plugin:
+        type: boolean
+        description: "Platform is a external plugin"
+        required: true
+      forms:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormListResponseSchema'
+      plugins:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformPluginListResponseSchema'
+      operation_subsets:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetListResponseSchema'
+  PlatformCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Platform identifier"
+      name:
+        type: string
+        description: "Name of platform"
+        required: true
+      slug:
+        type: string
+        description: "Slug of platform"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if execution platform is enabled"
+        required: true
+      description:
+        type: string
+        description: "Description of platform"
+        required: true
+      icon:
+        type: string
+        description: "Icon used to represent platform"
+        required: true
+      version:
+        type: string
+        description: "Platform version"
+        required: false
+      forms:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormCreateRequestSchema'
+      operation_subsets:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetCreateRequestSchema'
+  PlatformItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Platform identifier"
+      name:
+        type: string
+        description: "Name of platform"
+        required: true
+      slug:
+        type: string
+        description: "Slug of platform"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if execution platform is enabled"
+        required: true
+      description:
+        type: string
+        description: "Description of platform"
+        required: true
+      icon:
+        type: string
+        description: "Icon used to represent platform"
+        required: true
+      version:
+        type: string
+        description: "Platform version"
+        required: false
+      plugin:
+        type: boolean
+        description: "Platform is a external plugin"
+        required: true
+      forms:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormItemResponseSchema'
+      plugins:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformPluginItemResponseSchema'
+      operation_subsets:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetItemResponseSchema'
+  OperationSubsetListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationSubset identifier"
+      name:
+        type: string
+        description: "Name of the subset"
+        required: true
+      platform:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformListResponseSchema'
+      operations:
+        type: array
+        items:
+          $ref: '#/definitions/OperationListResponseSchema'
+  OperationSubsetCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationSubset identifier"
+      name:
+        type: string
+        description: "Name of the subset"
+        required: true
+      platform:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformCreateRequestSchema'
+      operations:
+        type: array
+        items:
+          $ref: '#/definitions/OperationCreateRequestSchema'
+  OperationSubsetItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationSubset identifier"
+      name:
+        type: string
+        description: "Name of the subset"
+        required: true
+      platform:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformItemResponseSchema'
+      operations:
+        type: array
+        items:
+          $ref: '#/definitions/OperationItemResponseSchema'
+  RoleOperationSubsetCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "RoleOperationSubset identifier"
+      role_name:
+        type: string
+        description: "Name of the role"
+        required: true
+      role_id:
+        type: integer
+        description: "Role id"
+        required: true
+      subset:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetCreateRequestSchema'
+  RoleOperationSubsetItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "RoleOperationSubset identifier"
+      role_name:
+        type: string
+        description: "Name of the role"
+        required: true
+      role_id:
+        type: integer
+        description: "Role id"
+        required: true
+      subset:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetItemResponseSchema'
+  OperationSimpleListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Operation identifier"
+      name:
+        type: string
+        description: "Name of operation"
+        required: false
+      slug:
+        type: string
+        description: "Slug of operation"
+        required: false
+  OperationListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Operation identifier"
+      name:
+        type: string
+        description: "Name of operation"
+        required: true
+      slug:
+        type: string
+        description: "Slug of operation"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if operation is enabled"
+        required: true
+      description:
+        type: string
+        description: "Description of operation"
+        required: true
+      type:
+        type: string
+        description: "Type of operation"
+        required: true
+        enum: ["TRANSFORMATION", "ACTION", "VISUALIZATION", "SHUFFLE", "SYSTEM_META_OPERATION", "USER_META_OPERATION", "SHORTCUT"]
+      icon:
+        type: string
+        description: "Icon used to represent operation"
+        required: true
+      css_class:
+        type: string
+        description: "Css class for web interface"
+        required: false
+      doc_link:
+        type: string
+        description: "Link to documentation"
+        required: false
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/OperationCategoryListResponseSchema'
+      subsets:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetListResponseSchema'
+      platforms:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformListResponseSchema'
+      forms:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormListResponseSchema'
+      ports:
+        type: array
+        items:
+          $ref: '#/definitions/OperationPortListResponseSchema'
+  OperationCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Operation identifier"
+      name:
+        type: string
+        description: "Name of operation"
+        required: true
+      slug:
+        type: string
+        description: "Slug of operation"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if operation is enabled"
+        required: true
+      description:
+        type: string
+        description: "Description of operation"
+        required: true
+      type:
+        type: string
+        description: "Type of operation"
+        required: true
+        enum: ["TRANSFORMATION", "ACTION", "VISUALIZATION", "SHUFFLE", "SYSTEM_META_OPERATION", "USER_META_OPERATION", "SHORTCUT"]
+      icon:
+        type: string
+        description: "Icon used to represent operation"
+        required: true
+      css_class:
+        type: string
+        description: "Css class for web interface"
+        required: false
+      doc_link:
+        type: string
+        description: "Link to documentation"
+        required: false
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/OperationCategoryCreateRequestSchema'
+      subsets:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetCreateRequestSchema'
+      platforms:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformCreateRequestSchema'
+      forms:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormCreateRequestSchema'
+      ports:
+        type: array
+        items:
+          $ref: '#/definitions/OperationPortCreateRequestSchema'
+      scripts:
+        type: array
+        items:
+          $ref: '#/definitions/OperationScriptCreateRequestSchema'
+  OperationItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Operation identifier"
+      name:
+        type: string
+        description: "Name of operation"
+        required: true
+      slug:
+        type: string
+        description: "Slug of operation"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if operation is enabled"
+        required: true
+      description:
+        type: string
+        description: "Description of operation"
+        required: true
+      type:
+        type: string
+        description: "Type of operation"
+        required: true
+        enum: ["TRANSFORMATION", "ACTION", "VISUALIZATION", "SHUFFLE", "SYSTEM_META_OPERATION", "USER_META_OPERATION", "SHORTCUT"]
+      icon:
+        type: string
+        description: "Icon used to represent operation"
+        required: true
+      css_class:
+        type: string
+        description: "Css class for web interface"
+        required: false
+      doc_link:
+        type: string
+        description: "Link to documentation"
+        required: false
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/OperationCategoryItemResponseSchema'
+      subsets:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetItemResponseSchema'
+      platforms:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformItemResponseSchema'
+      forms:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormItemResponseSchema'
+      ports:
+        type: array
+        items:
+          $ref: '#/definitions/OperationPortItemResponseSchema'
+      scripts:
+        type: array
+        items:
+          $ref: '#/definitions/OperationScriptItemResponseSchema'
+  OperationUpdateRequestSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Name of operation"
+        required: false
+      slug:
+        type: string
+        description: "Slug of operation"
+        required: false
+      enabled:
+        type: boolean
+        description: "Indicates if operation is enabled"
+        required: false
+      description:
+        type: string
+        description: "Description of operation"
+        required: false
+      type:
+        type: string
+        description: "Type of operation"
+        required: false
+        enum: ["TRANSFORMATION", "ACTION", "VISUALIZATION", "SHUFFLE", "SYSTEM_META_OPERATION", "USER_META_OPERATION", "SHORTCUT"]
+      icon:
+        type: string
+        description: "Icon used to represent operation"
+        required: false
+      css_class:
+        type: string
+        description: "Css class for web interface"
+        required: false
+      doc_link:
+        type: string
+        description: "Link to documentation"
+        required: false
+      categories:
+        type: array
+        items:
+          $ref: '#/definitions/OperationCategoryUpdateRequestSchema'
+      platforms:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformUpdateRequestSchema'
+      forms:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormUpdateRequestSchema'
+      ports:
+        type: array
+        items:
+          $ref: '#/definitions/OperationPortUpdateRequestSchema'
+      scripts:
+        type: array
+        items:
+          $ref: '#/definitions/OperationScriptUpdateRequestSchema'
+  OperationPortInterfaceCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationPortInterface identifier"
+      name:
+        type: string
+        description: "Port interface name"
+        required: true
+      color:
+        type: string
+        description: "Color for interface usability"
+        required: true
+  OperationPortInterfaceListResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Port interface name"
+        required: true
+      color:
+        type: string
+        description: "Color for interface usability"
+        required: true
+  OperationPortInterfaceItemResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Port interface name"
+        required: true
+      color:
+        type: string
+        description: "Color for interface usability"
+        required: true
+  OperationPortListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationPort identifier"
+      name:
+        type: string
+        description: "Port name"
+        required: true
+      slug:
+        type: string
+        description: "Port slug used by transpiler"
+        required: true
+      type:
+        type: string
+        description: "Port type"
+        required: true
+        enum: ["INPUT", "OUTPUT"]
+      description:
+        type: string
+        description: "Port description"
+        required: true
+      tags:
+        type: string
+        description: "Port tags"
+        required: false
+      order:
+        type: integer
+        description: "Port order"
+        required: false
+      multiplicity:
+        type: string
+        description: "Port multiplicity (how many arrows can have this port as target or source"
+        required: true
+        enum: ["ONE", "MANY"]
+      interfaces:
+        type: array
+        items:
+          $ref: '#/definitions/OperationPortInterfaceListResponseSchema'
+  OperationPortCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationPort identifier"
+      name:
+        type: string
+        description: "Port name"
+        required: true
+      slug:
+        type: string
+        description: "Port slug used by transpiler"
+        required: true
+      type:
+        type: string
+        description: "Port type"
+        required: true
+        enum: ["INPUT", "OUTPUT"]
+      description:
+        type: string
+        description: "Port description"
+        required: true
+      tags:
+        type: string
+        description: "Port tags"
+        required: false
+      order:
+        type: integer
+        description: "Port order"
+        required: false
+      multiplicity:
+        type: string
+        description: "Port multiplicity (how many arrows can have this port as target or source"
+        required: true
+        enum: ["ONE", "MANY"]
+      interfaces:
+        type: array
+        items:
+          $ref: '#/definitions/OperationPortInterfaceCreateRequestSchema'
+  OperationPortItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationPort identifier"
+      name:
+        type: string
+        description: "Port name"
+        required: true
+      slug:
+        type: string
+        description: "Port slug used by transpiler"
+        required: true
+      type:
+        type: string
+        description: "Port type"
+        required: true
+        enum: ["INPUT", "OUTPUT"]
+      description:
+        type: string
+        description: "Port description"
+        required: true
+      tags:
+        type: string
+        description: "Port tags"
+        required: false
+      order:
+        type: integer
+        description: "Port order"
+        required: false
+      multiplicity:
+        type: string
+        description: "Port multiplicity (how many arrows can have this port as target or source"
+        required: true
+        enum: ["ONE", "MANY"]
+      interfaces:
+        type: array
+        items:
+          $ref: '#/definitions/OperationPortInterfaceItemResponseSchema'
+  OperationCategoryCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationCategory identifier"
+      name:
+        type: string
+        description: "Name of category"
+        required: true
+      type:
+        type: string
+        description: "Type of category, used to filter"
+        required: true
+      order:
+        type: integer
+        description: "Order to display"
+        required: true
+      default_order:
+        type: integer
+        description: "Order to display"
+        required: true
+  OperationCategoryListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "OperationCategory identifier"
+      name:
+        type: string
+        description: "Name of category"
+        required: true
+      type:
+        type: string
+        description: "Type of category, used to filter"
+        required: true
+      order:
+        type: integer
+        description: "Order to display"
+        required: true
+      default_order:
+        type: integer
+        description: "Order to display"
+        required: true
+  OperationCategoryItemResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Name of category"
+        required: true
+      type:
+        type: string
+        description: "Type of category, used to filter"
+        required: true
+      order:
+        type: integer
+        description: "Order to display"
+        required: true
+      default_order:
+        type: integer
+        description: "Order to display"
+        required: true
+  OperationFormListResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Form interface name"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicate if form is enabled"
+        required: true
+      order:
+        type: integer
+        description: "Order of the form"
+        required: true
+      category:
+        type: string
+        description: "Purpose of the form"
+        required: true
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormFieldListResponseSchema'
+  OperationFormCreateRequestSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Form interface name"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicate if form is enabled"
+        required: true
+      order:
+        type: integer
+        description: "Order of the form"
+        required: true
+      category:
+        type: string
+        description: "Purpose of the form"
+        required: true
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormFieldCreateRequestSchema'
+  OperationFormItemResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Form interface name"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicate if form is enabled"
+        required: true
+      order:
+        type: integer
+        description: "Order of the form"
+        required: true
+      category:
+        type: string
+        description: "Purpose of the form"
+        required: true
+      fields:
+        type: array
+        items:
+          $ref: '#/definitions/OperationFormFieldItemResponseSchema'
+  ApplicationCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Application identifier"
+      name:
+        type: string
+        description: "Name of application"
+        required: true
+      description:
+        type: string
+        description: "Description of application"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if application is available to be used"
+        required: true
+      type:
+        type: string
+        description: "Type of application"
+        required: true
+        enum: ["SPARK_APPLICATION", "SPARK_CODE_FUNCTION"]
+      execution_parameters:
+        type: string
+        description: "Parameters used to start application"
+        required: false
+  ApplicationListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Application identifier"
+      name:
+        type: string
+        description: "Name of application"
+        required: true
+      description:
+        type: string
+        description: "Description of application"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if application is available to be used"
+        required: true
+      type:
+        type: string
+        description: "Type of application"
+        required: true
+        enum: ["SPARK_APPLICATION", "SPARK_CODE_FUNCTION"]
+      execution_parameters:
+        type: string
+        description: "Parameters used to start application"
+        required: false
+  ApplicationItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Application identifier"
+      name:
+        type: string
+        description: "Name of application"
+        required: true
+      description:
+        type: string
+        description: "Description of application"
+        required: true
+      enabled:
+        type: boolean
+        description: "Indicates if application is available to be used"
+        required: true
+      type:
+        type: string
+        description: "Type of application"
+        required: true
+        enum: ["SPARK_APPLICATION", "SPARK_CODE_FUNCTION"]
+      execution_parameters:
+        type: string
+        description: "Parameters used to start application"
+        required: false
+  OperationScriptListResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Script name"
+        required: true
+      type:
+        type: string
+        description: "Script type"
+        required: true
+        enum: ["JS_CLIENT", "PY_SERVER"]
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      description:
+        type: string
+        description: "Script description"
+        required: true
+      body:
+        type: string
+        description: "Script body"
+        required: true
+  OperationScriptCreateRequestSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Script name"
+        required: true
+      type:
+        type: string
+        description: "Script type"
+        required: true
+        enum: ["JS_CLIENT", "PY_SERVER"]
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      description:
+        type: string
+        description: "Script description"
+        required: true
+      body:
+        type: string
+        description: "Script body"
+        required: true
+  OperationScriptItemResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Script name"
+        required: true
+      type:
+        type: string
+        description: "Script type"
+        required: true
+        enum: ["JS_CLIENT", "PY_SERVER"]
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      description:
+        type: string
+        description: "Script description"
+        required: true
+      body:
+        type: string
+        description: "Script body"
+        required: true
+  PlatformPluginItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PlatformPlugin identifier"
+      name:
+        type: string
+        description: "Name of platform plugin."
+        required: true
+      description:
+        type: string
+        description: "Description of platform plugin."
+        required: false
+      version:
+        type: string
+        description: "Version of platform plugin."
+        required: false
+      copyright:
+        type: string
+        description: "Copyright of platform plugin."
+        required: false
+      status:
+        type: string
+        description: "Status of plugin"
+        required: false
+        enum: ["PENDING", "INSTALLED", "OUTDATED", "ERROR", "DISABLED"]
+      message:
+        type: string
+        description: "Status message of plugin"
+        required: false
+      manifest:
+        type: string
+        description: "Plugin manifest"
+        required: false
+      ids_offset:
+        type: integer
+        description: "Number used in order to avoid id collision"
+        required: true
+      uuid:
+        type: string
+        description: "UUID platform plugin."
+        required: true
+      url:
+        type: string
+        description: "Git URL of platform plugin."
+        required: false
+      use_compiler:
+        type: boolean
+        description: "Use compiler provided by the plugin"
+        required: true
+      use_executor:
+        type: boolean
+        description: "Use executor provided by the plugin"
+        required: true
+  PlatformPluginListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PlatformPlugin identifier"
+      name:
+        type: string
+        description: "Name of platform plugin."
+        required: true
+      description:
+        type: string
+        description: "Description of platform plugin."
+        required: false
+      version:
+        type: string
+        description: "Version of platform plugin."
+        required: false
+      copyright:
+        type: string
+        description: "Copyright of platform plugin."
+        required: false
+      status:
+        type: string
+        description: "Status of plugin"
+        required: false
+        enum: ["PENDING", "INSTALLED", "OUTDATED", "ERROR", "DISABLED"]
+      message:
+        type: string
+        description: "Status message of plugin"
+        required: false
+      manifest:
+        type: string
+        description: "Plugin manifest"
+        required: false
+      ids_offset:
+        type: integer
+        description: "Number used in order to avoid id collision"
+        required: true
+      uuid:
+        type: string
+        description: "UUID platform plugin."
+        required: true
+      url:
+        type: string
+        description: "Git URL of platform plugin."
+        required: false
+      use_compiler:
+        type: boolean
+        description: "Use compiler provided by the plugin"
+        required: true
+      use_executor:
+        type: boolean
+        description: "Use executor provided by the plugin"
+        required: true
+  OperationFormFieldListResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Field name"
+        required: true
+      label:
+        type: string
+        description: "Field label"
+        required: true
+      help:
+        type: FIXME:TIPO INDEFINIDO > unicode_text
+        description: "Field help"
+        required: true
+      type:
+        type: string
+        description: "Field type"
+        required: true
+        enum: ["BINARY", "CHARACTER", "DATE", "DATETIME", "DECIMAL", "DOUBLE", "ENUM", "FILE", "FLOAT", "INTEGER", "LAT_LONG", "LONG", "TEXT", "TIME", "TIMESTAMP", "VECTOR"]
+      required:
+        type: boolean
+        description: "If field is required"
+        required: true
+      order:
+        type: integer
+        description: "Order of filed"
+        required: true
+      default:
+        type: string
+        description: "Default value"
+        required: false
+      suggested_widget:
+        type: string
+        description: "Suggested widget for the interface"
+        required: false
+      values_url:
+        type: string
+        description: "URL to retrieve field values, in JSON format"
+        required: false
+      values:
+        type: string
+        description: "Values for the field in JSON format"
+        required: false
+      scope:
+        type: string
+        description: "Scope when a field can be changed"
+        required: true
+        enum: ["DESIGN", "EXECUTION", "BOTH"]
+      enable_conditions:
+        type: string
+        description: "Define when a field is enabled in UI"
+        required: false
+      editable:
+        type: boolean
+        description: "If field is editable"
+        required: true
+  OperationFormFieldCreateRequestSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Field name"
+        required: true
+      label:
+        type: string
+        description: "Field label"
+        required: true
+      help:
+        type: FIXME:TIPO INDEFINIDO > unicode_text
+        description: "Field help"
+        required: true
+      type:
+        type: string
+        description: "Field type"
+        required: true
+        enum: ["BINARY", "CHARACTER", "DATE", "DATETIME", "DECIMAL", "DOUBLE", "ENUM", "FILE", "FLOAT", "INTEGER", "LAT_LONG", "LONG", "TEXT", "TIME", "TIMESTAMP", "VECTOR"]
+      required:
+        type: boolean
+        description: "If field is required"
+        required: true
+      order:
+        type: integer
+        description: "Order of filed"
+        required: true
+      default:
+        type: string
+        description: "Default value"
+        required: false
+      suggested_widget:
+        type: string
+        description: "Suggested widget for the interface"
+        required: false
+      values_url:
+        type: string
+        description: "URL to retrieve field values, in JSON format"
+        required: false
+      values:
+        type: string
+        description: "Values for the field in JSON format"
+        required: false
+      scope:
+        type: string
+        description: "Scope when a field can be changed"
+        required: true
+        enum: ["DESIGN", "EXECUTION", "BOTH"]
+      enable_conditions:
+        type: string
+        description: "Define when a field is enabled in UI"
+        required: false
+      editable:
+        type: boolean
+        description: "If field is editable"
+        required: true
+  OperationFormFieldItemResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Field name"
+        required: true
+      label:
+        type: string
+        description: "Field label"
+        required: true
+      help:
+        type: FIXME:TIPO INDEFINIDO > unicode_text
+        description: "Field help"
+        required: true
+      type:
+        type: string
+        description: "Field type"
+        required: true
+        enum: ["BINARY", "CHARACTER", "DATE", "DATETIME", "DECIMAL", "DOUBLE", "ENUM", "FILE", "FLOAT", "INTEGER", "LAT_LONG", "LONG", "TEXT", "TIME", "TIMESTAMP", "VECTOR"]
+      required:
+        type: boolean
+        description: "If field is required"
+        required: true
+      order:
+        type: integer
+        description: "Order of filed"
+        required: true
+      default:
+        type: string
+        description: "Default value"
+        required: false
+      suggested_widget:
+        type: string
+        description: "Suggested widget for the interface"
+        required: false
+      values_url:
+        type: string
+        description: "URL to retrieve field values, in JSON format"
+        required: false
+      values:
+        type: string
+        description: "Values for the field in JSON format"
+        required: false
+      scope:
+        type: string
+        description: "Scope when a field can be changed"
+        required: true
+        enum: ["DESIGN", "EXECUTION", "BOTH"]
+      enable_conditions:
+        type: string
+        description: "Define when a field is enabled in UI"
+        required: false
+      editable:
+        type: boolean
+        description: "If field is editable"
+        required: true
+  WorkflowExecuteRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Workflow identifier"
+      name:
+        type: string
+        description: "Workflow's name"
+        required: true
+      description:
+        type: string
+        description: "Workflow's description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Indicate if workflow is enabled"
+        required: true
+      user_id:
+        type: integer
+        description: "User id"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+      created:
+        type: string
+        description: "Creation date and time"
+        required: true
+        format: 'date-time'
+      updated:
+        type: string
+        description: "Updating date and time"
+        required: true
+        format: 'date-time'
+      version:
+        type: integer
+        description: "Version of workflow"
+        required: true
+      image:
+        type: string
+        description: "Image representing this workflow"
+        required: false
+      is_template:
+        type: boolean
+        description: "Indicates if the workflow is a template."
+        required: true
+      is_system_template:
+        type: boolean
+        description: "Indicates if the workflow is a system template."
+        required: true
+      is_public:
+        type: boolean
+        description: "Indicates if the workflow is public."
+        required: true
+      template_code:
+        type: string
+        description: "Code for the template of the workflow. Avoids reading lots of tables"
+        required: false
+      forms:
+        type: string
+        description: "Forms with task parameters"
+        required: false
+      deployment_enabled:
+        type: boolean
+        description: "Indicate if workflow supports deployment"
+        required: true
+      publishing_enabled:
+        type: boolean
+        description: "Indicate if workflow supports publishing"
+        required: true
+      publishing_status:
+        type: string
+        description: "Publishing status"
+        required: false
+        enum: ["EDITING", "PUBLISHED", "DISABLED"]
+      type:
+        type: string
+        description: "Workflow type"
+        required: true
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+      preferred_cluster_id:
+        type: integer
+        description: "Preferred cluster used to run the workflow"
+        required: false
+      tasks:
+        type: array
+        items:
+          $ref: '#/definitions/TaskExecuteRequestSchema'
+      flows:
+        type: array
+        items:
+          $ref: '#/definitions/FlowExecuteRequestSchema'
+      variables:
+        type: array
+        items:
+          $ref: '#/definitions/WorkflowVariableExecuteRequestSchema'
+      platform:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformExecuteRequestSchema'
+      subset:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetExecuteRequestSchema'
+  WorkflowListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Workflow identifier"
+      name:
+        type: string
+        description: "Workflow's name"
+        required: true
+      description:
+        type: string
+        description: "Workflow's description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Indicate if workflow is enabled"
+        required: true
+      created:
+        type: string
+        description: "Creation date and time"
+        required: true
+        format: 'date-time'
+      updated:
+        type: string
+        description: "Updating date and time"
+        required: true
+        format: 'date-time'
+      version:
+        type: integer
+        description: "Version of workflow"
+        required: true
+      image:
+        type: string
+        description: "Image representing this workflow"
+        required: false
+      is_template:
+        type: boolean
+        description: "Indicates if the workflow is a template."
+        required: true
+      is_system_template:
+        type: boolean
+        description: "Indicates if the workflow is a system template."
+        required: true
+      is_public:
+        type: boolean
+        description: "Indicates if the workflow is public."
+        required: true
+      deployment_enabled:
+        type: boolean
+        description: "Indicate if workflow supports deployment"
+        required: true
+      publishing_enabled:
+        type: boolean
+        description: "Indicate if workflow supports publishing"
+        required: true
+      publishing_status:
+        type: string
+        description: "Publishing status"
+        required: false
+        enum: ["EDITING", "PUBLISHED", "DISABLED"]
+      type:
+        type: string
+        description: "Workflow type"
+        required: true
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+      preferred_cluster_id:
+        type: integer
+        description: "Preferred cluster used to run the workflow"
+        required: false
+      tasks:
+        type: array
+        items:
+          $ref: '#/definitions/TaskListResponseSchema'
+      flows:
+        type: array
+        items:
+          $ref: '#/definitions/FlowListResponseSchema'
+      variables:
+        type: array
+        items:
+          $ref: '#/definitions/WorkflowVariableListResponseSchema'
+      platform:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformListResponseSchema'
+      subset:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetListResponseSchema'
+  WorkflowCreateRequestSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Workflow's name"
+        required: true
+      description:
+        type: string
+        description: "Workflow's description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Indicate if workflow is enabled"
+        required: true
+      user_id:
+        type: integer
+        description: "User id"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+      image:
+        type: string
+        description: "Image representing this workflow"
+        required: false
+      is_template:
+        type: boolean
+        description: "Indicates if the workflow is a template."
+        required: true
+      is_system_template:
+        type: boolean
+        description: "Indicates if the workflow is a system template."
+        required: true
+      is_public:
+        type: boolean
+        description: "Indicates if the workflow is public."
+        required: true
+      forms:
+        type: string
+        description: "Forms with task parameters"
+        required: false
+      deployment_enabled:
+        type: boolean
+        description: "Indicate if workflow supports deployment"
+        required: true
+      publishing_enabled:
+        type: boolean
+        description: "Indicate if workflow supports publishing"
+        required: true
+      publishing_status:
+        type: string
+        description: "Publishing status"
+        required: false
+        enum: ["EDITING", "PUBLISHED", "DISABLED"]
+      type:
+        type: string
+        description: "Workflow type"
+        required: true
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+      preferred_cluster_id:
+        type: integer
+        description: "Preferred cluster used to run the workflow"
+        required: false
+      tasks:
+        type: array
+        items:
+          $ref: '#/definitions/TaskCreateRequestSchema'
+      flows:
+        type: array
+        items:
+          $ref: '#/definitions/FlowCreateRequestSchema'
+      variables:
+        type: array
+        items:
+          $ref: '#/definitions/WorkflowVariableCreateRequestSchema'
+      platform_id:
+        type: integer
+        required: true
+      subset_id:
+        type: integer
+        required: false
+  WorkflowItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Workflow identifier"
+      name:
+        type: string
+        description: "Workflow's name"
+        required: true
+      description:
+        type: string
+        description: "Workflow's description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Indicate if workflow is enabled"
+        required: true
+      created:
+        type: string
+        description: "Creation date and time"
+        required: true
+        format: 'date-time'
+      updated:
+        type: string
+        description: "Updating date and time"
+        required: true
+        format: 'date-time'
+      version:
+        type: integer
+        description: "Version of workflow"
+        required: true
+      image:
+        type: string
+        description: "Image representing this workflow"
+        required: false
+      is_template:
+        type: boolean
+        description: "Indicates if the workflow is a template."
+        required: true
+      is_system_template:
+        type: boolean
+        description: "Indicates if the workflow is a system template."
+        required: true
+      is_public:
+        type: boolean
+        description: "Indicates if the workflow is public."
+        required: true
+      forms:
+        type: string
+        description: "Forms with task parameters"
+        required: false
+      deployment_enabled:
+        type: boolean
+        description: "Indicate if workflow supports deployment"
+        required: true
+      publishing_enabled:
+        type: boolean
+        description: "Indicate if workflow supports publishing"
+        required: true
+      publishing_status:
+        type: string
+        description: "Publishing status"
+        required: false
+        enum: ["EDITING", "PUBLISHED", "DISABLED"]
+      type:
+        type: string
+        description: "Workflow type"
+        required: true
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+      preferred_cluster_id:
+        type: integer
+        description: "Preferred cluster used to run the workflow"
+        required: false
+      tasks:
+        type: array
+        items:
+          $ref: '#/definitions/TaskItemResponseSchema'
+      flows:
+        type: array
+        items:
+          $ref: '#/definitions/FlowItemResponseSchema'
+      variables:
+        type: array
+        items:
+          $ref: '#/definitions/WorkflowVariableItemResponseSchema'
+      platform:
+        type: array
+        items:
+          $ref: '#/definitions/PlatformItemResponseSchema'
+      subset:
+        type: array
+        items:
+          $ref: '#/definitions/OperationSubsetItemResponseSchema'
+  WorkflowVariableListResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Variable's name"
+        required: true
+      label:
+        type: string
+        description: "Label"
+        required: false
+      description:
+        type: string
+        description: "Workflow's description"
+        required: false
+      type:
+        type: string
+        description: "Field type"
+        required: true
+        enum: ["BINARY", "CHARACTER", "DATE", "DATETIME", "DECIMAL", "DOUBLE", "ENUM", "FILE", "FLOAT", "INTEGER", "LAT_LONG", "LONG", "TEXT", "TIME", "TIMESTAMP", "VECTOR"]
+      multiplicity:
+        type: integer
+        description: "Field multiplicity"
+        required: true
+      suggested_widget:
+        type: string
+        description: "Suggested widget for the interface"
+        required: false
+      default_value:
+        type: string
+        description: "Default value"
+        required: false
+      parameters:
+        type: string
+        description: "Parameters"
+        required: false
+  WorkflowVariableItemResponseSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Variable's name"
+        required: true
+      label:
+        type: string
+        description: "Label"
+        required: false
+      description:
+        type: string
+        description: "Workflow's description"
+        required: false
+      type:
+        type: string
+        description: "Field type"
+        required: true
+        enum: ["BINARY", "CHARACTER", "DATE", "DATETIME", "DECIMAL", "DOUBLE", "ENUM", "FILE", "FLOAT", "INTEGER", "LAT_LONG", "LONG", "TEXT", "TIME", "TIMESTAMP", "VECTOR"]
+      multiplicity:
+        type: integer
+        description: "Field multiplicity"
+        required: true
+      suggested_widget:
+        type: string
+        description: "Suggested widget for the interface"
+        required: false
+      default_value:
+        type: string
+        description: "Default value"
+        required: false
+      parameters:
+        type: string
+        description: "Parameters"
+        required: false
+  WorkflowVariableCreateRequestSchema:
+    type: object
+    properties:
+      name:
+        type: string
+        description: "Variable's name"
+        required: true
+      label:
+        type: string
+        description: "Label"
+        required: false
+      description:
+        type: string
+        description: "Workflow's description"
+        required: false
+      type:
+        type: string
+        description: "Field type"
+        required: true
+        enum: ["BINARY", "CHARACTER", "DATE", "DATETIME", "DECIMAL", "DOUBLE", "ENUM", "FILE", "FLOAT", "INTEGER", "LAT_LONG", "LONG", "TEXT", "TIME", "TIMESTAMP", "VECTOR"]
+      multiplicity:
+        type: integer
+        description: "Field multiplicity"
+        required: true
+      suggested_widget:
+        type: string
+        description: "Suggested widget for the interface"
+        required: false
+      default_value:
+        type: string
+        description: "Default value"
+        required: false
+      parameters:
+        type: string
+        description: "Parameters"
+        required: false
+  WorkflowHistoryListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "WorkflowHistory identifier"
+      version:
+        type: integer
+        description: "Version of the workflow"
+        required: true
+      user_id:
+        type: integer
+        description: "User identifier"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+      date:
+        type: string
+        description: "Date"
+        required: true
+        format: 'date-time'
+      content:
+        type: string
+        description: "Workflow content"
+        required: true
+  WorkflowHistoryItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "WorkflowHistory identifier"
+      version:
+        type: integer
+        description: "Version of the workflow"
+        required: true
+      user_id:
+        type: integer
+        description: "User identifier"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+      date:
+        type: string
+        description: "Date"
+        required: true
+        format: 'date-time'
+      content:
+        type: string
+        description: "Workflow content"
+        required: true
+  WorkflowPermissionListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "WorkflowPermission identifier"
+      permission:
+        type: string
+        description: "Permission"
+        required: true
+        enum: ["READ", "WRITE", "EXECUTE"]
+      user_id:
+        type: integer
+        description: "User identifier"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+  WorkflowPermissionItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "WorkflowPermission identifier"
+      permission:
+        type: string
+        description: "Permission"
+        required: true
+        enum: ["READ", "WRITE", "EXECUTE"]
+      user_id:
+        type: integer
+        description: "User identifier"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+  WorkflowPermissionCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "WorkflowPermission identifier"
+      permission:
+        type: string
+        description: "Permission"
+        required: true
+        enum: ["READ", "WRITE", "EXECUTE"]
+      user_id:
+        type: integer
+        description: "User identifier"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+  FlowListResponseSchema:
+    type: object
+    properties:
+      source_port:
+        type: integer
+        description: "Port id used in the source"
+        required: true
+      target_port:
+        type: integer
+        description: "Port id used in the target"
+        required: true
+      source_port_name:
+        type: string
+        description: "Port name used in the source"
+        required: false
+      target_port_name:
+        type: string
+        description: "Port name used in the target"
+        required: false
+      environment:
+        type: string
+        description: "Environment for flow"
+        required: true
+        enum: ["DESIGN", "DEPLOYMENT"]
+      source_id:
+        type: integer
+        required: true
+      target_id:
+        type: integer
+        required: true
+  FlowItemResponseSchema:
+    type: object
+    properties:
+      source_port:
+        type: integer
+        description: "Port id used in the source"
+        required: true
+      target_port:
+        type: integer
+        description: "Port id used in the target"
+        required: true
+      source_port_name:
+        type: string
+        description: "Port name used in the source"
+        required: false
+      target_port_name:
+        type: string
+        description: "Port name used in the target"
+        required: false
+      environment:
+        type: string
+        description: "Environment for flow"
+        required: true
+        enum: ["DESIGN", "DEPLOYMENT"]
+      source_id:
+        type: integer
+        required: true
+      target_id:
+        type: integer
+        required: true
+  FlowCreateRequestSchema:
+    type: object
+    properties:
+      source_port:
+        type: integer
+        description: "Port id used in the source"
+        required: true
+      target_port:
+        type: integer
+        description: "Port id used in the target"
+        required: true
+      source_port_name:
+        type: string
+        description: "Port name used in the source"
+        required: false
+      target_port_name:
+        type: string
+        description: "Port name used in the target"
+        required: false
+      environment:
+        type: string
+        description: "Environment for flow"
+        required: true
+        enum: ["DESIGN", "DEPLOYMENT"]
+      source_id:
+        type: integer
+        required: true
+      target_id:
+        type: integer
+        required: true
+  TaskListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Task identifier"
+      name:
+        type: string
+        description: "Task name"
+        required: false
+      left:
+        type: integer
+        description: "Left position in workflow drawing area"
+        required: true
+      top:
+        type: integer
+        description: "Top position in workflow drawing area"
+        required: true
+      z_index:
+        type: integer
+        description: "Z-Index position in workflow drawing area"
+        required: true
+      forms:
+        type: string
+        description: "Forms with task parameters"
+        required: true
+      version:
+        type: integer
+        description: "Version of task"
+        required: true
+      environment:
+        type: string
+        description: "Environment for task"
+        required: true
+        enum: ["DESIGN", "DEPLOYMENT"]
+      enabled:
+        type: boolean
+        description: "Indicates if task is enabled in the workflow"
+        required: true
+      width:
+        type: integer
+        description: "Width"
+        required: false
+      height:
+        type: integer
+        description: "Height"
+        required: false
+      display_order:
+        type: integer
+        description: "Order"
+        required: false
+      group_id:
+        type: string
+        description: "Group Id"
+        required: false
+  TaskCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Task identifier"
+      name:
+        type: string
+        description: "Task name"
+        required: false
+      left:
+        type: integer
+        description: "Left position in workflow drawing area"
+        required: true
+      top:
+        type: integer
+        description: "Top position in workflow drawing area"
+        required: true
+      z_index:
+        type: integer
+        description: "Z-Index position in workflow drawing area"
+        required: true
+      forms:
+        type: string
+        description: "Forms with task parameters"
+        required: true
+      environment:
+        type: string
+        description: "Environment for task"
+        required: true
+        enum: ["DESIGN", "DEPLOYMENT"]
+      enabled:
+        type: boolean
+        description: "Indicates if task is enabled in the workflow"
+        required: true
+      width:
+        type: integer
+        description: "Width"
+        required: false
+      height:
+        type: integer
+        description: "Height"
+        required: false
+      display_order:
+        type: integer
+        description: "Order"
+        required: false
+      group_id:
+        type: string
+        description: "Group Id"
+        required: false
+      operation_id:
+        type: integer
+        required: true
+  TaskItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Task identifier"
+      name:
+        type: string
+        description: "Task name"
+        required: false
+      left:
+        type: integer
+        description: "Left position in workflow drawing area"
+        required: true
+      top:
+        type: integer
+        description: "Top position in workflow drawing area"
+        required: true
+      z_index:
+        type: integer
+        description: "Z-Index position in workflow drawing area"
+        required: true
+      forms:
+        type: string
+        description: "Forms with task parameters"
+        required: true
+      version:
+        type: integer
+        description: "Version of task"
+        required: true
+      environment:
+        type: string
+        description: "Environment for task"
+        required: true
+        enum: ["DESIGN", "DEPLOYMENT"]
+      enabled:
+        type: boolean
+        description: "Indicates if task is enabled in the workflow"
+        required: true
+      width:
+        type: integer
+        description: "Width"
+        required: false
+      height:
+        type: integer
+        description: "Height"
+        required: false
+      display_order:
+        type: integer
+        description: "Order"
+        required: false
+      group_id:
+        type: string
+        description: "Group Id"
+        required: false
+  TaskExecuteRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Task identifier"
+      name:
+        type: string
+        description: "Task name"
+        required: false
+      left:
+        type: integer
+        description: "Left position in workflow drawing area"
+        required: true
+      top:
+        type: integer
+        description: "Top position in workflow drawing area"
+        required: true
+      z_index:
+        type: integer
+        description: "Z-Index position in workflow drawing area"
+        required: true
+      forms:
+        type: string
+        description: "Forms with task parameters"
+        required: true
+      version:
+        type: integer
+        description: "Version of task"
+        required: true
+      environment:
+        type: string
+        description: "Environment for task"
+        required: true
+        enum: ["DESIGN", "DEPLOYMENT"]
+      enabled:
+        type: boolean
+        description: "Indicates if task is enabled in the workflow"
+        required: true
+      width:
+        type: integer
+        description: "Width"
+        required: false
+      height:
+        type: integer
+        description: "Height"
+        required: false
+      display_order:
+        type: integer
+        description: "Order"
+        required: false
+      group_id:
+        type: string
+        description: "Group Id"
+        required: false
+      next_task_id:
+        type: string
+        required: false
+      operation:
+        type: array
+        items:
+          $ref: '#/definitions/OperationExecuteRequestSchema'
+      parameters:
+        type: array
+        items:
+          $ref: '#/definitions/ExecuteRequestSchema'

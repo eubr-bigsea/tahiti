@@ -7,8 +7,8 @@ from functools import reduce, cmp_to_key
 
 from flask import request, current_app, g
 from flask_restful import Resource
-from sqlalchemy.orm import joinedload, load_only
-from sqlalchemy.sql.expression import bindparam, column, text
+from sqlalchemy.orm import joinedload
+from sqlalchemy.sql.expression import bindparam, text
 
 from tahiti.app_auth import requires_auth, requires_permission
 from tahiti.cache import cache
@@ -43,14 +43,14 @@ def deep_merge(d1, d2, in_conflict=lambda v1, v2: v2):
 
 
 def optimize_operation_query(operations, only_translation=False):
-    current_translation = db.aliased(Operation.current_translation, 
-        name='operation_translation')
+    current_translation = db.aliased(Operation.current_translation,
+                                     name='operation_translation')
     # fallback_translation = db.aliased(Operation.fallback_translation)
     op = operations \
-        .join(current_translation) \
-        # .options(db.contains_eager(Operation.current_translation,
-        #                           alias=current_translation))
-    if not only_translation:    
+        .join(current_translation).options(joinedload('current_translation'))
+    # .options(db.contains_eager(Operation.current_translation,
+    #                           alias=current_translation))
+    if not only_translation:
         op = op.options(joinedload('forms.current_translation')) \
             .options(joinedload('ports.current_translation')) \
             .options(joinedload('ports.interfaces.current_translation')) \
@@ -62,8 +62,7 @@ def optimize_operation_query(operations, only_translation=False):
             .options(joinedload('ports')) \
             .options(joinedload('ports.interfaces')) \
             .options(joinedload('forms.fields')) \
-            .options(joinedload('categories')) \
-            .options(joinedload('subsets'))
+            .options(joinedload('categories'))
     return op
 
 
@@ -86,14 +85,13 @@ class OperationListApi(Resource):
                     if simple else None
 
             exclude = []
-            
+
             if simple:
                 operations = Operation.query
                 operations = operations.options(
                     joinedload('current_translation'))
             elif request.args.get('partial') in ('true', 1, '1'):
                 operations = optimize_operation_query(Operation.query, True)\
-                    .options(joinedload('subsets'))\
                     .options(joinedload('categories.current_translation')) \
                     .options(joinedload('categories'))
 
@@ -103,7 +101,7 @@ class OperationListApi(Resource):
 
             # if only:
             #     current_translation = Operation.current_translation
-            #     names = {'id': 'operation.id', 
+            #     names = {'id': 'operation.id',
             #     'name': 'operation_translation.name'}
             #     operations = operations.join(current_translation).with_entities(
             #         *[column(c) for c in only])
@@ -115,8 +113,11 @@ class OperationListApi(Resource):
 
             subset_filter = request.args.get('subset')
             if subset_filter and subset_filter.isdigit():
-                operations = operations.filter(
-                    Operation.subsets.any(id=int(subset_filter)))
+                sub_query = OperationSubset.query\
+                    .join(OperationSubset.operations).filter(
+                        OperationSubset.id == subset_filter)\
+                    .with_entities(Operation.id).subquery()
+                operations = operations.filter(Operation.id.in_(sub_query))
 
             platform = request.args.get('platform', None)
             if platform:
@@ -133,7 +134,7 @@ class OperationListApi(Resource):
             workflow = request.args.get('workflow', None)
             if workflow:
                 tasks = db.session.query(Task.operation_id).filter(
-                        Task.workflow_id == int(workflow)).subquery()
+                    Task.workflow_id == int(workflow)).subquery()
                 operations = operations.filter(Operation.id.in_(tasks))
 
             ids = request.args.getlist('ids[]')
@@ -151,11 +152,14 @@ class OperationListApi(Resource):
                                        '%%{}%%'.format(name),
                                        Unicode)
                 operations = operations.filter(text(
-                    'operation_translation.name LIKE :param_name',
-                    bindparams=[param_name]))
-            current_locale = str(g.get('locale', 'en'))[:2]
+                    'operation_translation.name LIKE :param_name').bindparams(
+                        param_name=f'%%{name}%%'))
+                #operations = operations.filter(OperationTranslation.name.ilike(
+                #    '%' + name + '%'))
 
-            if platform == '5': # FIXME hard coded
+            current_locale = g.user.locale
+
+            if platform == '5':  # FIXME hard coded
                 bindparam('param_locale', 'en', Unicode)
             else:
                 bindparam('param_locale', locale, Unicode)
@@ -164,8 +168,8 @@ class OperationListApi(Resource):
                 'operation_translation.locale = :param_locale').bindparams(
                     param_locale=current_locale))
 
-            exclude.extend(['platforms.forms', 'platforms.icon',
-                       'platforms.description'])
+            exclude.extend(['platforms.icon',
+                            'platforms.description'])
 
             category = request.args.get('category')
             if category:
@@ -173,9 +177,10 @@ class OperationListApi(Resource):
                     OperationCategory.type == category)
 
             page = request.args.get('page')
-            
+
             # Operations disabled in config file
-            disabled_ops = set(config.get('operations', {}).get('disabled', []))
+            disabled_ops = set(config.get(
+                'operations', {}).get('disabled', []))
             if page is not None and page.isdigit():
                 page_size = int(request.args.get('size', 20))
                 page = int(page)
@@ -222,8 +227,8 @@ class OperationListApi(Resource):
                 if only is None or 'forms' in only:
                     for op in data:
                         groups = itertools.groupby(
-                            sorted(op.get('forms', {}), 
-                                key=lambda f: f.get('category')),
+                            sorted(op.get('forms', {}),
+                                   key=lambda f: f.get('category')),
                             lambda f: f.get('category'))
 
                         op['forms'] = []
@@ -296,6 +301,7 @@ class OperationDetailApi(Resource):
                               errors=form.errors)
         return result, result_code
 
+
 class OperationClearCacheApi(Resource):
     # noinspection PyMethodMayBeStatic
     @staticmethod
@@ -304,11 +310,12 @@ class OperationClearCacheApi(Resource):
         cache.clear()
         return '{"msg": "Cache cleaned"}', 200
 
+
 class OperationTreeApi(Resource):
     @staticmethod
-    #@requires_auth
+    # @requires_auth
     def get(platform_id):
-        operations = Operation.query.filter(Operation.enabled).filter( 
+        operations = Operation.query.filter(Operation.enabled).filter(
             Operation.platforms.any(enabled=True, id=platform_id))
         current_translation = db.aliased(Operation.current_translation)
         operations = operations \
@@ -317,56 +324,66 @@ class OperationTreeApi(Resource):
                                        alias=current_translation)) \
             .options(joinedload('categories.current_translation')) \
             .options(joinedload('categories'))
-        extract_group = lambda c: {'id': c.id, 'name': c.name, 'order': c.order or c.default_order}
-        filter_group = lambda c: c.type == 'group'
-        filter_subgroup = lambda c: c.type == 'subgroup'
+
+        def extract_group(c): return {
+            'id': c.id, 'name': c.name, 'order': c.order or c.default_order}
+
+        def filter_group(c): return c.type == 'group'
+        def filter_subgroup(c): return c.type == 'subgroup'
 
         ops = []
         for op in operations:
-            group = next(map(extract_group, filter(filter_group, op.categories)), None)
-            subgroup = next(map(extract_group, filter(filter_subgroup, op.categories)), None)
-            item = { 
-                 'group_id': group['id'] if group is not None else None,
-                 'subgroup_id': subgroup['id'] if subgroup is not None else None,
-                 'group': group['name'] if group is not None else None,
-                 'operation': {'id': op.id, 'name': op.name, 'slug': op.slug},
-                 'subgroup': subgroup['name'] if subgroup is not None else None,
-                 'order': group['order'] if group is not None else None, 
-                 'subgroupOrder': subgroup['order'] if subgroup is not None else None
+            group = next(map(extract_group, filter(
+                filter_group, op.categories)), None)
+            subgroup = next(map(extract_group, filter(
+                filter_subgroup, op.categories)), None)
+            item = {
+                'group_id': group['id'] if group is not None else None,
+                'subgroup_id': subgroup['id'] if subgroup is not None else None,
+                'group': group['name'] if group is not None else None,
+                'operation': {'id': op.id, 'name': op.name, 'slug': op.slug},
+                'subgroup': subgroup['name'] if subgroup is not None else None,
+                'order': group['order'] if group is not None else None,
+                'subgroupOrder': subgroup['order'] if subgroup is not None else None
             }
             ops.append(item)
-            def cmp_groups(a, b):
-                    if a['order'] is None: return -1
-                    if b['order'] is None: return 1
-                    if a['order'] < b['order']: return -1
-                    if a['order'] > b['order']: return 1
-                    text_cmp = locale.strcoll(unicodedata.normalize('NFC', a['group'] or ''),
-                                unicodedata.normalize('NFC', b['group'] or ''))
-                    if text_cmp != 0:
-                        return text_cmp
-                    text_cmp= locale.strcoll(
-                            unicodedata.normalize('NFC', a['subgroup'] or ''),
-                            unicodedata.normalize('NFC', b['subgroup'] or ''))
-                    if text_cmp != 0:
-                        return text_cmp
-                    return locale.strcoll(
-                            unicodedata.normalize('NFC', a['operation']['name']),
-                            unicodedata.normalize('NFC', b['operation']['name']))
 
-                    
+            def cmp_groups(a, b):
+                if a['order'] is None:
+                    return -1
+                if b['order'] is None:
+                    return 1
+                if a['order'] < b['order']:
+                    return -1
+                if a['order'] > b['order']:
+                    return 1
+                text_cmp = locale.strcoll(unicodedata.normalize('NFC', a['group'] or ''),
+                                          unicodedata.normalize('NFC', b['group'] or ''))
+                if text_cmp != 0:
+                    return text_cmp
+                text_cmp = locale.strcoll(
+                    unicodedata.normalize('NFC', a['subgroup'] or ''),
+                    unicodedata.normalize('NFC', b['subgroup'] or ''))
+                if text_cmp != 0:
+                    return text_cmp
+                return locale.strcoll(
+                    unicodedata.normalize('NFC', a['operation']['name']),
+                    unicodedata.normalize('NFC', b['operation']['name']))
+
             ops = sorted(ops, key=cmp_to_key(cmp_groups))
             groups = []
             for k, g in itertools.groupby(ops, key=lambda x: x['group_id']):
                 for i, nested in enumerate(g):
-                   if i == 0:
-                       g = {'id': nested['group_id'], 'name': nested['group'], 'operations':[]}
-                       groups.append(g)
-                   g['operations'].append(nested['operation'])
+                    if i == 0:
+                        g = {'id': nested['group_id'],
+                             'name': nested['group'], 'operations': []}
+                        groups.append(g)
+                    g['operations'].append(nested['operation'])
 
         only = None
         exclude = ['forms', 'platforms', 'ports']
         result = OperationListResponseSchema(
-                    many=True, only=only, exclude=exclude).dump(operations)
+            many=True, only=only, exclude=exclude).dump(operations)
 
         return groups, 200
 
