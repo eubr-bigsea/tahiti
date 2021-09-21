@@ -170,7 +170,7 @@ def get_base_name(name):
     elif name in ['operation_category', 'operation_category_translation']:
         name = 'CATEGORY'
     elif name in ['operation_form_field', 'operation_form_field_translation']:
-        name = 'CATEGORY'
+        name = 'FORM_FIELD'
     else:
         raise ValueError(f'Invalid entity: {name}')
     return name
@@ -264,7 +264,7 @@ def main(args):
     env.filters['get_totals'] = get_totals
     env.filters['get_placeholder'] = get_placeholder
     revision_id = rev_id()
-    revision_id = 'f1ff40611872'
+    
     jinja_template = env.from_string(template)
     data = {
         'offsets': offsets,
