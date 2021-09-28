@@ -141,6 +141,7 @@ class OperationListApi(Resource):
             if ids:
                 operations = operations.filter(Operation.id.in_(
                     [int(x) for x in ids]))
+
             name = request.args.get('name', '')
             # SqlAlchemy-i18n is not working when a filter
             # is used in where clause with a translation table field.
