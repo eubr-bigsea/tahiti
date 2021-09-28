@@ -143,6 +143,9 @@ class WorkflowType:
     USER_TEMPLATE = 'USER_TEMPLATE'
     SYSTEM_TEMPLATE = 'SYSTEM_TEMPLATE'
     SUB_FLOW = 'SUB_FLOW'
+    DATA_EXPLORER = 'DATA_EXPLORER'
+    MODEL_BUILDER = 'MODEL_BUILDER'
+    VIS_BUILDER = 'VIS_BUILDER'
 
     @staticmethod
     def values():

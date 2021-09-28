@@ -109,6 +109,13 @@ class WorkflowListApi(Resource):
             workflows = test_and_apply_filter(request, 'platform', workflows,
                                               lambda v: Workflow.platform.has(slug=v))
 
+            types = request.args.get('types')
+            if types == 'experiment':
+                workflows = workflows.filter(Workflow.type.in_([
+                    'DATA_EXPLORER', 'MODEL_BUILDER', 'VIS_BUILDER']))
+            elif types:
+                workflows = workflows.filter(Workflow.type.in_(
+                    [x.strip() for x in types.split(',')]))
             # platform = request.args.get('platform', None)
             # if platform:
             #    workflows = workflows.filter(
