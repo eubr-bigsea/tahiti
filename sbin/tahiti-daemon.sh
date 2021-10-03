@@ -35,7 +35,7 @@ case $cmd_option in
   (start)
     # set python path
     PYTHONPATH=${TAHITI_HOME}:${PYTHONPATH} \
-      python ${TAHITI_HOME}/tahiti/manage.py db upgrade
+      flask db upgrade
 
     PYTHONPATH=${TAHITI_HOME}:${PYTHONPATH} nohup -- \
       python ${TAHITI_HOME}/tahiti/runner/tahiti_server.py \
@@ -54,7 +54,7 @@ case $cmd_option in
     # set python path
 
     PYTHONPATH=${TAHITI_HOME}:${PYTHONPATH} \
-      python ${TAHITI_HOME}/tahiti/manage.py db upgrade
+      flask db upgrade
 
     # check if db migration was successful
     if [ $? -eq 0 ]
