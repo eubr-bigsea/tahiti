@@ -16,4 +16,6 @@ COPY --from=pip_builder /usr/local /usr/local
 WORKDIR $TAHITI_HOME
 COPY . $TAHITI_HOME
 
+ENV FLASK_APP=tahiti.app
+
 CMD ["/usr/local/tahiti/sbin/tahiti-daemon.sh", "docker"]
