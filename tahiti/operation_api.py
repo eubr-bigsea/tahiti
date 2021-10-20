@@ -163,8 +163,7 @@ class OperationListApi(Resource):
             if platform == '5':  # FIXME hard coded
                 bindparam('param_locale', 'en', Unicode)
             else:
-                bindparam('param_locale', locale, Unicode)
-
+                bindparam('param_locale', current_locale, Unicode)
             operations = operations.filter(text(
                 'operation_translation.locale = :param_locale').bindparams(
                     param_locale=current_locale))
