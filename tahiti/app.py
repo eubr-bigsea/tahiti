@@ -19,12 +19,10 @@ babel = create_babel_i18n(app)
 
 @babel.localeselector
 def get_locale_from_query():
-    return request.args.get('lang', 'en')[:2]
-
-
-@app.before_request
-def func():
-    g.locale = get_locale()
+    try:
+        return g.user.locale
+    except:
+        return request.args.get('lang', 'en')[:2]
 
 
 @app.route('/static/<path:path>')
