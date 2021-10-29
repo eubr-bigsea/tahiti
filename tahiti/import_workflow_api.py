@@ -51,7 +51,8 @@ class ImportWorkflowApi(Resource):
         try:
             platform = original.pop('platform')
 
-            original['form'] = json.dumps(original.pop('forms'))
+            if 'forms' in original:
+                original['form'] = json.dumps(original.pop('forms'))
             user = g.user
             original.pop('user')
             original['platform'] = Platform.query.get(platform['id'])
@@ -74,6 +75,10 @@ class ImportWorkflowApi(Resource):
 
             request_schema = WorkflowCreateRequestSchema()
 
+            # Handle variables parameters serialization
+            for variable in original.get('variables'):
+                if 'parameters' in variable:
+                    variable['parameters'] = json.dumps(variable['parameters'])
             workflow = request_schema.load(original)
             try:
                 db.session.add(workflow)
@@ -102,4 +107,5 @@ class ImportWorkflowApi(Resource):
 
         except Exception as e:
             log.exception(e)
-            return gettext('Invalid workflow'), 400
+            return {'status': 'ERROR', 
+                'message': gettext('Invalid workflow')}, 400
