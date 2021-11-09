@@ -1,6 +1,6 @@
 /******************************************************************************
-* Attribute suggestion for Citron from Tahiti (both Lemonade Project modules).
-* (c) 2017 Speed Labs - Departamento de Ciência da Computação - UFMG (Brazil).
+* Attribute suggestion for Citrus from Tahiti (both Lemonade Project modules).
+* (c) 2017-2021 Speed Labs - Departamento de Ciência da Computação - UFMG (Brazil).
 *****************************************************************************/
 function caseInsensitiveComparator(a, b){
     if (! a || ! b) {
@@ -189,7 +189,11 @@ var TahitiAttributeSuggester = (function () {
         if (! parameters){ //old parameters set
             return joinSuffixDuplicatedAttributes(task);
         }
+        
         var value = parameters.value;
+        var keepRightKeys = task.forms['keep_right_keys'] && 
+            task.forms['keep_right_keys'].value === '1';
+        var rightKeys = new Set(value.conditions.map(c => c.second));
         var result = [];
 
         sorted_ports = task.uiPorts.inputs.sort(
@@ -215,7 +219,10 @@ var TahitiAttributeSuggester = (function () {
             switch(value.secondSelectionType){
                 case 1: //all attributes, with prefix
                     for(var i=0; i < sorted_ports[1].attributes.length; i++){
-                        result.push(value.secondPrefix + sorted_ports[1].attributes[i]);
+                        var attr_name = sorted_ports[1].attributes[i];
+                        if (keepRightKeys || !rightKeys.has(attr_name)){
+                            result.push(value.secondPrefix + attr_name);
+                        }
                     }
                     break;
                 case 2:
