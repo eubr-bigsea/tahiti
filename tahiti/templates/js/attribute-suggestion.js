@@ -193,7 +193,7 @@ var TahitiAttributeSuggester = (function () {
         var value = parameters.value;
         var keepRightKeys = task.forms['keep_right_keys'] && 
             task.forms['keep_right_keys'].value === '1';
-        var rightKeys = new Set(value.conditions.map(c => c.second));
+        var rightKeys = new Set(value ? value.conditions.map(c => c.second): []);
         var result = [];
 
         sorted_ports = task.uiPorts.inputs.sort(
