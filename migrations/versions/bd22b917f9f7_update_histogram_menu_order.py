@@ -179,6 +179,10 @@ def upgrade():
         INSERT INTO operation_script(`type`, enabled, body, operation_id) 
         VALUES ('JS_CLIENT', 1, 'copyInputAddAttributesSplitAlias(task, "attributes", "aliases", "_bucketed")', 100)
         """))
+    op.execute(text("""
+             UPDATE `operation_form_field_translation` SET 
+               `label` = 'Atributo com a predição', 
+                `help` = 'Atributo com a predição' WHERE id = 99 """))
 
 def downgrade():
     op.execute(text("UPDATE `operation_form` SET `order` = '10' WHERE (`id` = '142');"))
