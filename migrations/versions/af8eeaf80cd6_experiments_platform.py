@@ -718,9 +718,9 @@ def _insert_operation_operation_form(conn):
                 column('operation_form_id', Integer))
     columns = [c.name for c in tb.columns]
     data = []
-    for i in list(range(2, 13)):
-        for j in list(range(2, 4)):
-            data.append([BASE_OP + i, BASE_FORM + j])
+    # for i in list(range(2, 13)):
+    #    for j in list(range(2, 4)):
+    #        data.append([BASE_OP + i, BASE_FORM + j])
 
     ops_without_attribute_field = {
         ADD_BY_FORMULA, JOIN, SAMPLE, LIMIT, WINDOW_FUNCTION,
@@ -735,15 +735,16 @@ def _insert_operation_operation_form(conn):
     }
     # Common forms
     for op_id in ALL_OPS:
+        #if op_id == SORT: 
+        #    import pdb; pdb.set_trace()
         if op_id not in ops_without_attribute_field:
             data.append([op_id,  ATTRIBUTES_FORM])
-    for op_id in ALL_OPS:
         if op_id not in ops_without_aliases_field:
             data.append([op_id,  ALIASES_FORM])
-    for op_id in ALL_OPS:
         if op_id not in ops_without_keep_attribute_field:
             data.append([op_id,  KEEP_ATTRIBUTE_FORM])
 
+    # import pdb; pdb.set_trace()
     # Each op form
     for op_id in ALL_OPS: 
         data.append([op_id,  op_id + 50])

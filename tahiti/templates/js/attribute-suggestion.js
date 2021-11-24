@@ -284,7 +284,7 @@ var TahitiAttributeSuggester = (function () {
         var dataSources = [];
         workflow.tasks.forEach(function(task){
             task.uiPorts = {inputs: [], output: [], refs: []}
-            var isDataSource = [18, 53, 139].includes(parseInt(task.operation.id));
+            var isDataSource = [18, 53, 139, 2100].includes(parseInt(task.operation.id));
             if (isDataSource) {
                 dataSources.push(task);
             }
