@@ -32,7 +32,7 @@ def _insert_operation(conn):
                 column('doc_link', String))
     columns = [c.name for c in tb.columns]
     data = [
-      [BASE_OP + 1, 'rename_attr', True, 'TRANSFORMATION', '', '', ''],
+      [BASE_OP + 1, 'rename-attr', True, 'TRANSFORMATION', '', '', ''],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
