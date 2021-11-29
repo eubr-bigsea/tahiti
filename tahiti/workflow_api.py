@@ -58,11 +58,12 @@ def get_workflow(workflow_id):
         # Set the json form for operations
         for task in workflow.tasks:
             current_form = json.loads(task.forms) if task.forms else {}
-            for form in task.operation.forms:
-                for field in form.fields:
-                    if field.name not in current_form:
-                        current_form[field.name] = {
-                            'value': field.default}
+            if task.operation:
+                for form in task.operation.forms:
+                    for field in form.fields:
+                        if field.name not in current_form:
+                            current_form[field.name] = {
+                                'value': field.default}
             db.session.expunge(task)  # in order to avoid unnecessary updates
             task.forms = json.dumps(current_form)
     return workflow
