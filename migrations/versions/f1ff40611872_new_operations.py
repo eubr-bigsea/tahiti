@@ -1,4 +1,4 @@
-"""PDF and CDF definition
+"""New operations definition
 
 Revision ID: f1ff40611872 
 Revises: c4b87364ce33
