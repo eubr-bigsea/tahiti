@@ -19,7 +19,7 @@ TEMPLATE='''
     """
     from alembic import context
     from alembic import op
-    from sqlalchemy import Integer, String, Text, Boolean
+    from sqlalchemy import Integer, String, Text, Boolean, UnicodeText
     from sqlalchemy.orm import sessionmaker
     from sqlalchemy.sql import table, column
 
@@ -170,7 +170,9 @@ def get_base_name(name):
     elif name in ['operation_category', 'operation_category_translation']:
         name = 'CATEGORY'
     elif name in ['operation_form_field', 'operation_form_field_translation']:
-        name = 'CATEGORY'
+        name = 'FORM_FIELD'
+    elif name in ['operation_port', 'operation_port_translation']:
+        name = 'PORT'
     else:
         raise ValueError(f'Invalid entity: {name}')
     return name
@@ -188,7 +190,7 @@ def get_placeholder(value, loop, entity):
     elif v in ['Integer']:
         return 0
     elif v in ['Boolean']:
-        return 0
+        return 1
     else:
         raise ValueError(f'Unknown type: {v}')
 
@@ -209,6 +211,8 @@ def get_totals(entity, args):
         return args.categories
     elif name in ['operation_form_field', 'operation_form_field_translation']:
         return args.fields
+    elif name in ['operation_port', 'operation_port_translation']:
+        return args.ports
     else:
         raise ValueError(f'Invalid entity: {name}')
 
@@ -226,9 +230,10 @@ def main(args):
             OperationScript,
         ]
         associations.update({
-            'operation_category_operation': ['operation', 'category'], 
-            'operation_operation_form': ['operation', 'form'], 
+            'operation_category_operation': ['operation', 'operation_category'], 
+            'operation_operation_form': ['operation', 'operation_form'], 
             'operation_subset_operation': ['operation', 'operation_subset'], 
+            'operation_platform': ['operation', 'platform'], 
         })
         offsets.append('OP')
     if args.categories > 0:
@@ -243,7 +248,7 @@ def main(args):
     if args.ports > 0:
         entities += [OperationPort, OperationPortTranslation]
         associations.update({
-           'operation_port_interface_operation_port ': 
+           'operation_port_interface_operation_port': 
             ['operation_port_interface', 'operation_port']
         })
         offsets.append('PORT')
@@ -264,7 +269,7 @@ def main(args):
     env.filters['get_totals'] = get_totals
     env.filters['get_placeholder'] = get_placeholder
     revision_id = rev_id()
-    revision_id = 'f1ff40611872'
+    
     jinja_template = env.from_string(template)
     data = {
         'offsets': offsets,
