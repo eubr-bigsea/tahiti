@@ -22,6 +22,7 @@ BASE_FORM = 4050
 BASE_FORM_FIELD = 4392
 BASE_PORT = 4111
 
+
 def _insert_operation_category(conn):
     tb = table('operation_category',
                 column('id', Integer), 
@@ -37,10 +38,12 @@ def _insert_operation_category(conn):
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_category(conn):
     conn.execute(
         'DELETE from operation_category WHERE id BETWEEN %s AND %s', 
         BASE_CATEGORY + 1, BASE_CATEGORY + 2)
+
 
 def _insert_operation_category_translation(conn):
     tb = table('operation_category_translation',
@@ -58,10 +61,12 @@ def _insert_operation_category_translation(conn):
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_category_translation(conn):
     conn.execute(
         'DELETE from operation_category_translation WHERE id BETWEEN %s AND %s', 
         BASE_CATEGORY + 1, BASE_CATEGORY + 2)
+
 
 def _insert_operation(conn):
     tb = table('operation',
@@ -76,14 +81,17 @@ def _insert_operation(conn):
     data = [
       [BASE_OP + 1, 'pdf', True, 'TRANSFORMATION', '', '', ''],
       [BASE_OP + 2, 'cdf', True, 'TRANSFORMATION', '', '', ''],
+      [BASE_OP + 3, 'rename-attr', True, 'TRANSFORMATION', '', '', ''],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation(conn):
     conn.execute(
         'DELETE from operation WHERE id BETWEEN %s AND %s', 
-        BASE_OP + 1, BASE_OP + 2)
+        BASE_OP + 1, BASE_OP + 3)
+
 
 def _insert_operation_translation(conn):
     tb = table('operation_translation',
@@ -97,14 +105,18 @@ def _insert_operation_translation(conn):
       [BASE_OP + 1, 'en', 'Probability density function', 'The probability density function (PDF) is the probability that a random variable, say X, will take a value exactly equal to x'],
       [BASE_OP + 2, 'pt', 'Função cumulativa de distribuição', 'A função de distribuição cumulativa (CDF) calcula a probabilidade cumulativa para um determinado valor x. Use o CDF para determinar a probabilidade de que uma observação aleatória tirada da população seja menor ou igual a um certo valor. Você também pode usar essas informações para determinar a probabilidade de uma observação ser maior do que um determinado valor ou entre dois valores.'],
       [BASE_OP + 2, 'en', 'Cumulative distribution function', 'The cumulative distribution function (CDF) calculates the cumulative probability for a given x-value. Use the CDF to determine the probability that a random observation that is taken from the population will be less than or equal to a certain value. You can also use this information to determine the probability that an observation will be greater than a certain value, or between two values.'],
+      [BASE_OP + 3, 'pt', 'Renomeia os atributos', 'Renomeia os atributos'],
+      [BASE_OP + 3, 'en', 'Renames attributes', 'Renames attributes'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_translation(conn):
     conn.execute(
         'DELETE from operation_translation WHERE id BETWEEN %s AND %s', 
-        BASE_OP + 1, BASE_OP + 2)
+        BASE_OP + 1, BASE_OP + 3)
+
 
 def _insert_operation_platform(conn):
     tb = table(
@@ -118,6 +130,7 @@ def _insert_operation_platform(conn):
 	[BASE_OP + 1, 4],
 	[BASE_OP + 2, 1],
 	[BASE_OP + 2, 4],
+	[BASE_OP + 3, 4],
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -127,7 +140,8 @@ def _insert_operation_platform(conn):
 def _delete_operation_platform(conn):
     conn.execute(
 	'DELETE from operation_platform WHERE operation_id BETWEEN %s AND %s', 
-	BASE_OP + 1, BASE_OP + 2) 
+	BASE_OP + 1, BASE_OP + 3) 
+
 
 def _insert_operation_script(conn):
     tb = table('operation_script',
@@ -140,16 +154,19 @@ def _insert_operation_script(conn):
     data = [
       [BASE_OP + 1, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_pdf');", BASE_OP + 1],
       [BASE_OP + 2, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_cdf');", BASE_OP + 2],
+      [BASE_OP + 3, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_renamed');", BASE_OP + 3],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_script(conn):
     conn.execute(
         'DELETE from operation_script WHERE id BETWEEN %s AND %s', 
-        BASE_OP + 1, BASE_OP + 2)
+        BASE_OP + 1, BASE_OP + 3)
 
-# nao necessaria para aparecer a operacao
+
+# Not necessary to really show an operation
 def _insert_operation_form(conn):
     tb = table('operation_form',
                 column('id', Integer), 
@@ -163,10 +180,12 @@ def _insert_operation_form(conn):
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_form(conn):
     conn.execute(
         'DELETE from operation_form WHERE id BETWEEN %s AND %s', 
         BASE_FORM + 1, BASE_FORM + 1)
+
 
 def _insert_operation_form_translation(conn):
     tb = table('operation_form_translation',
@@ -181,10 +200,12 @@ def _insert_operation_form_translation(conn):
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_form_translation(conn):
     conn.execute(
         'DELETE from operation_form_translation WHERE id BETWEEN %s AND %s', 
         BASE_FORM + 1, BASE_FORM + 1)
+
 
 def _insert_operation_form_field(conn):
     tb = table('operation_form_field',
@@ -209,10 +230,12 @@ def _insert_operation_form_field(conn):
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_form_field(conn):
     conn.execute(
         'DELETE from operation_form_field WHERE form_id BETWEEN %s AND %s', 
         BASE_FORM + 1, BASE_FORM + 1)
+
 
 def _insert_operation_form_field_translation(conn):
     tb = table('operation_form_field_translation',
@@ -230,10 +253,12 @@ def _insert_operation_form_field_translation(conn):
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_form_field_translation(conn):
     conn.execute(
         'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
         BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 2)
+
 
 def _insert_operation_category_operation(conn):
     tb = table('operation_category_operation',
@@ -247,14 +272,16 @@ def _insert_operation_category_operation(conn):
         [BASE_OP + 2, BASE_CATEGORY + 1],
         [BASE_OP + 2, BASE_CATEGORY + 2],
         [BASE_OP + 2, 4001],
- 
+        [BASE_OP + 3, 7],
+        [BASE_OP + 3, 4001],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_category_operation(conn):
     sql = "DELETE from operation_category_operation WHERE operation_id BETWEEN %s AND %s"
-    conn.execute(sql, BASE_OP + 1, BASE_OP + 2)
+    conn.execute(sql, BASE_OP + 1, BASE_OP + 3)
 
 
 def _insert_operation_operation_form(conn):
@@ -270,14 +297,19 @@ def _insert_operation_operation_form(conn):
 	[BASE_OP + 2, BASE_FORM + 1],
 	[BASE_OP + 2, 110],
 	[BASE_OP + 2, 41],
+	[BASE_OP + 3, BASE_FORM + 1],
+	[BASE_OP + 3, 110],
+	[BASE_OP + 3, 41],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_operation_form(conn):
     conn.execute(
         'DELETE from operation_operation_form WHERE operation_form_id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 2)
+        BASE_FORM + 1, BASE_FORM + 3)
+
 
 def _insert_operation_port(conn):
     tb = table(
@@ -294,14 +326,18 @@ def _insert_operation_port(conn):
         (BASE_PORT + 2, 'OUTPUT', None, BASE_OP + 1, 1, 'MANY', 'output data'),
         (BASE_PORT + 3, 'INPUT', None, BASE_OP + 2, 1, 'ONE', 'input data'),
         (BASE_PORT + 4, 'OUTPUT', None, BASE_OP + 2, 1, 'MANY', 'output data'),
+        (BASE_PORT + 5, 'INPUT', None, BASE_OP + 3, 1, 'ONE', 'input data'),
+        (BASE_PORT + 6, 'OUTPUT', None, BASE_OP + 3, 1, 'MANY', 'output data'),
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_port(conn):
     conn.execute(
         'DELETE from operation_port WHERE id BETWEEN %s AND %s', 
-        BASE_PORT + 1, BASE_PORT + 4)
+        BASE_PORT + 1, BASE_PORT + 6)
+
 
 def _insert_operation_port_translation(conn):
     tb = table(
@@ -324,14 +360,22 @@ def _insert_operation_port_translation(conn):
         (BASE_PORT + 4, 'en', 'output data', 'Output data'),
         (BASE_PORT + 4, 'pt', 'dados de saída', 'Dados de saída'),
 
+        (BASE_PORT + 5, 'en', 'input data', 'Input data'),
+        (BASE_PORT + 5, 'pt', 'dados de entrada', 'Dados de entrada'),
+
+        (BASE_PORT + 6, 'en', 'output data', 'Output data'),
+        (BASE_PORT + 6, 'pt', 'dados de saída', 'Dados de saída'),
+
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_port_translation(conn):
     conn.execute(
         'DELETE from operation_port_translation WHERE id BETWEEN %s AND %s', 
-        BASE_PORT + 1, BASE_PORT + 4)
+        BASE_PORT + 1, BASE_PORT + 6)
+
 
 def _insert_operation_port_interface_operation_port(conn):
     tb = table(
@@ -343,14 +387,16 @@ def _insert_operation_port_interface_operation_port(conn):
     data = [
         (BASE_PORT + 1, 1),
         (BASE_PORT + 2, 1),
+        (BASE_PORT + 3, 1),
     ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
 
+
 def _delete_operation_port_interface_operation_port (conn):
     conn.execute(
         'DELETE from operation_port_interface_operation_port WHERE operation_port_id BETWEEN %s AND %s', 
-        BASE_PORT + 1, BASE_PORT + 2)
+        BASE_PORT + 1, BASE_PORT + 3)
 
     
 #def _insert_operation_subset_operation(conn):
