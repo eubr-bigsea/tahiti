@@ -1,7 +1,5 @@
 """New operations definition
 
-Revision ID: f1ff40611872 
-Revises: c4b87364ce33
 """
 from alembic import context
 from alembic import op
@@ -11,7 +9,7 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = 'f1ff40611872'
-down_revision = 'c4b87364ce33'
+down_revision = 'a85dce88d899'
 branch_labels = None
 depends_on = None
 
