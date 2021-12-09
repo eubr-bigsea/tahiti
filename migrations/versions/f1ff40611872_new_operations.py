@@ -407,6 +407,10 @@ def _insert_operation_port_interface_operation_port(conn):
         (BASE_PORT + 2, 1),
         (BASE_PORT + 3, 1),
         (BASE_PORT + 4, 1),
+        (BASE_PORT + 5, 1),
+        (BASE_PORT + 6, 1),
+        (BASE_PORT + 7, 1),
+        (BASE_PORT + 8, 1),
     ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
@@ -415,7 +419,7 @@ def _insert_operation_port_interface_operation_port(conn):
 def _delete_operation_port_interface_operation_port (conn):
     conn.execute(
         'DELETE from operation_port_interface_operation_port WHERE operation_port_id BETWEEN %s AND %s', 
-        BASE_PORT + 1, BASE_PORT + 4)
+        BASE_PORT + 1, BASE_PORT + 8)
 
     
 def _execute(conn, cmd):
