@@ -28,6 +28,8 @@ class PlatformListApi(Resource):
     @requires_auth
     def get(self):
         all_platforms = request.args.get('all') in ["true", 1, "1"]
+        only = None
+
         if all_platforms:
             platforms = Platform.query
         else:
