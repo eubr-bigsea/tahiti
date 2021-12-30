@@ -27,14 +27,14 @@ class PlatformListApi(Resource):
 
     @requires_auth
     def get(self):
-        only = ('id', 'slug', 'name',) \
-            if request.args.get('simple', 'false') == 'true' else None
         all_platforms = request.args.get('all') in ["true", 1, "1"]
+        only = None
+
         if all_platforms:
             platforms = Platform.query
         else:
-            only = ('id', ) if request.args.get(
-                'simple', 'false') == 'true' else None
+            only = ('id', 'slug', 'name',) \
+                if request.args.get('simple', 'false') == 'true' else None
         enabled_filter = request.args.get('enabled')
         if enabled_filter:
             platforms = Platform.query.filter(
