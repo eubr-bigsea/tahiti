@@ -9,12 +9,12 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = 'f1ff40611872'
-down_revision = 'a85dce88d899'
+down_revision = 'a0d6c6699b69'
 branch_labels = None
 depends_on = None
 
 
-BASE_CATEGORY = 45
+BASE_CATEGORY = 46
 BASE_OP = 4049
 BASE_FORM = 4050
 BASE_FORM_FIELD = 4392
