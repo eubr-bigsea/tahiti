@@ -233,6 +233,7 @@ class OperationListResponseSchema(BaseSchema):
     icon = fields.String(required=True)
     css_class = fields.String(required=False, allow_none=True)
     doc_link = fields.String(required=False, allow_none=True)
+    label_format = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryListResponseSchema',
         required=True,
@@ -273,6 +274,7 @@ class OperationCreateRequestSchema(BaseSchema):
     icon = fields.String(required=True)
     css_class = fields.String(required=False, allow_none=True)
     doc_link = fields.String(required=False, allow_none=True)
+    label_format = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryCreateRequestSchema',
         required=True,
@@ -317,6 +319,7 @@ class OperationItemResponseSchema(BaseSchema):
     icon = fields.String(required=True)
     css_class = fields.String(required=False, allow_none=True)
     doc_link = fields.String(required=False, allow_none=True)
+    label_format = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryItemResponseSchema',
         required=True,
@@ -360,6 +363,7 @@ class OperationUpdateRequestSchema(BaseSchema):
     icon = fields.String(required=False, allow_none=True)
     css_class = fields.String(required=False, allow_none=True)
     doc_link = fields.String(required=False, allow_none=True)
+    label_format = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryUpdateRequestSchema',
         required=True,
@@ -1490,6 +1494,9 @@ class WorkflowListResponseSchema(BaseSchema):
             "id": x.user_id,
             "name": x.user_name,
             "login": x.user_login})
+    specification = fields.Function(
+        lambda row, ctx: ctx.get(
+            "specification", "2.0.0"))
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1653,6 +1660,9 @@ class WorkflowItemResponseSchema(BaseSchema):
             "id": x.user_id,
             "name": x.user_name,
             "login": x.user_login})
+    specification = fields.Function(
+        lambda row, ctx: ctx.get(
+            "specification", "2.0.0"))
 
     # noinspection PyUnresolvedReferences
     @post_load

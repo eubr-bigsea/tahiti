@@ -11,8 +11,8 @@ from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
 make_translatable(options={'locales': ['pt', 'en'],
-                           'auto_create_locales': True,
-                           'fallback_locale': 'en'})
+                           'auto_create_locales': False,
+                           'fallback_locale': 'pt'})
 
 db = SQLAlchemy()
 
@@ -378,6 +378,7 @@ class OperationTranslation(translation_base(Operation)):
     # Fields
     name = Column(Unicode(200))
     description = Column(Unicode(800))
+    label_format = Column(Unicode(800))
 
 
 class OperationCategory(db.Model, Translatable):

@@ -17,6 +17,7 @@ from tahiti.schema import *
 
 log = logging.getLogger(__name__)
 
+WORKFLOW_SPECIFICATION = '2.4.0'
 
 def optimize_workflow_query(workflows):
     return workflows \
@@ -183,9 +184,10 @@ class WorkflowListApi(Resource):
             if pagination.total < (page - 1) * page_size and page != 1:
                 # Nothing in that specified page, return to page 1
                 pagination = workflows.paginate(1, page_size, False)
+            schema = WorkflowListResponseSchema(many=True, only=['specification'] + only)
+            schema.context = {'specification': WORKFLOW_SPECIFICATION}
             result = {
-                'data': WorkflowListResponseSchema(many=True,
-                                                   only=only).dump(
+                'data': schema.dump(
                     pagination.items),
                 'pagination': {'page': page, 'size': page_size,
                                'total': pagination.total,
@@ -251,6 +253,7 @@ class WorkflowListApi(Resource):
             db.session.add(workflow)
             db.session.flush()
             update_port_name_in_flows(db.session, workflow.id)
+            response_schema.context = {'specification': WORKFLOW_SPECIFICATION}
             result, result_code = response_schema.dump(
                 workflow), 200
             if workflow.is_template:
@@ -282,7 +285,9 @@ class WorkflowDetailApi(Resource):
     def get(workflow_id):
         workflow = get_workflow(workflow_id)
         if workflow is not None:
-            return WorkflowItemResponseSchema().dump(workflow)
+            schema = WorkflowItemResponseSchema()
+            schema.context = {'specification': WORKFLOW_SPECIFICATION}
+            return schema.dump(workflow)
         else:
             return dict(status="ERROR", message="Not found"), 404
 
@@ -329,6 +334,7 @@ class WorkflowDetailApi(Resource):
                                      if v.get('value') is not None or
                                      v.get('publishing_enabled') == True}
                     task['operation_id'] = task['operation']['id']
+                    task['environment'] = 'DESIGN'
                 
                 for variable in data.get('variables', []):
                     variable['parameters'] = json.dumps(variable['parameters'])

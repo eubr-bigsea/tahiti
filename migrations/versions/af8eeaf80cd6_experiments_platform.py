@@ -1,7 +1,7 @@
 """Experiments platform
 
-Revision ID: af8eeaf80cd6 
-Revises: a6aa24bf8d35
+Revision ID: af8eeaf80cd6
+Revises: a0d6c6699b69
 """
 import json
 from alembic import context
@@ -13,17 +13,19 @@ from sqlalchemy.sql.sqltypes import UnicodeText
 
 # revision identifiers, used by Alembic.
 revision = 'af8eeaf80cd6'
-down_revision = 'a6aa24bf8d35'
+down_revision = 'a0d6c6699b69'
 branch_labels = None
 depends_on = None
 
 # --------------------------------------------------------------
 # ATENTION: You must revise this auto-generated code.
 # Please, review offsets and commands before running a migration
-# and optionally, perform a database backup. If everything is 
+# and optionally, perform a database backup. If everything is
 # OK, remove this comment.
 # --------------------------------------------------------------
 META_PLATFORM = 1000
+
+APPEARANCE_FORM_ID=41
 
 BASE_OP = 2100
 BASE_CATEGORY = 2100
@@ -33,12 +35,14 @@ BASE_FORM_FIELD = 2100
 READ_DATA = BASE_OP + 0
 
 # Edit
-CHANGE_DATA_TYPE = BASE_OP + 1
+CAST = BASE_OP + 1
 RENAME = BASE_OP + 2
-DELETE = BASE_OP + 3
+DISCARD = BASE_OP + 3
 FIND_REPLACE = BASE_OP + 4
+DUPLICATE = BASE_OP + 62
 
 # Data
+SELECT = BASE_OP + 63
 SORT = BASE_OP + 5
 FILTER = BASE_OP + 6
 GROUP = BASE_OP + 7
@@ -72,7 +76,7 @@ PARSE_TO_DATE = BASE_OP + 32
 EXTRACT_NUMBERS = BASE_OP + 33
 EXTRACT_WITH_REGEX = BASE_OP + 34
 EXTRACT_FROM_ARRAY = BASE_OP + 35
-EXPAND_FROM_ARRAY = BASE_OP + 36
+# EXPAND_FROM_ARRAY = BASE_OP + 36
 FOLD_ARRAY = BASE_OP + 37
 CHANGE_ARRAY_TYPE = BASE_OP + 38
 SORT_ARRAY = BASE_OP + 39
@@ -101,14 +105,14 @@ FLAG_WITH_FORMULA = BASE_OP + 57
 
 
 # Fix data
-FILL_MISSING = BASE_OP + 58
-HANDLE_INVALID = BASE_OP + 59
-REMOVE_EMPTY = BASE_OP + 60
+CLEAN_MISSING = BASE_OP + 58
+REMOVE_MISSING = BASE_OP + 59
+HANDLE_INVALID = BASE_OP + 60
 REMOVE_INVALID = BASE_OP + 61
 
 # Categories
 CAT_INTERN = BASE_CATEGORY + 0
-CAT_EDIT = BASE_CATEGORY + 1 
+CAT_EDIT = BASE_CATEGORY + 1
 CAT_DATA = BASE_CATEGORY + 2
 CAT_TRANSFORM = BASE_CATEGORY + 3
 CAT_ENCODE = BASE_CATEGORY + 4
@@ -117,17 +121,24 @@ CAT_FIX = BASE_CATEGORY + 6
 CAT_CONTEXT = BASE_CATEGORY + 7
 CAT_TEXT = BASE_CATEGORY + 8
 CAT_INTEGER = BASE_CATEGORY + 9
-CAT_BOOL = BASE_CATEGORY + 10 
-CAT_DATE = BASE_CATEGORY + 11 
+CAT_BOOL = BASE_CATEGORY + 10
+CAT_DATE = BASE_CATEGORY + 11
 CAT_ARRAY= BASE_CATEGORY + 12
 
-MAX_OP = BASE_OP + 61
+
+FIELD_CAST_ERROR_ATTRIBUTE = 449
+FIELD_SELECT_MODE = 3
+FIELD_SELECT_ALIAS = 5
+
+ORIGINAL_CAST_FORM = 154
+ORIGINAL_SELECT_FORM = 6
 
 ALL_OPS = [
+    READ_DATA,
     # Edit
-    CHANGE_DATA_TYPE, RENAME, DELETE, FIND_REPLACE, 
+    CAST, RENAME, DISCARD, FIND_REPLACE, DUPLICATE,
     # Data
-    SORT, FILTER, GROUP, JOIN, CONCATE_ROWS, SAMPLE,
+    SELECT, SORT, FILTER, GROUP, JOIN, CONCATE_ROWS, SAMPLE,
     LIMIT, WINDOW_FUNCTION, PYTHON_CODE, ADD_BY_FORMULA,
     # Transform
     INVERT_BOOLEAN, RESCALE, ROUND_NUMBER, DISCRETIZE, NORMALIZE,
@@ -135,7 +146,8 @@ ALL_OPS = [
     REMOVE_ACCENTS, NORMALIZE_TEXT, CONCAT_ATTRIBUTE, TRIM,
     TRUNCATE_TEXT, SPLIT_INTO_WORDS, SUBSTRING, PARSE_TO_DATE,
     EXTRACT_NUMBERS, EXTRACT_WITH_REGEX, EXTRACT_FROM_ARRAY,
-    EXPAND_FROM_ARRAY, FOLD_ARRAY, CHANGE_ARRAY_TYPE, SORT_ARRAY,
+    #EXPAND_FROM_ARRAY, 
+    FOLD_ARRAY, CHANGE_ARRAY_TYPE, SORT_ARRAY,
     FORCE_DATE_RANGE, UPDATE_HOUR, TRUNCATE_DATE_TO, DATE_DIFF,
     DATE_ADD, DATE_PART, FORMAT_DATE, DATE_TO_TS,
     # Encode / decode
@@ -144,29 +156,37 @@ ALL_OPS = [
     # Flag
     FLAG_IN_RANGE, FLAG_INVALID, FLAG_EMPTY, FLAG_WITH_FORMULA,
     # Fix data
-    FILL_MISSING, HANDLE_INVALID, REMOVE_EMPTY, REMOVE_INVALID,
+    CLEAN_MISSING, HANDLE_INVALID, REMOVE_MISSING, REMOVE_INVALID,
  ]
 
 ATTRIBUTES_FORM = BASE_FORM + 2
 ALIASES_FORM = BASE_FORM + 3
 KEEP_ATTRIBUTE_FORM = BASE_FORM + 4
+ATTRIBUTE_FORM = BASE_FORM + 5
+ALIAS_FORM = BASE_FORM + 6
+
+MAX_OP = max(ALL_OPS)
+
+date_formats = [
+    {'key': ''}
+]
 
 def _insert_platform(conn):
     conn.execute(
         ''' INSERT INTO platform(id, slug, enabled, icon, version, plugin)
-            VALUES(%s, %s, %s, %s, %s, %s)''', 
+            VALUES(%s, %s, %s, %s, %s, %s)''',
         META_PLATFORM, 'meta', 1, ' ', None, 0)
 
 def _delete_platform(conn):
     conn.execute(
-        'DELETE from platform WHERE id BETWEEN %s AND %s', 
+        'DELETE from platform WHERE id BETWEEN %s AND %s',
         META_PLATFORM, META_PLATFORM)
 
 def _insert_platform_translation(conn):
     tb = table('platform_translation',
-                column('id', Integer), 
-                column('locale', String), 
-                column('name', String), 
+                column('id', Integer),
+                column('locale', String),
+                column('name', String),
                 column('description', String))
     columns = [c.name for c in tb.columns]
     data = [
@@ -178,175 +198,224 @@ def _insert_platform_translation(conn):
 
 def _delete_platform_translation(conn):
     conn.execute(
-        'DELETE from platform_translation WHERE id BETWEEN %s AND %s', 
+        'DELETE from platform_translation WHERE id BETWEEN %s AND %s',
         META_PLATFORM, META_PLATFORM)
 
 
 def _insert_operation(conn):
     tb = table('operation',
-                column('id', Integer), 
-                column('slug', String), 
-                column('enabled', Boolean), 
-                column('type', String), 
-                column('icon', String), 
-                column('css_class', String), 
+                column('id', Integer),
+                column('slug', String),
+                column('enabled', Boolean),
+                column('type', String),
+                column('icon', String),
+                column('css_class', String),
                 column('doc_link', String))
     columns = [c.name for c in tb.columns]
     data = [
-      [READ_DATA, 'read-data', 1, 'TRANSFORMATION', 'fa fa-edit', '', ''], 
-      [CHANGE_DATA_TYPE, 'change-data-type', 1, 'TRANSFORMATION', 'fa fa-exchange-alt', '', ''], 
-      [RENAME, 'rename', 1, 'TRANSFORMATION', 'fa fa-edit text-secondary', 'separator', ''], 
-      [DELETE, 'delete', 1, 'TRANSFORMATION', 'fa fa-times text-danger', 'separator', ''], 
-      [FIND_REPLACE, 'find-replace', 1, 'TRANSFORMATION', 'fa fa-search', '', ''], 
+      [READ_DATA, 'read-data', 1, 'TRANSFORMATION', 'fa fa-edit', '', ''],
+      [CAST, 'cast', 1, 'TRANSFORMATION', 'fa fa-exchange-alt', '', ''],
+      [RENAME, 'rename', 1, 'TRANSFORMATION', 'fa fa-edit text-secondary', 'separator', ''],
+      [DISCARD, 'discard', 1, 'TRANSFORMATION', 'fa fa-times text-danger', 'separator', ''],
+      [DUPLICATE, 'duplicate', 1, 'TRANSFORMATION', 'fa fa-copy', 'separator', ''],
+      [FIND_REPLACE, 'find-replace', 1, 'TRANSFORMATION', 'fa fa-search', '', ''],
 
-      [SORT, 'sort', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [FILTER, 'filter', 1, 'TRANSFORMATION', 'fa fa-filter text-success', '', ''], 
-      [GROUP, 'group', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [JOIN, 'join', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [CONCATE_ROWS, 'concat-rows', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [SAMPLE, 'sample', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [LIMIT, 'limit', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [WINDOW_FUNCTION, 'window-function', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [PYTHON_CODE, 'python-code', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''], 
-      [ADD_BY_FORMULA, 'add-by-formula', 1, 'TRANSFORMATION', '', '', ''], 
+      [SELECT, 'select', 1, 'TRANSFORMATION', 'fa fa-list text-secondary', 'separator', ''],
+      [SORT, 'sort', 1, 'TRANSFORMATION', 'fa fa-sort text-secondary', '', ''],
+      [FILTER, 'filter', 1, 'TRANSFORMATION', 'fa fa-filter text-success', '', ''],
+      [GROUP, 'group', 1, 'TRANSFORMATION', '', '', ''],
+      [JOIN, 'join', 1, 'TRANSFORMATION', '', '', ''],
+      [CONCATE_ROWS, 'concat-rows', 1, 'TRANSFORMATION', 'fa fa-plus text-secondary', 'separator', ''],
+      [SAMPLE, 'sample', 1, 'TRANSFORMATION', '', '', ''],
+      [LIMIT, 'limit', 1, 'TRANSFORMATION', '', 'separator', ''],
+      [WINDOW_FUNCTION, 'window-function', 1, 'TRANSFORMATION', '', '', ''],
+      [PYTHON_CODE, 'python-code', 1, 'TRANSFORMATION', '', '', ''],
+      [ADD_BY_FORMULA, 'add-by-formula', 1, 'TRANSFORMATION', 'fa fa-equals', '', ''],
 
-      [INVERT_BOOLEAN, 'invert-boolean', 1, 'TRANSFORMATION', '', 'boolean', ''], 
-      [RESCALE, 'rescale', 1, 'TRANSFORMATION', '', 'Number', ''], 
-      [ROUND_NUMBER, 'round-number', 1, 'TRANSFORMATION', '', 'Decimal', ''], 
-      [DISCRETIZE, 'discretize', 1, 'TRANSFORMATION', '', 'Number', ''], 
-      [NORMALIZE, 'normalize', 1, 'TRANSFORMATION', '', '', 'Number'], 
-      [FORCE_RANGE, 'force-range', 1, 'TRANSFORMATION', '', 'Number', ''], 
-      [TS_TO_DATE, 'ts-to-date', 1, 'TRANSFORMATION', '', 'Integer', ''], 
-      [TO_UPPER, 'to-upper', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [TO_LOWER, 'to-lower', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [CAPITALIZE, 'capitalize', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [REMOVE_ACCENTS, 'remove-accents', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [NORMALIZE_TEXT, 'normalize-text', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [CONCAT_ATTRIBUTE, 'concat-attribute', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [TRIM, 'trim', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [TRUNCATE_TEXT, 'truncate-text', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [SPLIT_INTO_WORDS, 'split-into-words', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [SUBSTRING, 'substring', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [PARSE_TO_DATE, 'parse-to-date', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [EXTRACT_NUMBERS, 'extract-numbers', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [EXTRACT_WITH_REGEX, 'extract-with-regex', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [EXTRACT_FROM_ARRAY, 'extract-from-array', 1, 'TRANSFORMATION', '', 'Array', ''], 
-      [EXPAND_FROM_ARRAY, 'expand-from-array', 1, 'TRANSFORMATION', '', 'Array', ''], 
-      [FOLD_ARRAY, 'fold-array', 1, 'TRANSFORMATION', '', 'Array', ''], 
-      [CHANGE_ARRAY_TYPE, 'change-array-type', 1, 'TRANSFORMATION', '', 'Array', ''], 
-      [SORT_ARRAY, 'sort-array', 1, 'TRANSFORMATION', '', 'Array', ''], 
-      [FORCE_DATE_RANGE, 'force-date-range', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      [UPDATE_HOUR, 'update-hour', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      [TRUNCATE_DATE_TO, 'truncate-date-to', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      [DATE_DIFF, 'date-diff', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      [DATE_ADD, 'date-add', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      [DATE_PART, 'date-part', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      [FORMAT_DATE, 'format-date', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      [DATE_TO_TS, 'date-to-ts', 1, 'TRANSFORMATION', '', 'Datetime', ''], 
-      
-      [ESCAPE_XML, 'escape-xml', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [ESCAPE_UNICODE, 'escape-unicode', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [STEMMING, 'stemming', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [N_GRAMS, 'n-grams', 1, 'TRANSFORMATION', '', 'Text', ''], 
-      [OBFUSCATE, 'obfuscate', 1, 'TRANSFORMATION', '', '', ''], 
-      [ONE_HOT_ENCODE, 'one-hot-encoding', 1, 'TRANSFORMATION', '', '', ''], 
+      [INVERT_BOOLEAN, 'invert-boolean', 1, 'TRANSFORMATION', '', 'boolean', ''],
+      [RESCALE, 'rescale', 1, 'TRANSFORMATION', '', 'Number', ''],
+      [ROUND_NUMBER, 'round-number', 1, 'TRANSFORMATION', '', 'Decimal', ''],
+      [DISCRETIZE, 'discretize', 1, 'TRANSFORMATION', '', 'Number', ''],
+      [NORMALIZE, 'normalize', 1, 'TRANSFORMATION', '', '', 'Number'],
+      [FORCE_RANGE, 'force-range', 1, 'TRANSFORMATION', '', 'Number', ''],
+      [TS_TO_DATE, 'ts-to-date', 1, 'TRANSFORMATION', '', 'Integer', ''],
+      [TO_UPPER, 'to-upper', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [TO_LOWER, 'to-lower', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [CAPITALIZE, 'capitalize', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [REMOVE_ACCENTS, 'remove-accents', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [NORMALIZE_TEXT, 'normalize-text', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [CONCAT_ATTRIBUTE, 'concat-attribute', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [TRIM, 'trim', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [TRUNCATE_TEXT, 'truncate-text', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [SPLIT_INTO_WORDS, 'split-into-words', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [SUBSTRING, 'substring', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [PARSE_TO_DATE, 'parse-to-date', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [EXTRACT_NUMBERS, 'extract-numbers', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [EXTRACT_WITH_REGEX, 'extract-with-regex', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [EXTRACT_FROM_ARRAY, 'extract-from-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+      # [EXPAND_FROM_ARRAY, 'expand-from-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+      [FOLD_ARRAY, 'fold-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+      [CHANGE_ARRAY_TYPE, 'change-array-type', 1, 'TRANSFORMATION', '', 'Array', ''],
+      [SORT_ARRAY, 'sort-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+      [FORCE_DATE_RANGE, 'force-date-range', 1, 'TRANSFORMATION', '', 'Datetime', ''],
+      [UPDATE_HOUR, 'update-hour', 1, 'TRANSFORMATION', '', 'Datetime', ''],
+      [TRUNCATE_DATE_TO, 'truncate-date-to', 1, 'TRANSFORMATION', '', 'Datetime', ''],
+      [DATE_DIFF, 'date-diff', 1, 'TRANSFORMATION', '', 'Datetime', ''],
+      [DATE_ADD, 'date-add', 1, 'TRANSFORMATION', '', 'Datetime', ''],
+      [DATE_PART, 'date-part', 1, 'TRANSFORMATION', '', 'Datetime', ''],
+      [FORMAT_DATE, 'format-date', 1, 'TRANSFORMATION', '', 'Datetime', ''],
+      [DATE_TO_TS, 'date-to-ts', 1, 'TRANSFORMATION', '', 'Datetime', ''],
 
-      [FLAG_IN_RANGE, 'flag-in-range', 1, 'TRANSFORMATION', '', '', ''], 
-      [FLAG_INVALID, 'flag-invalid', 1, 'TRANSFORMATION', '', '', ''], 
-      [FLAG_EMPTY, 'flag-invalid', 1, 'TRANSFORMATION', '', '', ''], 
-      [FLAG_WITH_FORMULA, 'flag-with-formula', 1, 'TRANSFORMATION', '', '', ''], 
-      
-      
-      [FILL_MISSING, 'fill-missing', 1, 'TRANSFORMATION', '', '', ''], 
-      [HANDLE_INVALID, 'handle-invalid', 1, 'TRANSFORMATION', '', '', ''], 
-      [REMOVE_EMPTY, 'remove-empty', 1, 'TRANSFORMATION', '', '', ''], 
-      [REMOVE_INVALID, 'remove-invalid', 1, 'TRANSFORMATION', '', '', ''], 
-   
+      [ESCAPE_XML, 'escape-xml', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [ESCAPE_UNICODE, 'escape-unicode', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [STEMMING, 'stemming', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [N_GRAMS, 'n-grams', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [OBFUSCATE, 'obfuscate', 1, 'TRANSFORMATION', '', '', ''],
+      [ONE_HOT_ENCODE, 'one-hot-encoding', 1, 'TRANSFORMATION', '', '', ''],
+
+      [FLAG_IN_RANGE, 'flag-in-range', 1, 'TRANSFORMATION', '', '', ''],
+      [FLAG_INVALID, 'flag-invalid', 1, 'TRANSFORMATION', '', '', ''],
+      [FLAG_EMPTY, 'flag-invalid', 1, 'TRANSFORMATION', '', '', ''],
+      [FLAG_WITH_FORMULA, 'flag-with-formula', 1, 'TRANSFORMATION', '', '', ''],
+
+
+      [CLEAN_MISSING, 'clean-missing', 1, 'TRANSFORMATION', '', '', ''],
+      [REMOVE_MISSING, 'remove-empty', 1, 'TRANSFORMATION', '', 'separator', ''],
+      [HANDLE_INVALID, 'handle-invalid', 1, 'TRANSFORMATION', '', '', ''],
+      [REMOVE_INVALID, 'remove-invalid', 1, 'TRANSFORMATION', '', '', ''],
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation(conn):
     conn.execute(
-        'DELETE from operation WHERE id BETWEEN %s AND %s', 
-        BASE_OP, MAX_OP)
+        'DELETE from operation WHERE id BETWEEN %s AND %s',
+        BASE_OP, max(ALL_OPS))
 
 def _insert_operation_translation(conn):
     tb = table('operation_translation',
-                column('id', Integer), 
-                column('locale', String), 
-                column('name', String), 
-                column('description', String))
+                column('id', Integer),
+                column('locale', String),
+                column('name', String),
+                column('description', String),
+                column('label_format', String),
+                )
     columns = [c.name for c in tb.columns]
     data = [
-      [READ_DATA, 'pt', 'Ler dados', 'Ler dados'], 
-      [CHANGE_DATA_TYPE, 'pt', 'Alterar o tipo do atributo', 'Altera o tipo do atributo.'], 
-      [RENAME, 'pt',  'Renomear atributo', 'Renomeia atributo.'], 
-      [DELETE, 'pt',  'Excluir atributo', 'Exclui atributo.'], 
-      [FIND_REPLACE, 'pt',  'Localizar e substituir', 'Localiza valores no atributo e permite a substituição.'], 
+      [SELECT, 'pt', 'Selecionar atributos', 'Selecionar atributos',
+          '<b>${this.mode.value == "include"?"Selecionar":(this.mode.value == "rename" ? "Renomear" : "Descartar")}</b> <i>${this.attributes.value.length > 3? '
+          'this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute).join(", ")}</i>'],
+      [READ_DATA, 'pt', 'Ler dados', 'Ler dados', '${data_source.label}: ${data_source.labelValue}'],
+      [CAST, 'pt', 'Alterar o tipo do atributo', 'Altera o tipo do atributo.',
+          'Alterar o tipo de ${this?.cast_attributes?.value?.length == 1? '
+          'this.cast_attributes.value[0].attribute + " para " + this.cast_attributes.value[0].type '
+          ': (this?.cast_attributes?.value?.length || 0) + " atributos"}'],
+      [RENAME, 'pt',  'Renomear atributo', 'Renomeia atributo.',
+         '<b>Renomear</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute + " para " + a.alias).join(", ")}</i>'],
+      [DISCARD, 'pt',  'Descartar atributo', 'Descarta atributo do resultado.',
+          '<b>Descartar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.join(", ")}</i>'],
+      [DUPLICATE, 'pt',  'Duplicar atributo', 'Duplica o atributo.',
+          '<b>Duplicar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute + " como " + a.alias).join(", ")}</i>'],
+      [FIND_REPLACE, 'pt',  'Localizar e substituir', 'Localiza valores no atributo e permite a substituição.', ''],
 
-      [SORT, 'pt', 'Ordenar', 'Permite definir as opções de ordenação.'], 
-      [FILTER, 'pt', 'Filtrar', 'Permite definir as opções de filtro.'], 
-      [GROUP, 'pt', 'Agrupar', 'Permite definir opções para agrupamento.'], 
-      [JOIN, 'pt', 'Juntar com outra fonte de dados', 'Permite juntar com outra fonte de dados (JOIN).'], 
-      [CONCATE_ROWS, 'pt', 'Adicionar registros ao fim', 'Permite adicionar registros ao fim dos dados a partir de outra fonte de dados.'], 
-      [SAMPLE, 'pt', 'Amostrar', 'Permite definir amostragem dos dados.'], 
-      [LIMIT, 'pt', 'Limitar', 'Permite limitar a quantidade de dados.'], 
-      [WINDOW_FUNCTION, 'pt', 'Transformar com função de janela', 'Permite usar uma função de janela (deslizante).'], 
-      [PYTHON_CODE, 'pt', 'Transformar com Python', 'Permite usar código Python para transformar os dados.'],
-      [ADD_BY_FORMULA, 'pt', 'Adicionar atributo via fórmula', 'Permite adicionar um novo atributo usando uma fórmula.'],
+      [SORT, 'pt', 'Ordenar', 'Permite definir as opções de ordenação.',
+            '<b>Ordenar por</b> <i>${this.order_by.value.map(v => v.f+ "(" + v.attribute +")").join(", ")}</i>'],
+      [FILTER, 'pt', 'Filtrar', 'Permite definir as opções de filtro.', ''],
+      [GROUP, 'pt', 'Agrupar', 'Permite definir opções para agrupamento.', '<b>Agrupar</b> por <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [JOIN, 'pt', 'Juntar com outra fonte de dados', 'Permite juntar com outra fonte de dados (JOIN).', ''],
+      [CONCATE_ROWS, 'pt', 'Adicionar registros ao fim', 'Permite adicionar registros ao fim dos dados a partir de outra fonte de dados.', ''],
+      [SAMPLE, 'pt', 'Amostrar ou limitar', 'Permite definir a amostragem dos dados.', ''],
+      [LIMIT, 'pt', 'Limitar', 'Permite limitar a quantidade de dados.', ''],
+      [WINDOW_FUNCTION, 'pt', 'Transformar com função de janela', 'Permite usar uma função de janela (deslizante).', ''],
+      [PYTHON_CODE, 'pt', 'Transformar com Python', 'Permite usar código Python para transformar os dados.', ''],
+      [ADD_BY_FORMULA, 'pt', 'Adicionar atributos usando fórmula', 'Permite adicionar novos atributos usando uma fórmula.',
+          '<b>Atributo(s)</b> <i>${this.formula.value.map(e=>e.alias).join(", ")}</i> <b>usando fórmula</b>'],
 
-      [INVERT_BOOLEAN, 'pt', 'Inverter', 'Permite inverter um valor lógico.'],
-      [RESCALE, 'pt', 'Rescalar', 'Permite rescalar um valor numérico.'],
-      [ROUND_NUMBER, 'pt', 'Arredondar', 'Permite arredondar um número.'],
-      [DISCRETIZE, 'pt', 'Discretizar', 'Permite discretizar um número.'],
-      [NORMALIZE, 'pt', 'Normalizar', 'Permite normalizar um número.'],
-      [FORCE_RANGE, 'pt', 'Forçar faixa', 'Permite forçar um número a uma faixa.'],
-      [TS_TO_DATE, 'pt', 'Timestamp para data', 'Permite converter um valor timestamp para data.'],
-      [TO_UPPER, 'pt', 'Converter para maiúsculas', 'Converte um texto para maiúsculas.'],
-      [TO_LOWER, 'pt', 'Converter para minúsculas', 'Converte um texto para minúsculas.'],
-      [CAPITALIZE, 'pt', 'Capitalizar iniciais', 'Capitaliza inciais das palavras.'],
-      [REMOVE_ACCENTS, 'pt', 'Remover acentos', 'Remove acentos das palavras.'],
-      [NORMALIZE_TEXT, 'pt', 'Normalizar texto', 'Normaliza o texto, retirando acentos, números e outros símbolos que não sejam letras.'],
-      [CONCAT_ATTRIBUTE, 'pt', 'Concatenar', 'Permite concatenar atributos com outros atributos ou valores.'],
-      [TRIM, 'pt', 'Remover espaços em branco', 'Permite remover espaços em branco de um texto, no início, no fim ou ambos.'],
-      [TRUNCATE_TEXT, 'pt', 'Truncar texto', 'Trunca um texto até um limite especificado de caracteres.'],
-      [SPLIT_INTO_WORDS, 'pt', 'Dividir em palavras', 'Divite o texto em palavras, considerando um separador.'],
-      [SUBSTRING, 'pt', 'Extrair texto', 'Permite extrair uma parte do texto.'],
-      [PARSE_TO_DATE, 'pt', 'Converter para data', 'Permite converter um texto em uma data.'],
-      [EXTRACT_NUMBERS, 'pt', 'Extrair números a partir do texto', 'Extrai números de um texto.'],
-      [EXTRACT_WITH_REGEX, 'pt', 'Extrair com expressão regular', 'Extrai dados usando expressões regulares.'],
-      [EXTRACT_FROM_ARRAY, 'pt', 'Extrair elemento de arranjo', 'Permite extrair um elemento de um arranjo (array) por um índice.'],
-      [EXPAND_FROM_ARRAY, 'pt', 'Expandir arranjo', 'Permite converter um arranjo (array) em uma ou mais colunas ou linhas.'],
-      [FOLD_ARRAY, 'pt', 'Converter em arranjo', 'Permite converter uma ou mais colunas em um arranjo (array) de valores.'],
-      [CHANGE_ARRAY_TYPE, 'pt', 'Alterar o tipo do arranjo', 'Permite alterar o tipo de dados dos elementos de um arranjo (array).'],
-      [SORT_ARRAY, 'pt', 'Ordenar arranjo', 'Permite ordenar os elementos de um arranjo (array).'],
-      [FORCE_DATE_RANGE, 'pt', 'Forçar data a uma faixa', 'Força que as datas estejam em uma faixa de valores.'],
-      [UPDATE_HOUR, 'pt', 'Atualizar hora', 'Atualiza a hora de um atributo com datas.'],
-      [TRUNCATE_DATE_TO, 'pt', 'Truncar data', 'Trunca a data para algum valor inicial.'],
-      [DATE_DIFF, 'pt', 'Diferença de datas', 'Calcula a diferença entre datas.'],
-      [DATE_ADD, 'pt', 'Adicionar datas', 'Soma uma data com um valor numérico'],
-      [DATE_PART, 'pt', 'Extrair parte de data', 'Extrai uma parte da data.'],
-      [FORMAT_DATE, 'pt', 'Formatar data', 'Formata uma data segundo um parâmetro.'],
-      [DATE_TO_TS, 'pt', 'Converter para timestamp', 'Converte uma data para um valor timestamp.'],
-      
-      [ESCAPE_XML, 'pt', 'Escapar caracteres (XML)', 'Escapa caracteres especiais para o formato XML.'],
-      [ESCAPE_UNICODE, 'pt', 'Escapar Unicode', 'Escapa caracteres Unicode.'],
-      [STEMMING, 'pt', 'Gerar radicais (stemming)', 'Gera radicais das palavras por stemming.'],
-      [N_GRAMS, 'pt', 'Gerar N-Gramas', 'Gera combinações N-Gramas'],
-      [OBFUSCATE, 'pt', 'Ofuscar', 'Ofusca valores de forma a torná-los mais difíceis de serem usados de forma maliciosa.'],
-      [ONE_HOT_ENCODE, 'pt', 'Codificar usando One Hot Encoder', 'Codifica usando One Hot Encoder.'],
+      [INVERT_BOOLEAN, 'pt', 'Inverter', 'Permite inverter um valor lógico.',
+          '<b>Inverter booleano</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [RESCALE, 'pt', 'Rescalar', 'Permite rescalar um valor numérico.',
+          '<b>Rescalar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [ROUND_NUMBER, 'pt', 'Arredondar', 'Permite arredondar um número.',
+          '<b>Arredondar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [DISCRETIZE, 'pt', 'Discretizar', 'Permite discretizar um número.',
+          '<b>Discretizar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [NORMALIZE, 'pt', 'Normalizar', 'Permite normalizar um número.',
+          '<b>Normalizar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [FORCE_RANGE, 'pt', 'Forçar faixa', 'Permite forçar um número a uma faixa.',
+          '<b>Forçar faixa</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [TS_TO_DATE, 'pt', 'Timestamp para data', 'Permite converter um valor timestamp para data.',
+          '<b>Converter</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> de timestamp para data'],
+      [TO_UPPER, 'pt', 'Converter para maiúsculas', 'Converte um texto para maiúsculas.',
+          '<b>Converter</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> para <b>maiúsculas</b>'],
+      [TO_LOWER, 'pt', 'Converter para minúsculas', 'Converte um texto para minúsculas.',
+          '<b>Converter</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> para <b>minúsculas</b>'],
+      [CAPITALIZE, 'pt', 'Capitalizar iniciais', 'Capitaliza inciais das palavras.',
+          '<b>Capitalizar iniciais em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [REMOVE_ACCENTS, 'pt', 'Remover acentos', 'Remove acentos das palavras.',
+          '<b>Remover acentos em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [NORMALIZE_TEXT, 'pt', 'Normalizar texto', 'Normaliza o texto, retirando acentos, números e outros símbolos que não sejam letras.',
+          '<b>Normalizar texto em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [CONCAT_ATTRIBUTE, 'pt', 'Concatenar', 'Permite concatenar atributos com outros atributos ou valores.',
+          '<b>Concatenar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [TRIM, 'pt', 'Remover espaços em branco', 'Permite remover espaços em branco de um texto, no início, no fim ou ambos.',
+          '<b>Remover espaços em branco em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [TRUNCATE_TEXT, 'pt', 'Truncar texto', 'Trunca um texto até um limite especificado de caracteres.',
+          '<b>Truncar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> para tamanho ${this.characters.value}'],
+      [SPLIT_INTO_WORDS, 'pt', 'Dividir em palavras', 'Divite o texto em palavras, considerando um separador.',
+          '<b>Dividir texto em palavras em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [SUBSTRING, 'pt', 'Extrair texto', 'Permite extrair uma parte do texto.',
+          '<b>Extrair texto em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [PARSE_TO_DATE, 'pt', 'Converter para data', 'Permite converter um texto em uma data.',
+          '<b>Converter</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> <b>para data</b>'],
+      [EXTRACT_NUMBERS, 'pt', 'Extrair números a partir do texto', 'Extrai números de um texto.',
+          '<b>Extrair números em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [EXTRACT_WITH_REGEX, 'pt', 'Extrair com expressão regular', 'Extrai dados usando expressões regulares.',
+          '<b>Extrair com expressão regular</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [EXTRACT_FROM_ARRAY, 'pt', 'Extrair elemento(s) de arranjo', 'Permite extrair um elemento de um arranjo (array) usando índice(s).',
+          '<b>Extrair elemento(s)</b> <i>${this.indexes.value}</i> <b>de arranjo em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      #[EXPAND_FROM_ARRAY, 'pt', 'Expandir arranjo', 'Permite converter um arranjo (array) em uma ou mais colunas ou linhas.',
+      #    '<b>Expandir arranjo em</b> <i>${this.attributes.value.map(a=>a).join(", ")} <b>em novas colunas</b></i>'],
+      [FOLD_ARRAY, 'pt', 'Converter em arranjo', 'Permite converter uma ou mais colunas em um arranjo (array) de valores.',
+          '<b>Converter </b> <i>${this.attributes.value.map(a=>a).join(", ")} <b>em nova coluna do tipo arranjo</b></i>'],
+      [CHANGE_ARRAY_TYPE, 'pt', 'Alterar o tipo do arranjo', 'Permite alterar o tipo de dados dos elementos de um arranjo (array).',
+          '<b>Alterar o tipo do item do arranjo em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [SORT_ARRAY, 'pt', 'Ordenar arranjo', 'Permite ordenar os elementos de um arranjo (array).',
+          '<b>Ordenar os itens do arranjo em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [FORCE_DATE_RANGE, 'pt', 'Forçar data a uma faixa', 'Força que as datas estejam em uma faixa de valores.',
+          '<b>Forçar que datas em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> <b>estejam em uma faixa</b>'],
+      [UPDATE_HOUR, 'pt', 'Atualizar hora', 'Atualiza a hora de um atributo com datas.',
+          '<b>Atualizar a hora das datas em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> com <i></i>'],
+      [TRUNCATE_DATE_TO, 'pt', 'Truncar data', 'Trunca a data para algum valor inicial.',
+          '<b>Truncar hora das datas em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [DATE_DIFF, 'pt', 'Diferença de datas', 'Calcula a diferença entre datas.',
+          '<b>Calcular a diferença entre datas </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [DATE_ADD, 'pt', 'Adicionar datas', 'Soma uma data com um valor numérico',
+          '<b>Adicionar um valor às datas em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [DATE_PART, 'pt', 'Extrair parte de data', 'Extrai uma parte da data.',
+          '<b>Extrair partes da data em</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [FORMAT_DATE, 'pt', 'Formatar data', 'Formata uma data segundo um parâmetro.',
+          '<b>Formatar a data em</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [DATE_TO_TS, 'pt', 'Converter para timestamp', 'Converte uma data para um valor timestamp.',
+          '<b>Converter a data em</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> <b>para timestamp</b>'],
 
-      [FLAG_IN_RANGE, 'pt', 'Sinalizar registros em faixa', 'Sinaliza registros em faixa.'],
-      [FLAG_INVALID, 'pt', 'Sinalizar registros com dados inválidos', 'Sinaliza registros com dados inválidos.'],
-      [FLAG_EMPTY, 'pt', 'Sinalizar registros com atributos vazios', 'Sinaliza registros que tenham valores vazios em atributos determinados.'],
-      [FLAG_WITH_FORMULA, 'pt', 'Sinalizar registros usando fórmula', 'Sinaliza registros usando fórmula.'],
-      
-      
-      [FILL_MISSING, 'pt', 'Preencher dados ausentes', 'Preenche dados ausentes de acordo com um regra.'],
-      [HANDLE_INVALID, 'pt', 'Tratar dados inválidos', 'Trata dados inválidos de acordo com um regra.'],
-      [REMOVE_EMPTY, 'pt', 'Remover registros com dados ausentes', 'Remove registros com dados ausentes.'],
-      [REMOVE_INVALID, 'pt', 'Remover registros com dados inválidos', 'Remover registros com dados inválidos.'],
+      [ESCAPE_XML, 'pt', 'Escapar caracteres (XML)', 'Escapa caracteres especiais para o formato XML.', ''],
+      [ESCAPE_UNICODE, 'pt', 'Escapar Unicode', 'Escapa caracteres Unicode.', ''],
+      [STEMMING, 'pt', 'Gerar radicais (stemming)', 'Gera radicais das palavras por stemming.', ''],
+      [N_GRAMS, 'pt', 'Gerar N-Gramas', 'Gera combinações N-Gramas', ''],
+      [OBFUSCATE, 'pt', 'Ofuscar', 'Ofusca valores de forma a torná-los mais difíceis de serem usados de forma maliciosa.', ''],
+      [ONE_HOT_ENCODE, 'pt', 'Codificar usando One Hot Encoder', 'Codifica usando One Hot Encoder.', ''],
+
+      [FLAG_IN_RANGE, 'pt', 'Sinalizar registros em faixa', 'Sinaliza registros em faixa.', ''],
+      [FLAG_INVALID, 'pt', 'Sinalizar registros com dados inválidos', 'Sinaliza registros com dados inválidos.', ''],
+      [FLAG_EMPTY, 'pt', 'Sinalizar registros com atributos vazios', 'Sinaliza registros que tenham valores vazios em atributos determinados.', ''],
+      [FLAG_WITH_FORMULA, 'pt', 'Sinalizar registros usando fórmula', 'Sinaliza registros usando fórmula.', ''],
+
+
+      [CLEAN_MISSING, 'pt', 'Tratar dados ausentes', 'Trata dados ausentes de acordo com um regra.', ''],
+      [REMOVE_MISSING, 'pt', 'Remover registros com dados ausentes', 'Remove registros com dados ausentes.', ''],
+      [HANDLE_INVALID, 'pt', 'Tratar dados inválidos', 'Trata dados inválidos de acordo com um regra.', ''],
+      [REMOVE_INVALID, 'pt', 'Remover registros com dados inválidos', 'Remover registros com dados inválidos.', ''],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -354,29 +423,29 @@ def _insert_operation_translation(conn):
 
 def _delete_operation_translation(conn):
     conn.execute(
-        'DELETE from operation_translation WHERE id BETWEEN %s AND %s', 
-        BASE_OP, MAX_OP)
+        'DELETE from operation_translation WHERE id BETWEEN %s AND %s',
+        BASE_OP, max(ALL_OPS))
 
 def _insert_operation_category(conn):
     tb = table('operation_category',
-                column('id', Integer), 
-                column('type', String), 
-                column('order', Integer), 
+                column('id', Integer),
+                column('type', String),
+                column('order', Integer),
                 column('default_order', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-      [CAT_INTERN, 'internal', 1, 1], 
-      [CAT_EDIT, 'menu/selected/fa fa-edit', 1, 1], 
-      [CAT_DATA, 'menu/always/fa fa-database', 2, 2], 
-      [CAT_TRANSFORM, 'menu/selected/fa fa-magic', 3, 3], 
-      [CAT_ENCODE, 'menu/selected/fa fa-code', 4, 4], 
-      [CAT_FLAG, 'menu/selected/fa fa-flag', 5, 5], 
-      [CAT_FIX, 'menu/selected/fa fa-eraser', 6, 6], 
-      [CAT_CONTEXT, 'context', 7, 7], 
-      [CAT_TEXT, 'data-type', 100, 100], 
-      [CAT_INTEGER, 'data-type', 100, 100], 
-      [CAT_BOOL, 'data-type', 100, 100], 
-      [CAT_DATE, 'data-type', 100, 100], 
+      [CAT_INTERN, 'internal', 1, 1],
+      [CAT_EDIT, 'menu/selected/fa fa-edit', 1, 1],
+      [CAT_DATA, 'menu/always/fa fa-database', 2, 2],
+      [CAT_TRANSFORM, 'menu/selected/fa fa-magic', 3, 3],
+      [CAT_ENCODE, 'menu/selected/fa fa-code', 4, 4],
+      [CAT_FLAG, 'menu/selected/fa fa-flag', 5, 5],
+      [CAT_FIX, 'menu/selected/fa fa-eraser', 6, 6],
+      [CAT_CONTEXT, 'context', 7, 7],
+      [CAT_TEXT, 'data-type', 100, 100],
+      [CAT_INTEGER, 'data-type', 100, 100],
+      [CAT_BOOL, 'data-type', 100, 100],
+      [CAT_DATE, 'data-type', 100, 100],
       [CAT_ARRAY, 'data-type', 100, 100]
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -384,28 +453,28 @@ def _insert_operation_category(conn):
 
 def _delete_operation_category(conn):
     conn.execute(
-        'DELETE from operation_category WHERE id BETWEEN %s AND %s', 
+        'DELETE from operation_category WHERE id BETWEEN %s AND %s',
         BASE_CATEGORY, BASE_CATEGORY + 12)
 
 def _insert_operation_category_translation(conn):
     tb = table('operation_category_translation',
-                column('id', Integer), 
-                column('locale', String), 
+                column('id', Integer),
+                column('locale', String),
                 column('name', String))
     columns = [c.name for c in tb.columns]
     data = [
-      [CAT_INTERN, 'pt', 'Interna'], 
-      [CAT_EDIT, 'pt', 'Editar'], 
-      [CAT_DATA, 'pt', 'Dados'], 
-      [CAT_TRANSFORM, 'pt', 'Transformar'], 
-      [CAT_ENCODE, 'pt', '(De)codificar'], 
-      [CAT_FLAG, 'pt', 'Sinalizar'], 
-      [CAT_FIX, 'pt', 'Corrigir'], 
-      [CAT_CONTEXT, 'pt', 'Contexto'], 
-      [CAT_TEXT, 'pt', 'Texto'], 
-      [CAT_INTEGER, 'pt', 'Inteiro'], 
-      [CAT_BOOL, 'pt', 'Booleano'], 
-      [CAT_DATE, 'pt', 'Data'], 
+      [CAT_INTERN, 'pt', 'Interna'],
+      [CAT_EDIT, 'pt', 'Editar'],
+      [CAT_DATA, 'pt', 'Dados'],
+      [CAT_TRANSFORM, 'pt', 'Transformar'],
+      [CAT_ENCODE, 'pt', '(De)codificar'],
+      [CAT_FLAG, 'pt', 'Sinalizar'],
+      [CAT_FIX, 'pt', 'Corrigir'],
+      [CAT_CONTEXT, 'pt', 'Contexto'],
+      [CAT_TEXT, 'pt', 'Texto'],
+      [CAT_INTEGER, 'pt', 'Inteiro'],
+      [CAT_BOOL, 'pt', 'Booleano'],
+      [CAT_DATE, 'pt', 'Data'],
       [CAT_ARRAY, 'pt', 'Arrajo']
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -413,22 +482,24 @@ def _insert_operation_category_translation(conn):
 
 def _delete_operation_category_translation(conn):
     conn.execute(
-        'DELETE from operation_category_translation WHERE id BETWEEN %s AND %s', 
+        'DELETE from operation_category_translation WHERE id BETWEEN %s AND %s',
         BASE_CATEGORY, BASE_CATEGORY + 12)
 
 def _insert_operation_category_operation(conn):
     tb = table('operation_category_operation',
-                column('operation_id', Integer), 
+                column('operation_id', Integer),
                 column('operation_category_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
       [READ_DATA, BASE_CATEGORY + 0],
 
-      [CHANGE_DATA_TYPE, CAT_EDIT],
+      [CAST, CAT_EDIT],
       [RENAME, CAT_EDIT],
-      [DELETE, CAT_EDIT],
+      [DISCARD, CAT_EDIT],
+      [DUPLICATE, CAT_EDIT],
       [FIND_REPLACE, CAT_EDIT],
 
+      [SELECT, CAT_DATA],
       [SORT, CAT_DATA],
       [FILTER, CAT_DATA],
       [GROUP, CAT_DATA],
@@ -461,7 +532,7 @@ def _insert_operation_category_operation(conn):
       [EXTRACT_NUMBERS, CAT_TRANSFORM],
       [EXTRACT_WITH_REGEX, CAT_TRANSFORM],
       [EXTRACT_FROM_ARRAY, CAT_TRANSFORM],
-      [EXPAND_FROM_ARRAY, CAT_TRANSFORM],
+      # [EXPAND_FROM_ARRAY, CAT_TRANSFORM],
       [FOLD_ARRAY, CAT_TRANSFORM],
       [CHANGE_ARRAY_TYPE, CAT_TRANSFORM],
       [SORT_ARRAY, CAT_TRANSFORM],
@@ -473,7 +544,7 @@ def _insert_operation_category_operation(conn):
       [DATE_PART, CAT_TRANSFORM],
       [FORMAT_DATE, CAT_TRANSFORM],
       [DATE_TO_TS, CAT_TRANSFORM],
-      
+
       [ESCAPE_XML, CAT_ENCODE],
       [ESCAPE_UNICODE, CAT_ENCODE],
       [STEMMING, CAT_ENCODE],
@@ -485,11 +556,11 @@ def _insert_operation_category_operation(conn):
       [FLAG_INVALID, CAT_FLAG],
       [FLAG_EMPTY, CAT_FLAG],
       [FLAG_WITH_FORMULA, CAT_FLAG],
-      
-      
-      [FILL_MISSING, CAT_FIX],
+
+
+      [CLEAN_MISSING, CAT_FIX],
       [HANDLE_INVALID, CAT_FIX],
-      [REMOVE_EMPTY, CAT_FIX],
+      [REMOVE_MISSING, CAT_FIX],
       [REMOVE_INVALID, CAT_FIX],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -503,11 +574,11 @@ def _delete_operation_category_operation(conn):
 
 def _insert_operation_platform(conn):
     tb = table('operation_platform',
-                column('operation_id', Integer), 
+                column('operation_id', Integer),
                 column('platform_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [op_id, META_PLATFORM] for op_id in list(range(BASE_OP, MAX_OP + 1))
+        [op_id, META_PLATFORM] for op_id in ALL_OPS
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -520,9 +591,9 @@ def _delete_operation_platform(conn):
 
 def _insert_operation_form(conn):
     tb = table('operation_form',
-                column('id', Integer), 
-                column('enabled', Boolean), 
-                column('order', Integer), 
+                column('id', Integer),
+                column('enabled', Boolean),
+                column('order', Integer),
                 column('category', String))
     columns = [c.name for c in tb.columns]
     data = [
@@ -531,6 +602,8 @@ def _insert_operation_form(conn):
       [ATTRIBUTES_FORM, 1, 1, 'execution'], # Attributes (common)
       [ALIASES_FORM, 1, 1, 'execution'], # Aliases (common)
       [KEEP_ATTRIBUTE_FORM, 1, 1, 'execution'], # Keep attribute (common)
+      [ATTRIBUTE_FORM, 1, 1, 'execution'], # Attribute (multiple = false) (common)
+      [ALIAS_FORM, 1, 1, 'execution'], # Alias (common)
     ]
     for op_id in ALL_OPS: # Operations' form
         data.append([op_id + 50, 1, 1, 'execution'])
@@ -540,13 +613,13 @@ def _insert_operation_form(conn):
 
 def _delete_operation_form(conn):
     conn.execute(
-        'DELETE from operation_form WHERE id BETWEEN %s AND %s', 
-        BASE_FORM, ALL_OPS[-1] + 50)
+        'DELETE from operation_form WHERE id BETWEEN %s AND %s',
+        BASE_FORM, max(ALL_OPS) + 50)
 
 def _insert_operation_form_translation(conn):
     tb = table('operation_form_translation',
-                column('id', Integer), 
-                column('locale', String), 
+                column('id', Integer),
+                column('locale', String),
                 column('name', String))
     columns = [c.name for c in tb.columns]
     data = [
@@ -555,12 +628,16 @@ def _insert_operation_form_translation(conn):
       [ATTRIBUTES_FORM, 'pt', 'Execução'],
       [ALIASES_FORM, 'pt', 'Execução'],
       [KEEP_ATTRIBUTE_FORM, 'pt', 'Execução'],
+      [ATTRIBUTE_FORM, 'pt', 'Execução'],
+      [ALIAS_FORM, 'pt', 'Execução'],
 
-      [BASE_FORM, 'en', 'Execution'], 
+      [BASE_FORM, 'en', 'Execution'],
       [BASE_FORM + 1, 'en', 'Execution'],
       [ATTRIBUTES_FORM, 'en', 'Execution'],
       [ALIASES_FORM, 'en', 'Execution'],
       [KEEP_ATTRIBUTE_FORM, 'en', 'Execution'],
+      [ATTRIBUTE_FORM, 'en', 'Execution'],
+      [ALIAS_FORM, 'en', 'Execution'],
     ]
     for op_id in ALL_OPS: # Operations' form
         data.append([op_id + 50, 'pt', 'Execução'])
@@ -571,150 +648,216 @@ def _insert_operation_form_translation(conn):
 
 def _delete_operation_form_translation(conn):
     conn.execute(
-        'DELETE from operation_form_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM, ALL_OPS[-1] + 50)
+        'DELETE from operation_form_translation WHERE id BETWEEN %s AND %s',
+        BASE_FORM, max(ALL_OPS) + 50)
 
 def _insert_operation_form_field(conn):
     tb = table('operation_form_field',
-                column('id', Integer), 
-                column('name', String), 
-                column('type', String), 
-                column('required', Boolean), 
-                column('order', Integer), 
-                column('default', String), 
-                column('suggested_widget', String), 
-                column('values_url', String), 
-                column('values', String), 
-                column('scope', String), 
-                column('enable_conditions', String), 
-                column('editable', Boolean), 
+                column('id', Integer),
+                column('name', String),
+                column('type', String),
+                column('required', Boolean),
+                column('order', Integer),
+                column('default', String),
+                column('suggested_widget', String),
+                column('values_url', String),
+                column('values', String),
+                column('scope', String),
+                column('enable_conditions', String),
+                column('editable', Boolean),
                 column('form_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-      [BASE_FORM_FIELD + 0, 'comment', 'TEXT', 1, 1, None, 'textarea', None, None, 'DESIGN', None, 1, BASE_FORM + 0], 
-      [BASE_FORM_FIELD + 1, 'data_source', 'TEXT', 1, 1, None, 'lookup', 
-        '`${LIMONERO_URL}/datasources?&simple=true&list=true&enabled=1`', None, 'DESIGN', None, 1, BASE_FORM + 1], 
-      [BASE_FORM_FIELD + 2, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'DESIGN', None, 1, ATTRIBUTES_FORM], 
-      [BASE_FORM_FIELD + 3, 'overwrite', 'INTEGER', 0, 2, '1', 'checkbox', None, None, 'DESIGN', None, 1, KEEP_ATTRIBUTE_FORM], 
-      [BASE_FORM_FIELD + 4, 'aliases', 'TEXT', 0, 3, None, 'text', None, None, 'DESIGN', 'this.overwrite.internalValue !== "1" ', 1, ALIASES_FORM], 
+      [BASE_FORM_FIELD + 0, 'comment', 'TEXT', 1, 1, None, 'textarea', None, None, 'EXECUTION', None, 1, BASE_FORM + 0],
+      [BASE_FORM_FIELD + 1, 'data_source', 'TEXT', 1, 1, None, 'lookup',
+        '`${LIMONERO_URL}/datasources?&simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, BASE_FORM + 1],
+      [BASE_FORM_FIELD + 2, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, ATTRIBUTES_FORM],
+      [BASE_FORM_FIELD + 3, 'overwrite', 'INTEGER', 0, 2, '1', 'checkbox', None, None, 'EXECUTION', None, 1, KEEP_ATTRIBUTE_FORM],
+      [BASE_FORM_FIELD + 4, 'aliases', 'TEXT', 0, 20, None, 'tag', None, None, 'EXECUTION', None, 1, ALIASES_FORM],
+      [BASE_FORM_FIELD + 5, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, '{"multiple": false}', 'EXECUTION', None, 1, ATTRIBUTE_FORM],#FIXME review name because UI
+      [BASE_FORM_FIELD + 6, 'alias', 'TEXT', 0, 20, None, 'text', None, None, 'EXECUTION', None, 1, ALIAS_FORM],
+
+
+      [BASE_FORM_FIELD + 51, 'find', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, FIND_REPLACE + 50],
+      [BASE_FORM_FIELD + 52, 'replace', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', None, 1, FIND_REPLACE + 50],
+
+      [BASE_FORM_FIELD + 53, 'other', 'TEXT', 1, 3, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, CONCAT_ATTRIBUTE + 50],
+      [BASE_FORM_FIELD + 54, 'separator', 'TEXT', 1, 4, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, CONCAT_ATTRIBUTE + 50],
+
+      [BASE_FORM_FIELD + 55, 'characters', 'INTEGER', 1, 3, None, 'integer', None, None, 'EXECUTION', None, 1, TRUNCATE_TEXT + 50],
+
+      [BASE_FORM_FIELD + 56, 'delimiter', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION', None, 1, SPLIT_INTO_WORDS + 50],
+
+      [BASE_FORM_FIELD + 57, 'format', 'TEXT', 1, 3, None, 'select2', None, None, 'EXECUTION', None, 1, PARSE_TO_DATE + 50],
+
+      [BASE_FORM_FIELD + 58, 'regex', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, EXTRACT_WITH_REGEX + 50],
+
+      [BASE_FORM_FIELD + 59, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', None, 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 60, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', None, 1, RESCALE + 50],
+
+      [BASE_FORM_FIELD + 61, 'bins', 'INTEGER', 1, 3, None, 'INTEGER', None, None, 'EXECUTION', None, 1, DISCRETIZE + 50],
+
+      [BASE_FORM_FIELD + 62, 'normalizer', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, NORMALIZE + 50],
+
+      [BASE_FORM_FIELD + 63, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', None, 1, FORCE_RANGE + 50],
+      [BASE_FORM_FIELD + 64, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', None, 1, FORCE_RANGE + 50],
+
+      [BASE_FORM_FIELD + 65, 'decimals', 'INTEGER', 1, 3, '2', 'integer', None, None, 'EXECUTION', None, 1, ROUND_NUMBER + 50],
+
+      # [BASE_FORM_FIELD + 66, 'limit', 'INTEGER', 1, 3, '10', 'decimal', None, None, 'EXECUTION', None, 1, EXPAND_FROM_ARRAY + 50],
+
+      [BASE_FORM_FIELD + 67, 'new_type', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, CHANGE_ARRAY_TYPE + 50],
+
+      [BASE_FORM_FIELD + 68, 'direction', 'TEXT', 1, 3, 'asc', 'dropdown', None,
+        json.dumps([{'key': 'asc', 'pt': 'Ascendente', 'en': 'Ascending'}, {'key': 'desc', 'pt': 'Descendente', 'en': 'Descending'}]),
+        'EXECUTION', None, 1, FORCE_RANGE + 50],
+      [BASE_FORM_FIELD + 69, 'format', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, FORMAT_DATE + 50],
+
+      [BASE_FORM_FIELD + 70, 'start', 'FLOAT', 0, 3, None, 'date', None, None, 'EXECUTION', None, 1, FORCE_DATE_RANGE + 50],
+      [BASE_FORM_FIELD + 71, 'end', 'FLOAT', 0, 4, None, 'date', None, None, 'EXECUTION', None, 1, FORCE_DATE_RANGE + 50],
+
+      [BASE_FORM_FIELD + 72, 'hour_column', 'TEXT', 1, 3, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, UPDATE_HOUR + 50],
+
+      [BASE_FORM_FIELD + 73, 'components', 'TEXT', 1, 3, None, 'tag', None, None, 'EXECUTION', None, 1, DATE_PART + 50],
+
+      [BASE_FORM_FIELD + 74, 'value', 'INTEGER', 1, 3, None, 'integer', None, None, 'EXECUTION', None, 1, DATE_ADD + 50],
+      [BASE_FORM_FIELD + 75, 'period', 'TEXT', 1, 4, None, 'dropdown', None,
+        json.dumps([{'key': 'day', 'pt': 'Dia(s)', 'en': 'Day(s)'}, {'key': 'hour', 'pt': 'Hora(s)', 'en': 'Hour(s)'}]),
+        'EXECUTION', None, 1, DATE_ADD + 50],
+
+      [BASE_FORM_FIELD + 76, 'type', 'INTEGER', 1, 3, 'now', 'dropdown', None,
+           json.dumps([{'key': 'now', 'pt': 'A data/hora atuais', 'en': 'Current date/hour'},
+            {'key': 'attribute', 'pt': 'Um atributo', 'en': 'An attribute'}, {'key': 'constant', 'pt': 'Data específica', 'en': 'Specific date'}]),
+        'EXECUTION', None, 1, DATE_DIFF + 50],
+      [BASE_FORM_FIELD + 77, 'date_attribute', 'INTEGER', 1, 4, None, 'attribute-selector', None, None, 'EXECUTION', 'this.type.internalValue === "attribute"', 1, DATE_DIFF + 50],
+      [BASE_FORM_FIELD + 78, 'value', 'TEXT', 1, 5, None, 'date', None, '{"use-datetime-local": true}', 'EXECUTION', 'this.type.internalValue === "constant"', 1, DATE_DIFF + 50],
+      [BASE_FORM_FIELD + 89, 'unit', 'TEXT', 1, 6, 'days', 'dropdown', None,
+              json.dumps([
+                  {'key': 'seconds', 'en': 'Seconds', 'pt': 'Segundos'},
+                  {'key': 'minutes', 'en': 'Minutes', 'pt': 'Minutos'},
+                  {'key': 'hours', 'en': 'Hours', 'pt': 'Horas'},
+                  {'key': 'days', 'en': 'Days', 'pt': 'Dias'},
+                  {'key': 'weeks', 'en': 'Weeks', 'pt': 'Semanas'},
+                  {'key': 'months', 'en': 'Monthis', 'pt': 'Meses'},
+                  {'key': 'years', 'en': 'Years', 'pt': 'Anos'},
+                  ]),
+              'EXECUTION', None, 1, DATE_DIFF + 50],
+      [BASE_FORM_FIELD + 90, 'invert', 'INTEGER', 1, 5, None, 'checkbox', None, None, 'EXECUTION', None, 1, DATE_DIFF + 50],
+
+      [BASE_FORM_FIELD + 79, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', None, 1, FLAG_IN_RANGE + 50],
+      [BASE_FORM_FIELD + 80, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', None, 1, FLAG_IN_RANGE + 50],
+
+      [BASE_FORM_FIELD + 81, 'formula', 'TEXT', 0, 3, None, 'expression', None, None, 'EXECUTION', None, 1, FLAG_WITH_FORMULA + 50],
+
+     [BASE_FORM_FIELD + 84, 'type', 'INTEGER', 1, 3, None, 'dropdown', None,
+        json.dumps([{'key': 'null', 'pt': 'Limpar valor', 'en': 'Clean value'},
+            {'key': 'average', 'pt': 'Com a média', 'en': 'With average'},
+            {'key': 'constant', 'pt': 'Valor constante', 'en': 'Constant value'}]),
+        'EXECUTION', None, 1, HANDLE_INVALID + 50],
+     [BASE_FORM_FIELD + 85, 'value', 'TEXT', 1, 4, None, 'text', None, None, 'EXECUTION', None, 1, HANDLE_INVALID + 50],
+
+    [BASE_FORM_FIELD + 86, 'formula', 'TEXT', 1, 3, None, 'expression', None, '{"alias": true}', 'EXECUTION', None, 1, ADD_BY_FORMULA + 50],
+
+    [BASE_FORM_FIELD + 87, 'formula', 'TEXT', 1, 3, None, 'expression', None, '{"alias": false}', 'EXECUTION', None, 1, FILTER + 50],
+    [BASE_FORM_FIELD + 88, 'order_by', 'TEXT', 1, 3, 'asc', 'attribute-function', None,
+            json.dumps({"functions": [
+                {"key": "asc", "value": "Ascending", "help": {"pt": "Ordena valores de forma crescente", "en": "Sort in ascending order"}},
+                    {"key": "desc", "value": "Descending", "help": {"pt": "Ordena valores de forma decrescente", "en": "Sort in descending order"}}],
+                    "options": {"title": "Sort operation", "description": "Sort a data source by a set of attributes",
+                        "show_alias": False}}),
+        'EXECUTION', None, 1, SORT + 50],
+
+      [BASE_FORM_FIELD + 91, 'attributes', 'TEXT', 1, 1, None, 'attribute-alias-selector', None, None, 'EXECUTION', None, 1, RENAME + 50],
+      [BASE_FORM_FIELD + 92, 'attributes', 'TEXT', 1, 1, None, 'attribute-alias-selector', None, None, 'EXECUTION', None, 1, DUPLICATE + 50],
       
-      [BASE_FORM_FIELD + 50, 'new_type', 'TEXT', 1, 3, None, 'dropdown', None, None, 'DESIGN', None, 1, CHANGE_DATA_TYPE + 50], 
-      
-      [BASE_FORM_FIELD + 51, 'find', 'TEXT', 1, 3, None, 'text', None, None, 'DESIGN', None, 1, FIND_REPLACE + 50], 
-      [BASE_FORM_FIELD + 52, 'replace', 'TEXT', 0, 4, None, 'text', None, None, 'DESIGN', None, 1, FIND_REPLACE + 50], 
-
-      [BASE_FORM_FIELD + 53, 'other', 'TEXT', 1, 3, None, 'attribute-selector', None, None, 'DESIGN', None, 1, CONCAT_ATTRIBUTE + 50], 
-      [BASE_FORM_FIELD + 54, 'separator', 'TEXT', 1, 4, None, 'attribute-selector', None, None, 'DESIGN', None, 1, CONCAT_ATTRIBUTE + 50], 
-
-      [BASE_FORM_FIELD + 55, 'characters', 'INTEGER', 1, 3, None, 'integer', None, None, 'DESIGN', None, 1, TRUNCATE_TEXT + 50], 
-      
-      [BASE_FORM_FIELD + 56, 'delimiter', 'INTEGER', 0, 3, None, 'integer', None, None, 'DESIGN', None, 1, SPLIT_INTO_WORDS + 50], 
-      
-      [BASE_FORM_FIELD + 57, 'format', 'TEXT', 1, 3, None, 'select2', None, None, 'DESIGN', None, 1, PARSE_TO_DATE + 50], 
-
-      [BASE_FORM_FIELD + 58, 'regex', 'TEXT', 1, 3, None, 'text', None, None, 'DESIGN', None, 1, EXTRACT_WITH_REGEX + 50], 
-
-      [BASE_FORM_FIELD + 59, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'DESIGN', None, 1, RESCALE + 50], 
-      [BASE_FORM_FIELD + 60, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'DESIGN', None, 1, RESCALE + 50], 
-
-      [BASE_FORM_FIELD + 61, 'bins', 'INTEGER', 1, 3, None, 'INTEGER', None, None, 'DESIGN', None, 1, DISCRETIZE + 50], 
-
-      [BASE_FORM_FIELD + 62, 'normalizer', 'TEXT', 1, 3, None, 'dropdown', None, None, 'DESIGN', None, 1, NORMALIZE + 50], 
-
-      [BASE_FORM_FIELD + 63, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'DESIGN', None, 1, FORCE_RANGE + 50], 
-      [BASE_FORM_FIELD + 64, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'DESIGN', None, 1, FORCE_RANGE + 50], 
-
-      [BASE_FORM_FIELD + 65, 'decimals', 'INTEGER', 1, 3, '2', 'integer', None, None, 'DESIGN', None, 1, ROUND_NUMBER + 50], 
-
-      [BASE_FORM_FIELD + 66, 'limit', 'INTEGER', 1, 3, '10', 'decimal', None, None, 'DESIGN', None, 1, EXPAND_FROM_ARRAY + 50],   
-
-      [BASE_FORM_FIELD + 67, 'new_type', 'TEXT', 1, 3, None, 'dropdown', None, None, 'DESIGN', None, 1, CHANGE_ARRAY_TYPE + 50], 
-
-      [BASE_FORM_FIELD + 68, 'direction', 'TEXT', 1, 3, 'asc', 'dropdown', None, 
-        json.dumps([{'key': 'asc', 'pt': 'Ascendente', 'en': 'Ascending'}, {'key': 'desc', 'pt': 'Descendente', 'en': 'Descending'}]), 
-        'DESIGN', None, 1, FORCE_RANGE + 50], 
-      [BASE_FORM_FIELD + 69, 'formato', 'TEXT', 1, 3, None, 'select2', None, None, 'DESIGN', None, 1, FORMAT_DATE + 50], 
-
-      [BASE_FORM_FIELD + 70, 'start', 'FLOAT', 0, 3, None, 'date', None, None, 'DESIGN', None, 1, FORCE_DATE_RANGE + 50], 
-      [BASE_FORM_FIELD + 71, 'end', 'FLOAT', 0, 4, None, 'date', None, None, 'DESIGN', None, 1, FORCE_DATE_RANGE + 50], 
-
-      [BASE_FORM_FIELD + 72, 'hour_column', 'TEXT', 1, 3, None, 'attribute-selector', None, None, 'DESIGN', None, 1, UPDATE_HOUR + 50], 
-
-      [BASE_FORM_FIELD + 73, 'components', 'TEXT', 1, 3, None, 'tag', None, None, 'DESIGN', None, 1, DATE_PART + 50], 
-
-      [BASE_FORM_FIELD + 74, 'value', 'INTEGER', 1, 3, None, 'integer', None, None, 'DESIGN', None, 1, DATE_ADD + 50], 
-      [BASE_FORM_FIELD + 75, 'period', 'TEXT', 1, 4, None, 'dropdown', None, 
-        json.dumps([{'key': 'day', 'pt': 'Dia(s)', 'en': 'Day(s)'}, {'key': 'hour', 'pt': 'Hora(s)', 'en': 'Hour(s)'}]), 
-        'DESIGN', None, 1, DATE_ADD + 50], 
-
-      [BASE_FORM_FIELD + 76, 'type', 'INTEGER', 1, 3, None, 'dropdown', None, 
-        json.dumps([{'key': 'column', 'pt': 'De uma coluna', 'en': 'From column'}, {'key': 'constant', 'pt': 'Valor constante', 'en': 'Constant value'}]), 
-        'DESIGN', None, 1, DATE_DIFF + 50],  
-      [BASE_FORM_FIELD + 77, 'column', 'INTEGER', 1, 4, None, 'attribute-selector', None, None, 'DESIGN', None, 1, DATE_DIFF + 50], 
-      [BASE_FORM_FIELD + 78, 'value', 'TEXT', 1, 5, None, 'text', None, None, 'DESIGN', None, 1, DATE_DIFF + 50], 
-
-      [BASE_FORM_FIELD + 79, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'DESIGN', None, 1, FLAG_IN_RANGE + 50], 
-      [BASE_FORM_FIELD + 80, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'DESIGN', None, 1, FLAG_IN_RANGE + 50], 
-
-      [BASE_FORM_FIELD + 81, 'formula', 'TEXT', 0, 3, None, 'expression', None, None, 'DESIGN', None, 1, FLAG_WITH_FORMULA + 50], 
-
-     [BASE_FORM_FIELD + 82, 'type', 'INTEGER', 1, 3, None, 'dropdown', None, 
-        json.dumps([{'key': 'average', 'pt': 'Com a média', 'en': 'With average'}, {'key': 'constant', 'pt': 'Valor constante', 'en': 'Constant value'}]), 
-        'DESIGN', None, 1, FILL_MISSING + 50], 
-     [BASE_FORM_FIELD + 83, 'value', 'TEXT', 1, 4, None, 'text', None, None, 'DESIGN', None, 1, FILL_MISSING + 50], 
-
-     [BASE_FORM_FIELD + 84, 'type', 'INTEGER', 1, 3, None, 'dropdown', None, 
-        json.dumps([{'key': 'null', 'pt': 'Limpar valor', 'en': 'Clean value'}, 
-            {'key': 'average', 'pt': 'Com a média', 'en': 'With average'}, 
-            {'key': 'constant', 'pt': 'Valor constante', 'en': 'Constant value'}]), 
-        'DESIGN', None, 1, HANDLE_INVALID + 50], 
-     [BASE_FORM_FIELD + 85, 'value', 'TEXT', 1, 4, None, 'text', None, None, 'DESIGN', None, 1, HANDLE_INVALID + 50], 
-
-    [BASE_FORM_FIELD + 86, 'formula', 'TEXT', 1, 3, None, 'expression', None, None, 'DESIGN', None, 1, ADD_BY_FORMULA + 50], 
-
-    [BASE_FORM_FIELD + 87, 'formula', 'TEXT', 1, 3, None, 'expression', None, None, 'DESIGN', None, 1, FILTER + 50], 
-
+      [BASE_FORM_FIELD + 93, 'indexes', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', None, 1, EXTRACT_FROM_ARRAY + 50],
     ]
+
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field(conn):
     conn.execute(
-        'DELETE from operation_form_field WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD, BASE_FORM_FIELD + 87)
+        'DELETE from operation_form_field WHERE (id BETWEEN %s AND %s)',
+        BASE_FORM_FIELD, BASE_FORM_FIELD + 120)
 
 def _insert_operation_form_field_translation(conn):
     tb = table('operation_form_field_translation',
-                column('id', Integer), 
-                column('locale', String), 
-                column('label', String), 
+                column('id', Integer),
+                column('locale', String),
+                column('label', String),
                 column('help', UnicodeText))
     columns = [c.name for c in tb.columns]
     data = [
-      [BASE_FORM_FIELD + 0, 'pt', 'Comentário', 'Comentário sobre a tarefa.'], 
-      [BASE_FORM_FIELD + 1, 'pt', 'Fonte de dados', 'Fonte de dados a ser utilizada como entrada para os dados.'], 
-      [BASE_FORM_FIELD + 2, 'pt', 'Atributos', 'Lista de atributos a ser usado na ação.'], 
-      [BASE_FORM_FIELD + 3, 'pt', 'Sobrescrever atributo(s) original(ais)', 'Indica se o(s) atributo(s) original(ais) deve(m) ser sobrescrito(s) após a transformação ou se novos atributos serão criados.'], 
-      [BASE_FORM_FIELD + 4, 'pt', 'Novos nomes', 'Novos nomes para os atributos resultantes.'], 
+      [BASE_FORM_FIELD + 0, 'pt', 'Comentário', 'Comentário sobre a tarefa.'],
+      [BASE_FORM_FIELD + 1, 'pt', 'Fonte de dados', 'Fonte de dados a ser utilizada como entrada para os dados.'],
+      [BASE_FORM_FIELD + 2, 'pt', 'Atributos', 'Lista de atributos a serem usados na ação.'],
+      [BASE_FORM_FIELD + 3, 'pt', 'Sobrescrever atributo(s) original(ais)', 'Indica se o(s) atributo(s) original(ais) deve(m) ser sobrescrito(s) após a transformação ou se novos atributos serão criados.'],
+      [BASE_FORM_FIELD + 4, 'pt', 'Novos nomes', 'Novos nomes para os atributos resultantes.'],
+      [BASE_FORM_FIELD + 5, 'pt', 'Atributo', 'Atributo a ser usado na ação.'],
+      [BASE_FORM_FIELD + 6, 'pt', 'Atributo resultante (pode ser novo)', 'Nome para o atributo resultante.'],
 
-      [BASE_FORM_FIELD + 50, 'pt', 'Novo tipo', 'Novo tipo para o atributo.'], 
-      [BASE_FORM_FIELD + 51, 'pt', 'Encontrar', 'Valor a ser pesquisado.'], 
-      [BASE_FORM_FIELD + 52, 'pt', 'Substituir', 'Valor a ser usado na substituição.'], 
-      [BASE_FORM_FIELD + 53, 'pt', 'Atributo(s) a ser(em) concatenado(s)', 'Atributo(s) a ser(em) concatenado(s).'], 
-      [BASE_FORM_FIELD + 54, 'pt', 'Separador', 'Separador para os atributos a serem concatenados.'], 
+      [BASE_FORM_FIELD + 51, 'pt', 'Encontrar', 'Valor a ser pesquisado.'],
+      [BASE_FORM_FIELD + 52, 'pt', 'Substituir', 'Valor a ser usado na substituição.'],
+      [BASE_FORM_FIELD + 53, 'pt', 'Atributo(s) a ser(em) concatenado(s)', 'Atributo(s) a ser(em) concatenado(s).'],
+      [BASE_FORM_FIELD + 54, 'pt', 'Separador', 'Separador para os atributos a serem concatenados.'],
+
+      # FIXME Invalid values
+      [BASE_FORM_FIELD + 55, 'pt', 'Número de caracteres', 'Números de caracteres limite.'],
+      [BASE_FORM_FIELD + 56, 'pt', 'Delimitador', 'Delimitador para as palavras.'],
+      [BASE_FORM_FIELD + 57, 'pt', 'Formato', 'Formato. '],
+      [BASE_FORM_FIELD + 58, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 59, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 60, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 61, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 62, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 63, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 64, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 65, 'pt', 'Casas decimais', 'Número de casas decimais (dígitos após a vírgula).'],
+      # [BASE_FORM_FIELD + 66, 'pt', 'Índice', 'Índice'],
+      [BASE_FORM_FIELD + 67, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 68, 'pt', 'Direção', 'Direção da ordenação (ascendente ou descendente)'],
+      [BASE_FORM_FIELD + 69, 'pt', 'Formato', 'Formato. Deve ser compatível com o formato da linguagem Java.'],
+      [BASE_FORM_FIELD + 70, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 71, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 72, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 73, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 74, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 75, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 76, 'pt', 'Diferença para', 'Valor ou atributo usado para calcular a diferença entre datas.'],
+      [BASE_FORM_FIELD + 77, 'pt', '2o. Atributo', '2o. atributo'],
+      [BASE_FORM_FIELD + 78, 'pt', 'Valor (data válida)', 'Value (valid date)'],
+      [BASE_FORM_FIELD + 79, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 80, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 81, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 84, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 85, 'pt', 'Value', 'Value'],
+
+      [BASE_FORM_FIELD + 86, 'pt', 'Fórmula(s)', 'Fórmula(s)'],
+      [BASE_FORM_FIELD + 87, 'pt', 'Filtro(s)', 'Filtro(s)'],
+      [BASE_FORM_FIELD + 88, 'pt', 'Opções de ordenação', 'Opções de ordenação'],
+      [BASE_FORM_FIELD + 89, 'pt', 'Unidade de tempo', 'Unidade de tempo.'],
+      [BASE_FORM_FIELD + 90, 'pt', 'Inverter o resultado (-1)', 'Calcula a diferença entre o argumento e o atributo data selecionado.'],
+
+      [BASE_FORM_FIELD + 91, 'pt', 'Atributo(s)', 'Permite renomear um ou mais atributos.'],
+      [BASE_FORM_FIELD + 92, 'pt', 'Atributo(s)', 'Permite duplicar um ou mais atributos.'],
+      [BASE_FORM_FIELD + 93, 'pt', 'Índices dos elementos a extrair, separados por vírgula. 0 é o primeiro elemento e '
+        'números negativos contam a partir do fim para o início (reverso).',
+        'Permite duplicar um ou mais atributos. O nome dos novos atributos têm o nome original + índice como sufixo.'],
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field_translation(conn):
     conn.execute(
-        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD, BASE_FORM_FIELD + 87)
+        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s',
+        BASE_FORM_FIELD, BASE_FORM_FIELD + 192)
 
 
 def _insert_operation_operation_form(conn):
     tb = table('operation_operation_form',
-                column('operation_id', Integer), 
+                column('operation_id', Integer),
                 column('operation_form_id', Integer))
     columns = [c.name for c in tb.columns]
     data = []
@@ -722,44 +865,179 @@ def _insert_operation_operation_form(conn):
     #    for j in list(range(2, 4)):
     #        data.append([BASE_OP + i, BASE_FORM + j])
 
-    ops_without_attribute_field = {
-        ADD_BY_FORMULA, JOIN, SAMPLE, LIMIT, WINDOW_FUNCTION,
+    ops_without_attributes_field = {
+        ADD_BY_FORMULA, JOIN, SAMPLE, LIMIT, WINDOW_FUNCTION, SORT, FILTER,
+        DATE_DIFF, GROUP, CLEAN_MISSING, CAST, READ_DATA, SELECT, RENAME, DUPLICATE,
+        EXTRACT_FROM_ARRAY
     }
-    ops_without_aliases_field = {
-        CHANGE_DATA_TYPE, DELETE, REMOVE_EMPTY, SORT, FILTER, GROUP, JOIN, 
-        SAMPLE, LIMIT, WINDOW_FUNCTION
+    ops_with_attribute_field = {
+        DATE_DIFF, EXTRACT_FROM_ARRAY
     }
-    ops_without_keep_attribute_field = {
-        CHANGE_DATA_TYPE, RENAME, DELETE, ADD_BY_FORMULA, SORT, FILTER, GROUP,
-        JOIN, SAMPLE, LIMIT, WINDOW_FUNCTION,
+    ops_with_aliases_field = {
+        #CAST, DELETE, REMOVE_MISSING, SORT, FILTER, GROUP, JOIN,
+        #SAMPLE, LIMIT, WINDOW_FUNCTION
     }
+    ops_with_alias_field = {
+        DATE_DIFF,
+    }
+    #ops_without_keep_attribute_field = {
+    #    CAST, RENAME, DELETE, ADD_BY_FORMULA, SORT, FILTER, GROUP,
+    #    JOIN, SAMPLE, LIMIT, WINDOW_FUNCTION,
+    #}
     # Common forms
     for op_id in ALL_OPS:
-        #if op_id == SORT: 
+        #if op_id == SORT:
         #    import pdb; pdb.set_trace()
-        if op_id not in ops_without_attribute_field:
+        if op_id not in ops_without_attributes_field:
             data.append([op_id,  ATTRIBUTES_FORM])
-        if op_id not in ops_without_aliases_field:
+        if op_id in ops_with_aliases_field:
             data.append([op_id,  ALIASES_FORM])
-        if op_id not in ops_without_keep_attribute_field:
-            data.append([op_id,  KEEP_ATTRIBUTE_FORM])
+        if op_id in ops_with_alias_field:
+            data.append([op_id,  ALIAS_FORM])
+        if op_id in ops_with_attribute_field:
+            data.append([op_id, ATTRIBUTE_FORM])
+        #if op_id not in ops_without_keep_attribute_field:
+        #    data.append([op_id,  KEEP_ATTRIBUTE_FORM])
+        data.append([op_id, APPEARANCE_FORM_ID])
 
     # import pdb; pdb.set_trace()
     # Each op form
-    for op_id in ALL_OPS: 
+    for op_id in ALL_OPS:
         data.append([op_id,  op_id + 50])
+
+    # Associate form 26 (with Sample Op fields) to the Meta operation
+    data.append([SAMPLE, 26])
+    # Associate form 15 (with Aggregate Op fields) to the Meta operation
+    data.append([GROUP, 15])
+    # Associate form 20 (with CleanMissing Op fields) to the Meta operation
+    data.append([CLEAN_MISSING, 20])
+    # Associate form 154 (with Cast Op fields) to the Meta operation
+    data.append([CAST, ORIGINAL_CAST_FORM])
+    # Associate form 6 (with Select Op fields) to the Meta operation
+    data.append([SELECT, ORIGINAL_SELECT_FORM])
+
 
     rows = [dict(list(zip(columns, row))) for row in data]
 
     rows.append({'operation_id': BASE_OP, 'operation_form_id': BASE_FORM_FIELD + 1})
+
     op.bulk_insert(tb, rows)
 
 def _delete_operation_operation_form(conn):
     conn.execute(
         '''DELETE FROM operation_operation_form
             WHERE operation_id BETWEEN %s and %s''',
-        BASE_OP, ALL_OPS[-1] + 50)
+        BASE_OP, max(ALL_OPS))
 
+
+def _fixes(conn):
+    conn.execute(
+            """ INSERT INTO operation_form_field(id, name, type, required, `order`,
+                suggested_widget, scope, enable_conditions, editable, form_id)
+                VALUES(%s, 'invalid_values', 'TEXT', 0, 3, 'text', 'EXECUTION',
+                'this.errors.internalValue === "move"', 1, %s)""",
+                FIELD_CAST_ERROR_ATTRIBUTE,  ORIGINAL_CAST_FORM)
+    dt = [
+            {"en": "Array", "value": "Array", "key": "Array", "pt": "Array"},
+            {"en": "Boolean", "value": "Boolean", "key": "Boolean", "pt": "Booleano (lógico)"},
+            {"en": "Date", "value": "Date", "key": "Date", "pt": "Data"},
+            {"en": "Decimal", "value": "Decimal", "key": "Decimal", "pt": "Decimal"},
+            {"en": "Integer", "value": "Integer", "key": "Integer", "pt": "Inteiro"},
+            {"en": "Time", "value": "Time", "key": "Time", "pt": "Hora"}]
+
+    conn.execute("""update operation_form_field
+        set `order`= 1, name = 'cast_attributes', `values`= %s where id = 585""", json.dumps(dt))
+    conn.execute("update operation_form_field set `order`= 2 where id = 586")
+    errors_options = [
+            {"en": "Fail in case of invalid value", "value": "raise", "key": "raise",
+                "pt": "Falhar em caso de valores inválidos"},
+            {"en": "Coerce value (invalid become null)", "value": "coerce", "key": "coerce",
+                "pt": "Forçar conversão (inválidos viram nulo)"},
+            {"en": "Move invalid value to (new) attribute", "value": "move",
+                "key": "move", "pt": "Mover valores inválidos para um novo atributo"}]
+    conn.execute('update operation_form_field set `values` = %s, `default` = %s WHERE id = 586',
+            json.dumps(errors_options), 'coerce')
+    conn.execute("""
+        INSERT INTO operation_form_field_translation(id, locale, label, help)
+        VALUES(%s, 'pt', 'Novo atributo com valores inválidos', 'Novo atributo com valores inválidos.')""",
+        FIELD_CAST_ERROR_ATTRIBUTE)
+    conn.execute("""
+        INSERT INTO operation_form_field_translation(id, locale, label, help)
+        VALUES(%s, 'en', 'New atribute with invalid data', 'New atribute with invalid data.')""", FIELD_CAST_ERROR_ATTRIBUTE)
+
+    # Select mode
+    mode = [
+            {"en": "Include attributes to the selection", "value": "include", "pt": "Incluir atributos à seleção", "key": 'include'},
+            {"en": "Discard attributes from the selection", "value": "exclude", "pt": "Descartar atributos da seleção", "key": 'exclude'},
+            {"en": "Select all and rename some attributes", "value": "rename", "pt": "Selecionar todos e renomear alguns atributos", "key": "rename"},
+            {"en": "Select all and Duplicate some attributes", "value": "rename", "pt": "Selecionar todos e duplicar alguns atributos", "key": "duplicate"},
+    ]
+    conn.execute(
+            """ INSERT INTO operation_form_field(id, name, type, required, `order`,
+                suggested_widget, scope, enable_conditions, editable, form_id, `values`, `default`)
+                VALUES(%s, 'mode', 'TEXT', 0, 0, 'dropdown',
+                'EXECUTION', null, 1, %s, %s, 'include')""",
+                FIELD_SELECT_MODE,  ORIGINAL_SELECT_FORM, json.dumps(mode))
+
+    # Select with alias
+    #conn.execute(
+    #        """ INSERT INTO operation_form_field(id, name, type, required, `order`,
+    #            suggested_widget, scope, enable_conditions, editable, form_id)
+    #            VALUES(%s, 'attributes', 'TEXT', 1, 0, 'attribute-alias-selector',
+    #            'EXECUTION', None, 1, %s)""",
+    #            FIELD_SELECT_ALIAS,  ORIGINAL_SELECT_FORM)
+
+    # Current select attribute field
+    conn.execute("""update operation_form_field set suggested_widget = 'attribute-alias-selector',
+            `order` = 2 where id = 6""")
+
+    # Translations
+    conn.execute("""
+        INSERT INTO operation_form_field_translation(id, locale, label, help)
+        VALUES(%s, 'pt', 'Modo de seleção', 'Modo de seleção (incluir ou excluir atributos).')""",
+        FIELD_SELECT_MODE)
+    conn.execute("""
+        INSERT INTO operation_form_field_translation(id, locale, label, help)
+        VALUES(%s, 'en', 'Selection mode', 'Selection mode (include or exclude attributes).')""", FIELD_SELECT_MODE)
+#     conn.execute("""
+#         INSERT INTO operation_form_field_translation(id, locale, label, help)
+#         VALUES(%s, 'pt', 'Atributo(s)', 'Atributos a serem selecionados.')""",
+#         FIELD_SELECT_ALIAS)
+#     conn.execute("""
+#         INSERT INTO operation_form_field_translation(id, locale, label, help)
+#         VALUES(%s, 'en', 'Attribute(s)', 'Attributes to be selected.')""", FIELD_SELECT_ALIAS)
+
+def _undo_fixes(conn):
+    conn.execute('DELETE FROM operation_form_field WHERE id = %s',
+            FIELD_CAST_ERROR_ATTRIBUTE)
+    conn.execute("update operation_form_field set name = 'attributes' where id = 585")
+
+    errors_options = [
+            {"en": "Coerce value (invalid become null)", "value": "coerce", "key": "coerce",
+                "pt": "Forçar conversão (inválidos viram nulo)"},
+            {"en": "Fail", "value": "raise", "key": "raise", "pt": "Falhar"},
+            {"en": "Ignore value (may cause errors)", "value": "ignore",
+                "key": "ignore", "pt": "Ignorar valor (pode causar erros)"}]
+    conn.execute('update operation_form_field set `values` = %s WHERE id = 586',
+            json.dumps(errors_options))
+    conn.execute('DELETE FROM operation_form_field_translation WHERE id = %s',
+            FIELD_CAST_ERROR_ATTRIBUTE)
+    conn.execute('DELETE FROM operation_form_field WHERE id = %s',
+            FIELD_CAST_ERROR_ATTRIBUTE)
+
+
+    conn.execute("""update operation_form_field
+        set `order`= 0, suggested_widget = 'attribute-selector' where id = 6""")
+
+    conn.execute('DELETE FROM operation_form_field_translation WHERE id = %s',
+            FIELD_SELECT_MODE)
+    conn.execute('DELETE FROM operation_form_field WHERE id = %s',
+            FIELD_SELECT_MODE)
+
+    # conn.execute('DELETE FROM operation_form_field_translation WHERE id = %s',
+    #         FIELD_SELECT_ALIAS)
+    # conn.execute('DELETE FROM operation_form_field WHERE id = %s',
+    #         FIELD_SELECT_ALIAS)
 
 # -----------------------
 def _execute(conn, cmd):
@@ -775,11 +1053,13 @@ def _execute(conn, cmd):
 
 def upgrade():
     ctx = context.get_context()
-    session = sessionmaker(bind=ctx.bind)() 
+    session = sessionmaker(bind=ctx.bind)()
     conn = session.connection()
     commands = [
+        _fixes,
         _insert_platform,
         _insert_platform_translation,
+        'ALTER TABLE operation_translation ADD label_format VARCHAR(800)',
         _insert_operation,
         _insert_operation_translation,
         _insert_operation_category,
@@ -795,22 +1075,26 @@ def upgrade():
     try:
         for cmd in commands:
             _execute(conn, cmd)
-    except:
+    except Exception as e:
+        pass
+        print(e)
         session.rollback()
-        raise
+        # raise
     session.commit()
 
 
 def downgrade():
     ctx = context.get_context()
-    session = sessionmaker(bind=ctx.bind)() 
+    session = sessionmaker(bind=ctx.bind)()
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
     conn.execute('SET FOREIGN_KEY_CHECKS=0;')
     commands = [
+        _undo_fixes,
         _delete_platform,
         _delete_platform_translation,
+        'ALTER TABLE operation_translation DROP COLUMN label_format',
         _delete_operation,
         _delete_operation_translation,
         _delete_operation_category,
