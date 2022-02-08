@@ -1,7 +1,7 @@
 """Experiments platform
 
 Revision ID: af8eeaf80cd6
-Revises: a0d6c6699b69
+Revises: a8642d0d1aa3
 """
 import json
 from alembic import context
@@ -13,7 +13,7 @@ from sqlalchemy.sql.sqltypes import UnicodeText
 
 # revision identifiers, used by Alembic.
 revision = 'af8eeaf80cd6'
-down_revision = 'a0d6c6699b69'
+down_revision = 'a8642d0d1aa3'
 branch_labels = None
 depends_on = None
 
@@ -47,12 +47,13 @@ SORT = BASE_OP + 5
 FILTER = BASE_OP + 6
 GROUP = BASE_OP + 7
 JOIN = BASE_OP + 8
-CONCATE_ROWS = BASE_OP + 9
+CONCAT_ROWS = BASE_OP + 9
 SAMPLE = BASE_OP + 10
 LIMIT = BASE_OP + 11
 WINDOW_FUNCTION = BASE_OP + 12
 PYTHON_CODE = BASE_OP + 13
 ADD_BY_FORMULA = BASE_OP + 14
+SAVE = BASE_OP + 64
 
 # Transform
 INVERT_BOOLEAN = BASE_OP + 15
@@ -110,6 +111,33 @@ REMOVE_MISSING = BASE_OP + 59
 HANDLE_INVALID = BASE_OP + 60
 REMOVE_INVALID = BASE_OP + 61
 
+
+
+# Model builder
+# Uses READ_DATA, SAMPLE
+SPLIT = BASE_OP + 250
+EVALUATOR = BASE_OP + 251
+FEATURES_REDUCTION = BASE_OP + 252
+GRID = BASE_OP + 253
+FEATURES  = BASE_OP + 254
+
+K_MEANS_CLUSTERING = BASE_OP + 255
+GAUSSIAN_MIXTURE_CLUSTERING = BASE_OP + 256
+DECISION_TREE_CLASSIFIER = BASE_OP + 257
+GBT_CLASSIFIER = BASE_OP + 258
+NAIVE_BAYES_CLASSIFIER = BASE_OP + 259
+PERCEPTRON_CLASSIFIER = BASE_OP + 260
+RANDOM_FOREST_CLASSIFIER = BASE_OP + 261
+LOGISTIC_REGRESSION = BASE_OP + 262
+SVM_CLASSIFICATION = BASE_OP + 263
+
+LINEAR_REGRESSION = BASE_OP + 264
+ISOTONIC_REGRESSION = BASE_OP + 265
+GBT_REGRESSOR = BASE_OP + 266
+RANDOM_FOREST_REGRESSOR = BASE_OP + 267
+GENERALIZED_LINEAR_REGRESSOR = BASE_OP + 268
+# AFT_SURVIVAL_REGRESSION = BASE_OP + 269 # Not supported
+
 # Categories
 CAT_INTERN = BASE_CATEGORY + 0
 CAT_EDIT = BASE_CATEGORY + 1
@@ -124,7 +152,11 @@ CAT_INTEGER = BASE_CATEGORY + 9
 CAT_BOOL = BASE_CATEGORY + 10
 CAT_DATE = BASE_CATEGORY + 11
 CAT_ARRAY= BASE_CATEGORY + 12
+CAT_MODEL_BUILDER = BASE_CATEGORY + 13
 
+CAT_CLASSIFICATION = 4
+CAT_REGRESSION = 45
+CAT_CLUSTERING = 46
 
 FIELD_CAST_ERROR_ATTRIBUTE = 449
 FIELD_SELECT_MODE = 3
@@ -132,14 +164,16 @@ FIELD_SELECT_ALIAS = 5
 
 ORIGINAL_CAST_FORM = 154
 ORIGINAL_SELECT_FORM = 6
+ORIGINAL_SAVE_FORM = 28
+ORIGINAL_JOIN_FORM = 16
 
 ALL_OPS = [
     READ_DATA,
     # Edit
     CAST, RENAME, DISCARD, FIND_REPLACE, DUPLICATE,
     # Data
-    SELECT, SORT, FILTER, GROUP, JOIN, CONCATE_ROWS, SAMPLE,
-    LIMIT, WINDOW_FUNCTION, PYTHON_CODE, ADD_BY_FORMULA,
+    SELECT, SORT, FILTER, GROUP, JOIN, CONCAT_ROWS, SAMPLE,
+    LIMIT, WINDOW_FUNCTION, PYTHON_CODE, ADD_BY_FORMULA, SAVE,
     # Transform
     INVERT_BOOLEAN, RESCALE, ROUND_NUMBER, DISCRETIZE, NORMALIZE,
     FORCE_RANGE, TS_TO_DATE, TO_UPPER, TO_LOWER, CAPITALIZE,
@@ -157,6 +191,15 @@ ALL_OPS = [
     FLAG_IN_RANGE, FLAG_INVALID, FLAG_EMPTY, FLAG_WITH_FORMULA,
     # Fix data
     CLEAN_MISSING, HANDLE_INVALID, REMOVE_MISSING, REMOVE_INVALID,
+
+    # Model builder
+    SPLIT, EVALUATOR, FEATURES_REDUCTION, GRID, FEATURES,
+    K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING,
+    DECISION_TREE_CLASSIFIER, GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER,
+    PERCEPTRON_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION,
+    SVM_CLASSIFICATION,
+    LINEAR_REGRESSION, ISOTONIC_REGRESSION, #AFT_SURVIVAL_REGRESSION,
+    GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR
  ]
 
 ATTRIBUTES_FORM = BASE_FORM + 2
@@ -225,12 +268,13 @@ def _insert_operation(conn):
       [FILTER, 'filter', 1, 'TRANSFORMATION', 'fa fa-filter text-success', '', ''],
       [GROUP, 'group', 1, 'TRANSFORMATION', '', '', ''],
       [JOIN, 'join', 1, 'TRANSFORMATION', '', '', ''],
-      [CONCATE_ROWS, 'concat-rows', 1, 'TRANSFORMATION', 'fa fa-plus text-secondary', 'separator', ''],
+      [CONCAT_ROWS, 'concat-rows', 1, 'TRANSFORMATION', 'fa fa-plus text-secondary', 'separator', ''],
       [SAMPLE, 'sample', 1, 'TRANSFORMATION', '', '', ''],
       [LIMIT, 'limit', 1, 'TRANSFORMATION', '', 'separator', ''],
       [WINDOW_FUNCTION, 'window-function', 1, 'TRANSFORMATION', '', '', ''],
       [PYTHON_CODE, 'python-code', 1, 'TRANSFORMATION', '', '', ''],
       [ADD_BY_FORMULA, 'add-by-formula', 1, 'TRANSFORMATION', 'fa fa-equals', '', ''],
+      [SAVE, 'save', 1, 'TRANSFORMATION', 'fa fa-save', '', ''],
 
       [INVERT_BOOLEAN, 'invert-boolean', 1, 'TRANSFORMATION', '', 'boolean', ''],
       [RESCALE, 'rescale', 1, 'TRANSFORMATION', '', 'Number', ''],
@@ -238,25 +282,29 @@ def _insert_operation(conn):
       [DISCRETIZE, 'discretize', 1, 'TRANSFORMATION', '', 'Number', ''],
       [NORMALIZE, 'normalize', 1, 'TRANSFORMATION', '', '', 'Number'],
       [FORCE_RANGE, 'force-range', 1, 'TRANSFORMATION', '', 'Number', ''],
+
       [TS_TO_DATE, 'ts-to-date', 1, 'TRANSFORMATION', '', 'Integer', ''],
+      
       [TO_UPPER, 'to-upper', 1, 'TRANSFORMATION', '', 'Text', ''],
       [TO_LOWER, 'to-lower', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [CAPITALIZE, 'capitalize', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [CAPITALIZE, 'capitalize', 1, 'TRANSFORMATION', '', 'Text separator', ''],
       [REMOVE_ACCENTS, 'remove-accents', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [NORMALIZE_TEXT, 'normalize-text', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [NORMALIZE_TEXT, 'normalize-text', 1, 'TRANSFORMATION', '', 'Text separator', ''],
       [CONCAT_ATTRIBUTE, 'concat-attribute', 1, 'TRANSFORMATION', '', 'Text', ''],
       [TRIM, 'trim', 1, 'TRANSFORMATION', '', 'Text', ''],
       [TRUNCATE_TEXT, 'truncate-text', 1, 'TRANSFORMATION', '', 'Text', ''],
       [SPLIT_INTO_WORDS, 'split-into-words', 1, 'TRANSFORMATION', '', 'Text', ''],
       [SUBSTRING, 'substring', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [PARSE_TO_DATE, 'parse-to-date', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [PARSE_TO_DATE, 'parse-to-date', 1, 'TRANSFORMATION', '', 'Text separator', ''],
       [EXTRACT_NUMBERS, 'extract-numbers', 1, 'TRANSFORMATION', '', 'Text', ''],
       [EXTRACT_WITH_REGEX, 'extract-with-regex', 1, 'TRANSFORMATION', '', 'Text', ''],
+
       [EXTRACT_FROM_ARRAY, 'extract-from-array', 1, 'TRANSFORMATION', '', 'Array', ''],
       # [EXPAND_FROM_ARRAY, 'expand-from-array', 1, 'TRANSFORMATION', '', 'Array', ''],
       [FOLD_ARRAY, 'fold-array', 1, 'TRANSFORMATION', '', 'Array', ''],
       [CHANGE_ARRAY_TYPE, 'change-array-type', 1, 'TRANSFORMATION', '', 'Array', ''],
       [SORT_ARRAY, 'sort-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+
       [FORCE_DATE_RANGE, 'force-date-range', 1, 'TRANSFORMATION', '', 'Datetime', ''],
       [UPDATE_HOUR, 'update-hour', 1, 'TRANSFORMATION', '', 'Datetime', ''],
       [TRUNCATE_DATE_TO, 'truncate-date-to', 1, 'TRANSFORMATION', '', 'Datetime', ''],
@@ -283,6 +331,29 @@ def _insert_operation(conn):
       [REMOVE_MISSING, 'remove-empty', 1, 'TRANSFORMATION', '', 'separator', ''],
       [HANDLE_INVALID, 'handle-invalid', 1, 'TRANSFORMATION', '', '', ''],
       [REMOVE_INVALID, 'remove-invalid', 1, 'TRANSFORMATION', '', '', ''],
+
+      [SPLIT, 'split', 1, 'TRANSFORMATION', '', '', ''],
+      [EVALUATOR, 'evaluator', 1, 'TRANSFORMATION', '', '', ''],
+      [FEATURES_REDUCTION, 'features-reduction', 1, 'TRANSFORMATION', '', '', ''],
+      [GRID, 'grid', 1, 'TRANSFORMATION', '', '', ''],
+      [FEATURES, 'features', 1, 'TRANSFORMATION', '', '', ''],
+
+      [K_MEANS_CLUSTERING, 'k-means', 1, 'TRANSFORMATION', '', '', ''],
+      [GAUSSIAN_MIXTURE_CLUSTERING, 'gaussian-mix', 1, 'TRANSFORMATION', '', '', ''],
+
+      [DECISION_TREE_CLASSIFIER, 'decision-tree-classifier', 1, 'TRANSFORMATION', '', '', ''],
+      [GBT_CLASSIFIER, 'gbt-classifier', 1, 'TRANSFORMATION', '', '', ''],
+      [NAIVE_BAYES_CLASSIFIER, 'naive-bayes', 1, 'TRANSFORMATION', '', '', ''],
+      [PERCEPTRON_CLASSIFIER, 'perceptron', 1, 'TRANSFORMATION', '', '', ''],
+      [RANDOM_FOREST_CLASSIFIER, 'random-forest-classifier', 1, 'TRANSFORMATION', '', '', ''],
+      [LOGISTIC_REGRESSION, 'logistic-regression', 1, 'TRANSFORMATION', '', '', ''],
+      [SVM_CLASSIFICATION, 'svm', 1, 'TRANSFORMATION', '', '', ''],
+
+      [LINEAR_REGRESSION, 'linear-regression', 1, 'TRANSFORMATION', '', '', ''],
+      [ISOTONIC_REGRESSION, 'isotonic-regression', 1, 'TRANSFORMATION', '', '', ''],
+      [GBT_REGRESSOR, 'gbt-regressor', 1, 'TRANSFORMATION', '', '', ''],
+      [RANDOM_FOREST_REGRESSOR, 'random-forest-regressor', 1, 'TRANSFORMATION', '', '', ''],
+      [GENERALIZED_LINEAR_REGRESSOR, 'generalized-linear-regressor', 1, 'TRANSFORMATION', '', '', ''],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -324,7 +395,7 @@ def _insert_operation_translation(conn):
       [FILTER, 'pt', 'Filtrar', 'Permite definir as opções de filtro.', ''],
       [GROUP, 'pt', 'Agrupar', 'Permite definir opções para agrupamento.', '<b>Agrupar</b> por <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [JOIN, 'pt', 'Juntar com outra fonte de dados', 'Permite juntar com outra fonte de dados (JOIN).', ''],
-      [CONCATE_ROWS, 'pt', 'Adicionar registros ao fim', 'Permite adicionar registros ao fim dos dados a partir de outra fonte de dados.', ''],
+      [CONCAT_ROWS, 'pt', 'Adicionar registros ao fim', 'Permite adicionar registros ao fim dos dados a partir de outra fonte de dados.', ''],
       [SAMPLE, 'pt', 'Amostrar ou limitar', 'Permite definir a amostragem dos dados.', ''],
       [LIMIT, 'pt', 'Limitar', 'Permite limitar a quantidade de dados.', ''],
       [WINDOW_FUNCTION, 'pt', 'Transformar com função de janela', 'Permite usar uma função de janela (deslizante).', ''],
@@ -416,6 +487,30 @@ def _insert_operation_translation(conn):
       [REMOVE_MISSING, 'pt', 'Remover registros com dados ausentes', 'Remove registros com dados ausentes.', ''],
       [HANDLE_INVALID, 'pt', 'Tratar dados inválidos', 'Trata dados inválidos de acordo com um regra.', ''],
       [REMOVE_INVALID, 'pt', 'Remover registros com dados inválidos', 'Remover registros com dados inválidos.', ''],
+      
+      [SAVE, 'pt', 'Salvar dados', 'Salva os dados considerando os passos habilitados e visíveis.', ''],
+
+
+      [SPLIT, 'pt', 'Dividir dados', 'Divide os dados de entrada entre treino e teste.', ''],
+      [EVALUATOR, 'pt', 'Avaliar modelo', 'Avalia um modelo segundo alguma métrica.', ''],
+      [FEATURES_REDUCTION, 'pt', 'Redução de atributos preditivos', 'Permite reduzir o número de atributros preditivos.', ''],
+      [GRID, 'pt', 'Grade de parâmetros', 'Permite definir uma grade de parâmetros.', ''],
+      [FEATURES, 'pt', 'Atributos preditivos', 'Permite configurar os atributos preditivos', ''],
+      [K_MEANS_CLUSTERING, 'pt', 'Agrupamento K-Means', 'Agrupamento K-Means', ''],
+      [GAUSSIAN_MIXTURE_CLUSTERING, 'pt', 'Agrupamento Misturas Gaussianas', 'Agrupamento misturas gaussianas.', ''],
+      [DECISION_TREE_CLASSIFIER, 'pt', 'Classificador Árvore de Decisão', 'Classificador árvore de decisão.', ''],
+      [GBT_CLASSIFIER, 'pt', 'Classificador GBT', 'Classificador GBT (Gradient Boosted Tree)', ''],
+      [NAIVE_BAYES_CLASSIFIER, 'pt', 'Classificador Naive Bayes', 'Classificador Naive Bayes.', ''],
+      [PERCEPTRON_CLASSIFIER, 'pt', 'Classificador Perceptron', 'Classificador Perceptron.', ''],
+      [RANDOM_FOREST_CLASSIFIER, 'pt', 'Classificador Random Forest', 'Classificador Random Forest.', ''],
+      [LOGISTIC_REGRESSION, 'pt', 'Regressão Logística', 'Regressão logística.', ''],
+      [SVM_CLASSIFICATION, 'pt', 'Classificador SVM', 'Classificador SVM', ''],
+
+      [LINEAR_REGRESSION, 'pt', 'Regressão Linear', 'Regressão linear', ''],
+      [ISOTONIC_REGRESSION, 'pt', 'Regressão Isotônica', 'Regressão isotônica.', ''],
+      [GBT_REGRESSOR, 'pt', 'Regressão GBT', 'Regressão GBT (Gradient Boosted Tree).', ''],
+      [RANDOM_FOREST_REGRESSOR, 'pt', 'Regressão Random Forest', 'Regressão Random Forest.', ''],
+      [GENERALIZED_LINEAR_REGRESSOR, 'pt', 'Regressão Linear Generalizada', 'Regressão linear generalizada.', ''],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -446,7 +541,8 @@ def _insert_operation_category(conn):
       [CAT_INTEGER, 'data-type', 100, 100],
       [CAT_BOOL, 'data-type', 100, 100],
       [CAT_DATE, 'data-type', 100, 100],
-      [CAT_ARRAY, 'data-type', 100, 100]
+      [CAT_ARRAY, 'data-type', 100, 100],
+      [CAT_MODEL_BUILDER, 'model-builder', 1, 1]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -454,7 +550,7 @@ def _insert_operation_category(conn):
 def _delete_operation_category(conn):
     conn.execute(
         'DELETE from operation_category WHERE id BETWEEN %s AND %s',
-        BASE_CATEGORY, BASE_CATEGORY + 12)
+        BASE_CATEGORY, BASE_CATEGORY + 13)
 
 def _insert_operation_category_translation(conn):
     tb = table('operation_category_translation',
@@ -475,7 +571,8 @@ def _insert_operation_category_translation(conn):
       [CAT_INTEGER, 'pt', 'Inteiro'],
       [CAT_BOOL, 'pt', 'Booleano'],
       [CAT_DATE, 'pt', 'Data'],
-      [CAT_ARRAY, 'pt', 'Arrajo']
+      [CAT_ARRAY, 'pt', 'Arranjo'],
+      [CAT_MODEL_BUILDER, 'pt', 'Construtor de modelos']
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -483,7 +580,7 @@ def _insert_operation_category_translation(conn):
 def _delete_operation_category_translation(conn):
     conn.execute(
         'DELETE from operation_category_translation WHERE id BETWEEN %s AND %s',
-        BASE_CATEGORY, BASE_CATEGORY + 12)
+        BASE_CATEGORY, BASE_CATEGORY + 20)
 
 def _insert_operation_category_operation(conn):
     tb = table('operation_category_operation',
@@ -504,12 +601,13 @@ def _insert_operation_category_operation(conn):
       [FILTER, CAT_DATA],
       [GROUP, CAT_DATA],
       [JOIN, CAT_DATA],
-      [CONCATE_ROWS, CAT_DATA],
+      [CONCAT_ROWS, CAT_DATA],
       [SAMPLE, CAT_DATA],
       [LIMIT, CAT_DATA],
       [WINDOW_FUNCTION, CAT_DATA],
       [PYTHON_CODE, CAT_DATA],
       [ADD_BY_FORMULA, CAT_DATA],
+      [SAVE, CAT_DATA],
 
       [INVERT_BOOLEAN, CAT_TRANSFORM],
       [RESCALE, CAT_TRANSFORM],
@@ -562,15 +660,55 @@ def _insert_operation_category_operation(conn):
       [HANDLE_INVALID, CAT_FIX],
       [REMOVE_MISSING, CAT_FIX],
       [REMOVE_INVALID, CAT_FIX],
+
+      [READ_DATA, CAT_MODEL_BUILDER],
+      [SAMPLE, CAT_MODEL_BUILDER],
+
+      [SPLIT, CAT_MODEL_BUILDER],
+      [EVALUATOR, CAT_MODEL_BUILDER],
+      [FEATURES_REDUCTION, CAT_MODEL_BUILDER],
+      [GRID, CAT_MODEL_BUILDER],
+      [FEATURES , CAT_MODEL_BUILDER],
+      
+      [K_MEANS_CLUSTERING, CAT_MODEL_BUILDER],
+      [GAUSSIAN_MIXTURE_CLUSTERING, CAT_MODEL_BUILDER],
+      [DECISION_TREE_CLASSIFIER, CAT_MODEL_BUILDER],
+      [GBT_CLASSIFIER, CAT_MODEL_BUILDER],
+      [NAIVE_BAYES_CLASSIFIER, CAT_MODEL_BUILDER],
+      [PERCEPTRON_CLASSIFIER, CAT_MODEL_BUILDER],
+      [RANDOM_FOREST_CLASSIFIER, CAT_MODEL_BUILDER],
+      [LOGISTIC_REGRESSION, CAT_MODEL_BUILDER],
+      [SVM_CLASSIFICATION, CAT_MODEL_BUILDER],
+      
+      [LINEAR_REGRESSION, CAT_MODEL_BUILDER],
+      [ISOTONIC_REGRESSION, CAT_MODEL_BUILDER],
+      [GBT_REGRESSOR, CAT_MODEL_BUILDER],
+      [RANDOM_FOREST_REGRESSOR, CAT_MODEL_BUILDER],
+      [GENERALIZED_LINEAR_REGRESSOR, CAT_MODEL_BUILDER],
+
     ]
+    for op_id in [
+        DECISION_TREE_CLASSIFIER, GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER,
+        PERCEPTRON_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION,
+        SVM_CLASSIFICATION]:    
+        data.append([op_id, CAT_CLASSIFICATION])
+
+    for op_id in [LINEAR_REGRESSION, ISOTONIC_REGRESSION, 
+        GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR]:
+        data.append([op_id, CAT_REGRESSION])
+
+    for op_id in [K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING]:
+        data.append([op_id, CAT_CLUSTERING])
+
+
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_category_operation(conn):
     conn.execute(
         '''DELETE FROM operation_category_operation
-            WHERE operation_category_id BETWEEN %s and %s''',
-        BASE_CATEGORY, BASE_CATEGORY + 12)
+            WHERE operation_id BETWEEN %s and %s ''',
+        BASE_OP, MAX_OP)
 
 def _insert_operation_platform(conn):
     tb = table('operation_platform',
@@ -605,7 +743,14 @@ def _insert_operation_form(conn):
       [ATTRIBUTE_FORM, 1, 1, 'execution'], # Attribute (multiple = false) (common)
       [ALIAS_FORM, 1, 1, 'execution'], # Alias (common)
     ]
-    for op_id in ALL_OPS: # Operations' form
+    exclusions = set([
+        K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING, DECISION_TREE_CLASSIFIER, 
+        GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER, PERCEPTRON_CLASSIFIER, 
+        RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
+        LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
+        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR])
+
+    for op_id in set(ALL_OPS) - exclusions: # Operations' form
         data.append([op_id + 50, 1, 1, 'execution'])
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -639,7 +784,15 @@ def _insert_operation_form_translation(conn):
       [ATTRIBUTE_FORM, 'en', 'Execution'],
       [ALIAS_FORM, 'en', 'Execution'],
     ]
-    for op_id in ALL_OPS: # Operations' form
+    exclusions = set([
+        K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING, DECISION_TREE_CLASSIFIER, 
+        GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER, PERCEPTRON_CLASSIFIER, 
+        RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
+        LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
+        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR])
+
+
+    for op_id in set(ALL_OPS) - exclusions: # Operations' form
         data.append([op_id + 50, 'pt', 'Execução'])
         data.append([op_id + 50, 'en', 'Execution'])
 
@@ -666,6 +819,64 @@ def _insert_operation_form_field(conn):
                 column('enable_conditions', String),
                 column('editable', Boolean),
                 column('form_id', Integer))
+    split_strategy = [
+          {'key': 'split', 'pt': 'Dividir aleatoriamente entre treino e teste', 'en': 'Randomly split between training and testing'},
+          {'key': 'cross_validation', 'pt': 'Realizar a validação cruzada', 'en': 'Perform cross-validation'},
+    ]
+    tasks_types = [
+          {'key': 'clustering', 'pt': 'Agrupamento', 'en': 'Clustering'},
+          {'key': 'binary-classification', 'pt': 'Classificação binária', 'en': 'Classification binária'},
+          {'key': 'multiclass-classification', 'pt': 'Classificação multiclasse', 'en': 'Classification multiclasse'},
+          {'key': 'regression', 'pt': 'Regressão', 'en': 'Regression'},
+    ]
+    bin_classification_metrics = [
+	{ "key": "areaUnderROC", "value": "Area under ROC curve", "en": "Area under ROC curve", "pt": "Área sob a curva ROC"},
+        { "key": "areaUnderPR", "value": "Area under precision-recall curve",
+            "en": "Area under precision-recall curve", "pt": "Área sobre a curva de precisão-revocação"
+        }
+     ]
+    multi_classification_metrics = [
+        { "key": "f1", "value": "F1 score", "en": "F1 score", "pt": "Métrica F1" },
+        {
+            "key": "weightedPrecision", "value": "Weighted precision", "en": "Weighted precision",
+            "pt": "Precisão ponderada"
+        }, {
+            "key": "weightedRecall", "value": "Weighted recall",
+            "en": "Weighted recall", "pt": "Revocação ponderada"
+        },
+        { "key": "accuracy", "value": "Accuracy", "en": "Accuracy", "pt": "Acurácia" },
+    ]
+    regression_metrics = [
+        {
+            "key": "rmse", "value": "Root mean squared error", "en": "Root mean squared error",
+            "pt": "Raíz do erro quadrático médio"
+        },
+        { "key": "mse", "value": "Mean squared error", "en": "Mean squared error", "pt": "Erro quadrático médio" },
+        { "key": "mae", "value": "Mean absolute error", "en": "Mean absolute error", "pt": "Erro absoluto médio" },
+        {
+            "key": "mape", "value": "Mean absolute percentage error",
+            "en": "Mean absolute percentage error", "pt": "Média Percentual Absoluta do Erro"
+        },
+        {
+            "key": "r2", "value": "Coefficient of determination R2", "en": "Coefficient of determination R2",
+            "pt": "Coeficiente de determinação (R2)"
+        }
+    ]   
+    clustering_metrics = [
+        {
+            "key": "silhouette", "value": "Silhouette", "en": "Silhouette",
+            "pt": "Silhouette"
+        },
+    ]
+    reduction_method = [
+	  {'key': 'disabled', 'pt': 'Sem redução', 'en': 'Do not reduce'},
+          {'key': 'pca', 'pt': 'Principal Component Analysis - PCA', 
+			'en': 'Principal Component Analysis - PCA'},
+    ]  
+    grid_strategy = [
+	  {'key': 'grid', 'pt': 'Busca em grade', 'en': 'Grid search'},
+          {'key': 'random', 'pt': 'Busca aleatória', 'en': 'Random search'},
+    ]  
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_FORM_FIELD + 0, 'comment', 'TEXT', 1, 1, None, 'textarea', None, None, 'EXECUTION', None, 1, BASE_FORM + 0],
@@ -771,14 +982,73 @@ def _insert_operation_form_field(conn):
       [BASE_FORM_FIELD + 92, 'attributes', 'TEXT', 1, 1, None, 'attribute-alias-selector', None, None, 'EXECUTION', None, 1, DUPLICATE + 50],
       
       [BASE_FORM_FIELD + 93, 'indexes', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', None, 1, EXTRACT_FROM_ARRAY + 50],
+      
+      [BASE_FORM_FIELD + 94, 'data_source', 'INTEGER', 1, 1, None, 'lookup', '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, CONCAT_ROWS + 50],
+      
+      [BASE_FORM_FIELD + 95, 'data_source', 'INTEGER', 1, 0, None, 'lookup', '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, JOIN + 50],
+
+      # Model builder
+      [BASE_FORM_FIELD + 96, 'strategy', 'INTEGER', 1, 0, 'split', 'lookup', None, json.dumps(split_strategy), 
+              'EXECUTION', None, 1, SPLIT + 50],
+      [BASE_FORM_FIELD + 97, 'ratio', 'FLOAT', 1, 1, None, 'decimal', None, None, 'EXECUTION', None, 1, SPLIT + 50],
+      [BASE_FORM_FIELD + 98, 'folds', 'INTEGER', 1, 1, '10', 'integer', None, None, 'EXECUTION', None, 1, SPLIT + 50],
+      [BASE_FORM_FIELD + 99, 'seed', 'INTEGER', 1, 0, None, 'lookup', None, None, 'EXECUTION', None, 1, SPLIT + 50],    
+      [BASE_FORM_FIELD + 100, 'task_type', 'TEXT', 1, 0, 'binary-classification', 'lookup', None, json.dumps(tasks_types), 'EXECUTION', None, 1, EVALUATOR + 50],
+      [BASE_FORM_FIELD + 101, 'method', 'INTEGER', 1, 0, 'disabled', 'lookup', None, json.dumps(reduction_method), 'EXECUTION', None, 1, FEATURES_REDUCTION + 50],
+      [BASE_FORM_FIELD + 102, 'strategy', 'INTEGER', 1, 0, 'grid', 'lookup', None, json.dumps(grid_strategy), 'EXECUTION', None, 1, GRID + 50],
+      [BASE_FORM_FIELD + 103, 'random_grid', 'INTEGER', 1, 1, None, 'checkbox', None, None, 'EXECUTION', None, 1, GRID + 50],
+      [BASE_FORM_FIELD + 104, 'seed', 'INTEGER', 1, 2, None, 'lookup', None, None, 'EXECUTION', None, 1, GRID + 50],
+      [BASE_FORM_FIELD + 105, 'max_iterations', 'INTEGER', 1, 3, None, 'integer', None, None, 'EXECUTION', None, 1, GRID + 50],
+      [BASE_FORM_FIELD + 106, 'max_search_time', 'INTEGER', 1, 4, None, 'integer', None, None, 'EXECUTION', None, 1, GRID + 50],
+      [BASE_FORM_FIELD + 107, 'parallelism', 'INTEGER', 1, 5, None, 'integer', None, None, 'EXECUTION', None, 1, GRID + 50],
+      [BASE_FORM_FIELD + 108, 'features', 'TEXT', 1, 2, None, 'features', None, None, 'EXECUTION', None, 1, FEATURES + 50],
+      [BASE_FORM_FIELD + 109, 'bin_metric', 'TEXT', 1, 2, 'areaUnderROC', 'features', None, json.dumps(bin_classification_metrics), 'EXECUTION', None, 1, EVALUATOR + 50],
+      [BASE_FORM_FIELD + 110, 'multi_metric', 'TEXT', 1, 2, 'accuracy', 'features', None,json.dumps(multi_classification_metrics), 'EXECUTION', None, 1, EVALUATOR + 50],
+      [BASE_FORM_FIELD + 111, 'reg_metric', 'TEXT', 1, 2, 'rmse' , 'features', None, json.dumps(regression_metrics), 'EXECUTION', None, 1, EVALUATOR + 50],
+      [BASE_FORM_FIELD + 112, 'clust_metric', 'TEXT', 1, 2, 'rmse' , 'features', None, json.dumps(clustering_metrics), 'EXECUTION', None, 1, EVALUATOR + 50],
+      [BASE_FORM_FIELD + 113, 'k', 'INTEGER', 1, 0, None, 'integer', None, None, 'EXECUTION', 'this.method.internalValue === "pca"', 1, FEATURES_REDUCTION + 50],
     ]
+
+    # Fix generalized linear regression
+    # link_gaussian_gamma = [
+    #         {"en": "identity", "key": "identity", "value": "identidade", "pt": "identity"}, 
+    #         {"en": "log", "key": "log", "value": "log", "pt": "log"}, 
+    #         {"en": "inverse", "key": "inverse", "value": "inverse", "pt": "inversa"}
+    # ]
+    # link_binomial = [
+    #         {"en": "logit", "key": "logit", "value": "logit", "pt": "logit"}, 
+    #         {"en": "probit", "key": "probit", "value": "probit", "pt": "probit"}, 
+    #         {"en": "cloglog", "key": "cloglog", "value": "cloglog", "pt": "cloglog"}
+    #         ]
+    # link_poisson= [
+    #         {"en": "identity", "key": "identity", "value": "identidade", "pt": "identity"}, 
+    #         {"en": "log", "key": "log", "value": "log", "pt": "log"}, 
+    #         {"en": "sqrt", "key": "sqrt", "value": "sqrt", "pt": "sqrt"}
+    # ]
+
+    # data.append([266, 'link', 'TEXT', 0, 6, 'identity', 'dropdown', None, json.dumps(link_gaussian_gamma), 'EXECUTION', 'this.family.internalValue === "gaussian"', 1, 107])
+    # data.append([267, 'link', 'TEXT', 0, 6, 'logit', 'dropdown', None, json.dumps(link_binomial), 'EXECUTION', 'this.family.internalValue === "binomial"', 1, 107])
+    # data.append([268, 'link', 'TEXT', 0, 6, 'log', 'dropdown', None, json.dumps(link_poisson), 'EXECUTION', 'this.family.internalValue === "poisson"', 1, 107])
+    # data.append([280, 'link', 'TEXT', 0, 6, 'inverse', 'dropdown', None, json.dumps(link_gaussian_gamma), 'EXECUTION', 'this.family.internalValue === "gaussian"', 1, 107])
+
+    # Fix linear regression
+    loss = [
+            {"en": "Squared error", "key": "squaredError", "pt": "Erro quadrado (squared error)"}, 
+            {"en": "Huber method", "key": "huber", "pt": "Método de Huber"}, 
+    ]
+    data.append([240, 'loss', 'TEXT', 0, 1, 'squaredError', 'dropdown', None, json.dumps(loss), 'EXECUTION', None, 1, 8])
+    data.append([241, 'reg_param', 'FLOAT', 0, 8, None, 'decimal', None, None, 'EXECUTION', None, 1, 8])
+    data.append([183, 'epsilon', 'FLOAT', 0, 9, None, 'decimal', None, None, 'EXECUTION', 'this.loss.internalValue === "hubber"', 1, 8])
+    data.append([184, 'tolerance', 'FLOAT', 0, 10, None, 'decimal', None, None, 'EXECUTION', None, 1, 8])
+    data.append([185, 'standardization', 'INTEGER', 0, 11, '1', 'checkbox', None, None, 'EXECUTION', None, 1, 8])
+    data.append([175, 'fit_intercept', 'INTEGER', 0, 12, '1', 'checkbox', None, None, 'EXECUTION', None, 1, 8])
 
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field(conn):
     conn.execute(
-        'DELETE from operation_form_field WHERE (id BETWEEN %s AND %s)',
+        'DELETE from operation_form_field WHERE (id BETWEEN %s AND %s) or id IN (183,184,185,240,241,175)',
         BASE_FORM_FIELD, BASE_FORM_FIELD + 120)
 
 def _insert_operation_form_field_translation(conn):
@@ -845,13 +1115,50 @@ def _insert_operation_form_field_translation(conn):
         'números negativos contam a partir do fim para o início (reverso).',
         'Permite duplicar um ou mais atributos. O nome dos novos atributos têm o nome original + índice como sufixo.'],
 
+      [BASE_FORM_FIELD + 94, 'pt', 'Fonte de dados', 'Permite unir (concatenar) registros de duas fontes de dados.'],
+      [BASE_FORM_FIELD + 95, 'pt', 'Fonte de dados', 'Permite juntar (join) registros de duas fontes de dados a partir de condições.'],
+
+      [BASE_FORM_FIELD + 96, 'pt', 'Estratégia para divisão entre treino e teste', 'Estratégia para divisão entre treino e teste.'],
+      [BASE_FORM_FIELD + 97, 'pt', 'Razão treino/teste', 'Razão treino/teste'],
+      [BASE_FORM_FIELD + 98, 'pt', 'Número de folds', 'Número de folds.'],
+      [BASE_FORM_FIELD + 99, 'pt', 'Semente aleatória', 'Semente aleatória.'],
+      [BASE_FORM_FIELD + 100, 'pt', 'Métrica', 'Métrica.'],
+      [BASE_FORM_FIELD + 101, 'pt', 'Método de redução', 'Método de redução.'],
+      [BASE_FORM_FIELD + 102, 'pt', 'Estratégia de busca em grade', 'Estratégia de busca em grade.'],
+      [BASE_FORM_FIELD + 103, 'pt', 'Usar grade aleatória', 'Usar grade aleatória.'],
+      [BASE_FORM_FIELD + 104, 'pt', 'Semente aleatória', 'Semente aleatória.'],
+      [BASE_FORM_FIELD + 105, 'pt', 'Número máximo de iterações', 'Número máximo de iterações.'],
+      [BASE_FORM_FIELD + 106, 'pt', 'Tempo máximo de busca', 'Tempo máximo de busca.'],
+      [BASE_FORM_FIELD + 107, 'pt', 'Paralelismo', 'Paralelismo'],
+      [BASE_FORM_FIELD + 108, 'pt', 'Atributos preditivos', 'Atributos preditivos.'],
+      [BASE_FORM_FIELD + 109, 'pt', 'Métrica', 'Métrica'],
+      [BASE_FORM_FIELD + 110, 'pt', 'Métrica', 'Métrica'],
+      [BASE_FORM_FIELD + 111, 'pt', 'Métrica', 'Métrica'],
+      [BASE_FORM_FIELD + 112, 'pt', 'Métrica', 'Métrica'],
+      [BASE_FORM_FIELD + 113, 'pt', 'Número de componentes principais (k)', 'Número de componentes principais (k).'],
     ]
+    # Generalized regression
+    # data.append([266, 'pt', 'Ligação (Link)', 'Ligação (Link)'])
+    # data.append([267, 'pt', 'Ligação (Link)', 'Ligação (Link)'])
+    # data.append([268, 'pt', 'Ligação (Link)', 'Ligação (Link)'])
+    # data.append([280, 'pt', 'Ligação (Link)', 'Ligação (Link)'])
+
+    # Linear regression 
+    data.append([240, 'pt', 'Função de perda', 'Função de perda a ser otimizada.'])
+    data.append([241, 'pt', 'Parâmetro de regularização (λ >= 0)', 'Parâmetro de regularização (λ)'])
+    data.append([183, 'pt', 'Epsilon (usado se função de perda Huber)', 'Parâmetro que controla a robustez. Deve ser maior que 1.0.'])
+    data.append([184, 'pt', 'Tolerância', 'Tolerância de convergência para algoritmo iterativo. Deve ser maior ou igual a 0.0.'])
+    data.append([185, 'pt', 'Padronização (standardization)', 'Indica se é para padronizar os atributos preditivos antes de realizar o treino.'])
+    data.append([175, 'pt', 'Fit intercept', 'Se desligado, define y-intercept igual a 0. Se ligado, y-intercept é determinado pela lina de melhor ajuste.'])
+
+
+
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field_translation(conn):
     conn.execute(
-        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s',
+        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s or id IN (183,184,185,240,241,175)',
         BASE_FORM_FIELD, BASE_FORM_FIELD + 192)
 
 
@@ -868,7 +1175,14 @@ def _insert_operation_operation_form(conn):
     ops_without_attributes_field = {
         ADD_BY_FORMULA, JOIN, SAMPLE, LIMIT, WINDOW_FUNCTION, SORT, FILTER,
         DATE_DIFF, GROUP, CLEAN_MISSING, CAST, READ_DATA, SELECT, RENAME, DUPLICATE,
-        EXTRACT_FROM_ARRAY
+        EXTRACT_FROM_ARRAY,SAVE, CONCAT_ROWS,
+        SPLIT, EVALUATOR, FEATURES_REDUCTION, GRID, FEATURES, 
+        K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING, 
+        DECISION_TREE_CLASSIFIER, GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER, 
+        PERCEPTRON_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, 
+        LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
+        LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
+        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR, 
     }
     ops_with_attribute_field = {
         DATE_DIFF, EXTRACT_FROM_ARRAY
@@ -885,7 +1199,15 @@ def _insert_operation_operation_form(conn):
     #    JOIN, SAMPLE, LIMIT, WINDOW_FUNCTION,
     #}
     # Common forms
-    for op_id in ALL_OPS:
+    exclusions = set([
+        K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING, DECISION_TREE_CLASSIFIER, 
+        GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER, PERCEPTRON_CLASSIFIER, 
+        RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
+        LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
+        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR])
+
+
+    for op_id in set(ALL_OPS) - exclusions:
         #if op_id == SORT:
         #    import pdb; pdb.set_trace()
         if op_id not in ops_without_attributes_field:
@@ -902,7 +1224,7 @@ def _insert_operation_operation_form(conn):
 
     # import pdb; pdb.set_trace()
     # Each op form
-    for op_id in ALL_OPS:
+    for op_id in set(ALL_OPS) - exclusions:
         data.append([op_id,  op_id + 50])
 
     # Associate form 26 (with Sample Op fields) to the Meta operation
@@ -915,11 +1237,28 @@ def _insert_operation_operation_form(conn):
     data.append([CAST, ORIGINAL_CAST_FORM])
     # Associate form 6 (with Select Op fields) to the Meta operation
     data.append([SELECT, ORIGINAL_SELECT_FORM])
+    # Associate form 6 (with Save Op fields) to the Meta operation
+    data.append([SAVE, ORIGINAL_SAVE_FORM])
+    # Associate form 6 (with Join Op fields) to the Meta operation
+    data.append([JOIN, ORIGINAL_JOIN_FORM])
 
+
+    # Model builder
+    model_builder_items = {K_MEANS_CLUSTERING: [27], GAUSSIAN_MIXTURE_CLUSTERING: [71], 
+            DECISION_TREE_CLASSIFIER: [66], GBT_CLASSIFIER: [67], NAIVE_BAYES_CLASSIFIER: [64], 
+            PERCEPTRON_CLASSIFIER: [68] , RANDOM_FOREST_CLASSIFIER: [65], LOGISTIC_REGRESSION: [34], 
+            SVM_CLASSIFICATION: [9], GBT_REGRESSOR: [105], RANDOM_FOREST_REGRESSOR: [106], 
+            ISOTONIC_REGRESSION: [103],LINEAR_REGRESSION: [8], GENERALIZED_LINEAR_REGRESSOR: [107]}
+
+    for op_id, forms in model_builder_items.items():
+        for form_id in forms:
+            data.append([op_id, form_id])
 
     rows = [dict(list(zip(columns, row))) for row in data]
 
     rows.append({'operation_id': BASE_OP, 'operation_form_id': BASE_FORM_FIELD + 1})
+    
+    # print(set([r.get('operation_form_id') for r in rows]))
 
     op.bulk_insert(tb, rows)
 
@@ -932,7 +1271,7 @@ def _delete_operation_operation_form(conn):
 
 def _fixes(conn):
     conn.execute(
-            """ INSERT INTO operation_form_field(id, name, type, required, `order`,
+           """ INSERT INTO operation_form_field(id, name, type, required, `order`,
                 suggested_widget, scope, enable_conditions, editable, form_id)
                 VALUES(%s, 'invalid_values', 'TEXT', 0, 3, 'text', 'EXECUTION',
                 'this.errors.internalValue === "move"', 1, %s)""",
@@ -1006,6 +1345,45 @@ def _fixes(conn):
 #     conn.execute("""
 #         INSERT INTO operation_form_field_translation(id, locale, label, help)
 #         VALUES(%s, 'en', 'Attribute(s)', 'Attributes to be selected.')""", FIELD_SELECT_ALIAS)
+    conn.execute('ALTER TABLE operation_category ADD COLUMN subtype VARCHAR(200);');
+    conn.execute("""
+        INSERT INTO operation_category(id, type, subtype, `order`, default_order)
+        VALUES (%s, %s, %s, %s, %s)""", [45, 'algorithm', 'regression', 0, 0])
+
+    conn.execute("""
+        INSERT INTO operation_category(id, type, subtype, `order`, default_order)
+        VALUES (%s, %s, %s, %s, %s)""", [46, 'algorithm', 'clustering', 0, 0])
+    conn.execute("""
+        INSERT INTO operation_category_translation(id, locale, name)
+        VALUES (%s, %s, %s)""", [45, 'pt', 'Regressão'])
+
+    conn.execute("""
+        INSERT INTO operation_category_translation(id, locale, name)
+        VALUES (%s, %s, %s)""", [46, 'pt', 'Agrupamento'])
+    conn.execute("""
+        INSERT INTO operation_category_translation(id, locale, name)
+        VALUES (%s, %s, %s)""", [45, 'en', 'Regression'])
+
+    conn.execute("""
+        INSERT INTO operation_category_translation(id, locale, name)
+        VALUES (%s, %s, %s)""", [46, 'en', 'Clustering'])
+    conn.execute("UPDATE operation_category set subtype = 'classification' where id = 4")
+
+    # Generalized linear regression
+    family = [
+        {"en": "Gaussian", "key": "gaussian", "value": "Gaussian", "pt": "Gaussiano"}, 
+        {"en": "Binomial", "key": "binomial", "value": "Binomial", "pt": "Binomial"}, 
+        {"en": "Poisson", "key": "poisson", "value": "Poisson", "pt": "Poisson"}, 
+        {"en": "Gamma", "key": "gamma", "value": "Gamma", "pt": "Gamma"},
+        {"en": "Tweedie ", "key": "tweedie", "value": "Tweedie", "pt": "Tweedie"}
+    ]
+    conn.execute("""
+        UPDATE operation_form_field SET `values` = %s WHERE id = 282 """, 
+        json.dumps(family))
+
+    # Linear regression
+    conn.execute('update operation_form_field set form_id = 8 where id in (245, 248)')
+    conn.execute("update operation_form_field_translation set label = replace(label,'ElasticNet', 'ElasticNet (0<=α<=1)') where id = 248")
 
 def _undo_fixes(conn):
     conn.execute('DELETE FROM operation_form_field WHERE id = %s',
@@ -1033,11 +1411,16 @@ def _undo_fixes(conn):
             FIELD_SELECT_MODE)
     conn.execute('DELETE FROM operation_form_field WHERE id = %s',
             FIELD_SELECT_MODE)
+    conn.execute('ALTER TABLE operation_category DROP COLUMN subtype');
+
+    conn.execute('DELETE FROM operation_category_translation WHERE id in (45, 46);')
+    conn.execute('DELETE FROM operation_category WHERE id in (45, 46);')
 
     # conn.execute('DELETE FROM operation_form_field_translation WHERE id = %s',
     #         FIELD_SELECT_ALIAS)
     # conn.execute('DELETE FROM operation_form_field WHERE id = %s',
     #         FIELD_SELECT_ALIAS)
+    conn.execute('update operation_form_field set form_id = 102 where id in (245, 248)')
 
 # -----------------------
 def _execute(conn, cmd):
@@ -1071,6 +1454,13 @@ def upgrade():
         _insert_operation_form_field,
         _insert_operation_form_field_translation,
         _insert_operation_operation_form,
+        """update operation_form_field set `values` = 
+            replace(`values`, 'os primeiro ', 'os primeiros ')
+            where id = 102;""",
+        """update operation_form_field set `values` = 
+        replace(`values`, 'Amostrar N registros a partir', 
+        'Amostrar N registros aleatórios a partir')
+        where id = 102;""",
     ]
     try:
         for cmd in commands:
@@ -1078,6 +1468,8 @@ def upgrade():
     except Exception as e:
         pass
         print(e)
+        import traceback
+        traceback.print_exc()
         session.rollback()
         # raise
     session.commit()

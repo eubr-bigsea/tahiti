@@ -43,11 +43,14 @@ def deep_merge(d1, d2, in_conflict=lambda v1, v2: v2):
 
 
 def optimize_operation_query(operations, only_translation=False):
-    current_translation = db.aliased(Operation.current_translation,
-                                     name='operation_translation')
+    #current_translation = db.aliased(Operation.current_translation,
+    #                                 name='operation_translation')
     # fallback_translation = db.aliased(Operation.fallback_translation)
-    op = operations \
-        .join(current_translation).options(joinedload('current_translation'))
+    #op = operations \
+    #    .join(current_translation).options(joinedload('current_translation'))
+
+    op = operations.options(joinedload(Operation.current_translation))
+
     # .options(db.contains_eager(Operation.current_translation,
     #                           alias=current_translation))
     if not only_translation:
@@ -74,6 +77,7 @@ class OperationListApi(Resource):
     def get():
         @cache.memoize(3600 * 24, make_name=lambda f: request.url)
         def result():
+
             config = current_app.config['TAHITI_CONFIG']
 
             simple = request.args.get('simple', 'false') == 'true'
@@ -153,20 +157,20 @@ class OperationListApi(Resource):
                                        '%%{}%%'.format(name),
                                        Unicode)
                 operations = operations.filter(text(
-                    'operation_translation.name LIKE :param_name').bindparams(
+                    'operation_translation_1.name LIKE :param_name').bindparams(
                         param_name=f'%%{name}%%'))
                 #operations = operations.filter(OperationTranslation.name.ilike(
                 #    '%' + name + '%'))
 
             current_locale = g.user.locale
 
-            if platform == '5':  # FIXME hard coded
-                bindparam('param_locale', 'en', Unicode)
-            else:
-                bindparam('param_locale', current_locale, Unicode)
-            operations = operations.filter(text(
-                'operation_translation.locale = :param_locale').bindparams(
-                    param_locale=current_locale))
+            # if platform == '5':  # FIXME hard coded
+            #    bindparam('param_locale', 'en', Unicode)
+            #else:
+            #    bindparam('param_locale', current_locale, Unicode)
+            # operations = operations.filter(text(
+            #    'operation_translation.locale = :param_locale').bindparams(
+            #        param_locale=current_locale))
 
             exclude.extend(['platforms.icon',
                             'platforms.description'])
@@ -187,7 +191,7 @@ class OperationListApi(Resource):
                 try:
                     s = request.args.get('sort')
                     if s == 'name':
-                        s = 'operation_translation.name'
+                        s = 'operation_translation_1.name'
                     else:
                         s = '1'
                     if request.args.get('asc') == 'true':
@@ -213,7 +217,7 @@ class OperationListApi(Resource):
                     raise
             else:
                 operations = operations.order_by(
-                    text('operation_translation.name'))
+                    text('operation_translation_1.name'))
                 items = operations
                 for item in items:
                     if item.id in disabled_ops:

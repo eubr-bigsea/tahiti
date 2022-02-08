@@ -389,6 +389,7 @@ class OperationCategory(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     type = Column(String(200), nullable=False)
+    subtype = Column(String(200))
     order = Column(Integer,
                    default=1, nullable=False)
     default_order = Column(Integer,

@@ -249,7 +249,9 @@ class WorkflowListApi(Resource):
             return result, result_code
 
         try:
-            
+            if 'forms' in params and params['forms']:
+                workflow.forms = json.dumps(params['forms'])
+
             db.session.add(workflow)
             db.session.flush()
             update_port_name_in_flows(db.session, workflow.id)
@@ -358,12 +360,12 @@ class WorkflowDetailApi(Resource):
                 # params['user_login'] = g.user.login
                 # params['user_name'] = g.user.name
 
-                if params.get('forms') is not None:
-                    params['forms'] = json.dumps(params['forms'])
-                else:
-                    params['forms'] = '{}'
                 response_schema = WorkflowItemResponseSchema()
                 workflow  = request_schema.load(params, partial=True)
+
+                if 'forms' in params and params['forms']:
+                    workflow.forms = json.dumps(params['forms'])
+
                 filtered = filter_by_permissions(
                     Workflow.query, [PermissionType.WRITE])
                 temp_workflow = filtered.filter(

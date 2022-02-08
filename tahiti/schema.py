@@ -401,6 +401,7 @@ class OperationCategoryCreateRequestSchema(BaseSchema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     type = fields.String(required=True)
+    subtype = fields.String(required=False, allow_none=True)
     order = fields.Integer(
         required=False,
         allow_none=True,
@@ -428,6 +429,7 @@ class OperationCategoryListResponseSchema(BaseSchema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     type = fields.String(required=True)
+    subtype = fields.String(required=False, allow_none=True)
     order = fields.Integer(
         required=False,
         allow_none=True,
@@ -454,6 +456,7 @@ class OperationCategoryItemResponseSchema(BaseSchema):
     """ JSON serialization schema """
     name = fields.String(required=True)
     type = fields.String(required=True)
+    subtype = fields.String(required=False, allow_none=True)
     order = fields.Integer(
         required=False,
         allow_none=True,
