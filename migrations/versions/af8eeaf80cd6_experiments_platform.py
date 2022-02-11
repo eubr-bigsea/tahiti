@@ -136,6 +136,7 @@ ISOTONIC_REGRESSION = BASE_OP + 265
 GBT_REGRESSOR = BASE_OP + 266
 RANDOM_FOREST_REGRESSOR = BASE_OP + 267
 GENERALIZED_LINEAR_REGRESSOR = BASE_OP + 268
+DECISION_TREE_REGRESSOR = BASE_OP + 269
 # AFT_SURVIVAL_REGRESSION = BASE_OP + 269 # Not supported
 
 # Categories
@@ -199,7 +200,8 @@ ALL_OPS = [
     PERCEPTRON_CLASSIFIER, RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION,
     SVM_CLASSIFICATION,
     LINEAR_REGRESSION, ISOTONIC_REGRESSION, #AFT_SURVIVAL_REGRESSION,
-    GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR
+    GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
+    DECISION_TREE_REGRESSOR,
  ]
 
 ATTRIBUTES_FORM = BASE_FORM + 2
@@ -354,6 +356,7 @@ def _insert_operation(conn):
       [GBT_REGRESSOR, 'gbt-regressor', 1, 'TRANSFORMATION', '', '', ''],
       [RANDOM_FOREST_REGRESSOR, 'random-forest-regressor', 1, 'TRANSFORMATION', '', '', ''],
       [GENERALIZED_LINEAR_REGRESSOR, 'generalized-linear-regressor', 1, 'TRANSFORMATION', '', '', ''],
+      [DECISION_TREE_REGRESSOR, 'decision-tree-regressor', 1, 'TRANSFORMATION', '', '', ''],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -511,6 +514,7 @@ def _insert_operation_translation(conn):
       [GBT_REGRESSOR, 'pt', 'Regressão GBT', 'Regressão GBT (Gradient Boosted Tree).', ''],
       [RANDOM_FOREST_REGRESSOR, 'pt', 'Regressão Random Forest', 'Regressão Random Forest.', ''],
       [GENERALIZED_LINEAR_REGRESSOR, 'pt', 'Regressão Linear Generalizada', 'Regressão linear generalizada.', ''],
+      [DECISION_TREE_REGRESSOR, 'pt', 'Regressão por Árvore de Decisão', 'Regressão por árvore de decisão.', ''],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -685,6 +689,7 @@ def _insert_operation_category_operation(conn):
       [GBT_REGRESSOR, CAT_MODEL_BUILDER],
       [RANDOM_FOREST_REGRESSOR, CAT_MODEL_BUILDER],
       [GENERALIZED_LINEAR_REGRESSOR, CAT_MODEL_BUILDER],
+      [DECISION_TREE_REGRESSOR, CAT_MODEL_BUILDER],
 
     ]
     for op_id in [
@@ -694,7 +699,8 @@ def _insert_operation_category_operation(conn):
         data.append([op_id, CAT_CLASSIFICATION])
 
     for op_id in [LINEAR_REGRESSION, ISOTONIC_REGRESSION, 
-        GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR]:
+        GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
+        DECISION_TREE_REGRESSOR]:
         data.append([op_id, CAT_REGRESSION])
 
     for op_id in [K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING]:
@@ -748,7 +754,8 @@ def _insert_operation_form(conn):
         GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER, PERCEPTRON_CLASSIFIER, 
         RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
         LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
-        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR])
+        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
+        DECISION_TREE_REGRESSOR])
 
     for op_id in set(ALL_OPS) - exclusions: # Operations' form
         data.append([op_id + 50, 1, 1, 'execution'])
@@ -789,7 +796,8 @@ def _insert_operation_form_translation(conn):
         GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER, PERCEPTRON_CLASSIFIER, 
         RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
         LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
-        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR])
+        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
+        DECISION_TREE_REGRESSOR])
 
 
     for op_id in set(ALL_OPS) - exclusions: # Operations' form
@@ -1183,6 +1191,7 @@ def _insert_operation_operation_form(conn):
         LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
         LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
         RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR, 
+        DECISION_TREE_REGRESSOR,
     }
     ops_with_attribute_field = {
         DATE_DIFF, EXTRACT_FROM_ARRAY
@@ -1204,7 +1213,8 @@ def _insert_operation_operation_form(conn):
         GBT_CLASSIFIER, NAIVE_BAYES_CLASSIFIER, PERCEPTRON_CLASSIFIER, 
         RANDOM_FOREST_CLASSIFIER, LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
         LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
-        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR])
+        RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
+        DECISION_TREE_REGRESSOR])
 
 
     for op_id in set(ALL_OPS) - exclusions:
@@ -1248,7 +1258,8 @@ def _insert_operation_operation_form(conn):
             DECISION_TREE_CLASSIFIER: [66], GBT_CLASSIFIER: [67], NAIVE_BAYES_CLASSIFIER: [64], 
             PERCEPTRON_CLASSIFIER: [68] , RANDOM_FOREST_CLASSIFIER: [65], LOGISTIC_REGRESSION: [34], 
             SVM_CLASSIFICATION: [9], GBT_REGRESSOR: [105], RANDOM_FOREST_REGRESSOR: [106], 
-            ISOTONIC_REGRESSION: [103],LINEAR_REGRESSION: [8], GENERALIZED_LINEAR_REGRESSOR: [107]}
+            ISOTONIC_REGRESSION: [103],LINEAR_REGRESSION: [8], GENERALIZED_LINEAR_REGRESSOR: [107],
+            DECISION_TREE_REGRESSOR: [29]}
 
     for op_id, forms in model_builder_items.items():
         for form_id in forms:
@@ -1369,21 +1380,52 @@ def _fixes(conn):
         VALUES (%s, %s, %s)""", [46, 'en', 'Clustering'])
     conn.execute("UPDATE operation_category set subtype = 'classification' where id = 4")
 
-    # Generalized linear regression
-    family = [
-        {"en": "Gaussian", "key": "gaussian", "value": "Gaussian", "pt": "Gaussiano"}, 
-        {"en": "Binomial", "key": "binomial", "value": "Binomial", "pt": "Binomial"}, 
-        {"en": "Poisson", "key": "poisson", "value": "Poisson", "pt": "Poisson"}, 
-        {"en": "Gamma", "key": "gamma", "value": "Gamma", "pt": "Gamma"},
-        {"en": "Tweedie ", "key": "tweedie", "value": "Tweedie", "pt": "Tweedie"}
+    # Generalized linear regressio
+    # family = [
+    #     {"en": "Gaussian", "key": "gaussian", "value": "Gaussian", "pt": "Gaussiano"}, 
+    #     {"en": "Binomial", "key": "binomial", "value": "Binomial", "pt": "Binomial"}, 
+    #     {"en": "Poisson", "key": "poisson", "value": "Poisson", "pt": "Poisson"}, 
+    #     {"en": "Gamma", "key": "gamma", "value": "Gamma", "pt": "Gamma"},
+    #     {"en": "Tweedie ", "key": "tweedie", "value": "Tweedie", "pt": "Tweedie"}
+    # ]
+    # conn.execute("""
+    #     UPDATE operation_form_field SET `values` = %s WHERE id = 282 """, 
+    #     json.dumps(family))
+    conn.execute('DELETE FROM operation_form_field_translation WHERE id = 282')
+    conn.execute('DELETE FROM operation_form_field WHERE id = 282')
+    conn.execute("""UPDATE operation_form_field_translation SET 
+            label = 'Família/predição de link',
+            help = 'Família/predição de link' 
+            where id = 283 and locale = 'pt'""")
+    conn.execute("""UPDATE operation_form_field_translation SET 
+            label = 'Family/link prediction' ,
+            help = 'Family/link prediction' 
+            where id = 283 and locale = 'en'""")
+    link_pred = [
+            {"en": "Binomial / logit", "key": "binomial:logit", "pt": "Binomial / logit"}, 
+            {"en": "Binomial / probit", "key": "binomial:probit", "pt": "Binomial / probit"}, 
+            {"en": "Binomial / cloglog", "key": "binomial:cloglog", "pt": "Binomial / cloglog"}, 
+            {"en": "Gamma / inverse", "key": "gamma:inverse", "pt": "Gama / inversa"}, 
+            {"en": "Gamma / identity", "key": "gamma:identity", "pt": "Gama / identidade"}, 
+            {"en": "Gamma / log", "key": "gamma:log", "pt": "Gama / log"},
+            {"en": "Gaussian / Identity", "key": "gaussian:identity", "pt": "Gaussiana / Identidade"}, 
+            {"en": "Gaussian / log", "key": "gaussian:log", "pt": "Gaussiana / log"}, 
+            {"en": "Gaussian / inverse", "key": "gaussian:inverse", "pt": "Gaussiana / inversa"}, 
+            {"en": "Poisson / log", "key": "poisson:log", "pt": "Poisson / log (Poisson)"}, 
+            {"en": "Poisson / identity", "key": "poisson:identity", "pt": "Poisson / identidade"}, 
+            {"en": "Poisson / sqrt", "key": "poisson:sqrt", "pt": "Poisson / sqrt (raiz quadrada)"}, 
     ]
-    conn.execute("""
-        UPDATE operation_form_field SET `values` = %s WHERE id = 282 """, 
-        json.dumps(family))
+    conn.execute("update operation_form_field set name='family_link', `values` = %s where id = 283",
+            json.dumps(link_pred))
+
+    solver = [{"en": "IRLS (Iteratively reweighted least squares)", "key": "irls", "pt": "Mínimos quadrados reponderados iterativamente (IRLS)"}]
+    conn.execute("update operation_form_field set `values` = %s where id = 285",
+            json.dumps(solver))
 
     # Linear regression
     conn.execute('update operation_form_field set form_id = 8 where id in (245, 248)')
-    conn.execute("update operation_form_field_translation set label = replace(label,'ElasticNet', 'ElasticNet (0<=α<=1)') where id = 248")
+    conn.execute("update operation_form_field_translation set label = 'Mix para ElasticNet (0<=α<=1)' where id = 248 and locale='pt'")
+    conn.execute("update operation_form_field_translation set label = 'ElasticNet mix (0<=α<=1)' where id = 248 and locale='en'")
 
 def _undo_fixes(conn):
     conn.execute('DELETE FROM operation_form_field WHERE id = %s',
