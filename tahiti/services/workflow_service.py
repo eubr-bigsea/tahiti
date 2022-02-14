@@ -13,6 +13,8 @@ class WorkflowService(object):
             return common + self._get_tasks_for_clustering(workflow, method)
         elif task_type == 'regression':
             return common + self._get_tasks_for_regression(workflow, method)
+        elif task_type == 'classification':
+            return common + self._get_tasks_for_classification(workflow, method)
 
         return common
 
@@ -29,8 +31,8 @@ class WorkflowService(object):
             id=str(uuid.uuid4()),
             operation=split, name=split.name, 
             workflow=workflow, forms=forms, left=0, top=0,
-            display_order=0, z_index=0))
-        
+            display_order=1, z_index=0))
+
         sample = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='sample', Platform.id==1000).first()
 
@@ -41,16 +43,38 @@ class WorkflowService(object):
             id=str(uuid.uuid4()),
             operation=sample, name=sample.name, 
             workflow=workflow, forms=forms, left=0, top=0,
-            display_order=0, z_index=0))
+            display_order=1, z_index=0))
         return result
 
 
     def _get_tasks_for_clustering(self, workflow: Workflow, 
             method: str) -> typing.List[Task]:
 
+        result = []
+        evaluator = Operation.query.join(Operation.platforms).filter(
+            Operation.slug=='evaluator', Platform.id==1000).first()
+        forms = json.dumps(
+            {"task_type": {"value": "clustering"}, "clust_metric": {"value": "silhouette"}}
+        )
+        result.append(Task(
+            id=str(uuid.uuid4()),
+            operation=evaluator, name=evaluator.name, 
+            workflow=workflow, forms=forms, left=0, top=0,
+            display_order=1, z_index=0))
+
+        grid = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='grid', Platform.id==1000).first()
+
+        forms = json.dumps({"strategy": {"value": "grid"}})
+        result.append(Task(
+            id=str(uuid.uuid4()),
+            operation=grid, name=grid.name, 
+            workflow=workflow, forms=forms, left=0, top=0,
+            display_order=1, z_index=0))
+
+
         k_means = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='k-means', Platform.id==1000).first()
-        result = []
         if k_means and method == 'fast':
             k = {"list": ["2", "4", "8", "16"], "type": "list"}
             alg_type = ["kmeans"]
@@ -85,7 +109,7 @@ class WorkflowService(object):
             id=str(uuid.uuid4()),
             operation=evaluator, name=evaluator.name, 
             workflow=workflow, forms=forms, left=0, top=0,
-            display_order=0, z_index=0))
+            display_order=1, z_index=0))
 
         features = Operation.query.join(Operation.platforms).filter(
             Operation.slug=='features', Platform.id==1000).first()
@@ -102,7 +126,7 @@ class WorkflowService(object):
             id=str(uuid.uuid4()),
             operation=features, name=features.name, 
             workflow=workflow, forms=forms, left=0, top=0,
-            display_order=0, z_index=0))
+            display_order=1, z_index=0))
 
 
         if method == 'fast':
@@ -145,7 +169,7 @@ class WorkflowService(object):
                 id=str(uuid.uuid4()),
                 operation=grid, name=grid.name, 
                 workflow=workflow, forms=forms, left=0, top=0,
-                display_order=0, z_index=0))
+                display_order=1, z_index=0))
 
             random_forest = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='random-forest-regressor', Platform.id==1000).first()
@@ -202,11 +226,150 @@ class WorkflowService(object):
                 id=str(uuid.uuid4()),
                 operation=grid, name=grid.name, 
                 workflow=workflow, forms=forms, left=0, top=0,
-                display_order=0, z_index=0))
-
-
+                display_order=1, z_index=0))
 
         return result
 
+    def _get_tasks_for_classification(self, workflow: Workflow, 
+            method: str) -> typing.List[Task]:
+
+        result = []
+
+        evaluator = Operation.query.join(Operation.platforms).filter(
+            Operation.slug=='evaluator', Platform.id==1000).first()
+        forms = json.dumps(
+            {"task_type": {"value": "multiclass-classification"}, 
+                "multi_metric": {"value": "accuracy"}}
+        )
+        result.append(Task(
+            id=str(uuid.uuid4()),
+            operation=evaluator, name=evaluator.name, 
+            workflow=workflow, forms=forms, left=0, top=0,
+            display_order=1, z_index=0))
+
+        features = Operation.query.join(Operation.platforms).filter(
+            Operation.slug=='features', Platform.id==1000).first()
+
+        workflow_form = json.loads(workflow.forms)
+
+        forms = json.dumps(
+                {"features": {"value": [
+                    {"name": workflow_form.get('$meta').get('value').get('label'), 
+                        "usage": "label", "enable": True, 
+                        "feature_type": "numerical", "transform": "keep"}]}}
+        )
+        result.append(Task(
+            id=str(uuid.uuid4()),
+            operation=features, name=features.name, 
+            workflow=workflow, forms=forms, left=0, top=0,
+            display_order=1, z_index=0))
 
 
+        if method == 'fast':
+            random_forest = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='random-forest-classifier', Platform.id==1000).first()
+
+            trees = {"list": ["100"], "type": "list"}
+            depth = {"list": ["12", "6"], "type": "list"}
+            forms = json.dumps({
+                "num_trees": {
+                    "value": trees, "internalValue": trees}, 
+                "max_depth": {"value": depth, "internalValue": depth},
+            })
+            result.append(Task(
+                id=str(uuid.uuid4()),
+                operation=random_forest, name=random_forest.name, 
+                workflow=workflow, forms=forms, left=0, top=0,
+                display_order=2, z_index=2))
+
+        elif method == 'interpretable':
+            dt = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='decision-tree-classifier', Platform.id==1000).first()
+
+            depth = {"list": ["5"], "type": "list"}
+            forms = json.dumps({
+                "max_depth": {"value": depth, "internalValue": depth},
+                "impurity": {"value": ["gini"], "internalValue": ["gini"]}
+            })
+            result.append(Task(
+                id=str(uuid.uuid4()),
+                operation=dt, name=dt.name, 
+                workflow=workflow, forms=forms, left=0, top=0,
+                display_order=3, z_index=3))
+
+        elif method == 'performance':
+            grid = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='grid', Platform.id==1000).first()
+
+            forms = json.dumps({"strategy": {"value": "random"}, 
+                "max_iterations": {"value": 30}})
+            result.append(Task(
+                id=str(uuid.uuid4()),
+                operation=grid, name=grid.name, 
+                workflow=workflow, forms=forms, left=0, top=0,
+                display_order=1, z_index=0))
+
+            random_forest = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='random-forest-classifier', Platform.id==1000).first()
+
+            trees = {"type": "range", "min": 80, "max": 200, "distribution": "uniform"}
+            depth = {"type": "range", "min": 5, "max": 10, "distribution": "uniform"}
+            feat_subset = ["auto"]
+            forms = json.dumps({
+                "num_trees": {
+                    "value": trees, "internalValue": trees}, 
+                "max_depth": {"value": depth, "internalValue": depth},
+                "feature_subset_strategy": {"value": feat_subset, 
+                    "internalValue": feat_subset}, 
+            })
+            result.append(Task(
+                id=str(uuid.uuid4()),
+                operation=random_forest, name=random_forest.name, 
+                workflow=workflow, forms=forms, left=0, top=0,
+                display_order=2, z_index=2))
+
+            gbt = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='gbt-classifier', Platform.id==1000).first()
+            depth = {"type": "range", "min": 5, "max": 10, "distribution": "uniform"}
+            forms = json.dumps({
+                "max_depth": {"value": depth, "internalValue": depth},
+            })
+            result.append(Task(
+                id=str(uuid.uuid4()),
+                operation=gbt, name=gbt.name, 
+                workflow=workflow, forms=forms, left=0, top=0,
+                display_order=2, z_index=2))
+
+
+            log_reg = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='logistic-regression', Platform.id==1000).first()
+
+            reg_param = {"elastic_net_param": 
+                    {"value": {"type": "range", "min": 0.01, 
+                        "max": 100, "distribution": "log_uniform"}, 
+                        "internalValue": {"type": "range", "min": 0.01, 
+                            "max": 100, "distribution": "log_uniform"}}}
+            forms = json.dumps({
+                "reg_param": {"value": reg_param, "internalValue": reg_param},
+            })
+            result.append(Task(
+                id=str(uuid.uuid4()),
+                operation=log_reg, name=log_reg.name, 
+                workflow=workflow, forms=forms, left=0, top=0,
+                display_order=2, z_index=2))
+
+
+        if method in ('fast', 'interpretable'):
+            log_reg = Operation.query.join(Operation.platforms).filter(
+                Operation.slug=='logistic-regression', Platform.id==1000).first()
+
+            reg_param = {"type": "list", "list": ["0.01", "0.1", "1", "10", "100"]}
+            forms = json.dumps({
+                "reg_param": {"value": reg_param, "internalValue": reg_param},
+            })
+            result.append(Task(
+                id=str(uuid.uuid4()),
+                operation=log_reg, name=log_reg.name, 
+                workflow=workflow, forms=forms, left=0, top=0,
+                display_order=2, z_index=2))
+        return result
