@@ -14,6 +14,7 @@ from sqlalchemy.sql.elements import and_
 from marshmallow.exceptions import ValidationError
 from tahiti.app_auth import requires_auth
 from tahiti.schema import *
+from tahiti.services.workflow_service import WorkflowService
 
 log = logging.getLogger(__name__)
 
@@ -226,6 +227,8 @@ class WorkflowListApi(Resource):
             workflow = request_schema.load(cloned)
         elif request.json:
             data = request.json
+            meta = request.json.pop('$meta')
+
             if 'user' in data:
                 data.pop('user')
             request_schema = WorkflowCreateRequestSchema()
@@ -251,6 +254,13 @@ class WorkflowListApi(Resource):
         try:
             if 'forms' in params and params['forms']:
                 workflow.forms = json.dumps(params['forms'])
+
+            if (workflow.type == WorkflowType.MODEL_BUILDER 
+                    and meta is not None):
+                # Creates initial tasks
+                tasks = WorkflowService().get_tasks_for_modeling(
+                    workflow, meta.get('task_type'), meta.get('method'))
+                workflow.tasks.extend(tasks)
 
             db.session.add(workflow)
             db.session.flush()
