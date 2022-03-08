@@ -14,9 +14,11 @@ from sqlalchemy.sql.elements import and_
 from marshmallow.exceptions import ValidationError
 from tahiti.app_auth import requires_auth
 from tahiti.schema import *
+from tahiti.services.workflow_service import WorkflowService
 
 log = logging.getLogger(__name__)
 
+WORKFLOW_SPECIFICATION = '2.4.0'
 
 def optimize_workflow_query(workflows):
     return workflows \
@@ -110,6 +112,13 @@ class WorkflowListApi(Resource):
             workflows = test_and_apply_filter(request, 'platform', workflows,
                                               lambda v: Workflow.platform.has(slug=v))
 
+            types = request.args.get('types')
+            if types == 'experiment':
+                workflows = workflows.filter(Workflow.type.in_([
+                    'DATA_EXPLORER', 'MODEL_BUILDER', 'VIS_BUILDER']))
+            elif types:
+                workflows = workflows.filter(Workflow.type.in_(
+                    [x.strip() for x in types.split(',')]))
             # platform = request.args.get('platform', None)
             # if platform:
             #    workflows = workflows.filter(
@@ -176,9 +185,10 @@ class WorkflowListApi(Resource):
             if pagination.total < (page - 1) * page_size and page != 1:
                 # Nothing in that specified page, return to page 1
                 pagination = workflows.paginate(1, page_size, False)
+            schema = WorkflowListResponseSchema(many=True, only=['specification'] + only)
+            schema.context = {'specification': WORKFLOW_SPECIFICATION}
             result = {
-                'data': WorkflowListResponseSchema(many=True,
-                                                   only=only).dump(
+                'data': schema.dump(
                     pagination.items),
                 'pagination': {'page': page, 'size': page_size,
                                'total': pagination.total,
@@ -217,6 +227,8 @@ class WorkflowListApi(Resource):
             workflow = request_schema.load(cloned)
         elif request.json:
             data = request.json
+            meta = request.json.pop('$meta')
+
             if 'user' in data:
                 data.pop('user')
             request_schema = WorkflowCreateRequestSchema()
@@ -240,10 +252,20 @@ class WorkflowListApi(Resource):
             return result, result_code
 
         try:
-            
+            if 'forms' in params and params['forms']:
+                workflow.forms = json.dumps(params['forms'])
+
+            if (workflow.type == WorkflowType.MODEL_BUILDER 
+                    and meta is not None):
+                # Creates initial tasks
+                tasks = WorkflowService().get_tasks_for_modeling(
+                    workflow, meta.get('task_type'), meta.get('method'))
+                workflow.tasks.extend(tasks)
+
             db.session.add(workflow)
             db.session.flush()
             update_port_name_in_flows(db.session, workflow.id)
+            response_schema.context = {'specification': WORKFLOW_SPECIFICATION}
             result, result_code = response_schema.dump(
                 workflow), 200
             if workflow.is_template:
@@ -275,7 +297,9 @@ class WorkflowDetailApi(Resource):
     def get(workflow_id):
         workflow = get_workflow(workflow_id)
         if workflow is not None:
-            return WorkflowItemResponseSchema().dump(workflow)
+            schema = WorkflowItemResponseSchema()
+            schema.context = {'specification': WORKFLOW_SPECIFICATION}
+            return schema.dump(workflow)
         else:
             return dict(status="ERROR", message="Not found"), 404
 
@@ -322,6 +346,7 @@ class WorkflowDetailApi(Resource):
                                      if v.get('value') is not None or
                                      v.get('publishing_enabled') == True}
                     task['operation_id'] = task['operation']['id']
+                    task['environment'] = 'DESIGN'
                 
                 for variable in data.get('variables', []):
                     variable['parameters'] = json.dumps(variable['parameters'])
@@ -345,12 +370,12 @@ class WorkflowDetailApi(Resource):
                 # params['user_login'] = g.user.login
                 # params['user_name'] = g.user.name
 
-                if params.get('forms') is not None:
-                    params['forms'] = json.dumps(params['forms'])
-                else:
-                    params['forms'] = '{}'
                 response_schema = WorkflowItemResponseSchema()
                 workflow  = request_schema.load(params, partial=True)
+
+                if 'forms' in params and params['forms']:
+                    workflow.forms = json.dumps(params['forms'])
+
                 filtered = filter_by_permissions(
                     Workflow.query, [PermissionType.WRITE])
                 temp_workflow = filtered.filter(
