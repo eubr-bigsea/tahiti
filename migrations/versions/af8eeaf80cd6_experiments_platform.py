@@ -139,6 +139,8 @@ GENERALIZED_LINEAR_REGRESSOR = BASE_OP + 268
 DECISION_TREE_REGRESSOR = BASE_OP + 269
 # AFT_SURVIVAL_REGRESSION = BASE_OP + 269 # Not supported
 
+VISUALIZATION = BASE_OP + 270
+
 # Categories
 CAT_INTERN = BASE_CATEGORY + 0
 CAT_EDIT = BASE_CATEGORY + 1
@@ -154,6 +156,7 @@ CAT_BOOL = BASE_CATEGORY + 10
 CAT_DATE = BASE_CATEGORY + 11
 CAT_ARRAY= BASE_CATEGORY + 12
 CAT_MODEL_BUILDER = BASE_CATEGORY + 13
+CAT_VISUALIZATION_BUILDER = BASE_CATEGORY + 14
 
 CAT_CLASSIFICATION = 4
 CAT_REGRESSION = 45
@@ -202,6 +205,9 @@ ALL_OPS = [
     LINEAR_REGRESSION, ISOTONIC_REGRESSION, #AFT_SURVIVAL_REGRESSION,
     GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
     DECISION_TREE_REGRESSOR,
+
+    # Visualization builder
+    VISUALIZATION,
  ]
 
 ATTRIBUTES_FORM = BASE_FORM + 2
@@ -357,6 +363,8 @@ def _insert_operation(conn):
       [RANDOM_FOREST_REGRESSOR, 'random-forest-regressor', 1, 'TRANSFORMATION', '', '', ''],
       [GENERALIZED_LINEAR_REGRESSOR, 'generalized-linear-regressor', 1, 'TRANSFORMATION', '', '', ''],
       [DECISION_TREE_REGRESSOR, 'decision-tree-regressor', 1, 'TRANSFORMATION', '', '', ''],
+      
+      [VISUALIZATION, 'visualization', 1, 'TRANSFORMATION', '', '', ''],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -515,6 +523,8 @@ def _insert_operation_translation(conn):
       [RANDOM_FOREST_REGRESSOR, 'pt', 'Regressão Random Forest', 'Regressão Random Forest.', ''],
       [GENERALIZED_LINEAR_REGRESSOR, 'pt', 'Regressão Linear Generalizada', 'Regressão linear generalizada.', ''],
       [DECISION_TREE_REGRESSOR, 'pt', 'Regressão por Árvore de Decisão', 'Regressão por árvore de decisão.', ''],
+      
+      [VISUALIZATION, 'pt', 'Visualização de dados', 'Visualização de dados.', ''],
 
     ]
     rows = [dict(zip(columns, row)) for row in data]
@@ -546,7 +556,8 @@ def _insert_operation_category(conn):
       [CAT_BOOL, 'data-type', 100, 100],
       [CAT_DATE, 'data-type', 100, 100],
       [CAT_ARRAY, 'data-type', 100, 100],
-      [CAT_MODEL_BUILDER, 'model-builder', 1, 1]
+      [CAT_MODEL_BUILDER, 'model-builder', 1, 1],
+      [CAT_VISUALIZATION_BUILDER, 'visualization-builder', 1, 1]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -554,7 +565,7 @@ def _insert_operation_category(conn):
 def _delete_operation_category(conn):
     conn.execute(
         'DELETE from operation_category WHERE id BETWEEN %s AND %s',
-        BASE_CATEGORY, BASE_CATEGORY + 13)
+        BASE_CATEGORY, BASE_CATEGORY + 15)
 
 def _insert_operation_category_translation(conn):
     tb = table('operation_category_translation',
@@ -690,6 +701,13 @@ def _insert_operation_category_operation(conn):
       [RANDOM_FOREST_REGRESSOR, CAT_MODEL_BUILDER],
       [GENERALIZED_LINEAR_REGRESSOR, CAT_MODEL_BUILDER],
       [DECISION_TREE_REGRESSOR, CAT_MODEL_BUILDER],
+
+
+      [READ_DATA, CAT_VISUALIZATION_BUILDER],
+      [FILTER, CAT_VISUALIZATION_BUILDER],
+      [GROUP, CAT_VISUALIZATION_BUILDER],
+      [SAMPLE, CAT_VISUALIZATION_BUILDER],
+      [VISUALIZATION, CAT_VISUALIZATION_BUILDER],
 
     ]
     for op_id in [
@@ -1015,6 +1033,24 @@ def _insert_operation_form_field(conn):
       [BASE_FORM_FIELD + 111, 'reg_metric', 'TEXT', 1, 2, 'rmse' , 'features', None, json.dumps(regression_metrics), 'EXECUTION', None, 1, EVALUATOR + 50],
       [BASE_FORM_FIELD + 112, 'clust_metric', 'TEXT', 1, 2, 'rmse' , 'features', None, json.dumps(clustering_metrics), 'EXECUTION', None, 1, EVALUATOR + 50],
       [BASE_FORM_FIELD + 113, 'k', 'INTEGER', 1, 0, None, 'integer', None, None, 'EXECUTION', 'this.method.internalValue === "pca"', 1, FEATURES_REDUCTION + 50],
+      
+      [BASE_FORM_FIELD + 114, 'type', 'INTEGER', 1, 0, None, 'integer', None, None, 'EXECUTION', '{"multiple": false}', 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 115, 'x_axis', 'TEXT', 1, 1, None, 'atribute-selector', None, None, 'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 116, 'y_axis', 'TEXT', 1, 1, None, 'atribute-selector', None, None, 'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 117, 'display_legend', 'INTEGER', 1, 1, None, 'checkbox', None, None, 'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 118, 'palette', 'TEXT', 1, 0, None, 'color-palette', None, None, 'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 119, 'direction', 'TEXT', 1, 0, None, 'dropdown', None, json.dumps(
+          [{'key': 'vertical', 'pt': 'Vertical', 'en': 'Vertical'}, {'key': 'horizontal', 'pt': 'Horizontal', 'en': 'Horizontal'}]), 
+          'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 120, 'stacked', 'INTEGER', 1, 0, None, 'checkbox', None, None, 'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 121, 'hole', 'FLOAT', 1, 0, None, 'decimal', None, None, 'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 122, 'line_stroke', 'INTEGER', 1, 0, None, 'integer', None, None, 'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 123, 'line_type', 'TEXT', 1, 0, None, 'dropdown', None, json.dumps(
+          [{'key': 'solid', 'pt': 'Sólida', 'en': 'Solid'}, {'key': 'dot', 'pt': 'Ponto', 'en': 'Dot'}, {'key': 'dashed', 'pt': 'Tracejado', 'en': 'Dashed'}]), 
+          'EXECUTION', None, 1, VISUALIZATION + 50],
+      [BASE_FORM_FIELD + 124, 'mode', 'TEXT', 1, 0, None, 'dropdown', None, json.dumps(
+          [{'key': 'lines', 'pt': 'Linhas', 'en': 'Lines'}, {'key': 'marks', 'pt': 'Marcas', 'en': 'Marks'}, {'key': 'lines+markers', 'pt': 'Linhas e marcas', 'en': 'Lines and marks'}]), 
+          'EXECUTION', None, 1, VISUALIZATION + 50],
     ]
 
     # Fix generalized linear regression
@@ -1057,7 +1093,7 @@ def _insert_operation_form_field(conn):
 def _delete_operation_form_field(conn):
     conn.execute(
         'DELETE from operation_form_field WHERE (id BETWEEN %s AND %s) or id IN (183,184,185,240,241,175)',
-        BASE_FORM_FIELD, BASE_FORM_FIELD + 120)
+        BASE_FORM_FIELD, BASE_FORM_FIELD + 140)
 
 def _insert_operation_form_field_translation(conn):
     tb = table('operation_form_field_translation',
@@ -1144,7 +1180,20 @@ def _insert_operation_form_field_translation(conn):
       [BASE_FORM_FIELD + 111, 'pt', 'Métrica', 'Métrica'],
       [BASE_FORM_FIELD + 112, 'pt', 'Métrica', 'Métrica'],
       [BASE_FORM_FIELD + 113, 'pt', 'Número de componentes principais (k)', 'Número de componentes principais (k).'],
+      
+      [BASE_FORM_FIELD + 114, 'pt', 'Tipo', 'Tipo da visualização.'],
+      [BASE_FORM_FIELD + 115, 'pt', 'Eixo X', 'Atributo usado no eixo X.'],
+      [BASE_FORM_FIELD + 116, 'pt', 'Eixo Y', 'Atributo usado no eixo Y.'],
+      [BASE_FORM_FIELD + 117, 'pt', 'Exibir leganda', 'Indica se é para exibir a legenda do gráfico.'],
+      [BASE_FORM_FIELD + 118, 'pt', 'Paleta de cores', 'Paleta de cores usada para as séries do gráfico.'],
+      [BASE_FORM_FIELD + 119, 'pt', 'Direção', 'Direção do gráfico de barras.'],
+      [BASE_FORM_FIELD + 120, 'pt', 'Empilhado', 'Indica se o gráfico terá suas séries empilhadas.'],
+      [BASE_FORM_FIELD + 121, 'pt', 'Preenchimento', 'Preenchimento do gráfico de pizza se 100%, senão donut.'],
+      [BASE_FORM_FIELD + 122, 'pt', 'Largura da linha', 'Largura da linha.'],
+      [BASE_FORM_FIELD + 123, 'pt', 'Tipo da linha', 'Tipo da linha.'],
+      [BASE_FORM_FIELD + 124, 'pt', 'Modo para séries', 'Modo para séries.'],
     ]
+ 
     # Generalized regression
     # data.append([266, 'pt', 'Ligação (Link)', 'Ligação (Link)'])
     # data.append([267, 'pt', 'Ligação (Link)', 'Ligação (Link)'])
