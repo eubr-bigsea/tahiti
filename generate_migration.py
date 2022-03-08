@@ -22,6 +22,7 @@ TEMPLATE='''
     from sqlalchemy import Integer, String, Text, Boolean, UnicodeText
     from sqlalchemy.orm import sessionmaker
     from sqlalchemy.sql import table, column
+    from sqlalchemy.sql.sqltypes import UnicodeText
 
     # revision identifiers, used by Alembic.
     revision = '{{new_revision}}'
@@ -88,6 +89,8 @@ TEMPLATE='''
         return 'SQL'
     {# extra line #}
     {%- endfor %}
+
+    # -------------------------------------------------------
 
     def _execute(conn, cmd):
         if isinstance(cmd, str):
@@ -186,7 +189,7 @@ def get_placeholder(value, loop, entity):
     elif v in ['Enum']:
         return f"'{value.expression.type.enums[0]}'"
     elif v in ['String', 'Unicode', 'LONGTEXT', 'UnicodeText']:
-        return f"'{value.expression.name}'" 
+        return f"'Text'" 
     elif v in ['Integer']:
         return 0
     elif v in ['Boolean']:

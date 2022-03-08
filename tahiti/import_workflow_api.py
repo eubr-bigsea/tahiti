@@ -16,12 +16,18 @@ log = logging.getLogger(__name__)
 
 def update_port_name_in_flows(session, workflow_id):
     sql = """
-        UPDATE flow, operation_port s, operation_port t,
-        operation_port_translation t1, operation_port_translation t2
-        SET source_port_name = t1.name, target_port_name = t2.name
-        WHERE flow.source_port = s.id AND flow.target_port = t.id
-        AND s.id = t1.id AND t.id = t2.id
-        AND workflow_id = :id"""
+        UPDATE flow f, task ts, task tt,
+        	operation_port os, operation_port ot
+        SET source_port_name = os.slug, target_port_name = ot.slug,
+            source_port = os.id, target_port = ot.id
+        WHERE 
+        	f.source_id  = ts.id 
+        	AND f.target_id  = tt.id
+        	AND os.operation_id = ts.operation_id 
+        	AND ot.operation_id = tt.operation_id 
+        	AND (os.slug = f.source_port_name OR os.id = f.source_port)
+        	AND (ot.slug = f.target_port_name OR ot.id = f.target_port)
+        	AND f.workflow_id = :id"""
     session.execute(sql, {'id': workflow_id})
 
 
@@ -76,7 +82,7 @@ class ImportWorkflowApi(Resource):
             request_schema = WorkflowCreateRequestSchema()
 
             # Handle variables parameters serialization
-            for variable in original.get('variables'):
+            for variable in original.get('variables', []):
                 if 'parameters' in variable:
                     variable['parameters'] = json.dumps(variable['parameters'])
             workflow = request_schema.load(original)

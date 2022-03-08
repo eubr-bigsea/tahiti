@@ -108,8 +108,20 @@ var TahitiAttributeSuggester = (function () {
             Array.prototype.push.apply(task.uiPorts.output,
                 task.forms[field].value.split(', ').map(function(attr){return attr.trim() }));
         } else if (task.forms[field]) {
-            Array.prototype.push.apply(task.uiPorts.output,
-                task.forms[field].value || []);
+            const values = task.forms[field].value || [];
+            if (values && values.length > 0 && typeof(values[0]) === 'object'){
+                //with aliases
+                if (task.forms.mode && task.forms.mode.value === 'exclude'){
+                    const suggestions = values.map(v => v.attribute);
+                    const selected = task.uiPorts.inputs[0].attributes.filter(x => !suggestions.includes(x)); 
+                    Array.prototype.push.apply(task.uiPorts.output, selected);
+                } else {
+                    Array.prototype.push.apply(task.uiPorts.output, values.map(v=> v.alias || v.attribute));
+                }
+            } else {
+                //without aliases
+                Array.prototype.push.apply(task.uiPorts.output, values);
+            }
         }
         task.uiPorts.output.sort(caseInsensitiveComparator);
     }
@@ -189,9 +201,9 @@ var TahitiAttributeSuggester = (function () {
         if (! parameters){ //old parameters set
             return joinSuffixDuplicatedAttributes(task);
         }
-        
+
         var value = parameters.value;
-        var keepRightKeys = task.forms['keep_right_keys'] && 
+        var keepRightKeys = task.forms['keep_right_keys'] &&
             task.forms['keep_right_keys'].value === '1';
         var rightKeys = new Set(value ? value.conditions.map(c => c.second): []);
         var result = [];
@@ -199,7 +211,7 @@ var TahitiAttributeSuggester = (function () {
         sorted_ports = task.uiPorts.inputs.sort(
             function(a, b) {return a.order - b.order}
         );
- 
+
         if (value && sorted_ports.length == 2) {
             switch(value.firstSelectionType){
                 case 1: //all attributes, with prefix
@@ -284,7 +296,7 @@ var TahitiAttributeSuggester = (function () {
         var dataSources = [];
         workflow.tasks.forEach(function(task){
             task.uiPorts = {inputs: [], output: [], refs: []}
-            var isDataSource = [18, 53, 139].includes(parseInt(task.operation.id));
+            var isDataSource = [18, 53, 139, 2100].includes(parseInt(task.operation.id));
             if (isDataSource) {
                 dataSources.push(task);
             }
