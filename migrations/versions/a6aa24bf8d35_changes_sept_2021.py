@@ -85,17 +85,17 @@ def upgrade():
         WHERE id = 210''',
 
         f'''insert operation_form_field values(
-        587, 'handle_invalid', 'TEXT', 0, 3, 
+        609, 'handle_invalid', 'TEXT', 0, 3, 
         'keep', 'dropdown', NULL, 
         '{handle_invalid}', 
         'EXECUTION', NULL, 1, 51)''',
 
         '''INSERT operation_form_field_translation
-        VALUES(587, 'pt', 'Tratar dados inválidos (nulos)',
+        VALUES(609, 'pt', 'Tratar dados inválidos (nulos)',
         'Como tratar os dados inválidos.') ''',
 
         '''INSERT operation_form_field_translation
-        VALUES(587, 'en', 'Invalid data handling(null)',
+        VALUES(609, 'en', 'Invalid data handling(null)',
         'How to handle invalid data (nulls).') ''',
     ]
     try:
@@ -124,12 +124,12 @@ def downgrade():
         SET suggested_widget = 'dropdown'
         WHERE id = 210''',
 
-        '''DELETE FROM operation_form_field WHERE id = 587''',
+        '''DELETE FROM operation_form_field WHERE id = 609''',
         '''DELETE FROM operation_form_field_translation 
-           WHERE id = 587 AND locale = 'pt' ''',
+           WHERE id = 609 AND locale = 'pt' ''',
 
         '''DELETE FROM operation_form_field_translation 
-           WHERE id = 587 AND locale = 'en' ''',
+           WHERE id = 609 AND locale = 'en' ''',
     ]
 
     try:
