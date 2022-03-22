@@ -133,8 +133,8 @@ class WorkflowService(object):
             random_forest = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='random-forest-regressor', Platform.id==1000).first()
 
-            trees = {"list": ["100"], "type": "list"}
-            depth = {"list": ["2", "6"], "type": "list"}
+            trees = {"list": [100], "type": "list"}
+            depth = {"list": [2, 6], "type": "list"}
             forms = json.dumps({
                 "num_trees": {
                     "value": trees, "internalValue": trees}, 
@@ -150,7 +150,7 @@ class WorkflowService(object):
             dt = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='decision-tree-regressor', Platform.id==1000).first()
 
-            depth = {"list": ["6"], "type": "list"}
+            depth = {"list": [6], "type": "list"}
             forms = json.dumps({
                 "max_depth": {"value": depth, "internalValue": depth},
             })
@@ -208,7 +208,7 @@ class WorkflowService(object):
             linear_reg = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='linear-regression', Platform.id==1000).first()
 
-            elastic_net = {"list": ["0.1", "1.0", "3.0"], "type": "list"}
+            elastic_net = {"list": [0.1, 1.0], "type": "list"}
             forms = json.dumps({
                 "elastic_net": {"value": elastic_net, "internalValue": elastic_net},
             })
@@ -269,8 +269,8 @@ class WorkflowService(object):
             random_forest = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='random-forest-classifier', Platform.id==1000).first()
 
-            trees = {"list": ["100"], "type": "list"}
-            depth = {"list": ["12", "6"], "type": "list"}
+            trees = {"list": [100], "type": "list"}
+            depth = {"list": [12, 6], "type": "list"}
             forms = json.dumps({
                 "num_trees": {
                     "value": trees, "internalValue": trees}, 
@@ -286,7 +286,7 @@ class WorkflowService(object):
             dt = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='decision-tree-classifier', Platform.id==1000).first()
 
-            depth = {"list": ["5"], "type": "list"}
+            depth = {"list": [5], "type": "list"}
             forms = json.dumps({
                 "max_depth": {"value": depth, "internalValue": depth},
                 "impurity": {"value": ["gini"], "internalValue": ["gini"]}
@@ -363,7 +363,7 @@ class WorkflowService(object):
             log_reg = Operation.query.join(Operation.platforms).filter(
                 Operation.slug=='logistic-regression', Platform.id==1000).first()
 
-            reg_param = {"type": "list", "list": ["0.01", "0.1", "1", "10", "100"]}
+            reg_param = {"type": "list", "list": [0.01, 0.1, 1, 10, 100]}
             forms = json.dumps({
                 "reg_param": {"value": reg_param, "internalValue": reg_param},
             })
