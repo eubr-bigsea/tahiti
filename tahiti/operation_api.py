@@ -305,6 +305,17 @@ class OperationDetailApi(Resource):
                               errors=form.errors)
         return result, result_code
 
+    @staticmethod
+    @requires_auth
+    @requires_permission('ADMINISTRATOR')
+    def delete(operation_id):
+        op = Operation.query.get(operation_id)
+        if op:
+            op.enabled = False
+            db.session.add(op)
+            db.session.commit()
+        return 204, 'OK'
+
 
 class OperationClearCacheApi(Resource):
     # noinspection PyMethodMayBeStatic
