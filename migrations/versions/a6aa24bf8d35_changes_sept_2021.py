@@ -115,7 +115,7 @@ def downgrade():
     # Remove it if your DB doesn't support disabling FK checks
     conn.execute('SET FOREIGN_KEY_CHECKS=0;')
     commands = [
-        remove_workflow_types,
+        # remove_workflow_types,
         '''UPDATE operation_form_field
         SET `values`= '{"multiple": false}' 
         WHERE id in (348, 356)''',
