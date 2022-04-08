@@ -59,7 +59,7 @@ SAVE = BASE_OP + 64
 INVERT_BOOLEAN = BASE_OP + 15
 RESCALE = BASE_OP + 16
 ROUND_NUMBER = BASE_OP + 17
-DISCRETIZE = BASE_OP + 18
+BUCKETIZE = BASE_OP + 18
 NORMALIZE = BASE_OP + 19
 FORCE_RANGE = BASE_OP + 20
 TS_TO_DATE = BASE_OP + 21
@@ -179,7 +179,7 @@ ALL_OPS = [
     SELECT, SORT, FILTER, GROUP, JOIN, CONCAT_ROWS, SAMPLE,
     LIMIT, WINDOW_FUNCTION, PYTHON_CODE, ADD_BY_FORMULA, SAVE,
     # Transform
-    INVERT_BOOLEAN, RESCALE, ROUND_NUMBER, DISCRETIZE, NORMALIZE,
+    INVERT_BOOLEAN, RESCALE, ROUND_NUMBER, BUCKETIZE, NORMALIZE,
     FORCE_RANGE, TS_TO_DATE, TO_UPPER, TO_LOWER, CAPITALIZE,
     REMOVE_ACCENTS, NORMALIZE_TEXT, CONCAT_ATTRIBUTE, TRIM,
     TRUNCATE_TEXT, SPLIT_INTO_WORDS, SUBSTRING, PARSE_TO_DATE,
@@ -281,11 +281,11 @@ def _insert_operation(conn):
       [SAVE, 'save', 1, 'TRANSFORMATION', 'fa fa-save', '', ''],
 
       [INVERT_BOOLEAN, 'invert-boolean', 1, 'TRANSFORMATION', '', 'boolean', ''],
-      [RESCALE, 'rescale', 1, 'TRANSFORMATION', '', 'Number', ''],
+      [RESCALE, 'rescale', 1, 'TRANSFORMATION', '', 'Integer|Decimal', ''],
       [ROUND_NUMBER, 'round-number', 1, 'TRANSFORMATION', '', 'Decimal', ''],
-      [DISCRETIZE, 'discretize', 1, 'TRANSFORMATION', '', 'Number', ''],
-      [NORMALIZE, 'normalize', 0, 'TRANSFORMATION', '', '', 'Number'],
-      [FORCE_RANGE, 'force-range', 1, 'TRANSFORMATION', '', 'Number', ''],
+      [BUCKETIZE, 'bucketize', 1, 'TRANSFORMATION', '', 'Integer|Decimal', ''],
+      [NORMALIZE, 'normalize', 0, 'TRANSFORMATION', '', '', 'Integer|Decimal'],
+      [FORCE_RANGE, 'force-range', 1, 'TRANSFORMATION', '', 'Integer|Decimal', ''],
 
       [TS_TO_DATE, 'ts-to-date', 1, 'TRANSFORMATION', '', 'Integer', ''],
       
@@ -412,12 +412,12 @@ def _insert_operation_translation(conn):
 
       [INVERT_BOOLEAN, 'pt', 'Inverter', 'Permite inverter um valor lógico.',
           '<b>Inverter booleano</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
-      [RESCALE, 'pt', 'Rescalar', 'Permite rescalar um valor numérico.',
-          '<b>Rescalar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [RESCALE, 'pt', 'Redefinir escala', 'Permite rescalar um valor numérico.',
+          '<b>Redefinir escala</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [ROUND_NUMBER, 'pt', 'Arredondar', 'Permite arredondar um número.',
           '<b>Arredondar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
-      [DISCRETIZE, 'pt', 'Discretizar', 'Permite discretizar um número.',
-          '<b>Discretizar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [BUCKETIZE, 'pt', 'Intervalar', 'Permite discretizar um número em intervalos (buckets).',
+          '<b>Intervalar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [NORMALIZE, 'pt', 'Normalizar', 'Permite normalizar um número.',
           '<b>Normalizar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [FORCE_RANGE, 'pt', 'Forçar faixa', 'Permite forçar um número a uma faixa.',
@@ -623,7 +623,7 @@ def _insert_operation_category_operation(conn):
       [INVERT_BOOLEAN, CAT_TRANSFORM],
       [RESCALE, CAT_TRANSFORM],
       [ROUND_NUMBER, CAT_TRANSFORM],
-      [DISCRETIZE, CAT_TRANSFORM],
+      [BUCKETIZE, CAT_TRANSFORM],
       [NORMALIZE, CAT_TRANSFORM],
       [FORCE_RANGE, CAT_TRANSFORM],
       [TS_TO_DATE, CAT_TRANSFORM],
@@ -946,10 +946,10 @@ def _insert_operation_form_field(conn):
 
       [BASE_FORM_FIELD + 58, 'regex', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, EXTRACT_WITH_REGEX + 50],
 
-      [BASE_FORM_FIELD + 59, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', None, 1, RESCALE + 50],
-      [BASE_FORM_FIELD + 60, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', None, 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 59, 'min', 'FLOAT', 0, 3, '0.0', 'decimal', None, None, 'EXECUTION', 'this.type.internalValue === "min_max"', 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 60, 'max', 'FLOAT', 0, 4, '1.0', 'decimal', None, None, 'EXECUTION', 'this.type.internalValue === "min_max"', 1, RESCALE + 50],
 
-      [BASE_FORM_FIELD + 61, 'bins', 'INTEGER', 1, 3, None, 'INTEGER', None, None, 'EXECUTION', None, 1, DISCRETIZE + 50],
+      [BASE_FORM_FIELD + 61, 'splits', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, BUCKETIZE + 50],
 
       [BASE_FORM_FIELD + 62, 'normalizer', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, NORMALIZE + 50],
 
@@ -1068,7 +1068,17 @@ def _insert_operation_form_field(conn):
            json.dumps([{'key': 'attribute', 'pt': 'Um atributo (inteiro)', 'en': 'An (integer) attribute'}, 
                {'key': 'constant', 'pt': 'Valor constante', 'en': 'Constant value'}]), 'EXECUTION', None, 1, DATE_ADD + 50],
       [BASE_FORM_FIELD + 128, 'value_attribute', 'INTEGER', 0, 4, None, 'attribute-selector', None, None, 'EXECUTION', 'this.type.internalValue === "attribute"', 1, DATE_ADD + 50],
- 
+      [BASE_FORM_FIELD + 129, 'handle_invalid', 'INTEGER', 1, 3, 'error', 'dropdown', None,
+              json.dumps([{"en": "Skip", "value": "Skip", "key": "skip", "pt": "Ignorar"}, {"en": "Keep", "value": "Keep", "key": "keep", "pt": "Manter"}, {"en": "Raise error", "value": "Raise error", "key": "error", "pt": "Gerar erro"}]),
+               'EXECUTION', None, 1, BUCKETIZE + 50],
+      [BASE_FORM_FIELD + 130, 'type', 'INTEGER', 1, 2, 'max_abs', 'dropdown', None,
+              json.dumps([
+                  {"en": "Max/Abs", "key": "max_abs", "pt": "Máximo-Absoluto", 'help': {'pt': 'Transforma a entrada (linhas com vetores), reescalando cada caracteristica(feature) para a faixa [-1, 1], através da divisão pelo valor absoluto máximo de cada caracteristica (feature)'}}, 
+                  {"en": "Min/Max", "key": "min_max", "pt": "Mínimo-Máximo", 'help': {'pt': 'Transforma a entrada (linhas com vetores), reescalando cada caracteristica (feature) para uma faixa específica (geralmente [0, 1])'}}, 
+                  {"en": "Standard (z-score)", "key": "z_score", "pt": "Padrão (z-score)", 'help': {'pt': 'Transforma a entrada (linhas com vetores), normalizando-os de forma que cada caracteristica (feature) tenha desvio-padrão unitário e/ou média zero.'}}]),
+               'EXECUTION', None, 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 131, 'with_mean', 'INTEGER', 0, 4, '0', 'checkbox', None, None, 'EXECUTION', 'this.type.internalValue === "z_score"', 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 132, 'with_std', 'INTEGER', 0, 4, '1', 'checkbox', None, None, 'EXECUTION', 'this.type.internalValue === "z_score"', 1, RESCALE + 50],
     ]
 
     # Fix generalized linear regression
@@ -1139,9 +1149,9 @@ def _insert_operation_form_field_translation(conn):
       [BASE_FORM_FIELD + 56, 'pt', 'Delimitador', 'Delimitador para as palavras.'],
       [BASE_FORM_FIELD + 57, 'pt', 'Formato', 'Escolha um formato ou informe um (usando sintaxe de formato Java).'],
       [BASE_FORM_FIELD + 58, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 59, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 60, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 61, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 59, 'pt', 'Limite inferior para a faixa', 'Limite inferior para a faixa (valor padrão: 0.0).'],
+      [BASE_FORM_FIELD + 60, 'pt', 'Limite superior para a faixa', 'Limite superior para a faixa (valor padrão: 1.0).'],
+      [BASE_FORM_FIELD + 61, 'pt', 'Divisores (lista de valores com no mínimo de 3 elementos, usado para definir as faixas, separados por vírgula, -INF e INF são valores válidos)', 'Divisores (lista de valores com no mínimo de 3 elementos, usado para definir as faixas, separados por vírgula, -INF e INF são valores válidos).'],
       [BASE_FORM_FIELD + 62, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 63, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 64, 'pt', 'Value', 'Value'],
@@ -1215,6 +1225,10 @@ def _insert_operation_form_field_translation(conn):
       [BASE_FORM_FIELD + 127, 'pt', 'Origem do valor', 'De onde será obtido o valor a ser incrementado ou decrementado.'],
       [BASE_FORM_FIELD + 128, 'pt', 'Atributo com o valor', 
               'De qual atributo será obtido o valor a ser incrementado ou decrementado.'],
+      [BASE_FORM_FIELD + 129, 'pt', 'Tratar erro', 'Como erros serão tratados.'],
+      [BASE_FORM_FIELD + 130, 'pt', 'Tipo de escala', 'Qual tipo de escala será usada.'],
+      [BASE_FORM_FIELD + 131, 'pt', 'Centralizar os dados com a média', 'Centralizar os dados com a média.'],
+      [BASE_FORM_FIELD + 132, 'pt', 'Escalar os dados para desvio-padrão unitário', 'Escalar os dados para desvio-padrão unitário.'],
     ]
  
     # Generalized regression
