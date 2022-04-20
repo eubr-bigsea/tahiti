@@ -210,7 +210,6 @@ def _insert_operation_form_field(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_FORM_FIELD + 1, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, BASE_FORM + 1],
-      [BASE_FORM_FIELD + 2, 'alias', 'TEXT', 0, 2, None, 'text', None, None, 'EXECUTION', None, 1, BASE_FORM + 1]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -232,8 +231,6 @@ def _insert_operation_form_field_translation(conn):
     data = [
       [BASE_FORM_FIELD + 1, 'pt', 'Atributo(s)', 'Atributos para a função'],
       [BASE_FORM_FIELD + 1, 'en', 'Attribute(s)', 'Attributes for the function'],
-      [BASE_FORM_FIELD + 2, 'pt', 'Nome do(s) novo(s) atributo(s)', 'Nome do(s) novo(s) atributo(s)'],
-      [BASE_FORM_FIELD + 2, 'en', 'Name of the new attributes', 'Name of the new attributes'], 
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -242,7 +239,7 @@ def _insert_operation_form_field_translation(conn):
 def _delete_operation_form_field_translation(conn):
     conn.execute(
         'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 2)
+        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 1)
 
 
 def _insert_operation_category_operation(conn):
