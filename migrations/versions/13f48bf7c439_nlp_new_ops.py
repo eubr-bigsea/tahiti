@@ -75,6 +75,7 @@ def _insert_operation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_OP + 1, 'nlp-word-counting', True, 'TRANSFORMATION', '', '', ''],
+      [BASE_OP + 2, 'nlp-lower-case', True, 'TRANSFORMATION', '', '', ''],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -83,7 +84,7 @@ def _insert_operation(conn):
 def _delete_operation(conn):
     conn.execute(
         'DELETE from operation WHERE id BETWEEN %s AND %s', 
-        BASE_OP + 1, BASE_OP + 1)
+        BASE_OP + 1, BASE_OP + 2)
 
 
 def _insert_operation_translation(conn):
@@ -96,6 +97,8 @@ def _insert_operation_translation(conn):
     data = [
       [BASE_OP + 1, 'pt', 'Contagem de palavras', 'Conta as palavras da frase'],
       [BASE_OP + 1, 'en', 'Word counting', 'Counts the words of the phrase'],
+      [BASE_OP + 2, 'pt', 'Minúsculas', 'Transforma as palavras em minúsculas'],
+      [BASE_OP + 2, 'en', 'Lowercase', 'Lowercase the words'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -104,7 +107,7 @@ def _insert_operation_translation(conn):
 def _delete_operation_translation(conn):
     conn.execute(
         'DELETE from operation_translation WHERE id BETWEEN %s AND %s', 
-        BASE_OP + 1, BASE_OP + 1)
+        BASE_OP + 1, BASE_OP + 2)
 
 
 def _insert_operation_platform(conn):
@@ -115,8 +118,8 @@ def _insert_operation_platform(conn):
     )
     columns = [c.name for c in tb.columns]
     data = [
-#	[BASE_OP + 1, 1],
 	[BASE_OP + 1, 4],
+	[BASE_OP + 2, 4],
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -126,7 +129,7 @@ def _insert_operation_platform(conn):
 def _delete_operation_platform(conn):
     conn.execute(
 	'DELETE from operation_platform WHERE operation_id BETWEEN %s AND %s', 
-	BASE_OP + 1, BASE_OP + 1) 
+	BASE_OP + 1, BASE_OP + 2) 
 
 
 def _insert_operation_script(conn):
@@ -138,8 +141,8 @@ def _insert_operation_script(conn):
                 column('operation_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-       [BASE_OP + 1, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_wc');", BASE_OP + 1],
-#      [BASE_OP + 1, 'JS_CLIENT', 1, "copyInputAddField(task, 'prediction', false, 'prediction');", BASE_OP + 1],
+       [BASE_OP + 2, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_lowercase');", BASE_OP + 2],
+       [BASE_OP + 1, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_lowercase');", BASE_OP + 1],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -148,7 +151,7 @@ def _insert_operation_script(conn):
 def _delete_operation_script(conn):
     conn.execute(
         'DELETE from operation_script WHERE id BETWEEN %s AND %s', 
-        BASE_OP + 1, BASE_OP + 1)
+        BASE_OP + 1, BASE_OP + 2)
 
 
 # Not necessary to really show an operation
@@ -161,6 +164,7 @@ def _insert_operation_form(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_FORM + 1, True, 0, 'execution'],
+      [BASE_FORM + 2, True, 0, 'execution'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -169,7 +173,7 @@ def _insert_operation_form(conn):
 def _delete_operation_form(conn):
     conn.execute(
         'DELETE from operation_form WHERE id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 1)
+        BASE_FORM + 1, BASE_FORM + 2)
 
 
 def _insert_operation_form_translation(conn):
@@ -180,7 +184,9 @@ def _insert_operation_form_translation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_FORM + 1, 'pt', 'Execução'],
-      [BASE_FORM + 1, 'en', 'Execution']
+      [BASE_FORM + 1, 'en', 'Execution'],
+      [BASE_FORM + 2, 'pt', 'Execução'],
+      [BASE_FORM + 2, 'en', 'Execution'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -189,7 +195,7 @@ def _insert_operation_form_translation(conn):
 def _delete_operation_form_translation(conn):
     conn.execute(
         'DELETE from operation_form_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 1)
+        BASE_FORM + 1, BASE_FORM + 2)
 
 
 def _insert_operation_form_field(conn):
@@ -210,6 +216,8 @@ def _insert_operation_form_field(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_FORM_FIELD + 1, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, BASE_FORM + 1],
+      [BASE_FORM_FIELD + 2, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, BASE_FORM + 2],
+      [BASE_FORM_FIELD + 3, 'alias', 'TEXT', 0, 2, None, 'text', None, None, 'DESIGN', None, 1, BASE_FORM + 1],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -218,7 +226,7 @@ def _insert_operation_form_field(conn):
 def _delete_operation_form_field(conn):
     conn.execute(
         'DELETE from operation_form_field WHERE form_id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 1)
+        BASE_FORM + 1, BASE_FORM + 2)
 
 
 def _insert_operation_form_field_translation(conn):
@@ -231,6 +239,11 @@ def _insert_operation_form_field_translation(conn):
     data = [
       [BASE_FORM_FIELD + 1, 'pt', 'Atributo(s)', 'Atributos para a função'],
       [BASE_FORM_FIELD + 1, 'en', 'Attribute(s)', 'Attributes for the function'],
+      [BASE_FORM_FIELD + 2, 'pt', 'Atributo(s)', 'Atributos para a função'],
+      [BASE_FORM_FIELD + 2, 'en', 'Attribute(s)', 'Attributes for the function'],
+      [BASE_FORM_FIELD + 3, 'pt', 'Nome do(s) novo(s) atributo(s)', 'Nome do(s) novo(s) atributo(s)'],
+      [BASE_FORM_FIELD + 3, 'en', 'Name of the new attributes', 'Name of the new attributes'],
+
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -239,7 +252,7 @@ def _insert_operation_form_field_translation(conn):
 def _delete_operation_form_field_translation(conn):
     conn.execute(
         'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 1)
+        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 3)
 
 
 def _insert_operation_category_operation(conn):
@@ -250,6 +263,8 @@ def _insert_operation_category_operation(conn):
     data = [
         [BASE_OP + 1, BASE_CATEGORY + 1],
         [BASE_OP + 1, 4001],
+        [BASE_OP + 2, BASE_CATEGORY + 1],
+        [BASE_OP + 2, 4001],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -257,7 +272,7 @@ def _insert_operation_category_operation(conn):
 
 def _delete_operation_category_operation(conn):
     sql = "DELETE from operation_category_operation WHERE operation_id BETWEEN %s AND %s"
-    conn.execute(sql, BASE_OP + 1, BASE_OP + 1)
+    conn.execute(sql, BASE_OP + 1, BASE_OP + 2)
 
 
 def _insert_operation_operation_form(conn):
@@ -267,9 +282,12 @@ def _insert_operation_operation_form(conn):
 
     columns = [c.name for c in tb.columns]
     data = [
-	[BASE_OP + 1, BASE_FORM + 1],
+	[BASE_OP + 1, BASE_FORM + 2],
 	[BASE_OP + 1, 110],
 	[BASE_OP + 1, 41],
+	[BASE_OP + 2, BASE_FORM + 1],
+	[BASE_OP + 2, 110],
+	[BASE_OP + 2, 41],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -278,7 +296,7 @@ def _insert_operation_operation_form(conn):
 def _delete_operation_operation_form(conn):
     conn.execute(
         'DELETE from operation_operation_form WHERE operation_form_id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 1)
+        BASE_FORM + 1, BASE_FORM + 2)
 
 
 def _insert_operation_port(conn):
@@ -294,6 +312,8 @@ def _insert_operation_port(conn):
     rows = [
         (BASE_PORT + 1, 'INPUT', None, BASE_OP + 1, 1, 'ONE', 'input data'),
         (BASE_PORT + 2, 'OUTPUT', None, BASE_OP + 1, 1, 'MANY', 'output data'),
+        (BASE_PORT + 3, 'INPUT', None, BASE_OP + 2, 1, 'ONE', 'input data'),
+        (BASE_PORT + 4, 'OUTPUT', None, BASE_OP + 2, 1, 'MANY', 'output data'),
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
     op.bulk_insert(tb, rows)
@@ -302,7 +322,7 @@ def _insert_operation_port(conn):
 def _delete_operation_port(conn):
     conn.execute(
         'DELETE from operation_port WHERE id BETWEEN %s AND %s', 
-        BASE_PORT + 1, BASE_PORT + 2)
+        BASE_PORT + 1, BASE_PORT + 4)
 
 
 def _insert_operation_port_translation(conn):
@@ -318,6 +338,10 @@ def _insert_operation_port_translation(conn):
         (BASE_PORT + 1, 'pt', 'dados de entrada', 'Dados de entrada'),
         (BASE_PORT + 2, 'en', 'output data', 'Output data'),
         (BASE_PORT + 2, 'pt', 'dados de saída', 'Dados de saída'),
+        (BASE_PORT + 3, 'en', 'input data', 'Input data'),
+        (BASE_PORT + 3, 'pt', 'dados de entrada', 'Dados de entrada'),
+        (BASE_PORT + 4, 'en', 'output data', 'Output data'),
+        (BASE_PORT + 4, 'pt', 'dados de saída', 'Dados de saída'),
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
     op.bulk_insert(tb, rows)
@@ -326,7 +350,7 @@ def _insert_operation_port_translation(conn):
 def _delete_operation_port_translation(conn):
     conn.execute(
         'DELETE from operation_port_translation WHERE id BETWEEN %s AND %s', 
-        BASE_PORT + 1, BASE_PORT + 2)
+        BASE_PORT + 1, BASE_PORT + 4)
 
 
 def _insert_operation_port_interface_operation_port(conn):
@@ -339,6 +363,8 @@ def _insert_operation_port_interface_operation_port(conn):
     data = [
         (BASE_PORT + 1, 1),
         (BASE_PORT + 2, 1),
+        (BASE_PORT + 3, 1),
+        (BASE_PORT + 4, 1),
    ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
@@ -347,7 +373,7 @@ def _insert_operation_port_interface_operation_port(conn):
 def _delete_operation_port_interface_operation_port (conn):
     conn.execute(
         'DELETE from operation_port_interface_operation_port WHERE operation_port_id BETWEEN %s AND %s', 
-        BASE_PORT + 1, BASE_PORT + 1)
+        BASE_PORT + 1, BASE_PORT + 4)
 
     
 def _execute(conn, cmd):
