@@ -15,13 +15,6 @@ down_revision = 'f1ff40611872'
 branch_labels = None
 depends_on = None
 
-# --------------------------------------------------------------
-# ATENTION: You must revise this auto-generated code.
-# Please, review offsets and commands before running a migration
-# and optionally, perform a database backup. If everything is 
-# OK, remove this comment.
-# --------------------------------------------------------------
-
 BASE_OP = 4053
 BASE_CATEGORY = 48
 BASE_FORM = 4051
