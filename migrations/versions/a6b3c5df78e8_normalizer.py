@@ -72,7 +72,8 @@ def _insert_operation(conn):
     data = [
       [BASE_OP + 1, 'stemming', True, 'TRANSFORMATION', '', '', ''],
       [BASE_OP + 2, 'lemmatization', True, 'TRANSFORMATION', '', '', ''],
-      [BASE_OP + 3, 'normalizer', True, 'TRANSFORMATION', '', '', '']
+      [BASE_OP + 3, 'normalizer', True, 'TRANSFORMATION', '', '', ''],
+      [BASE_OP + 4, 'postagging', True, 'TRANSFORMATION', '', '', '']
     ]
     
     rows = [dict(zip(columns, row)) for row in data]
@@ -81,7 +82,7 @@ def _insert_operation(conn):
 def _delete_operation(conn):
     conn.execute(
         'DELETE from operation WHERE id BETWEEN %s AND %s',
-        BASE_OP + 1, BASE_OP + 3)
+        BASE_OP + 1, BASE_OP + 4)
 
 def _insert_operation_translation(conn):
     tb = table('operation_translation',
@@ -96,7 +97,9 @@ def _insert_operation_translation(conn):
       [BASE_OP + 2, 'pt', 'Lematização', 'Lematização é o processo de agrupar as diferentes formas infinitivas de uma palavra para que elas sejam analisadas como um só item.'],
       [BASE_OP + 2, 'en', 'Lemmatization', 'Lemmatization is the process of grouping together the different inflected forms of a word so they can be analyzed as a single item.'],
       [BASE_OP + 3, 'pt', 'Normalização', 'A Normalização é o processo de remover as pontuações e deixar os tokens em caixa baixa.'],
-      [BASE_OP + 3, 'en', 'Normaliation', 'Normalization is the process of removing punctuaction and lower casing tokens.']
+      [BASE_OP + 3, 'en', 'Normaliation', 'Normalization is the process of removing punctuaction and lower casing tokens.'],
+      [BASE_OP + 4, 'pt', 'POS Tagging', 'Part-of-speech (POS) tagging é o processo de categorizar cada palavra de uma sentença com sua devida classe morfossintática.'],
+      [BASE_OP + 4, 'en', 'POS Tagging', 'Part-of-speech (POS) tagging is a process of labeling each word in a sentence with a morphosyntactic class']
       ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -104,7 +107,7 @@ def _insert_operation_translation(conn):
 def _delete_operation_translation(conn):
     conn.execute(
         'DELETE from operation_translation WHERE id BETWEEN %s AND %s',
-        BASE_OP + 1, BASE_OP + 3)
+        BASE_OP + 1, BASE_OP + 4)
 def _insert_operation_platform(conn):
     tb = table(
         'operation_platform',
@@ -118,7 +121,9 @@ def _insert_operation_platform(conn):
     [BASE_OP + 2, 1],
     [BASE_OP + 2, 4],
     [BASE_OP + 3, 1],
-    [BASE_OP + 3, 4]
+    [BASE_OP + 3, 4],
+    [BASE_OP + 4, 1],
+    [BASE_OP + 4, 4]
     ]
 
     rows = [dict(zip(columns, row)) for row in data]
@@ -128,7 +133,7 @@ def _insert_operation_platform(conn):
 def _delete_operation_platform(conn):
     conn.execute(
 	'DELETE from operation_platform WHERE operation_id BETWEEN %s AND %s',
-    BASE_OP + 1, BASE_OP + 3)
+    BASE_OP + 1, BASE_OP + 4)
 def _insert_operation_script(conn):
     tb = table('operation_script',
                 column('id', Integer),
@@ -140,7 +145,8 @@ def _insert_operation_script(conn):
     data = [
       [BASE_OP + 1, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_stems');", BASE_OP + 1],
       [BASE_OP + 2, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_lemmas');", BASE_OP + 2],
-      [BASE_OP + 3, 'JS_CLIENT', 1,  "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_normalized');", BASE_OP + 3]
+      [BASE_OP + 3, 'JS_CLIENT', 1,  "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_normalized');", BASE_OP + 3],
+      [BASE_OP + 4, 'JS_CLIENT', 1, "copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_postags');", BASE_OP + 4]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -148,7 +154,7 @@ def _insert_operation_script(conn):
 def _delete_operation_script(conn):
     conn.execute(
         'DELETE from operation_script WHERE id BETWEEN %s AND %s',
-        BASE_OP + 1, BASE_OP + 3)
+        BASE_OP + 1, BASE_OP + 4)
 
 def _insert_operation_form(conn):
     tb = table('operation_form',
@@ -246,14 +252,16 @@ def _insert_operation_category_operation(conn):
         [BASE_OP + 2, BASE_CATEGORY + 1],
         [BASE_OP + 2, 4001],
         [BASE_OP + 3, BASE_CATEGORY + 1],
-        [BASE_OP + 3, 4001]
+        [BASE_OP + 3, 4001],
+        [BASE_OP + 4, BASE_CATEGORY + 1],
+        [BASE_OP + 4, 4001]
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_category_operation(conn):
     sql = "DELETE from operation_category_operation WHERE operation_id BETWEEN %s AND %s"
-    conn.execute(sql, BASE_OP + 1, BASE_OP + 3)
+    conn.execute(sql, BASE_OP + 1, BASE_OP + 4)
 
 
 def _insert_operation_operation_form(conn):
@@ -271,7 +279,10 @@ def _insert_operation_operation_form(conn):
     [BASE_OP + 2, 41],
     [BASE_OP + 3, BASE_FORM + 1], 
     [BASE_OP + 3, 110],
-    [BASE_OP + 3, 41]
+    [BASE_OP + 3, 41],
+    [BASE_OP + 4, BASE_FORM + 1],
+    [BASE_OP + 4, 110],
+    [BASE_OP + 4, 41]
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -297,7 +308,9 @@ def _insert_operation_port(conn):
         (BASE_PORT + 3, 'INPUT', None, BASE_OP + 2, 1, 'ONE', 'input data'),
         (BASE_PORT + 4, 'OUTPUT', None, BASE_OP + 2, 1, 'MANY', 'output data'),
         (BASE_PORT + 5, 'INPUT', None, BASE_OP + 3, 1, 'ONE', 'input data'),
-        (BASE_PORT + 6, 'OUTPUT', None, BASE_OP + 3, 1, 'MANY', 'output data')
+        (BASE_PORT + 6, 'OUTPUT', None, BASE_OP + 3, 1, 'MANY', 'output data'),
+        (BASE_PORT + 7, 'INPUT', None, BASE_OP + 4, 1, 'ONE', 'input data'),
+        (BASE_PORT + 8, 'OUTPUT', None, BASE_OP + 4, 1, 'MANY', 'output data')
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
     op.bulk_insert(tb, rows)
@@ -305,7 +318,7 @@ def _insert_operation_port(conn):
 def _delete_operation_port(conn):
     conn.execute(
         'DELETE from operation_port WHERE id BETWEEN %s AND %s',
-        BASE_PORT + 1, BASE_PORT + 6)
+        BASE_PORT + 1, BASE_PORT + 8)
 
 def _insert_operation_port_translation(conn):
     tb = table(
@@ -332,7 +345,13 @@ def _insert_operation_port_translation(conn):
         (BASE_PORT + 5, 'pt', 'dados de entrada', 'Dados de entrada'),
 
         (BASE_PORT + 6, 'en', 'output data', 'Output data'),
-        (BASE_PORT + 6, 'pt', 'dados de saída', 'Dados de saída')
+        (BASE_PORT + 6, 'pt', 'dados de saída', 'Dados de saída'),
+
+        (BASE_PORT + 7, 'en', 'input data', 'Input data'), 
+        (BASE_PORT + 7, 'pt', 'dados de entrada', 'Dados de entrada'),
+
+        (BASE_PORT + 8, 'en', 'output data', 'Output data'),
+        (BASE_PORT + 8, 'pt', 'dados de saída', 'Dados de saída')
 
     ]
     rows = [dict(list(zip([c.name for c in tb.columns], row))) for row in rows]
@@ -341,7 +360,7 @@ def _insert_operation_port_translation(conn):
 def _delete_operation_port_translation(conn):
     conn.execute(
         'DELETE from operation_port_translation WHERE id BETWEEN %s AND %s',
-        BASE_PORT + 1, BASE_PORT + 6)
+        BASE_PORT + 1, BASE_PORT + 8)
 
 def _insert_operation_port_interface_operation_port(conn):
     tb = table(
@@ -356,7 +375,9 @@ def _insert_operation_port_interface_operation_port(conn):
         (BASE_PORT + 3, 1),
         (BASE_PORT + 4, 1),
         (BASE_PORT + 5, 1), 
-        (BASE_PORT + 6, 1)
+        (BASE_PORT + 6, 1),
+        (BASE_PORT + 7, 1),
+        (BASE_PORT + 8, 1)
     ]
     rows = [dict(list(zip(columns, cat))) for cat in data]
     op.bulk_insert(tb, rows)
@@ -364,7 +385,7 @@ def _insert_operation_port_interface_operation_port(conn):
 def _delete_operation_port_interface_operation_port (conn):
     conn.execute(
         'DELETE from operation_port_interface_operation_port WHERE operation_port_id BETWEEN %s AND %s',
-        BASE_PORT + 1, BASE_PORT + 6)
+        BASE_PORT + 1, BASE_PORT + 8)
 
 def _execute(conn, cmd):
     if isinstance(cmd, str):
