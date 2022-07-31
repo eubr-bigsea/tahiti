@@ -393,6 +393,10 @@ class WorkflowDetailApi(Resource):
                     update_port_name_in_flows(db.session, workflow.id)
                     db.session.commit()
 
+                    # Retrieve workflow in order to avoid lazy load.
+                    # This method is optimized to retrieve translations
+                    workflow = get_workflow(workflow.id)
+
                     historical_data = json.dumps(
                         response_schema.dump(workflow))
                     # if workflow.is_template:
