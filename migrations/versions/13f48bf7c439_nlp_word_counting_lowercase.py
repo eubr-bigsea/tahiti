@@ -9,16 +9,16 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision      = '13f48bf7c439'
-down_revision = 'a0d6c6699b69'
+down_revision = 'f1ff40611872'
 branch_labels = None
 depends_on = None
 
 
-BASE_CATEGORY = 46
-BASE_OP = 4049
-BASE_FORM = 4050
-BASE_FORM_FIELD = 4392
-BASE_PORT = 4111
+BASE_CATEGORY = 52
+BASE_OP = 4053
+BASE_FORM = 4052
+BASE_FORM_FIELD = 4394
+BASE_PORT = 4119
 
 
 def _insert_operation_category(conn):
