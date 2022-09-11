@@ -11,15 +11,15 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = 'a6b3c5df78e8'
-down_revision = 'f1ff40611872'
+down_revision = 'a4c87d04f18e'
 branch_labels = None
 depends_on = None
 
-BASE_OP = 4053
-BASE_CATEGORY = 48
-BASE_FORM = 4051
-BASE_FORM_FIELD = 4394
-BASE_PORT = 4119
+BASE_OP = 4060
+BASE_CATEGORY = 143
+BASE_FORM = 4055
+BASE_FORM_FIELD = 4399
+BASE_PORT = 4133
 
 def _insert_operation_category(conn):
     tb = table('operation_category',
@@ -49,7 +49,7 @@ def _insert_operation_category_translation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_CATEGORY + 1, 'en', 'NLP'],
-      [BASE_CATEGORY + 1, 'pt', 'PLN'],
+      [BASE_CATEGORY + 1, 'pt', 'PNL'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)

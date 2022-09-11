@@ -11,7 +11,7 @@ from sqlalchemy.sql import table, column
 
 # revision identifiers, used by Alembic.
 revision = 'a4c87d04f18e'
-down_revision = 'a85dce88d899'
+down_revision = '13f48bf7c439'
 branch_labels = None
 depends_on = None
 
@@ -22,11 +22,11 @@ depends_on = None
 # OK, remove this comment.
 # --------------------------------------------------------------
 
-BASE_CATEGORY = 46
-BASE_OP = 4393
-BASE_FORM = 4050
-BASE_FORM_FIELD = 4392
-BASE_PORT = 4111
+BASE_CATEGORY = 53
+BASE_OP = 4055
+BASE_FORM = 4054
+BASE_FORM_FIELD = 4397
+BASE_PORT = 4123
 
 
 def _insert_operation_category(conn):
@@ -57,7 +57,7 @@ def _insert_operation_category_translation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_CATEGORY + 1, 'en', 'NLP'],
-      [BASE_CATEGORY + 1, 'pt', 'NLP'],
+      [BASE_CATEGORY + 1, 'pt', 'PNL'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
