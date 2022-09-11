@@ -1204,7 +1204,7 @@ def _insert_operation_form_field_translation(conn):
     data.append([240, 'pt', 'Função de perda', 'Função de perda a ser otimizada.'])
     data.append([241, 'pt', 'Parâmetro de regularização (λ >= 0)', 'Parâmetro de regularização (λ)'])
     data.append([183, 'pt', 'Epsilon (usado se função de perda Huber)', 'Parâmetro que controla a robustez. Deve ser maior que 1.0.'])
-    data.append([184, 'pt', 'Tolerância', 'Tolerância de convergência para algoritmo iterativo. Deve ser maior ou igual a 0.0.'])
+    data.append([184, 'pt', 'Tolerância', 'Tolerância de convergência para oritmo iterativo. Deve ser maior ou igual a 0.0.'])
     data.append([185, 'pt', 'Padronização (standardization)', 'Indica se é para padronizar os atributos preditivos antes de realizar o treino.'])
     data.append([175, 'pt', 'Fit intercept', 'Se desligado, define y-intercept igual a 0. Se ligado, y-intercept é determinado pela lina de melhor ajuste.'])
 
@@ -1408,25 +1408,25 @@ def _fixes(conn):
     conn.execute('ALTER TABLE operation_category ADD COLUMN subtype VARCHAR(200);');
     conn.execute("""
         INSERT INTO operation_category(id, type, subtype, `order`, default_order)
-        VALUES (%s, %s, %s, %s, %s)""", [45, 'algorithm', 'regression', 0, 0])
+        VALUES (%s, %s, %s, %s, %s)""", [47, 'algorithm', 'regression', 0, 0])
 
     conn.execute("""
         INSERT INTO operation_category(id, type, subtype, `order`, default_order)
-        VALUES (%s, %s, %s, %s, %s)""", [46, 'algorithm', 'clustering', 0, 0])
+        VALUES (%s, %s, %s, %s, %s)""", [48, 'algorithm', 'clustering', 0, 0])
     conn.execute("""
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (%s, %s, %s)""", [45, 'pt', 'Regressão'])
+        VALUES (%s, %s, %s)""", [47, 'pt', 'Regressão'])
 
     conn.execute("""
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (%s, %s, %s)""", [46, 'pt', 'Agrupamento'])
+        VALUES (%s, %s, %s)""", [48, 'pt', 'Agrupamento'])
     conn.execute("""
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (%s, %s, %s)""", [45, 'en', 'Regression'])
+        VALUES (%s, %s, %s)""", [47, 'en', 'Regression'])
 
     conn.execute("""
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (%s, %s, %s)""", [46, 'en', 'Clustering'])
+        VALUES (%s, %s, %s)""", [48, 'en', 'Clustering'])
     conn.execute("UPDATE operation_category set subtype = 'classification' where id = 4")
 
     # Generalized linear regressio
