@@ -1,4 +1,4 @@
-"""New operations definition
+"""Add word counting and lowercase operations
 
 """
 from alembic import context
