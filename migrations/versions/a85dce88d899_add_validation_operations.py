@@ -22,12 +22,12 @@ depends_on = None
 # OK, remove this comment.
 # --------------------------------------------------------------
 
-BASE_OP = 20000
-BASE_CATEGORY = 20000
-BASE_FORM = 20000
-BASE_FORM_FIELD = 20000
-BASE_PORT = 20000
-BASE_INTERFACE = 20000
+BASE_OP = 141
+BASE_CATEGORY = 45
+BASE_FORM = 154
+BASE_FORM_FIELD = 586
+BASE_PORT = 327
+BASE_INTERFACE = 29
 
 def _insert_operation(conn):
     tb = table('operation',

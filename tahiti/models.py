@@ -11,8 +11,8 @@ from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
 make_translatable(options={'locales': ['pt', 'en'],
-                           'auto_create_locales': True,
-                           'fallback_locale': 'en'})
+                           'auto_create_locales': False,
+                           'fallback_locale': 'pt'})
 
 db = SQLAlchemy()
 
@@ -143,6 +143,9 @@ class WorkflowType:
     USER_TEMPLATE = 'USER_TEMPLATE'
     SYSTEM_TEMPLATE = 'SYSTEM_TEMPLATE'
     SUB_FLOW = 'SUB_FLOW'
+    DATA_EXPLORER = 'DATA_EXPLORER'
+    MODEL_BUILDER = 'MODEL_BUILDER'
+    VIS_BUILDER = 'VIS_BUILDER'
 
     @staticmethod
     def values():
@@ -375,6 +378,7 @@ class OperationTranslation(translation_base(Operation)):
     # Fields
     name = Column(Unicode(200))
     description = Column(Unicode(800))
+    label_format = Column(Unicode(800))
 
 
 class OperationCategory(db.Model, Translatable):
@@ -385,6 +389,7 @@ class OperationCategory(db.Model, Translatable):
     # Fields
     id = Column(Integer, primary_key=True)
     type = Column(String(200), nullable=False)
+    subtype = Column(String(200))
     order = Column(Integer,
                    default=1, nullable=False)
     default_order = Column(Integer,
