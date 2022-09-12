@@ -57,7 +57,7 @@ def _insert_operation_category_translation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_CATEGORY + 1, 'en', 'NLP'],
-      [BASE_CATEGORY + 1, 'pt', 'PNL'],
+      [BASE_CATEGORY + 1, 'pt', 'PLN'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
