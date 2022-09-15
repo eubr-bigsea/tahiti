@@ -265,8 +265,7 @@ class WorkflowListApi(Resource):
             workflow = request_schema.load(cloned)
         elif request.json:
             data = request.json
-            if '$meta' in request.json:
-                meta = request.json.pop('$meta')
+            meta = request.json.pop('$meta') if '$meta' in request.json else {}
 
             if 'user' in data:
                 data.pop('user')
@@ -435,6 +434,10 @@ class WorkflowDetailApi(Resource):
                     db.session.flush()
                     update_port_name_in_flows(db.session, workflow.id)
                     db.session.commit()
+
+                    # Retrieve workflow in order to avoid lazy load.
+                    # This method is optimized to retrieve translations
+                    workflow = get_workflow(workflow.id)
 
                     historical_data = json.dumps(
                         response_schema.dump(workflow))
