@@ -32,14 +32,52 @@ def optimize_workflow_query(workflows):
 
 def update_port_name_in_flows(session, workflow_id):
     sql = """
-        UPDATE flow, operation_port s, operation_port t,
-        operation_port_translation t1, operation_port_translation t2
-        SET source_port_name = t1.name, target_port_name = t2.name
+        UPDATE flow, operation_port s, operation_port t
+        SET source_port_name = s.slug, target_port_name = t.slug
         WHERE flow.source_port = s.id AND flow.target_port = t.id
-        AND s.id = t1.id AND t.id = t2.id
         AND workflow_id = :id"""
+
+    sql = """
+        UPDATE flow, operation_port ops, operation_port opt,
+            task ts, task tt, 
+            operation os, operation ot
+        SET flow.source_port_name = ops.slug, 
+            flow.target_port_name = opt.slug
+        WHERE 
+                ops.operation_id = os.id
+            AND opt.operation_id = ot.id
+            AND ts.operation_id = os.id
+            AND tt.operation_id = ot.id
+            AND flow.source_port = ops.id
+            AND flow.target_port = opt.id
+            AND ts.workflow_id = :id
+            AND tt.workflow_id = :id
+            AND flow.source_id = ts.id
+            AND flow.target_id = tt.id
+            AND flow.workflow_id = :id"""
+
     session.execute(sql, {'id': workflow_id})
 
+def update_port_id_in_flows(session, workflow_id):
+    sql = """
+        UPDATE flow, operation_port ops, operation_port opt,
+            task ts, task tt, 
+            operation os, operation ot
+        SET flow.source_port = ops.id, 
+            flow.target_port = opt.id
+        WHERE 
+                ops.operation_id = os.id
+            AND opt.operation_id = ot.id
+            AND ts.operation_id = os.id
+            AND tt.operation_id = ot.id
+            AND flow.source_port_name = ops.slug
+            AND flow.target_port_name = opt.slug
+            AND ts.workflow_id = :id
+            AND tt.workflow_id = :id
+            AND flow.source_id = ts.id
+            AND flow.target_id = tt.id
+            AND flow.workflow_id = :id"""
+    session.execute(sql, {'id': workflow_id})
 
 def get_workflow(workflow_id):
     workflows = optimize_workflow_query(
@@ -264,7 +302,11 @@ class WorkflowListApi(Resource):
 
             db.session.add(workflow)
             db.session.flush()
+            # Try to normalize information. There are 2 ways to define 
+            # a port: by using its id or its name. There are code 
+            # that use only the name and others code that use only id.
             update_port_name_in_flows(db.session, workflow.id)
+            update_port_id_in_flows(db.session, workflow.id)
             response_schema.context = {'specification': WORKFLOW_SPECIFICATION}
             result, result_code = response_schema.dump(
                 workflow), 200
@@ -392,6 +434,10 @@ class WorkflowDetailApi(Resource):
                     db.session.flush()
                     update_port_name_in_flows(db.session, workflow.id)
                     db.session.commit()
+
+                    # Retrieve workflow in order to avoid lazy load.
+                    # This method is optimized to retrieve translations
+                    workflow = get_workflow(workflow.id)
 
                     historical_data = json.dumps(
                         response_schema.dump(workflow))

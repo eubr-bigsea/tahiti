@@ -59,7 +59,7 @@ SAVE = BASE_OP + 64
 INVERT_BOOLEAN = BASE_OP + 15
 RESCALE = BASE_OP + 16
 ROUND_NUMBER = BASE_OP + 17
-DISCRETIZE = BASE_OP + 18
+BUCKETIZE = BASE_OP + 18
 NORMALIZE = BASE_OP + 19
 FORCE_RANGE = BASE_OP + 20
 TS_TO_DATE = BASE_OP + 21
@@ -77,8 +77,8 @@ PARSE_TO_DATE = BASE_OP + 32
 EXTRACT_NUMBERS = BASE_OP + 33
 EXTRACT_WITH_REGEX = BASE_OP + 34
 EXTRACT_FROM_ARRAY = BASE_OP + 35
-# EXPAND_FROM_ARRAY = BASE_OP + 36
-FOLD_ARRAY = BASE_OP + 37
+CONCAT_ARRAY = BASE_OP + 36
+CREATE_ARRAY = BASE_OP + 37
 CHANGE_ARRAY_TYPE = BASE_OP + 38
 SORT_ARRAY = BASE_OP + 39
 FORCE_DATE_RANGE = BASE_OP + 40
@@ -95,7 +95,7 @@ ESCAPE_XML = BASE_OP + 48
 ESCAPE_UNICODE = BASE_OP + 49
 STEMMING = BASE_OP + 50
 N_GRAMS = BASE_OP + 51
-OBFUSCATE = BASE_OP + 52
+STRING_INDEXER = BASE_OP + 52
 ONE_HOT_ENCODE = BASE_OP + 53
 
 # Flag
@@ -111,6 +111,7 @@ REMOVE_MISSING = BASE_OP + 59
 HANDLE_INVALID = BASE_OP + 60
 REMOVE_INVALID = BASE_OP + 61
 
+REPLACE_WITH_REGEX = BASE_OP + 65
 
 
 # Model builder
@@ -159,8 +160,8 @@ CAT_MODEL_BUILDER = BASE_CATEGORY + 13
 CAT_VISUALIZATION_BUILDER = BASE_CATEGORY + 14
 
 CAT_CLASSIFICATION = 4
-CAT_REGRESSION =50 
-CAT_CLUSTERING = 51
+CAT_REGRESSION = 45
+CAT_CLUSTERING = 46
 
 FIELD_CAST_ERROR_ATTRIBUTE = 449
 FIELD_SELECT_MODE = 3
@@ -179,18 +180,19 @@ ALL_OPS = [
     SELECT, SORT, FILTER, GROUP, JOIN, CONCAT_ROWS, SAMPLE,
     LIMIT, WINDOW_FUNCTION, PYTHON_CODE, ADD_BY_FORMULA, SAVE,
     # Transform
-    INVERT_BOOLEAN, RESCALE, ROUND_NUMBER, DISCRETIZE, NORMALIZE,
+    INVERT_BOOLEAN, RESCALE, ROUND_NUMBER, BUCKETIZE, NORMALIZE,
     FORCE_RANGE, TS_TO_DATE, TO_UPPER, TO_LOWER, CAPITALIZE,
     REMOVE_ACCENTS, NORMALIZE_TEXT, CONCAT_ATTRIBUTE, TRIM,
     TRUNCATE_TEXT, SPLIT_INTO_WORDS, SUBSTRING, PARSE_TO_DATE,
-    EXTRACT_NUMBERS, EXTRACT_WITH_REGEX, EXTRACT_FROM_ARRAY,
-    #EXPAND_FROM_ARRAY, 
-    FOLD_ARRAY, CHANGE_ARRAY_TYPE, SORT_ARRAY,
+    EXTRACT_NUMBERS, EXTRACT_WITH_REGEX, REPLACE_WITH_REGEX, 
+    EXTRACT_FROM_ARRAY,
+    CONCAT_ARRAY, 
+    CREATE_ARRAY, CHANGE_ARRAY_TYPE, SORT_ARRAY,
     FORCE_DATE_RANGE, UPDATE_HOUR, TRUNCATE_DATE_TO, DATE_DIFF,
     DATE_ADD, DATE_PART, FORMAT_DATE, DATE_TO_TS,
     # Encode / decode
     ESCAPE_XML, ESCAPE_UNICODE, STEMMING, N_GRAMS,
-    OBFUSCATE, ONE_HOT_ENCODE,
+    STRING_INDEXER, ONE_HOT_ENCODE,
     # Flag
     FLAG_IN_RANGE, FLAG_INVALID, FLAG_EMPTY, FLAG_WITH_FORMULA,
     # Fix data
@@ -217,10 +219,6 @@ ATTRIBUTE_FORM = BASE_FORM + 5
 ALIAS_FORM = BASE_FORM + 6
 
 MAX_OP = max(ALL_OPS)
-
-date_formats = [
-    {'key': ''}
-]
 
 def _insert_platform(conn):
     conn.execute(
@@ -279,17 +277,17 @@ def _insert_operation(conn):
       [CONCAT_ROWS, 'concat-rows', 1, 'TRANSFORMATION', 'fa fa-plus text-secondary', 'separator', ''],
       [SAMPLE, 'sample', 1, 'TRANSFORMATION', '', '', ''],
       [LIMIT, 'limit', 1, 'TRANSFORMATION', '', 'separator', ''],
-      [WINDOW_FUNCTION, 'window-function', 1, 'TRANSFORMATION', '', '', ''],
-      [PYTHON_CODE, 'python-code', 1, 'TRANSFORMATION', '', '', ''],
+      [WINDOW_FUNCTION, 'window-function', 0, 'TRANSFORMATION', '', '', ''],
+      [PYTHON_CODE, 'python-code', 0, 'TRANSFORMATION', '', '', ''],
       [ADD_BY_FORMULA, 'add-by-formula', 1, 'TRANSFORMATION', 'fa fa-equals', '', ''],
       [SAVE, 'save', 1, 'TRANSFORMATION', 'fa fa-save', '', ''],
 
       [INVERT_BOOLEAN, 'invert-boolean', 1, 'TRANSFORMATION', '', 'boolean', ''],
-      [RESCALE, 'rescale', 1, 'TRANSFORMATION', '', 'Number', ''],
+      [RESCALE, 'rescale', 1, 'TRANSFORMATION', '', 'Integer|Decimal', ''],
       [ROUND_NUMBER, 'round-number', 1, 'TRANSFORMATION', '', 'Decimal', ''],
-      [DISCRETIZE, 'discretize', 1, 'TRANSFORMATION', '', 'Number', ''],
-      [NORMALIZE, 'normalize', 1, 'TRANSFORMATION', '', '', 'Number'],
-      [FORCE_RANGE, 'force-range', 1, 'TRANSFORMATION', '', 'Number', ''],
+      [BUCKETIZE, 'bucketize', 1, 'TRANSFORMATION', '', 'Integer|Decimal', ''],
+      [NORMALIZE, 'normalize', 0, 'TRANSFORMATION', '', '', 'Integer|Decimal'],
+      [FORCE_RANGE, 'force-range', 1, 'TRANSFORMATION', '', 'Integer|Decimal', ''],
 
       [TS_TO_DATE, 'ts-to-date', 1, 'TRANSFORMATION', '', 'Integer', ''],
       
@@ -297,7 +295,7 @@ def _insert_operation(conn):
       [TO_LOWER, 'to-lower', 1, 'TRANSFORMATION', '', 'Text', ''],
       [CAPITALIZE, 'capitalize', 1, 'TRANSFORMATION', '', 'Text separator', ''],
       [REMOVE_ACCENTS, 'remove-accents', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [NORMALIZE_TEXT, 'normalize-text', 1, 'TRANSFORMATION', '', 'Text separator', ''],
+      [NORMALIZE_TEXT, 'normalize-text', 0, 'TRANSFORMATION', '', 'Text separator', ''],
       [CONCAT_ATTRIBUTE, 'concat-attribute', 1, 'TRANSFORMATION', '', 'Text', ''],
       [TRIM, 'trim', 1, 'TRANSFORMATION', '', 'Text', ''],
       [TRUNCATE_TEXT, 'truncate-text', 1, 'TRANSFORMATION', '', 'Text', ''],
@@ -306,10 +304,11 @@ def _insert_operation(conn):
       [PARSE_TO_DATE, 'parse-to-date', 1, 'TRANSFORMATION', '', 'Text separator', ''],
       [EXTRACT_NUMBERS, 'extract-numbers', 1, 'TRANSFORMATION', '', 'Text', ''],
       [EXTRACT_WITH_REGEX, 'extract-with-regex', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [REPLACE_WITH_REGEX, 'replace-with-regex', 1, 'TRANSFORMATION', '', 'Text', ''],
 
       [EXTRACT_FROM_ARRAY, 'extract-from-array', 1, 'TRANSFORMATION', '', 'Array', ''],
-      # [EXPAND_FROM_ARRAY, 'expand-from-array', 1, 'TRANSFORMATION', '', 'Array', ''],
-      [FOLD_ARRAY, 'fold-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+      [CONCAT_ARRAY, 'concat-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+      [CREATE_ARRAY, 'create-array', 1, 'TRANSFORMATION', '', 'Array', ''],
       [CHANGE_ARRAY_TYPE, 'change-array-type', 1, 'TRANSFORMATION', '', 'Array', ''],
       [SORT_ARRAY, 'sort-array', 1, 'TRANSFORMATION', '', 'Array', ''],
 
@@ -322,23 +321,23 @@ def _insert_operation(conn):
       [FORMAT_DATE, 'format-date', 1, 'TRANSFORMATION', '', 'Datetime', ''],
       [DATE_TO_TS, 'date-to-ts', 1, 'TRANSFORMATION', '', 'Datetime', ''],
 
-      [ESCAPE_XML, 'escape-xml', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [ESCAPE_UNICODE, 'escape-unicode', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [STEMMING, 'stemming', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [ESCAPE_XML, 'escape-xml', 0, 'TRANSFORMATION', '', 'Text', ''],
+      [ESCAPE_UNICODE, 'escape-unicode', 0, 'TRANSFORMATION', '', 'Text', ''],
+      [STEMMING, 'stemming', 0, 'TRANSFORMATION', '', 'Text', ''],
       [N_GRAMS, 'n-grams', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [OBFUSCATE, 'obfuscate', 1, 'TRANSFORMATION', '', '', ''],
+      [STRING_INDEXER, 'string-indexer', 1, 'TRANSFORMATION', '', '', ''],
       [ONE_HOT_ENCODE, 'one-hot-encoding', 1, 'TRANSFORMATION', '', '', ''],
 
-      [FLAG_IN_RANGE, 'flag-in-range', 1, 'TRANSFORMATION', '', '', ''],
-      [FLAG_INVALID, 'flag-invalid', 1, 'TRANSFORMATION', '', '', ''],
-      [FLAG_EMPTY, 'flag-invalid', 1, 'TRANSFORMATION', '', '', ''],
+      [FLAG_IN_RANGE, 'flag-in-range', 0, 'TRANSFORMATION', '', '', ''],
+      [FLAG_INVALID, 'flag-invalid', 0, 'TRANSFORMATION', '', '', ''],
+      [FLAG_EMPTY, 'flag-empty', 1, 'TRANSFORMATION', '', '', ''],
       [FLAG_WITH_FORMULA, 'flag-with-formula', 1, 'TRANSFORMATION', '', '', ''],
 
 
       [CLEAN_MISSING, 'clean-missing', 1, 'TRANSFORMATION', '', '', ''],
-      [REMOVE_MISSING, 'remove-empty', 1, 'TRANSFORMATION', '', 'separator', ''],
-      [HANDLE_INVALID, 'handle-invalid', 1, 'TRANSFORMATION', '', '', ''],
-      [REMOVE_INVALID, 'remove-invalid', 1, 'TRANSFORMATION', '', '', ''],
+      [REMOVE_MISSING, 'remove-missing', 1, 'TRANSFORMATION', '', '', ''],
+      [HANDLE_INVALID, 'handle-invalid', 0, 'TRANSFORMATION', '', '', ''],
+      [REMOVE_INVALID, 'remove-invalid', 0, 'TRANSFORMATION', '', '', ''],
 
       [SPLIT, 'split', 1, 'TRANSFORMATION', '', '', ''],
       [EVALUATOR, 'evaluator', 1, 'TRANSFORMATION', '', '', ''],
@@ -386,7 +385,7 @@ def _insert_operation_translation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [SELECT, 'pt', 'Selecionar atributos', 'Selecionar atributos',
-          '<b>${this.mode.value == "include"?"Selecionar":(this.mode.value == "rename" ? "Renomear" : "Descartar")}</b> <i>${this.attributes.value.length > 3? '
+          '<b>${this.mode.value == "include" || this.mode.value == "duplicate"?"Selecionar":(this.mode.value == "rename" ? "Renomear" : "Descartar")}</b> <i>${this.attributes.value.length > 3? '
           'this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute).join(", ")}</i>'],
       [READ_DATA, 'pt', 'Ler dados', 'Ler dados', '${data_source.label}: ${data_source.labelValue}'],
       [CAST, 'pt', 'Alterar o tipo do atributo', 'Altera o tipo do atributo.',
@@ -399,7 +398,7 @@ def _insert_operation_translation(conn):
           '<b>Descartar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.join(", ")}</i>'],
       [DUPLICATE, 'pt',  'Duplicar atributo', 'Duplica o atributo.',
           '<b>Duplicar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute + " como " + a.alias).join(", ")}</i>'],
-      [FIND_REPLACE, 'pt',  'Localizar e substituir', 'Localiza valores no atributo e permite a substituição.', ''],
+      [FIND_REPLACE, 'pt',  'Localizar e substituir (exato)', 'Localiza valores no atributo e permite a substituição.', ''],
 
       [SORT, 'pt', 'Ordenar', 'Permite definir as opções de ordenação.',
             '<b>Ordenar por</b> <i>${this.order_by.value.map(v => v.f+ "(" + v.attribute +")").join(", ")}</i>'],
@@ -416,12 +415,12 @@ def _insert_operation_translation(conn):
 
       [INVERT_BOOLEAN, 'pt', 'Inverter', 'Permite inverter um valor lógico.',
           '<b>Inverter booleano</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
-      [RESCALE, 'pt', 'Rescalar', 'Permite rescalar um valor numérico.',
-          '<b>Rescalar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [RESCALE, 'pt', 'Redefinir escala', 'Permite rescalar um valor numérico.',
+          '<b>Redefinir escala</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [ROUND_NUMBER, 'pt', 'Arredondar', 'Permite arredondar um número.',
           '<b>Arredondar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
-      [DISCRETIZE, 'pt', 'Discretizar', 'Permite discretizar um número.',
-          '<b>Discretizar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [BUCKETIZE, 'pt', 'Intervalar', 'Permite discretizar um número em intervalos (buckets).',
+          '<b>Intervalar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [NORMALIZE, 'pt', 'Normalizar', 'Permite normalizar um número.',
           '<b>Normalizar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [FORCE_RANGE, 'pt', 'Forçar faixa', 'Permite forçar um número a uma faixa.',
@@ -454,11 +453,13 @@ def _insert_operation_translation(conn):
           '<b>Extrair números em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [EXTRACT_WITH_REGEX, 'pt', 'Extrair com expressão regular', 'Extrai dados usando expressões regulares.',
           '<b>Extrair com expressão regular</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [REPLACE_WITH_REGEX, 'pt', 'Substituir com expressão regular', 'Substitui ocorrências de texto usando expressões regulares.',
+          '<b>Substituir com expressão regular</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [EXTRACT_FROM_ARRAY, 'pt', 'Extrair elemento(s) de arranjo', 'Permite extrair um elemento de um arranjo (array) usando índice(s).',
           '<b>Extrair elemento(s)</b> <i>${this.indexes.value}</i> <b>de arranjo em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
-      #[EXPAND_FROM_ARRAY, 'pt', 'Expandir arranjo', 'Permite converter um arranjo (array) em uma ou mais colunas ou linhas.',
-      #    '<b>Expandir arranjo em</b> <i>${this.attributes.value.map(a=>a).join(", ")} <b>em novas colunas</b></i>'],
-      [FOLD_ARRAY, 'pt', 'Converter em arranjo', 'Permite converter uma ou mais colunas em um arranjo (array) de valores.',
+      [CONCAT_ARRAY, 'pt', 'Concatenar elementos', 'Permite concatenar os elementos de um arranjo na forma de uma string.',
+          '<b>Concatenar os valores em</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> <b> usando separador</b>.'],
+      [CREATE_ARRAY, 'pt', 'Converter em arranjo', 'Permite converter uma ou mais colunas em um arranjo (array) de valores.',
           '<b>Converter </b> <i>${this.attributes.value.map(a=>a).join(", ")} <b>em nova coluna do tipo arranjo</b></i>'],
       [CHANGE_ARRAY_TYPE, 'pt', 'Alterar o tipo do arranjo', 'Permite alterar o tipo de dados dos elementos de um arranjo (array).',
           '<b>Alterar o tipo do item do arranjo em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
@@ -472,8 +473,8 @@ def _insert_operation_translation(conn):
           '<b>Truncar hora das datas em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [DATE_DIFF, 'pt', 'Diferença de datas', 'Calcula a diferença entre datas.',
           '<b>Calcular a diferença entre datas </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
-      [DATE_ADD, 'pt', 'Adicionar datas', 'Soma uma data com um valor numérico',
-          '<b>Adicionar um valor às datas em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
+      [DATE_ADD, 'pt', 'Incrementar/decrementar data', 'Soma ou subtrai um valor numérico de uma data',
+          '<b>Incrementar/decrementar valor na(s) data(s) </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [DATE_PART, 'pt', 'Extrair parte de data', 'Extrai uma parte da data.',
           '<b>Extrair partes da data em</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>'],
       [FORMAT_DATE, 'pt', 'Formatar data', 'Formata uma data segundo um parâmetro.',
@@ -485,17 +486,18 @@ def _insert_operation_translation(conn):
       [ESCAPE_UNICODE, 'pt', 'Escapar Unicode', 'Escapa caracteres Unicode.', ''],
       [STEMMING, 'pt', 'Gerar radicais (stemming)', 'Gera radicais das palavras por stemming.', ''],
       [N_GRAMS, 'pt', 'Gerar N-Gramas', 'Gera combinações N-Gramas', ''],
-      [OBFUSCATE, 'pt', 'Ofuscar', 'Ofusca valores de forma a torná-los mais difíceis de serem usados de forma maliciosa.', ''],
-      [ONE_HOT_ENCODE, 'pt', 'Codificar usando One Hot Encoder', 'Codifica usando One Hot Encoder.', ''],
+      [STRING_INDEXER, 'pt', 'Codificar usando números', 'Codifica um valor categório usando números. Cada registro com o mesmo valor categórico recebe um mesmo número, que é diferente para cada valor categórico.', '<b>Codifica</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> <b>usando números</b>.'],
+      [ONE_HOT_ENCODE, 'pt', 'Codificar usando One Hot Encoder', 'Codifica usando One Hot Encoder.', '<b>Codifica</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> <b>usando one hot encoder</b>.'],
 
       [FLAG_IN_RANGE, 'pt', 'Sinalizar registros em faixa', 'Sinaliza registros em faixa.', ''],
       [FLAG_INVALID, 'pt', 'Sinalizar registros com dados inválidos', 'Sinaliza registros com dados inválidos.', ''],
-      [FLAG_EMPTY, 'pt', 'Sinalizar registros com atributos vazios', 'Sinaliza registros que tenham valores vazios em atributos determinados.', ''],
+      [FLAG_EMPTY, 'pt', 'Sinalizar registros com valores nulos', 'Sinaliza registros que tenham valores nulos em atributos determinados.', ''],
       [FLAG_WITH_FORMULA, 'pt', 'Sinalizar registros usando fórmula', 'Sinaliza registros usando fórmula.', ''],
 
 
       [CLEAN_MISSING, 'pt', 'Tratar dados ausentes', 'Trata dados ausentes de acordo com um regra.', ''],
-      [REMOVE_MISSING, 'pt', 'Remover registros com dados ausentes', 'Remove registros com dados ausentes.', ''],
+      [REMOVE_MISSING, 'pt', 'Remover registros com dados ausentes', 'Remove registros com dados ausentes.', 
+            '<b>Remover registros com dados ausentes</b> em <i>${this.attributes.value.map(a=>a).join(", ")}</i>.'],
       [HANDLE_INVALID, 'pt', 'Tratar dados inválidos', 'Trata dados inválidos de acordo com um regra.', ''],
       [REMOVE_INVALID, 'pt', 'Remover registros com dados inválidos', 'Remover registros com dados inválidos.', ''],
       
@@ -547,7 +549,7 @@ def _insert_operation_category(conn):
       [CAT_EDIT, 'menu/selected/fa fa-edit', 1, 1],
       [CAT_DATA, 'menu/always/fa fa-database', 2, 2],
       [CAT_TRANSFORM, 'menu/selected/fa fa-magic', 3, 3],
-      [CAT_ENCODE, 'menu/selected/fa fa-code', 4, 4],
+      # [CAT_ENCODE, 'menu/selected/fa fa-code', 4, 4],
       [CAT_FLAG, 'menu/selected/fa fa-flag', 5, 5],
       [CAT_FIX, 'menu/selected/fa fa-eraser', 6, 6],
       [CAT_CONTEXT, 'context', 7, 7],
@@ -578,7 +580,7 @@ def _insert_operation_category_translation(conn):
       [CAT_EDIT, 'pt', 'Editar'],
       [CAT_DATA, 'pt', 'Dados'],
       [CAT_TRANSFORM, 'pt', 'Transformar'],
-      [CAT_ENCODE, 'pt', '(De)codificar'],
+      # [CAT_ENCODE, 'pt', '(De)codificar'],
       [CAT_FLAG, 'pt', 'Sinalizar'],
       [CAT_FIX, 'pt', 'Corrigir'],
       [CAT_CONTEXT, 'pt', 'Contexto'],
@@ -627,7 +629,7 @@ def _insert_operation_category_operation(conn):
       [INVERT_BOOLEAN, CAT_TRANSFORM],
       [RESCALE, CAT_TRANSFORM],
       [ROUND_NUMBER, CAT_TRANSFORM],
-      [DISCRETIZE, CAT_TRANSFORM],
+      [BUCKETIZE, CAT_TRANSFORM],
       [NORMALIZE, CAT_TRANSFORM],
       [FORCE_RANGE, CAT_TRANSFORM],
       [TS_TO_DATE, CAT_TRANSFORM],
@@ -644,9 +646,10 @@ def _insert_operation_category_operation(conn):
       [PARSE_TO_DATE, CAT_TRANSFORM],
       [EXTRACT_NUMBERS, CAT_TRANSFORM],
       [EXTRACT_WITH_REGEX, CAT_TRANSFORM],
+      [REPLACE_WITH_REGEX, CAT_TRANSFORM],
       [EXTRACT_FROM_ARRAY, CAT_TRANSFORM],
-      # [EXPAND_FROM_ARRAY, CAT_TRANSFORM],
-      [FOLD_ARRAY, CAT_TRANSFORM],
+      [CONCAT_ARRAY, CAT_TRANSFORM],
+      [CREATE_ARRAY, CAT_TRANSFORM],
       [CHANGE_ARRAY_TYPE, CAT_TRANSFORM],
       [SORT_ARRAY, CAT_TRANSFORM],
       [FORCE_DATE_RANGE, CAT_TRANSFORM],
@@ -658,12 +661,12 @@ def _insert_operation_category_operation(conn):
       [FORMAT_DATE, CAT_TRANSFORM],
       [DATE_TO_TS, CAT_TRANSFORM],
 
-      [ESCAPE_XML, CAT_ENCODE],
-      [ESCAPE_UNICODE, CAT_ENCODE],
-      [STEMMING, CAT_ENCODE],
-      [N_GRAMS, CAT_ENCODE],
-      [OBFUSCATE, CAT_ENCODE],
-      [ONE_HOT_ENCODE, CAT_ENCODE],
+      [ESCAPE_XML, CAT_TRANSFORM],
+      [ESCAPE_UNICODE, CAT_TRANSFORM],
+      [STEMMING, CAT_TRANSFORM],
+      [N_GRAMS, CAT_TRANSFORM],
+      [STRING_INDEXER, CAT_TRANSFORM],
+      [ONE_HOT_ENCODE, CAT_TRANSFORM],
 
       [FLAG_IN_RANGE, CAT_FLAG],
       [FLAG_INVALID, CAT_FLAG],
@@ -845,6 +848,17 @@ def _insert_operation_form_field(conn):
                 column('enable_conditions', String),
                 column('editable', Boolean),
                 column('form_id', Integer))
+
+    date_parse_formats = [
+        'dd-MM-yyyy', 'dd/MM/yyyy', 'dd.MM.yyyy',
+        'MM-dd-yyyy', 'MM/dd/yyyy', 'MM.dd.yyyy',
+        'yyyy-MM-dd', 'yyyy/MM/dd', 'yyyy.MM.dd',
+        'yyyy-MM-dd HH:mm:ss', 
+        'yyyy-MM-dd hh:mm:ss', 
+        'yyyy-MM-dd"T"HH:mm:ss',
+        'yyyy-MM-dd"T"HH:mm:ss. SSSXXX'
+    ]
+
     split_strategy = [
           {'key': 'split', 'pt': 'Dividir aleatoriamente entre treino e teste', 'en': 'Randomly split between training and testing'},
           {'key': 'cross_validation', 'pt': 'Realizar a validação cruzada', 'en': 'Perform cross-validation'},
@@ -903,6 +917,15 @@ def _insert_operation_form_field(conn):
 	  {'key': 'grid', 'pt': 'Busca em grade', 'en': 'Grid search'},
           {'key': 'random', 'pt': 'Busca aleatória', 'en': 'Random search'},
     ]  
+    date_formats = json.dumps([
+                  {'key': 'second', 'en': 'Second', 'pt': 'Segundo'},
+                  {'key': 'minute', 'en': 'Minute', 'pt': 'Minuto'},
+                  {'key': 'hour', 'en': 'Hour', 'pt': 'Hora'},
+                  {'key': 'day', 'en': 'Day', 'pt': 'Dia'},
+                  {'key': 'week', 'en': 'Week', 'pt': 'Semana'},
+                  {'key': 'month', 'en': 'Month', 'pt': 'Mês'},
+                  {'key': 'year', 'en': 'Year', 'pt': 'Ano'},
+                  ])
     columns = [c.name for c in tb.columns]
     data = [
       [BASE_FORM_FIELD + 0, 'comment', 'TEXT', 1, 1, None, 'textarea', None, None, 'EXECUTION', None, 1, BASE_FORM + 0],
@@ -916,7 +939,7 @@ def _insert_operation_form_field(conn):
 
 
       [BASE_FORM_FIELD + 51, 'find', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, FIND_REPLACE + 50],
-      [BASE_FORM_FIELD + 52, 'replace', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', None, 1, FIND_REPLACE + 50],
+      [BASE_FORM_FIELD + 52, 'replace', 'TEXT', 0, 4, None, 'text', None, None, 'EXECUTION', "this.nullify.internalValue !== '1'", 1, FIND_REPLACE + 50],
 
       [BASE_FORM_FIELD + 53, 'other', 'TEXT', 1, 3, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, CONCAT_ATTRIBUTE + 50],
       [BASE_FORM_FIELD + 54, 'separator', 'TEXT', 1, 4, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, CONCAT_ATTRIBUTE + 50],
@@ -925,14 +948,15 @@ def _insert_operation_form_field(conn):
 
       [BASE_FORM_FIELD + 56, 'delimiter', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION', None, 1, SPLIT_INTO_WORDS + 50],
 
-      [BASE_FORM_FIELD + 57, 'format', 'TEXT', 1, 3, None, 'select2', None, None, 'EXECUTION', None, 1, PARSE_TO_DATE + 50],
+      [BASE_FORM_FIELD + 57, 'format', 'TEXT', 1, 4, 'yyyy-MM-dd', 'single-tag', None, 
+              json.dumps(date_parse_formats), 'EXECUTION', None, 1, PARSE_TO_DATE + 50],
 
       [BASE_FORM_FIELD + 58, 'regex', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, EXTRACT_WITH_REGEX + 50],
 
-      [BASE_FORM_FIELD + 59, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', None, 1, RESCALE + 50],
-      [BASE_FORM_FIELD + 60, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', None, 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 59, 'min', 'FLOAT', 0, 3, '0.0', 'decimal', None, None, 'EXECUTION', 'this.type.internalValue === "min_max"', 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 60, 'max', 'FLOAT', 0, 4, '1.0', 'decimal', None, None, 'EXECUTION', 'this.type.internalValue === "min_max"', 1, RESCALE + 50],
 
-      [BASE_FORM_FIELD + 61, 'bins', 'INTEGER', 1, 3, None, 'INTEGER', None, None, 'EXECUTION', None, 1, DISCRETIZE + 50],
+      [BASE_FORM_FIELD + 61, 'splits', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, BUCKETIZE + 50],
 
       [BASE_FORM_FIELD + 62, 'normalizer', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, NORMALIZE + 50],
 
@@ -941,7 +965,7 @@ def _insert_operation_form_field(conn):
 
       [BASE_FORM_FIELD + 65, 'decimals', 'INTEGER', 1, 3, '2', 'integer', None, None, 'EXECUTION', None, 1, ROUND_NUMBER + 50],
 
-      # [BASE_FORM_FIELD + 66, 'limit', 'INTEGER', 1, 3, '10', 'decimal', None, None, 'EXECUTION', None, 1, EXPAND_FROM_ARRAY + 50],
+      [BASE_FORM_FIELD + 66, 'delimiter', 'TEXT', 1, 3, ',', 'text', None, None, 'EXECUTION', None, 1, CONCAT_ARRAY + 50],
 
       [BASE_FORM_FIELD + 67, 'new_type', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, CHANGE_ARRAY_TYPE + 50],
 
@@ -955,12 +979,13 @@ def _insert_operation_form_field(conn):
 
       [BASE_FORM_FIELD + 72, 'hour_column', 'TEXT', 1, 3, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, UPDATE_HOUR + 50],
 
-      [BASE_FORM_FIELD + 73, 'components', 'TEXT', 1, 3, None, 'tag', None, None, 'EXECUTION', None, 1, DATE_PART + 50],
+      [BASE_FORM_FIELD + 73, 'component', 'TEXT', 1, 3, 'day', 'dropdown', None, date_formats, 
+              'EXECUTION', None, 1, DATE_PART + 50],
 
-      [BASE_FORM_FIELD + 74, 'value', 'INTEGER', 1, 3, None, 'integer', None, None, 'EXECUTION', None, 1, DATE_ADD + 50],
-      [BASE_FORM_FIELD + 75, 'period', 'TEXT', 1, 4, None, 'dropdown', None,
-        json.dumps([{'key': 'day', 'pt': 'Dia(s)', 'en': 'Day(s)'}, {'key': 'hour', 'pt': 'Hora(s)', 'en': 'Hour(s)'}]),
-        'EXECUTION', None, 1, DATE_ADD + 50],
+      [BASE_FORM_FIELD + 74, 'value', 'INTEGER', 0, 4, None, 'integer', None, None, 'EXECUTION', 
+              'this.type.internalValue === "constant"', 1, DATE_ADD + 50],
+      [BASE_FORM_FIELD + 75, 'period', 'TEXT', 1, 5, 'day', 'dropdown', None,
+        date_formats, 'EXECUTION', None, 1, DATE_ADD + 50],
 
       [BASE_FORM_FIELD + 76, 'type', 'INTEGER', 1, 3, 'now', 'dropdown', None,
            json.dumps([{'key': 'now', 'pt': 'A data/hora atuais', 'en': 'Current date/hour'},
@@ -968,16 +993,7 @@ def _insert_operation_form_field(conn):
         'EXECUTION', None, 1, DATE_DIFF + 50],
       [BASE_FORM_FIELD + 77, 'date_attribute', 'INTEGER', 1, 4, None, 'attribute-selector', None, None, 'EXECUTION', 'this.type.internalValue === "attribute"', 1, DATE_DIFF + 50],
       [BASE_FORM_FIELD + 78, 'value', 'TEXT', 1, 5, None, 'date', None, '{"use-datetime-local": true}', 'EXECUTION', 'this.type.internalValue === "constant"', 1, DATE_DIFF + 50],
-      [BASE_FORM_FIELD + 89, 'unit', 'TEXT', 1, 6, 'days', 'dropdown', None,
-              json.dumps([
-                  {'key': 'seconds', 'en': 'Seconds', 'pt': 'Segundos'},
-                  {'key': 'minutes', 'en': 'Minutes', 'pt': 'Minutos'},
-                  {'key': 'hours', 'en': 'Hours', 'pt': 'Horas'},
-                  {'key': 'days', 'en': 'Days', 'pt': 'Dias'},
-                  {'key': 'weeks', 'en': 'Weeks', 'pt': 'Semanas'},
-                  {'key': 'months', 'en': 'Monthis', 'pt': 'Meses'},
-                  {'key': 'years', 'en': 'Years', 'pt': 'Anos'},
-                  ]),
+      [BASE_FORM_FIELD + 89, 'unit', 'TEXT', 1, 6, 'days', 'dropdown', None, date_formats,
               'EXECUTION', None, 1, DATE_DIFF + 50],
       [BASE_FORM_FIELD + 90, 'invert', 'INTEGER', 1, 5, None, 'checkbox', None, None, 'EXECUTION', None, 1, DATE_DIFF + 50],
 
@@ -1051,6 +1067,31 @@ def _insert_operation_form_field(conn):
       [BASE_FORM_FIELD + 124, 'mode', 'TEXT', 1, 0, None, 'dropdown', None, json.dumps(
           [{'key': 'lines', 'pt': 'Linhas', 'en': 'Lines'}, {'key': 'marks', 'pt': 'Marcas', 'en': 'Marks'}, {'key': 'lines+markers', 'pt': 'Linhas e marcas', 'en': 'Lines and marks'}]), 
           'EXECUTION', None, 1, VISUALIZATION + 50],
+      # Ngram
+      [BASE_FORM_FIELD + 125, 'n', 'INTEGER', 1, 4, '2', 'integer', None, None, 'EXECUTION', None, 1, N_GRAMS + 50],
+      [BASE_FORM_FIELD + 126, 'format', 'TEXT', 1, 4, 'day', 'dropdown', 
+              None, date_formats, 'EXECUTION', None, 1, TRUNCATE_DATE_TO + 50],
+      [BASE_FORM_FIELD + 127, 'type', 'INTEGER', 1, 3, 'constant', 'dropdown', None,
+           json.dumps([{'key': 'attribute', 'pt': 'Um atributo (inteiro)', 'en': 'An (integer) attribute'}, 
+               {'key': 'constant', 'pt': 'Valor constante', 'en': 'Constant value'}]), 'EXECUTION', None, 1, DATE_ADD + 50],
+      [BASE_FORM_FIELD + 128, 'value_attribute', 'INTEGER', 0, 4, None, 'attribute-selector', None, None, 'EXECUTION', 'this.type.internalValue === "attribute"', 1, DATE_ADD + 50],
+      [BASE_FORM_FIELD + 129, 'handle_invalid', 'INTEGER', 1, 3, 'error', 'dropdown', None,
+              json.dumps([{"en": "Skip", "value": "Skip", "key": "skip", "pt": "Ignorar"}, {"en": "Keep", "value": "Keep", "key": "keep", "pt": "Manter"}, {"en": "Raise error", "value": "Raise error", "key": "error", "pt": "Gerar erro"}]),
+               'EXECUTION', None, 1, BUCKETIZE + 50],
+      [BASE_FORM_FIELD + 130, 'type', 'INTEGER', 1, 2, 'max_abs', 'dropdown', None,
+              json.dumps([
+                  {"en": "Max/Abs", "key": "max_abs", "pt": "Máximo-Absoluto", 'help': {'pt': 'Transforma a entrada (linhas com vetores), reescalando cada caracteristica(feature) para a faixa [-1, 1], através da divisão pelo valor absoluto máximo de cada caracteristica (feature)'}}, 
+                  {"en": "Min/Max", "key": "min_max", "pt": "Mínimo-Máximo", 'help': {'pt': 'Transforma a entrada (linhas com vetores), reescalando cada caracteristica (feature) para uma faixa específica (geralmente [0, 1])'}}, 
+                  {"en": "Standard (z-score)", "key": "z_score", "pt": "Padrão (z-score)", 'help': {'pt': 'Transforma a entrada (linhas com vetores), normalizando-os de forma que cada caracteristica (feature) tenha desvio-padrão unitário e/ou média zero.'}}]),
+               'EXECUTION', None, 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 131, 'with_mean', 'INTEGER', 0, 4, '0', 'checkbox', None, None, 'EXECUTION', 'this.type.internalValue === "z_score"', 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 132, 'with_std', 'INTEGER', 0, 4, '1', 'checkbox', None, None, 'EXECUTION', 'this.type.internalValue === "z_score"', 1, RESCALE + 50],
+      [BASE_FORM_FIELD + 133, 'regex', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, REPLACE_WITH_REGEX + 50],
+      [BASE_FORM_FIELD + 134, 'replace', 'TEXT', 0, 3, None, 'text', None, None, 'EXECUTION', None, 1, REPLACE_WITH_REGEX + 50],
+      [BASE_FORM_FIELD + 135, 'nullify', 'INTEGER', 0, 4, None, 'checkbox', 0, None, 'EXECUTION', None, 1, FIND_REPLACE + 50],
+      #[BASE_FORM_FIELD + 135, 'replace_type', 'TEXT', 0, 3, None, 'dropdown', None, json.dumps([
+      #  {'key': 'number', 'pt': 'Número', 'en': 'Number'}, {'key': 'date', 'pt': 'Data', 'en': 'Date'}, {'key': 'text', 'pt': 'Texto', 'en': 'Text'}
+      #    ]), 'EXECUTION', None, 1, FIND_REPLACE + 50],
     ]
 
     # Fix generalized linear regression
@@ -1087,12 +1128,20 @@ def _insert_operation_form_field(conn):
     data.append([185, 'standardization', 'INTEGER', 0, 11, '1', 'checkbox', None, None, 'EXECUTION', None, 1, 8])
     data.append([175, 'fit_intercept', 'INTEGER', 0, 12, '1', 'checkbox', None, None, 'EXECUTION', None, 1, 8])
 
+
+    # Fix GBTClassifier
+    data.append([376, 'seed', 'INTEGER', 0, 10, None, 'integer', None, None, 'EXECUTION', None, 1, 67])
+
+    # RF classifier
+    data.append([405, 'seed', 'INTEGER', 0, 10, None, 'integer', None, None, 'EXECUTION', None, 1, 65])
+
+
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field(conn):
     conn.execute(
-        'DELETE from operation_form_field WHERE (id BETWEEN %s AND %s) or id IN (183,184,185,240,241,175)',
+        'DELETE from operation_form_field WHERE (id BETWEEN %s AND %s) or id IN (183,184,185,240,241,175,376,405)',
         BASE_FORM_FIELD, BASE_FORM_FIELD + 140)
 
 def _insert_operation_form_field_translation(conn):
@@ -1119,25 +1168,25 @@ def _insert_operation_form_field_translation(conn):
       # FIXME Invalid values
       [BASE_FORM_FIELD + 55, 'pt', 'Número de caracteres', 'Números de caracteres limite.'],
       [BASE_FORM_FIELD + 56, 'pt', 'Delimitador', 'Delimitador para as palavras.'],
-      [BASE_FORM_FIELD + 57, 'pt', 'Formato', 'Formato. '],
-      [BASE_FORM_FIELD + 58, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 59, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 60, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 61, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 57, 'pt', 'Formato', 'Escolha um formato ou informe um (usando sintaxe de formato Java).'],
+      [BASE_FORM_FIELD + 58, 'pt', 'Expressão regular', 'Expressão regular usada para extrair o padrão.'],
+      [BASE_FORM_FIELD + 59, 'pt', 'Limite inferior para a faixa', 'Limite inferior para a faixa (valor padrão: 0.0).'],
+      [BASE_FORM_FIELD + 60, 'pt', 'Limite superior para a faixa', 'Limite superior para a faixa (valor padrão: 1.0).'],
+      [BASE_FORM_FIELD + 61, 'pt', 'Divisores (lista de valores com no mínimo de 3 elementos, usado para definir as faixas, separados por vírgula, -INF e INF são valores válidos)', 'Divisores (lista de valores com no mínimo de 3 elementos, usado para definir as faixas, separados por vírgula, -INF e INF são valores válidos).'],
       [BASE_FORM_FIELD + 62, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 63, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 64, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 65, 'pt', 'Casas decimais', 'Número de casas decimais (dígitos após a vírgula).'],
-      # [BASE_FORM_FIELD + 66, 'pt', 'Índice', 'Índice'],
+      [BASE_FORM_FIELD + 66, 'pt', 'Delimitador', 'Delimitador usado para unir os valores.'],
       [BASE_FORM_FIELD + 67, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 68, 'pt', 'Direção', 'Direção da ordenação (ascendente ou descendente)'],
       [BASE_FORM_FIELD + 69, 'pt', 'Formato', 'Formato. Deve ser compatível com o formato da linguagem Java.'],
       [BASE_FORM_FIELD + 70, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 71, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 72, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 73, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 74, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 75, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 73, 'pt', 'Parte a ser extraída', 'Parte a ser extraída da data.'],
+      [BASE_FORM_FIELD + 74, 'pt', 'Valor', 'Valor a ser incrementado ou decrementado, se negativo.'],
+      [BASE_FORM_FIELD + 75, 'pt', 'Período', 'Período a ser incrementado ou decrementado.'],
       [BASE_FORM_FIELD + 76, 'pt', 'Diferença para', 'Valor ou atributo usado para calcular a diferença entre datas.'],
       [BASE_FORM_FIELD + 77, 'pt', '2o. Atributo', '2o. atributo'],
       [BASE_FORM_FIELD + 78, 'pt', 'Valor (data válida)', 'Value (valid date)'],
@@ -1192,6 +1241,19 @@ def _insert_operation_form_field_translation(conn):
       [BASE_FORM_FIELD + 122, 'pt', 'Largura da linha', 'Largura da linha.'],
       [BASE_FORM_FIELD + 123, 'pt', 'Tipo da linha', 'Tipo da linha.'],
       [BASE_FORM_FIELD + 124, 'pt', 'Modo para séries', 'Modo para séries.'],
+      [BASE_FORM_FIELD + 125, 'pt', 'Tamanho (N)', 'Tamanho do N-Gram (valor de N)'],
+      [BASE_FORM_FIELD + 126, 'pt', 'Truncar para', 'Define para qual valor truncar a data.'],
+      [BASE_FORM_FIELD + 127, 'pt', 'Origem do valor', 'De onde será obtido o valor a ser incrementado ou decrementado.'],
+      [BASE_FORM_FIELD + 128, 'pt', 'Atributo com o valor', 
+              'De qual atributo será obtido o valor a ser incrementado ou decrementado.'],
+      [BASE_FORM_FIELD + 129, 'pt', 'Tratar erro', 'Como erros serão tratados.'],
+      [BASE_FORM_FIELD + 130, 'pt', 'Tipo de escala', 'Qual tipo de escala será usada.'],
+      [BASE_FORM_FIELD + 131, 'pt', 'Centralizar os dados com a média', 'Centralizar os dados com a média.'],
+      [BASE_FORM_FIELD + 132, 'pt', 'Escalar os dados para desvio-padrão unitário', 'Escalar os dados para desvio-padrão unitário.'],
+      [BASE_FORM_FIELD + 133, 'pt', 'Expressão regular', 'Expressão regular para a busca.'],
+      [BASE_FORM_FIELD + 134, 'pt', 'Substituir por', 'Novo valor que substitui o valor encontrado.'],
+      [BASE_FORM_FIELD + 135, 'pt', 'Substituir por valor nulo', 'Indica se é para substituir o valor por nulo.'],
+      # [BASE_FORM_FIELD + 135, 'pt', 'Tipo do dado', 'Tipo do resultado após a substituição.'],
     ]
  
     # Generalized regression
@@ -1209,13 +1271,18 @@ def _insert_operation_form_field_translation(conn):
     data.append([175, 'pt', 'Fit intercept', 'Se desligado, define y-intercept igual a 0. Se ligado, y-intercept é determinado pela lina de melhor ajuste.'])
 
 
+    # GBT Classifier
+    data.append([376, 'pt', 'Semente (seed)', 'Semente para a geração de números aleatórios.'])
+
+    # Random forest classifier
+    data.append([405, 'pt', 'Semente (seed)', 'Semente para a geração de números aleatórios.'])
 
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field_translation(conn):
     conn.execute(
-        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s or id IN (183,184,185,240,241,175)',
+        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s or id IN (183,184,185,240,241,175,376,405)',
         BASE_FORM_FIELD, BASE_FORM_FIELD + 192)
 
 
@@ -1240,7 +1307,7 @@ def _insert_operation_operation_form(conn):
         LOGISTIC_REGRESSION, SVM_CLASSIFICATION, 
         LINEAR_REGRESSION, ISOTONIC_REGRESSION, GBT_REGRESSOR, 
         RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR, 
-        DECISION_TREE_REGRESSOR,
+        DECISION_TREE_REGRESSOR, FLAG_WITH_FORMULA
     }
     ops_with_attribute_field = {
         DATE_DIFF, EXTRACT_FROM_ARRAY
@@ -1369,7 +1436,7 @@ def _fixes(conn):
             {"en": "Include attributes to the selection", "value": "include", "pt": "Incluir atributos à seleção", "key": 'include'},
             {"en": "Discard attributes from the selection", "value": "exclude", "pt": "Descartar atributos da seleção", "key": 'exclude'},
             {"en": "Select all and rename some attributes", "value": "rename", "pt": "Selecionar todos e renomear alguns atributos", "key": "rename"},
-            {"en": "Select all and Duplicate some attributes", "value": "rename", "pt": "Selecionar todos e duplicar alguns atributos", "key": "duplicate"},
+            {"en": "Select all and Duplicate some attributes", "value": "duplicate", "pt": "Selecionar todos e duplicar alguns atributos", "key": "duplicate"},
     ]
     conn.execute(
             """ INSERT INTO operation_form_field(id, name, type, required, `order`,

@@ -141,10 +141,15 @@ class OperationListApi(Resource):
                     Task.workflow_id == int(workflow)).subquery()
                 operations = operations.filter(Operation.id.in_(tasks))
 
-            ids = request.args.getlist('ids[]')
+            ids = request.args.getlist('ids[]', type=int)
             if ids:
                 operations = operations.filter(Operation.id.in_(
                     [int(x) for x in ids]))
+
+            slugs = request.args.getlist('slugs', type=str)
+            if slugs:
+                operations = operations.filter(Operation.slug.in_(slugs))
+
 
             name = request.args.get('name', '')
             # SqlAlchemy-i18n is not working when a filter
@@ -304,6 +309,17 @@ class OperationDetailApi(Resource):
                 result = dict(status="ERROR", message="Invalid data",
                               errors=form.errors)
         return result, result_code
+
+    @staticmethod
+    @requires_auth
+    @requires_permission('ADMINISTRATOR')
+    def delete(operation_id):
+        op = Operation.query.get(operation_id)
+        if op:
+            op.enabled = False
+            db.session.add(op)
+            db.session.commit()
+        return 204, 'OK'
 
 
 class OperationClearCacheApi(Resource):
