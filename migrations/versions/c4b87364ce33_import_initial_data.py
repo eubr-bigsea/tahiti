@@ -11046,9 +11046,9 @@ def downgrade():
     ]
     for tb in names:
         if is_mysql():
-            bind.execute(f'TRUNCATE TABLE {tb} ')
+            bind.execute(f'DELETE FROM {tb} ')
         elif is_psql():
-            bind.execute(f'TRUNCATE TABLE {tb} CASCADE')
+            bind.execute(f'DELETE FROM {tb} CASCADE')
         elif is_sqlite():
             bind.execute(f'DELETE FROM {tb}')
         else:

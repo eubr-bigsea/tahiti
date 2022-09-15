@@ -1,7 +1,7 @@
 """add support to API Call
 
 Revision ID: a237518ec5e1 
-Revises: a6aa24bf8d35
+Revises: af8eeaf80cd6
 """
 from alembic import context
 from alembic import op
@@ -13,7 +13,7 @@ import json
 
 # revision identifiers, used by Alembic.
 revision = 'a237518ec5e1'
-down_revision = 'a6aa24bf8d35'
+down_revision = 'af8eeaf80cd6'
 branch_labels = None
 depends_on = None
 
@@ -25,8 +25,8 @@ depends_on = None
 # --------------------------------------------------------------
 
 BASE_OP = 143
-BASE_FORM = 156
-BASE_FORM_FIELD = 644
+BASE_FORM = 157
+BASE_FORM_FIELD = 651
 BASE_PORT = 351
 
 def _insert_operation(conn):
@@ -55,12 +55,11 @@ def _insert_operation_translation(conn):
                 column('id', Integer), 
                 column('locale', String), 
                 column('name', String), 
-                column('description', String), 
-                column('label_format', String))
+                column('description', String)) 
     columns = [c.name for c in tb.columns]
     data = [
-      [BASE_OP + 1, 'pt', 'Chamada à API', 'Permite realizar uma chamada a uma API do tipo REST.', ''],
-      [BASE_OP + 1, 'en', 'API call', 'Allows call a REST compatible API.', ''],
+      [BASE_OP + 1, 'pt', 'Chamada à API', 'Permite realizar uma chamada a uma API do tipo REST.'],
+      [BASE_OP + 1, 'en', 'API call', 'Allows call a REST compatible API.'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -365,7 +364,7 @@ def upgrade():
         _insert_operation_port_translation,
         _insert_operation_category_operation,
         _insert_operation_operation_form,
-        _insert_operation_subset_operation,
+        #_insert_operation_subset_operation,
         _insert_operation_platform,
         _insert_operation_port_interface_operation_port,
     ]
@@ -397,7 +396,7 @@ def downgrade():
         _delete_operation_port_translation,
         _delete_operation_category_operation,
         _delete_operation_operation_form,
-        _delete_operation_subset_operation,
+        # _delete_operation_subset_operation,
         _delete_operation_platform,
         _delete_operation_port_interface_operation_port,
     ]

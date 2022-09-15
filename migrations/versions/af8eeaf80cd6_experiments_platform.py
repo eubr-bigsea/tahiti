@@ -1,7 +1,7 @@
 """Experiments platform
 
 Revision ID: af8eeaf80cd6
-Revises: a8642d0d1aa3
+Revises: a6aa24bf8d35
 """
 import json
 from alembic import context
@@ -13,7 +13,7 @@ from sqlalchemy.sql.sqltypes import UnicodeText
 
 # revision identifiers, used by Alembic.
 revision = 'af8eeaf80cd6'
-down_revision = 'a8642d0d1aa3'
+down_revision = 'a6aa24bf8d35'
 branch_labels = None
 depends_on = None
 
@@ -719,13 +719,13 @@ def _insert_operation_category_operation(conn):
         SVM_CLASSIFICATION]:    
         data.append([op_id, CAT_CLASSIFICATION])
 
-    for op_id in [LINEAR_REGRESSION, ISOTONIC_REGRESSION, 
-        GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
-        DECISION_TREE_REGRESSOR]:
-        data.append([op_id, CAT_REGRESSION])
+    # for op_id in [LINEAR_REGRESSION, ISOTONIC_REGRESSION, 
+    #     GBT_REGRESSOR, RANDOM_FOREST_REGRESSOR, GENERALIZED_LINEAR_REGRESSOR,
+    #     DECISION_TREE_REGRESSOR]:
+    #     data.append([op_id, CAT_REGRESSION])
 
-    for op_id in [K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING]:
-        data.append([op_id, CAT_CLUSTERING])
+    # for op_id in [K_MEANS_CLUSTERING, GAUSSIAN_MIXTURE_CLUSTERING]:
+    #     data.append([op_id, CAT_CLUSTERING])
 
 
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -1266,7 +1266,7 @@ def _insert_operation_form_field_translation(conn):
     data.append([240, 'pt', 'Função de perda', 'Função de perda a ser otimizada.'])
     data.append([241, 'pt', 'Parâmetro de regularização (λ >= 0)', 'Parâmetro de regularização (λ)'])
     data.append([183, 'pt', 'Epsilon (usado se função de perda Huber)', 'Parâmetro que controla a robustez. Deve ser maior que 1.0.'])
-    data.append([184, 'pt', 'Tolerância', 'Tolerância de convergência para oritmo iterativo. Deve ser maior ou igual a 0.0.'])
+    data.append([184, 'pt', 'Tolerância', 'Tolerância de convergência para algoritmo iterativo. Deve ser maior ou igual a 0.0.'])
     data.append([185, 'pt', 'Padronização (standardization)', 'Indica se é para padronizar os atributos preditivos antes de realizar o treino.'])
     data.append([175, 'pt', 'Fit intercept', 'Se desligado, define y-intercept igual a 0. Se ligado, y-intercept é determinado pela lina de melhor ajuste.'])
 
@@ -1572,7 +1572,7 @@ def _undo_fixes(conn):
     conn.execute('ALTER TABLE operation_category DROP COLUMN subtype');
 
     conn.execute('DELETE FROM operation_category_translation WHERE id in (45, 46);')
-    conn.execute('DELETE FROM operation_category WHERE id in (45, 46);')
+    conn.execute('DELETE FROM operation_category WHERE id in (47, 48);')
 
     # conn.execute('DELETE FROM operation_form_field_translation WHERE id = %s',
     #         FIELD_SELECT_ALIAS)

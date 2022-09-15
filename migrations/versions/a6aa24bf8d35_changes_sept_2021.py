@@ -1,7 +1,7 @@
 """Changes sept 2021
 
 Revision ID: a6aa24bf8d35 
-Revises: af8eeaf80cd6
+Revises: a6b3c5df78e8
 """
 import json
 from alembic import context
@@ -14,7 +14,7 @@ from tahiti.migration_utils import (downgrade_actions, upgrade_actions,
 
 # revision identifiers, used by Alembic.
 revision = 'a6aa24bf8d35'
-down_revision = 'af8eeaf80cd6'
+down_revision = 'a6b3c5df78e8'
 branch_labels = None
 depends_on = None
 

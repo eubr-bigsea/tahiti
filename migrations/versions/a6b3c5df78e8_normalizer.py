@@ -1,7 +1,7 @@
 """normalizer
 
 Revision ID: a6b3c5df78e8 
-Revises: f1ff40611872
+Revises: a4c87d04f18e
 """
 from alembic import context
 from alembic import op
