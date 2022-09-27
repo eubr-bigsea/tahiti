@@ -119,15 +119,10 @@ def _insert_operation_platform(conn):
     )
     columns = [c.name for c in tb.columns]
     data = [
-	[BASE_OP + 1, 1],
 	[BASE_OP + 1, 4],
-    [BASE_OP + 2, 1],
     [BASE_OP + 2, 4],
-    [BASE_OP + 3, 1],
     [BASE_OP + 3, 4],
-    [BASE_OP + 4, 1],
     [BASE_OP + 4, 4],
-    [BASE_OP + 5, 1],
     [BASE_OP + 5, 4]
     ]
 
