@@ -84,17 +84,17 @@ def upgrade():
         SET suggested_widget = 'dropdown'
         WHERE id = 210''',
 
-        f'''insert operation_form_field values(
+        f'''insert into operation_form_field values(
         609, 'handle_invalid', 'TEXT', 0, 3, 
         'keep', 'dropdown', NULL, 
         '{handle_invalid}', 
         'EXECUTION', NULL, 1, 51)''',
 
-        '''INSERT operation_form_field_translation
+        '''INSERT into operation_form_field_translation
         VALUES(609, 'pt', 'Tratar dados inválidos (nulos)',
         'Como tratar os dados inválidos.') ''',
 
-        '''INSERT operation_form_field_translation
+        '''INSERT INTO operation_form_field_translation
         VALUES(609, 'en', 'Invalid data handling(null)',
         'How to handle invalid data (nulls).') ''',
     ]
