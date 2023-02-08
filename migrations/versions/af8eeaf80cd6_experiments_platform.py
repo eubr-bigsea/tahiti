@@ -960,8 +960,8 @@ def _insert_operation_form_field(conn):
 
       [BASE_FORM_FIELD + 62, 'normalizer', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, NORMALIZE + 50],
 
-      [BASE_FORM_FIELD + 63, 'start', 'FLOAT', 0, 3, None, 'decimal', None, None, 'EXECUTION', None, 1, FORCE_RANGE + 50],
-      [BASE_FORM_FIELD + 64, 'end', 'FLOAT', 0, 4, None, 'decimal', None, None, 'EXECUTION', None, 1, FORCE_RANGE + 50],
+      [BASE_FORM_FIELD + 63, 'start', 'FLOAT', 0, 1, None, 'decimal', None, None, 'EXECUTION', None, 1, FORCE_RANGE + 50],
+      [BASE_FORM_FIELD + 64, 'end', 'FLOAT', 0, 2, None, 'decimal', None, None, 'EXECUTION', None, 1, FORCE_RANGE + 50],
 
       [BASE_FORM_FIELD + 65, 'decimals', 'INTEGER', 1, 3, '2', 'integer', None, None, 'EXECUTION', None, 1, ROUND_NUMBER + 50],
 
@@ -969,8 +969,8 @@ def _insert_operation_form_field(conn):
 
       [BASE_FORM_FIELD + 67, 'new_type', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, CHANGE_ARRAY_TYPE + 50],
 
-      [BASE_FORM_FIELD + 68, 'direction', 'TEXT', 1, 3, 'asc', 'dropdown', None,
-        json.dumps([{'key': 'asc', 'pt': 'Ascendente', 'en': 'Ascending'}, {'key': 'desc', 'pt': 'Descendente', 'en': 'Descending'}]),
+      [BASE_FORM_FIELD + 68, 'outliers', 'TEXT', 1, 3, 'asc', 'dropdown', None,
+        json.dumps([{'key': 'clip', 'pt': 'Usar valor do limite mais próximo', 'en': 'Use upper closest value'}, {'key': 'clean', 'pt': 'Remover valor', 'en': 'Remove value'}]),
         'EXECUTION', None, 1, FORCE_RANGE + 50],
       [BASE_FORM_FIELD + 69, 'format', 'TEXT', 1, 3, None, 'text', None, None, 'EXECUTION', None, 1, FORMAT_DATE + 50],
 
@@ -1174,12 +1174,12 @@ def _insert_operation_form_field_translation(conn):
       [BASE_FORM_FIELD + 60, 'pt', 'Limite superior para a faixa', 'Limite superior para a faixa (valor padrão: 1.0).'],
       [BASE_FORM_FIELD + 61, 'pt', 'Divisores (lista de valores com no mínimo de 3 elementos, usado para definir as faixas, separados por vírgula, -INF e INF são valores válidos)', 'Divisores (lista de valores com no mínimo de 3 elementos, usado para definir as faixas, separados por vírgula, -INF e INF são valores válidos).'],
       [BASE_FORM_FIELD + 62, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 63, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 64, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 63, 'pt', 'Limite inferior', 'Limite inferior para a faixa (inclusive)'],
+      [BASE_FORM_FIELD + 64, 'pt', 'Limite superior', 'Limite superior para a faixa (inclusive)'],
       [BASE_FORM_FIELD + 65, 'pt', 'Casas decimais', 'Número de casas decimais (dígitos após a vírgula).'],
       [BASE_FORM_FIELD + 66, 'pt', 'Delimitador', 'Delimitador usado para unir os valores.'],
       [BASE_FORM_FIELD + 67, 'pt', 'Value', 'Value'],
-      [BASE_FORM_FIELD + 68, 'pt', 'Direção', 'Direção da ordenação (ascendente ou descendente)'],
+      [BASE_FORM_FIELD + 68, 'pt', 'Valores fora da faixa', 'Ação a ser feita sobre os valores fora da faixa.'],
       [BASE_FORM_FIELD + 69, 'pt', 'Formato', 'Formato. Deve ser compatível com o formato da linguagem Java.'],
       [BASE_FORM_FIELD + 70, 'pt', 'Value', 'Value'],
       [BASE_FORM_FIELD + 71, 'pt', 'Value', 'Value'],
@@ -1571,7 +1571,7 @@ def _undo_fixes(conn):
             FIELD_SELECT_MODE)
     conn.execute('ALTER TABLE operation_category DROP COLUMN subtype');
 
-    conn.execute('DELETE FROM operation_category_translation WHERE id in (45, 46);')
+    conn.execute('DELETE FROM operation_category_translation WHERE id in (47, 48);')
     conn.execute('DELETE FROM operation_category WHERE id in (47, 48);')
 
     # conn.execute('DELETE FROM operation_form_field_translation WHERE id = %s',
