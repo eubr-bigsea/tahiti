@@ -172,6 +172,30 @@ ORIGINAL_SELECT_FORM = 6
 ORIGINAL_SAVE_FORM = 28
 ORIGINAL_JOIN_FORM = 16
 
+DATA_TYPES = [
+ {'en': 'Float32', 'key': 'Float32', 'pt': 'Float32', 'value': 'Float32'},
+ {'en': 'Float64', 'key': 'Float64', 'pt': 'Float64', 'value': 'Float64'},
+ {'en': 'Int8', 'key': 'Int8', 'pt': 'Int8', 'value': 'Int8'},
+ {'en': 'Int16', 'key': 'Int16', 'pt': 'Int16', 'value': 'Int16'},
+ {'en': 'Int32', 'key': 'Int32', 'pt': 'Int32', 'value': 'Int32'},
+ {'en': 'Int64', 'key': 'Int64', 'pt': 'Int64', 'value': 'Int64'},
+ {'en': 'UInt8', 'key': 'UInt8', 'pt': 'UInt8', 'value': 'UInt8'},
+ {'en': 'UInt16', 'key': 'UInt16', 'pt': 'UInt16', 'value': 'UInt16'},
+ {'en': 'UInt32', 'key': 'UInt32', 'pt': 'UInt32', 'value': 'UInt32'},
+ {'en': 'UInt64', 'key': 'UInt64', 'pt': 'UInt64', 'value': 'UInt64'},
+ {'en': 'Date', 'key': 'Date', 'pt': 'Date', 'value': 'Date'},
+ {'en': 'Datetime', 'key': 'Datetime', 'pt': 'Datetime', 'value': 'Datetime'},
+ {'en': 'Duration', 'key': 'Duration', 'pt': 'Duration', 'value': 'Duration'},
+ {'en': 'Time', 'key': 'Time', 'pt': 'Time', 'value': 'Time'},
+ {'en': 'Boolean', 'key': 'Boolean', 'pt': 'Boolean', 'value': 'Boolean'},
+ {'en': 'List', 'key': 'List', 'pt': 'List', 'value': 'List'},
+ {'en': 'Utf8', 'key': 'Utf8', 'pt': 'Utf8', 'value': 'Utf8'},
+ {'en': 'Categorical', 'key': 'Categorical', 'pt': 'Categorical',
+  'value': 'Categorical'}
+]
+
+
+
 ALL_OPS = [
     READ_DATA,
     # Edit
@@ -300,7 +324,7 @@ def _insert_operation(conn):
       [TRIM, 'trim', 1, 'TRANSFORMATION', '', 'Text', ''],
       [TRUNCATE_TEXT, 'truncate-text', 1, 'TRANSFORMATION', '', 'Text', ''],
       [SPLIT_INTO_WORDS, 'split-into-words', 1, 'TRANSFORMATION', '', 'Text', ''],
-      [SUBSTRING, 'substring', 1, 'TRANSFORMATION', '', 'Text', ''],
+      [SUBSTRING, 'substring', 0, 'TRANSFORMATION', '', 'Text', ''],
       [PARSE_TO_DATE, 'parse-to-date', 1, 'TRANSFORMATION', '', 'Text separator', ''],
       [EXTRACT_NUMBERS, 'extract-numbers', 1, 'TRANSFORMATION', '', 'Text', ''],
       [EXTRACT_WITH_REGEX, 'extract-with-regex', 1, 'TRANSFORMATION', '', 'Text', ''],
@@ -308,7 +332,7 @@ def _insert_operation(conn):
 
       [EXTRACT_FROM_ARRAY, 'extract-from-array', 1, 'TRANSFORMATION', '', 'Array', ''],
       [CONCAT_ARRAY, 'concat-array', 1, 'TRANSFORMATION', '', 'Array', ''],
-      [CREATE_ARRAY, 'create-array', 1, 'TRANSFORMATION', '', 'Array', ''],
+      [CREATE_ARRAY, 'create-array', 0, 'TRANSFORMATION', '', 'Array', ''],
       [CHANGE_ARRAY_TYPE, 'change-array-type', 1, 'TRANSFORMATION', '', 'Array', ''],
       [SORT_ARRAY, 'sort-array', 1, 'TRANSFORMATION', '', 'Array', ''],
 
@@ -967,7 +991,8 @@ def _insert_operation_form_field(conn):
 
       [BASE_FORM_FIELD + 66, 'delimiter', 'TEXT', 1, 3, ',', 'text', None, None, 'EXECUTION', None, 1, CONCAT_ARRAY + 50],
 
-      [BASE_FORM_FIELD + 67, 'new_type', 'TEXT', 1, 3, None, 'dropdown', None, None, 'EXECUTION', None, 1, CHANGE_ARRAY_TYPE + 50],
+      [BASE_FORM_FIELD + 67, 'new_type', 'TEXT', 1, 3, None, 'dropdown', None, json.dumps(DATA_TYPES), 
+		'EXECUTION', None, 1, CHANGE_ARRAY_TYPE + 50],
 
       [BASE_FORM_FIELD + 68, 'outliers', 'TEXT', 1, 3, 'asc', 'dropdown', None,
         json.dumps([{'key': 'clip', 'pt': 'Usar valor do limite mais próximo', 'en': 'Use upper closest value'}, {'key': 'clean', 'pt': 'Remover valor', 'en': 'Remove value'}]),
@@ -1178,7 +1203,7 @@ def _insert_operation_form_field_translation(conn):
       [BASE_FORM_FIELD + 64, 'pt', 'Limite superior', 'Limite superior para a faixa (inclusive)'],
       [BASE_FORM_FIELD + 65, 'pt', 'Casas decimais', 'Número de casas decimais (dígitos após a vírgula).'],
       [BASE_FORM_FIELD + 66, 'pt', 'Delimitador', 'Delimitador usado para unir os valores.'],
-      [BASE_FORM_FIELD + 67, 'pt', 'Value', 'Value'],
+      [BASE_FORM_FIELD + 67, 'pt', 'Tipo de dado', 'Novo tipo de dado para os elementos do arrajo.'],
       [BASE_FORM_FIELD + 68, 'pt', 'Valores fora da faixa', 'Ação a ser feita sobre os valores fora da faixa.'],
       [BASE_FORM_FIELD + 69, 'pt', 'Formato', 'Formato. Deve ser compatível com o formato da linguagem Java.'],
       [BASE_FORM_FIELD + 70, 'pt', 'Value', 'Value'],
