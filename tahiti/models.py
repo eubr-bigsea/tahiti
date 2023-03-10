@@ -361,8 +361,8 @@ class Operation(db.Model, Translatable):
             "and_("
             "OperationForm.id==operation_operation_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
-    ports = relationship("OperationPort")
-    scripts = relationship("OperationScript")
+    ports = relationship("OperationPort", cascade="all, delete-orphan")
+    scripts = relationship("OperationScript", cascade="all, delete-orphan")
 
     def __str__(self):
         return self.name
