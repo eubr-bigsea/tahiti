@@ -22,7 +22,10 @@ def get_locale_from_query():
     try:
         return g.user.locale
     except:
-        return request.args.get('lang', 'en')[:2]
+        try:
+            return request.args.get('lang', 'en')[:2]
+        except:
+            return 'en'
 
 
 @app.route('/static/<path:path>')
