@@ -1,0 +1,59 @@
+id: 141
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 527
+  name: grid_coordinates
+  type: TEXT
+  required: false
+  order: 20
+  default: None
+  suggested_widget: grid-coordinates
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Coordenadas da grade
+      help: "Se a visualiza\xE7\xE3o \xE9 usada em um dashboard, em qual coordenada\
+        \ da grade ela deve ser inclu\xEDda. A grade tem 12 colunas e um n\xFAmero\
+        \ ilimitado de linhas."
+  - en:
+      locale: en
+      label: Grid coordinates
+      help: If generating dashboards, where to include the visualization. Grid has
+        12 columns and unlimited number of rows.
+- id: 528
+  name: command
+  type: TEXT
+  required: false
+  order: 22
+  default: None
+  suggested_widget: code
+  values_url: None
+  values: '{"language": "javascript"}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Comando executado no clique
+      help: "Comando executado se o usu\xE1rio clica um ponto na visualiza\xE7\xE3\
+        o."
+  - en:
+      locale: en
+      label: Command executed on click
+      help: Command executed if user clicks a point in the visualization.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

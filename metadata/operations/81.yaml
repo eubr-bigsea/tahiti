@@ -1,0 +1,67 @@
+id: 81
+slug: summary-statistics
+enabled: true
+type: VISUALIZATION
+icon: fa-calculator
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 174
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 175
+  slug: visualization
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+  - pt:
+      locale: pt
+      name: "visualiza\xE7\xE3o"
+      description: "Visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualization
+      description: Visualization
+translations:
+  pt:
+    locale: pt
+    name: "Sum\xE1rio estat\xEDstico"
+    description: "Sum\xE1rio estat\xEDstico"
+    label_format: None
+  en:
+    locale: en
+    name: Summary of statistics
+    description: Summary statistics
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 15
+  type: group
+

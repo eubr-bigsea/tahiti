@@ -1,0 +1,70 @@
+id: 129
+slug: user-filter
+enabled: true
+type: TRANSFORMATION
+icon: fa-window-close-o
+css_class: double-layout
+doc_link: None
+scripts:
+- id: 72
+  type: JS_CLIENT
+  enabled: true
+  body: copyInput(task);
+ports:
+- id: 306
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 307
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "Filtro do usu\xE1rio"
+    description: "Permite que os usu\xE1rios especifiquem filtros antes da execu\xE7\
+      \xE3o."
+    label_format: None
+  en:
+    locale: en
+    name: User filter
+    description: Allows users to provide filters values before the execution.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 41
+  type: group
+

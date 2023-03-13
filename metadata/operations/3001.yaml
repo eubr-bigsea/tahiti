@@ -1,0 +1,47 @@
+id: 3001
+slug: data-reader
+enabled: true
+type: TRANSFORMATION
+icon: fa-database
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3001
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "L\xEA dados"
+  - en:
+      locale: en
+      name: output data
+      description: Read data
+translations:
+  pt:
+    locale: pt
+    name: Leitor de dados
+    description: "L\xEA dados de uma fonte de dados"
+    label_format: None
+  en:
+    locale: en
+    name: Data reader
+    description: Reads data from a data set
+    label_format: None
+platforms: []
+categories:
+- id: 3
+  type: data source
+- id: 3001
+  type: technology
+- id: 6
+  type: group
+

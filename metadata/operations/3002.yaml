@@ -1,0 +1,45 @@
+id: 3002
+slug: data-writer
+enabled: true
+type: ACTION
+icon: fa-save
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3002
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Escrita de dados
+  - en:
+      locale: en
+      name: input data
+      description: Write data
+translations:
+  pt:
+    locale: pt
+    name: Escritor de dados
+    description: Escreve uma nova fonte de dados
+    label_format: None
+  en:
+    locale: en
+    name: Data writer
+    description: Writes a new data set
+    label_format: None
+platforms: []
+categories:
+- id: 6
+  type: group
+- id: 3001
+  type: technology
+

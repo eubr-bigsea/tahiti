@@ -1,0 +1,63 @@
+id: 3003
+slug: balance-data
+enabled: true
+type: TRANSFORMATION
+icon: fa-balance-scale
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3003
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input Data
+- id: 3004
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+translations:
+  pt:
+    locale: pt
+    name: Balanceador de carga
+    description: Balancea a carga de trabalho entre os recursos
+    label_format: None
+  en:
+    locale: en
+    name: Workload balancer
+    description: Balances the workload between the resources
+    label_format: None
+platforms: []
+categories:
+- id: 10
+  type: group
+- id: 3001
+  type: technology
+

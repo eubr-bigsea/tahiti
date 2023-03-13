@@ -1,0 +1,73 @@
+id: 28
+slug: sample
+enabled: true
+type: TRANSFORMATION
+icon: fa-flask
+css_class: None
+doc_link: None
+scripts:
+- id: 12
+  type: JS_CLIENT
+  enabled: true
+  body: copyInput(task);
+ports:
+- id: 55
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Input data to be sampled
+  - en:
+      locale: en
+      name: input data
+      description: Input data to be sampled
+- id: 56
+  slug: sampled data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados amostrados
+      description: Dados amostrados
+  - en:
+      locale: en
+      name: sampled data
+      description: Sampled data
+translations:
+  pt:
+    locale: pt
+    name: Amostrar exemplos
+    description: Gera uma amostra dos dados de entrada
+    label_format: None
+  en:
+    locale: en
+    name: Sample examples
+    description: Generates a sample of data
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 38
+  type: subgroup
+

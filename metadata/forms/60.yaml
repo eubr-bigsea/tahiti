@@ -1,0 +1,152 @@
+id: 60
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 114
+  name: attributes
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributos
+      help: Atributos.
+  - en:
+      locale: en
+      label: Attributes
+      help: List of attributes to be used as input to remove stop words
+- id: 115
+  name: alias
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nome do novo atributo (alias)
+      help: Nome do novo atributo (alias).
+  - en:
+      locale: en
+      label: Alias for new attributes
+      help: Alias for new attributes
+- id: 116
+  name: stop_word_list
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: textarea
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Lista de stop words
+      help: "Lista de stop words, separadas por v\xEDrgula."
+  - en:
+      locale: en
+      label: Stop word list
+      help: Stop word list, separated by commas
+- id: 117
+  name: stop_word_attribute
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo da segunda fonte de dados com as stop words
+      help: Atributo da segunda fonte de dados com as stop words.
+  - en:
+      locale: en
+      label: Attribute from 2nd input with stop words
+      help: Attribute from 2nd input with stop words
+- id: 118
+  name: case-sensitive
+  type: INTEGER
+  required: true
+  order: 5
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Diferenciar mai\xFAsculas/min\xFAsculas"
+      help: "Diferenciar mai\xFAsculas/min\xFAsculas"
+  - en:
+      locale: en
+      label: Case sensitive
+      help: Case sensitive
+- id: 369
+  name: language
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Danish", "key": "danish", "value": "Danish", "pt": "Dinamarqu\u00eas"},
+    {"en": "Dutch", "key": "dutch", "value": "Dutch", "pt": "Holand\u00eas"}, {"en":
+    "English", "key": "english", "value": "English", "pt": "Ingl\u00eas"}, {"en":
+    "Finnish", "key": "finnish", "value": "Finnish", "pt": "Finland\u00eas"}, {"en":
+    "French", "key": "french", "value": "French", "pt": "Franc\u00eas"}, {"en": "German",
+    "key": "german", "value": "German", "pt": "Alem\u00e3o"}, {"en": "Hungarian",
+    "key": "hungarian", "value": "Hungarian", "pt": "H\u00fangaro"}, {"en": "Italian",
+    "key": "italian", "value": "Italian", "pt": "Italiano"}, {"en": "Norwegian", "key":
+    "norwegian", "value": "Norwegian", "pt": "Noruegu\u00eas"}, {"en": "Portuguese",
+    "key": "portuguese", "value": "Portuguese", "pt": "Portugu\u00eas"}, {"en": "Russian",
+    "key": "russian", "value": "Russian", "pt": "Russo"}, {"en": "Spanish", "key":
+    "spanish", "value": "Spanish", "pt": "Espanhol"}, {"en": "Swedish", "key": "swedish",
+    "value": "Swedish", "pt": "Sueco"}, {"en": "Turkish", "key": "turkish", "value":
+    "Turkish", "pt": "Turco"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Idioma (opcional)
+      help: "Se informado, usa o conjunto de stop words padr\xE3o para o idioma."
+  - en:
+      locale: en
+      label: Language (optional)
+      help: If informed, uses the default stop word list for the language.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

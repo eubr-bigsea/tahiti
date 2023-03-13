@@ -1,0 +1,102 @@
+id: 5122
+slug: fit-generator
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5229
+  slug: train-generator
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 23
+    name: Generator
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: train generator
+      description: Generator
+- id: 5235
+  slug: validation-generator
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 23
+    name: Generator
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: validation generator
+      description: Generator
+- id: 5394
+  slug: model
+  type: INPUT
+  tags: ''
+  order: 3
+  multiplicity: ONE
+  interfaces:
+  - id: 22
+    name: Model
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 5399
+  slug: model
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 22
+    name: Model
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: model
+      description: Model
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Fit generator
+    description: Trains the model on data generated batch-by-batch by a Python generator
+      (or an instance of Sequence). The generator is run in parallel to the model,
+      for efficiency. For instance, this allows you to do real-time data augmentation
+      on images on CPU in parallel to training your model on GPU.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5063
+  type: group
+

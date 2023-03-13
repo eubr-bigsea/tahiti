@@ -1,0 +1,64 @@
+id: 5121
+slug: video-generator
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5390
+  slug: video data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 29
+    name: VideoData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: video data
+      description: Video Data
+- id: 5391
+  slug: generator
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 23
+    name: Generator
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: generator
+      description: Generator
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Video generator
+    description: Takes the dataset of videos and generates batches of tensor video
+      data with real-time data augmentation.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5064
+  type: group
+

@@ -1,0 +1,70 @@
+id: 94
+slug: one-vs-rest-classifier
+enabled: true
+type: TRANSFORMATION
+icon: fa-window-close
+css_class: None
+doc_link: None
+scripts:
+- id: 42
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'prediction', false, null);
+ports:
+- id: 215
+  slug: algorithm
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+- id: 216
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+translations:
+  pt:
+    locale: pt
+    name: Classificador 1 vs. resto
+    description: "Redu\xE7\xE3o da classifica\xE7\xE3o multiclasse para a classifica\xE7\
+      \xE3o bin\xE1ria."
+    label_format: None
+  en:
+    locale: en
+    name: One vs. rest classifier
+    description: Reduction of multiclass classification to binary classification.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 8
+  type: group
+- id: 18
+  type: subgroup
+

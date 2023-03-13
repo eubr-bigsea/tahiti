@@ -1,0 +1,63 @@
+id: 132
+slug: word-cloud
+enabled: true
+type: VISUALIZATION
+icon: ' '
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 311
+  slug: visualization
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+  - pt:
+      locale: pt
+      name: "visualiza\xE7\xE3o"
+      description: "Visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualization
+      description: Visualization
+- id: 312
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Nuvem de palavras
+    description: Gera uma nuvem de palavras a partir de um atributo textual.
+    label_format: None
+  en:
+    locale: en
+    name: Word cloud
+    description: Generates a word cloud from a textual attribute.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 15
+  type: group
+

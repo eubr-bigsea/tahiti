@@ -1,0 +1,36 @@
+id: 43
+enabled: false
+order: 5
+category: logging
+fields:
+- id: 67
+  name: log_level
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: "[\r\n  {\"key\": \"DEBUG\", \"value\": \"DEBUG\"}, \r\n  {\"key\": \"INFO\"\
+    , \"value\": \"INFO\"}, \r\n  {\"key\": \"WARN\", \"value\": \"WARNING\"},\r\n\
+    \  {\"key\": \"ERROR\", \"value\": \"ERROR\"}\r\n]"
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xEDvel de registro"
+      help: "N\xEDvel de registro"
+  - en:
+      locale: en
+      label: Log level
+      help: Log level
+translations:
+  pt:
+    locale: pt
+    name: "Registro de execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Logging
+

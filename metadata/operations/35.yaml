@@ -1,0 +1,67 @@
+id: 35
+slug: table-visualization
+enabled: true
+type: VISUALIZATION
+icon: fa-table
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 70
+  slug: visualization
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+  - pt:
+      locale: pt
+      name: "visualiza\xE7\xE3o"
+      description: "Visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualization
+      description: Visualization
+- id: 155
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Tabela
+    description: "Visualiza\xE7\xE3o em tabela"
+    label_format: None
+  en:
+    locale: en
+    name: Table
+    description: Table visualization
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 15
+  type: group
+

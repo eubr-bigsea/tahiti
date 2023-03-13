@@ -1,0 +1,91 @@
+id: 117
+slug: linear-regression-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-chart-line
+css_class: None
+doc_link: None
+scripts:
+- id: 62
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "prediction", false, null);
+ports:
+- id: 278
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: entrada do treino
+      description: Train input data
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 279
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Output model
+  - en:
+      locale: en
+      name: model
+      description: Output model
+- id: 280
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "Regress\xE3o linear"
+    description: "Aplica a regress\xE3o linear"
+    label_format: None
+  en:
+    locale: en
+    name: Linear regression
+    description: Applies a linear regression algorithm
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 21
+  type: subgroup
+- id: 8
+  type: group
+- id: 1501
+  type: regression
+

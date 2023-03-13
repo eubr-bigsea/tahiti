@@ -1,0 +1,29 @@
+id: 2126
+slug: normalize-text
+enabled: false
+type: TRANSFORMATION
+icon: ''
+css_class: Text separator
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Normalizar texto
+    description: "Normaliza o texto, retirando acentos, n\xFAmeros e outros s\xED\
+      mbolos que n\xE3o sejam letras."
+    label_format: <b>Normalizar texto em </b> <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

@@ -1,0 +1,68 @@
+id: 4037
+slug: local-outlier-factor
+enabled: true
+type: ACTION
+icon: ''
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4078
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4079
+  slug: output data
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Local Outlier Factor (LOF)
+    description: ''
+    label_format: None
+  en:
+    locale: en
+    name: Local Outlier Factor (LOF)
+    description: 'The Local Outlier Factor (LOF) algorithm is an unsupervised anomaly
+      detection method which computes the local density deviation of a given data
+      point with respect to its neighbors. It considers as outliers the samples that
+      have a substantially lower density than their neighbors. '
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 8
+  type: group
+- id: 4002
+  type: subgroup
+

@@ -1,0 +1,177 @@
+id: 159
+enabled: true
+order: 0
+category: execution
+translations:
+  pt: 
+    locale: pt
+    name: Execução
+  en:
+    locale: en
+    name: Execution
+  
+fields:
+- id: 662
+  name: type
+  type: TEXT
+  required: true
+  order: 1
+  default: 'LINE'
+  suggested_widget: dropdown
+  values_url: null
+  values: '[
+    {"key": "LINE", "pt": "Gráfico de linha", "en": "Line chart"}, 
+    {"key": "PIE", "pt": "Gráfico de pizza", "en": "Pie chart"}
+  ]'
+  scope: DESIGN
+  enable_conditions: null
+  editable: true
+  translations:
+    pt:
+      locale: pt
+      label: "Tipo de visualização"
+      help: "Define o tipo de visualização."
+    en:
+      locale: en
+      label: "Visualization type"
+      help: "Define the visualization type."
+
+- id: 663
+  name: display_legend
+  type: TEXT
+  required: true
+  order: 1
+  default: 'RIGHT'
+  suggested_widget: dropdown
+  values_url: null
+  values: '[
+    {"key": "RIGHT", "pt": "À direita", "en": "Right side"}, 
+    {"key": "LEFT", "pt": "À esquerda","en": "Left side"}, 
+    {"key": "TOP", "pt": "No topo", "en": "At top"}, 
+    {"key": "BOTTOM", "pt": "Na parte inferior", "en": "At bottom"},
+    {"key": "IN_CHART", "pt": "Dentro do gráfico", "en": "Inside"},
+    {"key": "HIDE", "pt": "Não exibir", "en": "Do not display"}
+  ]'
+  scope: DESIGN
+  enable_conditions: null
+  editable: true
+  translations:
+    pt:
+      locale: pt
+      label: "Exibir legenda"
+      help: "Definição para a exibição da legenda (posicionar ou ocultar)."
+    en:
+      locale: en
+      label: "Display legend"
+      help: "Define if legend is displayed and its position."
+
+- id: 664
+  name: palette
+  type: TEXT
+  required: true
+  order: 1
+  default: null
+  suggested_widget: "color-palette"
+  values_url: null
+  values_url: null
+  scope: DESIGN
+  enable_conditions: null
+  editable: true
+  translations:
+    pt:
+      locale: pt
+      label: "Paleta de cores para as séries"
+      help: "Define a paleta de cores aplicada às séries do gráfico."
+    en:
+      locale: en
+      label: "Color palette"
+      help: "Define the color palette applied to series."
+
+- id: 665
+  name: x
+  type: TEXT
+  required: true
+  order: 1
+  default: null
+  suggested_widget: "text"
+  values_url: null
+  values_url: null
+  scope: DESIGN
+  enable_conditions: null
+  editable: true
+  translations:
+    pt:
+      locale: pt
+      label: "Valores para o eixo X"
+      help: "Valores para o eixo X."
+    en:
+      locale: en
+      label: "X values"
+      help: "X values."
+
+- id: 666
+  name: y
+  type: TEXT
+  required: true
+  order: 1
+  default: null
+  suggested_widget: "text"
+  values_url: null
+  values_url: null
+  scope: DESIGN
+  enable_conditions: null
+  editable: true
+  translations:
+    pt:
+      locale: pt
+      label: "Valores para o eixo Y"
+      help: "Valores para o eixo Y."
+    en:
+      locale: en
+      label: "Y values"
+      help: "Y values."
+
+- id: 667
+  name: x_axis
+  type: TEXT
+  required: true
+  order: 1
+  default: null
+  suggested_widget: "text"
+  values_url: null
+  values_url: null
+  scope: DESIGN
+  enable_conditions: null
+  editable: true
+  translations:
+    pt:
+      locale: pt
+      label: "Definições para o eixo X"
+      help: "Definições para o eixo X."
+    en:
+      locale: en
+      label: "Settings for X-axis"
+      help: "Settings for X-axis.."
+
+- id: 668
+  name: y_axis
+  type: TEXT
+  required: true
+  order: 1
+  default: null
+  suggested_widget: "text"
+  values_url: null
+  values_url: null
+  scope: DESIGN
+  enable_conditions: null
+  editable: true
+  translations:
+    pt:
+      locale: pt
+      label: "Definições para o eixo Y"
+      help: "Definições para o eixo Y."
+    en:
+      locale: en
+      label: "Settings for Y-axis"
+      help: "Settings for Y-axis.."
+

@@ -1,0 +1,76 @@
+id: 109
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 288
+  name: min_support
+  type: DECIMAL
+  required: true
+  order: 1
+  default: '0.1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Suporte m\xEDnimo"
+      help: "Suporte m\xEDnimo"
+  - en:
+      locale: en
+      label: Min. support
+      help: Min. support
+- id: 289
+  name: max_pattern_length
+  type: INTEGER
+  required: true
+  order: 2
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tamanho m\xE1x. da sequ\xEAncia"
+      help: "Tamanho m\xE1x. da sequ\xEAncia"
+  - en:
+      locale: en
+      label: Max. sequence length
+      help: Max. sequence length
+- id: 291
+  name: attribute
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com transa\xE7\xF5es (vazio = primeiro atributo)"
+      help: "Atributo com transa\xE7\xF5es (vazio = primeiro atributo)"
+  - en:
+      locale: en
+      label: Attribute with transactions (empty = first attribute)
+      help: ' Attribute with transactions (empty = first attribute)'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

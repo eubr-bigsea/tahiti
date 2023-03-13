@@ -1,0 +1,89 @@
+id: 5073
+slug: convolution-1d
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5173
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5273
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5350
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Convolution1D
+    description: 1D convolution layer (e.g. temporal convolution). This layer creates
+      a convolution kernel that is convolved with the layer input over a single spatial
+      (or temporal) dimension to produce a tensor of outputs. If use_bias is True,
+      a bias vector is created and added to the outputs. Finally, if activation is
+      not None, it is applied to the outputs as well. When using this layer as the
+      first layer in a model, provide an input_shape argument (tuple of integers or
+      None, does not include the batch axis), e.g. input_shape=(10, 128) for time
+      series sequences of 10 time steps with 128 features per step in data_format="channels_last",
+      or (None, 128) for variable-length sequences with 128 features per step.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5020
+  type: group
+

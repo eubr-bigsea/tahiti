@@ -1,0 +1,28 @@
+id: 2124
+slug: capitalize
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Text separator
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Capitalizar iniciais
+    description: Capitaliza inciais das palavras.
+    label_format: <b>Capitalizar iniciais em </b> <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

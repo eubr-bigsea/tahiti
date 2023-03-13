@@ -1,0 +1,107 @@
+id: 52
+slug: word-to-vector
+enabled: true
+type: TRANSFORMATION
+icon: fa-list-ol
+css_class: None
+doc_link: None
+scripts:
+- id: 19
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_vect');
+ports:
+- id: 15
+  slug: vector-model
+  type: OUTPUT
+  tags: None
+  order: 3
+  multiplicity: MANY
+  interfaces:
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo de vetores
+      description: Modelo de vetores
+  - en:
+      locale: en
+      name: vector model
+      description: Vector model
+- id: 115
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 116
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 117
+  slug: vocabulary
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 13
+    name: IVocabulary
+  translations:
+  - pt:
+      locale: pt
+      name: "vocabul\xE1rio"
+      description: "Vocabul\xE1rio gerado"
+  - en:
+      locale: en
+      name: vocabulary
+      description: Vocabulary produced
+translations:
+  pt:
+    locale: pt
+    name: "Contar frequ\xEAncia dos termos"
+    description: Converter palavras em vetor
+    label_format: None
+  en:
+    locale: en
+    name: Count term frequency
+    description: Convert words to vector
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 37
+  type: subgroup
+

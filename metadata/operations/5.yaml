@@ -1,0 +1,73 @@
+id: 5
+slug: filter-selection
+enabled: true
+type: TRANSFORMATION
+icon: fa-filter
+css_class: None
+doc_link: None
+scripts:
+- id: 6
+  type: JS_CLIENT
+  enabled: true
+  body: copyInput(task);
+ports:
+- id: 1
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Input data to be filtered
+  - en:
+      locale: en
+      name: input data
+      description: Input data to be filtered
+- id: 2
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: Output data generated
+  - en:
+      locale: en
+      name: output data
+      description: Output data generated
+translations:
+  pt:
+    locale: pt
+    name: "Filtrar por fun\xE7\xE3o"
+    description: "Filtra linhas da fonte de dados de acordo com algum crit\xE9rio"
+    label_format: None
+  en:
+    locale: en
+    name: Filter by function
+    description: Filters data according to some criteria
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 7
+  type: group
+- id: 31
+  type: subgroup
+

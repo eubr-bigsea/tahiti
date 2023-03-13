@@ -1,0 +1,89 @@
+id: 5079
+slug: conv-3d-transpose
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5179
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5279
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5356
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Conv3DTranpose
+    description: Transposed convolution layer (sometimes called Deconvolution). The
+      need for transposed convolutions generally arises from the desire to use a transformation
+      going in the opposite direction of a normal convolution, i.e., from something
+      that has the shape of the output of some convolution to something that has the
+      shape of its input while maintaining a connectivity pattern that is compatible
+      with said convolution. When using this layer as the first layer in a model,
+      provide the keyword argument input_shape (tuple of integers, does not include
+      the batch axis), e.g. input_shape=(128, 128, 128, 3) for a 128x128x128 volume
+      with 3 channels if data_format="channels_last".
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5020
+  type: group
+

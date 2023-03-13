@@ -1,0 +1,99 @@
+id: 42
+slug: apply-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-lightbulb
+css_class: None
+doc_link: None
+scripts:
+- id: 1
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'prediction', false, null);
+ports:
+- id: 92
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 93
+  slug: model
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  - id: 18
+    name: IRegressionModel
+  - id: 14
+    name: IClusteringModel
+  - id: 20
+    name: TransformationModel
+  - id: 4
+    name: IndexerModel
+  - id: 15
+    name: IRecommendationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Aplica esse modelo aos dados
+  - en:
+      locale: en
+      name: model
+      description: Input model to be applied
+- id: 94
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Aplicar modelo
+    description: "Aplica um modelo de aprendizado de m\xE1quina aos dados"
+    label_format: None
+  en:
+    locale: en
+    name: Apply model
+    description: Apply a machine learning model to data
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 40
+  type: group
+

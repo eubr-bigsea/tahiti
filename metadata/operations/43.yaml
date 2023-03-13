@@ -1,0 +1,126 @@
+id: 43
+slug: cross-validation
+enabled: false
+type: TRANSFORMATION
+icon: fa-crosshairs
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 95
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 0
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "parti\xE7\xE3o"
+      description: Dados particionados
+  - en:
+      locale: en
+      name: input data
+      description: Partitioned data in folds
+- id: 96
+  slug: algorithm
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Modelo
+  - en:
+      locale: en
+      name: algorithm
+      description: Model
+- id: 97
+  slug: scored data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados pontuados
+      description: Dados pontuados
+  - en:
+      locale: en
+      name: scored data
+      description: Scored data
+- id: 98
+  slug: best model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  - id: 18
+    name: IRegressionModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo avaliado
+      description: Melhor modelo
+  - en:
+      locale: en
+      name: best model
+      description: Best model generated
+- id: 100
+  slug: models
+  type: OUTPUT
+  tags: None
+  order: 3
+  multiplicity: MANY
+  interfaces:
+  - id: 8
+    name: IListOfMachineLearningModels
+  - id: 2
+    name: ClassificationModel
+  - id: 18
+    name: IRegressionModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelos
+      description: "Modelos gerados para cada parti\xE7\xE3o, ordenados pelo melhor\
+        \ score"
+  - en:
+      locale: en
+      name: models
+      description: Models generate for each fold, sorted by best scored
+translations:
+  pt:
+    locale: pt
+    name: "Avalia\xE7\xE3o com valida\xE7\xE3o cruzada"
+    description: "Realiza a valida\xE7\xE3o cruzada"
+    label_format: None
+  en:
+    locale: en
+    name: Evaluate with cross validation
+    description: Perform cross validation
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 40
+  type: group
+

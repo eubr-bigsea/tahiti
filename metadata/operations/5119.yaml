@@ -1,0 +1,81 @@
+id: 5119
+slug: sequence-reader
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5320
+  slug: train-sequence
+  type: OUTPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 26
+    name: SequenceData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: train sequence data
+      description: Sequence Data
+- id: 5321
+  slug: validation-sequence
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 26
+    name: SequenceData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: validation sequence data
+      description: Sequence Data
+- id: 5405
+  slug: test-sequence
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 26
+    name: SequenceData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: test sequence data
+      description: Sequence data
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Sequence reader
+    description: Reads sequences of any data type from a data source.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5065
+  type: group
+

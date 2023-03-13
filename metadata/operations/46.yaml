@@ -1,0 +1,57 @@
+id: 46
+slug: decision-tree-classifier
+enabled: false
+type: TRANSFORMATION
+icon: fa-arrow-right
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 103
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+translations:
+  pt:
+    locale: pt
+    name: "\xC1rvore de decis\xE3o"
+    description: "Classificador baseado em \xE1rvores de decis\xE3o. Suporta tanto\
+      \ r\xF3tulos bin\xE1rios quanto multiclasses e features cont\xEDnuas e categ\xF3\
+      ricas."
+    label_format: None
+  en:
+    locale: en
+    name: Decision tree
+    description: Decision tree learning algorithm for classification. It supports
+      both binary and multiclass labels, as well as both continuous and categorical
+      features.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 4
+  type: algorithm
+- id: 18
+  type: subgroup
+- id: 8
+  type: group
+- id: 1500
+  type: classification
+

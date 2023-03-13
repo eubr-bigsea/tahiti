@@ -1,0 +1,45 @@
+id: 5072
+slug: output-old
+enabled: false
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5172
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Output
+    description: ''
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5070
+  type: group
+

@@ -1,0 +1,34 @@
+id: 5139
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5139
+  name: l1
+  type: DECIMAL
+  required: true
+  order: 1
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: L1
+      help: ' L1 regularization factor (positive float).'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

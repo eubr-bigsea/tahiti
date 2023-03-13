@@ -1,0 +1,29 @@
+id: 2102
+slug: rename
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-edit text-secondary
+css_class: separator
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Renomear atributo
+    description: Renomeia atributo.
+    label_format: '<b>Renomear</b> <i>${this.attributes.value.length > 3? this.attributes.value.length
+      + " atributos" : this.attributes.value.map(a=>a.attribute + " para " + a.alias).join(",
+      ")}</i>'
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2101
+  type: menu/selected/fa fa-edit
+

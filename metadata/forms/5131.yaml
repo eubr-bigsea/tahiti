@@ -1,0 +1,40 @@
+id: 5131
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5131
+  name: activation
+  type: TEXT
+  required: true
+  order: 1
+  default: linear
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
+    {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
+    {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
+    "sigmoid", "key": "sigmoid"}, {"value": "softmax", "key": "softmax"}, {"value":
+    "softplus", "key": "softplus"}, {"value": "softsign", "key": "softsign"}, {"value":
+    "tanh", "key": "tanh"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Activation function
+      help: 'Activation function to use. If you do not specify anything, no activation
+        is applied (ie. "linear" activation: a(x) = x).'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

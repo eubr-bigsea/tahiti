@@ -1,0 +1,71 @@
+id: 98
+slug: cox-proportional-hazards
+enabled: true
+type: TRANSFORMATION
+icon: fa-space-shuttle
+css_class: None
+doc_link: None
+scripts:
+- id: 47
+  type: JS_CLIENT
+  enabled: true
+  body: onlyField(task, "x_attribute", true);
+ports:
+- id: 225
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 226
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Cox proportional hazards
+    description: Cox proportional hazards
+    label_format: None
+  en:
+    locale: en
+    name: Cox proportional hazards
+    description: Cox proportional hazards
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 8
+  type: group
+- id: 27
+  type: subgroup
+

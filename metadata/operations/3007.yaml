@@ -1,0 +1,49 @@
+id: 3007
+slug: linear-regression
+enabled: true
+type: TRANSFORMATION
+icon: fa-chart-line
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3010
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 17
+    name: IRegressionAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: "Modelo de regress\xE3o"
+  - en:
+      locale: en
+      name: algorithm
+      description: Regression model
+translations:
+  pt:
+    locale: pt
+    name: "Regress\xE3o linear"
+    description: "Aplica a regress\xE3o linear"
+    label_format: None
+  en:
+    locale: en
+    name: Linear regression
+    description: Applies a linear regression algorithm
+    label_format: None
+platforms: []
+categories:
+- id: 8
+  type: group
+- id: 21
+  type: subgroup
+- id: 3001
+  type: technology
+- id: 1501
+  type: regression
+

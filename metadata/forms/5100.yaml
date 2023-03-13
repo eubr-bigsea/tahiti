@@ -1,0 +1,296 @@
+id: 5100
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5563
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5100
+  name: units
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Output dimensions
+      help: Positive integer, dimensionality of the output space.
+- id: 5643
+  name: trainable
+  type: INTEGER
+  required: false
+  order: 1
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Trainable
+      help: Indicates whether the layer in the model is trainable.
+- id: 5101
+  name: activation
+  type: TEXT
+  required: false
+  order: 2
+  default: linear
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
+    {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
+    {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
+    "sigmoid", "key": "sigmoid"}, {"value": "softmax", "key": "softmax"}, {"value":
+    "softplus", "key": "softplus"}, {"value": "softsign", "key": "softsign"}, {"value":
+    "tanh", "key": "tanh"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Activation function
+      help: 'Activation function to use. If you do not specify anything, no activation
+        is applied (ie. "linear" activation: a(x) = x).'
+- id: 5102
+  name: use_bias
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Use bias
+      help: Boolean (True|False), whether the layer uses a bias vector.
+- id: 5103
+  name: kernel_initializer
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Weight initialization function
+      help: ' Initializer for the kernel weights matrix.'
+- id: 5104
+  name: bias_initializer
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias initialization function
+      help: Initializer for the bias vector.
+- id: 5105
+  name: kernel_regularizer
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Regularizer for input weight
+      help: Regularizer function applied to the kernel weights matrix
+- id: 5106
+  name: bias_regularizer
+  type: TEXT
+  required: false
+  order: 7
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias regularizer
+      help: Regularizer function applied to the bias vector.
+- id: 5107
+  name: activity_regularizer
+  type: TEXT
+  required: false
+  order: 8
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Activity regularizer
+      help: Regularizer function applied to the output of the layer (its "activation").
+- id: 5108
+  name: kernel_constraint
+  type: TEXT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Weight constraint
+      help: Constraint function applied to the kernel weights matrix.
+- id: 5109
+  name: bias_constraint
+  type: TEXT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias constraint
+      help: Constraint function applied to the bias vector.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

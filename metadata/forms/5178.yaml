@@ -1,0 +1,578 @@
+id: 5178
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5585
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5191
+  name: units
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Output dimensions
+      help: Positive integer, dimensionality of the output space.
+- id: 5192
+  name: activation
+  type: TEXT
+  required: false
+  order: 2
+  default: tanh
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
+    {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
+    {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
+    "sigmoid", "key": "sigmoid"}, {"value": "softmax", "key": "softmax"}, {"value":
+    "softplus", "key": "softplus"}, {"value": "softsign", "key": "softsign"}, {"value":
+    "tanh", "key": "tanh"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Activation function
+      help: 'Activation function to use. If you do not specify anything, no activation
+        is applied (ie. "linear" activation: a(x) = x).'
+- id: 5178
+  name: recurrent_activation
+  type: TEXT
+  required: false
+  order: 3
+  default: hard_sigmoid
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
+    {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
+    {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
+    "sigmoid", "key": "sigmoid"}, {"value": "softmax", "key": "softmax"}, {"value":
+    "softplus", "key": "softplus"}, {"value": "softsign", "key": "softsign"}, {"value":
+    "tanh", "key": "tanh"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Recurrent activation
+      help: Activation function to use for the recurrent step.
+- id: 5193
+  name: use_bias
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Use bias
+      help: Boolean (True|False), whether the layer uses a bias vector.
+- id: 5194
+  name: kernel_initializer
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Weight initialization function
+      help: ' Initializer for the kernel weights matrix.'
+- id: 5190
+  name: recurrent_initializer
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Recurrent initializer
+      help: Initializer for the recurrent_kernel weights matrix, used for the linear
+        transformation of the recurrent state.
+- id: 5195
+  name: bias_initializer
+  type: TEXT
+  required: false
+  order: 7
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias initialization function
+      help: Initializer for the bias vector.
+- id: 5179
+  name: unit_forget_bias
+  type: INTEGER
+  required: false
+  order: 8
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Unit forget bias
+      help: If True, add 1 to the bias of the forget gate at initialization. Use in
+        combination with bias_initializer="zeros". This is recommended in Jozefowicz
+        et al. (2015).
+- id: 5196
+  name: kernel_regularizer
+  type: TEXT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Regularizer for input weight
+      help: Regularizer function applied to the kernel weights matrix
+- id: 5180
+  name: recurrent_regularizer
+  type: TEXT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Recurrent regularizer
+      help: Regularizer function applied to the recurrent_kernel weights matrix
+- id: 5197
+  name: bias_regularizer
+  type: TEXT
+  required: false
+  order: 11
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias regularizer
+      help: Regularizer function applied to the bias vector.
+- id: 5198
+  name: activity_regularizer
+  type: TEXT
+  required: false
+  order: 12
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Activity regularizer
+      help: Regularizer function applied to the output of the layer (its "activation").
+- id: 5199
+  name: kernel_constraint
+  type: TEXT
+  required: false
+  order: 13
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Weight constraint
+      help: Constraint function applied to the kernel weights matrix.
+- id: 5181
+  name: recurrent_constraint
+  type: TEXT
+  required: false
+  order: 14
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Recurrent constraint
+      help: Constraint function applied to the recurrent_kernel weights matrix.
+- id: 5200
+  name: bias_constraint
+  type: TEXT
+  required: false
+  order: 15
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias constraint
+      help: Constraint function applied to the bias vector.
+- id: 5182
+  name: dropout
+  type: FLOAT
+  required: false
+  order: 16
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Dropout
+      help: Float between 0 and 1. Fraction of the units to drop for the linear transformation
+        of the inputs.
+- id: 5183
+  name: recurrent_dropout
+  type: FLOAT
+  required: false
+  order: 17
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Recurrent dropout
+      help: Float between 0 and 1. Fraction of the units to drop for the linear transformation
+        of the recurrent state.
+- id: 5184
+  name: implementation
+  type: INTEGER
+  required: false
+  order: 18
+  default: '1'
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": 1, "key": 1}, {"value": 2, "key": 2}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Implementation mode
+      help: Implementation mode, either 1 or 2. Mode 1 will structure its operations
+        as a larger number of smaller dot products and additions, whereas mode 2 will
+        batch them into fewer, larger operations. These modes will have different
+        performance profiles on different hardware and for different applications.
+- id: 5185
+  name: return_sequences
+  type: INTEGER
+  required: false
+  order: 19
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Return sequences
+      help: Whether to return the last output in the output sequence, or the full
+        sequence.
+- id: 5186
+  name: return_state
+  type: INTEGER
+  required: false
+  order: 20
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Return state
+      help: Whether to return the last state in addition to the output.
+- id: 5187
+  name: go_backwards
+  type: INTEGER
+  required: false
+  order: 21
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Go backwards
+      help: If True, process the input sequence backwards and return the reversed
+        sequence.
+- id: 5188
+  name: stateful
+  type: INTEGER
+  required: false
+  order: 22
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Stateful
+      help: If True, the last state for each sample at index i in a batch will be
+        used as initial state for the sample of index i in the following batch.
+- id: 5189
+  name: unroll
+  type: INTEGER
+  required: false
+  order: 23
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Unroll
+      help: If True, the network will be unrolled, else a symbolic loop will be used.
+        Unrolling can speed-up a RNN, although it tends to be more memory-intensive.
+        Unrolling is only suitable for short sequences.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

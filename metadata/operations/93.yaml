@@ -1,0 +1,87 @@
+id: 93
+slug: execute-sql
+enabled: true
+type: TRANSFORMATION
+icon: fa-bolt
+css_class: None
+doc_link: None
+scripts:
+- id: 33
+  type: JS_CLIENT
+  enabled: true
+  body: copyAllInputsRemoveDuplicated(task, 'names');
+ports:
+- id: 212
+  slug: input data 1
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada 1
+      description: Dados de entrada 1
+  - en:
+      locale: en
+      name: input data 1
+      description: Input data 1
+- id: 213
+  slug: input data 2
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada 2
+      description: Dados de entrada 2
+  - en:
+      locale: en
+      name: input data 2
+      description: Input data 2
+- id: 214
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Executar consulta SQL
+    description: "Executa uma consulta usando a linguagem SQL dispon\xEDvel no Spark."
+    label_format: None
+  en:
+    locale: en
+    name: Execute SQL query
+    description: Executes a query using SQL language available in Spark.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 41
+  type: group
+

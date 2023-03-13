@@ -1,0 +1,81 @@
+id: 3024
+slug: add-columns
+enabled: true
+type: TRANSFORMATION
+icon: fa-copy
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3048
+  slug: input data 1
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada 1
+      description: Dados de entrada 1
+  - en:
+      locale: en
+      name: input data 1
+      description: Input Data 1
+- id: 3049
+  slug: input data 2
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada 2
+      description: Dados de entrada 2
+  - en:
+      locale: en
+      name: input data 2
+      description: Input Data 2
+- id: 3050
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+translations:
+  pt:
+    locale: pt
+    name: Adicionar colunas
+    description: Adiciona colunas de uma fonte de dados a outra
+    label_format: None
+  en:
+    locale: en
+    name: Add Columns
+    description: Adds columns from one data source to another
+    label_format: None
+platforms: []
+categories:
+- id: 7
+  type: group
+- id: 3001
+  type: technology
+

@@ -1,0 +1,261 @@
+id: 4004
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4016
+  name: max_depth
+  type: INTEGER
+  required: false
+  order: 1
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Profundidade m\xE1xima"
+      help: "Profundidade m\xE1xima na \xE1rvore."
+  - en:
+      locale: en
+      label: Maximum depth
+      help: The maximum depth of the tree. If None, then nodes are expanded until
+        all leaves are pure or until all leaves contain less than min_samples_split
+        samples.
+- id: 4017
+  name: min_samples_split
+  type: INTEGER
+  required: false
+  order: 2
+  default: '2'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xF3 interno m\xEDnimo"
+      help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para dividir\
+        \ um n\xF3 interno."
+  - en:
+      locale: en
+      label: Minimum samples split
+      help: Percentage of the minimum number of samples required to be at a leaf node.
+- id: 4018
+  name: min_samples_leaf
+  type: INTEGER
+  required: false
+  order: 3
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xF3 de folha m\xEDnima"
+      help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para estar\
+        \ em um n\xF3 folha."
+  - en:
+      locale: en
+      label: Minimum samples leaf
+      help: Percentage of the minimum number of samples required to be at a leaf node.
+- id: 4019
+  name: min_weight
+  type: DECIMAL
+  required: false
+  order: 4
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Soma total de pesos
+      help: "A fra\xE7\xE3o ponderada m\xEDnima da soma total de pesos (de todas as\
+        \ amostras de entrada) necess\xE1ria para estar em um n\xF3 folha. As amostras\
+        \ t\xEAm peso igual quando n\xE3o \xE9 fornecido."
+  - en:
+      locale: en
+      label: Sum total of weights
+      help: The minimum weighted fraction of the sum total of weights (of all the
+        input samples) required to be at a leaf node. Samples have equal weight when
+        sample_weight is not provided.
+- id: 4020
+  name: random_state
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estado Aleat\xF3rio"
+      help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
+        m utilizada para reprodutibilidade."
+  - en:
+      locale: en
+      label: Random State
+      help: Seed used by the random number generator. Also used for reproducibility.
+- id: 4224
+  name: criterion
+  type: TEXT
+  required: false
+  order: 6
+  default: gini
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "gini", "value": "gini"}, {"key": "entropy", "value": "entropy"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Crit\xE9rio"
+      help: "A fun\xE7\xE3o para medir a qualidade de uma divis\xE3o."
+  - en:
+      locale: en
+      label: Criterion
+      help: The function to measure the quality of a split.
+- id: 4225
+  name: splitter
+  type: TEXT
+  required: false
+  order: 7
+  default: best
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "best", "value": "best"}, {"key": "random", "value": "random"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Splitter
+      help: "A estrat\xE9gia usada para escolher a divis\xE3o em cada n\xF3."
+  - en:
+      locale: en
+      label: Splitter
+      help: The strategy used to choose the split at each node.
+- id: 4226
+  name: max_features
+  type: TEXT
+  required: false
+  order: 8
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "auto", "value": "auto"}, {"key": "sqrt", "value": "sqrt"}, {"key":
+    "log2", "value": "log2"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Recursos m\xE1ximos"
+      help: "O n\xFAmero de recursos a serem considerados ao procurar a melhor divis\xE3\
+        o."
+  - en:
+      locale: en
+      label: Maximum features
+      help: The number of features to consider when looking for the best split.
+- id: 4227
+  name: max_leaf_nodes
+  type: INTEGER
+  required: false
+  order: 9
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de n\xF3s folha"
+      help: "Cres\xE7a uma \xE1rvore com o n\xFAmero m\xE1ximo de n\xF3s folha da\
+        \ melhor maneira poss\xEDvel. Os melhores n\xF3s s\xE3o definidos como redu\xE7\
+        \xE3o relativa na impureza. Se nenhum, n\xFAmero ilimitado de n\xF3s de folha."
+  - en:
+      locale: en
+      label: Maximum leaf nodes
+      help: Grow a tree with max_leaf_nodes in best-first fashion. Best nodes are
+        defined as relative reduction in impurity. If None then unlimited number of
+        leaf nodes.
+- id: 4228
+  name: min_impurity_decrease
+  type: DECIMAL
+  required: false
+  order: 10
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Diminui\xE7\xE3o m\xEDnima da impureza"
+      help: "Um n\xF3 ser\xE1 dividido se essa divis\xE3o induzir uma diminui\xE7\xE3\
+        o da impureza maior ou igual a esse valor."
+  - en:
+      locale: en
+      label: Minimum impurity decrease
+      help: A node will be split if this split induces a decrease of the impurity
+        greater than or equal to this value.
+- id: 4229
+  name: class_weight
+  type: TEXT
+  required: false
+  order: 11
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Peso da classe
+      help: 'Pesos associados a classes no formato {class_label: weight}.'
+  - en:
+      locale: en
+      label: Class weight
+      help: 'Weights associated with classes in the form {class_label: weight}.'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

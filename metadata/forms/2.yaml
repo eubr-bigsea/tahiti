@@ -1,0 +1,76 @@
+id: 2
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 152
+  name: terms_per_topic
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Termos por t\xF3pico(m\xE1x)"
+      help: "Termos por t\xF3pico(m\xE1x)"
+  - en:
+      locale: en
+      label: Terms per topic (max)
+      help: Terms per topic (max)
+- id: 477
+  name: topic_indices
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo do Indices de t\xF3picos"
+      help: "Atributo do Indices de t\xF3picos"
+  - en:
+      locale: en
+      label: Topic Indices field
+      help: Topic Indices field
+- id: 478
+  name: topic_terms
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Coluna para o termos do t\xF3pico"
+      help: "Coluna para o termos do t\xF3pico"
+  - en:
+      locale: en
+      label: Topic Terms alias
+      help: Topic Terms alias
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

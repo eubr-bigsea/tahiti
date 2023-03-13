@@ -1,0 +1,16 @@
+id: 2
+slug: ophidia2
+enabled: true
+icon: ''
+version: None
+plugin: false
+translations:
+  pt:
+    locale: pt
+    name: Ophidia
+    description: Ophidia
+  en:
+    locale: en
+    name: Ophidia
+    description: Ophidia
+

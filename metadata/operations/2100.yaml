@@ -1,0 +1,31 @@
+id: 2100
+slug: read-data
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-edit
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Ler dados
+    description: Ler dados
+    label_format: '${data_source.label}: ${data_source.labelValue}'
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2100
+  type: internal
+- id: 2113
+  type: model-builder
+- id: 2114
+  type: visualization-builder
+

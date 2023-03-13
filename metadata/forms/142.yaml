@@ -1,0 +1,34 @@
+id: 142
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 569
+  name: colors
+  type: TEXT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: color-pallete
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Paleta de cores
+      help: "Escolha a paleta de cores usada na visualiza\xE7\xE3o."
+  - en:
+      locale: en
+      label: Color palette
+      help: Choose the color palette used in the visualization.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

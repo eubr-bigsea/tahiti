@@ -1,0 +1,27 @@
+id: 2160
+slug: handle-invalid
+enabled: false
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Tratar dados inv\xE1lidos"
+    description: "Trata dados inv\xE1lidos de acordo com um regra."
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2106
+  type: menu/selected/fa fa-eraser
+

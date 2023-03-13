@@ -1,0 +1,28 @@
+id: 2103
+slug: discard
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-times text-danger
+css_class: separator
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Descartar atributo
+    description: Descarta atributo do resultado.
+    label_format: '<b>Descartar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length
+      + " atributos" : this.attributes.value.join(", ")}</i>'
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2101
+  type: menu/selected/fa fa-edit
+

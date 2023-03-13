@@ -1,0 +1,97 @@
+id: 110
+slug: perceptron-classifier-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-angle-double-down
+css_class: None
+doc_link: None
+scripts:
+- id: 55
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "prediction", false, null);
+ports:
+- id: 257
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: entrada do treino
+      description: Train input data
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 258
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Output model
+  - en:
+      locale: en
+      name: model
+      description: Output model
+- id: 259
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Perceptron multicamadas
+    description: "Classificador baseado no Perceptron Multicamadas. Cada camada tem\
+      \ fun\xE7\xE3o de ativa\xE7\xE3o sigm\xF3ide e a camada de sa\xEDda usa softmax.\
+      \ O n\xFAmero de entradas deve ser igual ao tamanho dos vetores de recursos."
+    label_format: None
+  en:
+    locale: en
+    name: Multi-layer Perceptron
+    description: Classifier trainer based on the Multilayer Perceptron. Each layer
+      has sigmoid activation function, output layer has softmax.Number of inputs has
+      to be equal to the size of feature vectors.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 4
+  type: algorithm
+- id: 18
+  type: subgroup
+- id: 8
+  type: group
+- id: 1500
+  type: classification
+

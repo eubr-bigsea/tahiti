@@ -1,0 +1,27 @@
+id: 2151
+slug: n-grams
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Text
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Gerar N-Gramas
+    description: "Gera combina\xE7\xF5es N-Gramas"
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

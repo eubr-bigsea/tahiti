@@ -1,0 +1,55 @@
+id: 2204
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2179
+  name: start
+  type: FLOAT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Value
+      help: Value
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2180
+  name: end
+  type: FLOAT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Value
+      help: Value
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

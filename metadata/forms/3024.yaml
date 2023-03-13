@@ -1,0 +1,34 @@
+id: 3024
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3085
+  name: aliases
+  type: TEXT
+  required: false
+  order: 4
+  default: _l,_r
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Sufixos para os atributos (2 valores, separados por v\xEDrgula)"
+      help: "Os atributos s\xE3o sufixados a fim de evitar colis\xE3o de nomes."
+  - en:
+      locale: en
+      label: Suffixes for attributes (2 values, comma separated)
+      help: Attributes are suffixed in order to avoid name collision.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

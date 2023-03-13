@@ -1,0 +1,97 @@
+id: 105
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 270
+  name: max_depth
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Profundidade m\xE1xima"
+      help: "Profundidade m\xE1xima."
+  - en:
+      locale: en
+      label: Max. depth
+      help: Max. depth
+- id: 271
+  name: min_instance
+  type: INTEGER
+  required: false
+  order: 6
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Inst\xE2ncias m\xEDnimas"
+      help: "Inst\xE2ncias m\xEDnimas."
+  - en:
+      locale: en
+      label: Min. instance
+      help: Min. instance
+- id: 272
+  name: min_info_gain
+  type: DECIMAL
+  required: false
+  order: 7
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Ganho de informa\xE7\xE3o m\xEDnimo"
+      help: "Ganho de informa\xE7\xE3o m\xEDnimo."
+  - en:
+      locale: en
+      label: Min. info gain
+      help: Min. info gain
+- id: 273
+  name: seed
+  type: INTEGER
+  required: false
+  order: 8
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Semente (seed)
+      help: Semente (seed).
+  - en:
+      locale: en
+      label: Seed
+      help: Seed
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

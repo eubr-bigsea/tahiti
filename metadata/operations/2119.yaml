@@ -1,0 +1,27 @@
+id: 2119
+slug: normalize
+enabled: false
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: Integer|Decimal
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Normalizar
+    description: "Permite normalizar um n\xFAmero."
+    label_format: <b>Normalizar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

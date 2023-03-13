@@ -1,0 +1,81 @@
+id: 5142
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5605
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5142
+  name: rate
+  type: DECIMAL
+  required: true
+  order: 1
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Rate
+      help: Float between 0 and 1. Fraction of the input units to drop.
+- id: 5562
+  name: data_format
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
+    "key": "channels_first"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: "'channels_first' or 'channels_last'. \n    In 'channels_first' mode,\
+        \ the channels dimension (the depth) is at index 1, \n    in 'channels_last'\
+        \ mode is it at index 3. It defaults to the \n    image_data_format value\
+        \ found in your Keras config file at \n    ~/.keras/keras.json. If you never\
+        \ set it, then it will be \n    'channels_last'."
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

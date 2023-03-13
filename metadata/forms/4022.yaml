@@ -1,0 +1,230 @@
+id: 4022
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4108
+  name: features
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) previsor(es)
+      help: Atributo(s) previsor(es)
+  - en:
+      locale: en
+      label: Features
+      help: Features
+- id: 4109
+  name: label
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o r\xF3tulo"
+      help: "Atributo com o r\xF3tulo"
+  - en:
+      locale: en
+      label: Label attribute
+      help: Label attribute
+- id: 4110
+  name: prediction
+  type: TEXT
+  required: false
+  order: 3
+  default: prediction
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com a predi\xE7\xE3o (novo)"
+      help: "Atributo usado para predi\xE7\xE3o (novo)"
+  - en:
+      locale: en
+      label: Prediction attribute (new)
+      help: Prediction attribute (new)
+- id: 4150
+  name: min_weight_fraction_leaf
+  type: FLOAT
+  required: false
+  order: 4
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fra\xE7\xE3o ponderada m\xEDnima"
+      help: "A fra\xE7\xE3o ponderada m\xEDnima da soma total de pesos (de todas as\
+        \ amostras de entrada) necess\xE1ria para estar em um n\xF3 folha."
+  - en:
+      locale: en
+      label: Minimum weighted fraction
+      help: The minimum weighted fraction of the sum total of weights (of all the
+        input samples) required to be at a leaf node.
+- id: 4151
+  name: max_leaf_nodes
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Max. n\xF3s folha"
+      help: "Cres\xE7a \xE1rvores com max_leaf_nodes da melhor maneira poss\xEDvel."
+  - en:
+      locale: en
+      label: Max. leaf nodes
+      help: Grow trees with max_leaf_nodes in best-first fashion.
+- id: 4152
+  name: min_impurity_decrease
+  type: FLOAT
+  required: false
+  order: 6
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Redu\xE7\xE3o m\xEDnima da impureza"
+      help: "Um n\xF3 ser\xE1 dividido se essa divis\xE3o induzir uma redu\xE7\xE3\
+        o da impureza maior ou igual a esse valor."
+  - en:
+      locale: en
+      label: Min. impurity decrease
+      help: A node will be split if this split induces a decrease of the impurity
+        greater than or equal to this value.
+- id: 4153
+  name: bootstrap
+  type: INTEGER
+  required: false
+  order: 7
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Amostras de autoinicializa\xE7\xE3o"
+      help: "Se as amostras de autoinicializa\xE7\xE3o s\xE3o usadas na constru\xE7\
+        \xE3o de \xE1rvores."
+  - en:
+      locale: en
+      label: Bootstrap
+      help: Whether bootstrap samples are used when building trees.
+- id: 4154
+  name: oob_score
+  type: INTEGER
+  required: false
+  order: 8
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Amostras prontas
+      help: "Se \xE9 necess\xE1rio usar amostras prontas para estimar o R\xB2 em dados\
+        \ n\xE3o vistos."
+  - en:
+      locale: en
+      label: Out-of-bag samples
+      help: "Whether to use out-of-bag samples to estimate the R\xB2 on unseen data."
+- id: 4156
+  name: random_state
+  type: INTEGER
+  required: false
+  order: 10
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estado aleat\xF3rio"
+      help: "\xC9 a semente usada pelo gerador de n\xFAmeros aleat\xF3rios."
+  - en:
+      locale: en
+      label: Random state
+      help: Is the seed used by the random number generator.
+- id: 4159
+  name: criterion
+  type: TEXT
+  required: false
+  order: 13
+  default: mse
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "mse", "value": "Mean squared error"}, {"key": "mae", "value":
+    "Mean absolute error"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Crit\xE9rio"
+      help: "A fun\xE7\xE3o para medir a qualidade de um split."
+  - en:
+      locale: en
+      label: Criterion
+      help: The function to measure the quality of a split.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

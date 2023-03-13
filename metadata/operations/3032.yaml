@@ -1,0 +1,67 @@
+id: 3032
+slug: pca
+enabled: true
+type: TRANSFORMATION
+icon: fa-arrows-h
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3064
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input Data
+- id: 3065
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+translations:
+  pt:
+    locale: pt
+    name: PCA
+    description: "Principal componente de an\xE1lise (PCA) \xE9 um procedimento estatistico\
+      \ capaz de reduzir a dimensionalidade dos dados."
+    label_format: None
+  en:
+    locale: en
+    name: PCA
+    description: Principal component analysis (PCA) is a statistical procedure that
+      reduce the dimensionality.
+    label_format: None
+platforms: []
+categories:
+- id: 8
+  type: group
+- id: 23
+  type: subgroup
+- id: 3001
+  type: technology
+

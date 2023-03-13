@@ -1,0 +1,80 @@
+id: 3029
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3095
+  name: attributes
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s)
+      help: Selecione um ou mais atributos a ser(em) limpos.
+  - en:
+      locale: en
+      label: Attribute(s)
+      help: Select one or more attributes to be cleaned
+- id: 3096
+  name: cleaning_mode
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Replace with mean", "key": "MEAN", "value": "Replace with mean",
+    "pt": "Substituir pela m\u00e9dia"}, {"en": "Replace with value", "key": "VALUE",
+    "value": "Replace with value", "pt": "Substituir por valor"}, {"en": "Replace
+    with approx. median", "pt": "Substituir com a mediana aproximada", "value": "Replace
+    with app"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tipo de limpeza
+      help: Tipo de limpeza a ser realizada.
+  - en:
+      locale: en
+      label: Cleaning mode
+      help: Type of cleaning to be performed.
+- id: 3097
+  name: value
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Valor
+      help: Valor a ser usado para substituir os valores ausentes.
+  - en:
+      locale: en
+      label: Value
+      help: Value used to replace missing values.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

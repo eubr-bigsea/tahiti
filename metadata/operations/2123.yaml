@@ -1,0 +1,28 @@
+id: 2123
+slug: to-lower
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Text
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Converter para min\xFAsculas"
+    description: "Converte um texto para min\xFAsculas."
+    label_format: "<b>Converter</b> <i>${this.attributes.value.map(a=>a).join(\",\
+      \ \")}</i> para <b>min\xFAsculas</b>"
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

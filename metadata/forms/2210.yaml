@@ -1,0 +1,57 @@
+id: 2210
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2184
+  name: type
+  type: INTEGER
+  required: true
+  order: 3
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "null", "pt": "Limpar valor", "en": "Clean value"}, {"key": "average",
+    "pt": "Com a m\u00e9dia", "en": "With average"}, {"key": "constant", "pt": "Valor
+    constante", "en": "Constant value"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Value
+      help: Value
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2185
+  name: value
+  type: TEXT
+  required: true
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Value
+      help: Value
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,65 @@
+id: 140
+slug: cast
+enabled: true
+type: TRANSFORMATION
+icon: ' '
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 326
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 327
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Alterar tipos de dados
+    description: Permite alterar o tipo de um ou mais atributos.
+    label_format: None
+  en:
+    locale: en
+    name: Change data types
+    description: Allow to change attribute type (casting).
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 7
+  type: group
+

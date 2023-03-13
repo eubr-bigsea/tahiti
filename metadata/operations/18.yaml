@@ -1,0 +1,51 @@
+id: 18
+slug: data-reader
+enabled: true
+type: TRANSFORMATION
+icon: fa-database
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 35
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: Read data
+  - en:
+      locale: en
+      name: output data
+      description: Read data
+translations:
+  pt:
+    locale: pt
+    name: Ler dados
+    description: "L\xEA dados de uma fonte de dados"
+    label_format: None
+  en:
+    locale: en
+    name: Read data
+    description: Reads data from a data set
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+- id: 100000
+  slug: demo
+categories:
+- id: 3
+  type: data source
+- id: 6
+  type: group
+

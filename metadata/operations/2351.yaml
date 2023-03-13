@@ -1,0 +1,27 @@
+id: 2351
+slug: evaluator
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Avaliar modelo
+    description: "Avalia um modelo segundo alguma m\xE9trica."
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2113
+  type: model-builder
+

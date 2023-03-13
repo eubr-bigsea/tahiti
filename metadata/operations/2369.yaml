@@ -1,0 +1,27 @@
+id: 2369
+slug: decision-tree-regressor
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Regress\xE3o por \xC1rvore de Decis\xE3o"
+    description: "Regress\xE3o por \xE1rvore de decis\xE3o."
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2113
+  type: model-builder
+

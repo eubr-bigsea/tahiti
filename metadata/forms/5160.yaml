@@ -1,0 +1,374 @@
+id: 5160
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5586
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5366
+  name: axis
+  type: INTEGER
+  required: false
+  order: 1
+  default: '-1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Axis
+      help: Integer, the axis that should be normalized (typically the features axis).
+        For instance, after a Conv2D layer with  data_format="channels_first", set
+        axis=1 in BatchNormalization.
+- id: 5367
+  name: momentum
+  type: DECIMAL
+  required: false
+  order: 2
+  default: '0.99'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Momentum
+      help: Momentum for the moving mean and the moving variance.
+- id: 5368
+  name: epsilon
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Epsilon
+      help: Small float added to variance to avoid dividing by zero.
+- id: 5369
+  name: center
+  type: INTEGER
+  required: false
+  order: 4
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Center
+      help: If True, add offset of beta to normalized tensor. If False, beta is ignored.
+- id: 5370
+  name: scale
+  type: INTEGER
+  required: false
+  order: 5
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Scale
+      help: If True, multiply by gamma. If False, gamma is not used. When the next
+        layer is linear (also e.g. nn.relu), this can be disabled since the scaling
+        will be done by the next layer.
+- id: 5371
+  name: beta_initializer
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta initializer
+      help: Initializer for the beta weight.
+- id: 5372
+  name: gamma_initializer
+  type: TEXT
+  required: false
+  order: 7
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Gamma initializer
+      help: Initializer for the gamma weight.
+- id: 5373
+  name: moving_mean_initializer
+  type: TEXT
+  required: false
+  order: 8
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Moving mean initializer
+      help: Initializer for the moving mean.
+- id: 5374
+  name: moving_variance_initializer
+  type: TEXT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Moving variance initializer
+      help: Initializer for the moving variance.
+- id: 5375
+  name: beta_regularizer
+  type: TEXT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta regularizer
+      help: Optional regularizer for the beta weight.
+- id: 5376
+  name: gamma_regularizer
+  type: TEXT
+  required: false
+  order: 11
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Gamma regularizer
+      help: Optional regularizer for the gamma weight.
+- id: 5377
+  name: beta_constraint
+  type: TEXT
+  required: false
+  order: 12
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta constraint
+      help: Optional constraint for the beta weight.
+- id: 5378
+  name: gamma_constraint
+  type: TEXT
+  required: false
+  order: 13
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Gamma constraint
+      help: Optional constraint for the gamma weight.
+- id: 5560
+  name: kwargs
+  type: TEXT
+  required: false
+  order: 30
+  default: fused=False
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Kwargs
+      help: Standard layer keyword arguments.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

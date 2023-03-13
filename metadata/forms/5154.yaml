@@ -1,0 +1,110 @@
+id: 5154
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5574
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5355
+  name: cropping
+  type: TEXT
+  required: true
+  order: 1
+  default: ((0, 0), (0, 0), (0, 0))
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Cropping
+      help: 'Int, or tuple of 3 ints, or tuple of 3 tuples of 2 ints. If int: the
+        same symmetric cropping is applied to depth, height, and width. If tuple of
+        3 ints: interpreted as two different symmetric cropping values for depth,
+        height, and width: (symmetric_dim1_crop, symmetric_dim2_crop, symmetric_dim3_crop).
+        If tuple of 3 tuples of 2 ints: interpreted as ((left_dim1_crop, right_dim1_crop),
+        (left_dim2_crop, right_dim2_crop), (left_dim3_crop, right_dim3_crop)).'
+- id: 5356
+  name: data_format
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
+    "key": "channels_first"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: A string, one of "channels_last" or "channels_first". The ordering of
+        the dimensions in the inputs.  "channels_last" corresponds to inputs with
+        shape  (batch, spatial_dim1, spatial_dim2, spatial_dim3, channels) while "channels_first"
+        corresponds to inputs with shape  (batch, channels, spatial_dim1, spatial_dim2,
+        spatial_dim3). It defaults to the image_data_format value found in your Keras
+        config file at ~/.keras/keras.json. If you never set it, then it will be "channels_last".
+- id: 5533
+  name: input_shape
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Input shape
+      help: '5D tensor with shape: - If data_format is "channels_last": (batch, first_axis_to_crop,
+        second_axis_to_crop, third_axis_to_crop, depth) - If data_format is "channels_first":
+        (batch, depth, first_axis_to_crop, second_axis_to_crop, third_axis_to_crop)'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

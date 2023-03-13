@@ -1,0 +1,34 @@
+id: 144
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 536
+  name: text
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: rich-text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Texto (Markdown)
+      help: Text formatado na linguagem Markdown.
+  - en:
+      locale: en
+      label: Text (Markdown)
+      help: Rich text encoded in Markdown language.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,76 @@
+id: 2154
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2151
+  name: find
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Encontrar
+      help: Valor a ser pesquisado.
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2152
+  name: replace
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.nullify.internalValue !== '1'
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Substituir
+      help: "Valor a ser usado na substitui\xE7\xE3o."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2235
+  name: nullify
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: checkbox
+  values_url: '0'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Substituir por valor nulo
+      help: "Indica se \xE9 para substituir o valor por nulo."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

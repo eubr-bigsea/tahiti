@@ -1,0 +1,56 @@
+id: 73
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 172
+  name: attributes
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributos
+      help: Atributos
+  - en:
+      locale: en
+      label: Attributes
+      help: Attributes
+- id: 173
+  name: type
+  type: TEXT
+  required: true
+  order: 2
+  default: SERVICE_INPUT
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Read as web service input", "key": "SERVICE_INPUT", "value": "Read
+    as web service input", "pt": "Ler como entrada para o web service"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tipo
+      help: Tipo de entrada externa
+  - en:
+      locale: en
+      label: Type
+      help: Type of external input
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

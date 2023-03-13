@@ -1,0 +1,18 @@
+id: 5
+slug: keras
+enabled: true
+icon: ''
+version: None
+plugin: false
+translations:
+  pt:
+    locale: pt
+    name: Keras
+    description: "Keras \xE9 uma API de mais alto n\xEDvel para redes neurais, escrita\
+      \ em Python capaz de executar sobre o TensorFlow, CNTK ou Theano."
+  en:
+    locale: en
+    name: Keras
+    description: Keras is a high-level neural networks API, written in Python and
+      capable of running on top of TensorFlow, CNTK, or Theano.
+

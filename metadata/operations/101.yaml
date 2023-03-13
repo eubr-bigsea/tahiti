@@ -1,0 +1,89 @@
+id: 101
+slug: quantile-discretizer
+enabled: true
+type: TRANSFORMATION
+icon: fa-ruler-horizontal
+css_class: None
+doc_link: None
+scripts:
+- id: 76
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddAttributesSplitAlias(task, "attributes", "alias", "_quantile");
+ports:
+- id: 232
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 233
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 234
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+translations:
+  pt:
+    locale: pt
+    name: Por quantis
+    description: Discretizador em quantis recebe um atributo e associa-o a quantis
+      especificados em faixas de valores.
+    label_format: None
+  en:
+    locale: en
+    name: Quantile discretizer
+    description: Quantile discretizer takes an attribute with continuous features
+      and outputs an attribute with binned categorical features.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 32
+  type: group
+- id: 35
+  type: subgroup
+

@@ -1,0 +1,30 @@
+id: 2105
+slug: sort
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-sort text-secondary
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Ordenar
+    description: "Permite definir as op\xE7\xF5es de ordena\xE7\xE3o."
+    label_format: <b>Ordenar por</b> <i>${this.order_by.value.map(v => v.f+ "(" +
+      v.attribute +")").join(", ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2102
+  type: menu/always/fa fa-database
+- id: 2114
+  type: visualization-builder
+

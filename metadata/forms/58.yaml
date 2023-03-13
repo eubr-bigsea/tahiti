@@ -1,0 +1,121 @@
+id: 58
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 110
+  name: optimizer
+  type: TEXT
+  required: true
+  order: 1
+  default: em
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "EM optimizer (Expectation Maximization)", "key": "em", "value":
+    "EM optimizer (Expectation Maximization)", "pt": "Otimizador EM (Expectation Maximization)"},
+    {"en": "Online optimizer", "key": "online", "value": "Online optimizer", "pt":
+    "Otimizador online"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Otimizador
+      help: Otimizador
+  - en:
+      locale: en
+      label: Optimizer
+      help: Optimizer
+- id: 126
+  name: number_of_topics
+  type: INTEGER
+  required: true
+  order: 2
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero de t\xF3picos (K)"
+      help: "N\xFAmero de t\xF3picos (K)"
+  - en:
+      locale: en
+      label: Number of topics (K)
+      help: Number of topics (K) to be generated
+- id: 127
+  name: max_iteractions
+  type: INTEGER
+  required: false
+  order: 3
+  default: '3'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
+  - en:
+      locale: en
+      label: Max. iterations
+      help: Max. iterations
+- id: 170
+  name: doc_concentration
+  type: FLOAT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Concentra\xE7\xE3o de documentos (alfa)"
+      help: "Concentra\xE7\xE3o de documentos (alfa)"
+  - en:
+      locale: en
+      label: Document concentration (alpha)
+      help: Document concentration (alpha)
+- id: 171
+  name: topic_concentration
+  type: FLOAT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Concentra\xE7\xE3o de t\xF3picos (beta)"
+      help: "Concentra\xE7\xE3o de t\xF3picos (beta)"
+  - en:
+      locale: en
+      label: Topic concentration (beta)
+      help: Topic concentration (beta)
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

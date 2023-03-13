@@ -1,0 +1,95 @@
+id: 132
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 501
+  name: perform_cross_validation
+  type: INTEGER
+  required: false
+  order: 9
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Realizar a valida\xE7\xE3o cruzada"
+      help: "Realizar a valida\xE7\xE3o cruzada (requer um atributo com a informa\xE7\
+        \xE3o de parti\xE7\xE3o)."
+  - en:
+      locale: en
+      label: Perform cross-validation
+      help: Perform cross-validation (requires an attribute with fold information
+- id: 487
+  name: cross_validation
+  type: INTEGER
+  required: false
+  order: 10
+  default: none
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Area under ROC curve(binary classification)", "value": "Area under
+    ROC curve (binary classification)", "key": "areaUnderROC", "pt": "\u00c1rea sob
+    a curva ROC (classifica\u00e7\u00e3o bin\u00e1ria)"}, {"en": "Area under precision-recall
+    curve (binary classification)", "value": "Area under precision-recall curve (binary
+    classification)", "key": "areaUnderPR", "pt": "\u00c1rea sob a curva precis\u00e3o-revoca\u00e7\u00e3o"},
+    {"en": "F1 score (multiclass classification)", "value": "F1 score (multiclass
+    classification)", "key": "f1", "pt": "F1"}, {"en": "Weighted precision (multiclass
+    classification)", "value": "Weighted precision (multiclass classification)", "key":
+    "weightedPrecision", "pt": "Precis\u00e3o ponderada"}, {"en": "Weighted recall
+    (multiclass classification)", "value": "Weighted recall (multiclass classification)",
+    "key": "weightedRecall", "pt": "Revoca\u00e7\u00e3o ponderada"}, {"en": "Accuracy
+    (multiclass classification)", "value": "Accuracy (multiclass classification)",
+    "key": "accuracy", "pt": "Acur\u00e1cia"}, {"en": "Root mean squared error  (regression)",
+    "value": "Root mean squared error  (regression)", "key": "rmse", "pt": "Ra\u00edz
+    do erro quadr\u00e1tico m\u00e9dio"}, {"mse": "mse", "en": "Mean squared error
+    (regression)", "pt": "Erro quadr\u00e1tico m\u00e9dio", "value": "Mean squared
+    error (regression)"}, {"en": "Mean absolute error (regression)", "value": "Mean
+    absolute error regression)", "key": "mae", "pt": "Erro absoluto m\u00e9dio"}]'
+  scope: EXECUTION
+  enable_conditions: this.perform_cross_validation.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica para valida\xE7\xE3o cruzada"
+      help: "Se informada, essa m\xE9trica ser\xE1 usada e a valida\xE7\xE3o cruzada\
+        \ ser\xE1 executada"
+  - en:
+      locale: en
+      label: Metric for applying cross-validation
+      help: If informed, this metric will be used and cross-validation will be executed.
+- id: 488
+  name: attribute_cross_validation
+  type: TEXT
+  required: false
+  order: 11
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.perform_cross_validation.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o n\xFAmero da parti\xE7\xE3o (fold)"
+      help: "Cont\xE9m o n\xFAmero da parti\xE7\xE3o para a linha"
+  - en:
+      locale: en
+      label: Attribute with fold number
+      help: Contains the fold number for the row
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

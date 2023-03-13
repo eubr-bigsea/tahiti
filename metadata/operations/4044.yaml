@@ -1,0 +1,65 @@
+id: 4044
+slug: drop
+enabled: true
+type: ACTION
+icon: ''
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4096
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4097
+  slug: output data
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Remover Coluna
+    description: Remove as colunas selecionadas.
+    label_format: None
+  en:
+    locale: en
+    name: Drop
+    description: Remove a selected column.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 7
+  type: group
+- id: 30
+  type: subgroup
+

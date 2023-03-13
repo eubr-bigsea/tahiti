@@ -1,0 +1,63 @@
+id: 6
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3
+  name: mode
+  type: TEXT
+  required: false
+  order: 0
+  default: include
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Include attributes to the selection", "value": "include", "pt":
+    "Incluir atributos \u00e0 sele\u00e7\u00e3o", "key": "include"}, {"en": "Discard
+    attributes from the selection", "value": "exclude", "pt": "Descartar atributos
+    da sele\u00e7\u00e3o", "key": "exclude"}, {"en": "Select all and rename some attributes",
+    "value": "rename", "pt": "Selecionar todos e renomear alguns atributos", "key":
+    "rename"}, {"en": "Select all and Duplicate some attributes", "value": "duplicate",
+    "pt": "Selecionar todos e duplicar alguns atributos", "key": "duplicate"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Modo de sele\xE7\xE3o"
+      help: "Modo de sele\xE7\xE3o (incluir ou excluir atributos)."
+  - en:
+      locale: en
+      label: Selection mode
+      help: Selection mode (include or exclude attributes).
+- id: 6
+  name: attributes
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-alias-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s)
+      help: "Escolha um ou mais atributos. Esses atributos ser\xE3o selecionados para\
+        \ a sa\xEDda da fonte de dados."
+  - en:
+      locale: en
+      label: Select attribute(s)
+      help: Choose one or more attributes. These attributes will be selected to the
+        output data set.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

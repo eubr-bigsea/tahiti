@@ -1,0 +1,86 @@
+id: 5044
+slug: gru
+enabled: false
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5144
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5244
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5342
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: GRU
+    description: Gated Recurrent Unit - Cho et al. 2014. There are two variants. The
+      default one is based on 1406.1078v3 and has reset gate applied to hidden state
+      before matrix multiplication. The other one is based on original 1406.1078v1
+      and has the order reversed. The second variant is compatible with CuDNNGRU (GPU-only)
+      and allows inference on CPU. Thus it has separate biases for kernel and recurrent_kernel.
+      Use 'reset_after'=True and recurrent_activation='sigmoid'.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5040
+  type: group
+

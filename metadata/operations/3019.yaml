@@ -1,0 +1,83 @@
+id: 3019
+slug: apply-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-lightbulb
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3038
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 3039
+  slug: model
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 18
+    name: IRegressionModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 3040
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+translations:
+  pt:
+    locale: pt
+    name: Aplicar modelo
+    description: "Aplica um modelo de aprendizado de m\xE1quina aos dados"
+    label_format: None
+  en:
+    locale: en
+    name: Apply model
+    description: Apply a machine learning model to data
+    label_format: None
+platforms: []
+categories:
+- id: 8
+  type: group
+- id: 26
+  type: subgroup
+- id: 3001
+  type: technology
+

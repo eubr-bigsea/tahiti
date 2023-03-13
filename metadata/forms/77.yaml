@@ -1,0 +1,34 @@
+id: 77
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 176
+  name: filter
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: query_builder
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Filtro
+      help: Filtro
+  - en:
+      locale: en
+      label: Filter
+      help: Filter
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

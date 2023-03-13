@@ -1,0 +1,34 @@
+id: 63
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 133
+  name: shapefile
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: lookup
+  values_url: '`${LIMONERO_URL}/datasources?format=SHAPEFILE&simple=true&list=true&enabled=1`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Arquivo shapefile
+      help: Arquivo shapefile
+  - en:
+      locale: en
+      label: Shapefile
+      help: Shapefile
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

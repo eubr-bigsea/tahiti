@@ -1,0 +1,71 @@
+id: 127
+slug: sliding-window
+enabled: true
+type: TRANSFORMATION
+icon: fa-window-close-o
+css_class: None
+doc_link: None
+scripts:
+- id: 70
+  type: JS_CLIENT
+  enabled: true
+  body: repeatFromAlias(task, 'alias', 'window_size');
+ports:
+- id: 302
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 303
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Janela deslizante
+    description: Janela deslizante sobre vetor.
+    label_format: None
+  en:
+    locale: en
+    name: Sliding window
+    description: Sliding window over vector.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 7
+  type: group
+- id: 29
+  type: subgroup
+

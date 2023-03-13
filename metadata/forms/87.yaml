@@ -1,0 +1,76 @@
+id: 87
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 204
+  name: attributes
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo de entrada com dados indexados
+      help: Input attribute with indexed data
+  - en:
+      locale: en
+      label: Input attribute with indexed data
+      help: Input attribute with indexed data
+- id: 216
+  name: original_names
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) original(ais)
+      help: Atributo original
+  - en:
+      locale: en
+      label: Original attribute(s)
+      help: Original attribute
+- id: 205
+  name: alias
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo(s) de sa\xEDda"
+      help: "Atributo de sa\xEDda"
+  - en:
+      locale: en
+      label: Output attribute(s)
+      help: Output attribute
+translations:
+  pt:
+    locale: pt
+    name: None
+  en:
+    locale: en
+    name: None
+

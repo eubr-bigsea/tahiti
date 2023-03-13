@@ -1,0 +1,61 @@
+id: 5130
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5130
+  name: data_format
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: A string, one of channels_last (default) or channels_first. The ordering
+        of the dimensions in the inputs. The purpose of this argument is to preserve
+        weight ordering when switching a model from one data format to another. channels_last
+        corresponds to inputs with shape  (batch, ..., channels) while channels_first
+        corresponds to inputs with shape (batch, channels, ...). It defaults to the
+        image_data_format value found in your Keras config file at ~/.keras/keras.json.
+        If you never set it, then it will be "channels_last".
+- id: 5645
+  name: trainable
+  type: INTEGER
+  required: false
+  order: 1
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Trainable
+      help: Indicates whether the layer in the model is trainable.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

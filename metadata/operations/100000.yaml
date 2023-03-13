@@ -1,0 +1,69 @@
+id: 100000
+slug: demo::upper_case
+enabled: true
+type: ACTION
+icon: ''
+css_class: None
+doc_link: ''
+scripts:
+- id: 100000
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'output', false, 'output')
+ports:
+- id: 100000
+  slug: input
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: Dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: Input data
+      description: Input data
+- id: 100001
+  slug: output
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "Dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: Output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Caixa alta
+    description: "Converte um atributo para letras mai\xFAsculas"
+    label_format: None
+  en:
+    locale: en
+    name: Upper case
+    description: Convert an attribute to upper case
+    label_format: None
+platforms:
+- id: 100000
+  slug: demo
+categories:
+- id: 7
+  type: group
+- id: 30
+  type: subgroup
+

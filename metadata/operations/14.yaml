@@ -1,0 +1,47 @@
+id: 14
+slug: time-series
+enabled: false
+type: TRANSFORMATION
+icon: fa-calendar
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 38
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: Aggregated output data
+  - en:
+      locale: en
+      name: output data
+      description: Aggregated output data
+translations:
+  pt:
+    locale: pt
+    name: "S\xE9ries temporais"
+    description: "S\xE9ries temporais"
+    label_format: None
+  en:
+    locale: en
+    name: Time series
+    description: Time series
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 13
+  type: group
+

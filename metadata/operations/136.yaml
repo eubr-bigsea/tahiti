@@ -1,0 +1,47 @@
+id: 136
+slug: iframe
+enabled: true
+type: VISUALIZATION
+icon: ' '
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 319
+  slug: visualization
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+  - pt:
+      locale: pt
+      name: "visualiza\xE7\xE3o"
+      description: "Visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualization
+      description: Visualization
+translations:
+  pt:
+    locale: pt
+    name: Iframe HTML
+    description: "Usa um elemento HTML chamado iframe para embutir uma p\xE1gina externa\
+      \ no resultado."
+    label_format: None
+  en:
+    locale: en
+    name: HTML iframe
+    description: Uses a HTML element called iframe to embed an external page into
+      the result.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 15
+  type: group
+

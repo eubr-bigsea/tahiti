@@ -1,0 +1,89 @@
+id: 126
+slug: chi-sq-selector
+enabled: true
+type: TRANSFORMATION
+icon: fa-chart
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 299
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 300
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 301
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Seletor chi-square
+    description: "Seleciona features categ\xF3rias para serem usadas para predizer\
+      \ um r\xF3tulo categ\xF3rico. Mas as features devem ser convertidas para uma\
+      \ representa\xE7\xE3o num\xE9rica antes de usar esta opera\xE7\xE3o."
+    label_format: None
+  en:
+    locale: en
+    name: Chi-square selector
+    description: Selects categorical features to use for predicting a categorical
+      label. But features must be converted to a numerical representation before using
+      this operation.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 44
+  type: subgroup
+- id: 32
+  type: group
+

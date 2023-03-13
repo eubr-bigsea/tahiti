@@ -1,0 +1,160 @@
+id: 147
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 545
+  name: title
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo para o gr\xE1fico de bolhas."
+  - en:
+      locale: en
+      label: Title
+      help: Title for the bubble chart.
+- id: 546
+  name: x_axis_attribute
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo para o eixo X
+      help: Atributo usado para o eixo X.
+  - en:
+      locale: en
+      label: x-axis attribute
+      help: Attribute used for the x-axis.
+- id: 547
+  name: y_axis_attribute
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributos para o eixo Y
+      help: "Atributos usados para o eixo Y (cada um cria uma s\xE9rie)."
+  - en:
+      locale: en
+      label: y-axis attributes
+      help: Attributes used for the y-axis (each one creates a serie).
+- id: 548
+  name: size_attribute
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo para o tamanho
+      help: Atributo usado para o tamanho da bolha.
+  - en:
+      locale: en
+      label: Size attribute
+      help: Attribute used for the bubble size.
+- id: 549
+  name: color
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo para a cor
+      help: Atributo usado para a cor da bolha.
+  - en:
+      locale: en
+      label: Color attribute
+      help: Attribute used for the bubble color.
+- id: 550
+  name: x_title
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para o eixo x"
+      help: "T\xEDtulo para o eixo x."
+  - en:
+      locale: en
+      label: Title for x-axis
+      help: Title for the x-axis.
+- id: 551
+  name: y_title
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para o eixo y"
+      help: "T\xEDtulo para o eixo y."
+  - en:
+      locale: en
+      label: Title for y-axis
+      help: Title for the y-axis.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

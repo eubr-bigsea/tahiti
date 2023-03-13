@@ -1,0 +1,165 @@
+id: 5161
+enabled: true
+order: 6
+category: execution
+fields:
+- id: 5163
+  name: number_of_epochs
+  type: INTEGER
+  required: true
+  order: 1
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Number of epochs
+      help: Integer. Number of epochs to train the model. An epoch is an iteration
+        over the entire x and y data provided. Note that in conjunction with initial_epoch,  epochs
+        is to be understood as "final epoch". The model is not trained for a number
+        of iterations given by epochs, but merely until the epoch of index epochs
+        is reached.
+- id: 5164
+  name: batch_size
+  type: INTEGER
+  required: true
+  order: 2
+  default: '32'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Batch size
+      help: Integer or None. Number of samples per gradient update. If unspecified,
+        batch_size will default to 32.
+- id: 5161
+  name: loss
+  type: TEXT
+  required: false
+  order: 3
+  default: mean_squared_logarithmic_error
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "squared_hinge", "key": "squared_hinge"}, {"value": "hinge",
+    "key": "hinge"}, {"value": "categorical_hinge", "key": "categorical_hinge"}, {"value":
+    "logcosh", "key": "logcosh"}, {"value": "categorical_crossentropy", "key": "categorical_crossentropy"},
+    {"value": "sparse_categorical_crossentropy", "key": "sparse_categorical_crossentropy"},
+    {"value": "binary_crossentropy", "key": "binary_crossentropy"}, {"value": "kullback_leibler_divergence",
+    "key": "kullback_leibler_divergence"}, {"value": "poisson", "key": "poisson"},
+    {"value": "cosine_proximity", "key": "cosine_proximity"}, {"value": "mean_squared_error",
+    "key": "mean_squared_error"}, {"value": "mean_absolute_error", "key": "mean_absolute_error"},
+    {"value": "mean_absolute_percentage_error", "key": "mean_absolute_percentage_error"},
+    {"value": "mean_squared_logarithmic_error", "key": "mean_squared_logarithmic_error"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Loss function
+      help: A loss function (or objective function, or optimization score function)
+        is one of the two parameters required to compile a model.
+- id: 5162
+  name: optimizer
+  type: TEXT
+  required: false
+  order: 4
+  default: SGD
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "sgd", "key": "sgd"}, {"value": "rmsprop", "key": "rmsprop"},
+    {"value": "adagrad", "key": "adagrad"}, {"value": "adadelta", "key": "adadelta"},
+    {"value": "adam", "key": "adam"}, {"value": "adamax", "key": "adamax"}, {"value":
+    "nadam", "key": "nadam"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Optimizer function
+      help: An optimizer is one of the two arguments required for compiling a Keras
+        model.
+- id: 5165
+  name: metrics
+  type: TEXT
+  required: true
+  order: 5
+  default: Categorical Accuracy
+  suggested_widget: select2
+  values_url: None
+  values: '[{"key": "acc", "value": "Binary Accuracy"}, {"key": "acc", "value": "Categorical
+    Accuracy"}, {"key": "sparse_categorical_accuracy", "value": "Sparse Categorical
+    Accuracy"}, {"key": "top_k_categorical_accuracy", "value": "Top k Categorical
+    Accuracy"}, {"key": "sparse_top_k_categorical_accuracy", "value": "Sparse Top
+    k Categorical Accuracy"}, {"key": "mse", "value": "Mean Squared Error"}, {"key":
+    "mae", "value": "Mean Absolute Error"}, {"key": "mape", "value": "Mean Absolute
+    Percentage Error"}, {"key": "cosine", "value": "Cosine Proximity"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Metrics
+      help: A metric is a function that is used to judge the performance of your model.
+- id: 5166
+  name: k
+  type: INTEGER
+  required: false
+  order: 6
+  default: '5'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: K
+      help: K is a parameter required for the metrics related to the Top K Categorical
+        Accuracy functions.
+translations:
+  pt:
+    locale: pt
+    name: "Hiperpar\xE2metros"
+  en:
+    locale: en
+    name: Hyperparameters
+

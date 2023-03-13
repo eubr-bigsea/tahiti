@@ -1,0 +1,304 @@
+id: 4001
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4001
+  name: tol
+  type: FLOAT
+  required: false
+  order: 1
+  default: '0.0001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tolerancia
+      help: "Toler\xE2ncia para crit\xE9rios de parada."
+  - en:
+      locale: en
+      label: Tolerance
+      help: Tolerance for stopping criteria.
+- id: 4002
+  name: regularization
+  type: FLOAT
+  required: false
+  order: 2
+  default: '1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: C
+      help: "For\xE7a de regulariza\xE7\xE3o inversa. Como no SVM, valores menores\
+        \ especificam uma regulariza\xE7\xE3o mais forte."
+  - en:
+      locale: en
+      label: C
+      help: Inverse of regularization strength. Like in support vector machines, smaller
+        values specify stronger regularization.
+- id: 4003
+  name: random_state
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estado Aleat\xF3rio"
+      help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
+        m utilizada para reprodutibilidade."
+  - en:
+      locale: en
+      label: Random State
+      help: Seed used by the random number generator. Also used for reproducibility.
+- id: 4004
+  name: solver
+  type: TEXT
+  required: false
+  order: 4
+  default: lbfgs
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "newton-cg", "value": "newton-cg"}, {"key": "lbfgs", "value":
+    "lbfgs"}, {"key": "liblinear", "value": "liblinear"}, {"key": "sag", "value":
+    "sag"}, {"key": "saga", "value": "saga"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Solver
+      help: "A converg\xEAncia r\xE1pida de sag e saga \xE9 garantida apenas em atributos\
+        \ com aproximadamente a mesma escala."
+  - en:
+      locale: en
+      label: Solver
+      help: Note that sag and saga fast convergence is only guaranteed on features
+        with approximately the same scale.
+- id: 4005
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 5
+  default: '100'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
+      help: 'Apenas para solvers: newton-cg, sag e lbfgs.'
+  - en:
+      locale: en
+      label: Maximum number of iterations
+      help: Useful only for the newton-cg, sag and lbfgs solvers.
+- id: 4231
+  name: penalty
+  type: TEXT
+  required: false
+  order: 6
+  default: l2
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "l1", "value": "l1"}, {"key": "l2", "value": "l2"}, {"key": "elasticnet",
+    "value": "elasticnet"}, {"key": "none", "value": "none"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Penalidade
+      help: "Usado para especificar a norma da penaliza\xE7\xE3o."
+  - en:
+      locale: en
+      label: Penalty
+      help: Used to specify the norm used in the penalization.
+- id: 4232
+  name: dual
+  type: INTEGER
+  required: false
+  order: 7
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Dual
+      help: "Formula\xE7\xE3o dual ou primal."
+  - en:
+      locale: en
+      label: Dual
+      help: Dual or primal formulation.
+- id: 4233
+  name: fit_intercept
+  type: INTEGER
+  required: false
+  order: 8
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.solver.internalValue === "liblinear"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Considerar intercepto
+      help: "Especificar se uma constante (intecerpto ou vi\xE9s) deve ser adicionada\
+        \ na fun\xE7\xE3o de decis\xE3o."
+  - en:
+      locale: en
+      label: Fit intercept
+      help: Specifies if a constant (a.k.a. bias or intercept) should be added to
+        the decision function.
+- id: 4234
+  name: intercept_scaling
+  type: DECIMAL
+  required: false
+  order: 9
+  default: '1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.solver.internalValue === "liblinear"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Escala do intercepto
+      help: Usado apenas se o Solver "liblinear" for utilizado com o atributo "Considerar
+        intercepto" habilitado.
+  - en:
+      locale: en
+      label: Intercept scaling
+      help: Useful only when the solver "liblinear" is used and "Fit intercept" is
+        set to True.
+- id: 4236
+  name: multi_class
+  type: TEXT
+  required: false
+  order: 11
+  default: ovr
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "ovr", "value": "ovr"}, {"key": "multinomial", "value": "multinomial"},
+    {"key": "auto", "value": "auto"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Mutiplas classes
+      help: "Se a op\xE7\xE3o selecionada \xE9 \"ovr\", ent\xE3o um problema bin\xE1\
+        rio \xE9 moldado para cada label. Para o atributo \"multinomial\" a miniza\xE7\
+        \xE3o de perda \xE9 o ajuste de perda multinomial das fun\xE7\xF5es de probabilidade,\
+        \ mesmo com atributos bin\xE1rios."
+  - en:
+      locale: en
+      label: Multi class
+      help: If the option chosen is "ovr", then a binary problem is fit for each label.
+        For "multinomial" the loss minimised is the multinomial loss fit across the
+        entire probability distribution, even when the data is binary.
+- id: 4295
+  name: bootstrap
+  type: INTEGER
+  required: false
+  order: 12
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Bootstrap
+      help: "Utilizar amostras de um bootstrap para gerar as \xE1rvores."
+  - en:
+      locale: en
+      label: Bootstrap
+      help: Whether bootstrap samples are used when building trees.
+- id: 4238
+  name: l1_ratio
+  type: DECIMAL
+  required: false
+  order: 13
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.penalty.internalValue === "elasticnet"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: L1 Ratio
+      help: "Par\xE2metro do Elastic-Net, o valor deve estar entre 0 e 1."
+  - en:
+      locale: en
+      label: L1 Ratio
+      help: The Elastic-Net mixing parameter, with l1_ratio between 0 and 1.
+- id: 4296
+  name: oob_score
+  type: INTEGER
+  required: false
+  order: 13
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Out of bag
+      help: "Usar amostras \"out-of-bag\" para estimar a acur\xE1cia do generalizador"
+  - en:
+      locale: en
+      label: Out of bag
+      help: Whether to use out-of-bag samples to estimate the generalization accuracy
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

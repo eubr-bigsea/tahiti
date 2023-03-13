@@ -1,0 +1,49 @@
+id: 3006
+slug: svm-classification
+enabled: true
+type: TRANSFORMATION
+icon: fa-tag
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3009
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
+  - en:
+      locale: en
+      name: algorithm
+      description: Untrained classification model
+translations:
+  pt:
+    locale: pt
+    name: Classificador SVM
+    description: Usa um classificador SVM
+    label_format: None
+  en:
+    locale: en
+    name: SVM Classification
+    description: Uses a SVM Classifier
+    label_format: None
+platforms: []
+categories:
+- id: 8
+  type: group
+- id: 18
+  type: subgroup
+- id: 3001
+  type: technology
+- id: 1500
+  type: classification
+

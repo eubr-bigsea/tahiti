@@ -1,0 +1,76 @@
+id: 75
+slug: one-hot-encoder
+enabled: true
+type: TRANSFORMATION
+icon: fa-qrcode
+css_class: None
+doc_link: None
+scripts:
+- id: 25
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_onehotenc');
+ports:
+- id: 165
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 166
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "Codifica\xE7\xE3o distribu\xEDda (One-Hot encoder)"
+    description: "One Hot encoding \xE9 uma transforma\xE7\xE3o que fazemos nos dados\
+      \ para representarmos uma vari\xE1vel categ\xF3rica de forma bin\xE1ria (indica\
+      \ presen\xE7a ou aus\xEAncia de um valor)."
+    label_format: None
+  en:
+    locale: en
+    name: One-hot encoder
+    description: One hot encoding transforms categorical features to a format that
+      works better with classification and regression algorithms.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 33
+  type: subgroup
+

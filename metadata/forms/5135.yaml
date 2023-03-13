@@ -1,0 +1,34 @@
+id: 5135
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5135
+  name: n
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: N
+      help: Repeats the input n times.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

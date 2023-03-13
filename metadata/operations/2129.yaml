@@ -1,0 +1,28 @@
+id: 2129
+slug: truncate-text
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Text
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Truncar texto
+    description: "Trunca um texto at\xE9 um limite especificado de caracteres."
+    label_format: <b>Truncar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>
+      para tamanho ${this.characters.value}
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

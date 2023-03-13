@@ -1,0 +1,95 @@
+id: 40
+slug: feature-indexer
+enabled: true
+type: TRANSFORMATION
+icon: fa-list-ol
+css_class: None
+doc_link: None
+scripts:
+- id: 15
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_indexed');
+ports:
+- id: 85
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Conjunto de dados com atributos a serem indexados
+  - en:
+      locale: en
+      name: input data
+      description: Data set with feature columns to be indexed
+- id: 86
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda com nova coluna indexada"
+  - en:
+      locale: en
+      name: output data
+      description: Output data with new indexed column
+- id: 89
+  slug: models
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 4
+    name: IndexerModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelos
+      description: "Modelo de indexa\xE7\xE3o gerado"
+  - en:
+      locale: en
+      name: models
+      description: Indexer model generated
+translations:
+  pt:
+    locale: pt
+    name: "Converter categ\xF3rico para num\xE9rico"
+    description: "Indexa uma feature codificando o texto da coluna como uma coluna\
+      \ contendo os \xEDndices para os r\xF3tulos ou codificando uma coluna do tipo\
+      \ Vector como uma coluna de \xEDndices para esses vetores"
+    label_format: None
+  en:
+    locale: en
+    name: Convert categorical to numeric
+    description: Indexes a feature by encoding a string column as a column containing
+      indexes for labels (String type) or by encoding a Vector column as a column
+      containing indexes for these vectors.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 33
+  type: subgroup
+

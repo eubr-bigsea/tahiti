@@ -1,0 +1,126 @@
+id: 4032
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4327
+  name: features
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) previsor(es)
+      help: Atributo(s) previsor(es).
+  - en:
+      locale: en
+      label: Features
+      help: Features.
+- id: 4328
+  name: prediction
+  type: TEXT
+  required: false
+  order: 2
+  default: clusters
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com a predi\xE7\xE3o (novo)"
+      help: "Atributo com a predi\xE7\xE3o (novo)."
+  - en:
+      locale: en
+      label: Prediction (new attribute)
+      help: Prediction (new attribute).
+- id: 4329
+  name: eps
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.5'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Dist\xE2ncia m\xE1xima"
+      help: "A dist\xE2ncia m\xE1xima entre duas amostras para uma ser considerada\
+        \ como na vizinhan\xE7a da outra."
+  - en:
+      locale: en
+      label: Max. distance
+      help: The maximum distance between two samples for one to be considered as in
+        the neighborhood of the other.
+- id: 4330
+  name: min_samples
+  type: INTEGER
+  required: false
+  order: 4
+  default: '5'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero de amostras"
+      help: "O n\xFAmero de amostras (ou peso total) em uma vizinhan\xE7a para um\
+        \ ponto a ser considerado como um ponto central."
+  - en:
+      locale: en
+      label: Number of samples
+      help: The number of samples (or total weight) in a neighborhood for a point
+        to be considered as a core point.
+- id: 4331
+  name: metric
+  type: TEXT
+  required: false
+  order: 5
+  default: euclidean
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "euclidean", "value": "euclidean"}, {"key": "cityblock", "value":
+    "cityblock"}, {"key": "cosine", "value": "cosine"}, {"key": "l1", "value": "l1"},
+    {"key": "l2", "value": "l2"}, {"key": "manhattan", "value": "manhattan"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica"
+      help: "A m\xE9trica a ser usada ao calcular a dist\xE2ncia entre inst\xE2ncias\
+        \ em uma matriz de features."
+  - en:
+      locale: en
+      label: Metric
+      help: The metric to use when calculating distance between instances in a feature
+        array.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

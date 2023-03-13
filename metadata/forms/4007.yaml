@@ -1,0 +1,187 @@
+id: 4007
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4033
+  name: alpha
+  type: FLOAT
+  required: false
+  order: 4
+  default: '1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Alpha
+      help: "Constante que multiplica o termo de regulariza\xE7\xE3o."
+  - en:
+      locale: en
+      label: Alpha
+      help: Constant that multiplies the penalty terms.
+- id: 4034
+  name: l1_ratio
+  type: FLOAT
+  required: false
+  order: 5
+  default: '0.5'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Mix. para ElasticNet
+      help: "O par\xE2metro de mistura Elastic Net, com 0<=l1_ratio<=1. l1_ratio=0\
+        \ corresponde a penalidade L2, l1_ratio=1 a L1."
+  - en:
+      locale: en
+      label: L1 ratio
+      help: The ElasticNet mixing parameter, with 0 <= l1_ratio <= 1. For l1_ratio
+        = 0 the penalty is an L2 penalty. For l1_ratio = 1 it is an L1 penalty. For
+        0 < l1_ratio < 1, the penalty is a combination of L1 and L2.
+- id: 4035
+  name: normalize
+  type: INTEGER
+  required: false
+  order: 6
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Normalizar
+      help: "Se os regressores ser\xE3o normalizados antes da regress\xE3o."
+  - en:
+      locale: en
+      label: Normalize
+      help: If True, the regressors will be normalized before regression.
+- id: 4036
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 7
+  default: '1000'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es."
+  - en:
+      locale: en
+      label: Maximum number of iterations
+      help: The maximum number of iterations.
+- id: 4037
+  name: tol
+  type: FLOAT
+  required: false
+  order: 8
+  default: '0.0001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tolerancia
+      help: "Toler\xE2ncia para crit\xE9rios de parada."
+  - en:
+      locale: en
+      label: Tolerance
+      help: 'The tolerance for the optimization: if the updates are smaller than tol,
+        the optimization code checks the dual gap for optimality and continues until
+        it is smaller than tol.'
+- id: 4038
+  name: random_state
+  type: INTEGER
+  required: false
+  order: 9
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estado Aleat\xF3rio"
+      help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
+        m utilizada para reprodutibilidade."
+  - en:
+      locale: en
+      label: Random State
+      help: Seed used by the random number generator. Also used for reproducibility.
+- id: 4342
+  name: fit_intercept
+  type: INTEGER
+  required: false
+  order: 10
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Considerar intercepto
+      help: "Estimar, ou n\xE3o o intercepto."
+  - en:
+      locale: en
+      label: Fit intercept
+      help: Whether the intercept should be estimated or not.
+- id: 4343
+  name: positive
+  type: INTEGER
+  required: false
+  order: 11
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Coeficientes positivos
+      help: "For\xE7a os coeficientes a serem positivos."
+  - en:
+      locale: en
+      label: Positive coefficients
+      help: Forces the coefficients to be positive.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

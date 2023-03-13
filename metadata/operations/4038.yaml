@@ -1,0 +1,87 @@
+id: 4038
+slug: generalized-linear-regression
+enabled: true
+type: ACTION
+icon: ''
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4080
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4081
+  slug: output data
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 4082
+  slug: model
+  type: OUTPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  translations:
+  - pt:
+      locale: pt
+      name: Modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+translations:
+  pt:
+    locale: pt
+    name: "Regress\xE3o Linear Generalizada"
+    description: ''
+    label_format: None
+  en:
+    locale: en
+    name: Generalized Linear Regression
+    description: Generalized Linear Regression fits a linear model with coefficients  to
+      minimize the residual sum of squares between the observed targets in the dataset,
+      and the targets predicted by the linear approximation.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 8
+  type: group
+- id: 21
+  type: subgroup
+- id: 1501
+  type: regression
+
