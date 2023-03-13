@@ -1,0 +1,135 @@
+id: 144
+slug: api-call
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts:
+- id: 100182
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100184
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100185
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100186
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100187
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100188
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100189
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100190
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100191
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100192
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100193
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100194
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100195
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100196
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100197
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100198
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100199
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+- id: 100200
+  type: JS_CLIENT
+  enabled: true
+  body: ''
+ports:
+- id: 352
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: None
+      description: None
+- id: 353
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: None
+      description: None
+translations:
+  pt:
+    locale: pt
+    name: "Chamada \xE0 API"
+    description: Permite realizar uma chamada a uma API do tipo REST.
+    label_format: None
+  en:
+    locale: en
+    name: API call
+    description: Allows call a REST compatible API.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 41
+  type: group
+

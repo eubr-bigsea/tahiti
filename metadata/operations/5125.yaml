@@ -1,0 +1,45 @@
+id: 5125
+slug: file-reader
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5407
+  slug: python code
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: File reader
+    description: Provides access to any file type.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5065
+  type: group
+

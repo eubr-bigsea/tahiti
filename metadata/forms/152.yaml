@@ -1,0 +1,167 @@
+id: 152
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 575
+  name: number_of_clusters
+  type: INTEGER
+  required: true
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Quantidade de agrupamentos (K)
+      help: Quantidade de agrupamentos (K)
+  - en:
+      locale: en
+      label: Number of clusters (K)
+      help: Number of clusters (K)
+- id: 576
+  name: max_iterations
+  type: INTEGER
+  required: true
+  order: 4
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
+  - en:
+      locale: en
+      label: Max iterations
+      help: Max iterations
+- id: 577
+  name: similarity
+  type: TEXT
+  required: false
+  order: 5
+  default: hamming
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "frequency", "value": "Frequency-based dissimilarity"}, {"key":
+    "hamming", "value": "Hamming distance"}, {"key": "all_frequency", "value": "All
+    Frequency-based dissimilarity for modes."}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fun\xE7\xE3o de dissimilaridade"
+      help: "Fun\xE7\xE3o de dissimilaridade"
+  - en:
+      locale: en
+      label: Dissimilarity function
+      help: Distance function
+- id: 578
+  name: metamodessimilarity
+  type: TEXT
+  required: false
+  order: 6
+  default: hamming
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "frequency", "value": "Frequency-based dissimilarity"}, {"key":
+    "hamming", "value": "Hamming distance"}, {"key": "all_frequency", "value": "All
+    Frequency-based dissimilarity for modes."}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fun\xE7\xE3o de dissimilaridade para os Metamodes"
+      help: "Fun\xE7\xE3o de dissimilaridade para os metamodes"
+  - en:
+      locale: en
+      label: Dissimilarity function for Metamodes
+      help: Distance function for Metamodes
+- id: 579
+  name: max_local_iterations
+  type: INTEGER
+  required: false
+  order: 7
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1x. de itera\xE7\xF5es na gera\xE7\xE3o de Metamodes"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es na segunda etapa (gera\xE7\xE3\
+        o de Metamodes)"
+  - en:
+      locale: en
+      label: Max iterations in Metamodes generation
+      help: Maximum iterations in second step (Metamodes generation)
+- id: 580
+  name: seed
+  type: INTEGER
+  required: false
+  order: 8
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Semente
+      help: "Semente aleat\xF3ria"
+  - en:
+      locale: en
+      label: Seed
+      help: Seed
+- id: 583
+  name: fragmentation
+  type: INTEGER
+  required: false
+  order: 9
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Reduzir a fragmenta\xE7\xE3o"
+      help: "Se ativado, ir\xE1 reduzir a paraleliza\xE7\xE3o em favor da capacidade\
+        \ de lidar com pequenas bases"
+  - en:
+      locale: en
+      label: Reduce fragmentation
+      help: If enabled, it will reduce the parallelization in favor of the ability
+        to handle small databases.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

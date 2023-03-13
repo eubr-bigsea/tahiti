@@ -1,0 +1,36 @@
+id: 5134
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5134
+  name: dims
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Dimensions
+      help: Tuple of integers. Permutation pattern, does not include the samples dimension.
+        Indexing starts at 1. For instance, (2, 1) permutes the first and second dimension
+        of the input.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

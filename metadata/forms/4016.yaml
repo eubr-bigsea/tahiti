@@ -1,0 +1,125 @@
+id: 4016
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4080
+  name: attributes
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Attributo
+      help: Campo com as palavras para serem convertidas.
+  - en:
+      locale: en
+      label: Attribute
+      help: Field with the words to converter.
+- id: 4081
+  name: alias
+  type: TEXT
+  required: false
+  order: 2
+  default: wordsvector
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Alias
+      help: Nova coluna.
+  - en:
+      locale: en
+      label: Alias
+      help: New column name.
+- id: 4082
+  name: type
+  type: TEXT
+  required: true
+  order: 3
+  default: count
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Count term frequency", "value": "Count term frequency", "key":
+    "count", "pt": "Contar a frequencia do termo"}, {"en": "Term Frequency Inverse
+    Document Frequency (TF-IDF)", "value": "tf-idf", "key": "TF-IDF", "pt": "TF-IDF"},
+    {"en": "Use word2vec algorithm", "value": "Use Word2vec algorithm", "key": "word2vec",
+    "pt": "Usar o algoritmo Word2vec"}, {"en": "Map the sequence of terms to their
+    TF using hashing trick", "value": "Map the sequence of terms to their TF using
+    hashing trick", "key": "hashing_tf", "pt": "Mapear a sequencia de termos para
+    TF (frequencia do termo) usando hashing"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tipo
+      help: Tipo do conversor.
+  - en:
+      locale: en
+      label: Type
+      help: Type of conversor.
+- id: 4083
+  name: vocab_size
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tamanho do Vocabulario
+      help: "Se houver mais palavras \xFAnicas do que isso, podar as menos frequentes."
+  - en:
+      locale: en
+      label: Vocabulary size
+      help: If there are more unique words than this, then prune the infrequent ones.
+- id: 4084
+  name: minimum_df
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Frequ\xEAncia m\xEDnima nos documentos (DF)"
+      help: "Ignora todas as palavras com frequ\xEAncia total inferior a esta."
+  - en:
+      locale: en
+      label: Minimum frequency in docs (DF)
+      help: Ignores all words with total frequency lower than this.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

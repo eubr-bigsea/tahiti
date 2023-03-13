@@ -1,0 +1,83 @@
+id: 5097
+slug: minimum
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5198
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5297
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5373
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Minimum
+    description: Layer that computes the minimum (element-wise) a list of inputs.
+      It takes as input a list of tensors, all of the same shape, and returns a single
+      tensor (also of the same shape).
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5062
+  type: group
+

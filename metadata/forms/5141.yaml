@@ -1,0 +1,34 @@
+id: 5141
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5141
+  name: mask_value
+  type: DECIMAL
+  required: true
+  order: 2
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Mask value
+      help: Masks a sequence by using a mask_value to skip timesteps.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

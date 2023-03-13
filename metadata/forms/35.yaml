@@ -1,0 +1,40 @@
+id: 35
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 23
+  name: attributes
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-function
+  values_url: None
+  values: "{\r\n    \"functions\":\r\n\t[\r\n\t  {\"key\": \"asc\", \"value\": \"\
+    Ascending\", \"help\": \"Ascending order\"},\r\n\t  {\"key\": \"desc\", \"value\"\
+    : \"Descending\", \"help\": \"Descending order\"}\r\n    ],\r\n    \"options\"\
+    : {\r\n        \"title\": \"Sort operation\",\r\n        \"description\": \"Sort\
+    \ a data source by a set of attributes\",\r\n        \"show_alias\": false\r\n\
+    \    }\r\n}"
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s)
+      help: "Selecione um ou mais atributos a serem usados como crit\xE9rio de ordena\xE7\
+        \xE3o. A ordem dos atributos faz diferen\xE7a."
+  - en:
+      locale: en
+      label: Attribute(s)
+      help: Select one or more attributes to be used as sort criteria. Order matters.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

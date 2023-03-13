@@ -1,0 +1,41 @@
+id: 5062
+slug: optimizer
+enabled: true
+type: ACTION
+icon: ''
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 5349
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Optimizer
+    description: ''
+    label_format: None
+platforms: []
+categories: []
+

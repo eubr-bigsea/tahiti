@@ -1,0 +1,38 @@
+id: 2155
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2188
+  name: order_by
+  type: TEXT
+  required: true
+  order: 3
+  default: asc
+  suggested_widget: attribute-function
+  values_url: None
+  values: '{"functions": [{"key": "asc", "value": "Ascending", "help": {"pt": "Ordena
+    valores de forma crescente", "en": "Sort in ascending order"}}, {"key": "desc",
+    "value": "Descending", "help": {"pt": "Ordena valores de forma decrescente", "en":
+    "Sort in descending order"}}], "options": {"title": "Sort operation", "description":
+    "Sort a data source by a set of attributes", "show_alias": false}}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es de ordena\xE7\xE3o"
+      help: "Op\xE7\xF5es de ordena\xE7\xE3o"
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

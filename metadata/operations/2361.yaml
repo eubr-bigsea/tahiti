@@ -1,0 +1,29 @@
+id: 2361
+slug: random-forest-classifier
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Classificador Random Forest
+    description: Classificador Random Forest.
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2113
+  type: model-builder
+- id: 4
+  type: algorithm
+

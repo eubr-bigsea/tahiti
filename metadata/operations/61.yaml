@@ -1,0 +1,89 @@
+id: 61
+slug: decision-tree-regression-model
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts:
+- id: 100176
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "prediction", false, null);
+- id: 100177
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "prediction", false, null);
+ports:
+- id: 349
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data.
+- id: 350
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data.
+- id: 351
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo.
+  - en:
+      locale: en
+      name: model
+      description: Model.
+translations:
+  pt:
+    locale: pt
+    name: "Regressor \xE1rvore de decis\xE3o"
+    description: "Regressor \xE1rvore de decis\xE3o"
+    label_format: None
+  en:
+    locale: en
+    name: Decision tree regressor
+    description: Decision tree regressor
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 8
+  type: group
+

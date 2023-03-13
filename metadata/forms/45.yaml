@@ -1,0 +1,55 @@
+id: 45
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 194
+  name: column_names
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributos (vazio significa todos os atributos da fonte de dados)
+      help: Atributos (vazio significa todos os atributos da fonte de dados)
+  - en:
+      locale: en
+      label: Attributes (empty = all attributes from data source)
+      help: Attributes (empty = all attributes from data source)
+- id: 195
+  name: title
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo"
+  - en:
+      locale: en
+      label: Title
+      help: Title
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

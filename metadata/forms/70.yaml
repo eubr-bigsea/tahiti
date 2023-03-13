@@ -1,0 +1,118 @@
+id: 70
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 154
+  name: latitude
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Latitude
+      help: Latitude
+  - en:
+      locale: en
+      label: Latitude
+      help: Latitude
+- id: 167
+  name: longitude
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Longitude
+      help: Longitude
+  - en:
+      locale: en
+      label: Longitude
+      help: Longitude
+- id: 155
+  name: polygon
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o pol\xEDgono nos dados geo"
+      help: "Atributo com o pol\xEDgono nos dados geo"
+  - en:
+      locale: en
+      label: Polygon attribute in geo data
+      help: Polygon attribute in geo data
+- id: 168
+  name: polygon_attributes
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributos a recuperar do shapefile
+      help: Atributos a recuperar do shapefile
+  - en:
+      locale: en
+      label: Attributes to retrieve from shapefile
+      help: Attributes to retrieve from shapefile
+- id: 169
+  name: alias
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nomes para atributos do shapefile
+      help: Nomes para atributos do shapefile
+  - en:
+      locale: en
+      label: Alias for shapefile attributes
+      help: Alias for shapefile attributes
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,81 @@
+id: 5086
+slug: zero-padding-1d
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5186
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5286
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5363
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: ZeroPadding1D
+    description: Zero-padding layer for 1D input (e.g. temporal sequence).
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5020
+  type: group
+

@@ -1,0 +1,55 @@
+id: 47
+slug: perceptron-classifier
+enabled: true
+type: TRANSFORMATION
+icon: fa-angle-double-down
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 104
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+translations:
+  pt:
+    locale: pt
+    name: Perceptron
+    description: 'Classifier trainer based on the Multilayer Perceptron. Each layer
+      has sigmoid activation function, output layer has softmax. Number of inputs
+      has to be equal to the size of feature vectors. Number of '
+    label_format: None
+  en:
+    locale: en
+    name: Perceptron
+    description: 'Classifier trainer based on the Multilayer Perceptron. Each layer
+      has sigmoid activation function, output layer has softmax. Number of inputs
+      has to be equal to the size of feature vectors. Number of '
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 4
+  type: algorithm
+- id: 18
+  type: subgroup
+- id: 8
+  type: group
+

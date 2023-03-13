@@ -1,0 +1,76 @@
+id: 4021
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4105
+  name: features
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) previsor(es)
+      help: Atributo(s) previsor(es)
+  - en:
+      locale: en
+      label: Features
+      help: Features
+- id: 4106
+  name: label
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o r\xF3tulo"
+      help: "Atributo com o r\xF3tulo"
+  - en:
+      locale: en
+      label: Label attribute
+      help: Label attribute
+- id: 4107
+  name: prediction
+  type: TEXT
+  required: false
+  order: 3
+  default: prediction
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com a predi\xE7\xE3o (novo)"
+      help: "Atributo usado para predi\xE7\xE3o (novo)"
+  - en:
+      locale: en
+      label: Prediction attribute (new)
+      help: Prediction attribute (new)
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

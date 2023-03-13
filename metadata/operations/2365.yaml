@@ -1,0 +1,27 @@
+id: 2365
+slug: isotonic-regression
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Regress\xE3o Isot\xF4nica"
+    description: "Regress\xE3o isot\xF4nica."
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2113
+  type: model-builder
+

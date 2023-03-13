@@ -1,0 +1,138 @@
+id: 2401
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2200
+  name: task_type
+  type: TEXT
+  required: true
+  order: 0
+  default: binary-classification
+  suggested_widget: lookup
+  values_url: None
+  values: '[{"key": "clustering", "pt": "Agrupamento", "en": "Clustering"}, {"key":
+    "binary-classification", "pt": "Classifica\u00e7\u00e3o bin\u00e1ria", "en": "Classification
+    bin\u00e1ria"}, {"key": "multiclass-classification", "pt": "Classifica\u00e7\u00e3o
+    multiclasse", "en": "Classification multiclasse"}, {"key": "regression", "pt":
+    "Regress\u00e3o", "en": "Regression"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica"
+      help: "M\xE9trica."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2209
+  name: bin_metric
+  type: TEXT
+  required: true
+  order: 2
+  default: areaUnderROC
+  suggested_widget: features
+  values_url: None
+  values: '[{"key": "areaUnderROC", "value": "Area under ROC curve", "en": "Area under
+    ROC curve", "pt": "\u00c1rea sob a curva ROC"}, {"key": "areaUnderPR", "value":
+    "Area under precision-recall curve", "en": "Area under precision-recall curve",
+    "pt": "\u00c1rea sobre a curva de precis\u00e3o-revoca\u00e7\u00e3o"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica"
+      help: "M\xE9trica"
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2210
+  name: multi_metric
+  type: TEXT
+  required: true
+  order: 2
+  default: accuracy
+  suggested_widget: features
+  values_url: None
+  values: '[{"key": "f1", "value": "F1 score", "en": "F1 score", "pt": "M\u00e9trica
+    F1"}, {"key": "weightedPrecision", "value": "Weighted precision", "en": "Weighted
+    precision", "pt": "Precis\u00e3o ponderada"}, {"key": "weightedRecall", "value":
+    "Weighted recall", "en": "Weighted recall", "pt": "Revoca\u00e7\u00e3o ponderada"},
+    {"key": "accuracy", "value": "Accuracy", "en": "Accuracy", "pt": "Acur\u00e1cia"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica"
+      help: "M\xE9trica"
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2211
+  name: reg_metric
+  type: TEXT
+  required: true
+  order: 2
+  default: rmse
+  suggested_widget: features
+  values_url: None
+  values: '[{"key": "rmse", "value": "Root mean squared error", "en": "Root mean squared
+    error", "pt": "Ra\u00edz do erro quadr\u00e1tico m\u00e9dio"}, {"key": "mse",
+    "value": "Mean squared error", "en": "Mean squared error", "pt": "Erro quadr\u00e1tico
+    m\u00e9dio"}, {"key": "mae", "value": "Mean absolute error", "en": "Mean absolute
+    error", "pt": "Erro absoluto m\u00e9dio"}, {"key": "mape", "value": "Mean absolute
+    percentage error", "en": "Mean absolute percentage error", "pt": "M\u00e9dia Percentual
+    Absoluta do Erro"}, {"key": "r2", "value": "Coefficient of determination R2",
+    "en": "Coefficient of determination R2", "pt": "Coeficiente de determina\u00e7\u00e3o
+    (R2)"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica"
+      help: "M\xE9trica"
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2212
+  name: clust_metric
+  type: TEXT
+  required: true
+  order: 2
+  default: rmse
+  suggested_widget: features
+  values_url: None
+  values: '[{"key": "silhouette", "value": "Silhouette", "en": "Silhouette", "pt":
+    "Silhouette"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica"
+      help: "M\xE9trica"
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

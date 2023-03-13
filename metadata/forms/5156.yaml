@@ -1,0 +1,104 @@
+id: 5156
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5595
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5358
+  name: size_up_sampling
+  type: TEXT
+  required: true
+  order: 1
+  default: (2, 2)
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Size
+      help: Int, or tuple of 2 integers. The upsampling factors for rows and columns.
+- id: 5359
+  name: data_format
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
+    "key": "channels_first"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: A string, one of "channels_last" or "channels_first". The ordering of
+        the dimensions in the inputs.  "channels_last" corresponds to inputs with
+        shape  (batch, height, width, channels) while "channels_first" corresponds
+        to inputs with shape  (batch, channels, height, width). It defaults to the
+        image_data_format value found in your Keras config file at ~/.keras/keras.json.
+        If you never set it, then it will be "channels_last".
+- id: 5360
+  name: interpolation
+  type: TEXT
+  required: false
+  order: 3
+  default: nearest
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "nearest", "key": "nearest"}, {"value": "bilinear", "key": "bilinear"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Interpolation
+      help: A string, one of nearest or bilinear. Note that CNTK does not support
+        yet the bilinear upscaling and that with Theano, only size=(2, 2) is possible.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,67 @@
+id: 4045
+slug: cartographic-projection
+enabled: true
+type: TRANSFORMATION
+icon: fa-globe-stand
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4098
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4099
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "Conversor de proje\xE7\xF5es cartogr\xE1ficas"
+    description: "Converte diferentes proje\xE7\xF5es cartograficas entre si."
+    label_format: None
+  en:
+    locale: en
+    name: Cartographic projections converter
+    description: Converts different cartographic projections to each other.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 4001
+  type: technology
+- id: 41
+  type: group
+- id: 42
+  type: subgroup
+

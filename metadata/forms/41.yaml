@@ -1,0 +1,72 @@
+id: 41
+enabled: true
+order: 2
+category: appearance
+fields:
+- id: 21
+  name: comment
+  type: TEXT
+  required: false
+  order: 0
+  default: None
+  suggested_widget: textarea
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Coment\xE1rio"
+      help: "Coment\xE1rio"
+  - en:
+      locale: en
+      label: Comment
+      help: Comment
+- id: 25
+  name: color
+  type: TEXT
+  required: false
+  order: 1
+  default: rgb(255, 255, 165)
+  suggested_widget: color
+  values_url: None
+  values: "[\r\n{\"background\": \"transparent\", \"foreground\": \"#222222\"},\r\n\
+    {\"background\": \"#FF1417\", \"foreground\": \"#FFFFFF\"},\r\n{\"background\"\
+    : \"#FF6611\", \"foreground\": \"#FFFFFF\"},\r\n{\"background\": \"#FF8844\",\
+    \ \"foreground\": \"#000000\"},\r\n{\"background\": \"#FFEE55\", \"foreground\"\
+    : \"#222222\"},\r\n{\"background\": \"#FEFE38\", \"foreground\": \"#222222\"},\r\
+    \n{\"background\": \"#FFFF99\", \"foreground\": \"#222222\"},\r\n{\"background\"\
+    : \"#AACC22\", \"foreground\": \"#222222\"},\r\n{\"background\": \"#BBDD77\",\
+    \ \"foreground\": \"#222222\"},\r\n{\"background\": \"#C8CF82\", \"foreground\"\
+    : \"#222222\"},\r\n{\"background\": \"#92A77E\", \"foreground\": \"#FFFFFF\"},\r\
+    \n{\"background\": \"#5599EE\", \"foreground\": \"#FFFFFF\"},\r\n{\"background\"\
+    : \"#0088CC\", \"foreground\": \"#FFFFFF\"},\r\n{\"background\": \"#226688\",\
+    \ \"foreground\": \"#FFFFFF\"},\r\n{\"background\": \"#175279\", \"foreground\"\
+    : \"#FFFFFF\"},\r\n{\"background\": \"#557777\", \"foreground\": \"#FFFFFF\"},\r\
+    \n{\"background\": \"#DDBB33\", \"foreground\": \"#222222\"},\r\n{\"background\"\
+    : \"#D3A76D\", \"foreground\": \"#222222\"},\r\n{\"background\": \"#A9834B\",\
+    \ \"foreground\": \"#FFFFFF\"},\r\n{\"background\": \"#AA6688\", \"foreground\"\
+    : \"#FFFFFF\"},\r\n{\"background\": \"#767676\", \"foreground\": \"#FFFFFF\"},\r\
+    \n{\"background\": \"#FFFFFF\", \"foreground\": \"#222222\"}\r\n]\r\n"
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Cor
+      help: Cor
+  - en:
+      locale: en
+      label: Color
+      help: Color
+translations:
+  pt:
+    locale: pt
+    name: "Apar\xEAncia"
+  en:
+    locale: en
+    name: Appearance
+

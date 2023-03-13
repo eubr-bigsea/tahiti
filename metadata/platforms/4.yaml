@@ -1,0 +1,16 @@
+id: 4
+slug: scikit-learn
+enabled: true
+icon: ''
+version: None
+plugin: false
+translations:
+  pt:
+    locale: pt
+    name: Scikit-learn
+    description: Scikit-learn 0.19.1
+  en:
+    locale: en
+    name: Scikit-learn
+    description: Scikit-learn 0.19.1
+

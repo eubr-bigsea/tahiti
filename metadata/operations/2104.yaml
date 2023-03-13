@@ -1,0 +1,27 @@
+id: 2104
+slug: find-replace
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-search
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Localizar e substituir (exato)
+    description: "Localiza valores no atributo e permite a substitui\xE7\xE3o."
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2101
+  type: menu/selected/fa fa-edit
+

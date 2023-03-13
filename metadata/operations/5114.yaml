@@ -1,0 +1,63 @@
+id: 5114
+slug: evaluate-model
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5232
+  slug: model
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 22
+    name: Model
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 5393
+  slug: generator
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 23
+    name: Generator
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: generator
+      description: Generator
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Evaluate model
+    description: Evaluates the model on a data generator.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5063
+  type: group
+

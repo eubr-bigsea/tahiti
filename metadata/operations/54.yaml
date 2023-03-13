@@ -1,0 +1,45 @@
+id: 54
+slug: classification-report
+enabled: false
+type: TRANSFORMATION
+icon: fa-print
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 119
+  slug: evaluation
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 9
+    name: IEvaluation
+  translations:
+  - pt:
+      locale: pt
+      name: "avalia\xE7\xE3o"
+      description: "Avalia\xE7\xE3o"
+  - en:
+      locale: en
+      name: evaluation
+      description: Evaluation
+translations:
+  pt:
+    locale: pt
+    name: "Relat. de Classifica\xE7\xE3o"
+    description: "Relat\xF3rio de classifica\xE7\xE3o"
+    label_format: None
+  en:
+    locale: en
+    name: Classification Report
+    description: Classification report
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+

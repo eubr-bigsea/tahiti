@@ -1,0 +1,55 @@
+id: 100000
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 100000
+  name: attribute
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo
+      help: Atributo usado como entrada
+  - en:
+      locale: en
+      label: Attribute
+      help: Attribute used as input
+- id: 100001
+  name: output
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Novo atributo
+      help: "Atributo usado como sa\xEDda"
+  - en:
+      locale: en
+      label: New attribute
+      help: Attribute used as output
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

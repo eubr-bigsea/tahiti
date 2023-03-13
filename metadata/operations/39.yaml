@@ -1,0 +1,75 @@
+id: 39
+slug: save-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-cloud-upload-alt
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 17
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 0
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 83
+  slug: models
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 8
+    name: IListOfMachineLearningModels
+  - id: 2
+    name: ClassificationModel
+  - id: 18
+    name: IRegressionModel
+  - id: 7
+    name: ModelWithEvaluation
+  - id: 4
+    name: IndexerModel
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelos
+      description: Modelos a serem salvos
+  - en:
+      locale: en
+      name: models
+      description: Models to be saved
+translations:
+  pt:
+    locale: pt
+    name: Salvar modelo
+    description: Salva um modelo para uso futuro
+    label_format: None
+  en:
+    locale: en
+    name: Save model
+    description: Saves a model for future use
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 6
+  type: group
+

@@ -1,0 +1,51 @@
+id: 44
+slug: random-forest-classifier
+enabled: false
+type: TRANSFORMATION
+icon: fa-random
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 101
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+translations:
+  pt:
+    locale: pt
+    name: Random forest
+    description: Classificador random forest
+    label_format: None
+  en:
+    locale: en
+    name: Random forest
+    description: Random forest classifier
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 18
+  type: subgroup
+- id: 8
+  type: group
+- id: 1500
+  type: classification
+

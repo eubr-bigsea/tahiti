@@ -1,0 +1,120 @@
+id: 5243
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5545
+  name: dimensions
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Dimensions
+      help: ''
+- id: 5546
+  name: channels
+  type: INTEGER
+  required: true
+  order: 2
+  default: '3'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Channels
+      help: ''
+- id: 5547
+  name: batch_size
+  type: INTEGER
+  required: true
+  order: 3
+  default: '16'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Batch size
+      help: 'Size of the batches of data (default: 16).'
+- id: 5548
+  name: shuffle
+  type: INTEGER
+  required: false
+  order: 8
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shuffle
+      help: 'Whether to shuffle the data (default: True) If set to False, it will
+        be processed in the read order of the data set.'
+- id: 5549
+  name: validation_split
+  type: DECIMAL
+  required: false
+  order: 9
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Validation split
+      help: Float. Fraction of videos reserved for validation (strictly between 0
+        and 1).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

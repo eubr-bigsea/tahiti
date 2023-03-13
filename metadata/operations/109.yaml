@@ -1,0 +1,97 @@
+id: 109
+slug: decision-tree-classifier-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-arrow-right
+css_class: None
+doc_link: None
+scripts:
+- id: 54
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "prediction", false, null);
+ports:
+- id: 254
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: entrada do treino
+      description: Train input data
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 255
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Output model
+  - en:
+      locale: en
+      name: model
+      description: Output model
+- id: 256
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "\xC1rvore de Decis\xE3o"
+    description: "Classificador baseado em \xE1rvores de decis\xE3o. Suporta tanto\
+      \ r\xF3tulos bin\xE1rios quanto multiclasses e features cont\xEDnuas e categ\xF3\
+      ricas."
+    label_format: None
+  en:
+    locale: en
+    name: Decision Tree
+    description: Decision tree learning algorithm for classification. It supports
+      both binary and multiclass labels\, as well as both continuous and categorical
+      features.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 4
+  type: algorithm
+- id: 18
+  type: subgroup
+- id: 8
+  type: group
+- id: 1500
+  type: classification
+

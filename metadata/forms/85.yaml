@@ -1,0 +1,140 @@
+id: 85
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 200
+  name: value_attribute
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo com o valor
+      help: Atributo com o valor
+  - en:
+      locale: en
+      label: Attribute with value
+      help: Attribute with value
+- id: 305
+  name: id_attribute
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo usado como r\xF3tulo (vazio: usar o valor como r\xF3tulo)"
+      help: "Atributo usado para o r\xF3tulo"
+  - en:
+      locale: en
+      label: 'Optional label attribute (blank: use value as label'
+      help: Attribute used as label
+- id: 201
+  name: title
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo"
+  - en:
+      locale: en
+      label: Title
+      help: Title
+- id: 306
+  name: type
+  type: TEXT
+  required: false
+  order: 4
+  default: pie
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Pie", "value": "Pie", "key": "pie", "pt": "Pizza (pie)"}, {"en":
+    "Donut", "value": "Donut", "key": "donut", "pt": "Rosca (donut)"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tipo de gr\xE1fico"
+      help: "Tipo de gr\xE1fico"
+  - en:
+      locale: en
+      label: Graph type
+      help: Graph type
+- id: 308
+  name: x_prefix
+  type: TEXT
+  required: false
+  order: 8
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Prefixo para r\xF3tulo"
+      help: "Texto adicionado ao in\xEDcio do r\xF3tulo"
+  - en:
+      locale: en
+      label: Label prefix
+      help: Text added on the beggining of label string
+- id: 309
+  name: x_suffix
+  type: TEXT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Sufixo para r\xF3tulo"
+      help: "Texto adicionado ao final do r\xF3tulo"
+  - en:
+      locale: en
+      label: Label sufix
+      help: Text appended on the end of label string
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

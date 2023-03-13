@@ -1,0 +1,55 @@
+id: 3019
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3068
+  name: features
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributos
+      help: Atributos
+  - en:
+      locale: en
+      label: Features
+      help: Feature
+- id: 3069
+  name: prediction
+  type: TEXT
+  required: false
+  order: 2
+  default: prediction
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo para predi\xE7\xE3o"
+      help: "Atributo para predi\xE7\xE3o"
+  - en:
+      locale: en
+      label: Prediction attribute
+      help: Prediction attribute
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,100 @@
+id: 96
+slug: lsh
+enabled: true
+type: TRANSFORMATION
+icon: fa-hashtag
+css_class: None
+doc_link: None
+scripts:
+- id: 44
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "output_attribute", false, "hashes");
+ports:
+- id: 219
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 220
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 221
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 21
+    name: LSHModel
+  translations:
+  - pt:
+      locale: pt
+      name: model
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+translations:
+  pt:
+    locale: pt
+    name: "Hash sens\xEDvel \xE0 localidade (LSH)"
+    description: "Hash sens\xEDvel \xE0 localidade (LSH) reduz a quantidade de dimens\xF5\
+      es de dados com alta dimensionalidade. Hash sens\xEDvel \xE0 localidade analisa\
+      \ os itens de forma que itens similares sejam mapeados para os mesmos \"buckets\"\
+      \ com alta probabilidade (sendo o n\xFAmero de de buckets muito menor que o\
+      \ universo de poss\xEDveis itens). LSH difere das fun\xE7\xF5es tradicionais\
+      \ de hash convencionais e daquelas usadas para criptografiahash porque busca\
+      \ maximizar a probabilidade de uma \"colis\xE3o\" para itens similares."
+    label_format: None
+  en:
+    locale: en
+    name: Locality-sensitive hashing
+    description: "Locality-sensitive hashing (LSH) reduces the dimensionality of high-dimensional\
+      \ data. LSH hashes input items so that similar items map to the same \u201C\
+      buckets\u201D with high probability (the number of buckets being much smaller\
+      \ than the universe of possible input items). LSH differs from conventional\
+      \ and cryptographic hash functions because it aims to maximize the probability\
+      \ of a \"collision\" for similar items."
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 36
+  type: subgroup
+

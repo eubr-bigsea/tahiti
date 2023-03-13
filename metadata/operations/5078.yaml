@@ -1,0 +1,88 @@
+id: 5078
+slug: convolution-3d
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5178
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5278
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5355
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Convolution3D
+    description: 3D convolution layer (e.g. spatial convolution over volumes). This
+      layer creates a convolution kernel that is convolved with the layer input to
+      produce a tensor of outputs. If use_bias is True, a bias vector is created and
+      added to the outputs. Finally, if activation is not None, it is applied to the
+      outputs as well. When using this layer as the first layer in a model, provide
+      the keyword argument input_shape (tuple of integers, does not include the batch
+      axis), e.g. input_shape=(128, 128, 128, 1) for 128x128x128 volumes with a single
+      channel, in data_format="channels_last".
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5020
+  type: group
+

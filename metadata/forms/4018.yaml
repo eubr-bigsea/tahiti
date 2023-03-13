@@ -1,0 +1,60 @@
+id: 4018
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4089
+  name: query
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: code
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Consulta (entradas est\xE3o dispon\xEDveis como tabelas chamadas ds1\
+        \ e ds2)"
+      help: "Consulta SQL compat\xEDvel com o Apache Spark. Para mais informa\xE7\xF5\
+        es, veja https://www.sqlite.org/lang.html ou https://github.com/yhat/pandasql."
+  - en:
+      locale: en
+      label: SQL Query, (inputs are available as tables named ds1 and ds2)
+      help: SQL query compatible with SQLite sytanx. For more information, see https://www.sqlite.org/lang.html
+        or https://github.com/yhat/pandasql.
+- id: 4090
+  name: names
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Nome dos novos atributos ap\xF3s a consulta"
+      help: "Nome dos novos atributos ap\xF3s executar a consulta (opcional. auxilia\
+        \ na sugest\xE3o de atributos)."
+  - en:
+      locale: en
+      label: Names of attributes after the query
+      help: Name of the new attributes after executing the query (optional, helps
+        attribute suggestion).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

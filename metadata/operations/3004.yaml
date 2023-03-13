@@ -1,0 +1,81 @@
+id: 3004
+slug: word-to-vector
+enabled: true
+type: TRANSFORMATION
+icon: fa-list-ol
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3005
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input Data
+- id: 3006
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+- id: 3007
+  slug: vocabulary
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "vocabul\xE1rio"
+      description: "Vocabul\xE1rio"
+  - en:
+      locale: en
+      name: vocabulary
+      description: Vocabulary
+translations:
+  pt:
+    locale: pt
+    name: Converter palavras em vetor
+    description: Converter palavras em vetor
+    label_format: None
+  en:
+    locale: en
+    name: Convert words to vector
+    description: Convert words to vector
+    label_format: None
+platforms: []
+categories:
+- id: 16
+  type: group
+- id: 3001
+  type: technology
+

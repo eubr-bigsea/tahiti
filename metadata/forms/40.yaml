@@ -1,0 +1,34 @@
+id: 40
+enabled: false
+order: 4
+category: security
+fields:
+- id: 10
+  name: sensitive_data
+  type: INTEGER
+  required: false
+  order: 0
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Dados de sa\xEDda s\xE3o sens\xEDveis"
+      help: "Dados de sa\xEDda s\xE3o sens\xEDveis"
+  - en:
+      locale: en
+      label: Output data is sensitive
+      help: Is the output data sensitive and should be protected?
+translations:
+  pt:
+    locale: pt
+    name: "Seguran\xE7a e privacidade"
+  en:
+    locale: en
+    name: Security and Privacy
+

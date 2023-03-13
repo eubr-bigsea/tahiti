@@ -1,0 +1,121 @@
+id: 9
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 370
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 1
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Itera\xE7\xF5es m\xE1ximas"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es (>=0)."
+  - en:
+      locale: en
+      label: Max. iterations
+      help: Max number of iterations (>=0).
+- id: 371
+  name: standardization
+  type: INTEGER
+  required: false
+  order: 2
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Aplicar padroniza\xE7\xE3o"
+      help: "Indica se \xE9 para padronizar as features de treinamento antes de ajustar\
+        \ o model."
+  - en:
+      locale: en
+      label: Apply standardization
+      help: Whether to standardize the training features before fitting the model.
+- id: 372
+  name: threshold
+  type: FLOAT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Limiar para a classifica\xE7\xE3o bin\xE1ria"
+      help: "Limiar na classifica\xE7\xE3o bin\xE1ria aplicada ao modelo de predi\xE7\
+        \xE3o linear"
+  - en:
+      locale: en
+      label: Threshold for binary classification
+      help: The threshold in binary classification applied to the linear model prediction
+- id: 373
+  name: tol
+  type: FLOAT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Toler\xE2ncia para a converg\xEAncia"
+      help: "Toler\xE2ncia de converg\xEAncia para algoritmos iterativos  (>= 0)."
+  - en:
+      locale: en
+      label: Convergence tolerance
+      help: The convergence tolerance for iterative algorithms (>= 0).
+- id: 374
+  name: weight_attr
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo com pesos
+      help: "Atributo com pesos. Se n\xE3o informado, todas as inst\xE2ncias t\xEA\
+        m o mesmopeso (1.0)."
+  - en:
+      locale: en
+      label: Weight attribute
+      help: Attribute with weights. If empty, all instances have the same weight (1.0);
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

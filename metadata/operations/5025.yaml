@@ -1,0 +1,87 @@
+id: 5025
+slug: spatialDropout2D
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5125
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5225
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5336
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: SpatialDropout2D
+    description: Spatial 2D version of Dropout. This version performs the same function
+      as Dropout, however it drops entire 2D feature maps instead of individual elements.
+      If adjacent pixels within feature maps are strongly correlated (as is normally
+      the case in early convolution layers) then regular dropout will not regularize
+      the activations and will otherwise just result in an effective learning rate
+      decrease. In this case, SpatialDropout2D will help promote independence between
+      feature maps and should be used instead.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5010
+  type: group
+

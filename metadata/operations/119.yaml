@@ -1,0 +1,89 @@
+id: 119
+slug: lda-clustering-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-file-alt
+css_class: None
+doc_link: None
+scripts:
+- id: 64
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "prediction", false, null);
+ports:
+- id: 284
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: entrada do treino
+      description: Train input data
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 285
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 14
+    name: IClusteringModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Output model
+  - en:
+      locale: en
+      name: model
+      description: Output model
+- id: 286
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Latent Dirichlet Allocation (LDA)
+    description: Agrupamento LDA
+    label_format: None
+  en:
+    locale: en
+    name: Latent Dirichlet Allocation (LDA)
+    description: LDA Clustering
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 32
+  type: group
+- id: 37
+  type: subgroup
+

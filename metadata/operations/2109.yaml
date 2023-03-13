@@ -1,0 +1,28 @@
+id: 2109
+slug: concat-rows
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-plus text-secondary
+css_class: separator
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Adicionar registros ao fim
+    description: Permite adicionar registros ao fim dos dados a partir de outra fonte
+      de dados.
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2102
+  type: menu/always/fa fa-database
+

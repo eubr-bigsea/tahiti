@@ -1,0 +1,63 @@
+id: 5118
+slug: text-reader
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5318
+  slug: train-text
+  type: OUTPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 25
+    name: TextData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: text data
+      description: Text Data
+- id: 5319
+  slug: validation-text
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 25
+    name: TextData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: validation text data
+      description: Text Data
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Text reader
+    description: Reads texts from a data source.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5065
+  type: group
+

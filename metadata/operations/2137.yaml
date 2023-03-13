@@ -1,0 +1,28 @@
+id: 2137
+slug: create-array
+enabled: false
+type: TRANSFORMATION
+icon: ''
+css_class: Array
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Converter em arranjo
+    description: Permite converter uma ou mais colunas em um arranjo (array) de valores.
+    label_format: <b>Converter </b> <i>${this.attributes.value.map(a=>a).join(", ")}
+      <b>em nova coluna do tipo arranjo</b></i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

@@ -1,0 +1,141 @@
+id: 3004
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3006
+  name: attributes
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Attributos
+      help: Colunas para serem consideradas
+  - en:
+      locale: en
+      label: Attributes
+      help: Attributes
+- id: 3007
+  name: alias
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Alias
+      help: Nome para a nova coluna criada
+  - en:
+      locale: en
+      label: Alias
+      help: Name of the new column
+- id: 3008
+  name: type
+  type: TEXT
+  required: true
+  order: 2
+  default: count
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Count term frequency", "key": "count", "value": "Count term frequency",
+    "pt": "Contar a frequ\u00eancia do termo"}, {"en": "Use Bag of Words", "key":
+    "BoW", "value": "Use bag of words", "pt": "Usar bag of words"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tipo
+      help: Tipo
+  - en:
+      locale: en
+      label: Type
+      help: Type
+- id: 3009
+  name: vocab_size
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tamanho do vocabul\xE1rio"
+      help: "Tamanho do vocabul\xE1rio"
+  - en:
+      locale: en
+      label: Vocabulary size
+      help: Vocabulary size
+- id: 3010
+  name: minimum_df
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Frequ\xEAncia m\xEDnima de documentos (DF)"
+      help: "Frequ\xEAncia m\xEDnima de documentos (DF)"
+  - en:
+      locale: en
+      label: Minimum frequency in docs (DF)
+      help: Minimum frequency in docs (DF)
+- id: 3011
+  name: minimum_tf
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Frequ\xEAncia m\xEDnima do termo (TF)"
+      help: "Frequ\xEAncia m\xEDnima do termo (TF)"
+  - en:
+      locale: en
+      label: Minimum term frequency (TF)
+      help: Minimum term frequency (TF)
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

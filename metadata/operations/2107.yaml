@@ -1,0 +1,28 @@
+id: 2107
+slug: group
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Agrupar
+    description: "Permite definir op\xE7\xF5es para agrupamento."
+    label_format: <b>Agrupar</b> por <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2102
+  type: menu/always/fa fa-database
+

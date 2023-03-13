@@ -1,0 +1,55 @@
+id: 5165
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5394
+  name: out_code
+  type: INTEGER
+  required: false
+  order: 1
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Out code
+      help: Code used out of the method to generate the Keras layers.
+- id: 5393
+  name: code
+  type: TEXT
+  required: false
+  order: 2
+  default: '# Write your Python code here'
+  suggested_widget: code
+  values_url: None
+  values: '{"language": "python"}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Code
+      help: Possible to add simple lines, functions, classes or an entire Python code.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

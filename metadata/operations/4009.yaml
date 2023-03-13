@@ -1,0 +1,53 @@
+id: 4009
+slug: sgd-regressor
+enabled: false
+type: TRANSFORMATION
+icon: fa-id-card
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4009
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 17
+    name: IRegressionAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: "Modelo de regress\xE3o n\xE3o treinado"
+  - en:
+      locale: en
+      name: algorithm
+      description: Untrained regressor model
+translations:
+  pt:
+    locale: pt
+    name: Regressor SGD
+    description: "Modelo linear ajustado por minimiza\xE7\xE3o com o gradiente descendente\
+      \ estoc\xE1stico."
+    label_format: None
+  en:
+    locale: en
+    name: SGD Regressor
+    description: Linear model fitted by minimizing a regularized empirical loss with
+      Stochastic Gradient Descent.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 8
+  type: group
+- id: 21
+  type: subgroup
+- id: 4001
+  type: technology
+- id: 1501
+  type: regression
+

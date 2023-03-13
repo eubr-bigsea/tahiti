@@ -1,0 +1,97 @@
+id: 3006
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3017
+  name: coef_lambda
+  type: FLOAT
+  required: false
+  order: 1
+  default: '0.0001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Par\xE2metro de Regulariza\xE7\xE3o"
+      help: Valores entre zero e infinito.
+  - en:
+      locale: en
+      label: Regularization  parameter
+      help: Values between zero and infinity.
+- id: 3018
+  name: coef_lr
+  type: FLOAT
+  required: false
+  order: 2
+  default: '0.01'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Taxa de aprendizado
+      help: Valores entre zero e um.
+  - en:
+      locale: en
+      label: Learning rate parameter
+      help: Values between zero and one
+- id: 3019
+  name: coef_threshold
+  type: FLOAT
+  required: false
+  order: 3
+  default: '0.01'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Toler\xE2ncia"
+      help: "Toler\xE2ncia para o crit\xE9rio de parada."
+  - en:
+      locale: en
+      label: Tolerance
+      help: Tolerance for stopping criterion
+- id: 3020
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 4
+  default: '1000'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Max itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
+  - en:
+      locale: en
+      label: Max iterations
+      help: Number of maximum iterations
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

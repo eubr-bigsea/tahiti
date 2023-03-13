@@ -1,0 +1,28 @@
+id: 2153
+slug: one-hot-encoding
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Codificar usando One Hot Encoder
+    description: Codifica usando One Hot Encoder.
+    label_format: <b>Codifica</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>
+      <b>usando one hot encoder</b>.
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

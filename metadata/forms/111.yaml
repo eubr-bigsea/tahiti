@@ -1,0 +1,223 @@
+id: 111
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 311
+  name: x_axis_attribute
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo para eixo X
+      help: Atributo para eixo X
+  - en:
+      locale: en
+      label: X-axis attribute
+      help: X-axis attribute
+- id: 312
+  name: y_axis_attribute
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo para eixo Y
+      help: Atributo para eixo Y
+  - en:
+      locale: en
+      label: Y-axis attribute
+      help: Y-axis attribute
+- id: 331
+  name: title
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo"
+  - en:
+      locale: en
+      label: Title
+      help: Title
+- id: 279
+  name: series_attribute
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo usado para s\xE9ries"
+      help: "Atributo usado para s\xE9ries"
+  - en:
+      locale: en
+      label: Attribute used for series (optional)
+      help: Attribute used for series (optional)
+- id: 315
+  name: x_title
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para o eixo X"
+      help: "T\xEDtulo para o eixo X"
+  - en:
+      locale: en
+      label: X-axis title
+      help: X-axis title
+- id: 316
+  name: y_title
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para o eixo Y"
+      help: "T\xEDtulo para o eixo Y"
+  - en:
+      locale: en
+      label: Y-axis title
+      help: Y-axis title
+- id: 323
+  name: x_prefix
+  type: TEXT
+  required: false
+  order: 12
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Prefixo para eixo X
+      help: Prefixo para eixo X
+  - en:
+      locale: en
+      label: X-axis prefix
+      help: X-axis prefix
+- id: 324
+  name: y_prefix
+  type: TEXT
+  required: false
+  order: 13
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Prefixo para eixo Y
+      help: Prefixo para eixo Y
+  - en:
+      locale: en
+      label: Y-axis prefix
+      help: Y-axis fprefix
+- id: 327
+  name: x_suffix
+  type: TEXT
+  required: false
+  order: 16
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Sufixo para eixo X
+      help: Sufixo para eixo X
+  - en:
+      locale: en
+      label: X-axis suffix
+      help: X-axis suffix
+- id: 328
+  name: y_suffix
+  type: TEXT
+  required: false
+  order: 17
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Sufixo para eixo Y
+      help: Sufixo para eixo Y
+  - en:
+      locale: en
+      label: Y-axis suffix
+      help: Y-axis suffix
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,27 @@
+id: 2127
+slug: concat-attribute
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Text
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Concatenar
+    description: Permite concatenar atributos com outros atributos ou valores.
+    label_format: <b>Concatenar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

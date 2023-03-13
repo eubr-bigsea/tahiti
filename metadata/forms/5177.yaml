@@ -1,0 +1,35 @@
+id: 5177
+enabled: true
+order: 6
+category: execution
+fields:
+- id: 5395
+  name: shape
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shape
+      help: A shape tuple (integer), not including the batch size. For instance, shape=(32,)
+        indicates that the expected input will be batches of 32-dimensional vectors.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

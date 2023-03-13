@@ -1,0 +1,73 @@
+id: 19
+slug: evaluate-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-check
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 36
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Input data to be used during evaluation
+  - en:
+      locale: en
+      name: input data
+      description: Input data to be used during evaluation
+- id: 37
+  slug: model
+  type: INPUT
+  tags: None
+  order: 3
+  multiplicity: ONE
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  - id: 18
+    name: IRegressionModel
+  - id: 15
+    name: IRecommendationModel
+  - id: 14
+    name: IClusteringModel
+  - id: 20
+    name: TransformationModel
+  - id: 4
+    name: IndexerModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Model to be evaluated
+  - en:
+      locale: en
+      name: model
+      description: Model to be evaluated
+translations:
+  pt:
+    locale: pt
+    name: Avaliar modelo
+    description: "Avalia um modelo de aprendizado de m\xE1quina"
+    label_format: None
+  en:
+    locale: en
+    name: Evaluate model
+    description: Evaluates a machine learning model
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 40
+  type: group
+

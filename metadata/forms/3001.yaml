@@ -1,0 +1,146 @@
+id: 3001
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3001
+  name: data_source
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: text
+  values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Fonte de Dados
+      help: Fonte de dados para ser usado como entrada.
+  - en:
+      locale: en
+      label: Data source
+      help: Data source to be used as input.
+- id: 3002
+  name: header
+  type: INTEGER
+  required: false
+  order: 2
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Usar primeira linha como header
+      help: "A primeira linha cont\xEAm informa\xE7\xE3o sobre os campos?"
+  - en:
+      locale: en
+      label: Use first line as header
+      help: Does file first line contain header information about attributes?
+- id: 3003
+  name: separator
+  type: TEXT
+  required: true
+  order: 3
+  default: ','
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo separador
+      help: Caractere usado como atributo separador
+  - en:
+      locale: en
+      label: Attribute separator
+      help: Character used as attribute separator
+- id: 3005
+  name: None_values
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: textarea
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tratar esses valores como nulos (separe por v\xEDrgula)"
+      help: "Esses valores ser\xE3o considerados como nulos quando o arquivo estiver\
+        \ sendo lido. Separe os valores por v\xEDrgula (,)."
+  - en:
+      locale: en
+      label: Treat these values as NULL (comma-separated)
+      help: These values will be considered as NULL when parsing the file. Separe
+        items by comma (,).
+- id: 3004
+  name: infer_schema
+  type: TEXT
+  required: false
+  order: 4
+  default: FROM_LIMONERO
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "From data", "key": "FROM_VALUES", "value": "From data", "pt":
+    "A partir dos dados"}, {"en": "Do not infer", "key": "NO", "value": "Do not infer",
+    "pt": "N\u00e3o inferir"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Infer data source schema
+      help: Infer data source schema from attribute's values.
+  - en:
+      locale: en
+      label: Infer data source schema
+      help: Infer data source schema from attribute's values.
+- id: 3084
+  name: mode
+  type: TEXT
+  required: false
+  order: 5
+  default: DROPMALFORMED
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Ignore whole corrupted record", "value": "Ignore whole corrupted
+    record", "key": "DROPMALFORMED", "pt": "Ignorar todo o registro corrompido"},
+    {"en": "Stop processing and raise error", "value": "Stop processing and raise
+    error", "key": "FAILFAST", "pt": "Parar o processamento e gerar erro"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "O que fazer em caso de dados inv\xE1lidos"
+      help: "Op\xE7\xE3o sobre o que fazer em caso de dados inv\xE1lidos."
+  - en:
+      locale: en
+      label: What to do in case of invalid data
+      help: What to do in case of invalid data
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

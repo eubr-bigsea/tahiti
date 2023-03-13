@@ -1,0 +1,28 @@
+id: 2114
+slug: add-by-formula
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-equals
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Adicionar atributos usando f\xF3rmula"
+    description: "Permite adicionar novos atributos usando uma f\xF3rmula."
+    label_format: "<b>Atributo(s)</b> <i>${this.formula.value.map(e=>e.alias).join(\"\
+      , \")}</i> <b>usando f\xF3rmula</b>"
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2102
+  type: menu/always/fa fa-database
+

@@ -1,0 +1,29 @@
+id: 2101
+slug: cast
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-exchange-alt
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Alterar o tipo do atributo
+    description: Altera o tipo do atributo.
+    label_format: 'Alterar o tipo de ${this?.cast_attributes?.value?.length == 1?
+      this.cast_attributes.value[0].attribute + " para " + this.cast_attributes.value[0].type
+      : (this?.cast_attributes?.value?.length || 0) + " atributos"}'
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2101
+  type: menu/selected/fa fa-edit
+

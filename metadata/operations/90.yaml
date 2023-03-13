@@ -1,0 +1,94 @@
+id: 90
+slug: standard-scaler
+enabled: true
+type: TRANSFORMATION
+icon: fa-balance-scale
+css_class: None
+doc_link: None
+scripts:
+- id: 29
+  type: JS_CLIENT
+  enabled: false
+  body: copyInputAddField(task, 'prediction', false, null);
+- id: 30
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'alias', false, null);
+ports:
+- id: 203
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 204
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 205
+  slug: transformation model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: "modelo de transforma\xE7\xE3o"
+      description: "Modelo de transforma\xE7\xE3o"
+  - en:
+      locale: en
+      name: transformation model
+      description: Transformation model
+translations:
+  pt:
+    locale: pt
+    name: "Padr\xE3o (Z-score)"
+    description: "Transforma a entrada (linhas com vetores), normalizando-os de forma\
+      \ que cada caracteristica (feature) tenha desvio-padr\xE3o unit\xE1rio e/ou\
+      \ m\xE9dia zero."
+    label_format: None
+  en:
+    locale: en
+    name: Default (Z-score)
+    description: Transforms the input (vector rows), normalizing each feature to have
+      unit standard deviation and/or zero mean.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 32
+  type: group
+- id: 34
+  type: subgroup
+

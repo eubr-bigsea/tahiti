@@ -1,0 +1,65 @@
+id: 4040
+slug: box-plot
+enabled: true
+type: VISUALIZATION
+icon: ''
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4086
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4087
+  slug: input data
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "visualiza\xE7\xE3o"
+      description: "Visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualization
+      description: Visualization
+translations:
+  pt:
+    locale: pt
+    name: Box Plot
+    description: "Diagrama de caixa, diagrama de extremos e quartis, boxplot ou box\
+      \ plot \xE9 uma ferramenta gr\xE1fica para representar a varia\xE7\xE3o de dados\
+      \ observados de uma vari\xE1vel num\xE9rica por meio de quartis."
+    label_format: None
+  en:
+    locale: en
+    name: Box Plot
+    description: ''
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 15
+  type: group
+

@@ -1,0 +1,35 @@
+id: 103
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 254
+  name: isotonic
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"pt": "Isot\u00f4nica/crescente", "key": true, "value": "Isotonic/increasing"},
+    {"pt": "Antit\u00f4nica/decrescente", "key": false, "value": "Antitonic/decreasing"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Isotonic
+      help: Isotonic
+  - en:
+      locale: en
+      label: Isotonic
+      help: Isotonic
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

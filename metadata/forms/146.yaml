@@ -1,0 +1,97 @@
+id: 146
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 541
+  name: title
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo para o mapa de calor."
+  - en:
+      locale: en
+      label: Title
+      help: Title for the heatmap
+- id: 542
+  name: row_attribute
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo usado nas linhas
+      help: Atributo usado nas linhas do heatmap.
+  - en:
+      locale: en
+      label: Attribute used in the rows
+      help: Attribute used in the rows of heatmap.
+- id: 543
+  name: column_attribute
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo usado nas colunas
+      help: Atributo usado nas colunas do heatmap.
+  - en:
+      locale: en
+      label: Attribute used in the columns
+      help: Attribute used in the columns of heatmap.
+- id: 544
+  name: value_attribute
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo usado como valor
+      help: Atributo usado como valor para a intensidade (calor).
+  - en:
+      locale: en
+      label: Attribute used as  value
+      help: Attribute used as value for the intensity (heat).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

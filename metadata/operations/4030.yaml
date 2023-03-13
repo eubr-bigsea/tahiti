@@ -1,0 +1,87 @@
+id: 4030
+slug: huber-regressor-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-laptop
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4057
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: entrada do treino
+      description: Train input data
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 4058
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Output model
+  - en:
+      locale: en
+      name: model
+      description: Output model
+- id: 4059
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Regressor Huber
+    description: "Modelo de regress\xE3o linear que \xE9 robusto para outliers."
+    label_format: None
+  en:
+    locale: en
+    name: Huber Regressor
+    description: Linear regression model that is robust to outliers.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 4001
+  type: technology
+- id: 21
+  type: subgroup
+- id: 8
+  type: group
+- id: 1501
+  type: regression
+

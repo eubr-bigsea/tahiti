@@ -1,0 +1,251 @@
+id: 4011
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4054
+  name: c
+  type: FLOAT
+  required: false
+  order: 1
+  default: '1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: C
+      help: "Par\xE2metro de penalidade C do termo de erro."
+  - en:
+      locale: en
+      label: C
+      help: Penalty parameter C of the error term.
+- id: 4055
+  name: kernel
+  type: TEXT
+  required: false
+  order: 2
+  default: rbf
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "rbf", "value": "rbf"}, {"key": "linear", "value": "linear"},
+    {"key": "poly", "value": "poly"}, {"key": "sigmoid", "value": "sigmoid"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Kernel
+      help: Especifica o tipo de kernel a ser usado no algoritmo.
+  - en:
+      locale: en
+      label: Kernel
+      help: Specifies the kernel type to be used in the algorithm.
+- id: 4056
+  name: degree
+  type: INTEGER
+  required: false
+  order: 3
+  default: '3'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Grau do Polin\xF4mio"
+      help: "Grau da fun\xE7\xE3o do kernel polinomial. Ignorado por todos os outros\
+        \ kernels."
+  - en:
+      locale: en
+      label: Degree
+      help: Degree of the polynomial kernel function. Ignored by all other kernels.
+- id: 4057
+  name: tol
+  type: FLOAT
+  required: false
+  order: 4
+  default: '0.001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tolerancia
+      help: "Toler\xE2ncia para crit\xE9rios de parada."
+  - en:
+      locale: en
+      label: Tolerance
+      help: Tolerance for stopping criterion.
+- id: 4058
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 5
+  default: '1000'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es."
+  - en:
+      locale: en
+      label: Maximum number of iterations
+      help: Maximum number of iterations.
+- id: 4059
+  name: random_state
+  type: INTEGER
+  required: false
+  order: 6
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estado Aleat\xF3rio"
+      help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
+        m utilizada para reprodutibilidade."
+  - en:
+      locale: en
+      label: Random State
+      help: Seed used by the random number generator. Also used for reproducibility.
+- id: 4178
+  name: gamma
+  type: DECIMAL
+  required: false
+  order: 7
+  default: auto
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.kernel.internalValue != "linear"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Coeficiente do kernel.
+      help: "Coeficiente do kernel para as m\xE9tricas \"rbf\", \"poly\" e \"sigmoid."
+  - en:
+      locale: en
+      label: Kernel coefficient.
+      help: Kernel coefficient for "rbf", "poly" and "sigmoid".
+- id: 4179
+  name: coef0
+  type: DECIMAL
+  required: false
+  order: 8
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.kernel.internalValue === "sigmoid" || this.kernel.internalValue
+    === "poly"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Termo independente da fun\xE7\xE3o do kernel."
+      help: "Termp independente da fun\xE7\xE3o do kernel. \xC9 significativo apenas\
+        \ nas m\xE9tricas \"poly\" e \"sigmoid\"."
+  - en:
+      locale: en
+      label: Independent term in kernel function.
+      help: Independent term in kernel function. It is only significant in "poly"
+        and "sigmoid".
+- id: 4180
+  name: shrinking
+  type: INTEGER
+  required: false
+  order: 9
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Usar a heur\xEDstica shrinking."
+      help: "Necessidade de usar a heur\xEDstica shrinking"
+  - en:
+      locale: en
+      label: Use the shrinking heuristic.
+      help: Whether to use the shrinking heuristic.
+- id: 4181
+  name: probability
+  type: INTEGER
+  required: false
+  order: 10
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Habilitar estimativas probail\xEDsticas."
+      help: "Habilitar estimativas probail\xEDsticas."
+  - en:
+      locale: en
+      label: Enable probability estimates.
+      help: Whether to enable probability estimates.
+- id: 4183
+  name: decision_function_shape
+  type: TEXT
+  required: false
+  order: 12
+  default: ovr
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "ovr", "value": "ovr"}, {"key": "ovo", "value": "ovo"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Decis\xE3o de retorno."
+      help: "Decis\xE3o de retorno \"ovr\" (one-vs-rest : um por todos) ou \"ovo\"\
+        \ (one-vs-one: um por um)."
+  - en:
+      locale: en
+      label: Return decision.
+      help: Return (one-vs-rest) "ovr" or (one-vs-one) "ovo" decision funcion.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

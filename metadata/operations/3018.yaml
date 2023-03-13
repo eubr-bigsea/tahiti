@@ -1,0 +1,103 @@
+id: 3018
+slug: classification-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-tags
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3034
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de treino de entrada
+      description: Dados de treino de entrada
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 3035
+  slug: algorithm
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+- id: 3036
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 18
+    name: IRegressionModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 3037
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+translations:
+  pt:
+    locale: pt
+    name: "Modelo de Classifica\xE7\xE3o"
+    description: "Modelo de Classifica\xE7\xE3o"
+    label_format: None
+  en:
+    locale: en
+    name: Classification Model
+    description: Classification Model
+    label_format: None
+platforms: []
+categories:
+- id: 8
+  type: group
+- id: 18
+  type: subgroup
+- id: 3001
+  type: technology
+- id: 1500
+  type: classification
+

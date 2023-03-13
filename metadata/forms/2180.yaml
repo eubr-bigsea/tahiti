@@ -1,0 +1,34 @@
+id: 2180
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2156
+  name: delimiter
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Delimitador
+      help: Delimitador para as palavras.
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

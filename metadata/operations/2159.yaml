@@ -1,0 +1,28 @@
+id: 2159
+slug: remove-missing
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Remover registros com dados ausentes
+    description: Remove registros com dados ausentes.
+    label_format: <b>Remover registros com dados ausentes</b> em <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i>.
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2106
+  type: menu/selected/fa fa-eraser
+

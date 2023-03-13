@@ -1,0 +1,176 @@
+id: 4012
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4060
+  name: type
+  type: TEXT
+  required: false
+  order: 1
+  default: Multinomial
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "Bernoulli", "value": "Bernoulli"}, {"key": "Multinomial", "value":
+    "Multinomial"}, {"key": "Gaussian", "value": "Gaussian"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tipo de modelo
+      help: "O Gaussiano assume que a probabilidade das caracter\xEDsticas \xE9 Gaussiana;\
+        \ O multinomial \xE9 adequado para caracter\xEDsticas discretas; Bernoulli\
+        \ \xE9 projetado para campos bin\xE1rios/booleanos (campos n\xE3o bin\xE1\
+        rios ser\xE3o convertidos)."
+  - en:
+      locale: en
+      label: Model type
+      help: The Gaussian assumes that the likelihood of the features is Gaussian;
+        The multinomial is suitable for discrete features; Bernoulli is designed for
+        binary/boolean features (non binary features will be converted).
+- id: 4061
+  name: alpha
+  type: DECIMAL
+  required: false
+  order: 2
+  default: '1.0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: "this.type.internalValue === \"Multinomial\" || \n        this.type.internalValue\
+    \ === \"Bernoulli\""
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Suaviza\xE7\xE3o"
+      help: "Par\xE2metro de suaviza\xE7\xE3o Aditivo (Laplace / Lidstone) (0 para\
+        \ n\xE3o suaviza\xE7\xE3o). Apenas para os tipos Multinomial e Bernoulli."
+  - en:
+      locale: en
+      label: Smoothing
+      help: Additive (Laplace/Lidstone) smoothing parameter (0 for no smoothing).
+        Only for Multinomial and Bernoulli types.
+- id: 4062
+  name: class_prior
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: "this.type.internalValue === \"Multinomial\" || \n        this.type.internalValue\
+    \ === \"Bernoulli\""
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Pesos (separados por v\xEDrgula, usados em ensembles)"
+      help: "Peso probabilistico das classes. Se especificado, os pesos n\xE3o s\xE3\
+        o ajustados de acordo com os dados."
+  - en:
+      locale: en
+      label: Classes probabilities
+      help: Prior probabilities of the classes. If specified the priors are not adjusted
+        according to the data.
+- id: 4262
+  name: piors
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "Gaussian"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Anteriores
+      help: Probabilidades anteriores das classes.
+  - en:
+      locale: en
+      label: Piors
+      help: Prior probabilities of the classes.
+- id: 4263
+  name: var_smoothing
+  type: DECIMAL
+  required: false
+  order: 5
+  default: '0.000000001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "Gaussian"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Varia\xE7\xE3o"
+      help: "Parte da maior varia\xE7\xE3o de todos os recursos adicionados \xE0s\
+        \ varia\xE7\xF5es de estabilidade de c\xE1lculo."
+  - en:
+      locale: en
+      label: Variance
+      help: Portion of the largest variance of all features that is added to variances
+        for calculation stability.
+- id: 4264
+  name: fit_prior
+  type: INTEGER
+  required: false
+  order: 6
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "Multinomial" || this.type.internalValue
+    === "Bernoulli"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Probabilidades anteriores da classe
+      help: "Se deve aprender as probabilidades anteriores da aula ou n\xE3o."
+  - en:
+      locale: en
+      label: Class prior probabilities
+      help: Whether to learn class prior probabilities or not.
+- id: 4265
+  name: binarize
+  type: DECIMAL
+  required: false
+  order: 7
+  default: '0.0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "Bernoulli"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Binariza\xE7\xE3o"
+      help: "Limite para binariza\xE7\xE3o (mapeamento para booleanos) de recursos\
+        \ de amostra."
+  - en:
+      locale: en
+      label: Binarize
+      help: Threshold for binarizing (mapping to booleans) of sample features.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

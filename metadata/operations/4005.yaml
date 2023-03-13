@@ -1,0 +1,51 @@
+id: 4005
+slug: perceptron-classifier
+enabled: false
+type: TRANSFORMATION
+icon: fa-angle-double-down
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4005
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
+  - en:
+      locale: en
+      name: algorithm
+      description: Untrained classification model
+translations:
+  pt:
+    locale: pt
+    name: Classificador Perceptron
+    description: Classificador baseado no Perceptron de Multicamadas.
+    label_format: None
+  en:
+    locale: en
+    name: Perceptron Classifier
+    description: Classifier trainer based on the Multilayer Perceptron.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 8
+  type: group
+- id: 18
+  type: subgroup
+- id: 4001
+  type: technology
+- id: 1500
+  type: classification
+

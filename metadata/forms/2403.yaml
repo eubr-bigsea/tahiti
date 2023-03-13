@@ -1,0 +1,140 @@
+id: 2403
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2202
+  name: strategy
+  type: INTEGER
+  required: true
+  order: 0
+  default: grid
+  suggested_widget: lookup
+  values_url: None
+  values: '[{"key": "grid", "pt": "Busca em grade", "en": "Grid search"}, {"key":
+    "random", "pt": "Busca aleat\u00f3ria", "en": "Random search"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estrat\xE9gia de busca em grade"
+      help: "Estrat\xE9gia de busca em grade."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2203
+  name: random_grid
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Usar grade aleat\xF3ria"
+      help: "Usar grade aleat\xF3ria."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2204
+  name: seed
+  type: INTEGER
+  required: true
+  order: 2
+  default: None
+  suggested_widget: lookup
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Semente aleat\xF3ria"
+      help: "Semente aleat\xF3ria."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2205
+  name: max_iterations
+  type: INTEGER
+  required: true
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2206
+  name: max_search_time
+  type: INTEGER
+  required: true
+  order: 4
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tempo m\xE1ximo de busca"
+      help: "Tempo m\xE1ximo de busca."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2207
+  name: parallelism
+  type: INTEGER
+  required: true
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Paralelismo
+      help: Paralelismo
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

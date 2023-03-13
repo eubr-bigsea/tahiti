@@ -1,0 +1,227 @@
+id: 34
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 412
+  name: aggregation_depth
+  type: INTEGER
+  required: false
+  order: 1
+  default: '2'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Profundidade de agrega\xE7\xE3o"
+      help: "Profundidade de agrega\xE7\xE3o"
+  - en:
+      locale: en
+      label: Aggregation depth
+      help: Aggregation depth
+- id: 413
+  name: elastic_net_param
+  type: FLOAT
+  required: false
+  order: 2
+  default: '0.0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Par\xE2metro para a Elastic Net"
+      help: "Par\xE2metro para a Elastic Net"
+  - en:
+      locale: en
+      label: Elastic Net param
+      help: Elastic Net param
+- id: 414
+  name: fit_intercept
+  type: INTEGER
+  required: false
+  order: 3
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Interse\xE7\xE3o ajustada"
+      help: "Interse\xE7\xE3o ajustada"
+  - en:
+      locale: en
+      label: Fit intercept
+      help: Fit intercept
+- id: 418
+  name: threshold
+  type: FLOAT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Limiar para classifica\xE7\xE3o bin\xE1ria"
+      help: "Limiar para classifica\xE7\xE3o bin\xE1ria"
+  - en:
+      locale: en
+      label: Threshold in binary classification prediction
+      help: Threshold in binary classification prediction
+- id: 419
+  name: thresholds
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Limiar para classifica\xE7\xE3o multiclasse"
+      help: "Limiar para classifica\xE7\xE3o multiclasse para ajustar a probabilidade\
+        \ de predizer cada classe"
+  - en:
+      locale: en
+      label: Thresholds in multi-class classification
+      help: Thresholds in multi-class classification to adjust the probability of
+        predicting each class.
+- id: 186
+  name: weight_col
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo com os pesos
+      help: Atributo com os pesos
+  - en:
+      locale: en
+      label: Weight attribute
+      help: Weight attribute
+- id: 415
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Itera\xE7\xF5es m\xE1ximas"
+      help: "Itera\xE7\xF5es m\xE1ximas"
+  - en:
+      locale: en
+      label: Max iterations
+      help: Max iterations
+- id: 417
+  name: tol
+  type: FLOAT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Toler\xE2ncia"
+      help: "Toler\xE2ncia"
+  - en:
+      locale: en
+      label: Tolerance
+      help: Tolerance
+- id: 187
+  name: family
+  type: TEXT
+  required: true
+  order: 5
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Auto", "key": "auto", "value": "Auto", "pt": "Autom\u00e1tico"},
+    {"en": "Binomial", "key": "binomial", "value": "Binomial", "pt": "Binomial"},
+    {"en": "Multinomial", "key": "multinomial", "value": "Multinomial", "pt": "Multinomial"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fam\xEDlia"
+      help: "Fam\xEDlia"
+  - en:
+      locale: en
+      label: Family
+      help: Family
+- id: 416
+  name: reg_param
+  type: FLOAT
+  required: false
+  order: 5
+  default: '0.0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Par\xE2metro para regulariza\xE7\xE3o"
+      help: "Par\xE2metro para regulariza\xE7\xE3o"
+  - en:
+      locale: en
+      label: Regularization parameter
+      help: Regularization parameter
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

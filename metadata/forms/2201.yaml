@@ -1,0 +1,34 @@
+id: 2201
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2225
+  name: n
+  type: INTEGER
+  required: true
+  order: 4
+  default: '2'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tamanho (N)
+      help: Tamanho do N-Gram (valor de N)
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

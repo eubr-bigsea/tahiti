@@ -1,0 +1,81 @@
+id: 83
+slug: entity-matching
+enabled: false
+type: TRANSFORMATION
+icon: fa-address-card
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 181
+  slug: input data 1
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados entrada 1
+      description: Entrada 1
+  - en:
+      locale: en
+      name: input data 1
+      description: Input 1
+- id: 182
+  slug: input data 2
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados entrada 2
+      description: Entrada 2
+  - en:
+      locale: en
+      name: input data 2
+      description: Input 2
+- id: 183
+  slug: output data 1
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados sa\xEDda 1"
+      description: "Sa\xEDda 1"
+  - en:
+      locale: en
+      name: output data 1
+      description: Output 1
+translations:
+  pt:
+    locale: pt
+    name: "Resolu\xE7\xE3o de entidades"
+    description: "Resolu\xE7\xE3o de entidades"
+    label_format: None
+  en:
+    locale: en
+    name: Entity matching
+    description: Entity matching
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 13
+  type: group
+

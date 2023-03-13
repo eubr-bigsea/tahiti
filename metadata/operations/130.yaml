@@ -1,0 +1,64 @@
+id: 130
+slug: indicator
+enabled: true
+type: VISUALIZATION
+icon: ' '
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 308
+  slug: visualization
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+  - pt:
+      locale: pt
+      name: "visualiza\xE7\xE3o"
+      description: "Visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualization
+      description: Visualization
+- id: 309
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Medidor
+    description: "Permite exibir um valor como um medidor ou um \"n\xFAmero grande\"\
+      \ em um dashboard."
+    label_format: None
+  en:
+    locale: en
+    name: Gauge
+    description: Allows to display a value as a gauge or a "big number" in a dashboard.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 15
+  type: group
+

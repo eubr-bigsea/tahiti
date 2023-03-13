@@ -1,0 +1,76 @@
+id: 128
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 467
+  name: features
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) usado(s) como feature(s)
+      help: Atributo(s) usado(s) como feature(s)
+  - en:
+      locale: en
+      label: Feature attribute(s)
+      help: Feature attribute(s)
+- id: 468
+  name: alias
+  type: TEXT
+  required: false
+  order: 1
+  default: outlier
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nome para o novo atributo
+      help: Nome para o novo atributo.
+  - en:
+      locale: en
+      label: Name for the new attribute
+      help: Name for the new attribute.
+- id: 469
+  name: min_points
+  type: INTEGER
+  required: true
+  order: 2
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xEDnimo de pontos"
+      help: "N\xFAmero m\xEDnimo de pontos."
+  - en:
+      locale: en
+      label: Minimum number of points
+      help: Minimum number of points.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,76 @@
+id: 39
+enabled: false
+order: 3
+category: infrastructure
+fields:
+- id: 7
+  name: max_memory
+  type: FLOAT
+  required: false
+  order: 0
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Quantidade (em MB) m\xE1xima de mem\xF3ria reservada"
+      help: "Quantidade (em MB) m\xE1xima de mem\xF3ria reservada"
+  - en:
+      locale: en
+      label: Max. execution memory (in MB)
+      help: Max execution memory in megabytes. This is just a recommendation.
+- id: 8
+  name: max_exec_time
+  type: INTEGER
+  required: false
+  order: 0
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tempo m\xE1ximo de execu\xE7\xE3o (em segundos) "
+      help: "Tempo m\xE1ximo de execu\xE7\xE3o (em segundos) "
+  - en:
+      locale: en
+      label: Max. execution time (seconds)
+      help: Max execution time in seconds. This is just a recommendation.
+- id: 9
+  name: max_cpus
+  type: INTEGER
+  required: false
+  order: 0
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de CPUs"
+      help: "N\xFAmero m\xE1ximo de CPUs"
+  - en:
+      locale: en
+      label: Max. number of CPUs
+      help: Max number of CPUs. This is just a recommendation.
+translations:
+  pt:
+    locale: pt
+    name: Infraestrutura/QoS
+  en:
+    locale: en
+    name: Infrastructure/QoS
+

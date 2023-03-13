@@ -1,0 +1,83 @@
+id: 122
+slug: vector-indexer
+enabled: true
+type: ACTION
+icon: ''
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 292
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Conjunto de dados com atributos a serem indexados
+  - en:
+      locale: en
+      name: input data
+      description: Data set with feature columns to be indexed
+- id: 293
+  slug: output data
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda com nova coluna indexada"
+  - en:
+      locale: en
+      name: output data
+      description: Output data with new indexed column
+- id: 294
+  slug: indexer models
+  type: OUTPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 4
+    name: IndexerModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: "Modelo de indexa\xE7\xE3o gerado"
+  - en:
+      locale: en
+      name: model
+      description: Indexer model generated
+translations:
+  pt:
+    locale: pt
+    name: Indexador de vetor
+    description: Indexa categorical features representadas por um vetor.
+    label_format: None
+  en:
+    locale: en
+    name: Vector indexer
+    description: Indexing categorical features represented in a Vector.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 32
+  type: group
+- id: 33
+  type: subgroup
+

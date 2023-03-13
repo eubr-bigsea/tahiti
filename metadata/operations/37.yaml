@@ -1,0 +1,92 @@
+id: 37
+slug: difference
+enabled: true
+type: TRANSFORMATION
+icon: fa-minus-square
+css_class: None
+doc_link: None
+scripts:
+- id: 5
+  type: JS_CLIENT
+  enabled: true
+  body: copyInput(task);
+ports:
+- id: 76
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 77
+  slug: input data 1
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada 1
+      description: Dados de entrada 1
+  - en:
+      locale: en
+      name: input data 1
+      description: Input data 1
+- id: 130
+  slug: input data 2
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados entrada 2
+      description: Dados de entrada 2
+  - en:
+      locale: en
+      name: input data 2
+      description: Input data 2
+translations:
+  pt:
+    locale: pt
+    name: "Diferen\xE7a entre colunas"
+    description: "Retorna registros existntes no primeiro conjunto de dados e que\
+      \ n\xE3o existem no segundo"
+    label_format: None
+  en:
+    locale: en
+    name: Difference between columns
+    description: Returns rows existing in first data set but not in second one
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 7
+  type: group
+- id: 30
+  type: subgroup
+

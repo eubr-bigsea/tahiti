@@ -1,0 +1,103 @@
+id: 3010
+slug: evaluate-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-check
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3013
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input Data
+- id: 3014
+  slug: model
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  - id: 18
+    name: IRegressionModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 3015
+  slug: evaluated model
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 7
+    name: ModelWithEvaluation
+  translations:
+  - pt:
+      locale: pt
+      name: modelo avaliado
+      description: Modelo avaliado
+  - en:
+      locale: en
+      name: evaluated model
+      description: Evaluated model
+- id: 3016
+  slug: evaluator
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 10
+    name: IEvaluatorModel
+  translations:
+  - pt:
+      locale: pt
+      name: avaliador
+      description: Avaliador
+  - en:
+      locale: en
+      name: evaluator
+      description: Evaluator
+translations:
+  pt:
+    locale: pt
+    name: Avaliar modelo
+    description: "Avalia um modelo de aprendizado de m\xE1quina"
+    label_format: None
+  en:
+    locale: en
+    name: Evaluate model
+    description: Evaluates a machine learning model
+    label_format: None
+platforms: []
+categories:
+- id: 8
+  type: group
+- id: 26
+  type: subgroup
+- id: 3001
+  type: technology
+

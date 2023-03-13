@@ -1,0 +1,27 @@
+id: 2149
+slug: escape-unicode
+enabled: false
+type: TRANSFORMATION
+icon: ''
+css_class: Text
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Escapar Unicode
+    description: Escapa caracteres Unicode.
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

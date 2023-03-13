@@ -1,0 +1,149 @@
+id: 130
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 479
+  name: k_fold
+  type: INTEGER
+  required: true
+  order: 0
+  default: '7'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Parti\xE7\xF5es (K)"
+      help: "N\xFAmero de parti\xE7\xF5es."
+  - en:
+      locale: en
+      label: Number of folds (K)
+      help: Number of K folds.
+- id: 480
+  name: type
+  type: TEXT
+  required: true
+  order: 2
+  default: Random
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"pt": "Aleat\u00f3ria (parti\u00e7\u00e3o aproximada => mais r\u00e1pida)",
+    "en": "Random (approximated fold => faster) ", "value": "Random", "key": "random"},
+    {"pt": "Aleat\u00f3ria (parti\u00e7\u00e3o quase exata => mais lenta)", "en":
+    "Random (near exact fold => slower) ", "value": "Random", "key": "random_exact"},
+    {"pt": "Estratificada (parti\u00e7\u00e3o aproximada => mais r\u00e1pida)", "en":
+    "Stratified (approximated fold => faster)", "value": "Stratified (approximated
+    fold => faster)", "key": "stratified"}, {"pt": "Estratificada (parti\u00e7\u00e3o
+    quase exata => mais lenta)", "en": "Stratified (near exact fold => slower)", "value":
+    "Stratified (near exact fold => slower)", "key": "stratified_exact"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tipo de parti\xE7\xE3o"
+      help: "Tipo de parti\xE7\xE3o."
+  - en:
+      locale: en
+      label: Type
+      help: Type of partition.
+- id: 96
+  name: max_categories
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE1x. categorias"
+      help: "M\xE1x. categorias"
+  - en:
+      locale: en
+      label: Max. categories
+      help: Max. categories
+- id: 481
+  name: label
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o r\xF3tulo (classe)"
+      help: "Selecione o atributo considerado como classe/r\xF3tulo (label)."
+  - en:
+      locale: en
+      label: Label attribute
+      help: Select the label attribute from dataset.
+- id: 482
+  name: alias_fold
+  type: TEXT
+  required: true
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nome do novo atributo
+      help: "Nome do novo atributo que indica a que parti\xE7\xE3o o objeto pertence."
+  - en:
+      locale: en
+      label: New attribute alias
+      help: Alias to the new feature column that is an identifier for each object
+        fold.
+- id: 483
+  name: seed
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Semente
+      help: "Semente usada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9m usado\
+        \ para reprodutibilidade."
+  - en:
+      locale: en
+      label: Seed
+      help: Seed used by the random number generator. Also used for reproducibility.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

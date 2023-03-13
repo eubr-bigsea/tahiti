@@ -1,0 +1,37 @@
+id: 5158
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5363
+  name: padding
+  type: TEXT
+  required: true
+  order: 1
+  default: '1'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Padding
+      help: 'Int, or tuple of int (length 2), or dictionary. If int: How many zeros
+        to add at the beginning and end of the padding dimension (axis 1). If tuple
+        of int (length 2): How many zeros to add at the beginning and at the end of
+        the padding dimension ((left_pad, right_pad)).'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

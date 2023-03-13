@@ -1,0 +1,144 @@
+id: 5223
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5578
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5438
+  name: pool_size
+  type: INTEGER
+  required: true
+  order: 1
+  default: '2'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Pool size
+      help: Integer size of the average pooling windows.
+- id: 5439
+  name: strides
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Strides
+      help: Integer, or None. Factor by which to downscale. E.g. 2 will halve the
+        input. If None, it will default to pool_size.
+- id: 5440
+  name: padding
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "valid", "key": "valid"}, {"value": "same", "key": "same"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Padding
+      help: One of "valid" or "same" (case-insensitive).
+- id: 5441
+  name: data_format
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
+    "key": "channels_first"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: A string, one of channels_last (default) or channels_first. The ordering
+        of the dimensions in the inputs.  channels_last corresponds to inputs with
+        shape (batch, steps, features) while channels_first corresponds to inputs
+        with shape  (batch, features, steps).
+- id: 5442
+  name: kwargs
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Kwargs
+      help: Standard layer keyword arguments.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

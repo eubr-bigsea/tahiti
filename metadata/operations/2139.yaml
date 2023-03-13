@@ -1,0 +1,28 @@
+id: 2139
+slug: sort-array
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Array
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Ordenar arranjo
+    description: Permite ordenar os elementos de um arranjo (array).
+    label_format: <b>Ordenar os itens do arranjo em </b> <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

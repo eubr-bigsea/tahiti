@@ -1,0 +1,228 @@
+id: 83
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 304
+  name: x_axis_attribute
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo para eixo X
+      help: Atributo usado para eixo X
+  - en:
+      locale: en
+      label: X-axis attribute
+      help: Attribute used for X-axis
+- id: 567
+  name: display_mode
+  type: TEXT
+  required: false
+  order: 0
+  default: vertical
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Vertical bars", "value": "vertical", "key": "vertical", "pt":
+    "Barras verticais"}, {"en": "Horizontal bars", "value": "horizontal", "key": "horizontal",
+    "pt": "Barras horizontais"}, {"en": "Stacked vertical bars", "value": "stacked-vertical",
+    "key": "stacked-vertical", "pt": "Barras verticais empilhadas"}, {"en": "Stacked
+    horizontal bars", "value": "stacked-horizontal", "key": "stacked-horizontal",
+    "pt": "Barras horizontais empilhadas"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Modo de exibi\xE7\xE3o"
+      help: "Como exibir o gr\xE1fico de barras."
+  - en:
+      locale: en
+      label: Display mode
+      help: How to display the bar chart.
+- id: 196
+  name: column_names
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributos para eixo Y (cada um ser\xE1 uma s\xE9rie)"
+      help: "Atributos para eixo Y (cada um ser\xE1 uma s\xE9rie)"
+  - en:
+      locale: en
+      label: Attributes for Y-axis (each one will be a series)
+      help: Attributes for Y-axis (each one will be a series)
+- id: 197
+  name: title
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo"
+  - en:
+      locale: en
+      label: Title
+      help: Title
+- id: 296
+  name: x_title
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para eixo X"
+      help: "T\xEDtulo a ser exibido para eixo X"
+  - en:
+      locale: en
+      label: X-axis title
+      help: X-axis title to be shown
+- id: 297
+  name: y_title
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para eixo Y"
+      help: "T\xEDtulo a ser exibido  para eixo Y"
+  - en:
+      locale: en
+      label: Y-axis title
+      help: Y-axis title to be shown
+- id: 300
+  name: x_prefix
+  type: TEXT
+  required: false
+  order: 7
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Prefixo para eixo X
+      help: Prefixo para eixo X (adicionado ao valor ao exibi-lo)
+  - en:
+      locale: en
+      label: X-axis prefix (added to the value when displaying it)
+      help: X-axis prefix (added to the value display)
+- id: 301
+  name: y_prefix
+  type: TEXT
+  required: false
+  order: 8
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Prefixo para eixo Y
+      help: Prefixo para eixo Y (adicionado ao valor ao exibi-lo)
+  - en:
+      locale: en
+      label: Y-axis prefix (added to value when displaying it)
+      help: Y-axis prefix (added to the value display)
+- id: 302
+  name: x_suffix
+  type: TEXT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Sufixo para eixo X
+      help: Sufixo para eixo X (adicionado ao valor ao exibi-lo)
+  - en:
+      locale: en
+      label: X-axis suffix (added to the value when displaying it)
+      help: X-axis suffix(added to the value display)
+- id: 303
+  name: y_suffix
+  type: TEXT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Sufixo para eixo Y
+      help: Sufixo para eixo Y (adicionado ao valor ao exibi-lo)
+  - en:
+      locale: en
+      label: Y-axis suffix (added to the value when displaying it)
+      help: Y-axis suffix (added to the value display)
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

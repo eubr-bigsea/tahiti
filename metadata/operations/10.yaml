@@ -1,0 +1,137 @@
+id: 10
+slug: clustering-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-users
+css_class: None
+doc_link: None
+scripts:
+- id: 38
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'prediction', false, null)
+- id: 39
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'prediction', false, null)
+- id: 40
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'prediction', false, null)
+- id: 41
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'prediction', false, null)
+ports:
+- id: 22
+  slug: algorithm
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 11
+    name: IClusteringAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Clustering algorithm to be trained
+  - en:
+      locale: en
+      name: algorithm
+      description: Clustering algorithm to be trained
+- id: 23
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: entrada do treino
+      description: Train input data
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 24
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 14
+    name: IClusteringModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Clustering output model
+  - en:
+      locale: en
+      name: model
+      description: Clustering output model
+- id: 25
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: Clustered data
+  - en:
+      locale: en
+      name: output data
+      description: Clustered data
+- id: 202
+  slug: cluster centroids
+  type: OUTPUT
+  tags: None
+  order: 3
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: centroides do agrupamento
+      description: Centroides do agrupamento
+  - en:
+      locale: en
+      name: cluster centroids
+      description: Cluster centroids
+translations:
+  pt:
+    locale: pt
+    name: Modelo de agrupamento
+    description: Treina e aplica um modelo de agrupamento
+    label_format: None
+  en:
+    locale: en
+    name: Clustering model
+    description: Trains and applies a clustering model
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 19
+  type: subgroup
+- id: 8
+  type: group
+

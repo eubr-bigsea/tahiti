@@ -1,0 +1,56 @@
+id: 96
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 225
+  name: attributes
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributos, separados por v\xEDrgula (vazio = usar nomes da fonte de\
+        \ dados)"
+      help: "Atributos, separados por v\xEDrgula (vazio = usar nomes da fonte de dados)"
+  - en:
+      locale: en
+      label: Attribute  names, comma separated (empty = use data source names)
+      help: Attribute names, comma separated (empty = use data source names)
+- id: 226
+  name: title
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo"
+  - en:
+      locale: en
+      label: Title
+      help: Tiel
+translations:
+  pt:
+    locale: pt
+    name: None
+  en:
+    locale: en
+    name: None
+

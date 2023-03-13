@@ -1,0 +1,47 @@
+id: 34
+slug: broadcast-data
+enabled: false
+type: TRANSFORMATION
+icon: fa-bullhorn
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 68
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Distribuir dados de processamento
+    description: "Distribui pequenos conjuntos de dados entre os n\xF3s de processamento"
+    label_format: None
+  en:
+    locale: en
+    name: Broadcast processing data
+    description: Distribute small data sets between processing nodes
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 10
+  type: group
+

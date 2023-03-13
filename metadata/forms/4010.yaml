@@ -1,0 +1,123 @@
+id: 4010
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4053
+  name: tol
+  type: DECIMAL
+  required: false
+  order: 4
+  default: '0.00001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tolerancia
+      help: "Toler\xE2ncia para crit\xE9rios de parada."
+  - en:
+      locale: en
+      label: Tolerance
+      help: Tolerance for stopping criteria.
+- id: 4050
+  name: epsilon
+  type: DECIMAL
+  required: false
+  order: 5
+  default: '1.35'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Epsilon
+      help: "O par\xE2metro epsilon controla o n\xFAmero de amostras que devem ser\
+        \ classificadas como outliers. Quanto menor o epsilon, mais robusto \xE9 para\
+        \ outliers."
+  - en:
+      locale: en
+      label: Epsilon
+      help: The parameter epsilon controls the number of samples that should be classified
+        as outliers. The smaller the epsilon, the more robust it is to outliers.
+- id: 4051
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 6
+  default: '100'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es."
+  - en:
+      locale: en
+      label: Maximum number of iterations
+      help: Maximum number of iterations.
+- id: 4052
+  name: alpha
+  type: DECIMAL
+  required: false
+  order: 7
+  default: '0.0001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Alpha
+      help: "Par\xE2metro de Regulariza\xE7\xE3o."
+  - en:
+      locale: en
+      label: Alpha
+      help: Regularization parameter.
+- id: 4186
+  name: fit_intercept
+  type: INTEGER
+  required: false
+  order: 9
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fit intercepta\xE7\xE3o"
+      help: "Se deve ou n\xE3o caber na intercepta\xE7\xE3o. Isso pode ser definido\
+        \ como False se os dados j\xE1 estiverem centralizados em torno da origem."
+  - en:
+      locale: en
+      label: Fit the intercept
+      help: Whether or not to fit the intercept. This can be set to False if the data
+        is already centered around the origin.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,55 @@
+id: 4025
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4123
+  name: fit_intercept
+  type: INTEGER
+  required: false
+  order: 5
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Interceptar
+      help: "Se deve calcular a intercepta\xE7\xE3o para este modelo."
+  - en:
+      locale: en
+      label: Intercept
+      help: Whether to calculate the intercept for this model.
+- id: 4124
+  name: normalize
+  type: INTEGER
+  required: false
+  order: 6
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.fit_intercept.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Normalizar
+      help: "Usado para normalizar os regressores antes da regress\xE3o."
+  - en:
+      locale: en
+      label: Normalize
+      help: Used to normalized the regressors before regression.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

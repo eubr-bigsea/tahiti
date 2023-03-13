@@ -1,0 +1,91 @@
+id: 92
+slug: max-abs-scaler
+enabled: true
+type: TRANSFORMATION
+icon: fa-play
+css_class: None
+doc_link: None
+scripts:
+- id: 32
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'alias', false, null);
+ports:
+- id: 209
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 210
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 211
+  slug: transformation model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: "modelo de transforma\xE7\xE3o"
+      description: "Modelo de transforma\xE7\xE3o"
+  - en:
+      locale: en
+      name: transformation model
+      description: Transformation model
+translations:
+  pt:
+    locale: pt
+    name: "M\xE1ximo-Absoluto"
+    description: "Transforma a entrada (linhas com vetores), reescalando cada caracteristica(feature)\
+      \ para a faixa [-1, 1], atrav\xE9s da divis\xE3o pelo valor absoluto m\xE1ximo\
+      \ de cada caracteristica (feature)"
+    label_format: None
+  en:
+    locale: en
+    name: Max-Abs
+    description: Transforms the input (vector rows), rescaling each value (feature)
+      to range [-1, 1] by dividing through the maximum absolute value in each value
+      (feature(.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 32
+  type: group
+- id: 34
+  type: subgroup
+

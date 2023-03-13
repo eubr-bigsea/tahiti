@@ -1,0 +1,130 @@
+id: 20
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 18
+  name: attributes
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s)
+      help: Selecione um ou mais atributos a ser(em) limpos.
+  - en:
+      locale: en
+      label: Attribute(s)
+      help: Select one or more attributes to be cleaned
+- id: 19
+  name: cleaning_mode
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Replace with mean", "key": "MEAN", "value": "Replace with mean",
+    "pt": "Substituir com a m\u00e9dia"}, {"en": "Replace with value", "key": "VALUE",
+    "value": "Replace with value", "pt": "Substituir por valor"}, {"en": "Replace
+    with approx. median (10% relative target precision)", "key": "MEDIAN", "value":
+    "Replace with approx. median (10% relative target precision)", "pt": "Substituir
+    com a mediana aproximada (10% de precis\u00e3o relativa)"}, {"en": "Replace with
+    mode", "key": "MODE", "value": "Replace with mode", "pt": "Substituir com a moda"},
+    {"en": "Remove entire row", "key": "REMOVE_ROW", "value": "Remove entire row",
+    "pt": "Remover toda a linha"}, {"en": "Remove entire column", "key": "REMOVE_COLUMN",
+    "value": "Remove entire column", "pt": "Remover toda a coluna"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tipo de limpeza
+      help: Tipo de limpeza a ser realizada.
+  - en:
+      locale: en
+      label: Cleaning mode
+      help: Type of cleaning to be performed.
+- id: 20
+  name: value
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Valor
+      help: Valor a ser usado para substituir os valores ausentes.
+  - en:
+      locale: en
+      label: Value
+      help: Value used to replace missing values.
+- id: 79
+  name: min_missing_ratio
+  type: FLOAT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Raz\xE3o m\xEDnima de valores ausentes"
+      help: "Raz\xE3o m\xEDnima entre o total de valores ausentes e o total de registros\
+        \ a ser considerada para que a opera\xE7\xE3o seja executada"
+  - en:
+      locale: en
+      label: Minimum missing value ratio
+      help: Minimum number of missing values required for the operation to be performed
+- id: 80
+  name: max_missing_ratio
+  type: FLOAT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Raz\xE3o m\xE1xima de valores ausentes"
+      help: "Raz\xE3o m\xE1xima entre o total de valores ausentes e o total de registros\
+        \ a ser considerada para que a opera\xE7\xE3o seja executada"
+  - en:
+      locale: en
+      label: Maximum missing value ratio
+      help: Maximum number of missing values that can be present for the operation
+        to be performed
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

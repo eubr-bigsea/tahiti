@@ -1,0 +1,57 @@
+id: 86
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 202
+  name: labels
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Nomes das colunas, separadas por v\xEDrgula (vazio = usar nomes da fonte\
+        \ de dados)"
+      help: "Nomes das colunas, separadas por v\xEDrgula (vazio = usar nomes da fonte\
+        \ de dados)"
+  - en:
+      locale: en
+      label: Column names, comma separated (empty = use data source names)
+      help: Column names, comma separated (empty = use data source names)
+- id: 203
+  name: title
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo"
+  - en:
+      locale: en
+      label: Title
+      help: Title
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

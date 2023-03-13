@@ -1,0 +1,47 @@
+id: 20
+slug: service-output
+enabled: true
+type: ACTION
+icon: fa-cogs
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 40
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: "Sa\xEDda de servi\xE7o"
+    description: "Sa\xEDda para um servi\xE7o web ou visualiza\xE7\xE3o"
+    label_format: None
+  en:
+    locale: en
+    name: Service output
+    description: Service output for web service or visualization
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 2
+  type: service
+- id: 9
+  type: group
+

@@ -1,0 +1,89 @@
+id: 91
+slug: min-max-scaler
+enabled: true
+type: TRANSFORMATION
+icon: fa-arrows-alt-v
+css_class: None
+doc_link: None
+scripts:
+- id: 31
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, "alias", false, null);
+ports:
+- id: 206
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 207
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 208
+  slug: transformation model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: "modelo de transforma\xE7\xE3o"
+      description: "Modelo de transforma\xE7\xE3o"
+  - en:
+      locale: en
+      name: transformation model
+      description: Transformation model
+translations:
+  pt:
+    locale: pt
+    name: "M\u0131\u0301nimo-M\xE1ximo"
+    description: "Transforma a entrada (linhas com vetores), reescalando cada caracteristica\
+      \ (feature) para uma faixa espec\xEDfica (geralmente [0, 1])"
+    label_format: None
+  en:
+    locale: en
+    name: Min-Max
+    description: 'Transforms the input (vector rows), rescaling each feature to a
+      specific range (often [0, 1]). '
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 32
+  type: group
+- id: 34
+  type: subgroup
+

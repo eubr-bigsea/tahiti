@@ -1,0 +1,87 @@
+id: 5075
+slug: separable-conv-2d
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5175
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5275
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5352
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: SeparableConv2D
+    description: Depthwise separable 2D convolution. Separable convolutions consist
+      in first performing a depthwise spatial convolution (which acts on each input
+      channel separately) followed by a pointwise convolution which mixes together
+      the resulting output channels. The depth_multiplier argument controls how many
+      output channels are generated per input channel in the depthwise step. Intuitively,
+      separable convolutions can be understood as a way to factorize a convolution
+      kernel into two smaller kernels, or as an extreme version of an Inception block.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5020
+  type: group
+

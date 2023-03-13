@@ -1,0 +1,76 @@
+id: 140
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 524
+  name: filters
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: filter
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Filtros
+      help: "Filtros a serem aplicados \xE0 entrada."
+  - en:
+      locale: en
+      label: Filters
+      help: Filters to be applied to the input.
+- id: 525
+  name: ignore
+  type: INTEGER
+  required: false
+  order: 2
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Ignore ao executar em ambiente de edi\xE7\xE3o"
+      help: "Filtros s\xE3o ignorados durante a edi\xE7\xE3o do workflow."
+  - en:
+      locale: en
+      label: Ignore in design
+      help: In design/editing mode, filters are ignored.
+- id: 526
+  name: use_advanced_editor
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Disponibilizar editor de consulta
+      help: "Usu\xE1rios podem editar os filtros usando um editor avan\xE7ado de consultas."
+  - en:
+      locale: en
+      label: User can use advanced query editor
+      help: Users can define custom filters using an advanced query editor.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

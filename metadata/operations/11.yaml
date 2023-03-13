@@ -1,0 +1,27 @@
+id: 11
+slug: outlier-detection
+enabled: false
+type: TRANSFORMATION
+icon: fa-balance-scale
+css_class: None
+doc_link: None
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Detectar outliers
+    description: "Realiza a detec\xE7\xE3o de outliers"
+    label_format: None
+  en:
+    locale: en
+    name: Outlier detection
+    description: Performs outlier detection
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+

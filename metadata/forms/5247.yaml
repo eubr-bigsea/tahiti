@@ -1,0 +1,100 @@
+id: 5247
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5635
+  name: batch_size
+  type: INTEGER
+  required: true
+  order: 1
+  default: '32'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Batch size
+      help: 'Size of the batches of data (default: 32).'
+- id: 5638
+  name: shape
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shape
+      help: A shape tuple (integer), not including the batch size. For instance, shape=(32,)
+        indicates that the expected input will be batches of 32-dimensional vectors.
+- id: 5636
+  name: shuffle
+  type: INTEGER
+  required: false
+  order: 3
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shuffle
+      help: 'Whether to shuffle the order of the batches at the beginning of each
+        epoch. '
+- id: 5637
+  name: validation_split
+  type: DECIMAL
+  required: false
+  order: 4
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Validation split
+      help: Float. Fraction of data reserved for validation (strictly between 0 and
+        1).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

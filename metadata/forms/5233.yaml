@@ -1,0 +1,695 @@
+id: 5233
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5465
+  name: optimizer
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "adadelta", "key": "adadelta"}, {"value": "adagrad", "key":
+    "adagrad"}, {"value": "adam", "key": "adam"}, {"value": "adamax", "key": "adamax"},
+    {"value": "nadam", "key": "nadam"}, {"value": "rmsprop", "key": "rmsprop"}, {"value":
+    "sgd", "key": "sgd"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Optimizer
+      help: An optimizer is one of the two arguments required for compiling a Keras
+        model.
+- id: 5612
+  name: advanced_optimizer
+  type: INTEGER
+  required: false
+  order: 2
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Advanced optimizer options
+      help: Advanced option for the optimazer parameters.
+- id: 5615
+  name: learning_rate_sgd
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.01'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate.
+- id: 5619
+  name: learning_rate_rmsprop
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "rmsprop" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate.
+- id: 5621
+  name: learning_rate_adagrad
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.01'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adagrad" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate.
+- id: 5622
+  name: learning_rate_adadelta
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adadelta" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate.
+- id: 5624
+  name: learning_rate_adam
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate.
+- id: 5628
+  name: learning_rate_adamax
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.002'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adamax" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate.
+- id: 5631
+  name: learning_rate_nadam
+  type: DECIMAL
+  required: false
+  order: 3
+  default: '0.002'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "nadam" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate.
+- id: 5613
+  name: clipnorm
+  type: DECIMAL
+  required: false
+  order: 4
+  default: '1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_optimizer.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Clip norm
+      help: All parameter gradients will be clipped to a maximum norm of 1.
+- id: 5614
+  name: clipvalue
+  type: DECIMAL
+  required: false
+  order: 5
+  default: '0.5'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_optimizer.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Clip value
+      help: All parameter gradients will be clipped to a maximum value of 0.5 and
+        a minimum value of -0.5.
+- id: 5616
+  name: decay_sgd
+  type: DECIMAL
+  required: false
+  order: 6
+  default: '0.000001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Decay
+      help: Learning rate decay
+- id: 5620
+  name: rho_rmsprop
+  type: DECIMAL
+  required: false
+  order: 6
+  default: '0.9'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "rmsprop" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Rho
+      help: Rho
+- id: 5623
+  name: rho_adadelta
+  type: DECIMAL
+  required: false
+  order: 6
+  default: '0.95'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adadelta" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Rho
+      help: Rho
+- id: 5625
+  name: beta_1_adam
+  type: DECIMAL
+  required: false
+  order: 6
+  default: '0.9'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta 1
+      help: ' 0 < beta < 1. Generally close to 1.'
+- id: 5629
+  name: beta_1_adamax
+  type: DECIMAL
+  required: false
+  order: 6
+  default: '0.9'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adamax" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta 1
+      help: ' 0 < beta < 1. Generally close to 1.'
+- id: 5632
+  name: beta_1_nadam
+  type: DECIMAL
+  required: false
+  order: 6
+  default: '0.9'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "nadam" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta 1
+      help: ' 0 < beta < 1. Generally close to 1.'
+- id: 5617
+  name: momentum_sgd
+  type: DECIMAL
+  required: false
+  order: 7
+  default: '0.9'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Momentum
+      help: Parameter that accelerates SGD in the relevant direction and dampens oscillations.
+- id: 5626
+  name: beta_2_adam
+  type: DECIMAL
+  required: false
+  order: 7
+  default: '0.999'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta 2
+      help: 0 < beta < 1. Generally close to 1.
+- id: 5630
+  name: beta_2_adamax
+  type: DECIMAL
+  required: false
+  order: 7
+  default: '0.999'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adamax" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta 2
+      help: 0 < beta < 1. Generally close to 1.
+- id: 5633
+  name: beta_2_nadam
+  type: DECIMAL
+  required: false
+  order: 7
+  default: '0.999'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "nadam" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Beta 2
+      help: 0 < beta < 1. Generally close to 1.
+- id: 5618
+  name: nesterov_sgd
+  type: INTEGER
+  required: false
+  order: 8
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Nesterov
+      help: Whether to apply Nesterov momentum.
+- id: 5627
+  name: amsgrad_adam
+  type: INTEGER
+  required: false
+  order: 8
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Amsgrad
+      help: Whether to apply the AMSGrad variant of this algorithm from the paper
+        "On the Convergence of Adam and Beyond".
+- id: 5466
+  name: loss
+  type: TEXT
+  required: true
+  order: 10
+  default: None
+  suggested_widget: select2
+  values_url: None
+  values: '[{"value": "squared_hinge", "key": "squared_hinge"}, {"value": "hinge",
+    "key": "hinge"}, {"value": "categorical_hinge", "key": "categorical_hinge"}, {"value":
+    "logcosh", "key": "logcosh"}, {"value": "categorical_crossentropy", "key": "categorical_crossentropy"},
+    {"value": "sparse_categorical_crossentropy", "key": "sparse_categorical_crossentropy"},
+    {"value": "binary_crossentropy", "key": "binary_crossentropy"}, {"value": "kullback_leibler_divergence",
+    "key": "kullback_leibler_divergence"}, {"value": "poisson", "key": "poisson"},
+    {"value": "cosine_proximity", "key": "cosine_proximity"}, {"value": "mean_squared_error",
+    "key": "mean_squared_error"}, {"value": "mean_absolute_error", "key": "mean_absolute_error"},
+    {"value": "mean_absolute_percentage_error", "key": "mean_absolute_percentage_error"},
+    {"value": "mean_squared_logarithmic_error", "key": "mean_squared_logarithmic_error"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Loss
+      help: If the model has multiple outputs, you can use a different loss on each
+        output by passing a dictionary or a list of losses. The loss value that will
+        be minimized by the model will then be the sum of all individual losses.
+- id: 5467
+  name: metrics
+  type: TEXT
+  required: true
+  order: 11
+  default: Categorical Accuracy
+  suggested_widget: select2
+  values_url: None
+  values: '[{"key": "binary_accuracy", "value": "Binary accuracy"}, {"key": "categorical_accuracy",
+    "value": "Categorical accuracy"}, {"key": "sparse_categorical_accuracy", "value":
+    "Sparse categorical accuracy"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Metrics
+      help: A metric is a function that is used to judge the performance of your model.
+- id: 5469
+  name: loss_weights
+  type: TEXT
+  required: false
+  order: 12
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Loss weights
+      help: Optional list or dictionary specifying scalar coefficients (Python floats)
+        to weight the loss contributions of different model outputs. The loss value
+        that will be minimized by the model will then be the weighted sum of all individual
+        losses, weighted by the loss_weights coefficients. If a list, it is expected
+        to have a 1:1 mapping to the model's outputs. If a tensor, it is expected
+        to map output names (strings) to scalar coefficients.
+- id: 5470
+  name: sample_weight_mode
+  type: TEXT
+  required: false
+  order: 13
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Sample weight mode
+      help: If you need to do timestep-wise sample weighting (2D weights), set this
+        to "temporal". None defaults to sample-wise weights (1D). If the model has
+        multiple outputs, you can use a different sample_weight_mode on each output
+        by passing a dictionary or a list of modes.
+- id: 5471
+  name: weighted_metrics
+  type: TEXT
+  required: false
+  order: 14
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Weighted metrics
+      help: List of metrics to be evaluated and weighted by sample_weight or class_weight
+        during training and testing.
+- id: 5472
+  name: target_tensors
+  type: TEXT
+  required: false
+  order: 15
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Target tensors
+      help: By default, Keras will create placeholders for the model's target, which
+        will be fed with the target data during training. If instead you would like
+        to use your own target tensors (in turn, Keras will not expect external Numpy
+        data for these targets at training time), you can specify them via the target_tensors
+        argument. It can be a single tensor (for a single-output model), a list of
+        tensors, or a dict mapping output names to target tensors.
+- id: 5473
+  name: kwargs
+  type: TEXT
+  required: false
+  order: 16
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Kwargs
+      help: For the TensorFlow backend, these arguments are passed into tf.Session.run.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

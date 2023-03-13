@@ -1,0 +1,76 @@
+id: 3032
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3108
+  name: attributes
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Feature
+      help: Feature para reduzir a dimensionalidade.
+  - en:
+      locale: en
+      label: Feature
+      help: Feature to reduce the dimensionality.
+- id: 3109
+  name: aliases
+  type: TEXT
+  required: false
+  order: 1
+  default: feature_PCA
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Alias
+      help: Nome para a nova coluna.
+  - en:
+      locale: en
+      label: Alias
+      help: Alias to the new feature.
+- id: 3110
+  name: NComponents
+  type: INTEGER
+  required: true
+  order: 3
+  default: '2'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero de componentes"
+      help: "O algoritmo PCA ir\xE1 tentar reduzir a dimensionalidade para esse valor."
+  - en:
+      locale: en
+      label: Number of components
+      help: The PCA algorithm will try to reduce the dimensionality to this value.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: None
+

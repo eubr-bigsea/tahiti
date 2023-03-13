@@ -1,0 +1,76 @@
+id: 29
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 139
+  name: max_depth
+  type: INTEGER
+  required: false
+  order: 7
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: DESIGN
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Profundidade m\xE1xima"
+      help: "Profundidade m\xE1xima."
+  - en:
+      locale: en
+      label: Max. depth
+      help: Max. depth.
+- id: 140
+  name: min_instance
+  type: INTEGER
+  required: false
+  order: 8
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: DESIGN
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xEDnimo de inst\xE2ncias por n\xF3"
+      help: "M\xEDnimo de inst\xE2ncias por n\xF3."
+  - en:
+      locale: en
+      label: Min instances per node
+      help: Min instances per node.
+- id: 141
+  name: min_info_gain
+  type: FLOAT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: DESIGN
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Ganho de informa\xE7\xE3o (info gain) m\xEDnimo"
+      help: "Ganho de informa\xE7\xE3o (info gain) m\xEDnimo."
+  - en:
+      locale: en
+      label: Min. info gain
+      help: Min. info gain.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

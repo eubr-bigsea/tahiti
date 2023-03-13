@@ -1,0 +1,103 @@
+id: 59
+slug: recommendation-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-star
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 131
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 132
+  slug: algorithm
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 16
+    name: IRecommendationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+- id: 134
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 15
+    name: IRecommendationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 152
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "Modelo de recomenda\xE7\xE3o"
+    description: "Modelo de recomenda\xE7\xE3o"
+    label_format: None
+  en:
+    locale: en
+    name: Recommendation Model
+    description: Recommendation model
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 20
+  type: subgroup
+- id: 8
+  type: group
+

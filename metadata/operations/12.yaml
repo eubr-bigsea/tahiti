@@ -1,0 +1,92 @@
+id: 12
+slug: add-rows
+enabled: true
+type: TRANSFORMATION
+icon: fa-plus-square
+css_class: None
+doc_link: None
+scripts:
+- id: 16
+  type: JS_CLIENT
+  enabled: true
+  body: copyFromOnlyOneInput(task, 5); //hard coded id for 'input data 1', first input
+    data port
+ports:
+- id: 5
+  slug: input data 1
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada 1
+      description: Input data 1
+  - en:
+      locale: en
+      name: input data 1
+      description: Input data 1
+- id: 6
+  slug: input data 2
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada 2
+      description: Input data 2
+  - en:
+      locale: en
+      name: input data 2
+      description: Input data 2
+- id: 7
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Adicionar nova(s) linha(s)
+    description: Concatena duas fontes de dados
+    label_format: None
+  en:
+    locale: en
+    name: Add new row(s)
+    description: 'Concates two data sources '
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 7
+  type: group
+- id: 29
+  type: subgroup
+

@@ -1,0 +1,77 @@
+id: 3
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 227
+  name: min_support
+  type: FLOAT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Suporte m\xEDnimo"
+      help: "Suporte m\xEDnimo"
+  - en:
+      locale: en
+      label: Minimum support
+      help: The minimum support for an itemset to be identified as frequent. For example,
+        if an item appears 3 out of 5 transactions, it has a support of 3/5=0.6.
+- id: 228
+  name: attribute
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com transa\xE7\xF5es (vazio = primeiro attributo)"
+      help: "Atributo com transa\xE7\xF5es (vazio = primeiro attributo)"
+  - en:
+      locale: en
+      label: Attribute with transactions (empty = first attribute)
+      help: ' Attribute with transactions (empty = first attribute)'
+- id: 344
+  name: min_confidence
+  type: FLOAT
+  required: false
+  order: 2
+  default: '0.9'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Confian\xE7a m\xEDnima (para gera\xE7\xE3o das regras)"
+      help: "Confian\xE7a m\xEDnima (para gera\xE7\xE3o das regras)"
+  - en:
+      locale: en
+      label: Min. confidence (for rules generation)
+      help: Min. confidence (for rules generation)
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

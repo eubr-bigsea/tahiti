@@ -1,0 +1,45 @@
+id: 139
+slug: data-source
+enabled: true
+type: SHORTCUT
+icon: ' '
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 325
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Fonte de dados
+    description: "L\xEA uma fonte de dados."
+    label_format: None
+  en:
+    locale: en
+    name: Data source
+    description: Reads a data source.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+

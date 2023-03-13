@@ -1,0 +1,28 @@
+id: 2120
+slug: force-range
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Integer|Decimal
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "For\xE7ar faixa"
+    description: "Permite for\xE7ar um n\xFAmero a uma faixa."
+    label_format: "<b>For\xE7ar faixa</b> <i>${this.attributes.value.map(a=>a).join(\"\
+      , \")}</i>"
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

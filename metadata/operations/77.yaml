@@ -1,0 +1,51 @@
+id: 77
+slug: gbt-regressor
+enabled: true
+type: TRANSFORMATION
+icon: fa-id-card
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 169
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 17
+    name: IRegressionAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+translations:
+  pt:
+    locale: pt
+    name: Gradient boosted tree regressor
+    description: Gradient-Boosted Trees (GBTs) learning algorithm for regression.
+      It supports both continuous and categorical feature
+    label_format: None
+  en:
+    locale: en
+    name: Gradient boosted tree regressor
+    description: Gradient-Boosted Trees (GBTs) learning algorithm for regression.
+      It supports both continuous and categorical featur
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 21
+  type: subgroup
+- id: 8
+  type: group
+

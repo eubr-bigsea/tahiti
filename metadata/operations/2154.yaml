@@ -1,0 +1,27 @@
+id: 2154
+slug: flag-in-range
+enabled: false
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Sinalizar registros em faixa
+    description: Sinaliza registros em faixa.
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2105
+  type: menu/selected/fa fa-flag
+

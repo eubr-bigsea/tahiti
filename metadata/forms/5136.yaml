@@ -1,0 +1,128 @@
+id: 5136
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5566
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5136
+  name: function
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: code
+  values_url: None
+  values: '{"language": "python"}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Function
+      help: The function to be evaluated. Takes input tensor as first argument.
+- id: 5137
+  name: mask
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Mask
+      help: 'Masks a sequence by using a mask value to skip timesteps.For each timestep
+        in the input tensor (dimension #1 in the tensor), if all values in the input
+        tensor at that timestep are equal to mask_value, then the timestep will be
+        masked (skipped) in all downstream layers (as long as they support masking).If
+        any downstream layer does not support masking yet receives such an input mask,
+        an exception will be raised.'
+- id: 5138
+  name: arguments
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Arguments
+      help: Optional dictionary of keyword arguments to be passed to the function.
+- id: 5418
+  name: output_shape
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Output shape
+      help: 'Expected output shape from function. Only relevant when using Theano.
+        Can be a tuple or function. If a tuple, it only specifies the first dimension
+        onward; sample dimension is assumed either the same as the input: output_shape
+        = (input_shape[0], ) + output_shape or, the input is None and the sample dimension
+        is also None: output_shape = (None, ) + output_shape If a function, it specifies
+        the entire shape as a function of the input shape: output_shape = f(input_shape).'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

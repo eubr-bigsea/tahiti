@@ -1,0 +1,142 @@
+id: 134
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 490
+  name: title
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo"
+      help: "T\xEDtulo para o gr\xE1fico"
+  - en:
+      locale: en
+      label: Chart Title
+      help: Title for the chart
+- id: 491
+  name: fact_attributes
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) de entrada
+      help: Atributos usados para calcular os quartis e gerar o box plot.
+  - en:
+      locale: en
+      label: Input attribute(s)
+      help: Calculate and box plot quartiles for these attributes.
+- id: 492
+  name: group_attribute
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo usado para agrupar (x-axis)
+      help: "Os dados de entrada ser\xE3o agrupados por este atributo e os quartis\
+        \ ser\xE3o calculados para cada grupo. Cada grupo ser\xE1 uma caixa no eixo\
+        \ X."
+  - en:
+      locale: en
+      label: Grouping attribute (x-axis)
+      help: Input data will be grouped by this attribute and quartiles will be calculated
+        for each group. Each group will be a box in x-axis.
+- id: 493
+  name: show_outliers
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Exibir discrepantes
+      help: Exibir discrepantes (outliers).
+  - en:
+      locale: en
+      label: Show outliers
+      help: Display outliers
+- id: 494
+  name: x_title
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para o eixo X"
+      help: "T\xEDtulo para o eixo X."
+  - en:
+      locale: en
+      label: X-axis title
+      help: X-axis title.
+- id: 495
+  name: y_title
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "T\xEDtulo para o eixo Y"
+      help: "T\xEDtulo para o eixo Y."
+  - en:
+      locale: en
+      label: Y-axis title
+      help: Y-axis title.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

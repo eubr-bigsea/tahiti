@@ -1,0 +1,34 @@
+id: 2179
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2155
+  name: characters
+  type: INTEGER
+  required: true
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero de caracteres"
+      help: "N\xFAmeros de caracteres limite."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

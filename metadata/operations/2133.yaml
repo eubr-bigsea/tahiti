@@ -1,0 +1,28 @@
+id: 2133
+slug: extract-numbers
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Text
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Extrair n\xFAmeros a partir do texto"
+    description: "Extrai n\xFAmeros de um texto."
+    label_format: "<b>Extrair n\xFAmeros em </b> <i>${this.attributes.value.map(a=>a).join(\"\
+      , \")}</i>"
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

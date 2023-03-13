@@ -1,0 +1,139 @@
+id: 75
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 177
+  name: rank
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero de fatoriza\xE7\xE3o (rank)"
+      help: "N\xFAmero de fatoriza\xE7\xE3o (rank)"
+  - en:
+      locale: en
+      label: Factorization number (rank)
+      help: Factorization number (rank)
+- id: 178
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 2
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Itera\xE7\xF5es"
+      help: "Itera\xE7\xF5es"
+  - en:
+      locale: en
+      label: Max iterations
+      help: Max iterations
+- id: 179
+  name: user_col
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com id do usu\xE1rio"
+      help: "Atributo com id do usu\xE1rio"
+  - en:
+      locale: en
+      label: User id attribute
+      help: User id attribute
+- id: 180
+  name: item_col
+  type: TEXT
+  required: true
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo com id do item avaliado
+      help: Atributo com id do item avaliado
+  - en:
+      locale: en
+      label: Evaluated item id attribute
+      help: Evaluated item id attribute
+- id: 181
+  name: rating_col
+  type: TEXT
+  required: true
+  order: 5
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com a avalia\xE7\xE3o"
+      help: "Atributo com a avalia\xE7\xE3o"
+  - en:
+      locale: en
+      label: Attribute with evaluation
+      help: Attribute with evaluation
+- id: 182
+  name: reg_param
+  type: FLOAT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Regulariza\xE7\xE3o do experimento"
+      help: "Regulariza\xE7\xE3o do experimento"
+  - en:
+      locale: en
+      label: Experiment regularization
+      help: Experiment regularization
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

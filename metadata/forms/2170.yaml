@@ -1,0 +1,78 @@
+id: 2170
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2163
+  name: start
+  type: FLOAT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Limite inferior
+      help: Limite inferior para a faixa (inclusive)
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2164
+  name: end
+  type: FLOAT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Limite superior
+      help: Limite superior para a faixa (inclusive)
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2168
+  name: outliers
+  type: TEXT
+  required: true
+  order: 3
+  default: asc
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "clip", "pt": "Usar valor do limite mais pr\u00f3ximo", "en":
+    "Use upper closest value"}, {"key": "clean", "pt": "Remover valor", "en": "Remove
+    value"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Valores fora da faixa
+      help: "A\xE7\xE3o a ser feita sobre os valores fora da faixa."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+
