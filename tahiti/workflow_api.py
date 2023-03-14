@@ -385,8 +385,8 @@ class WorkflowDetailApi(Resource):
                 for task in data.get('tasks', {}):
                     task['forms'] = {k: v for k, v in
                                      list(task['forms'].items())
-                                     if v.get('value') is not None or
-                                     v.get('publishing_enabled') == True}
+                                     if v and (v.get('value') is not None or
+                                     v.get('publishing_enabled')) == True}
                     task['operation_id'] = task['operation']['id']
                     task['environment'] = 'DESIGN'
                 
