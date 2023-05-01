@@ -1,6 +1,6 @@
 coverage==5.5
 eventlet==0.31.0
-Flask==2.0.1
+Flask==2.3.2
 Flask-Babel==2.0.0
 flask-caching==1.10.1
 Flask-Cors==3.0.10
