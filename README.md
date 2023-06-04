@@ -1,25 +1,22 @@
 # tahiti
 Repository for backend execution of Lemonade project
 
-### Install
+### Install Tahiti
 ```
 git clone git@github.com:eubr-bigsea/tahiti.git
 cd tahiti
 ```
 
 ### Install Requirements
-
 ```
-pip install -r requiremenets.txt
+pip install -r requirements.txt
 ```
 
 If you prefer, use a virtualenv to install all requirements.
 
 
-### Define path
-
+### Define Path
 Execute the following command inside tahiti folder
-
 ```
 export PYTHONPATH=.
 ```
@@ -27,57 +24,56 @@ export PYTHONPATH=.
 ### Config
 Copy `tahiti.yaml.example` to `tahiti.yaml`
 ```
-cp tahiti.yaml.example tahiti.yaml
+cp conf/tahiti.yaml.example tahiti.yaml
 ```
 
 Create a database named `tahiti`
 ```
 #Example
-mysql -uroot -pmysecret -e "CREATE DATABASE tahiti CHARACTER SET utf8;"
+mysql -u root -p mysecret -e "CREATE DATABASE tahiti CHARACTER SET utf8;"
 
 ```
 and then create a user and give him/her permissions to the database (
-SELECT/INSERT/DELETE/UPDATE and DML).
+INSERT/UPDATE/DELETE/SELECT and DML).
+```
+#Example
+mysql -u root -p mysecret
+> CREATE USER 'username'@'hostname' IDENTIFIED BY 'password';
+> GRANT INSERT, UPDATE, DELETE, SELECT on tahiti.* TO 'username'@'hostname';
+> exit
+
+```
 
 Edit `tahiti.yaml` according to your database config
-```
-# Tahiti configuration file
-tahiti:
-    debug: true
-    servers:
-        database_url: mysql://user:secret@server:3306/tahiti
-    services:
-    config:
-        SQLALCHEMY_POOL_SIZE: 10
-        SQLALCHEMY_POOL_RECYCLE: 240
-```
-In order to use Lemonade, you need to import the SQL script tahiti.sql, located
-under the folder `migrations/versions`'. This script will load initial list of
-operations and platforms supported by Lemonade.
-To import the script, use the following command (requires installation of mysql-clients package):
 
-`mysql -h "server" -P 3306 -u user -p "secret" "tahiti" < "migrations/versions/tahiti.sql"`
 
-### Run
+### Migration
+In order to use Lemonade, you need to migrate the last version of the database to your 
+recently created database and upgrade it as follows:
+
+#### Run app
 ```
-TAHITI_CONFIG=tahiti.yaml python tahiti/app.py
+export TAHITI_CONFIG = tahiti.yaml
+export FLASK_APP = tahiti/app.py
 ```
 
-In order to use Lemonade, you need to import the migrations, so you need execute
-the following command (if tahiti.sql not exist).
-### Upgrade db
-
+#### Migrate db
 ```
-TAHITI_CONFIG=tahiti.yaml python tahiti/manage.py db upgrade
+flask db stamp head
+flask db migrate
 ```
 
-### Check db migration version
-
+#### Upgrade db
 ```
-TAHITI_CONFIG=../tahiti.yaml python tahiti/manage.py db current
+flask db upgrade
 ```
 
-#### Using docker
+#### Check db migration version
+```
+flask db current
+```
+
+### Using Docker
 Build the container
 ```
 docker build -t bigsea/tahiti .
@@ -90,6 +86,5 @@ docker run \
   -p 3322:5000 \
   bigsea/tahiti
 ```
-
 
 Again, you should import initial data as described above, even if you are using Docker.
