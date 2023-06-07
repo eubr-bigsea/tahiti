@@ -998,3 +998,22 @@ class WorkflowVariable(db.Model):
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
+
+class SourceCode(db.Model):
+    """ Source codes table """
+    __tablename__ = 'source_code'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(LONGTEXT)
+    code = Column(LONGTEXT, nullable=False)
+
+    # Associations
+    # ...
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
