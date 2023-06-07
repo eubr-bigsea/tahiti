@@ -1,0 +1,9 @@
+# Tahiti configuration file
+tahiti:
+    debug: true
+    servers:
+        database_url: mysql+pymysql://ericksunclair:Senha-123@localhost:3306/tahiti?charset=utf8
+    services:
+    config:
+        SQLALCHEMY_POOL_SIZE: 10
+        SQLALCHEMY_POOL_RECYCLE: 240
