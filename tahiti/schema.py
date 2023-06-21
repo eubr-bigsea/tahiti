@@ -1497,9 +1497,6 @@ class WorkflowListResponseSchema(BaseSchema):
             "id": x.user_id,
             "name": x.user_name,
             "login": x.user_login})
-    specification = fields.Function(
-        lambda row, ctx: ctx.get(
-            "specification", "2.0.0"))
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1663,9 +1660,6 @@ class WorkflowItemResponseSchema(BaseSchema):
             "id": x.user_id,
             "name": x.user_name,
             "login": x.user_login})
-    specification = fields.Function(
-        lambda row, ctx: ctx.get(
-            "specification", "2.0.0"))
 
     # noinspection PyUnresolvedReferences
     @post_load

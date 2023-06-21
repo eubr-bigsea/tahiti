@@ -34,6 +34,55 @@ class OperationType:
 
 
 # noinspection PyClassHasNoInit
+class LinkType:
+    BUILD = 'BUILD'
+    CREATE = 'CREATE'
+    DELETE = 'DELETE'
+    DEPLOY = 'DEPLOY'
+    DISPLAY = 'DISPLAY'
+    FIT = 'FIT'
+    PROCESS = 'PROCESS'
+    REPLACE = 'REPLACE'
+    UPDATE = 'UPDATE'
+
+    @staticmethod
+    def values():
+        return [n for n in list(LinkType.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
+class ProjectItemType:
+    DATA_EXPLORER = 'DATA_EXPLORER'
+    DATA_SOURCE = 'DATA_SOURCE'
+    DASHBOARD = 'DASHBOARD'
+    DEPLOYMENT = 'DEPLOYMENT'
+    EXECUTION = 'EXECUTION'
+    MODEL = 'MODEL'
+    MODEL_BUILDER = 'MODEL_BUILDER'
+    VISUALIZATION = 'VISUALIZATION'
+    VISUALIZATION_BUILDER = 'VISUALIZATION_BUILDER'
+    WORKFLOW = 'WORKFLOW'
+
+    @staticmethod
+    def values():
+        return [n for n in list(ProjectItemType.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
+class ProjectStatus:
+    ENABLED = 'ENABLED'
+    DISABLED = 'DISABLED'
+    ARCHIVED = 'ARCHIVED'
+
+    @staticmethod
+    def values():
+        return [n for n in list(ProjectStatus.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
+# noinspection PyClassHasNoInit
 class DiagramEnvironment:
     DESIGN = 'DESIGN'
     DEPLOYMENT = 'DEPLOYMENT'
@@ -361,8 +410,8 @@ class Operation(db.Model, Translatable):
             "and_("
             "OperationForm.id==operation_operation_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
-    ports = relationship("OperationPort", cascade="all, delete-orphan")
-    scripts = relationship("OperationScript", cascade="all, delete-orphan")
+    ports = relationship("OperationPort")
+    scripts = relationship("OperationScript")
 
     def __str__(self):
         return self.name
@@ -709,6 +758,63 @@ class PlatformPlugin(db.Model):
 
     def __str__(self):
         return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class Project(db.Model):
+    """ Project """
+    __tablename__ = 'project'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(100), nullable=False)
+    description = Column(String(200), nullable=False)
+    image = Column(String(200))
+    status = Column(Enum(*list(ProjectStatus.values()),
+                         name='ProjectStatusEnumType'),
+                    default='ACTIVE', nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(100), nullable=False)
+    user_email = Column(String(200), nullable=False)
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class ProjectItem(db.Model):
+    """ Project item """
+    __tablename__ = 'project_item'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    original_id = Column(Integer, nullable=False)
+    type = Column(Enum(*list(ProjectItemType.values()),
+                       name='ProjectItemTypeEnumType'), nullable=False)
+
+    def __str__(self):
+        return self.original_id
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class ProjectItemLink(db.Model):
+    """ Project item link """
+    __tablename__ = 'project_item_link'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    source_id = Column(Integer, nullable=False)
+    target_id = Column(Integer, nullable=False)
+    type = Column(String(100), nullable=False)
+
+    def __str__(self):
+        return self.source_id
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
