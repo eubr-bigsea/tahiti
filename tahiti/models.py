@@ -191,6 +191,18 @@ class PluginStatus:
                 if n[0] != '_' and n != 'values']
 
 
+# noinspection PyClassHasNoInit
+class CodeStatus:
+    ENABLED = 'ENABLED'
+    DISABLED = 'DISABLED'
+    SUSPICIOUS = 'SUSPICIOUS'
+
+    @staticmethod
+    def values():
+        return [n for n in list(CodeStatus.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
 # Association tables definition
     # noinspection PyUnresolvedReferences
 operation_category_operation = db.Table(
@@ -1005,9 +1017,13 @@ class SourceCode(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    description = Column(LONGTEXT)
+    # name = Column(String(200), nullable=False)
+    description = Column(String(200), nullable=False)
+    requirements = Column(LONGTEXT)
+    help = Column(UnicodeText())
     code = Column(LONGTEXT, nullable=False)
+    status = Column(Enum(*list(CodeStatus.values()),
+                         name='CodeStatusEnumType'))
 
     # Associations
     # ...
