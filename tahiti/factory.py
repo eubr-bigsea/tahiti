@@ -107,6 +107,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows/from-template': WorkflowFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
+        '/sourcecodes': SourceCodeListApi,
+        '/sourcecodes/<int:sourcecode_id>': SourceCodeDetailApi,
     }
     for path, view in list(mappings.items()):
         api.add_resource(view, path)

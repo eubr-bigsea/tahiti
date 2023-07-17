@@ -1,6 +1,8 @@
 # Tahiti configuration file
 tahiti:
     debug: true
+    environment: dev
+    secret: "123456"
     servers:
         database_url: mysql+pymysql://ericksunclair:Senha-123@localhost:3306/tahiti?charset=utf8
     services:
