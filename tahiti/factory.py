@@ -26,6 +26,7 @@ from tahiti.workflow_from_template_api import WorkflowFromTemplateApi
 from tahiti.workflow_permission_api import WorkflowPermissionApi
 from tahiti.import_workflow_api import ImportWorkflowApi
 from tahiti.workflow_history_api import  WorkflowHistoryApi
+from tahiti.source_code_api import SourceCodeListApi, SourceCodeDetailApi
 from flask_swagger_ui import get_swaggerui_blueprint
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
