@@ -1017,13 +1017,12 @@ class SourceCode(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    # name = Column(String(200), nullable=False)
     description = Column(String(200), nullable=False)
-    requirements = Column(LONGTEXT)
-    help = Column(UnicodeText())
+    requirements = Column(String(200))
+    help = Column(String(200))
     code = Column(LONGTEXT, nullable=False)
     status = Column(Enum(*list(CodeStatus.values()),
-                         name='CodeStatusEnumType'))
+                         name='CodeStatusEnumType'), nullable=False)
 
     # Associations
     # ...

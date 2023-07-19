@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-}
 import logging
+import math
 
 from flask import request, current_app, g
 from flask_babel import gettext

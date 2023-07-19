@@ -138,6 +138,70 @@ class ApplicationItemResponseSchema(BaseSchema):
         unknown = EXCLUDE
 
 
+class SourceCodeCreateRequestSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    description = fields.String(required=True)
+    requirements = fields.String(required=False)
+    help = fields.String(required=False)
+    code = fields.String(required=True)
+    status = fields.String(required=True,
+                           validate=[OneOf(list(CodeStatus.__dict__.keys()))])
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of SourceCode"""
+        return SourceCode(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class SourceCodeListResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    description = fields.String(required=True)
+    requirements = fields.String(required=False)
+    help = fields.String(required=False)
+    code = fields.String(required=True)
+    status = fields.String(required=True,
+                           validate=[OneOf(list(CodeStatus.__dict__.keys()))])
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of SourceCode"""
+        return SourceCode(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class SourceCodeItemResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    description = fields.String(required=True)
+    requirements = fields.String(required=False)
+    help = fields.String(required=False)
+    code = fields.String(required=True)
+    status = fields.String(required=True,
+                           validate=[OneOf(list(CodeStatus.__dict__.keys()))])
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of SourceCode"""
+        return SourceCode(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+# --------------------------------------------------
+
+
 class FlowListResponseSchema(BaseSchema):
     """ JSON schema for listing """
     source_port = fields.Integer(required=True)
