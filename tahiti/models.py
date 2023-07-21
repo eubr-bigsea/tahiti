@@ -1018,8 +1018,8 @@ class SourceCode(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     description = Column(String(200), nullable=False)
-    requirements = Column(String(200))
-    help = Column(String(200))
+    requirements = Column(String(200), nullable=False)
+    help = Column(String(200), nullable=False)
     code = Column(LONGTEXT, nullable=False)
     status = Column(Enum(*list(CodeStatus.values()),
                          name='CodeStatusEnumType'), nullable=False)

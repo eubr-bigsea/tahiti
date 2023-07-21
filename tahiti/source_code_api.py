@@ -56,7 +56,7 @@ class SourceCodeListApi(Resource):
 
     @requires_auth
     @requires_permission('ADMINISTRATOR',)
-    def post():
+    def post(self):
         result = {'status': 'ERROR',
                   'message': gettext("Missing json in the request body")}
         return_code = HTTPStatus.BAD_REQUEST
@@ -128,7 +128,7 @@ class SourceCodeDetailApi(Resource):
     @requires_auth
     @requires_permission('ADMINISTRATOR',)
     def delete(self, sourcecode_id):
-        return_code = HTTPStatus.NO_CONTENT
+        return_code = HTTPStatus.OK
         if log.isEnabledFor(logging.DEBUG):
             log.debug(gettext('Deleting %s (id=%s)'), self.human_name,
                       sourcecode_id)
