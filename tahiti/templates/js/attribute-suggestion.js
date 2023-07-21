@@ -1,7 +1,7 @@
-/******************************************************************************
+/***********************************************************************************
 * Attribute suggestion for Citrus from Tahiti (both Lemonade Project modules).
-* (c) 2017-2021 Speed Labs - Departamento de Ciência da Computação - UFMG (Brazil).
-*****************************************************************************/
+* (c) 2017-today Speed Labs - Departamento de Ciência da Computação - UFMG (Brazil).
+***********************************************************************************/
 function caseInsensitiveComparator(a, b){
     if (! a || ! b) {
         return -1;
@@ -296,7 +296,7 @@ var TahitiAttributeSuggester = (function () {
         var dataSources = [];
         workflow.tasks.forEach(function(task){
             task.uiPorts = {inputs: [], output: [], refs: []}
-            var isDataSource = [18, 53, 139, 2100].includes(parseInt(task.operation.id));
+            var isDataSource = [18, 53, 139, 2100, 2108].includes(parseInt(task.operation.id));
             if (isDataSource) {
                 dataSources.push(task);
             }
