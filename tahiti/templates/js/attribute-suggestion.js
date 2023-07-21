@@ -297,6 +297,14 @@ var TahitiAttributeSuggester = (function () {
 				}) || [];
 		task.uiPorts.output = flatArrayOfArrays(inputs).sort(caseInsensitiveComparator);
 	}
+	var joinWithDataSource = function(task, id) {
+		if (task.uiPorts.fromDataSource === undefined) {
+			task.uiPorts.fromDataSource = task.uiPorts.output;
+			task.uiPorts.inputs.push({order: 100, attributes: task.uiPorts.fromDataSource})
+		}
+		joinSuffixDuplicatedAttributes2(task);
+	}
+
 	/* Public methods */
 	suggester.compute = function(workflow, dataSourceLoader, uiCallback) {
 
