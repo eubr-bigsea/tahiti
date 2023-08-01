@@ -3,7 +3,7 @@ FROM python:3.7.15-alpine3.15 as base
 RUN apk add --no-cache bash
 
 FROM base as pip_builder
-RUN apk add --no-cache gcc g++ musl-dev postgresql-dev
+RUN apk add --no-cache gcc g++ musl-dev postgresql-dev dumb-init
 COPY requirements.txt /
 RUN pip install -r /requirements.txt
 
@@ -20,4 +20,6 @@ COPY . $TAHITI_HOME
 
 ENV FLASK_APP=tahiti.app
 
-CMD ["/usr/local/tahiti/sbin/tahiti-daemon.sh", "docker"]
+COPY bin/entrypoint /usr/local/bin/
+ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/local/bin/entrypoint"]
+CMD ["server"]
