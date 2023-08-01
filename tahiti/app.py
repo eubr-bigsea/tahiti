@@ -1,13 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# noinspection PyBroadException
-try:
-    #import eventlet
-
-    #eventlet.monkey_patch(all=True, thread=False)
-    pass
-except:
-    pass
 from flask import request, g
 from flask_babel import get_locale
 
