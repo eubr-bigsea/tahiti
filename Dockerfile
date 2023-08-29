@@ -3,7 +3,7 @@ FROM python:3.7.15-alpine3.15 as base
 RUN apk add --no-cache bash
 
 FROM base as pip_builder
-RUN apk add --no-cache gcc g++ musl-dev postgresql-dev dumb-init
+RUN apk add --no-cache gcc g++ musl-dev postgresql-dev
 COPY requirements.txt /
 RUN pip install -r /requirements.txt
 
@@ -12,7 +12,7 @@ LABEL maintainer="Vinicius Dias <viniciusvdias@dcc.ufmg.br>, Guilherme Maluf <gu
 
 ENV TAHITI_HOME /usr/local/tahiti
 ENV TAHITI_CONFIG $TAHITI_HOME/conf/tahiti-config.yaml
-
+RUN apk add dumb-init
 COPY --from=pip_builder /usr/local /usr/local
 
 WORKDIR $TAHITI_HOME
