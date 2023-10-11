@@ -10,6 +10,7 @@ from sqlalchemy import Integer, String, Text, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 from sqlalchemy.sql.sqltypes import UnicodeText
+from tahiti.migration_utils import is_sqlite
 
 # revision identifiers, used by Alembic.
 revision = 'af8eeaf80cd6'
@@ -244,15 +245,22 @@ ALIAS_FORM = BASE_FORM + 6
 
 MAX_OP = max(ALL_OPS)
 
+def execute(conn, cmd, *params):
+    if is_sqlite():
+        cmd2 = cmd.replace('%s', '?')
+    else:
+        cmd2 = cmd
+    conn.execute(cmd2, *params)
+
 def _insert_platform(conn):
-    conn.execute(
+    execute(conn, 
         ''' INSERT INTO platform(id, slug, enabled, icon, version, plugin)
-            VALUES(?, ?, ?, ?, ?, ?)''',
+            VALUES(%s, %s, %s, %s, %s, %s)''',
         META_PLATFORM, 'meta', 1, ' ', None, 0)
 
 def _delete_platform(conn):
-    conn.execute(
-        'DELETE from platform WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from platform WHERE id BETWEEN %s AND %s',
         META_PLATFORM, META_PLATFORM)
 
 def _insert_platform_translation(conn):
@@ -270,8 +278,8 @@ def _insert_platform_translation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_platform_translation(conn):
-    conn.execute(
-        'DELETE from platform_translation WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from platform_translation WHERE id BETWEEN %s AND %s',
         META_PLATFORM, META_PLATFORM)
 
 
@@ -394,8 +402,8 @@ def _insert_operation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation(conn):
-    conn.execute(
-        'DELETE from operation WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from operation WHERE id BETWEEN %s AND %s',
         BASE_OP, max(ALL_OPS))
 
 def _insert_operation_translation(conn):
@@ -409,19 +417,19 @@ def _insert_operation_translation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [SELECT, 'pt', 'Selecionar atributos', 'Selecionar atributos',
-          '<b>${this.mode.value == "include" || this.mode.value == "duplicate"?"Selecionar":(this.mode.value == "rename" ? "Renomear" : "Descartar")}</b> <i>${this.attributes.value.length > 3? '
+          '<b>${this.mode.value == "include" || this.mode.value == "duplicate"%s"Selecionar":(this.mode.value == "rename" %s "Renomear" : "Descartar")}</b> <i>${this.attributes.value.length > 3%s '
           'this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute).join(", ")}</i>'],
       [READ_DATA, 'pt', 'Ler dados', 'Ler dados', '${data_source.label}: ${data_source.labelValue}'],
       [CAST, 'pt', 'Alterar o tipo do atributo', 'Altera o tipo do atributo.',
-          'Alterar o tipo de ${this?.cast_attributes?.value?.length == 1? '
+          'Alterar o tipo de ${this%s.cast_attributes%s.value%s.length == 1%s '
           'this.cast_attributes.value[0].attribute + " para " + this.cast_attributes.value[0].type '
-          ': (this?.cast_attributes?.value?.length || 0) + " atributos"}'],
+          ': (this%s.cast_attributes%s.value%s.length || 0) + " atributos"}'],
       [RENAME, 'pt',  'Renomear atributo', 'Renomeia atributo.',
-         '<b>Renomear</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute + " para " + a.alias).join(", ")}</i>'],
+         '<b>Renomear</b> <i>${this.attributes.value.length > 3%s this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute + " para " + a.alias).join(", ")}</i>'],
       [DISCARD, 'pt',  'Descartar atributo', 'Descarta atributo do resultado.',
-          '<b>Descartar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.join(", ")}</i>'],
+          '<b>Descartar</b> <i>${this.attributes.value.length > 3%s this.attributes.value.length + " atributos" : this.attributes.value.join(", ")}</i>'],
       [DUPLICATE, 'pt',  'Duplicar atributo', 'Duplica o atributo.',
-          '<b>Duplicar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute + " como " + a.alias).join(", ")}</i>'],
+          '<b>Duplicar</b> <i>${this.attributes.value.length > 3%s this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute + " como " + a.alias).join(", ")}</i>'],
       [FIND_REPLACE, 'pt',  'Localizar e substituir (exato)', 'Localiza valores no atributo e permite a substituição.', ''],
 
       [SORT, 'pt', 'Ordenar', 'Permite definir as opções de ordenação.',
@@ -557,8 +565,8 @@ def _insert_operation_translation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_translation(conn):
-    conn.execute(
-        'DELETE from operation_translation WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from operation_translation WHERE id BETWEEN %s AND %s',
         BASE_OP, max(ALL_OPS))
 
 def _insert_operation_category(conn):
@@ -589,8 +597,8 @@ def _insert_operation_category(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_category(conn):
-    conn.execute(
-        'DELETE from operation_category WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from operation_category WHERE id BETWEEN %s AND %s',
         BASE_CATEGORY, BASE_CATEGORY + 15)
 
 def _insert_operation_category_translation(conn):
@@ -619,8 +627,8 @@ def _insert_operation_category_translation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_category_translation(conn):
-    conn.execute(
-        'DELETE from operation_category_translation WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from operation_category_translation WHERE id BETWEEN %s AND %s',
         BASE_CATEGORY, BASE_CATEGORY + 20)
 
 def _insert_operation_category_operation(conn):
@@ -757,9 +765,9 @@ def _insert_operation_category_operation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_category_operation(conn):
-    conn.execute(
+    execute(conn, 
         '''DELETE FROM operation_category_operation
-            WHERE operation_id BETWEEN ? and ? ''',
+            WHERE operation_id BETWEEN %s and %s ''',
         BASE_OP, MAX_OP)
 
 def _insert_operation_platform(conn):
@@ -774,9 +782,9 @@ def _insert_operation_platform(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_platform(conn):
-    conn.execute(
+    execute(conn, 
         '''DELETE FROM operation_platform
-            WHERE operation_id BETWEEN ? and ?''',
+            WHERE operation_id BETWEEN %s and %s''',
         BASE_OP, MAX_OP)
 
 def _insert_operation_form(conn):
@@ -810,8 +818,8 @@ def _insert_operation_form(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form(conn):
-    conn.execute(
-        'DELETE from operation_form WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from operation_form WHERE id BETWEEN %s AND %s',
         BASE_FORM, max(ALL_OPS) + 50)
 
 def _insert_operation_form_translation(conn):
@@ -854,8 +862,8 @@ def _insert_operation_form_translation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_translation(conn):
-    conn.execute(
-        'DELETE from operation_form_translation WHERE id BETWEEN ? AND ?',
+    execute(conn, 
+        'DELETE from operation_form_translation WHERE id BETWEEN %s AND %s',
         BASE_FORM, max(ALL_OPS) + 50)
 
 def _insert_operation_form_field(conn):
@@ -955,7 +963,7 @@ def _insert_operation_form_field(conn):
     data = [
       [BASE_FORM_FIELD + 0, 'comment', 'TEXT', 1, 1, None, 'textarea', None, None, 'EXECUTION', None, 1, BASE_FORM + 0],
       [BASE_FORM_FIELD + 1, 'data_source', 'TEXT', 1, 1, None, 'lookup',
-        '`${LIMONERO_URL}/datasources?&simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, BASE_FORM + 1],
+        '`${LIMONERO_URL}/datasources%s&simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, BASE_FORM + 1],
       [BASE_FORM_FIELD + 2, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, ATTRIBUTES_FORM],
       [BASE_FORM_FIELD + 3, 'overwrite', 'INTEGER', 0, 2, '1', 'checkbox', None, None, 'EXECUTION', None, 1, KEEP_ATTRIBUTE_FORM],
       [BASE_FORM_FIELD + 4, 'aliases', 'TEXT', 0, 20, None, 'tag', None, None, 'EXECUTION', None, 1, ALIASES_FORM],
@@ -1051,9 +1059,9 @@ def _insert_operation_form_field(conn):
       
       [BASE_FORM_FIELD + 93, 'indexes', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', None, 1, EXTRACT_FROM_ARRAY + 50],
       
-      [BASE_FORM_FIELD + 94, 'data_source', 'INTEGER', 1, 1, None, 'lookup', '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, CONCAT_ROWS + 50],
+      [BASE_FORM_FIELD + 94, 'data_source', 'INTEGER', 1, 1, None, 'lookup', '`${LIMONERO_URL}/datasources%ssimple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, CONCAT_ROWS + 50],
       
-      [BASE_FORM_FIELD + 95, 'data_source', 'INTEGER', 1, 0, None, 'lookup', '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, JOIN + 50],
+      [BASE_FORM_FIELD + 95, 'data_source', 'INTEGER', 1, 0, None, 'lookup', '`${LIMONERO_URL}/datasources%ssimple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, JOIN + 50],
 
       # Model builder
       [BASE_FORM_FIELD + 96, 'strategy', 'INTEGER', 1, 0, 'split', 'lookup', None, json.dumps(split_strategy), 
@@ -1166,8 +1174,8 @@ def _insert_operation_form_field(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field(conn):
-    conn.execute(
-        'DELETE from operation_form_field WHERE (id BETWEEN ? AND ?) or id IN (183,184,185,240,241,175,376,405)',
+    execute(conn, 
+        'DELETE from operation_form_field WHERE (id BETWEEN %s AND %s) or id IN (183,184,185,240,241,175,376,405)',
         BASE_FORM_FIELD, BASE_FORM_FIELD + 140)
 
 def _insert_operation_form_field_translation(conn):
@@ -1307,8 +1315,8 @@ def _insert_operation_form_field_translation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field_translation(conn):
-    conn.execute(
-        'DELETE from operation_form_field_translation WHERE id BETWEEN ? AND ? or id IN (183,184,185,240,241,175,376,405)',
+    execute(conn, 
+        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s or id IN (183,184,185,240,241,175,376,405)',
         BASE_FORM_FIELD, BASE_FORM_FIELD + 192)
 
 
@@ -1416,19 +1424,19 @@ def _insert_operation_operation_form(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_operation_form(conn):
-    conn.execute(
+    execute(conn, 
         '''DELETE FROM operation_operation_form
-            WHERE operation_id BETWEEN ? and ?''',
+            WHERE operation_id BETWEEN %s and %s''',
         BASE_OP, max(ALL_OPS))
 
 
 def _fixes(conn):
-    conn.execute(
+    execute(conn, 
            """ INSERT INTO operation_form_field(id, name, type, required, `order`,
                 suggested_widget, scope, enable_conditions, editable, form_id)
-                VALUES(?, 'invalid_values', 'TEXT', 0, 3, 'text', 'EXECUTION',
-                'this.errors.internalValue === "move"', 1, ?)""",
-                (FIELD_CAST_ERROR_ATTRIBUTE,  ORIGINAL_CAST_FORM))
+                VALUES(%s, 'invalid_values', 'TEXT', 0, 3, 'text', 'EXECUTION',
+                'this.errors.internalValue === "move"', 1, %s)""",
+                FIELD_CAST_ERROR_ATTRIBUTE,  ORIGINAL_CAST_FORM)
     dt = [
             {"en": "Array", "value": "Array", "key": "Array", "pt": "Array"},
             {"en": "Boolean", "value": "Boolean", "key": "Boolean", "pt": "Booleano (lógico)"},
@@ -1437,9 +1445,9 @@ def _fixes(conn):
             {"en": "Integer", "value": "Integer", "key": "Integer", "pt": "Inteiro"},
             {"en": "Time", "value": "Time", "key": "Time", "pt": "Hora"}]
 
-    conn.execute("""update operation_form_field
-        set `order`= 1, name = 'cast_attributes', `values`= ? where id = 585""", json.dumps(dt))
-    conn.execute("update operation_form_field set `order`= 2 where id = 586")
+    execute(conn, """update operation_form_field
+        set `order`= 1, name = 'cast_attributes', `values`= %s where id = 585""", json.dumps(dt))
+    execute(conn, "update operation_form_field set `order`= 2 where id = 586")
     errors_options = [
             {"en": "Fail in case of invalid value", "value": "raise", "key": "raise",
                 "pt": "Falhar em caso de valores inválidos"},
@@ -1447,15 +1455,15 @@ def _fixes(conn):
                 "pt": "Forçar conversão (inválidos viram nulo)"},
             {"en": "Move invalid value to (new) attribute", "value": "move",
                 "key": "move", "pt": "Mover valores inválidos para um novo atributo"}]
-    conn.execute('update operation_form_field set `values` = ?, `default` = ? WHERE id = 586',
+    execute(conn, 'update operation_form_field set `values` = %s, `default` = %s WHERE id = 586',
             json.dumps(errors_options), 'coerce')
-    conn.execute("""
+    execute(conn, """
         INSERT INTO operation_form_field_translation(id, locale, label, help)
-        VALUES(?, 'pt', 'Novo atributo com valores inválidos', 'Novo atributo com valores inválidos.')""",
+        VALUES(%s, 'pt', 'Novo atributo com valores inválidos', 'Novo atributo com valores inválidos.')""",
         FIELD_CAST_ERROR_ATTRIBUTE)
-    conn.execute("""
+    execute(conn, """
         INSERT INTO operation_form_field_translation(id, locale, label, help)
-        VALUES(?, 'en', 'New atribute with invalid data', 'New atribute with invalid data.')""", FIELD_CAST_ERROR_ATTRIBUTE)
+        VALUES(%s, 'en', 'New atribute with invalid data', 'New atribute with invalid data.')""", FIELD_CAST_ERROR_ATTRIBUTE)
 
     # Select mode
     mode = [
@@ -1464,63 +1472,63 @@ def _fixes(conn):
             {"en": "Select all and rename some attributes", "value": "rename", "pt": "Selecionar todos e renomear alguns atributos", "key": "rename"},
             {"en": "Select all and Duplicate some attributes", "value": "duplicate", "pt": "Selecionar todos e duplicar alguns atributos", "key": "duplicate"},
     ]
-    conn.execute(
+    execute(conn, 
             """ INSERT INTO operation_form_field(id, name, type, required, `order`,
                 suggested_widget, scope, enable_conditions, editable, form_id, `values`, `default`)
-                VALUES(?, 'mode', 'TEXT', 0, 0, 'dropdown',
-                'EXECUTION', null, 1, ?, ?, 'include')""",
+                VALUES(%s, 'mode', 'TEXT', 0, 0, 'dropdown',
+                'EXECUTION', null, 1, %s, %s, 'include')""",
                 FIELD_SELECT_MODE,  ORIGINAL_SELECT_FORM, json.dumps(mode))
 
     # Select with alias
-    #conn.execute(
+    #execute(conn, 
     #        """ INSERT INTO operation_form_field(id, name, type, required, `order`,
     #            suggested_widget, scope, enable_conditions, editable, form_id)
-    #            VALUES(?, 'attributes', 'TEXT', 1, 0, 'attribute-alias-selector',
-    #            'EXECUTION', None, 1, ?)""",
+    #            VALUES(%s, 'attributes', 'TEXT', 1, 0, 'attribute-alias-selector',
+    #            'EXECUTION', None, 1, %s)""",
     #            FIELD_SELECT_ALIAS,  ORIGINAL_SELECT_FORM)
 
     # Current select attribute field
-    conn.execute("""update operation_form_field set suggested_widget = 'attribute-alias-selector',
+    execute(conn, """update operation_form_field set suggested_widget = 'attribute-alias-selector',
             `order` = 2 where id = 6""")
 
     # Translations
-    conn.execute("""
+    execute(conn, """
         INSERT INTO operation_form_field_translation(id, locale, label, help)
-        VALUES(?, 'pt', 'Modo de seleção', 'Modo de seleção (incluir ou excluir atributos).')""",
+        VALUES(%s, 'pt', 'Modo de seleção', 'Modo de seleção (incluir ou excluir atributos).')""",
         FIELD_SELECT_MODE)
-    conn.execute("""
+    execute(conn, """
         INSERT INTO operation_form_field_translation(id, locale, label, help)
-        VALUES(?, 'en', 'Selection mode', 'Selection mode (include or exclude attributes).')""", FIELD_SELECT_MODE)
-#     conn.execute("""
+        VALUES(%s, 'en', 'Selection mode', 'Selection mode (include or exclude attributes).')""", FIELD_SELECT_MODE)
+#     execute(conn, """
 #         INSERT INTO operation_form_field_translation(id, locale, label, help)
-#         VALUES(?, 'pt', 'Atributo(s)', 'Atributos a serem selecionados.')""",
+#         VALUES(%s, 'pt', 'Atributo(s)', 'Atributos a serem selecionados.')""",
 #         FIELD_SELECT_ALIAS)
-#     conn.execute("""
+#     execute(conn, """
 #         INSERT INTO operation_form_field_translation(id, locale, label, help)
-#         VALUES(?, 'en', 'Attribute(s)', 'Attributes to be selected.')""", FIELD_SELECT_ALIAS)
-    conn.execute('ALTER TABLE operation_category ADD COLUMN subtype VARCHAR(200);');
-    conn.execute("""
+#         VALUES(%s, 'en', 'Attribute(s)', 'Attributes to be selected.')""", FIELD_SELECT_ALIAS)
+    execute(conn, 'ALTER TABLE operation_category ADD COLUMN subtype VARCHAR(200);');
+    execute(conn, """
         INSERT INTO operation_category(id, type, subtype, `order`, default_order)
-        VALUES (?, ?, ?, ?, ?)""", [47, 'algorithm', 'regression', 0, 0])
+        VALUES (%s, %s, %s, %s, %s)""", [47, 'algorithm', 'regression', 0, 0])
 
-    conn.execute("""
+    execute(conn, """
         INSERT INTO operation_category(id, type, subtype, `order`, default_order)
-        VALUES (?, ?, ?, ?, ?)""", [48, 'algorithm', 'clustering', 0, 0])
-    conn.execute("""
+        VALUES (%s, %s, %s, %s, %s)""", [48, 'algorithm', 'clustering', 0, 0])
+    execute(conn, """
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (?, ?, ?)""", [47, 'pt', 'Regressão'])
+        VALUES (%s, %s, %s)""", [47, 'pt', 'Regressão'])
 
-    conn.execute("""
+    execute(conn, """
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (?, ?, ?)""", [48, 'pt', 'Agrupamento'])
-    conn.execute("""
+        VALUES (%s, %s, %s)""", [48, 'pt', 'Agrupamento'])
+    execute(conn, """
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (?, ?, ?)""", [47, 'en', 'Regression'])
+        VALUES (%s, %s, %s)""", [47, 'en', 'Regression'])
 
-    conn.execute("""
+    execute(conn, """
         INSERT INTO operation_category_translation(id, locale, name)
-        VALUES (?, ?, ?)""", [48, 'en', 'Clustering'])
-    conn.execute("UPDATE operation_category set subtype = 'classification' where id = 4")
+        VALUES (%s, %s, %s)""", [48, 'en', 'Clustering'])
+    execute(conn, "UPDATE operation_category set subtype = 'classification' where id = 4")
 
     # Generalized linear regressio
     # family = [
@@ -1530,16 +1538,16 @@ def _fixes(conn):
     #     {"en": "Gamma", "key": "gamma", "value": "Gamma", "pt": "Gamma"},
     #     {"en": "Tweedie ", "key": "tweedie", "value": "Tweedie", "pt": "Tweedie"}
     # ]
-    # conn.execute("""
-    #     UPDATE operation_form_field SET `values` = ? WHERE id = 282 """, 
+    # execute(conn, """
+    #     UPDATE operation_form_field SET `values` = %s WHERE id = 282 """, 
     #     json.dumps(family))
-    conn.execute('DELETE FROM operation_form_field_translation WHERE id = 282')
-    conn.execute('DELETE FROM operation_form_field WHERE id = 282')
-    conn.execute("""UPDATE operation_form_field_translation SET 
+    execute(conn, 'DELETE FROM operation_form_field_translation WHERE id = 282')
+    execute(conn, 'DELETE FROM operation_form_field WHERE id = 282')
+    execute(conn, """UPDATE operation_form_field_translation SET 
             label = 'Família/predição de link',
             help = 'Família/predição de link' 
             where id = 283 and locale = 'pt'""")
-    conn.execute("""UPDATE operation_form_field_translation SET 
+    execute(conn, """UPDATE operation_form_field_translation SET 
             label = 'Family/link prediction' ,
             help = 'Family/link prediction' 
             where id = 283 and locale = 'en'""")
@@ -1557,22 +1565,22 @@ def _fixes(conn):
             {"en": "Poisson / identity", "key": "poisson:identity", "pt": "Poisson / identidade"}, 
             {"en": "Poisson / sqrt", "key": "poisson:sqrt", "pt": "Poisson / sqrt (raiz quadrada)"}, 
     ]
-    conn.execute("update operation_form_field set name='family_link', `values` = ? where id = 283",
+    execute(conn, "update operation_form_field set name='family_link', `values` = %s where id = 283",
             json.dumps(link_pred))
 
     solver = [{"en": "IRLS (Iteratively reweighted least squares)", "key": "irls", "pt": "Mínimos quadrados reponderados iterativamente (IRLS)"}]
-    conn.execute("update operation_form_field set `values` = ? where id = 285",
+    execute(conn, "update operation_form_field set `values` = %s where id = 285",
             json.dumps(solver))
 
     # Linear regression
-    conn.execute('update operation_form_field set form_id = 8 where id in (245, 248)')
-    conn.execute("update operation_form_field_translation set label = 'Mix para ElasticNet (0<=α<=1)' where id = 248 and locale='pt'")
-    conn.execute("update operation_form_field_translation set label = 'ElasticNet mix (0<=α<=1)' where id = 248 and locale='en'")
+    execute(conn, 'update operation_form_field set form_id = 8 where id in (245, 248)')
+    execute(conn, "update operation_form_field_translation set label = 'Mix para ElasticNet (0<=α<=1)' where id = 248 and locale='pt'")
+    execute(conn, "update operation_form_field_translation set label = 'ElasticNet mix (0<=α<=1)' where id = 248 and locale='en'")
 
 def _undo_fixes(conn):
-    conn.execute('DELETE FROM operation_form_field WHERE id = ?',
+    execute(conn, 'DELETE FROM operation_form_field WHERE id = %s',
             FIELD_CAST_ERROR_ATTRIBUTE)
-    conn.execute("update operation_form_field set name = 'attributes' where id = 585")
+    execute(conn, "update operation_form_field set name = 'attributes' where id = 585")
 
     errors_options = [
             {"en": "Coerce value (invalid become null)", "value": "coerce", "key": "coerce",
@@ -1580,39 +1588,39 @@ def _undo_fixes(conn):
             {"en": "Fail", "value": "raise", "key": "raise", "pt": "Falhar"},
             {"en": "Ignore value (may cause errors)", "value": "ignore",
                 "key": "ignore", "pt": "Ignorar valor (pode causar erros)"}]
-    conn.execute('update operation_form_field set `values` = ? WHERE id = 586',
+    execute(conn, 'update operation_form_field set `values` = %s WHERE id = 586',
             json.dumps(errors_options))
-    conn.execute('DELETE FROM operation_form_field_translation WHERE id = ?',
+    execute(conn, 'DELETE FROM operation_form_field_translation WHERE id = %s',
             FIELD_CAST_ERROR_ATTRIBUTE)
-    conn.execute('DELETE FROM operation_form_field WHERE id = ?',
+    execute(conn, 'DELETE FROM operation_form_field WHERE id = %s',
             FIELD_CAST_ERROR_ATTRIBUTE)
 
 
-    conn.execute("""update operation_form_field
+    execute(conn, """update operation_form_field
         set `order`= 0, suggested_widget = 'attribute-selector' where id = 6""")
 
-    conn.execute('DELETE FROM operation_form_field_translation WHERE id = ?',
+    execute(conn, 'DELETE FROM operation_form_field_translation WHERE id = %s',
             FIELD_SELECT_MODE)
-    conn.execute('DELETE FROM operation_form_field WHERE id = ?',
+    execute(conn, 'DELETE FROM operation_form_field WHERE id = %s',
             FIELD_SELECT_MODE)
-    conn.execute('ALTER TABLE operation_category DROP COLUMN subtype');
+    execute(conn, 'ALTER TABLE operation_category DROP COLUMN subtype');
 
-    conn.execute('DELETE FROM operation_category_translation WHERE id in (47, 48);')
-    conn.execute('DELETE FROM operation_category WHERE id in (47, 48);')
+    execute(conn, 'DELETE FROM operation_category_translation WHERE id in (47, 48);')
+    execute(conn, 'DELETE FROM operation_category WHERE id in (47, 48);')
 
-    # conn.execute('DELETE FROM operation_form_field_translation WHERE id = ?',
+    # execute(conn, 'DELETE FROM operation_form_field_translation WHERE id = %s',
     #         FIELD_SELECT_ALIAS)
-    # conn.execute('DELETE FROM operation_form_field WHERE id = ?',
+    # execute(conn, 'DELETE FROM operation_form_field WHERE id = %s',
     #         FIELD_SELECT_ALIAS)
-    conn.execute('update operation_form_field set form_id = 102 where id in (245, 248)')
+    execute(conn, 'update operation_form_field set form_id = 102 where id in (245, 248)')
 
 # -----------------------
 def _execute(conn, cmd):
     if isinstance(cmd, str):
-        conn.execute(cmd)
+        execute(conn, cmd)
     elif isinstance(cmd, list):
         for row in cmd:
-            conn.execute(row)
+            execute(conn, row)
     else: # it's a method
         cmd(conn)
 
@@ -1665,7 +1673,7 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+    execute(conn, 'SET FOREIGN_KEY_CHECKS=0;')
     commands = [
         _undo_fixes,
         _delete_platform,
@@ -1691,5 +1699,5 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=1;')
+    execute(conn, 'SET FOREIGN_KEY_CHECKS=1;')
     session.commit()
