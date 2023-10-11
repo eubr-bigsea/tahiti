@@ -1,18 +1,19 @@
-# -*- coding: utf-8 -*-}
 import math
 import logging
-import math
 
 from http import HTTPStatus
 from flask import request, g
 from flask_restful import Resource
 from sqlalchemy.orm import joinedload
-from sqlalchemy.sql.expression import bindparam, text
+from sqlalchemy.sql.expression import text
 from flask_babel import gettext
-from tahiti.app_auth import (requires_auth,
-                             requires_auth, requires_permission)
-from tahiti.schema import *
-from marshmallow import ValidationError
+from tahiti.app_auth import (requires_auth, requires_permission)
+from tahiti.schema import (PlatformCreateRequestSchema, 
+                           PlatformItemResponseSchema, 
+                           PlatformListResponseSchema, 
+                           partial_schema_factory
+                           )
+from tahiti.models import Platform, PlatformTranslation, db
 
 log = logging.getLogger(__name__)
 # region Protected
@@ -66,26 +67,19 @@ class PlatformListApi(Resource):
 
         platforms = platforms.order_by(sort_option)
 
-        page = request.args.get('page') or '1' 
-        if page is not None and page.isdigit():
-            page_size = int(request.args.get('size', 20))
-            page = int(page)
-            pagination = platforms.paginate(page, page_size, True)
-            result = {
-                'data': PlatformListResponseSchema(
-                    many=True, only=only).dump(pagination.items),
-                'pagination': {
-                    'page': page, 'size': page_size,
-                    'total': pagination.total,
-                    'pages': int(math.ceil(1.0 * pagination.total / page_size))}
-            }
-        else:
-            result = {
-                'data': PlatformListResponseSchema(
-                    many=True, only=only).dump(
-                    platforms)}
+        # Pagination
+        page = request.args.get('page', type=int, default=1)
+        page_size = request.args.get('size', type=int, default=20)
+        pagination = platforms.paginate(page, page_size, True)
 
-        return result
+        return {
+            'data': PlatformListResponseSchema(
+                many=True, only=only).dump(pagination.items),
+            'pagination': {
+                'page': page, 'size': page_size,
+                'total': pagination.total,
+                'pages': int(math.ceil(1.0 * pagination.total / page_size))}
+        }
 
 
 class PlatformDetailApi(Resource):
@@ -112,7 +106,7 @@ class PlatformDetailApi(Resource):
         platform = platform.join(current_translation)\
             .options(joinedload('current_translation'))\
                 .options(joinedload('subsets'))
-        platform = platform.filter(Platform.id==platform_id).one()
+        platform = platform.filter(Platform.id==platform_id).first()
             
         if platform is not None:
             result = {
@@ -144,39 +138,21 @@ class PlatformDetailApi(Resource):
             request_schema = partial_schema_factory(
                 PlatformCreateRequestSchema)
             response_schema = PlatformItemResponseSchema()
-            try:
-                # Ignore missing fields to allow partial updates
-                platform = request_schema.load(request.json, partial=True)
-                platform.id = platform_id
-                platform = db.session.merge(platform)
-                db.session.commit()
+            # Ignore missing fields to allow partial updates
+            platform = request_schema.load(request.json, partial=True)
+            platform.id = platform_id
+            platform = db.session.merge(platform)
+            db.session.commit()
 
-                if platform is not None:
-                    return_code = HTTPStatus.OK
-                    result = {
-                        'status': 'OK',
-                        'message': gettext(
-                            '%(n)s (id=%(id)s) was updated with success!',
-                            n=self.human_name,
-                            id=platform_id),
-                        'data': [response_schema.dump(
-                            platform)]
-                    }
-            except ValidationError as e:
+            if platform is not None:
+                return_code = HTTPStatus.OK
                 result = {
-                    'status': 'ERROR',
-                    'message': gettext('Invalid data for %(name)s (id=%(id)s)',
-                                       name=self.human_name,
-                                       id=platform_id),
-                    'errors': translate_validation(e.messages)
+                    'status': 'OK',
+                    'message': gettext(
+                        '%(n)s (id=%(id)s) was updated with success!',
+                        n=self.human_name,
+                        id=platform_id),
+                    'data': [response_schema.dump(
+                        platform)]
                 }
-                result = dict(status="ERROR", message=gettext('Invalid data'),
-                              errors=e.messages)
-                return_code = 400
-            except Exception as e:
-                result = {'status': 'ERROR',
-                          'message': gettext("Internal error")}
-                return_code = 500
-                log.exception("Error in PATCH")
-                db.session.rollback()
         return result, return_code
