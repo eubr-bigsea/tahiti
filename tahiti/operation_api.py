@@ -7,6 +7,7 @@ from functools import reduce, cmp_to_key
 
 from flask import request, current_app, g
 from flask_restful import Resource
+from sqlalchemy import select
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.expression import text #, bindparam
 
@@ -139,8 +140,8 @@ class OperationListApi(Resource):
 
             workflow = request.args.get('workflow', None)
             if workflow:
-                tasks = db.session.query(Task.operation_id).filter(
-                    Task.workflow_id == int(workflow)).subquery()
+                tasks = select(Task.operation_id).filter(
+                    Task.workflow_id == int(workflow))
                 operations = operations.filter(Operation.id.in_(tasks))
 
             ids = request.args.getlist('ids[]', type=int)

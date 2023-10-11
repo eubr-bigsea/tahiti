@@ -1,5 +1,5 @@
 import pytest
-from tahiti.models import Operation, OperationTranslation, Platform, db
+from tahiti.models import Operation, OperationTranslation, Platform, Workflow, db
 from flask import current_app
 
 
@@ -33,7 +33,20 @@ def test_list_operations_filtered_subset_success(client):
 
 
 def test_list_operations_filtered_workflow_success(client):
-    pass
+    workflow_id = 1
+    headers = {'X-Auth-Token': str(client.secret)}
+    params = {'workflow': workflow_id, 'simple': 'true'}
+    rv = client.get('/operations', headers=headers, query_string=params)
+
+    with current_app.app_context():
+        wf = Workflow.query.get(workflow_id)
+        ops1 = [t.operation.id for t in wf.tasks]
+    
+    assert 200 == rv.status_code, 'Incorrect status code'
+    resp = rv.json
+
+    ops2 = [op['id'] for op in resp['data']]
+    assert set(ops1) == set(ops2)
 
 
 def test_list_operations_filtered_name_success(client):

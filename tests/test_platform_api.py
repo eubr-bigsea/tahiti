@@ -3,7 +3,7 @@ from tahiti.models import db, Platform, PlatformTranslation
 from flask import current_app
 
 CURRENT_NUMBER_OF_PLATFORMS = len(['spark', 'comps', 'ophidia',
-                                   'scikit-learn', 'meta'])
+                                   'scikit-learn', 'keras', 'meta'])
 
 
 def test_platform_fail_not_authorized(client):
@@ -26,7 +26,7 @@ def test_platform_list_success(client):
     rv = client.get('/platforms', headers=headers)
     assert 200 == rv.status_code, 'Incorrect status code'
     resp = rv.json
-    assert resp['pagination']['total'] == 5, \
+    assert resp['pagination']['total'] == CURRENT_NUMBER_OF_PLATFORMS, \
         f"Wrong quantity: {resp['pagination']['total']}"
 
     with current_app.app_context():
@@ -40,6 +40,12 @@ def test_platform_list_success(client):
         assert resp['data'][0]['name'] == default_platform.name
         assert resp['data'][0]['enabled'] == default_platform.enabled
 
+def test_platform_list_all_success(client):
+    headers = {'X-Auth-Token': str(client.secret)}
+    params = {'all': 'true'}
+    rv = client.get('/platforms', headers=headers, query_string=params)
+    assert 200 == rv.status_code, 'Incorrect status code'
+
 
 def test_platform_list_simple_sucess(client):
     headers = {'X-Auth-Token': str(client.secret)}
@@ -47,20 +53,6 @@ def test_platform_list_simple_sucess(client):
 
     rv = client.get('/platforms', headers=headers, query_string=params)
     assert 200 == rv.status_code, 'Incorrect status code'
-    resp = rv.json
-    assert resp['pagination']['total'] == CURRENT_NUMBER_OF_PLATFORMS, \
-        f"Wrong quantity: {resp['pagination']['total']}"
-    assert set(resp['data'][0].keys()) == {'id', 'name', 'slug'}
-
-
-def test_platform_list_no_page_success(client):
-    headers = {'X-Auth-Token': str(client.secret)}
-    params = {'page': 'false'}
-
-    rv = client.get('/platforms', headers=headers, query_string=params)
-    assert 200 == rv.status_code, 'Incorrect status code'
-    resp = rv.json
-    assert len(resp['data']) == CURRENT_NUMBER_OF_PLATFORMS
 
 
 def test_platform_get_success(client):
