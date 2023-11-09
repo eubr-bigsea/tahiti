@@ -23,6 +23,7 @@ from tahiti.operation_subset_api import (OperationSubsetDetailApi,
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.schema import translate_validation
+from tahiti.source_code_api import SourceCodeDetailApi, SourceCodeListApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowListApi
 from tahiti.workflow_from_template_api import WorkflowFromTemplateApi
@@ -103,6 +104,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/<int:operation_id>': OperationDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
+        '/source_codes': SourceCodeListApi,
+        '/source_codes/<int:source_code_id>': SourceCodeDetailApi,
         '/subsets': OperationSubsetListApi,
         '/subsets/<int:subset_id>': OperationSubsetDetailApi,
         '/subsets/<int:subset_id>/<int:operation_id>': OperationSubsetOperationApi,
@@ -144,10 +147,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
                   'message': gettext("Internal error")}
         if app.debug:
             result['debug_detail'] = str(e)
-
-        import pdb; pdb.set_trace()
-
         log.exception(e)
+        import pdb; pdb.set_trace()
         db.session.rollback()
         return result, 500        
     return app

@@ -1144,6 +1144,72 @@ class RoleOperationSubsetItemResponseSchema(BaseSchema):
         unknown = EXCLUDE
 
 
+class SourceCodeCreateRequestSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
+    suspicious = fields.Boolean(required=True)
+    requirements = fields.String(required=False, allow_none=True)
+    imports = fields.String(required=False, allow_none=True)
+    help = fields.String(required=False, allow_none=True)
+    code = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of SourceCode"""
+        return SourceCode(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class SourceCodeItemResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
+    suspicious = fields.Boolean(required=True)
+    requirements = fields.String(required=False, allow_none=True)
+    imports = fields.String(required=False, allow_none=True)
+    help = fields.String(required=False, allow_none=True)
+    code = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of SourceCode"""
+        return SourceCode(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class SourceCodeListResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
+    suspicious = fields.Boolean(required=True)
+    requirements = fields.String(required=False, allow_none=True)
+    imports = fields.String(required=False, allow_none=True)
+    help = fields.String(required=False, allow_none=True)
+    code = fields.String(required=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of SourceCode"""
+        return SourceCode(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
 class TaskListResponseSchema(BaseSchema):
     """ JSON serialization schema """
     id = fields.String(required=True)
