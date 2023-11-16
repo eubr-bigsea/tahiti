@@ -1,0 +1,5 @@
+# Tahiti configuration file
+tahiti:
+    debug: true
+    servers:
+        database_url: mysql://user:secret@server:3306/tahiti
