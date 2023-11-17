@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metro de Regulariza\xE7\xE3o"
       help: Valores entre zero e infinito.
-  - en:
+    en:
       locale: en
       label: Regularization  parameter
       help: Values between zero and infinity.
@@ -31,17 +28,14 @@ fields:
   order: 2
   default: '0.01'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Taxa de aprendizado
       help: Valores entre zero e um.
-  - en:
+    en:
       locale: en
       label: Learning rate parameter
       help: Values between zero and one
@@ -52,17 +46,14 @@ fields:
   order: 3
   default: '0.01'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: "Toler\xE2ncia para o crit\xE9rio de parada."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Tolerance for stopping criterion
@@ -73,17 +64,14 @@ fields:
   order: 4
   default: '1000'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Max itera\xE7\xF5es"
       help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Number of maximum iterations

@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: C
       help: "Par\xE2metro de penalidade C do termo de erro."
-  - en:
+    en:
       locale: en
       label: C
       help: Penalty parameter C of the error term.
@@ -31,18 +28,16 @@ fields:
   order: 2
   default: rbf
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "rbf", "value": "rbf"}, {"key": "linear", "value": "linear"},
     {"key": "poly", "value": "poly"}, {"key": "sigmoid", "value": "sigmoid"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Kernel
       help: Especifica o tipo de kernel a ser usado no algoritmo.
-  - en:
+    en:
       locale: en
       label: Kernel
       help: Specifies the kernel type to be used in the algorithm.
@@ -53,18 +48,15 @@ fields:
   order: 3
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Grau do Polin\xF4mio"
       help: "Grau da fun\xE7\xE3o do kernel polinomial. Ignorado por todos os outros\
         \ kernels."
-  - en:
+    en:
       locale: en
       label: Degree
       help: Degree of the polynomial kernel function. Ignored by all other kernels.
@@ -75,17 +67,14 @@ fields:
   order: 4
   default: '0.001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tolerancia
       help: "Toler\xE2ncia para crit\xE9rios de parada."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Tolerance for stopping criterion.
@@ -96,17 +85,14 @@ fields:
   order: 5
   default: '1000'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es."
-  - en:
+    en:
       locale: en
       label: Maximum number of iterations
       help: Maximum number of iterations.
@@ -115,20 +101,16 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.
@@ -139,17 +121,15 @@ fields:
   order: 7
   default: auto
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.kernel.internalValue != "linear"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Coeficiente do kernel.
       help: "Coeficiente do kernel para as m\xE9tricas \"rbf\", \"poly\" e \"sigmoid."
-  - en:
+    en:
       locale: en
       label: Kernel coefficient.
       help: Kernel coefficient for "rbf", "poly" and "sigmoid".
@@ -160,19 +140,17 @@ fields:
   order: 8
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.kernel.internalValue === "sigmoid" || this.kernel.internalValue
     === "poly"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Termo independente da fun\xE7\xE3o do kernel."
       help: "Termp independente da fun\xE7\xE3o do kernel. \xC9 significativo apenas\
         \ nas m\xE9tricas \"poly\" e \"sigmoid\"."
-  - en:
+    en:
       locale: en
       label: Independent term in kernel function.
       help: Independent term in kernel function. It is only significant in "poly"
@@ -184,17 +162,14 @@ fields:
   order: 9
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Usar a heur\xEDstica shrinking."
       help: "Necessidade de usar a heur\xEDstica shrinking"
-  - en:
+    en:
       locale: en
       label: Use the shrinking heuristic.
       help: Whether to use the shrinking heuristic.
@@ -205,17 +180,14 @@ fields:
   order: 10
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Habilitar estimativas probail\xEDsticas."
       help: "Habilitar estimativas probail\xEDsticas."
-  - en:
+    en:
       locale: en
       label: Enable probability estimates.
       help: Whether to enable probability estimates.
@@ -226,18 +198,16 @@ fields:
   order: 12
   default: ovr
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "ovr", "value": "ovr"}, {"key": "ovo", "value": "ovo"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Decis\xE3o de retorno."
       help: "Decis\xE3o de retorno \"ovr\" (one-vs-rest : um por todos) ou \"ovo\"\
         \ (one-vs-one: um por um)."
-  - en:
+    en:
       locale: en
       label: Return decision.
       help: Return (one-vs-rest) "ovr" or (one-vs-one) "ovo" decision funcion.

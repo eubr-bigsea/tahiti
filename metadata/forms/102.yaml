@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -29,19 +25,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo usado como r\xF3tulo (label)"
       help: "Atributo usado como r\xF3tulo (label)"
-  - en:
+    en:
       locale: en
       label: Label
       help: Label
@@ -50,19 +43,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Nome do atributo usado como predi\xE7\xE3o"
       help: "Nome do atributo usado como predi\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Prediction
       help: Prediction

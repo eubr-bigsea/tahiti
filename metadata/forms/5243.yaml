@@ -8,19 +8,13 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Dimensions
       help: ''
@@ -31,17 +25,12 @@ fields:
   order: 2
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Channels
       help: ''
@@ -52,17 +41,12 @@ fields:
   order: 3
   default: '16'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Batch size
       help: 'Size of the batches of data (default: 16).'
@@ -73,17 +57,12 @@ fields:
   order: 8
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Shuffle
       help: 'Whether to shuffle the data (default: True) If set to False, it will
@@ -95,17 +74,12 @@ fields:
   order: 9
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Validation split
       help: Float. Fraction of videos reserved for validation (strictly between 0

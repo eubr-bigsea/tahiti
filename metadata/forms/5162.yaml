@@ -8,19 +8,13 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Dataset
       help: Path for the dataset.
@@ -31,17 +25,12 @@ fields:
   order: 3
   default: 60%-20%-20%
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Train-Validation-Test split
       help: Percentage for Train, Validation and Test to split the data automatically.
@@ -51,19 +40,13 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Use K-fold cross validation
       help: The dataset will be split in different k-fold train and test.
@@ -72,19 +55,13 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: '% of train data'
       help: Percentage of training data to compose the each fold for the cross validation.
@@ -94,19 +71,13 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Shuffle data
       help: Shuffle the instances in the dataset to ensure a random learning space.
@@ -117,18 +88,14 @@ fields:
   order: 3
   default: one batch at a time
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "one batch at a time", "key": "one batch at a time"}, {"value":
     "full dataset", "key": "full dataset"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Load dataset in memory
       help: Load the dataset in memory in two ways. 1- Full dataset in memory (recommended
@@ -140,17 +107,12 @@ fields:
   order: 3
   default: '17'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Seed
       help: Fix random seed for reproducibility.

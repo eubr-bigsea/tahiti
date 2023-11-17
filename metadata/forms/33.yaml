@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: "Atributos onde a opera\xE7\xE3o de substitui\xE7\xE3o ser\xE1 aplicada."
-  - en:
+    en:
       locale: en
       label: Attributes
       help: Attributes in which the operation of replacement will be applied.
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valor a ser substitu\xEDdo"
       help: "Valor a ser substitu\xEDdo."
-  - en:
+    en:
       locale: en
       label: Value to be replaced
       help: Value to be replaced.
@@ -50,19 +42,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Substituir por
       help: Valor usado para substituir.
-  - en:
+    en:
       locale: en
       label: Replacement
       help: Replacement for the value.

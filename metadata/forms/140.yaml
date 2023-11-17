@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: filter
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Filtros
       help: "Filtros a serem aplicados \xE0 entrada."
-  - en:
+    en:
       locale: en
       label: Filters
       help: Filters to be applied to the input.
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 2
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ignore ao executar em ambiente de edi\xE7\xE3o"
       help: "Filtros s\xE3o ignorados durante a edi\xE7\xE3o do workflow."
-  - en:
+    en:
       locale: en
       label: Ignore in design
       help: In design/editing mode, filters are ignored.
@@ -50,19 +42,15 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Disponibilizar editor de consulta
       help: "Usu\xE1rios podem editar os filtros usando um editor avan\xE7ado de consultas."
-  - en:
+    en:
       locale: en
       label: User can use advanced query editor
       help: Users can define custom filters using an advanced query editor.

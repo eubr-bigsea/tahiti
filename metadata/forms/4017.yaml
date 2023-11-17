@@ -8,23 +8,20 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: "[{\"en\": \"Clustering model\", \"value\": \"Clustering model\", \"key\"\
     : \"clustering\", \"pt\": \"Model de agrupamento\"}, {\"en\": \"Classifier model\"\
     , \"value\": \"Classifier mode\", \"key\": \"classification\", \"pt\": \"Modelo\
     \ de classifica\xE7\xE3o\"}, {\"en\": \"Regressor model\", \"value\": \"Regressor\
     \ model\", \"key\": \"regression\", \"pt\": \"Modelo de regress\xE3o\"}]"
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo do modelo
       help: Tipo do modelo para ser avaliado.
-  - en:
+    en:
       locale: en
       label: Model Type
       help: Type of model to be evaluated.
@@ -35,7 +32,6 @@ fields:
   order: 2
   default: homogeneity_completeness_v_measure
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "calinski_harabasz_score", "value": "Calinski and Harabasz"},
     {"key": "davies_bouldin_score", "value": "Davies-Bouldin"}, {"key": "homogeneity_completeness_v_measure",
     "value": "Homogeneity, completeness and V-Measure"}, {"key": "fowlkes_mallows_score",
@@ -45,11 +41,11 @@ fields:
   enable_conditions: this.model_type.internalValue === "clustering"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9trica de agrupamento"
       help: "M\xE9trica para avaliar um modelo de agrupamento."
-  - en:
+    en:
       locale: en
       label: Clustering metric
       help: Metric to evaluate a clustering model.
@@ -60,7 +56,6 @@ fields:
   order: 2
   default: r2_score
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "explained_variance_score", "value": "Explained variance"}, {"key":
     "max_error", "value": "Maximum residual error"}, {"key": "mean_absolute_error",
     "value": "Mean absolute error"}, {"key": "mean_squared_error", "value": "Mean
@@ -71,11 +66,11 @@ fields:
   enable_conditions: this.model_type.internalValue === "regression"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9trica de regress\xE3o"
       help: "M\xE9trica para avaliar um modelo de regress\xE3o."
-  - en:
+    en:
       locale: en
       label: Regression metric
       help: Metric to evaluate a regression model.
@@ -86,7 +81,6 @@ fields:
   order: 2
   default: f1_score
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "balanced_accuracy_score", "value": "Balanced accuracy"}, {"key":
     "f1_score", "value": "F1"}, {"key": "precision_score", "value": "Weighted Precision"},
     {"key": "recall_score", "value": "Weighted Recall"}, {"key": "jaccard_score",
@@ -97,11 +91,11 @@ fields:
   enable_conditions: this.model_type.internalValue === "classification"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9trica de classifica\xE7\xE3o"
       help: "M\xE9trica para avaliar um modelo de classifica\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Classification metric
       help: Metric to evaluate a classification model.
@@ -110,19 +104,16 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo usado para predi\xE7\xE3o"
       help: "Atributo usado para predi\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Prediction attribute
       help: Prediction attribute.
@@ -131,9 +122,7 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
   enable_conditions: "! [\"calinski_harabasz_score\", \"davies_bouldin_score\"].includes(\n\
@@ -141,11 +130,11 @@ fields:
     \ !== \"clustering\" "
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Label attribute
       help: Label attribute
-  - en:
+    en:
       locale: en
       label: Label attribute
       help: Label attribute
@@ -154,20 +143,18 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": true}'
   scope: EXECUTION
   enable_conditions: '["calinski_harabasz_score", "davies_bouldin_score"].includes(this.clustering_metric.internalValue)
     && this.model_type.internalValue === "clustering"'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo de features
       help: Atributo usado como features.
-  - en:
+    en:
       locale: en
       label: Feature attribute
       help: Feature attribute.

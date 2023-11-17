@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: "Lista de atributos usados na transforma\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Attribute(s)
       help: List of attributes used in the transformation.
@@ -29,20 +25,16 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do(s) novo(s) attributo(s)
       help: "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo original\
         \ com um sufixo ser\xE1 usado."
-  - en:
+    en:
       locale: en
       label: Name(s) for new attribute(s)
       help: Name(s) for new attribute(s). If omitted, the name of original attribute
@@ -52,19 +44,15 @@ fields:
   type: INTEGER
   required: true
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de categorias (buckets)"
       help: "Quantas categorias (buckets) ser\xE3o criadas."
-  - en:
+    en:
       locale: en
       label: Number of buckets
       help: How many buckets are going to be created.
@@ -75,18 +63,15 @@ fields:
   order: 3
   default: '0.001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Erro relativo (entre [0.0, 1.0])
       help: "A precis\xE3o do alvo relativo para o algoritmo quantil aproximado usado\
         \ para gerar categorias (buckets)."
-  - en:
+    en:
       locale: en
       label: Relative error (between [0.0, 1.0])
       help: The relative target precision for the approximate quantile algorithm used

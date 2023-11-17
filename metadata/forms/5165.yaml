@@ -10,17 +10,12 @@ fields:
   order: 1
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Out code
       help: Code used out of the method to generate the Keras layers.
@@ -31,17 +26,13 @@ fields:
   order: 2
   default: '# Write your Python code here'
   suggested_widget: code
-  values_url: None
   values: '{"language": "python"}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Code
       help: Possible to add simple lines, functions, classes or an entire Python code.

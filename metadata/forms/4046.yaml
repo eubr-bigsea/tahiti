@@ -10,17 +10,14 @@ fields:
   order: 20
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Realizar a valida\xE7\xE3o cruzada"
       help: "Realizar a valida\xE7\xE3o cruzada"
-  - en:
+    en:
       locale: en
       label: Perform cross-validation
       help: Perform cross-validation
@@ -31,7 +28,6 @@ fields:
   order: 21
   default: f1_weighted
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "balanced_accuracy", "value": "Balanced accuracy"}, {"key": "f1_weighted",
     "value": "F1 weighted"}, {"key": "precision_weighted", "value": "Weighted Precision"},
     {"key": "recall_weighted", "value": "Weighted Recall"}, {"key": "jaccard_weighted",
@@ -41,12 +37,12 @@ fields:
   enable_conditions: this.apply_cross_validation.internalValue === '1'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9trica para valida\xE7\xE3o cruzada"
       help: "Se informada, essa m\xE9trica ser\xE1 usada e a valida\xE7\xE3o cruzada\
         \ ser\xE1 executada"
-  - en:
+    en:
       locale: en
       label: Metric for applying cross-validation
       help: If informed, this metric will be used and cross-validation will be executed.
@@ -57,17 +53,15 @@ fields:
   order: 22
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.apply_cross_validation.internalValue === '1'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o n\xFAmero da parti\xE7\xE3o (fold)"
       help: "Cont\xE9m o n\xFAmero da parti\xE7\xE3o para a linha"
-  - en:
+    en:
       locale: en
       label: Attribute with fold number
       help: Contains the fold number for the row

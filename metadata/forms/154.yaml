@@ -8,9 +8,7 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: cast
-  values_url: None
   values: '[{"en": "Array", "value": "Array", "key": "Array", "pt": "Array"}, {"en":
     "Boolean", "value": "Boolean", "key": "Boolean", "pt": "Booleano (l\u00f3gico)"},
     {"en": "Date", "value": "Date", "key": "Date", "pt": "Data"}, {"en": "Decimal",
@@ -18,14 +16,13 @@ fields:
     "Integer", "key": "Integer", "pt": "Inteiro"}, {"en": "Time", "value": "Time",
     "key": "Time", "pt": "Hora"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: "Atributos que ter\xE3o o seu tipo alterado."
-  - en:
+    en:
       locale: en
       label: Attributes
       help: Attributes to change their types.
@@ -36,7 +33,6 @@ fields:
   order: 2
   default: coerce
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Fail in case of invalid value", "value": "raise", "key": "raise",
     "pt": "Falhar em caso de valores inv\u00e1lidos"}, {"en": "Coerce value (invalid
     become null)", "value": "coerce", "key": "coerce", "pt": "For\u00e7ar convers\u00e3o
@@ -44,14 +40,13 @@ fields:
     "value": "move", "key": "move", "pt": "Mover valores inv\u00e1lidos para um novo
     atributo"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "A\xE7\xE3o em caso de erro"
       help: "A\xE7\xE3o a ser tomada em caso de erro."
-  - en:
+    en:
       locale: en
       label: Action if error
       help: Action to be taken in case of error.
@@ -60,19 +55,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.errors.internalValue === "move"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Novo atributo com valores inv\xE1lidos"
       help: "Novo atributo com valores inv\xE1lidos."
-  - en:
+    en:
       locale: en
       label: New atribute with invalid data
       help: New atribute with invalid data.

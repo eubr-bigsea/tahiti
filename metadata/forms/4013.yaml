@@ -10,18 +10,15 @@ fields:
   order: 1
   default: '8'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Quantidade de agrupamentos (K)
       help: "O n\xFAmero de clusters a serem formados, bem como o n\xFAmero de centr\xF3\
         ides a serem gerados."
-  - en:
+    en:
       locale: en
       label: Number of clusters
       help: The number of clusters to form as well as the number of centroids to generate.
@@ -32,18 +29,16 @@ fields:
   order: 2
   default: K-Means
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "K-Means", "value": "K-Means"}, {"key": "Mini-Batch K-Means",
     "value": "Mini-Batch K-Means"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo
       help: K-Means usando o algoritmo de Lloyd ou o Mini-Batch K-Means.
-  - en:
+    en:
       locale: en
       label: Type
       help: K-Means using Lloyds algorithm or Mini-Batch K-Means clustering.
@@ -54,18 +49,16 @@ fields:
   order: 3
   default: K-Means++
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "K-Means++", "value": "K-Meanss++"}, {"key": "Random", "value":
     "Random"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Gera\xE7\xE3o dos centroids iniciais"
       help: "M\xE9todo para inicializa\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Method for initialization
       help: Method for initialization.
@@ -76,17 +69,14 @@ fields:
   order: 4
   default: '100'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es."
-  - en:
+    en:
       locale: en
       label: Maximum number of iterations
       help: Maximum number of iterations.
@@ -97,17 +87,14 @@ fields:
   order: 5
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tolerancia
       help: "Toler\xE2ncia para crit\xE9rios de parada."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Tolerance for stopping criterion.
@@ -116,20 +103,16 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.
@@ -140,18 +123,16 @@ fields:
   order: 8
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "K-Means"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de inicializa\xE7\xF5es"
       help: "N\xFAmero de vezes que o algoritmo k-means ser\xE1 executado com diferentes\
         \ sementes de centr\xF3ide."
-  - en:
+    en:
       locale: en
       label: Number of initializations
       help: Number of time the k-means algorithm will be run with different centroid
@@ -163,17 +144,15 @@ fields:
   order: 10
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "Mini-Batch K-Means"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de inicializa\xE7\xF5es"
       help: "N\xFAmero de inicializa\xE7\xF5es aleat\xF3rias que s\xE3o tentadas."
-  - en:
+    en:
       locale: en
       label: Number of initializations
       help: Number of random initializations that are tried.
@@ -184,18 +163,17 @@ fields:
   order: 13
   default: auto
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "auto", "value": "auto"}, {"key": "full", "value": "full"}, {"key":
     "elkan", "value": "elkan"}]'
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "K-Means"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Algoritmo
       help: Algoritmo K-means a ser usado.
-  - en:
+    en:
       locale: en
       label: Algorithm
       help: K-means algorithm to use.
@@ -206,17 +184,15 @@ fields:
   order: 14
   default: '100'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "Mini-Batch K-Means"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho do batch
       help: Tamanho dos mini batches.
-  - en:
+    en:
       locale: en
       label: Batch size
       help: Size of the mini batches.
@@ -227,19 +203,17 @@ fields:
   order: 16
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "Mini-Batch K-Means"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: "Controla a parada antecipada com base nas mudan\xE7as relativas do centro,\
         \ conforme medido por uma mudan\xE7a suavizada, normalizada pela varia\xE7\
         \xE3o da posi\xE7\xE3o m\xE9dia do quadrado ao quadrado."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Control early stopping based on the relative center changes as measured
@@ -251,18 +225,16 @@ fields:
   order: 17
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "Mini-Batch K-Means"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Parada antecipada
       help: "Controla a parada antecipada com base no n\xFAmero consecutivo de mini\
         \ batches que n\xE3o gera uma melhoria na in\xE9rcia suavizada."
-  - en:
+    en:
       locale: en
       label: Early stopping
       help: Control early stopping based on the consecutive number of mini batches

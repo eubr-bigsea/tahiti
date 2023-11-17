@@ -148,7 +148,6 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         if app.debug:
             result['debug_detail'] = str(e)
         log.exception(e)
-        import pdb; pdb.set_trace()
         db.session.rollback()
         return result, 500        
     return app

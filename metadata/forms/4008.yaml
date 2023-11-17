@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '100'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de \xE1rvores"
       help: "N\xFAmero de \xE1rvores na floresta."
-  - en:
+    en:
       locale: en
       label: Number of estimators
       help: The number of trees in the forest.
@@ -31,19 +28,17 @@ fields:
   order: 2
   default: auto
   suggested_widget: dropdown
-  values_url: None
   values: "[{\"key\": \"auto\", \"value\": \"auto\"}, {\"key\": \"sqrt\", \"value\"\
     : \"sqrt\"}, \n          {\"key\": \"log2\", \"value\": \"log2\"}]"
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de atributos"
       help: "N\xFAmero de atributos a serem considerados ao procurar a melhor divis\xE3\
         o."
-  - en:
+    en:
       locale: en
       label: Maximum number of features
       help: The number of features to consider when looking for the best split.
@@ -52,19 +47,15 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima na \xE1rvore."
-  - en:
+    en:
       locale: en
       label: Maximum depth
       help: Maximum depth of the individual regression estimators. The maximum depth
@@ -77,18 +68,15 @@ fields:
   order: 4
   default: '2'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xF3 interno m\xEDnimo"
       help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para dividir\
         \ um n\xF3 interno."
-  - en:
+    en:
       locale: en
       label: Minimun samples split
       help: The minimum number of samples required to split an internal node.
@@ -99,18 +87,15 @@ fields:
   order: 5
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xF3 de folha m\xEDnima"
       help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para estar\
         \ em um n\xF3 folha."
-  - en:
+    en:
       locale: en
       label: Minimum samples leaf
       help: The minimum number of samples required to be at a leaf node.

@@ -91,3 +91,9 @@ fields:
       locale: en
       label: Aggregation functions
       help: Aggregation functions
+translations:
+  pt:
+    locale: pt
+  en:
+    locale: en
+

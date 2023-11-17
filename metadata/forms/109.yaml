@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '0.1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Suporte m\xEDnimo"
       help: "Suporte m\xEDnimo"
-  - en:
+    en:
       locale: en
       label: Min. support
       help: Min. support
@@ -31,17 +28,14 @@ fields:
   order: 2
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Tamanho m\xE1x. da sequ\xEAncia"
       help: "Tamanho m\xE1x. da sequ\xEAncia"
-  - en:
+    en:
       locale: en
       label: Max. sequence length
       help: Max. sequence length
@@ -50,19 +44,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com transa\xE7\xF5es (vazio = primeiro atributo)"
       help: "Atributo com transa\xE7\xF5es (vazio = primeiro atributo)"
-  - en:
+    en:
       locale: en
       label: Attribute with transactions (empty = first attribute)
       help: ' Attribute with transactions (empty = first attribute)'

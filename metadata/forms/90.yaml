@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: Atributos a serem indexados
-  - en:
+    en:
       locale: en
       label: Attributes
       help: Attributes to be indexed
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Alias
       help: Alias para os campos indexados gerados
-  - en:
+    en:
       locale: en
       label: Alias
       help: Alias(es) for generated indexed fields

@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: false
   order: 12
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Usar classifica\xE7\xE3o um-contra-todos (one-vs-rest)"
       help: "Permite executar um classificador com dados de entrada multi r\xF3tulos"
-  - en:
+    en:
       locale: en
       label: Use one-vs-rest classification
       help: Allow to run any classifier with multi label input data.

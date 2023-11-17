@@ -8,19 +8,14 @@ fields:
   type: INTEGER
   required: false
   order: 1
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1&formats=HDF5`'
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Model
       help: ''
@@ -29,19 +24,14 @@ fields:
   type: INTEGER
   required: false
   order: 2
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1&formats=HDF5`'
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Weights
       help: ''

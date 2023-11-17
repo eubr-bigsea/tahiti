@@ -2,7 +2,6 @@ id: 5
 slug: keras
 enabled: true
 icon: ''
-version: null
 plugin: false
 translations:
   pt:

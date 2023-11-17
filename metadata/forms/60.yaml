@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: Atributos.
-  - en:
+    en:
       locale: en
       label: Attributes
       help: List of attributes to be used as input to remove stop words
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do novo atributo (alias)
       help: Nome do novo atributo (alias).
-  - en:
+    en:
       locale: en
       label: Alias for new attributes
       help: Alias for new attributes
@@ -50,19 +42,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Lista de stop words
       help: "Lista de stop words, separadas por v\xEDrgula."
-  - en:
+    en:
       locale: en
       label: Stop word list
       help: Stop word list, separated by commas
@@ -71,19 +59,16 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo da segunda fonte de dados com as stop words
       help: Atributo da segunda fonte de dados com as stop words.
-  - en:
+    en:
       locale: en
       label: Attribute from 2nd input with stop words
       help: Attribute from 2nd input with stop words
@@ -94,17 +79,14 @@ fields:
   order: 5
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Diferenciar mai\xFAsculas/min\xFAsculas"
       help: "Diferenciar mai\xFAsculas/min\xFAsculas"
-  - en:
+    en:
       locale: en
       label: Case sensitive
       help: Case sensitive
@@ -113,9 +95,7 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Danish", "key": "danish", "value": "Danish", "pt": "Dinamarqu\u00eas"},
     {"en": "Dutch", "key": "dutch", "value": "Dutch", "pt": "Holand\u00eas"}, {"en":
     "English", "key": "english", "value": "English", "pt": "Ingl\u00eas"}, {"en":
@@ -131,14 +111,13 @@ fields:
     "value": "Swedish", "pt": "Sueco"}, {"en": "Turkish", "key": "turkish", "value":
     "Turkish", "pt": "Turco"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Idioma (opcional)
       help: "Se informado, usa o conjunto de stop words padr\xE3o para o idioma."
-  - en:
+    en:
       locale: en
       label: Language (optional)
       help: If informed, uses the default stop word list for the language.

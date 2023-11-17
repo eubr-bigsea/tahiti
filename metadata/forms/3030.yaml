@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) da primeira fonte de dados
       help: Selecione um ou mais atributos da primeira fonte de dados.
-  - en:
+    en:
       locale: en
       label: Attribute(s) from first data source
       help: Select one or more attributes from the first data source.
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) da segunda fonte de dados
       help: Selecione um ou mais atributos da segunda fonte de dados.
-  - en:
+    en:
       locale: en
       label: Attribute(s) from second data source
       help: Select one or more attributes from the second data source.
@@ -50,20 +42,17 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "inner", "value": "Inner join"}, {"key": "left_outer", "value":
     "Left outer join"}, {"key": "right_outer", "value": "Right outer join"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Tipo de jun\xE7\xE3o (join)"
       help: "Tipo da jun\xE7\xE3o (join) a ser realizada."
-  - en:
+    en:
       locale: en
       label: Join type
       help: Type of join to be performed.
@@ -72,20 +61,16 @@ fields:
   type: INTEGER
   required: false
   order: 0
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Manter chaves da segunda fonte de dados
       help: "Chaves usads na jun\xE7\xE3o podem ser ignoradas porque elas j\xE1 est\xE3\
         o presentes na primeira fonte de dados."
-  - en:
+    en:
       locale: en
       label: Keep keys from second data source
       help: Keys columns used in the join could be ignored because they are already
@@ -97,18 +82,15 @@ fields:
   order: 0
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Diferenciar mai\xFAsculas e min\xFAsculas quando comparar chaves"
       help: "Se marcado, ir\xE1 diferenciar mai\xFAsculas e min\xFAsculas quando estiver\
         \ comparando as chave."
-  - en:
+    en:
       locale: en
       label: Match case when comparing keys
       help: If checked, a case sensitive matching will be performed when comparing
@@ -120,17 +102,14 @@ fields:
   order: 4
   default: _l, _r
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Sufixos para os atributos (2 valores, separados por v\xEDrgula)"
       help: "Os atributos s\xE3o sufixados a fim de evitar colis\xE3o de nomes."
-  - en:
+    en:
       locale: en
       label: Suffixes for attributes (2 values, comma separated)
       help: Attributes are suffixed in order to avoid name collision.

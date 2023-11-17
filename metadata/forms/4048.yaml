@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -29,20 +25,16 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do(s) novo(s) attributo(s)
       help: "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo original\
         \ com um sufixo ser\xE1 usado."
-  - en:
+    en:
       locale: en
       label: Name(s) for new attribute(s)
       help: Name(s) for new attribute(s). If omitted, the name of original attribute
@@ -54,17 +46,14 @@ fields:
   order: 3
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Centralizar os dados com a m\xE9dia"
       help: "Centralizar os dados com a m\xE9dia (falso por padr\xE3o)"
-  - en:
+    en:
       locale: en
       label: Center data with mean
       help: 'Center data with mean (default: false).'
@@ -75,18 +64,15 @@ fields:
   order: 4
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Escalar os dados para desvio-padr\xE3o unit\xE1rio"
       help: "Escalar os dados para desvio-padr\xE3o unit\xE1rio (verdadeiro por padr\xE3\
         o)"
-  - en:
+    en:
       locale: en
       label: Scale to unit standard deviation
       help: 'Scale to unit standard deviation (default: true).'

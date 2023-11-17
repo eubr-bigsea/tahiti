@@ -8,21 +8,17 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Nomes dos atributos, separados por v\xEDrgula (vazio = usar nomes da\
         \ fonte de dados)"
       help: "Nomes dos atributos, separados por v\xEDrgula (vazio = usar nomes da\
         \ fonte de dados)"
-  - en:
+    en:
       locale: en
       label: Column names, comma separated (empty = use data source names)
       help: Column names, comma separated (empty = use data source names)
@@ -31,19 +27,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo"
-  - en:
+    en:
       locale: en
       label: Title
       help: Title
@@ -52,29 +44,24 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Correlation", "key": "CORRELATION", "value": "Correlation", "pt":
     "Correla\u00e7\u00e3o"}, {"en": "Covariance", "key": "COVARIANCE", "value": "Covariance",
     "pt": "Covari\u00e2ncia"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Calcular
       help: Calcular
-  - en:
+    en:
       locale: en
       label: Calculate
       help: Calculate
 translations:
   pt:
     locale: pt
-    name: None
   en:
     locale: en
-    name: None
 

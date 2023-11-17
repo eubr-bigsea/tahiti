@@ -10,21 +10,16 @@ fields:
   order: 2
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Sobrescrever atributo(s) original(ais)
       help: "Indica se o(s) atributo(s) original(ais) deve(m) ser sobrescrito(s) ap\xF3\
         s a transforma\xE7\xE3o ou se novos atributos ser\xE3o criados."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: true
   order: 1
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de componentes principais"
       help: "N\xFAmero de componentes principais"
-  - en:
+    en:
       locale: en
       label: Number of principal components
       help: Number of principal components.
@@ -29,19 +25,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": true}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -52,17 +45,14 @@ fields:
   order: 3
   default: pca_features
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo de sa\xEDda"
       help: "Atributo de sa\xEDda"
-  - en:
+    en:
       locale: en
       label: PCA output attribute
       help: PCA output attribute.

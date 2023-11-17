@@ -10,17 +10,12 @@ fields:
   order: 0
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Apply transformations
       help: Turn on to apply transformations to the video data set.
@@ -29,19 +24,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "random", "value": "random"}, {"key": "center", "value": "center"}]'
   scope: EXECUTION
   enable_conditions: this.apply_transformations.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Cropping strategy
       help: ''
@@ -50,20 +41,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Frames
       help: 'Number of frames to apply the cropping. It is necessary to inform a interval
@@ -78,18 +64,14 @@ fields:
   order: 4
   default: (0, 16)
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Random height
       help: 'Height in number of pixels. It is necessary to inform a tuple containing
@@ -105,18 +87,14 @@ fields:
   order: 4
   default: (0, 59)
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Random width
       help: 'It is necessary to inform a tuple containing the range: initial and final
@@ -129,20 +107,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Channel
       help: 'Number of channels to apply the crop. It is necessary to inform a tuple
@@ -155,20 +128,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Frames
       help: 'Number of frames to apply the cropping. It is necessary to inform a interval
@@ -183,18 +151,14 @@ fields:
   order: 4
   default: '[8:120]'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Height
       help: 'Height in number of pixels. It is necessary to inform a interval containing
@@ -209,18 +173,14 @@ fields:
   order: 4
   default: '[30:142]'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Width
       help: 'Width in number of pixels. It is necessary to inform a interval containing
@@ -233,20 +193,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Channel
       help: 'Number of channels to apply the crop. It is necessary to inform a interval

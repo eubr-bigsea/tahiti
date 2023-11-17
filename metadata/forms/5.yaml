@@ -8,19 +8,16 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: expression
-  values_url: None
   values: '{"alias": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Express\xE3o para filtro (avan\xE7ado)."
       help: "Permite especificar uma express\xE3o para filtrar os dados."
-  - en:
+    en:
       locale: en
       label: Filter expression (advanced)
       help: Filter expression (advanced).
@@ -29,9 +26,7 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-function
-  values_url: None
   values: "{\r\n\t\"functions\": [\r\n            {\r\n\t\t\"key\": \">\",\r\n\t\t\
     \"value\": \"Greater than (>)\",\r\n\t\t\"help\": \"Greater than (>)\"\r\n\t \
     \   },\r\n            {\r\n\t\t\"key\": \">=\",\r\n\t\t\"value\": \"Greater or\
@@ -49,11 +44,11 @@ fields:
   enable_conditions: 'false'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Filtro
       help: Filtro
-  - en:
+    en:
       locale: en
       label: Filter
       help: Filter

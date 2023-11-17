@@ -10,17 +10,14 @@ fields:
   order: 5
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Interceptar
       help: "Se deve calcular a intercepta\xE7\xE3o para este modelo."
-  - en:
+    en:
       locale: en
       label: Intercept
       help: Whether to calculate the intercept for this model.
@@ -31,17 +28,15 @@ fields:
   order: 6
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.fit_intercept.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Normalizar
       help: "Usado para normalizar os regressores antes da regress\xE3o."
-  - en:
+    en:
       locale: en
       label: Normalize
       help: Used to normalized the regressors before regression.

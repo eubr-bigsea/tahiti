@@ -10,18 +10,15 @@ fields:
   order: 9
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Realizar a valida\xE7\xE3o cruzada"
       help: "Realizar a valida\xE7\xE3o cruzada (requer um atributo com a informa\xE7\
         \xE3o de parti\xE7\xE3o)."
-  - en:
+    en:
       locale: en
       label: Perform cross-validation
       help: Perform cross-validation (requires an attribute with fold information
@@ -30,9 +27,7 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: none
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Area under ROC curve(binary classification)", "value": "Area under
     ROC curve (binary classification)", "key": "areaUnderROC", "pt": "\u00c1rea sob
     a curva ROC (classifica\u00e7\u00e3o bin\u00e1ria)"}, {"en": "Area under precision-recall
@@ -55,12 +50,12 @@ fields:
   enable_conditions: this.perform_cross_validation.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9trica para valida\xE7\xE3o cruzada"
       help: "Se informada, essa m\xE9trica ser\xE1 usada e a valida\xE7\xE3o cruzada\
         \ ser\xE1 executada"
-  - en:
+    en:
       locale: en
       label: Metric for applying cross-validation
       help: If informed, this metric will be used and cross-validation will be executed.
@@ -69,19 +64,16 @@ fields:
   type: TEXT
   required: false
   order: 11
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.perform_cross_validation.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o n\xFAmero da parti\xE7\xE3o (fold)"
       help: "Cont\xE9m o n\xFAmero da parti\xE7\xE3o para a linha"
-  - en:
+    en:
       locale: en
       label: Attribute with fold number
       help: Contains the fold number for the row

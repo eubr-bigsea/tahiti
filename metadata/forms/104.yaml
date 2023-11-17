@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Itera\xE7\xF5es m\xE1ximas"
       help: "Itera\xE7\xF5es m\xE1ximas."
-  - en:
+    en:
       locale: en
       label: Max. iterations
       help: Maximum number of iterations
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 7
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima da agrega\xE7\xE3o"
       help: "Profundidade m\xE1xima da agrega\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Aggregation depth
       help: Aggregation depth
@@ -50,19 +42,15 @@ fields:
   type: INTEGER
   required: false
   order: 8
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Semente (seed)
       help: Semente (seed).
-  - en:
+    en:
       locale: en
       label: Seed
       help: Seed
@@ -71,19 +59,16 @@ fields:
   type: INTEGER
   required: false
   order: 9
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo usado como censor (deve conter valores 0 ou 1)
       help: Atributo usado como censor (deve conter valores 0 ou 1).
-  - en:
+    en:
       locale: en
       label: Censor
       help: Censor
@@ -92,19 +77,15 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Valores para probabilidade dos quantis
       help: Valores para probabilidade dos quantis.
-  - en:
+    en:
       locale: en
       label: Quantile probabilities
       help: Quantile probabilities
@@ -113,19 +94,15 @@ fields:
   type: TEXT
   required: false
   order: 11
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com os quantis
       help: Atributo com os quantis.
-  - en:
+    en:
       locale: en
       label: Quantiles attribute
       help: Quantiles attribute

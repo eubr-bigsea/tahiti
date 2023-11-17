@@ -10,17 +10,12 @@ fields:
   order: 1
   default: '32'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Batch size
       help: 'Size of the batches of data (default: 32).'
@@ -29,19 +24,13 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Shape
       help: A shape tuple (integer), not including the batch size. For instance, shape=(32,)
@@ -53,17 +42,12 @@ fields:
   order: 3
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Shuffle
       help: 'Whether to shuffle the order of the batches at the beginning of each
@@ -75,17 +59,12 @@ fields:
   order: 4
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Validation split
       help: Float. Fraction of data reserved for validation (strictly between 0 and

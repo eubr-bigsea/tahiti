@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: false
   order: 0
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Dados de sa\xEDda s\xE3o sens\xEDveis"
       help: "Dados de sa\xEDda s\xE3o sens\xEDveis"
-  - en:
+    en:
       locale: en
       label: Output data is sensitive
       help: Is the output data sensitive and should be protected?

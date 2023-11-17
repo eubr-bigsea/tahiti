@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: true
   order: 1
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Proje\xE7\xE3o de origem (epsg)"
       help: "Proje\xE7\xE3o de origem (epsg)"
-  - en:
+    en:
       locale: en
       label: Source projection (epsg code)
       help: Source projection (epsg)
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: true
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Proje\xE7\xE3o de destino (epsg)"
       help: "Proje\xE7\xE3o de destino (epsg)."
-  - en:
+    en:
       locale: en
       label: Destination projection (epsg code)
       help: Destination projection (epsg code).
@@ -50,19 +42,16 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Coluna de Latitude
       help: Nome da coluna que contem a Latitude.
-  - en:
+    en:
       locale: en
       label: Latitude column
       help: Latitude column name.
@@ -71,19 +60,16 @@ fields:
   type: TEXT
   required: true
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Coluna de Longitude
       help: Nome da coluna que contem a Longitude.
-  - en:
+    en:
       locale: en
       label: Longitude column
       help: Longitude column name.
@@ -92,20 +78,16 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nova coluna de Latitude
       help: Novo nome da coluna para as Latitudes convertidas (se vazia, vai substituir
         a atual).
-  - en:
+    en:
       locale: en
       label: New Latitude column
       help: Alias for the converted Latitude.
@@ -114,20 +96,16 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nova coluna de Longitude
       help: Novo nome da coluna para as Longitudes convertidas (se vazia, vai substituir
         a atual).
-  - en:
+    en:
       locale: en
       label: New Longitude column
       help: Alias for the converted Longitude (if empty will replace it).

@@ -2,7 +2,6 @@ id: 1
 slug: spark
 enabled: true
 icon: /static/spark.png
-version: null
 plugin: false
 translations:
   pt:

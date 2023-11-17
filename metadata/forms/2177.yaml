@@ -8,43 +8,31 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) a ser(em) concatenado(s)
       help: Atributo(s) a ser(em) concatenado(s).
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2154
   name: separator
   type: TEXT
   required: true
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Separador
       help: Separador para os atributos a serem concatenados.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

@@ -10,20 +10,18 @@ fields:
   order: 1
   default: deviance
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "deviance", "value": "deviance"}, {"key": "exponential", "value":
     "exponential"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fun\xE7\xE3o de perda a ser otimizada"
       help: "Desvio refere-se a desvio (= regress\xE3o log\xEDstica) para classifica\xE7\
         \xE3o com sa\xEDdas probabil\xEDsticas. Para aumento de gradiente exponencial\
         \ de perda recupera o algoritmo AdaBoost."
-  - en:
+    en:
       locale: en
       label: Loss function to be optimized
       help: ' deviance refers to deviance (= logistic regression) for classification
@@ -36,19 +34,16 @@ fields:
   order: 2
   default: '0.01'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Taxa de aprendizado
       help: "A taxa de aprendizado reduz a contribui\xE7\xE3o de cada \xE1rvore pela\
         \ taxa de aprendizado. Existe um trade-off entre taxa de aprendizado e n\xFA\
         mero de estimadores."
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate shrinks the contribution of each tree by learning rate.
@@ -60,18 +55,15 @@ fields:
   order: 3
   default: '100'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de est\xE1gios de boosting"
       help: "O aumento de gradiente \xE9 bastante robusto para o ajuste excessivo,\
         \ portanto, um grande n\xFAmero geralmente resulta em melhor desempenho."
-  - en:
+    en:
       locale: en
       label: Number of boosting stages
       help: Gradient boosting is fairly robust to over-fitting so a large number usually
@@ -83,18 +75,15 @@ fields:
   order: 4
   default: '2'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xF3 interno m\xEDnimo"
       help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para dividir\
         \ um n\xF3 interno."
-  - en:
+    en:
       locale: en
       label: Minimum samples split
       help: Percentage of the minimum number of samples required to split an internal
@@ -106,18 +95,15 @@ fields:
   order: 5
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xF3 de folha m\xEDnima"
       help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para estar\
         \ em um n\xF3 folha."
-  - en:
+    en:
       locale: en
       label: Minimum samples leaf
       help: Percentage of the minimum number of samples required to be at a leaf node.
@@ -126,20 +112,16 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.
@@ -150,18 +132,15 @@ fields:
   order: 7
   default: '1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Subamostra
       help: "A fra\xE7\xE3o de amostras a serem usadas para ajustar os aprendizes\
         \ da base individual."
-  - en:
+    en:
       locale: en
       label: Subsample
       help: The fraction of samples to be used for fitting the individual base learners.
@@ -172,18 +151,16 @@ fields:
   order: 8
   default: friedman_mse
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "friedman_mse", "value": "friedman_mse"}, {"key": "mse", "value":
     "mse"}, {"key": "mae", "value": "mae"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Crit\xE9rio"
       help: "A fun\xE7\xE3o para medir a qualidade de uma divis\xE3o."
-  - en:
+    en:
       locale: en
       label: Criterion
       help: The function to measure the quality of a split.
@@ -194,18 +171,15 @@ fields:
   order: 9
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Folha de fra\xE7\xE3o ponderada m\xEDnima"
       help: "A fra\xE7\xE3o ponderada m\xEDnima da soma total de pesos (de todas as\
         \ amostras de entrada) necess\xE1ria para estar em um n\xF3 folha."
-  - en:
+    en:
       locale: en
       label: Minimum weighted fraction leaf
       help: The minimum weighted fraction of the sum total of weights (of all the
@@ -217,18 +191,15 @@ fields:
   order: 10
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima dos estimadores de regress\xE3o individuais. A\
         \ profundidade m\xE1xima limita o n\xFAmero de n\xF3s na \xE1rvore."
-  - en:
+    en:
       locale: en
       label: Maximum depth
       help: Maximum depth of the individual regression estimators.The maximum depth
@@ -240,18 +211,15 @@ fields:
   order: 11
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Diminui\xE7\xE3o m\xEDnima da impureza"
       help: "Um n\xF3 ser\xE1 dividido se essa divis\xE3o induzir uma diminui\xE7\xE3\
         o da impureza maior ou igual a esse valor."
-  - en:
+    en:
       locale: en
       label: Minimum impurity decrease
       help: A node will be split if this split induces a decrease of the impurity
@@ -261,21 +229,17 @@ fields:
   type: TEXT
   required: false
   order: 12
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Previs\xF5es iniciais"
       help: "Um objeto estimador usado para calcular as previs\xF5es iniciais. Se\
         \ \"zero\", as previs\xF5es brutas iniciais s\xE3o definidas como zero. Por\
         \ padr\xE3o, um DummyEstimator que prev\xEA as classes anteriores \xE9 usado."
-  - en:
+    en:
       locale: en
       label: Init
       help: "An estimator object that is used to compute the initial predictions.\
@@ -286,21 +250,18 @@ fields:
   type: TEXT
   required: false
   order: 13
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "auto", "value": "auto"}, {"key": "sqrt", "value": "sqrt"}, {"key":
     "log2", "value": "log2"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Recursos m\xE1ximos"
       help: "O n\xFAmero de recursos a serem considerados ao procurar a melhor divis\xE3\
         o."
-  - en:
+    en:
       locale: en
       label: Maximum features
       help: The number of features to consider when looking for the best split.
@@ -309,19 +270,15 @@ fields:
   type: INTEGER
   required: false
   order: 15
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de n\xF3s foliares"
       help: "Cultive \xE1rvores com max_leaf_nodes da melhor maneira poss\xEDvel."
-  - en:
+    en:
       locale: en
       label: Maximum leaf nodes
       help: Grow trees with max_leaf_nodes in best-first fashion.
@@ -332,18 +289,15 @@ fields:
   order: 18
   default: '0.1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fra\xE7\xE3o de valida\xE7\xE3o"
       help: "A propor\xE7\xE3o de dados de treinamento a serem retirados como valida\xE7\
         \xE3o definida para parada antecipada."
-  - en:
+    en:
       locale: en
       label: Validation fraction
       help: The proportion of training data to set aside as validation set for early
@@ -353,20 +307,16 @@ fields:
   type: INTEGER
   required: false
   order: 19
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de itera\xE7\xF5es sem altera\xE7\xE3o"
       help: "Usado para decidir se a parada precoce ser\xE1 usada para encerrar o\
         \ treinamento quando a pontua\xE7\xE3o da valida\xE7\xE3o n\xE3o estiver melhorando."
-  - en:
+    en:
       locale: en
       label: Number of iterations with no change
       help: Used to decide if early stopping will be used to terminate training when
@@ -378,17 +328,14 @@ fields:
   order: 20
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: "Toler\xE2ncia \xE0 parada antecipada."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Tolerance for the early stopping.

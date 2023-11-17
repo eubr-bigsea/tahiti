@@ -8,22 +8,17 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "adadelta", "key": "adadelta"}, {"value": "adagrad", "key":
     "adagrad"}, {"value": "adam", "key": "adam"}, {"value": "adamax", "key": "adamax"},
     {"value": "nadam", "key": "nadam"}, {"value": "rmsprop", "key": "rmsprop"}, {"value":
     "sgd", "key": "sgd"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Optimizer
       help: An optimizer is one of the two arguments required for compiling a Keras
@@ -35,17 +30,13 @@ fields:
   order: 2
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Advanced optimizer options
       help: Advanced option for the optimazer parameters.
@@ -56,18 +47,14 @@ fields:
   order: 3
   default: '0.01'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate.
@@ -78,18 +65,14 @@ fields:
   order: 3
   default: '0.001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "rmsprop" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate.
@@ -100,18 +83,14 @@ fields:
   order: 3
   default: '0.01'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adagrad" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate.
@@ -122,18 +101,14 @@ fields:
   order: 3
   default: '1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adadelta" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate.
@@ -144,18 +119,14 @@ fields:
   order: 3
   default: '0.001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate.
@@ -166,18 +137,14 @@ fields:
   order: 3
   default: '0.002'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adamax" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate.
@@ -188,18 +155,14 @@ fields:
   order: 3
   default: '0.002'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "nadam" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate.
@@ -210,17 +173,13 @@ fields:
   order: 4
   default: '1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_optimizer.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Clip norm
       help: All parameter gradients will be clipped to a maximum norm of 1.
@@ -231,17 +190,13 @@ fields:
   order: 5
   default: '0.5'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_optimizer.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Clip value
       help: All parameter gradients will be clipped to a maximum value of 0.5 and
@@ -253,18 +208,14 @@ fields:
   order: 6
   default: '0.000001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Decay
       help: Learning rate decay
@@ -275,18 +226,14 @@ fields:
   order: 6
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "rmsprop" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Rho
       help: Rho
@@ -297,18 +244,14 @@ fields:
   order: 6
   default: '0.95'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adadelta" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Rho
       help: Rho
@@ -319,18 +262,14 @@ fields:
   order: 6
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Beta 1
       help: ' 0 < beta < 1. Generally close to 1.'
@@ -341,18 +280,14 @@ fields:
   order: 6
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adamax" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Beta 1
       help: ' 0 < beta < 1. Generally close to 1.'
@@ -363,18 +298,14 @@ fields:
   order: 6
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "nadam" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Beta 1
       help: ' 0 < beta < 1. Generally close to 1.'
@@ -385,18 +316,14 @@ fields:
   order: 7
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Momentum
       help: Parameter that accelerates SGD in the relevant direction and dampens oscillations.
@@ -407,18 +334,14 @@ fields:
   order: 7
   default: '0.999'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Beta 2
       help: 0 < beta < 1. Generally close to 1.
@@ -429,18 +352,14 @@ fields:
   order: 7
   default: '0.999'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adamax" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Beta 2
       help: 0 < beta < 1. Generally close to 1.
@@ -451,18 +370,14 @@ fields:
   order: 7
   default: '0.999'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "nadam" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Beta 2
       help: 0 < beta < 1. Generally close to 1.
@@ -473,18 +388,14 @@ fields:
   order: 8
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "sgd" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Nesterov
       help: Whether to apply Nesterov momentum.
@@ -495,18 +406,14 @@ fields:
   order: 8
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.optimizer.internalValue === "adam" && this.advanced_optimizer.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Amsgrad
       help: Whether to apply the AMSGrad variant of this algorithm from the paper
@@ -516,9 +423,7 @@ fields:
   type: TEXT
   required: true
   order: 10
-  default: None
   suggested_widget: select2
-  values_url: None
   values: '[{"value": "squared_hinge", "key": "squared_hinge"}, {"value": "hinge",
     "key": "hinge"}, {"value": "categorical_hinge", "key": "categorical_hinge"}, {"value":
     "logcosh", "key": "logcosh"}, {"value": "categorical_crossentropy", "key": "categorical_crossentropy"},
@@ -530,14 +435,11 @@ fields:
     {"value": "mean_absolute_percentage_error", "key": "mean_absolute_percentage_error"},
     {"value": "mean_squared_logarithmic_error", "key": "mean_squared_logarithmic_error"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Loss
       help: If the model has multiple outputs, you can use a different loss on each
@@ -550,19 +452,15 @@ fields:
   order: 11
   default: Categorical Accuracy
   suggested_widget: select2
-  values_url: None
   values: '[{"key": "binary_accuracy", "value": "Binary accuracy"}, {"key": "categorical_accuracy",
     "value": "Categorical accuracy"}, {"key": "sparse_categorical_accuracy", "value":
     "Sparse categorical accuracy"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Metrics
       help: A metric is a function that is used to judge the performance of your model.
@@ -571,19 +469,13 @@ fields:
   type: TEXT
   required: false
   order: 12
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Loss weights
       help: Optional list or dictionary specifying scalar coefficients (Python floats)
@@ -597,19 +489,13 @@ fields:
   type: TEXT
   required: false
   order: 13
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Sample weight mode
       help: If you need to do timestep-wise sample weighting (2D weights), set this
@@ -621,19 +507,13 @@ fields:
   type: TEXT
   required: false
   order: 14
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Weighted metrics
       help: List of metrics to be evaluated and weighted by sample_weight or class_weight
@@ -643,19 +523,13 @@ fields:
   type: TEXT
   required: false
   order: 15
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Target tensors
       help: By default, Keras will create placeholders for the model's target, which
@@ -669,19 +543,13 @@ fields:
   type: TEXT
   required: false
   order: 16
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Kwargs
       help: For the TensorFlow backend, these arguments are passed into tf.Session.run.

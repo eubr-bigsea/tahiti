@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo para a nuvem de palavras."
-  - en:
+    en:
       locale: en
       label: Title
       help: Title for the word cloud.
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com as palavras
       help: Atributo com as palavras usadas na nuvem.
-  - en:
+    en:
       locale: en
       label: Attribute with words
       help: Attributes with words used in the cloud.
@@ -50,19 +42,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com os pesos (opcional)
       help: Atributo com os pesos das palavras usadas na nuvem.
-  - en:
+    en:
       locale: en
       label: Attribute with weights (optional)
       help: Attributes with weights for the words used in the cloud.
@@ -71,19 +59,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Escala de normaliza\xE7\xE3o"
       help: Escala usada para normalizar os valores.
-  - en:
+    en:
       locale: en
       label: Normalization scale
       help: Scale used to normalize values.

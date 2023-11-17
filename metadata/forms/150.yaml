@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo para a visualiza\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Title
       help: Title for the visualization.
@@ -29,19 +25,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o r\xF3tulo para a c\xE9lula"
       help: "Atributo com o r\xF3tulo para a c\xE9lula."
-  - en:
+    en:
       locale: en
       label: Cell label attribute
       help: Cell label attribute used in the treemap.
@@ -50,19 +43,16 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o pai da c\xE9lula"
       help: "Atributo com o pai da c\xE9lula."
-  - en:
+    en:
       locale: en
       label: Parent attribute
       help: Cell parent used to build the hierarchy.
@@ -71,19 +61,16 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com o valor
       help: "Atributo com o valor da c\xE9lula."
-  - en:
+    en:
       locale: en
       label: Value attribute
       help: Attribute with the cell value.
@@ -94,17 +81,14 @@ fields:
   order: 5
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Exibir o valor da c\xE9lula"
       help: "Exibe o valor da c\xE9lula."
-  - en:
+    en:
       locale: en
       label: Display value
       help: Displays the cell value.
@@ -115,18 +99,15 @@ fields:
   order: 6
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Exibir o % para a c\xE9lula"
       help: "Exibe o percentual do valor da c\xE9lula em rela\xE7\xE3o \xE0 c\xE9\
         lula pai."
-  - en:
+    en:
       locale: en
       label: Display cell's percentage
       help: Display cell's percentage in relation to its parent.
@@ -137,17 +118,14 @@ fields:
   order: 7
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Exibir o percentual da c\xE9lula pai"
       help: "Exibe o percentual da c\xE9lula pai."
-  - en:
+    en:
       locale: en
       label: Display parent's percentage
       help: Display parent's percentage.
