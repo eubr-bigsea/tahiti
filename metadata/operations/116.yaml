@@ -1,77 +1,128 @@
-id: 116
-slug: generalized-linear-regressor-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-plus-square
-css_class: None
-doc_link: None
+id: !!set
+  116: null
+slug: !!set
+  generalized-linear-regressor-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-plus-square: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 275
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    275: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: entrada do treino
-      description: Train input data
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 276
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        entrada do treino: null
+      description: !!set
+        Train input data: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    276: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Output model
-  - en:
-      locale: en
-      name: model
-      description: Output model
-- id: 277
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Output model: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Output model: null
+- id: !!set
+    277: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: "Regress\xE3o Linear generalizada"
-    description: Regressor Linear Generalizado
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regress\xE3o Linear generalizada": null
+    description: !!set
+      Regressor Linear Generalizado: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Generalized Linear Regression
-    description: Generalized Linear Regressor
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Generalized Linear Regression: null
+    description: !!set
+      Generalized Linear Regressor: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
@@ -84,4 +135,10 @@ categories:
   type: group
 - id: 1501
   type: regression
+forms:
+- 41
+- 110
+- 102
+- 107
+- 132
 

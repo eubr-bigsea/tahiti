@@ -3,8 +3,6 @@ slug: add-columns
 enabled: true
 type: TRANSFORMATION
 icon: fa-copy
-css_class: None
-doc_link: None
 scripts:
 - id: 17
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 50
   slug: input data 1
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 1
       description: Input data 1
-  - en:
+    en:
       locale: en
       name: input data 1
       description: Input data 1
 - id: 51
   slug: input data 2
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 2
       description: Input data 2
-  - en:
+    en:
       locale: en
       name: input data 2
       description: Input data 2
 - id: 52
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -70,12 +65,10 @@ translations:
     locale: pt
     name: Adicionar nova(s) coluna(s)
     description: Adiciona colunas de uma fonte de dados a outra
-    label_format: None
   en:
     locale: en
     name: Add new column(s)
     description: Adds columns from one data source to another
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -86,4 +79,8 @@ categories:
   type: group
 - id: 30
   type: subgroup
+forms:
+- 41
+- 110
+- 117
 

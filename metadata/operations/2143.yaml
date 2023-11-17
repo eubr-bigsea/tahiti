@@ -1,28 +1,49 @@
-id: 2143
-slug: date-diff
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Datetime
-doc_link: ''
+id: !!set
+  2143: null
+slug: !!set
+  date-diff: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Datetime: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "Diferen\xE7a de datas"
-    description: "Calcula a diferen\xE7a entre datas."
-    label_format: "<b>Calcular a diferen\xE7a entre datas </b> <i>${this.attributes.value.map(a=>a).join(\"\
-      , \")}</i>"
+    locale: !!set
+      pt: null
+    name: !!set
+      "Diferen\xE7a de datas": null
+    description: !!set
+      "Calcula a diferen\xE7a entre datas.": null
+    label_format: !!set
+      "<b>Calcular a diferen\xE7a entre datas </b> <i>${this.attributes.value.map(a=>a).join(\", \")}</i>": null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2105
+- 2193
+- 2106
 

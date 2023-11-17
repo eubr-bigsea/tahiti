@@ -3,8 +3,6 @@ slug: random-forest-classifier-model
 enabled: true
 type: TRANSFORMATION
 icon: fa-random
-css_class: None
-doc_link: None
 scripts:
 - id: 52
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 248
   slug: train input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: entrada do treino
       description: Train input data
-  - en:
+    en:
       locale: en
       name: train input data
       description: Train input data
 - id: 249
   slug: model
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Output model
-  - en:
+    en:
       locale: en
       name: model
       description: Output model
 - id: 250
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -70,12 +65,10 @@ translations:
     locale: pt
     name: Random forest
     description: Classificador random forest
-    label_format: None
   en:
     locale: en
     name: Random forest
     description: Random forest classifier
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -90,4 +83,11 @@ categories:
   type: group
 - id: 1500
   type: classification
+forms:
+- 41
+- 1
+- 110
+- 65
+- 132
+- 133
 

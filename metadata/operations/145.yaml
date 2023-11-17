@@ -1,60 +1,98 @@
-id: 145
-slug: visualization
-enabled: true
-type: VISUALIZATION
-icon: fa-chart-line
-css_class: None
-doc_link: None
-translations:
-  pt:
-    locale: pt
-    name: "Visualização"
-    description: "Permite definiir visualização de dados, incluindo gráficos, tabelas e outras."
-    label_format: None
-  en:
-    locale: en
-    name: 'Visualization'
-    description: "Allow to create data visualization, such as charts, tables and others."
-    label_format: None
-
+id: !!set
+  145: null
+slug: !!set
+  visualization: null
+enabled: !!set
+  true: null
+type: !!set
+  VISUALIZATION: null
+icon: !!set
+  fa-chart-line: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 354
-  slug: visualization
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    354: null
+  slug: !!set
+    visualization: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 19
     name: Visualization
   translations:
     pt:
-      locale: pt
-      name: "visualiza\xE7\xE3o"
-      description: "Visualiza\xE7\xE3o"
+      locale: !!set
+        pt: null
+      name: !!set
+        "visualiza\xE7\xE3o": null
+      description: !!set
+        "Visualiza\xE7\xE3o": null
     en:
-      locale: en
-      name: visualization
-      description: Visualization
-- id: 355
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+      locale: !!set
+        en: null
+      name: !!set
+        visualization: null
+      description: !!set
+        Visualization: null
+- id: !!set
+    355: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
     pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
     en:
-      locale: en
-      name: input data
-      description: Input data
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+translations:
+  pt:
+    locale: !!set
+      pt: null
+    name: !!set
+      "Visualiza\xE7\xE3o": null
+    description: !!set
+      "Permite definiir visualiza\xE7\xE3o de dados, incluindo gr\xE1ficos, tabelas e outras.": null
+    label_format: !!set
+      None: null
+  en:
+    locale: !!set
+      en: null
+    name: !!set
+      Visualization: null
+    description: !!set
+      Allow to create data visualization, such as charts, tables and others.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
@@ -64,6 +102,6 @@ categories:
 - id: 15
   type: group
 forms:
-- id: 41  # Color and comment
-- id: 159 # Specific
-#- id: 110  # Sample and schema
+- 41
+- 159
+

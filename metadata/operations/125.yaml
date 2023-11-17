@@ -1,28 +1,46 @@
-id: 125
-slug: meta-operation
-enabled: false
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  125: null
+slug: !!set
+  meta-operation: null
+enabled: !!set
+  false: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "Meta-opera\xE7\xE3o"
-    description: "A meta-opera\xE7\xE3o \xE9 uma opera\xE7\xE3o que cont\xE9m subfluxos,\
-      \ ou seja, no fluxo de trabalho eles se parecem com uma \xFAnica opera\xE7\xE3\
-      o, embora possam conter muitas opera\xE7\xF5es e tamb\xE9m outras meta-opera\xE7\
-      \xF5es."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Meta-opera\xE7\xE3o": null
+    description: !!set
+      ? "A meta-opera\xE7\xE3o \xE9 uma opera\xE7\xE3o que cont\xE9m subfluxos, ou\
+        \ seja, no fluxo de trabalho eles se parecem com uma \xFAnica opera\xE7\xE3\
+        o, embora possam conter muitas opera\xE7\xF5es e tamb\xE9m outras meta-opera\xE7\
+        \xF5es."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Meta-operation
-    description: Meta-operation is an operation that contain subworkflows, i.e. in
-      the workflow they look like a single operation, although they can contain many
-      operations and even more meta-operations.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Meta-operation: null
+    description: !!set
+      ? Meta-operation is an operation that contain subworkflows, i.e. in the workflow
+        they look like a single operation, although they can contain many operations
+        and even more meta-operations.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
@@ -35,4 +53,8 @@ platforms:
 categories:
 - id: 43
   type: group
+forms:
+- 41
+- 136
+- 110
 

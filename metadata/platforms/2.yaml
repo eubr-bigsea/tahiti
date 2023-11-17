@@ -2,7 +2,7 @@ id: 2
 slug: ophidia2
 enabled: true
 icon: ''
-version: None
+version: null
 plugin: false
 translations:
   pt:

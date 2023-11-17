@@ -3,8 +3,6 @@ slug: pca
 enabled: true
 type: TRANSFORMATION
 icon: fa-sort-amount-down
-css_class: None
-doc_link: None
 scripts:
 - id: 43
   type: JS_CLIENT
@@ -14,36 +12,34 @@ ports:
 - id: 217
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
 - id: 218
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
@@ -58,7 +54,6 @@ translations:
       \ n\xE3o-correlacionadas, chamadas de componentes principais. Uma opera\xE7\xE3\
       o ACP treina um modelo para projetar vetores para um espa\xE7o de menor dimensionalidade\
       \ usando ACP."
-    label_format: None
   en:
     locale: en
     name: Principal Component Analysis (PCA)
@@ -67,7 +62,6 @@ translations:
       correlated variables into a set of values of linearly uncorrelated variables
       called principal components. A PCA operation trains a model to project vectors
       to a low-dimensional space using PCA.
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -80,4 +74,8 @@ categories:
   type: group
 - id: 36
   type: subgroup
+forms:
+- 41
+- 120
+- 110
 

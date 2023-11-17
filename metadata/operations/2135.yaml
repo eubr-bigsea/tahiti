@@ -1,28 +1,50 @@
-id: 2135
-slug: extract-from-array
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Array
-doc_link: ''
+id: !!set
+  2135: null
+slug: !!set
+  extract-from-array: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Array: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Extrair elemento(s) de arranjo
-    description: "Permite extrair um elemento de um arranjo (array) usando \xEDndice(s)."
-    label_format: <b>Extrair elemento(s)</b> <i>${this.indexes.value}</i> <b>de arranjo
-      em </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>
+    locale: !!set
+      pt: null
+    name: !!set
+      Extrair elemento(s) de arranjo: null
+    description: !!set
+      "Permite extrair um elemento de um arranjo (array) usando \xEDndice(s).": null
+    label_format: !!set
+      ? <b>Extrair elemento(s)</b> <i>${this.indexes.value}</i> <b>de arranjo em </b>
+        <i>${this.attributes.value.map(a=>a).join(", ")}</i>
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2105
+- 2185
 

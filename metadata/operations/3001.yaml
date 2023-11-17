@@ -1,41 +1,68 @@
-id: 3001
-slug: data-reader
-enabled: true
-type: TRANSFORMATION
-icon: fa-database
-css_class: None
-doc_link: None
+id: !!set
+  3001: null
+slug: !!set
+  data-reader: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-database: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3001
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    3001: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "L\xEA dados"
-  - en:
-      locale: en
-      name: output data
-      description: Read data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "L\xEA dados": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Read data: null
 translations:
   pt:
-    locale: pt
-    name: Leitor de dados
-    description: "L\xEA dados de uma fonte de dados"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Leitor de dados: null
+    description: !!set
+      "L\xEA dados de uma fonte de dados": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Data reader
-    description: Reads data from a data set
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Data reader: null
+    description: !!set
+      Reads data from a data set: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 3
@@ -44,4 +71,8 @@ categories:
   type: technology
 - id: 6
   type: group
+forms:
+- 41
+- 3001
+- 110
 

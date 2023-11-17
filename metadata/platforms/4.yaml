@@ -2,7 +2,7 @@ id: 4
 slug: scikit-learn
 enabled: true
 icon: ''
-version: None
+version: null
 plugin: false
 translations:
   pt:

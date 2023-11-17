@@ -3,25 +3,22 @@ slug: external-input
 enabled: true
 type: TRANSFORMATION
 icon: fa-external-link-alt
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 129
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: Entrada externa
     description: "L\xEA dados de uma fonte externa"
-    label_format: None
   en:
     locale: en
     name: External input
     description: Read data from an external source
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -44,4 +39,7 @@ categories:
   type: technology
 - id: 9
   type: group
+forms:
+- 41
+- 73
 

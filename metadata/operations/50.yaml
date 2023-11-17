@@ -3,8 +3,6 @@ slug: remove-stop-words
 enabled: true
 type: TRANSFORMATION
 icon: fa-hand-paper
-css_class: None
-doc_link: None
 scripts:
 - id: 21
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 110
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada com o texto para se remover stop words
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data with text to remove stop words
 - id: 111
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda com campo texto sem stop words"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data with text field without stop words
 - id: 114
   slug: stop words
   type: INPUT
-  tags: None
   order: 2
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: stop words
       description: Dados de entrada contendo um atributo com as stop words
-  - en:
+    en:
       locale: en
       name: stop words
       description: Input data containing an attribute with stop words
@@ -70,12 +65,10 @@ translations:
     locale: pt
     name: Remover palavras-comuns (stopwords)
     description: Remove stop words
-    label_format: None
   en:
     locale: en
     name: Remove stop words
     description: Remove stop words
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -88,4 +81,8 @@ categories:
   type: group
 - id: 37
   type: subgroup
+forms:
+- 41
+- 60
+- 110
 

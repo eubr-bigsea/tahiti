@@ -1,81 +1,139 @@
-id: 5119
-slug: sequence-reader
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5119: null
+slug: !!set
+  sequence-reader: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5320
-  slug: train-sequence
-  type: OUTPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+- id: !!set
+    5320: null
+  slug: !!set
+    train-sequence: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 26
     name: SequenceData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: train sequence data
-      description: Sequence Data
-- id: 5321
-  slug: validation-sequence
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train sequence data: null
+      description: !!set
+        Sequence Data: null
+- id: !!set
+    5321: null
+  slug: !!set
+    validation-sequence: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 26
     name: SequenceData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: validation sequence data
-      description: Sequence Data
-- id: 5405
-  slug: test-sequence
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        validation sequence data: null
+      description: !!set
+        Sequence Data: null
+- id: !!set
+    5405: null
+  slug: !!set
+    test-sequence: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 26
     name: SequenceData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: test sequence data
-      description: Sequence data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        test sequence data: null
+      description: !!set
+        Sequence data: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Sequence reader
-    description: Reads sequences of any data type from a data source.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Sequence reader: null
+    description: !!set
+      Reads sequences of any data type from a data source.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5065
   type: group
+forms:
+- 41
+- 5240
 

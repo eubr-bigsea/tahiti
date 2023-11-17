@@ -1,64 +1,106 @@
-id: 3025
-slug: aggregation
-enabled: true
-type: TRANSFORMATION
-icon: fa-cube
-css_class: None
-doc_link: None
+id: !!set
+  3025: null
+slug: !!set
+  aggregation: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-cube: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3051
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3051: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input Data
-- id: 3053
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input Data: null
+- id: !!set
+    3053: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: "Agrega\xE7\xE3o"
-    description: "Realiza a agrega\xE7\xE3o de dados agrupados por um conjunto de\
-      \ atributos"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Agrega\xE7\xE3o": null
+    description: !!set
+      "Realiza a agrega\xE7\xE3o de dados agrupados por um conjunto de atributos": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Aggregation
-    description: Performs aggregation of data grouped by a set of fields
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Aggregation: null
+    description: !!set
+      Performs aggregation of data grouped by a set of fields: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 7
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 3025
 

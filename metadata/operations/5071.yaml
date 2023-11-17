@@ -4,7 +4,6 @@ enabled: false
 type: ACTION
 icon: ''
 css_class: circle-layout
-doc_link: None
 scripts: []
 ports:
 - id: 5191
@@ -17,11 +16,9 @@ ports:
   - id: 27
     name: Layer
   translations:
-  - pt:
+    pt:
       locale: pt
-      name: None
-      description: None
-  - en:
+    en:
       locale: en
       name: input layer
       description: Input layer
@@ -35,29 +32,32 @@ ports:
   - id: 27
     name: Layer
   translations:
-  - pt:
+    pt:
       locale: pt
-      name: None
-      description: None
-  - en:
+    en:
       locale: en
       name: output layer
       description: Output layer
 translations:
   pt:
     locale: pt
-    name: None
-    description: None
-    label_format: None
   en:
     locale: en
     name: Input
-    description: ''
-    label_format: None
+    description: 'null'
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5070
   type: group
+forms:
+- 5176
+- 5171
+- 5172
+- 5173
+- 5174
+- 5175
+- 41
+- 5177
 

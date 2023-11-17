@@ -1,81 +1,139 @@
-id: 5117
-slug: image-reader
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5117: null
+slug: !!set
+  image-reader: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5316
-  slug: train-image
-  type: OUTPUT
-  tags: ''
-  order: 3
-  multiplicity: MANY
+- id: !!set
+    5316: null
+  slug: !!set
+    train-image: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    3: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 24
     name: ImageData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: train image data
-      description: Image Data
-- id: 5317
-  slug: validation-image
-  type: OUTPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train image data: null
+      description: !!set
+        Image Data: null
+- id: !!set
+    5317: null
+  slug: !!set
+    validation-image: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 24
     name: ImageData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: validation image data
-      description: Image Data
-- id: 5395
-  slug: test-image
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        validation image data: null
+      description: !!set
+        Image Data: null
+- id: !!set
+    5395: null
+  slug: !!set
+    test-image: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 24
     name: ImageData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: test image data
-      description: Image Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        test image data: null
+      description: !!set
+        Image Data: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Image reader
-    description: Reads images from a data source.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Image reader: null
+    description: !!set
+      Reads images from a data source.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5065
   type: group
+forms:
+- 41
+- 5238
 

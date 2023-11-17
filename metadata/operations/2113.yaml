@@ -12,16 +12,17 @@ translations:
     locale: pt
     name: Transformar com Python
     description: "Permite usar c\xF3digo Python para transformar os dados."
-    label_format: ''
+    label_format: 'null'
   en:
     locale: en
-    name: None
-    description: None
-    label_format: None
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2102
   type: menu/always/fa fa-database
+forms:
+- 2163
+- 41
+- 2102
 

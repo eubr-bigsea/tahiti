@@ -4,7 +4,6 @@ enabled: false
 type: ACTION
 icon: ''
 css_class: circle-layout
-doc_link: None
 scripts: []
 ports:
 - id: 5149
@@ -17,11 +16,9 @@ ports:
   - id: 27
     name: Layer
   translations:
-  - pt:
+    pt:
       locale: pt
-      name: None
-      description: None
-  - en:
+    en:
       locale: en
       name: input layer
       description: Input layer
@@ -35,30 +32,25 @@ ports:
   - id: 27
     name: Layer
   translations:
-  - pt:
+    pt:
       locale: pt
-      name: None
-      description: None
-  - en:
+    en:
       locale: en
       name: output layer
       description: Output layer
 translations:
   pt:
     locale: pt
-    name: None
-    description: None
-    label_format: None
   en:
     locale: en
     name: CuDNNGRU
     description: Fast GRU implementation backed by CuDNN. Can only be run on GPU,
       with the TensorFlow backend.
-    label_format: None
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5040
   type: group
+forms: []
 

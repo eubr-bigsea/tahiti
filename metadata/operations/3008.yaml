@@ -1,41 +1,68 @@
-id: 3008
-slug: logistic-regression
-enabled: true
-type: TRANSFORMATION
-icon: fa-exchange-alt
-css_class: None
-doc_link: None
+id: !!set
+  3008: null
+slug: !!set
+  logistic-regression: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-exchange-alt: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3011
-  slug: algorithm
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    3011: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
-  - en:
-      locale: en
-      name: algorithm
-      description: Untrained classification model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        "Modelo de classifica\xE7\xE3o n\xE3o treinado": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Untrained classification model: null
 translations:
   pt:
-    locale: pt
-    name: "Regress\xE3o log\xEDstica"
-    description: "Realiza regress\xE3o log\xEDstica"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regress\xE3o log\xEDstica": null
+    description: !!set
+      "Realiza regress\xE3o log\xEDstica": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Logistic regression
-    description: Performs logistic regression
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Logistic regression: null
+    description: !!set
+      Performs logistic regression: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -46,4 +73,8 @@ categories:
   type: technology
 - id: 1500
   type: classification
+forms:
+- 41
+- 110
+- 3008
 

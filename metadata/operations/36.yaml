@@ -3,8 +3,6 @@ slug: run-application
 enabled: false
 type: TRANSFORMATION
 icon: fa-play
-css_class: None
-doc_link: None
 scripts:
 - id: 27
   type: JS_CLIENT
@@ -14,36 +12,34 @@ ports:
 - id: 74
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
 - id: 75
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
@@ -52,12 +48,10 @@ translations:
     locale: pt
     name: "Executar aplica\xE7\xE3o"
     description: "Executa uma aplica\xE7\xE3o dispon\xEDvel no cat\xE1logo do Lemonade"
-    label_format: None
   en:
     locale: en
     name: Run application
     description: Executes an application available in the Lemonade catalog
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -66,4 +60,7 @@ categories:
   type: technology
 - id: 10
   type: group
+forms:
+- 41
+- 46
 

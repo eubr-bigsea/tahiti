@@ -3,25 +3,22 @@ slug: als-recommender
 enabled: true
 type: TRANSFORMATION
 icon: fa-signal
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 133
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 16
     name: IRecommendationAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Algoritmo
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Algorithm
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: Recomendador ALS
     description: ' Recomendador ALS'
-    label_format: None
   en:
     locale: en
     name: ALS Recommender
     description: ALS Recommender
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -46,4 +41,8 @@ categories:
   type: subgroup
 - id: 8
   type: group
+forms:
+- 41
+- 75
+- 141
 

@@ -2,7 +2,7 @@ id: 1000
 slug: meta
 enabled: true
 icon: ' '
-version: None
+version: null
 plugin: false
 translations:
   pt:

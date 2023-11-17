@@ -1,23 +1,42 @@
-id: 2363
-slug: svm
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2363: null
+slug: !!set
+  svm: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Classificador SVM
-    description: Classificador SVM
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Classificador SVM: null
+    description: !!set
+      Classificador SVM: null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
@@ -26,4 +45,6 @@ categories:
   type: model-builder
 - id: 4
   type: algorithm
+forms:
+- 9
 

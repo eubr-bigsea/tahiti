@@ -1,95 +1,158 @@
-id: 3018
-slug: classification-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-tags
-css_class: None
-doc_link: None
+id: !!set
+  3018: null
+slug: !!set
+  classification-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-tags: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3034
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3034: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de treino de entrada
-      description: Dados de treino de entrada
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 3035
-  slug: algorithm
-  type: INPUT
-  tags: None
-  order: 2
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de treino de entrada: null
+      description: !!set
+        Dados de treino de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    3035: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: Algoritmo
-  - en:
-      locale: en
-      name: algorithm
-      description: Algorithm
-- id: 3036
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        Algoritmo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Algorithm: null
+- id: !!set
+    3036: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 18
     name: IRegressionModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 3037
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    3037: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: "Modelo de Classifica\xE7\xE3o"
-    description: "Modelo de Classifica\xE7\xE3o"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Modelo de Classifica\xE7\xE3o": null
+    description: !!set
+      "Modelo de Classifica\xE7\xE3o": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Classification Model
-    description: Classification Model
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Classification Model: null
+    description: !!set
+      Classification Model: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -100,4 +163,8 @@ categories:
   type: technology
 - id: 1500
   type: classification
+forms:
+- 41
+- 3018
+- 110
 

@@ -1,9 +1,9 @@
-id: 15
+id: 2421
 enabled: true
 order: 1
 category: execution
 fields:
-- id: 70
+- id: 2236
   name: attributes
   type: TEXT
   required: false
@@ -20,7 +20,7 @@ fields:
       locale: en
       label: Select attribute(s) for grouping
       help: Choose one or more attributes to aggregate data with
-- id: 71
+- id: 2237
   name: function
   type: TEXT
   required: true
@@ -91,47 +91,3 @@ fields:
       locale: en
       label: Aggregation functions
       help: Aggregation functions
-- id: 359
-  name: pivot
-  type: TEXT
-  required: false
-  order: 3
-  suggested_widget: attribute-selector
-  values: '{"multiple": false}'
-  scope: EXECUTION
-  editable: true
-  translations:
-    pt:
-      locale: pt
-      label: "Atributo usado como piv\xF4"
-      help: "Atributo usado como piv\xF4. Cada valor para o atributo ir\xE1 gerar\
-        \ um novo atributo."
-    en:
-      locale: en
-      label: Attribute used as pivot
-      help: Attribute used as pivot. Each attribute value will generate a new attribute
-- id: 360
-  name: pivot_values
-  type: TEXT
-  required: false
-  order: 4
-  suggested_widget: textarea
-  scope: EXECUTION
-  editable: true
-  translations:
-    pt:
-      locale: pt
-      label: "Valores do piv\xF4 (recomendado, se piv\xF4 for usado)"
-      help: "Valores do piv\xF4. Recomendado, se piv\xF4 for usado (melhora desempenho)."
-    en:
-      locale: en
-      label: Pivot values (recommended if pivot is used)
-      help: Pivot values. Recommended if pivot is used (better performance).
-translations:
-  pt:
-    locale: pt
-    name: "Execu\xE7\xE3o"
-  en:
-    locale: en
-    name: Execution
-

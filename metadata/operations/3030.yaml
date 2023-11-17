@@ -1,78 +1,128 @@
-id: 3030
-slug: join
-enabled: true
-type: TRANSFORMATION
-icon: fa-link
-css_class: None
-doc_link: None
+id: !!set
+  3030: null
+slug: !!set
+  join: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-link: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3060
-  slug: input data 1
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3060: null
+  slug: !!set
+    input data 1: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada 1
-      description: Dados de entrada 1
-  - en:
-      locale: en
-      name: input data 1
-      description: Input Data 1
-- id: 3061
-  slug: input data 2
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada 1: null
+      description: !!set
+        Dados de entrada 1: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data 1: null
+      description: !!set
+        Input Data 1: null
+- id: !!set
+    3061: null
+  slug: !!set
+    input data 2: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada 2
-      description: Dados de entrada 2
-  - en:
-      locale: en
-      name: input data 2
-      description: Input Data 2
-- id: 3062
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada 2: null
+      description: !!set
+        Dados de entrada 2: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data 2: null
+      description: !!set
+        Input Data 2: null
+- id: !!set
+    3062: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: "Jun\xE7\xE3o (join)"
-    description: "Realiza a jun\xE7\xE3o de fontes de dados usando um conjunto de\
-      \ atributos (chaves)"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Jun\xE7\xE3o (join)": null
+    description: !!set
+      "Realiza a jun\xE7\xE3o de fontes de dados usando um conjunto de atributos (chaves)": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Join
-    description: Joins two data sets using a set of fields (keys)
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Join: null
+    description: !!set
+      Joins two data sets using a set of fields (keys): null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -83,4 +133,8 @@ categories:
   type: subgroup
 - id: 3001
   type: technology
+forms:
+- 41
+- 3030
+- 110
 

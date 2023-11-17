@@ -1,63 +1,108 @@
-id: 5100
-slug: input
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5100: null
+slug: !!set
+  input: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5300
-  slug: output layer
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    5300: null
+  slug: !!set
+    output layer: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: output layer
-      description: Output layer
-- id: 5376
-  slug: python code
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output layer: null
+      description: !!set
+        Output layer: null
+- id: !!set
+    5376: null
+  slug: !!set
+    python code: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Input
-    description: Input layer is used to instantiate a Keras tensor.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Input: null
+    description: !!set
+      Input layer is used to instantiate a Keras tensor.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5010
   type: group
+forms:
+- 41
+- 5175
 

@@ -1,97 +1,160 @@
-id: 3010
-slug: evaluate-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-check
-css_class: None
-doc_link: None
+id: !!set
+  3010: null
+slug: !!set
+  evaluate-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-check: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3013
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3013: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input Data
-- id: 3014
-  slug: model
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input Data: null
+- id: !!set
+    3014: null
+  slug: !!set
+    model: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 2
     name: ClassificationModel
   - id: 18
     name: IRegressionModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 3015
-  slug: evaluated model
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    3015: null
+  slug: !!set
+    evaluated model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 7
     name: ModelWithEvaluation
   translations:
-  - pt:
-      locale: pt
-      name: modelo avaliado
-      description: Modelo avaliado
-  - en:
-      locale: en
-      name: evaluated model
-      description: Evaluated model
-- id: 3016
-  slug: evaluator
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo avaliado: null
+      description: !!set
+        Modelo avaliado: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        evaluated model: null
+      description: !!set
+        Evaluated model: null
+- id: !!set
+    3016: null
+  slug: !!set
+    evaluator: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 10
     name: IEvaluatorModel
   translations:
-  - pt:
-      locale: pt
-      name: avaliador
-      description: Avaliador
-  - en:
-      locale: en
-      name: evaluator
-      description: Evaluator
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        avaliador: null
+      description: !!set
+        Avaliador: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        evaluator: null
+      description: !!set
+        Evaluator: null
 translations:
   pt:
-    locale: pt
-    name: Avaliar modelo
-    description: "Avalia um modelo de aprendizado de m\xE1quina"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Avaliar modelo: null
+    description: !!set
+      "Avalia um modelo de aprendizado de m\xE1quina": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Evaluate model
-    description: Evaluates a machine learning model
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Evaluate model: null
+    description: !!set
+      Evaluates a machine learning model: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -100,4 +163,8 @@ categories:
   type: subgroup
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 3010
 

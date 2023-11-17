@@ -1,28 +1,48 @@
-id: 2144
-slug: date-add
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Datetime
-doc_link: ''
+id: !!set
+  2144: null
+slug: !!set
+  date-add: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Datetime: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Incrementar/decrementar data
-    description: "Soma ou subtrai um valor num\xE9rico de uma data"
-    label_format: <b>Incrementar/decrementar valor na(s) data(s) </b> <i>${this.attributes.value.map(a=>a).join(",
-      ")}</i>
+    locale: !!set
+      pt: null
+    name: !!set
+      Incrementar/decrementar data: null
+    description: !!set
+      "Soma ou subtrai um valor num\xE9rico de uma data": null
+    label_format: !!set
+      <b>Incrementar/decrementar valor na(s) data(s) </b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>: null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2102
+- 2194
 

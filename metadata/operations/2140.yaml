@@ -1,28 +1,48 @@
-id: 2140
-slug: force-date-range
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Datetime
-doc_link: ''
+id: !!set
+  2140: null
+slug: !!set
+  force-date-range: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Datetime: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "For\xE7ar data a uma faixa"
-    description: "For\xE7a que as datas estejam em uma faixa de valores."
-    label_format: "<b>For\xE7ar que datas em </b> <i>${this.attributes.value.map(a=>a).join(\"\
-      , \")}</i> <b>estejam em uma faixa</b>"
+    locale: !!set
+      pt: null
+    name: !!set
+      "For\xE7ar data a uma faixa": null
+    description: !!set
+      "For\xE7a que as datas estejam em uma faixa de valores.": null
+    label_format: !!set
+      "<b>For\xE7ar que datas em </b> <i>${this.attributes.value.map(a=>a).join(\", \")}</i> <b>estejam em uma faixa</b>": null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2102
+- 2190
 

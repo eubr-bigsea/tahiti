@@ -2,13 +2,13 @@ id: 3
 slug: compss
 enabled: false
 icon: ''
-version: None
+version: null
 plugin: false
 translations:
   pt:
     locale: pt
-    name: None
-    description: None
+    name: null
+    description: null
   en:
     locale: en
     name: COMPSs

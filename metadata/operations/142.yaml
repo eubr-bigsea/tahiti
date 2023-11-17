@@ -1,63 +1,111 @@
-id: 142
-slug: validation
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  142: null
+slug: !!set
+  validation: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports:
-- id: 328
-  slug: input data
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    328: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: input data
-- id: 329
-  slug: output results
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        input data: null
+- id: !!set
+    329: null
+  slug: !!set
+    output results: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 30
     name: ValidationResult
   translations:
-  - pt:
-      locale: pt
-      name: "resultado valida\xE7\xE3o"
-      description: "Resultado valida\xE7\xE3o"
-  - en:
-      locale: en
-      name: validation result
-      description: validation result
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "resultado valida\xE7\xE3o": null
+      description: !!set
+        "Resultado valida\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        validation result: null
+      description: !!set
+        validation result: null
 translations:
   pt:
-    locale: pt
-    name: "Valida\xE7\xE3o de dados"
-    description: Valida os dados segundo regras.
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Valida\xE7\xE3o de dados": null
+    description: !!set
+      Valida os dados segundo regras.: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Data validation
-    description: Validates data against rules.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Data validation: null
+    description: !!set
+      Validates data against rules.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
 categories:
 - id: 46
   type: algorithm
+forms:
+- 41
+- 155
+- 110
 

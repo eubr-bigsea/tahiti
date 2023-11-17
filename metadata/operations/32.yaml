@@ -3,8 +3,6 @@ slug: sort
 enabled: true
 type: TRANSFORMATION
 icon: fa-sort
-css_class: None
-doc_link: None
 scripts:
 - id: 13
   type: JS_CLIENT
@@ -14,36 +12,34 @@ ports:
 - id: 61
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Input to be sorted
-  - en:
+    en:
       locale: en
       name: input data
       description: Input to be sorted
 - id: 62
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: Sorted output
-  - en:
+    en:
       locale: en
       name: output data
       description: Sorted output
@@ -53,12 +49,10 @@ translations:
     name: Ordenar
     description: "Ordena dados de uma fonte de acordo com um conjunto de atributos\
       \ e dire\xE7\xF5es"
-    label_format: None
   en:
     locale: en
     name: Sort
     description: Sorts data from data set according to a set of fields and directions
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -71,4 +65,8 @@ categories:
   type: group
 - id: 30
   type: subgroup
+forms:
+- 35
+- 41
+- 110
 

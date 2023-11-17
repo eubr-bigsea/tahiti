@@ -1,77 +1,128 @@
-id: 3019
-slug: apply-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-lightbulb
-css_class: None
-doc_link: None
+id: !!set
+  3019: null
+slug: !!set
+  apply-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-lightbulb: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3038
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3038: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 3039
-  slug: model
-  type: INPUT
-  tags: None
-  order: 2
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    3039: null
+  slug: !!set
+    model: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 18
     name: IRegressionModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 3040
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    3040: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: Aplicar modelo
-    description: "Aplica um modelo de aprendizado de m\xE1quina aos dados"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Aplicar modelo: null
+    description: !!set
+      "Aplica um modelo de aprendizado de m\xE1quina aos dados": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Apply model
-    description: Apply a machine learning model to data
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Apply model: null
+    description: !!set
+      Apply a machine learning model to data: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -80,4 +131,8 @@ categories:
   type: subgroup
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 3019
 

@@ -1,81 +1,136 @@
-id: 3024
-slug: add-columns
-enabled: true
-type: TRANSFORMATION
-icon: fa-copy
-css_class: None
-doc_link: None
+id: !!set
+  3024: null
+slug: !!set
+  add-columns: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-copy: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3048
-  slug: input data 1
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3048: null
+  slug: !!set
+    input data 1: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada 1
-      description: Dados de entrada 1
-  - en:
-      locale: en
-      name: input data 1
-      description: Input Data 1
-- id: 3049
-  slug: input data 2
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada 1: null
+      description: !!set
+        Dados de entrada 1: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data 1: null
+      description: !!set
+        Input Data 1: null
+- id: !!set
+    3049: null
+  slug: !!set
+    input data 2: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada 2
-      description: Dados de entrada 2
-  - en:
-      locale: en
-      name: input data 2
-      description: Input Data 2
-- id: 3050
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada 2: null
+      description: !!set
+        Dados de entrada 2: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data 2: null
+      description: !!set
+        Input Data 2: null
+- id: !!set
+    3050: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: Adicionar colunas
-    description: Adiciona colunas de uma fonte de dados a outra
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Adicionar colunas: null
+    description: !!set
+      Adiciona colunas de uma fonte de dados a outra: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Add Columns
-    description: Adds columns from one data source to another
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Add Columns: null
+    description: !!set
+      Adds columns from one data source to another: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 7
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 3024
 

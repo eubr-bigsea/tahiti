@@ -1,113 +1,188 @@
-id: 3016
-slug: clustering-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-users
-css_class: None
-doc_link: None
+id: !!set
+  3016: null
+slug: !!set
+  clustering-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-users: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3027
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3027: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de treino de entrada
-      description: Dados de treino de entrada
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 3028
-  slug: algorithm
-  type: INPUT
-  tags: None
-  order: 2
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de treino de entrada: null
+      description: !!set
+        Dados de treino de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    3028: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 11
     name: IClusteringAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: Algoritmo
-  - en:
-      locale: en
-      name: algorithm
-      description: Algorithm
-- id: 3029
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        Algoritmo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Algorithm: null
+- id: !!set
+    3029: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 18
     name: IRegressionModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 3033
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    3033: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
-- id: 3069
-  slug: cluster centroids
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
+- id: !!set
+    3069: null
+  slug: !!set
+    cluster centroids: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: centroids do agrupamento
-      description: Centroids do agrupamento
-  - en:
-      locale: en
-      name: cluster centroids
-      description: Cluster centroids
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        centroids do agrupamento: null
+      description: !!set
+        Centroids do agrupamento: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        cluster centroids: null
+      description: !!set
+        Cluster centroids: null
 translations:
   pt:
-    locale: pt
-    name: Modelo de Agrupamento
-    description: Modelo de Agrupamento
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Modelo de Agrupamento: null
+    description: !!set
+      Modelo de Agrupamento: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Clustering Model
-    description: Clustering Model
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Clustering Model: null
+    description: !!set
+      Clustering Model: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -118,4 +193,8 @@ categories:
   type: technology
 - id: 1504
   type: clustering
+forms:
+- 41
+- 110
+- 3016
 

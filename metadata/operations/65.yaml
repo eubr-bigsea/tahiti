@@ -3,43 +3,39 @@ slug: word_tree
 enabled: false
 type: TRANSFORMATION
 icon: fa-tree
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 142
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
 - id: 143
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -48,12 +44,13 @@ translations:
     locale: pt
     name: Word tree
     description: Word tree
-    label_format: None
   en:
     locale: en
     name: Word tree
     description: Word tree
-    label_format: None
 platforms: []
 categories: []
+forms:
+- 80
+- 41
 

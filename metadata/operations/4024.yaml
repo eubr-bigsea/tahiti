@@ -1,81 +1,132 @@
-id: 4024
-slug: decision-tree-classifier-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-arrow-right
-css_class: None
-doc_link: None
+id: !!set
+  4024: null
+slug: !!set
+  decision-tree-classifier-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-arrow-right: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4039
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4039: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: entrada do treino
-      description: Train input data
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 4040
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        entrada do treino: null
+      description: !!set
+        Train input data: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    4040: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Output model
-  - en:
-      locale: en
-      name: model
-      description: Output model
-- id: 4041
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Output model: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Output model: null
+- id: !!set
+    4041: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: "Classif. \xC1rv. Decis\xE3o"
-    description: "Classificador baseado em \xE1rvores de decis\xE3o. Suporta tanto\
-      \ r\xF3tulos bin\xE1rios quanto multiclasses e features cont\xEDnuas e categ\xF3\
-      ricas."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Classif. \xC1rv. Decis\xE3o": null
+    description: !!set
+      ? "Classificador baseado em \xE1rvores de decis\xE3o. Suporta tanto r\xF3tulos\
+        \ bin\xE1rios quanto multiclasses e features cont\xEDnuas e categ\xF3ricas."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Decision tree classifier
-    description: Decision tree learning algorithm for classification. It supports
-      both binary and multiclass labels, as well as both continuous and categorical
-      features.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Decision tree classifier: null
+    description: !!set
+      ? Decision tree learning algorithm for classification. It supports both binary
+        and multiclass labels, as well as both continuous and categorical features.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -90,4 +141,10 @@ categories:
   type: group
 - id: 1500
   type: classification
+forms:
+- 41
+- 110
+- 4021
+- 4004
+- 4046
 
