@@ -190,14 +190,28 @@ class PluginStatus:
         return [n for n in list(PluginStatus.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
-# noinspection PyClassHasNoInit
-class PipelineStatus:
-    ENABLE = 'ENABLE'
-    DISABLE = 'DISABLE'
+
+class ExecutionStatus:
+    FAILURE = 'FAILURE'
+    PARTIAL_SUCCESS = 'PARTIAL_SUCCESS'
+    SUCCESS = 'SUCCESS'
+    CANCELLED = 'CANCELLED'
+    REJECTED = 'REJECTED'
+    CREATED = 'CREATED'
 
     @staticmethod
     def values():
-        return [n for n in list(PipelineStatus.__dict__.keys())
+        return [n for n in list(ExecutionStatus.__dict__.keys())
+                if n[0] != '_' and n != 'values']
+
+
+class AccessStatus:
+    ENABLED = 'ENABLED'
+    DISABLED = 'DISABLED'
+
+    @staticmethod
+    def values():
+        return [n for n in list(AccessStatus.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 # Association tables definition
@@ -1012,9 +1026,10 @@ class TemplatePipeline(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    enabled = Column(Boolean,
-                    default=True, nullable=False)
+    name = Column(String(200), nullable=True)
+    description = Column(String(200), nullable=True)
+    enabled = Column(Enum(*list(AccessStatus.values()),
+                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
@@ -1040,12 +1055,14 @@ class TemplatePipelineStep(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
+    name = Column(String(200), nullable=True)
     order = Column(Integer, nullable=False)
-
-    user_id = Column(Integer, nullable=False)
-    user_login = Column(String(50), nullable=False)
-    user_name = Column(String(200), nullable=False)
+    description = Column(String(200), nullable=True)
+    scheduling = Column(String(300), nullable=True)
+    enabled = Column(Enum(*list(AccessStatus.values()),
+                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
+    status = Column(Enum(*list(ExecutionStatus.values()),
+                    name='ExecutionStatus'), nullable=False, default=ExecutionStatus.CREATED)
 
     created = Column(DateTime,
                     default=datetime.datetime.utcnow, nullable=False)
@@ -1082,9 +1099,12 @@ class Pipeline(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    description = Column(String(200), nullable=False)
+    name = Column(String(200), nullable=True)
+    description = Column(String(200), nullable=True)
 
+    enabled = Column(Enum(*list(AccessStatus.values()),
+                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
+    
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
@@ -1094,22 +1114,6 @@ class Pipeline(db.Model):
     updated = Column(DateTime,
                     default=datetime.datetime.utcnow, nullable=False,
                     onupdate=datetime.datetime.utcnow)
-
-    status = Column(Enum(*list(PipelineStatus.values()),
-                    name='PipelineStatus'), nullable=False)
-
-    # Associations
-    templatepipeline_id = Column(Integer,
-                        ForeignKey("template_pipeline.id",
-                                    name="fk_pipeline_template_pipeline_id"),
-                        nullable=False,
-                        index=True)
-    templatepipeline = relationship(
-        "TemplatePipeline",
-        overlaps='templatepipelines_pipeline',
-        foreign_keys=[templatepipeline_id],
-        backref=backref("templatepipelines_pipeline",
-                        cascade="all, delete-orphan"))
 
     version = Column(Integer, nullable=False)
     __mapper_args__ = {
@@ -1121,13 +1125,17 @@ class PipelineStep(db.Model):
 
     # Fields
     id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=False)
-    description = Column(String(200), nullable=False)
+    name = Column(String(200), nullable=True)
+    description = Column(String(200), nullable=True)
     order = Column(Integer, nullable=False)
 
-    user_id = Column(Integer, nullable=False)
-    user_login = Column(String(50), nullable=False)
-    user_name = Column(String(200), nullable=False)
+    scheduling = Column(String(300), nullable=True)
+
+    enabled = Column(Enum(*list(AccessStatus.values()),
+                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
+    
+    status = Column(Enum(*list(ExecutionStatus.values()),
+                    name='ExecutionStatus'), nullable=False, default=ExecutionStatus.CREATED)
 
     created = Column(DateTime,
                     default=datetime.datetime.utcnow, nullable=False)

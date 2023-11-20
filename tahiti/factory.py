@@ -19,7 +19,9 @@ from tahiti.operation_api import OperationListApi, OperationTreeApi
 from tahiti.operation_subset_api import (OperationSubsetDetailApi,
         OperationSubsetListApi)
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
+from tahiti.pipeline_api import PipelineApi, PipelineDetailApi, PipelineStepApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
+from tahiti.template_pipeline_api import TemplatePipelineApi, TemplatePipelineDetailApi, TemplatePipelineStepApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowListApi
 from tahiti.workflow_from_template_api import WorkflowFromTemplateApi
@@ -95,6 +97,9 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/clear-cache': OperationClearCacheApi,
         '/operations/tree/<int:platform_id>': OperationTreeApi,
         '/operations/<int:operation_id>': OperationDetailApi,
+        '/pipeline': PipelineApi,
+        '/pipeline/<int:pipeline_id>': PipelineDetailApi,
+        '/pipeline/<int:pipeline_id>/<int:step_id>': PipelineStepApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
         '/subsets': OperationSubsetListApi,
@@ -106,6 +111,9 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows/import': ImportWorkflowApi,
         '/workflows/from-template': WorkflowFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
+        '/template-pipeline': TemplatePipelineApi,
+        '/template-pipeline/<int:template_pipeline_id>': TemplatePipelineDetailApi,
+        '/template-pipeline/<int:template_pipeline_id>/<int:step_id>': TemplatePipelineStepApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in list(mappings.items()):
