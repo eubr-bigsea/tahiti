@@ -9,7 +9,8 @@ from alembic import op
 from sqlalchemy.sql import text
 import sqlalchemy as sa
 import json
-
+from tahiti.migration_utils import (downgrade_actions, upgrade_actions,
+        is_mysql, is_psql, is_sqlite, get_psql_enum_alter_commands)
 
 # revision identifiers, used by Alembic.
 revision = 'bd22b917f9f7'
@@ -19,7 +20,10 @@ depends_on = None
 
 
 def upgrade():
-    op.execute(text("UPDATE `operation_form` SET `order` = '1' WHERE (`id` = '142');"))
+    if is_mysql():
+        op.execute(text("UPDATE operation_form SET `order` = '1' WHERE (id = '142');"))
+    else:
+        op.execute(text('UPDATE operation_form SET "order" = 1 WHERE (id = 142);'))
 
     function_list = {
         "functions": [
@@ -164,39 +168,42 @@ def upgrade():
             "pt": { "title": "Função de agrupamento", "description": "Realiza o agrupamento de dados por um conjunto de atributos." }
         }
     }
-    op.execute(text("UPDATE `operation_form_field` SET required = 1, `values` = '{}' WHERE (`id` = 71);".format(json.dumps(function_list, ensure_ascii=False))))
+    op.execute(text("UPDATE operation_form_field SET required = true, values = '{}' WHERE (id = 71);".format(json.dumps(function_list, ensure_ascii=False))))
     
-    op.execute(text("UPDATE `operation_form_field` SET required = 0 WHERE id=70;"))
+    op.execute(text("UPDATE operation_form_field SET required = false WHERE id=70;"))
     op.execute(text("""
-             UPDATE `operation_form_field_translation` SET 
-               `label` = 'Selecione o(s) atributos para agrupar', 
-                `help` = 'Escolha um ou mais atributos para agrupar.' WHERE locale='pt' and (`id` = 70);"""))
+             UPDATE operation_form_field_translation SET 
+               label = 'Selecione o(s) atributos para agrupar', 
+                help = 'Escolha um ou mais atributos para agrupar.' WHERE locale='pt' and (id = 70);"""))
     op.execute(text("""
-             UPDATE `operation_form_field_translation` SET 
-               `label` = 'Função de agrupamento', 
-                `help` = 'Função a ser aplicada aos dados agrupados.' WHERE locale='pt' and (`id` = 71);"""))
+             UPDATE operation_form_field_translation SET 
+               label = 'Função de agrupamento', 
+                help = 'Função a ser aplicada aos dados agrupados.' WHERE locale='pt' and (id = 71);"""))
     op.execute(text("""
-        INSERT INTO operation_script(`type`, enabled, body, operation_id) 
-        VALUES ('JS_CLIENT', 1, 'copyInputAddAttributesSplitAlias(task, "attributes", "aliases", "_bucketed")', 100)
+        INSERT INTO operation_script(id, type, enabled, body, operation_id) 
+        VALUES (77, 'JS_CLIENT', true, 'copyInputAddAttributesSplitAlias(task, "attributes", "aliases", "_bucketed")', 100)
         """))
     op.execute(text("""
-             UPDATE `operation_form_field_translation` SET 
-               `label` = 'Atributo com a predição', 
-                `help` = 'Atributo com a predição' WHERE id = 99 """))
+             UPDATE operation_form_field_translation SET 
+               label = 'Atributo com a predição', 
+                help = 'Atributo com a predição' WHERE id = 99 """))
 
 def downgrade():
-    op.execute(text("UPDATE `operation_form` SET `order` = '10' WHERE (`id` = '142');"))
+    if is_mysql():
+        op.execute(text("UPDATE operation_form SET `order` = '10' WHERE (id = '142');"))
+    else:
+        op.execute(text('UPDATE "operation_form" SET "order" = 10 WHERE ("id" = 142);'))
     function_list = {"functions": [{"key": "avg", "value": "Average (AVG)", "help": "Computes the average of each group"}, {"key": "collect_list", "value": "Collect List", "help": "Aggregate function: returns a list of objects with duplicates."}, {"key": "collect_set", "value": "Collect Set", "help": "Aggregate function: returns a set of objects with duplicate elements eliminated."}, {"key": "count", "value": "Count", "help": "Counts the total of records of each group"}, {"key": "first", "value": "First", "help": "Returns the first element of group"}, {"key": "last", "value": "Last", "help": "Returns the last element of group"}, {"key": "max", "value": "Maximum (MAX)", "help": "Returns the max value of each group for one attribute"}, {"key": "min", "value": "Minimum (MIN)", "help": "Returns the min value of each group for one attribute"}, {"key": "sum", "value": "Sum", "help": "Returns the sum of values of each group for one attribute"}], "options": {"title": "Aggregate operation", "description": "Add one of more lines with attribute to be used, function and alias to compute aggregate function over groups.", "show_alias": True}}
-    op.execute(text("UPDATE `operation_form_field` SET required=1, `values` = '{}' WHERE (`id` = 71);".format(json.dumps(function_list, ensure_ascii=False))))
+    op.execute(text("UPDATE operation_form_field SET required=true, values = '{}' WHERE (id = 71);".format(json.dumps(function_list, ensure_ascii=False))))
 
-    op.execute(text("UPDATE `operation_form_field` SET required = 1 WHERE id=70;"))
+    op.execute(text("UPDATE operation_form_field SET required =true WHERE id=70;"))
     op.execute(text("""
-             UPDATE `operation_form_field_translation` SET 
-               `label` = 'Selecione o(s) atributos para a agregação', 
-                `help` = 'Escolha um ou mais atributos para a agregação.' WHERE locale='pt' and (`id` = 70);"""))
+             UPDATE operation_form_field_translation SET 
+               label = 'Selecione o(s) atributos para a agregação', 
+                help = 'Escolha um ou mais atributos para a agregação.' WHERE locale='pt' and (id = 70);"""))
     op.execute(text("""
-             UPDATE `operation_form_field_translation` SET 
-               `label` = 'Função de agregação', 
-                `help` = 'Função a ser aplicada aos dados agregados.' WHERE locale='pt' and (`id` = 71);"""))
+             UPDATE operation_form_field_translation SET 
+               label = 'Função de agregação', 
+                help = 'Função a ser aplicada aos dados agregados.' WHERE locale='pt' and (id = 71);"""))
 
     op.execute(text("DELETE FROM operation_script WHERE operation_id = 100"))

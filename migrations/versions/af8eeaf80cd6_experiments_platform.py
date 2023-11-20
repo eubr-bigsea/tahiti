@@ -10,7 +10,7 @@ from sqlalchemy import Integer, String, Text, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 from sqlalchemy.sql.sqltypes import UnicodeText
-from tahiti.migration_utils import is_sqlite
+from tahiti.migration_utils import is_sqlite, xkpe, is_psql
 
 # revision identifiers, used by Alembic.
 revision = 'af8eeaf80cd6'
@@ -256,7 +256,7 @@ def _insert_platform(conn):
     execute(conn, 
         ''' INSERT INTO platform(id, slug, enabled, icon, version, plugin)
             VALUES(%s, %s, %s, %s, %s, %s)''',
-        META_PLATFORM, 'meta', 1, ' ', None, 0)
+        META_PLATFORM, 'meta', True, ' ', None, False)
 
 def _delete_platform(conn):
     execute(conn, 
@@ -1432,10 +1432,10 @@ def _delete_operation_operation_form(conn):
 
 def _fixes(conn):
     execute(conn, 
-           """ INSERT INTO operation_form_field(id, name, type, required, `order`,
+           f""" INSERT INTO operation_form_field(id, name, type, required, {xkpe('order')},
                 suggested_widget, scope, enable_conditions, editable, form_id)
-                VALUES(%s, 'invalid_values', 'TEXT', 0, 3, 'text', 'EXECUTION',
-                'this.errors.internalValue === "move"', 1, %s)""",
+                VALUES(%s, 'invalid_values', 'TEXT', False, 3, 'text', 'EXECUTION',
+                'this.errors.internalValue === "move"', True, %s)""",
                 FIELD_CAST_ERROR_ATTRIBUTE,  ORIGINAL_CAST_FORM)
     dt = [
             {"en": "Array", "value": "Array", "key": "Array", "pt": "Array"},
@@ -1445,9 +1445,9 @@ def _fixes(conn):
             {"en": "Integer", "value": "Integer", "key": "Integer", "pt": "Inteiro"},
             {"en": "Time", "value": "Time", "key": "Time", "pt": "Hora"}]
 
-    execute(conn, """update operation_form_field
-        set `order`= 1, name = 'cast_attributes', `values`= %s where id = 585""", json.dumps(dt))
-    execute(conn, "update operation_form_field set `order`= 2 where id = 586")
+    execute(conn, f"""update operation_form_field
+        set {xkpe('order')}= 1, name = 'cast_attributes', {xkpe('values')}= %s where id = 585""", json.dumps(dt))
+    execute(conn, f"update operation_form_field set {xkpe('order')}= 2 where id = 586")
     errors_options = [
             {"en": "Fail in case of invalid value", "value": "raise", "key": "raise",
                 "pt": "Falhar em caso de valores inválidos"},
@@ -1455,7 +1455,7 @@ def _fixes(conn):
                 "pt": "Forçar conversão (inválidos viram nulo)"},
             {"en": "Move invalid value to (new) attribute", "value": "move",
                 "key": "move", "pt": "Mover valores inválidos para um novo atributo"}]
-    execute(conn, 'update operation_form_field set `values` = %s, `default` = %s WHERE id = 586',
+    execute(conn, f"update operation_form_field set {xkpe('values')} = %s, {xkpe('default')} = %s WHERE id = 586",
             json.dumps(errors_options), 'coerce')
     execute(conn, """
         INSERT INTO operation_form_field_translation(id, locale, label, help)
@@ -1473,23 +1473,23 @@ def _fixes(conn):
             {"en": "Select all and Duplicate some attributes", "value": "duplicate", "pt": "Selecionar todos e duplicar alguns atributos", "key": "duplicate"},
     ]
     execute(conn, 
-            """ INSERT INTO operation_form_field(id, name, type, required, `order`,
-                suggested_widget, scope, enable_conditions, editable, form_id, `values`, `default`)
-                VALUES(%s, 'mode', 'TEXT', 0, 0, 'dropdown',
-                'EXECUTION', null, 1, %s, %s, 'include')""",
+            f""" INSERT INTO operation_form_field(id, name, type, required, {xkpe('order')},
+                suggested_widget, scope, enable_conditions, editable, form_id, {xkpe('values')}, {xkpe('default')})
+                VALUES(%s, 'mode', 'TEXT', False, 0, 'dropdown',
+                'EXECUTION', null, True, %s, %s, 'include')""",
                 FIELD_SELECT_MODE,  ORIGINAL_SELECT_FORM, json.dumps(mode))
 
     # Select with alias
     #execute(conn, 
-    #        """ INSERT INTO operation_form_field(id, name, type, required, `order`,
+    #        f""" INSERT INTO operation_form_field(id, name, type, required, {xkpe('order')},
     #            suggested_widget, scope, enable_conditions, editable, form_id)
     #            VALUES(%s, 'attributes', 'TEXT', 1, 0, 'attribute-alias-selector',
     #            'EXECUTION', None, 1, %s)""",
     #            FIELD_SELECT_ALIAS,  ORIGINAL_SELECT_FORM)
 
     # Current select attribute field
-    execute(conn, """update operation_form_field set suggested_widget = 'attribute-alias-selector',
-            `order` = 2 where id = 6""")
+    execute(conn, f"""update operation_form_field set suggested_widget = 'attribute-alias-selector',
+            {xkpe('order')} = 2 where id = 6""")
 
     # Translations
     execute(conn, """
@@ -1507,12 +1507,12 @@ def _fixes(conn):
 #         INSERT INTO operation_form_field_translation(id, locale, label, help)
 #         VALUES(%s, 'en', 'Attribute(s)', 'Attributes to be selected.')""", FIELD_SELECT_ALIAS)
     execute(conn, 'ALTER TABLE operation_category ADD COLUMN subtype VARCHAR(200);');
-    execute(conn, """
-        INSERT INTO operation_category(id, type, subtype, `order`, default_order)
+    execute(conn, f"""
+        INSERT INTO operation_category(id, type, subtype, {xkpe('order')}, default_order)
         VALUES (%s, %s, %s, %s, %s)""", [47, 'algorithm', 'regression', 0, 0])
 
-    execute(conn, """
-        INSERT INTO operation_category(id, type, subtype, `order`, default_order)
+    execute(conn, f"""
+        INSERT INTO operation_category(id, type, subtype, {xkpe('order')}, default_order)
         VALUES (%s, %s, %s, %s, %s)""", [48, 'algorithm', 'clustering', 0, 0])
     execute(conn, """
         INSERT INTO operation_category_translation(id, locale, name)
@@ -1538,8 +1538,8 @@ def _fixes(conn):
     #     {"en": "Gamma", "key": "gamma", "value": "Gamma", "pt": "Gamma"},
     #     {"en": "Tweedie ", "key": "tweedie", "value": "Tweedie", "pt": "Tweedie"}
     # ]
-    # execute(conn, """
-    #     UPDATE operation_form_field SET `values` = %s WHERE id = 282 """, 
+    # execute(conn, f"""
+    #     UPDATE operation_form_field SET {xkpe('values')} = %s WHERE id = 282 """, 
     #     json.dumps(family))
     execute(conn, 'DELETE FROM operation_form_field_translation WHERE id = 282')
     execute(conn, 'DELETE FROM operation_form_field WHERE id = 282')
@@ -1565,11 +1565,11 @@ def _fixes(conn):
             {"en": "Poisson / identity", "key": "poisson:identity", "pt": "Poisson / identidade"}, 
             {"en": "Poisson / sqrt", "key": "poisson:sqrt", "pt": "Poisson / sqrt (raiz quadrada)"}, 
     ]
-    execute(conn, "update operation_form_field set name='family_link', `values` = %s where id = 283",
+    execute(conn, f"update operation_form_field set name='family_link', {xkpe('values')} = %s where id = 283",
             json.dumps(link_pred))
 
     solver = [{"en": "IRLS (Iteratively reweighted least squares)", "key": "irls", "pt": "Mínimos quadrados reponderados iterativamente (IRLS)"}]
-    execute(conn, "update operation_form_field set `values` = %s where id = 285",
+    execute(conn, f"update operation_form_field set {xkpe('values')} = %s where id = 285",
             json.dumps(solver))
 
     # Linear regression
@@ -1588,7 +1588,7 @@ def _undo_fixes(conn):
             {"en": "Fail", "value": "raise", "key": "raise", "pt": "Falhar"},
             {"en": "Ignore value (may cause errors)", "value": "ignore",
                 "key": "ignore", "pt": "Ignorar valor (pode causar erros)"}]
-    execute(conn, 'update operation_form_field set `values` = %s WHERE id = 586',
+    execute(conn, f"update operation_form_field set {xkpe('values')} = %s WHERE id = 586",
             json.dumps(errors_options))
     execute(conn, 'DELETE FROM operation_form_field_translation WHERE id = %s',
             FIELD_CAST_ERROR_ATTRIBUTE)
@@ -1596,8 +1596,8 @@ def _undo_fixes(conn):
             FIELD_CAST_ERROR_ATTRIBUTE)
 
 
-    execute(conn, """update operation_form_field
-        set `order`= 0, suggested_widget = 'attribute-selector' where id = 6""")
+    execute(conn, f"""update operation_form_field
+        set {xkpe('order')}= 0, suggested_widget = 'attribute-selector' where id = 6""")
 
     execute(conn, 'DELETE FROM operation_form_field_translation WHERE id = %s',
             FIELD_SELECT_MODE)
@@ -1646,11 +1646,11 @@ def upgrade():
         _insert_operation_form_field,
         _insert_operation_form_field_translation,
         _insert_operation_operation_form,
-        """update operation_form_field set `values` = 
-            replace(`values`, 'os primeiro ', 'os primeiros ')
+        f"""update operation_form_field set {xkpe('values')} = 
+            replace({xkpe('values')}, 'os primeiro ', 'os primeiros ')
             where id = 102;""",
-        """update operation_form_field set `values` = 
-        replace(`values`, 'Amostrar N registros a partir', 
+        f"""update operation_form_field set {xkpe('values')} = 
+        replace({xkpe('values')}, 'Amostrar N registros a partir', 
         'Amostrar N registros aleatórios a partir')
         where id = 102;""",
     ]
@@ -1673,7 +1673,10 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    execute(conn, 'SET FOREIGN_KEY_CHECKS=0;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL DEFERRED')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=0;')
     commands = [
         _undo_fixes,
         _delete_platform,
@@ -1699,5 +1702,8 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    execute(conn, 'SET FOREIGN_KEY_CHECKS=1;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL IMMEDIATE')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=1;')
     session.commit()
