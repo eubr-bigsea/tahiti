@@ -8,6 +8,7 @@ from alembic import op
 from sqlalchemy import Integer, String, Text, Boolean, UnicodeText
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
+from tahiti.migration_utils import is_psql
 
 # revision identifiers, used by Alembic.
 revision = 'a4c87d04f18e'
@@ -302,8 +303,8 @@ def _insert_operation_operation_form(conn):
 
 def _delete_operation_operation_form(conn):
     conn.execute(
-        'DELETE from operation_operation_form WHERE operation_form_id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 5)
+        'DELETE from operation_operation_form WHERE operation_id BETWEEN %s AND %s', 
+        BASE_OP + 1, BASE_OP + 5)
 
 def _insert_operation_port(conn):
     tb = table(
@@ -456,7 +457,11 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL DEFERRED')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+   
     commands = [
         _delete_operation_category,
         _delete_operation_category_translation,
@@ -482,5 +487,8 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=1;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL IMMEDIATE')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=1;')
     session.commit()

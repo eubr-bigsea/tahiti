@@ -9,6 +9,7 @@ from sqlalchemy import Integer, String, Text, Boolean, UnicodeText
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 from sqlalchemy.sql.sqltypes import UnicodeText
+from tahiti.migration_utils import is_psql
 
 # revision identifiers, used by Alembic.
 revision = 'a8642d0d1aa3'
@@ -74,14 +75,14 @@ def _insert_operation_script(conn):
                 column('operation_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-      [None, 'JS_CLIENT', 1, 'copyInputAddField(task, "prediction", false, null);', DECISION_TREE_REG], 
+      [78, 'JS_CLIENT', 1, 'copyInputAddField(task, "prediction", false, null);', DECISION_TREE_REG], 
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_script(conn):
     conn.execute(
-        'DELETE from operation_script WHERE id BETWEEN %s AND %s', 
+        'DELETE from operation_script WHERE operation_id BETWEEN %s AND %s', 
         DECISION_TREE_REG, DECISION_TREE_REG)
 
 def _insert_operation_form(conn):
@@ -282,7 +283,7 @@ def _delete_operation_port_interface_operation_port(conn):
     conn.execute(
         '''delete from operation_port_interface_operation_port 
             where operation_port_id between %s and %s''',
-            BASE_PORT + 1, BASE_PORT + 2)
+            BASE_PORT + 1, BASE_PORT + 3)
 
 
 # -------------------------------------------------------
@@ -332,7 +333,11 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL DEFERRED')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+
     commands = [
         _delete_operation,
         _delete_operation_translation,
@@ -356,5 +361,9 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=1;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL IMMEDIATE')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=1;')
+
     session.commit()

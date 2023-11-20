@@ -9,6 +9,7 @@ from sqlalchemy import Integer, String, Text, Boolean, UnicodeText
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 import json
+from tahiti.migration_utils import is_psql
 
 # revision identifiers, used by Alembic.
 revision = 'a0d6c6699b69'
@@ -162,7 +163,11 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL DEFERRED')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+
     commands = [
         _delete_operation_form_field,
         _delete_operation_form_field_translation,
@@ -178,5 +183,8 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=1;')
+    if is_psql():
+        conn.execute('SET CONSTRAINTS ALL IMMEDIATE')
+    else:
+        conn.execute('SET FOREIGN_KEY_CHECKS=1;')
     session.commit()

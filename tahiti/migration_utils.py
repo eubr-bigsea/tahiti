@@ -37,7 +37,13 @@ def get_psql_enum_alter_commands(tables: list, columns: list, name: str,
 
     return result
 
-
+def xkpe(identifier: str) -> str:
+    """ Escape an identifier """
+    if is_psql:
+        return f'"{identifier}"'
+    else:
+        return f'`{identifier}`'
+    
 def upgrade_actions(all_commands):
     ctx = context.get_context()
     session = sessionmaker(bind=ctx.bind)()
