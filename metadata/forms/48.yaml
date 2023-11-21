@@ -1,0 +1,35 @@
+id: 48
+enabled: true
+order: 0
+category: execution
+fields:
+- id: 78
+  name: attributes
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Selecione 2 atributos
+      help: "Selecione exatamente 2 atributos. Estes atributos ser\xE3o usados na\
+        \ correla\xE7\xE3o."
+  - en:
+      locale: en
+      label: Select 2 attribute
+      help: Choose exactly 2 attributes. These attributes will be used in correlation.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

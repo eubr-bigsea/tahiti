@@ -1,0 +1,55 @@
+id: 5239
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5511
+  name: train_text
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: lookup
+  values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1&formats=TAR_IMAGE_FOLDER,HAR_IMAGE_FOLDER,IMAGE_FOLDER`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Train texts
+      help: ''
+- id: 5512
+  name: validation_text
+  type: INTEGER
+  required: false
+  order: 2
+  default: None
+  suggested_widget: lookup
+  values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1&formats=TAR_IMAGE_FOLDER,HAR_IMAGE_FOLDER,IMAGE_FOLDER`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Validation texts
+      help: ''
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

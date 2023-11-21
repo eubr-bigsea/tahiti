@@ -1,0 +1,34 @@
+id: 3026
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3088
+  name: name
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nome do modelo
+      help: Nome do modelo
+  - en:
+      locale: en
+      label: Model name
+      help: Model name
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

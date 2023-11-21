@@ -1,0 +1,30 @@
+id: 2163
+slug: select
+enabled: true
+type: TRANSFORMATION
+icon: fa fa-list text-secondary
+css_class: separator
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Selecionar atributos
+    description: Selecionar atributos
+    label_format: '<b>${this.mode.value == "include" || this.mode.value == "duplicate"?"Selecionar":(this.mode.value
+      == "rename" ? "Renomear" : "Descartar")}</b> <i>${this.attributes.value.length
+      > 3? this.attributes.value.length + " atributos" : this.attributes.value.map(a=>a.attribute).join(",
+      ")}</i>'
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2102
+  type: menu/always/fa fa-database
+

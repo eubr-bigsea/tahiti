@@ -1,0 +1,49 @@
+id: 26
+slug: publish-as-visualization
+enabled: true
+type: ACTION
+icon: fa-tachometer-alt
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 73
+  slug: visualizations
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+  - pt:
+      locale: pt
+      name: "visualiza\xE7\xF5es"
+      description: "Modelo de visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualizations
+      description: Visualization model
+translations:
+  pt:
+    locale: pt
+    name: Publicar como dashboard
+    description: Publica os resultados como um dashboard
+    label_format: None
+  en:
+    locale: en
+    name: Publish as dashboard
+    description: Publish results as a visualization dashboard
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 15
+  type: group
+- id: 2
+  type: service
+

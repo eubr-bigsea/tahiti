@@ -1,0 +1,72 @@
+id: 124
+slug: histogram
+enabled: true
+type: VISUALIZATION
+icon: fa-chart
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 297
+  slug: visualization
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+  - pt:
+      locale: pt
+      name: visualization
+      description: "Visualiza\xE7\xE3o"
+  - en:
+      locale: en
+      name: visualization
+      description: Visualization
+- id: 298
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Histograma
+    description: "Um histograma \xE9 um gr\xE1fico que permite descobrir e mostrar\
+      \ a distribui\xE7\xE3o de frequ\xEAncia subjacente (forma) de um conjunto de\
+      \ dados cont\xEDnuos. Isso permite a inspe\xE7\xE3o dos dados para sua distribui\xE7\
+      \xE3o subjacente (por exemplo, distribui\xE7\xE3o normal), outliers, assimetria,\
+      \ etc."
+    label_format: None
+  en:
+    locale: en
+    name: Histogram
+    description: A histogram is a plot that lets you discover, and show, the underlying
+      frequency distribution (shape) of a set of continuous data. This allows the
+      inspection of the data for its underlying distribution (e.g., normal distribution),
+      outliers, skewness, etc.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 15
+  type: group
+

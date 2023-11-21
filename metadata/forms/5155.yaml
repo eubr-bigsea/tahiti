@@ -1,0 +1,34 @@
+id: 5155
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5357
+  name: size_up_sampling
+  type: INTEGER
+  required: true
+  order: 1
+  default: '2'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Size
+      help: Integer. Upsampling factor.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

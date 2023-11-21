@@ -1,0 +1,388 @@
+id: 4009
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4045
+  name: alpha
+  type: DECIMAL
+  required: false
+  order: 4
+  default: '0.0001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Alpha
+      help: "Constante que multiplica o termo de regulariza\xE7\xE3o."
+  - en:
+      locale: en
+      label: Alpha
+      help: Constant that multiplies the regularization term.
+- id: 4046
+  name: l1_ratio
+  type: DECIMAL
+  required: false
+  order: 5
+  default: '0.15'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Taxa L1
+      help: "O par\xE2metro de mistura Elastic Net, com 0<=l1_ratio<=1. l1_ratio=0\
+        \ corresponde a penalidade L2, l1_ratio=1 a L1."
+  - en:
+      locale: en
+      label: L1 ratio
+      help: The Elastic Net mixing parameter, with 0 <= l1_ratio <= 1. l1_ratio=0
+        corresponds to L2 penalty, l1_ratio=1 to L1.
+- id: 4208
+  name: power_t
+  type: DECIMAL
+  required: false
+  order: 6
+  default: '0.5'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Expoente
+      help: O expoente da taxa de aprendizado de escala inversa.
+  - en:
+      locale: en
+      label: Power t
+      help: The exponent for inverse scaling learning rate.
+- id: 4211
+  name: early_stopping
+  type: INTEGER
+  required: false
+  order: 7
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Parada antecipada
+      help: "Se a parada precoce deve ser usada para encerrar o treinamento quando\
+        \ a pontua\xE7\xE3o de valida\xE7\xE3o n\xE3o est\xE1 melhorando."
+  - en:
+      locale: en
+      label: Early stopping
+      help: Whether to use early stopping to terminate training when validation score
+        is not improving.
+- id: 4212
+  name: validation_fraction
+  type: DECIMAL
+  required: false
+  order: 8
+  default: '0.1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.early_stopping.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fra\xE7\xE3o de valida\xE7\xE3o"
+      help: "A propor\xE7\xE3o de dados de treinamento a serem retirados como valida\xE7\
+        \xE3o definida para parada antecipada."
+  - en:
+      locale: en
+      label: Validation fraction
+      help: The proportion of training data to set aside as validation set for early
+        stopping.
+- id: 4215
+  name: loss
+  type: TEXT
+  required: false
+  order: 9
+  default: squared_loss
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "squared_loss", "value": "squared_loss"}, {"key": "huber", "value":
+    "huber"}, {"key": "epsilon_insensitive", "value": "epsilon_insensitive"}, {"key":
+    "squared_epsilon_insensitive", "value": "squared_epsilon_insensitive"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Perda
+      help: "A fun\xE7\xE3o de perda a ser usada."
+  - en:
+      locale: en
+      label: Loss
+      help: The loss function to be used.
+- id: 4213
+  name: epsilon
+  type: DECIMAL
+  required: false
+  order: 10
+  default: '0.1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.loss.internalValue !== "squared_loss"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Epsilon
+      help: "Epsilon nas fun\xE7\xF5es de perda insens\xEDvel ao epsilon."
+  - en:
+      locale: en
+      label: Epsilon
+      help: Epsilon in the epsilon-insensitive loss functions.
+- id: 4214
+  name: n_iter_no_change
+  type: INTEGER
+  required: false
+  order: 11
+  default: '5'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: N iter no change
+      help: "N\xFAmero de itera\xE7\xF5es sem melhoria a aguardar antes da parada\
+        \ precoce."
+  - en:
+      locale: en
+      label: N iter no change
+      help: Number of iterations with no improvement to wait before early stopping.
+- id: 4216
+  name: penalty
+  type: TEXT
+  required: false
+  order: 12
+  default: l2
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "none", "value": "none"}, {"key": "l2", "value": "l2"}, {"key":
+    "l1", "value": "l1"}, {"key": "elasticnet", "value": "elasticnet"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Penalidade
+      help: "A penalidade (termo de regulariza\xE7\xE3o) a ser usada."
+  - en:
+      locale: en
+      label: Penalty
+      help: The penalty (aka regularization term) to be used.
+- id: 4217
+  name: fit_intercept
+  type: INTEGER
+  required: false
+  order: 13
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Intercepta\xE7\xE3o"
+      help: "Se a intercepta\xE7\xE3o deve ser estimada ou n\xE3o."
+  - en:
+      locale: en
+      label: Fit intercept
+      help: Whether the intercept should be estimated or not.
+- id: 4207
+  name: learning_rate
+  type: TEXT
+  required: false
+  order: 14
+  default: invscaling
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "constant", "value": "constant"}, {"key": "invscaling", "value":
+    "invscaling"}, {"key": "adaptive", "value": "adaptive"}, {"key": "optimal", "value":
+    "optimal"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Taxa de aprendizado
+      help: The learning rate schedule.
+  - en:
+      locale: en
+      label: Learning rate
+      help: The learning rate schedule.
+- id: 4048
+  name: tol
+  type: DECIMAL
+  required: false
+  order: 15
+  default: '0.001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tolerancia
+      help: "Toler\xE2ncia para crit\xE9rios de parada."
+  - en:
+      locale: en
+      label: Tolerance
+      help: Tolerance for stopping criteria.
+- id: 4049
+  name: random_state
+  type: INTEGER
+  required: false
+  order: 16
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estado Aleat\xF3rio"
+      help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
+        m utilizada para reprodutibilidade."
+  - en:
+      locale: en
+      label: Random State
+      help: Seed used by the random number generator. Also used for reproducibility.
+- id: 4220
+  name: average
+  type: INTEGER
+  required: false
+  order: 19
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9dia"
+      help: "Se definido como um int maior que 1, a m\xE9dia come\xE7ar\xE1 assim\
+        \ que o n\xFAmero total de amostras vistas atingir a m\xE9dia. Ent\xE3o a\
+        \ m\xE9dia = 10 come\xE7ar\xE1 a m\xE9dia depois de ver 10 amostras."
+  - en:
+      locale: en
+      label: Average
+      help: If set to an int greater than 1, averaging will begin once the total number
+        of samples seen reaches average. So average=10 will begin averaging after
+        seeing 10 samples.
+- id: 4219
+  name: eta0
+  type: DECIMAL
+  required: false
+  order: 20
+  default: '0.01'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.learning_rate.internalValue !== "optimal"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Eta
+      help: A taxa de aprendizado inicial.
+  - en:
+      locale: en
+      label: Eta
+      help: The initial learning rate.
+- id: 4209
+  name: shuffle
+  type: INTEGER
+  required: false
+  order: 21
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Embaralhar
+      help: "Se os dados de treinamento devem ou n\xE3o ser embaralhados ap\xF3s cada\
+        \ \xE9poca."
+  - en:
+      locale: en
+      label: Shuffle
+      help: Whether or not the training data should be shuffled after each epoch.
+- id: 4047
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 22
+  default: '1000'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
+      help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es."
+  - en:
+      locale: en
+      label: Maximum number of iterations
+      help: Maximum number of iterations.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

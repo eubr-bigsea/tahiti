@@ -1,0 +1,47 @@
+id: 30
+slug: data-writer
+enabled: true
+type: ACTION
+icon: fa-save
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 58
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Escreve dados
+  - en:
+      locale: en
+      name: input data
+      description: Write data
+translations:
+  pt:
+    locale: pt
+    name: Salvar dados
+    description: Escreve uma nova fonte de dados
+    label_format: None
+  en:
+    locale: en
+    name: Save data
+    description: Writes a new data set
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 6
+  type: group
+

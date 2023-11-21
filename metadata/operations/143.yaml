@@ -1,0 +1,45 @@
+id: 143
+slug: validation-report
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports:
+- id: 330
+  slug: input results
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 30
+    name: ValidationResult
+  translations:
+  - pt:
+      locale: pt
+      name: "resultado valida\xE7\xE3o"
+      description: "Resultado valida\xE7\xE3o"
+  - en:
+      locale: en
+      name: validation result
+      description: validation result
+translations:
+  pt:
+    locale: pt
+    name: "Relat\xF3rio de valida\xE7\xE3o"
+    description: "Gera um relat\xF3rio de valida\xE7\xE3o."
+    label_format: None
+  en:
+    locale: en
+    name: Data validation report
+    description: Generates a report for data validation.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 46
+  type: algorithm
+

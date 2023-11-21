@@ -1,0 +1,69 @@
+id: 145
+slug: visualization
+enabled: true
+type: VISUALIZATION
+icon: fa-chart-line
+css_class: None
+doc_link: None
+translations:
+  pt:
+    locale: pt
+    name: "Visualização"
+    description: "Permite definiir visualização de dados, incluindo gráficos, tabelas e outras."
+    label_format: None
+  en:
+    locale: en
+    name: 'Visualization'
+    description: "Allow to create data visualization, such as charts, tables and others."
+    label_format: None
+
+scripts: []
+ports:
+- id: 354
+  slug: visualization
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 19
+    name: Visualization
+  translations:
+    pt:
+      locale: pt
+      name: "visualiza\xE7\xE3o"
+      description: "Visualiza\xE7\xE3o"
+    en:
+      locale: en
+      name: visualization
+      description: Visualization
+- id: 355
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+    pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+    en:
+      locale: en
+      name: input data
+      description: Input data
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 15
+  type: group
+forms:
+- id: 41  # Color and comment
+- id: 159 # Specific
+#- id: 110  # Sample and schema

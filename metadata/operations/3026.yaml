@@ -1,0 +1,55 @@
+id: 3026
+slug: load-model
+enabled: true
+type: ACTION
+icon: fa-cloud-download-alt
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3054
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  - id: 4
+    name: IndexerModel
+  - id: 14
+    name: IClusteringModel
+  - id: 15
+    name: IRecommendationModel
+  - id: 20
+    name: TransformationModel
+  - id: 18
+    name: IRegressionModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo carregado
+  - en:
+      locale: en
+      name: model
+      description: Loaded model
+translations:
+  pt:
+    locale: pt
+    name: Carregar modelo
+    description: Carrega um modelo (COMPSs) salvo anteriormente.
+    label_format: None
+  en:
+    locale: en
+    name: Load model
+    description: Loads a previously saved model (COMPSs).
+    label_format: None
+platforms: []
+categories:
+- id: 6
+  type: group
+- id: 3001
+  type: technology
+

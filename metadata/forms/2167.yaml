@@ -1,0 +1,34 @@
+id: 2167
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2165
+  name: decimals
+  type: INTEGER
+  required: true
+  order: 3
+  default: '2'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Casas decimais
+      help: "N\xFAmero de casas decimais (d\xEDgitos ap\xF3s a v\xEDrgula)."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

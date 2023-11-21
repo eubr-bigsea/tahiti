@@ -1,0 +1,393 @@
+id: 5148
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5575
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5291
+  name: kernel_size
+  type: TEXT
+  required: true
+  order: 1
+  default: '0'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Kernel size
+      help: An integer or tuple/list of a single integer, specifying the length of
+        the 1D convolution window.
+- id: 5292
+  name: strides
+  type: TEXT
+  required: false
+  order: 2
+  default: (1, 1)
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Strides
+      help: An integer or tuple/list of 2 integers, specifying the strides of the
+        convolution along the height and width. Can be a single integer to specify
+        the same value for all spatial dimensions. Specifying any stride value !=
+        1 is incompatible with specifying any dilation_rate value != 1.
+- id: 5293
+  name: padding
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "valid", "key": "valid"}, {"value": "same", "key": "same"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Padding
+      help: One of "valid" or "same" (case-insensitive).
+- id: 5294
+  name: depth_multiplier
+  type: INTEGER
+  required: false
+  order: 4
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Depth multiplier
+      help: The number of depthwise convolution output channels for each input channel.
+        The total number of depthwise convolution output channels will be equal to
+        filters_in * depth_multiplier.
+- id: 5295
+  name: data_format
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
+    "key": "channels_first"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: A string, one of "channels_last" (default) or "channels_first". The ordering
+        of the dimensions in the inputs.  "channels_last" corresponds to inputs with
+        shape  (batch, steps, channels) (default format for temporal data in Keras)
+        while "channels_first" corresponds to inputs with shape (batch, channels,
+        steps).
+- id: 5527
+  name: input_shape
+  type: TEXT
+  required: false
+  order: 5
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Input shape
+      help: '4D tensor with shape: (batch, channels, rows, cols) if data_format is
+        "channels_first" or 4D tensor with shape: (batch, rows, cols, channels) if
+        data_format is "channels_last".'
+- id: 5296
+  name: activation
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
+    {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
+    {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
+    "sigmoid", "key": "sigmoid"}, {"value": "softmax", "key": "softmax"}, {"value":
+    "softplus", "key": "softplus"}, {"value": "softsign", "key": "softsign"}, {"value":
+    "tanh", "key": "tanh"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Activation
+      help: 'Activation function to use. If you don''t specify anything, no activation
+        is applied (ie. "linear" activation: a(x) = x).'
+- id: 5297
+  name: use_bias
+  type: INTEGER
+  required: false
+  order: 7
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Use bias
+      help: Boolean, whether the layer uses a bias vector.
+- id: 5298
+  name: depthwise_initializer
+  type: TEXT
+  required: false
+  order: 8
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Depthwise initializer
+      help: Initializer for the depthwise kernel matrix.
+- id: 5299
+  name: bias_initializer
+  type: TEXT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
+    "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
+    "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
+    {"value": "identity", "key": "identity"}, {"value": "initializer", "key": "initializer"},
+    {"value": "lecun_normal", "key": "lecun_normal"}, {"value": "lecun_uniform", "key":
+    "lecun_uniform"}, {"value": "ones", "key": "ones"}, {"value": "orthogonal", "key":
+    "orthogonal"}, {"value": "randomNormal", "key": "randomNormal"}, {"value": "randomUniform",
+    "key": "randomUniform"}, {"value": "truncatedNormal", "key": "truncatedNormal"},
+    {"value": "varianceScaling", "key": "varianceScaling"}, {"value": "zeros", "key":
+    "zeros"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias initializer
+      help: Initializer for the bias vector.
+- id: 5300
+  name: depthwise_regularizer
+  type: TEXT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Depthwise regularizer
+      help: Regularizer function applied to the depthwise kernel matrix.
+- id: 5301
+  name: bias_regularizer
+  type: TEXT
+  required: false
+  order: 11
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias regularizer
+      help: Regularizer function applied to the bias vector.
+- id: 5302
+  name: activity_regularizer
+  type: TEXT
+  required: false
+  order: 12
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
+    "l1_l2", "key": "l1_l2"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Activity regularizer
+      help: Regularizer function applied to the output of the layer (its "activation").
+- id: 5303
+  name: depthwise_constraint
+  type: TEXT
+  required: false
+  order: 13
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Depthwise constraint
+      help: Constraint function applied to the depthwise kernel matrix.
+- id: 5304
+  name: bias_constraint
+  type: TEXT
+  required: false
+  order: 14
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
+    "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
+    "key": "unit_norm"}]'
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Bias constraint
+      help: Constraint function applied to the bias vector.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

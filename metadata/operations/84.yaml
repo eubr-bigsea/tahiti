@@ -1,0 +1,87 @@
+id: 84
+slug: voting-classifier
+enabled: true
+type: TRANSFORMATION
+icon: fa-hand-peace
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 184
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 185
+  slug: models
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  - id: 7
+    name: ModelWithEvaluation
+  translations:
+  - pt:
+      locale: pt
+      name: models
+      description: Modelos de entrada
+  - en:
+      locale: en
+      name: models
+      description: Input models
+- id: 186
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: "Classifica\xE7\xE3o por voto da maioria"
+    description: Classificador por votos
+    label_format: None
+  en:
+    locale: en
+    name: Voting classifier
+    description: Voting classifier
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 8
+  type: group
+- id: 18
+  type: subgroup
+

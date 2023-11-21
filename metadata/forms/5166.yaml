@@ -1,0 +1,40 @@
+id: 5166
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5397
+  name: data_format
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
+    "key": "channels_first"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: A string, one of channels_last (default) or channels_first. The ordering
+        of the dimensions in the inputs.  channels_last corresponds to inputs with
+        shape  (batch, height, width, channels) while channels_first corresponds to
+        inputs with shape  (batch, channels, height, width). It defaults to the image_data_format
+        value found in your Keras config file at ~/.keras/keras.json. If you never
+        set it, then it will be "channels_last".
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

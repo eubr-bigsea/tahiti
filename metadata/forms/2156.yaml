@@ -1,0 +1,34 @@
+id: 2156
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2187
+  name: formula
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: expression
+  values_url: None
+  values: '{"alias": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Filtro(s)
+      help: Filtro(s)
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

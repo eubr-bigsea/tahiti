@@ -1,0 +1,416 @@
+id: 4006
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4027
+  name: learning_rate
+  type: FLOAT
+  required: false
+  order: 1
+  default: '0.1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Taxa de aprendizado
+      help: "A taxa de aprendizado reduz a contribui\xE7\xE3o de cada \xE1rvore. Existe\
+        \ um trade-off entre taxa de aprendizado e n\xFAmero de \xE1rvores."
+  - en:
+      locale: en
+      label: Learning rate
+      help: Learning rate shrinks the contribution of each tree by learning_rate.
+        There is a trade-off between learning rate and number of estimators.
+- id: 4028
+  name: n_estimators
+  type: INTEGER
+  required: false
+  order: 2
+  default: '100'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero de \xE1rvores"
+      help: "N\xFAmero de \xE1rvores na floresta."
+  - en:
+      locale: en
+      label: Number of estimators
+      help: The number of boosting stages to perform. Gradient boosting is fairly
+        robust to over-fitting so a large number usually results in better performance.
+- id: 4029
+  name: max_depth
+  type: INTEGER
+  required: false
+  order: 3
+  default: '3'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Profundidade m\xE1xima"
+      help: "Profundidade m\xE1xima na \xE1rvore."
+  - en:
+      locale: en
+      label: Maximum depth
+      help: Maximum depth of the individual regression estimators. The maximum depth
+        limits the number of nodes in the tree. Tune this parameter for best performance;
+        the best value depends on the interaction of the input variables.
+- id: 4031
+  name: min_samples_leaf
+  type: INTEGER
+  required: false
+  order: 5
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xF3 de folha m\xEDnima"
+      help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para estar\
+        \ em um n\xF3 folha."
+  - en:
+      locale: en
+      label: Minimum samples leaf
+      help: The minimum number of samples required to be at a leaf node.
+- id: 4362
+  name: n_iter_no_change
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Parada antecipada
+      help: "Usada para decidir se a parada antecipada vai ser usada para terminar\
+        \ treino quando a pontua\xE7\xE3o de valida\xE7\xE3o n\xE3o est\xE1 melhorando."
+  - en:
+      locale: en
+      label: Early stopping
+      help: Used to decide if early stopping will be used to terminate training when
+        validation score is not improving.
+- id: 4032
+  name: random_state
+  type: INTEGER
+  required: false
+  order: 6
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estado Aleat\xF3rio"
+      help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
+        m utilizada para reprodutibilidade."
+  - en:
+      locale: en
+      label: Random State
+      help: Seed used by the random number generator. Also used for reproducibility.
+- id: 4360
+  name: validation_fraction
+  type: FLOAT
+  required: false
+  order: 6
+  default: '0.1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.n_iter_no_change.internalValue !== "0"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fra\xE7\xE3o de valida\xE7\xE3o"
+      help: "A propor\xE7\xE3o de dados de treinamento a serem retirados como valida\xE7\
+        \xE3o definida para parada antecipada."
+  - en:
+      locale: en
+      label: Validation fraction
+      help: The proportion of training data to set aside as validation set for early
+        stopping.
+- id: 4361
+  name: max_depth
+  type: INTEGER
+  required: false
+  order: 8
+  default: '3'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Profundidade m\xE1xima"
+      help: "Profundidade m\xE1xima na \xE1rvore."
+  - en:
+      locale: en
+      label: Maximum depth
+      help: Maximum depth of the individual regression estimators. The maximum depth
+        limits the number of nodes in the tree. Tune this parameter for best performance;
+        the best value depends on the interaction of the input variables.
+- id: 4363
+  name: tol
+  type: DECIMAL
+  required: false
+  order: 12
+  default: '0.0001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Toler\xE2ncia"
+      help: "Toler\xE2ncia para a parada antecipada."
+  - en:
+      locale: en
+      label: Tolerance
+      help: Tolerance for the early stopping.
+- id: 4364
+  name: criterion
+  type: TEXT
+  required: false
+  order: 13
+  default: friedman_mse
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "friedman_mse", "value": "Mean squared error with improvement
+    score by Friedman"}, {"key": "mse", "value": "Mean squared error"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Crit\xE9rio"
+      help: "A fun\xE7\xE3o para medir a qualidade de um split.."
+  - en:
+      locale: en
+      label: Criterion
+      help: The function to measure the quality of a split..
+- id: 4365
+  name: loss
+  type: TEXT
+  required: false
+  order: 13
+  default: ls
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "ls", "value": "Least squares regression"}, {"key": "lad", "value":
+    "Least absolute deviation"}, {"key": "huber", "value": "Combination of the two
+    above"}, {"key": "quantile", "value": "Quantile regression"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Perda
+      help: "Fun\xE7\xE3o de perda a ser otimizada."
+  - en:
+      locale: en
+      label: Loss
+      help: Loss function to be optimized.
+- id: 4366
+  name: subsample
+  type: DECIMAL
+  required: false
+  order: 14
+  default: '1'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Subamostra
+      help: "A fra\xE7\xE3o de amostras para serem usadas para fazer o fitting em\
+        \ learners de base individual."
+  - en:
+      locale: en
+      label: Subsample
+      help: The fraction of samples to be used for fitting the individual base learners.
+- id: 4367
+  name: alpha
+  type: DECIMAL
+  required: false
+  order: 15
+  default: '0.9'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.loss.internalValue === "huber" || this.loss.internalValue
+    === "quantile"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Alfa
+      help: "O alfa-quantil da fun\xE7\xE3o huber loss e a fun\xE7\xE3o de perda de\
+        \ quantis."
+  - en:
+      locale: en
+      label: Alpha
+      help: The alpha-quantile of the huber loss function and the quantiles loss function.
+- id: 4368
+  name: min_weight_fraction_leaf
+  type: DECIMAL
+  required: false
+  order: 16
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fra\xE7\xE3o ponderada m\xEDnima"
+      help: "A fra\xE7\xE3o ponderada m\xEDnima da soma total de pesos (de todas as\
+        \ amostras de entrada) necess\xE1ria para estar em um n\xF3 folha."
+  - en:
+      locale: en
+      label: Min. weight fraction leaf
+      help: The minimum weighted fraction of the sum total of weights (of all the
+        input samples) required to be at a leaf node..
+- id: 4369
+  name: max_leaf_nodes
+  type: INTEGER
+  required: false
+  order: 17
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Max. n\xF3s folha"
+      help: "Cres\xE7a \xE1rvores com max_leaf_nodes da melhor maneira poss\xEDvel."
+  - en:
+      locale: en
+      label: Max. leaf nodes
+      help: Grow trees with max_leaf_nodes in best-first fashion.
+- id: 4370
+  name: min_impurity_decrease
+  type: DECIMAL
+  required: false
+  order: 18
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Redu\xE7\xE3o m\xEDnima da impureza"
+      help: "Um n\xF3 ser\xE1 dividido se essa divis\xE3o induzir uma redu\xE7\xE3\
+        o da impureza maior ou igual a esse valor."
+  - en:
+      locale: en
+      label: Min. impurity decrease
+      help: A node will be split if this split induces a decrease of the impurity
+        greater than or equal to this value.
+- id: 4371
+  name: max_features
+  type: TEXT
+  required: false
+  order: 22
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "auto", "value": "auto"}, {"key": "sqrt", "value": "sqrt"}, {"key":
+    "log2", "value": "log2"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero m\xE1ximo de atributos"
+      help: "N\xFAmero de atributos a serem considerados ao procurar a melhor divis\xE3\
+        o."
+  - en:
+      locale: en
+      label: Max. features
+      help: The number of features to consider when looking for the best split.
+- id: 4030
+  name: cc_alpha
+  type: DECIMAL
+  required: false
+  order: 23
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Custo de Complexidade Alpha
+      help: "Par\xE2metro de complexidade usado na poda m\xEDnima de custo de complexidade."
+  - en:
+      locale: en
+      label: Cost Complexity Alpha
+      help: Complexity parameter used for Minimal Cost-Complexity Pruning.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

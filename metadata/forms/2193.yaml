@@ -1,0 +1,124 @@
+id: 2193
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2176
+  name: type
+  type: INTEGER
+  required: true
+  order: 3
+  default: now
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "now", "pt": "A data/hora atuais", "en": "Current date/hour"},
+    {"key": "attribute", "pt": "Um atributo", "en": "An attribute"}, {"key": "constant",
+    "pt": "Data espec\u00edfica", "en": "Specific date"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Diferen\xE7a para"
+      help: "Valor ou atributo usado para calcular a diferen\xE7a entre datas."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2177
+  name: date_attribute
+  type: INTEGER
+  required: true
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "attribute"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: 2o. Atributo
+      help: 2o. atributo
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2178
+  name: value
+  type: TEXT
+  required: true
+  order: 5
+  default: None
+  suggested_widget: date
+  values_url: None
+  values: '{"use-datetime-local": true}'
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "constant"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Valor (data v\xE1lida)"
+      help: Value (valid date)
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2190
+  name: invert
+  type: INTEGER
+  required: true
+  order: 5
+  default: None
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Inverter o resultado (-1)
+      help: "Calcula a diferen\xE7a entre o argumento e o atributo data selecionado."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2189
+  name: unit
+  type: TEXT
+  required: true
+  order: 6
+  default: days
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "second", "en": "Second", "pt": "Segundo"}, {"key": "minute",
+    "en": "Minute", "pt": "Minuto"}, {"key": "hour", "en": "Hour", "pt": "Hora"},
+    {"key": "day", "en": "Day", "pt": "Dia"}, {"key": "week", "en": "Week", "pt":
+    "Semana"}, {"key": "month", "en": "Month", "pt": "M\u00eas"}, {"key": "year",
+    "en": "Year", "pt": "Ano"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Unidade de tempo
+      help: Unidade de tempo.
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

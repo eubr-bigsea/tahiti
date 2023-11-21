@@ -1,0 +1,55 @@
+id: 46
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 68
+  name: application
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: lookup
+  values_url: '{{TAHITI_URL}}/applications'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Aplica\xE7\xF5es dispon\xEDveis"
+      help: "Aplica\xE7\xE3o a ser executada"
+  - en:
+      locale: en
+      label: Available applications
+      help: Application to be executed
+- id: 69
+  name: parameters
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Par\xE2mertos"
+      help: "Par\xE2metros da aplica\xE7\xE3o"
+  - en:
+      locale: en
+      label: Parameters
+      help: Application parameters
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

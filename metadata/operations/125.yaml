@@ -1,0 +1,38 @@
+id: 125
+slug: meta-operation
+enabled: false
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Meta-opera\xE7\xE3o"
+    description: "A meta-opera\xE7\xE3o \xE9 uma opera\xE7\xE3o que cont\xE9m subfluxos,\
+      \ ou seja, no fluxo de trabalho eles se parecem com uma \xFAnica opera\xE7\xE3\
+      o, embora possam conter muitas opera\xE7\xF5es e tamb\xE9m outras meta-opera\xE7\
+      \xF5es."
+    label_format: None
+  en:
+    locale: en
+    name: Meta-operation
+    description: Meta-operation is an operation that contain subworkflows, i.e. in
+      the workflow they look like a single operation, although they can contain many
+      operations and even more meta-operations.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 2
+  slug: ophidia2
+- id: 4
+  slug: scikit-learn
+- id: 5
+  slug: keras
+categories:
+- id: 43
+  type: group
+

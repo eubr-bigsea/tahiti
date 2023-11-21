@@ -1,0 +1,63 @@
+id: 3011
+slug: replace-value
+enabled: true
+type: TRANSFORMATION
+icon: fa-eraser
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3017
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input Data
+- id: 3018
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+translations:
+  pt:
+    locale: pt
+    name: Substituir valor
+    description: Substitui o valor da coluna por outro valor
+    label_format: None
+  en:
+    locale: en
+    name: Replace value
+    description: Replaces column value by another
+    label_format: None
+platforms: []
+categories:
+- id: 7
+  type: group
+- id: 3001
+  type: technology
+

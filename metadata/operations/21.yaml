@@ -1,0 +1,73 @@
+id: 21
+slug: clean-missing
+enabled: true
+type: ACTION
+icon: fa-check
+css_class: None
+doc_link: None
+scripts:
+- id: 9
+  type: JS_CLIENT
+  enabled: true
+  body: copyInput(task);
+ports:
+- id: 43
+  slug: output result
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "resultado de sa\xEDda"
+      description: "Sa\xEDda de resultado"
+  - en:
+      locale: en
+      name: output result
+      description: Output result
+- id: 44
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Tratar dados ausentes
+    description: Limpa ou substitui dados ausentes
+    label_format: None
+  en:
+    locale: en
+    name: Handle missing values
+    description: Cleans or replaces missing values from fields
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 7
+  type: group
+- id: 31
+  type: subgroup
+- id: 8
+  type: group
+

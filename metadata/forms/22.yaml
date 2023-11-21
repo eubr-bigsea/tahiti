@@ -1,0 +1,37 @@
+id: 22
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 72
+  name: attributes
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Campos-chave
+      help: "Escolha zero ou mais campos para serem usados como chave durante a opera\xE7\
+        \xE3o. Se nenhum campo for informado, todos os campos ser\xE3o considerados\
+        \ como parte da chave"
+  - en:
+      locale: en
+      label: Key fields
+      help: Choose zero or more fields to be used as key. If no field is choosen,
+        all fields are used
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

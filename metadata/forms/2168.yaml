@@ -1,0 +1,61 @@
+id: 2168
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2161
+  name: splits
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Divisores (lista de valores com no m\xEDnimo de 3 elementos, usado para\
+        \ definir as faixas, separados por v\xEDrgula, -INF e INF s\xE3o valores v\xE1\
+        lidos)"
+      help: "Divisores (lista de valores com no m\xEDnimo de 3 elementos, usado para\
+        \ definir as faixas, separados por v\xEDrgula, -INF e INF s\xE3o valores v\xE1\
+        lidos)."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2229
+  name: handle_invalid
+  type: INTEGER
+  required: true
+  order: 3
+  default: error
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Skip", "value": "Skip", "key": "skip", "pt": "Ignorar"}, {"en":
+    "Keep", "value": "Keep", "key": "keep", "pt": "Manter"}, {"en": "Raise error",
+    "value": "Raise error", "key": "error", "pt": "Gerar erro"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tratar erro
+      help: "Como erros ser\xE3o tratados."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

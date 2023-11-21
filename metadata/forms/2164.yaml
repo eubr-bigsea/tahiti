@@ -1,0 +1,34 @@
+id: 2164
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2186
+  name: formula
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: expression
+  values_url: None
+  values: '{"alias": true}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "F\xF3rmula(s)"
+      help: "F\xF3rmula(s)"
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

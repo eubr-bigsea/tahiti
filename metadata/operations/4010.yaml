@@ -1,0 +1,51 @@
+id: 4010
+slug: huber-regressor
+enabled: false
+type: TRANSFORMATION
+icon: fa-laptop
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4010
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 17
+    name: IRegressionAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: "Modelo de regress\xE3o n\xE3o treinado"
+  - en:
+      locale: en
+      name: algorithm
+      description: Untrained regressor model
+translations:
+  pt:
+    locale: pt
+    name: 'Regressor Hube '
+    description: "Modelo de regress\xE3o linear que \xE9 robusto para outliers."
+    label_format: None
+  en:
+    locale: en
+    name: Huber Regressor
+    description: Linear regression model that is robust to outliers.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 8
+  type: group
+- id: 21
+  type: subgroup
+- id: 4001
+  type: technology
+- id: 1501
+  type: regression
+

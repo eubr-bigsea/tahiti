@@ -1,13 +1,9 @@
 import datetime
-import json
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Float, \
-    Enum, DateTime, Numeric, Text, Unicode, UnicodeText
-from sqlalchemy import event
+from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Enum, \
+    DateTime, Unicode, UnicodeText
 from sqlalchemy.dialects.mysql import LONGTEXT
-from sqlalchemy.sql import func
 from sqlalchemy.orm import relationship, backref
-from sqlalchemy.schema import UniqueConstraint
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
 make_translatable(options={'locales': ['pt', 'en'],
@@ -384,8 +380,10 @@ class Operation(db.Model, Translatable):
             "and_("
             "OperationForm.id==operation_operation_form.c.operation_form_id,"
             "OperationForm.enabled==1)"))
-    ports = relationship("OperationPort")
-    scripts = relationship("OperationScript")
+    ports = relationship("OperationPort",
+                         cascade="all, delete-orphan")
+    scripts = relationship("OperationScript",
+                           cascade="all, delete-orphan")
 
     def __str__(self):
         return self.name
@@ -761,6 +759,27 @@ class RoleOperationSubset(db.Model):
 
     def __str__(self):
         return self.role_name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class SourceCode(db.Model):
+    """ Trusted source code that can be used in Lemonade """
+    __tablename__ = 'source_code'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    enabled = Column(Boolean, nullable=False)
+    suspicious = Column(Boolean, nullable=False)
+    requirements = Column(String(200))
+    imports = Column(String(200))
+    help = Column(String(400))
+    code = Column(String(4000), nullable=False)
+
+    def __str__(self):
+        return self.name
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)

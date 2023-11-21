@@ -1,0 +1,35 @@
+id: 98
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 230
+  name: algorithm
+  type: TEXT
+  required: true
+  order: 0
+  default: ''
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Geospatial Data - Bulma", "key": "BULMA", "value": "Geospatial
+    Data - Bulma", "pt": "Geospatial Data - Bulma"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Algoritmo
+      help: Algoritmo
+  - en:
+      locale: en
+      label: Algorithm
+      help: Algorithm
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

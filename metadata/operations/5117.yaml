@@ -1,0 +1,81 @@
+id: 5117
+slug: image-reader
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5316
+  slug: train-image
+  type: OUTPUT
+  tags: ''
+  order: 3
+  multiplicity: MANY
+  interfaces:
+  - id: 24
+    name: ImageData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: train image data
+      description: Image Data
+- id: 5317
+  slug: validation-image
+  type: OUTPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 24
+    name: ImageData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: validation image data
+      description: Image Data
+- id: 5395
+  slug: test-image
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 24
+    name: ImageData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: test image data
+      description: Image Data
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Image reader
+    description: Reads images from a data source.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5065
+  type: group
+

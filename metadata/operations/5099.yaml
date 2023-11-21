@@ -1,0 +1,84 @@
+id: 5099
+slug: dot
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5200
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5299
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5375
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Dot
+    description: Layer that computes a dot product between samples in two tensors.
+      E.g. if applied to a list of two tensors a and b of shape (batch_size, n), the
+      output will be a tensor of shape (batch_size, 1) where each entry i will be
+      the dot product between a[i] and b[i].
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5062
+  type: group
+

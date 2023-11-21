@@ -1,0 +1,28 @@
+id: 2147
+slug: date-to-ts
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Datetime
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Converter para timestamp
+    description: Converte uma data para um valor timestamp.
+    label_format: <b>Converter a data em</b> <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i> <b>para timestamp</b>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

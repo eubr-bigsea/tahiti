@@ -1,0 +1,461 @@
+id: 5245
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5606
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5475
+  name: epochs
+  type: INTEGER
+  required: true
+  order: 1
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Epochs
+      help: Number of epochs to train the model. An epoch is an iteration over the
+        entire data provided, as defined by steps_per_epoch. Note that in conjunction
+        with initial_epoch, epochs is to be understood as "final epoch". The model
+        is not trained for a number of iterations given by epochs, but merely until
+        the epoch of index epochs is reached.
+- id: 5541
+  name: classification_report
+  type: INTEGER
+  required: false
+  order: 2
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Classification report
+      help: Show the classification report.
+- id: 5646
+  name: early_stopping
+  type: INTEGER
+  required: false
+  order: 2
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Early stopping
+      help: Stop training when a monitored quantity has stopped improving.
+- id: 5647
+  name: monitor
+  type: TEXT
+  required: false
+  order: 2
+  default: val_loss
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "Binary accuracy", "key": "binary_accuracy"}, {"value": "Categorical
+    accuracy", "key": "categorical_accuracy"}, {"value": "Loss", "key": "loss"}, {"value":
+    "Sparse categorical accuracy", "key": "sparse_categorical_accuracy"}, {"value":
+    "Validation loss", "key": "val_loss"}, {"value": "Validation categorical accuracy",
+    "key": "val_categorical_accuracy"}]'
+  scope: EXECUTION
+  enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Monitor
+      help: Quantity to be monitored.
+- id: 5648
+  name: min_delta
+  type: DECIMAL
+  required: false
+  order: 2
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Minimum delta
+      help: Minimum change in the monitored quantity to qualify as an improvement,
+        i.e. an absolute change of less than min_delta, will count as no improvement.
+- id: 5649
+  name: patience
+  type: INTEGER
+  required: false
+  order: 2
+  default: '0'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Patience
+      help: Number of epochs that produced the monitored quantity with no improvement
+        after which training will be stopped. Validation quantities may not be produced
+        for every epoch, if the validation frequency (model.fit(validation_freq=5))
+        is greater than one.
+- id: 5650
+  name: mode
+  type: TEXT
+  required: false
+  order: 2
+  default: auto
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "Automatic", "key": "auto"}, {"value": "Minimum", "key": "min"},
+    {"value": "Maximum", "key": "max"}]'
+  scope: EXECUTION
+  enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Mode
+      help: One of {auto, min, max}. In min mode, training will stop when the quantity
+        monitored has stopped decreasing; in max mode it will stop when the quantity
+        monitored has stopped increasing; in auto mode, the direction is automatically
+        inferred from the name of the monitored quantity.
+- id: 5651
+  name: baseline
+  type: DECIMAL
+  required: false
+  order: 2
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Baseline
+      help: Baseline value for the monitored quantity to reach. Training will stop
+        if the model doesn't show improvement over the baseline.
+- id: 5652
+  name: restore_best_weights
+  type: INTEGER
+  required: false
+  order: 2
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Restore best weights
+      help: Whether to restore model weights from the epoch with the best value of
+        the monitored quantity. If False, the model weights obtained at the last step
+        of training are used.
+- id: 5474
+  name: steps_per_epoch
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Steps per epoch
+      help: 'Total number of steps (batches of samples) to yield from generator before
+        declaring one epoch finished and starting the next epoch. It should typically
+        be equal to ceil(num_samples / batch_size) Optional for Sequence: if unspecified,
+        will use the len(generator) as a number of steps.'
+- id: 5479
+  name: validation_steps
+  type: DECIMAL
+  required: false
+  order: 4
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Validation steps
+      help: 'Only relevant if validation_data is a generator. Total number of steps
+        (batches of samples) to yield from validation_data generator before stopping
+        at the end of every epoch. It should typically be equal to the number of samples
+        of your validation dataset divided by the batch size. Optional for Sequence:
+        if unspecified, will use the len(validation_data) as a number of steps.'
+- id: 5480
+  name: validation_freq
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Validation freq
+      help: Only relevant if validation data is provided. Integer or collections.
+        Container instance (e.g. list, tuple, etc.). If an integer, specifies how
+        many training epochs to run before a new validation run is performed, e.g.
+        validation_freq=2 runs validation every 2 epochs. If a Container, specifies
+        the epochs on which to run validation, e.g. validation_freq=[1, 2, 10] runs
+        validation at the end of the 1st, 2nd, and 10th epochs.
+- id: 5481
+  name: class_weight
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Class weight
+      help: Optional dictionary mapping class indices (integers) to a weight (float)
+        value, used for weighting the loss function (during training only). This can
+        be useful to tell the model to "pay more attention" to samples from an under-represented
+        class.
+- id: 5482
+  name: max_queue_size
+  type: INTEGER
+  required: false
+  order: 7
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Max queue size
+      help: Maximum size for the generator queue. If unspecified, max_queue_size will
+        default to 10.
+- id: 5483
+  name: workers
+  type: INTEGER
+  required: false
+  order: 8
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Workers
+      help: Maximum number of processes to spin up when using process-based threading.
+        If unspecified, workers will default to 1. If 0, will execute the generator
+        on the main thread.
+- id: 5484
+  name: use_multiprocessing
+  type: INTEGER
+  required: false
+  order: 9
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Use multiprocessing
+      help: If True, use process-based threading. If unspecified, use_multiprocessing
+        will default to False. Note that because this implementation relies on multiprocessing,
+        you should not pass non-picklable arguments to the generator as they can't
+        be passed easily to children processes.
+- id: 5485
+  name: shuffle
+  type: INTEGER
+  required: false
+  order: 10
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shuffle
+      help: Whether to shuffle the order of the batches at the beginning of each epoch.
+        Only used with instances of Sequence (keras.utils.Sequence). Has no effect
+        when steps_per_epoch is not None.
+- id: 5486
+  name: initial_epoch
+  type: INTEGER
+  required: false
+  order: 11
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Initial epoch
+      help: Epoch at which to start training (useful for resuming a previous training
+        run).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,75 @@
+id: 49
+slug: tokenizer
+enabled: true
+type: TRANSFORMATION
+icon: fa-text-width
+css_class: None
+doc_link: None
+scripts:
+- id: 22
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_tokenized');
+ports:
+- id: 108
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada com um atributo texto a ser separado em palavras
+  - en:
+      locale: en
+      name: input data
+      description: Input data with a text attribute to be tokenized
+- id: 109
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda com o texto dividido em palavras"
+  - en:
+      locale: en
+      name: output data
+      description: Output data with tokenized text in a vector
+translations:
+  pt:
+    locale: pt
+    name: Dividir texto por delimitador
+    description: "Divide o texto de entrada em um vetor de palavras usando um separador\
+      \ simples ou baseado em express\xF5es regulares."
+    label_format: None
+  en:
+    locale: en
+    name: Tokenizer
+    description: Tokenize the input text in a vector of words using a simple tokenizer
+      or one based on regular expression.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 37
+  type: subgroup
+

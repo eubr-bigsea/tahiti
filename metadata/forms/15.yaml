@@ -1,0 +1,151 @@
+id: 15
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 70
+  name: attributes
+  type: TEXT
+  required: false
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Selecione o(s) atributos para agrupar
+      help: Escolha um ou mais atributos para agrupar.
+  - en:
+      locale: en
+      label: Select attribute(s) for grouping
+      help: Choose one or more attributes to aggregate data with
+- id: 71
+  name: function
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-function
+  values_url: None
+  values: "{\"functions\": [{\"key\": \"avg\", \"value\": \"Average (AVG)\", \"label\"\
+    : {\"pt\": \"M\xE9dia (AVG)\", \"en\": \"Average (AVG)\"}, \"help\": {\"en\":\
+    \ \"Computes the average of each group\", \"pt\": \"Computa a m\xE9dia de cada\
+    \ grupo\"}}, {\"key\": \"collect_list\", \"value\": \"Collect List\", \"label\"\
+    : {\"pt\": \"Agrupa valores em lista\", \"en\": \"Collect list\"}, \"help\": {\"\
+    en\": \"Returns a list of values with possible duplicates\", \"pt\": \"Retorna\
+    \ a lista de valores, podendo haver repeti\xE7\xE3o.\"}}, {\"key\": \"collect_set\"\
+    , \"value\": \"Collect Set\", \"label\": {\"pt\": \"Agrupa valores em conjunto\"\
+    , \"en\": \"Collect set\"}, \"help\": {\"en\": \"Returns a set of values with\
+    \ duplicate elements eliminated\", \"pt\": \"Retorna um conjunto de valores sem\
+    \ repeti\xE7\xE3o\"}}, {\"key\": \"count\", \"value\": \"Count\", \"label\": {\"\
+    pt\": \"Conta valores (Count)\", \"en\": \"Count\"}, \"help\": {\"en\": \"Counts\
+    \ the total of records of each group\", \"pt\": \"Conta o total de registros em\
+    \ cada grupo\"}}, {\"key\": \"countDistinct\", \"value\": \"Count Distinct\",\
+    \ \"label\": {\"pt\": \"Conta valores distintos\", \"en\": \"Count distinct\"\
+    }, \"help\": {\"en\": \"Counts the total of distinct values of each group\", \"\
+    pt\": \"Conta o total de valores distintos em cada grupo\"}}, {\"key\": \"approx_count_distinct\"\
+    , \"value\": \"Approximated Count Distinct\", \"label\": {\"pt\": \"Conta o total\
+    \ aproximado de valores distintos\", \"en\": \"Approx. Count distinct\"}, \"help\"\
+    : {\"en\": \"Counts the total of distinct values of each group, but using an approximation\"\
+    , \"pt\": \"Conta o total aproximado de valores distintos em cada grupo\"}}, {\"\
+    key\": \"first\", \"value\": \"First\", \"help\": {\"en\": \"Returns the first\
+    \ value of group.\", \"pt\": \"Retorna o primeiro valor do grupo\"}}, {\"key\"\
+    : \"last\", \"value\": \"Last\", \"help\": {\"en\": \"Returns the last value of\
+    \ group.\", \"pt\": \"Retorna o \xFAltimo valor do grupo.\"}}, {\"key\": \"max\"\
+    , \"value\": \"Maximum (MAX)\", \"help\": {\"en\": \"Returns the max value of\
+    \ each group for one attribute\", \"pt\": \"Retorna o valor m\xE1ximo de cada\
+    \ grupo\"}}, {\"key\": \"min\", \"value\": \"Minimum (MIN)\", \"help\": {\"en\"\
+    : \"Returns the min value of each group for one attribute\", \"pt\": \"Retorna\
+    \ o valor m\xEDnimo de cada grupo\"}}, {\"key\": \"sum\", \"value\": \"Sum\",\
+    \ \"help\": {\"en\": \"Returns the sum of values of each group for one attribute\"\
+    , \"pt\": \"Retorna a soma dos valores de cada grupo\"}}, {\"key\": \"sumDistinct\"\
+    , \"value\": \"Sum Distinct\", \"help\": {\"en\": \"Returns the sum of distinct\
+    \ values of each group for one attribute\", \"pt\": \"Retorna a soma dos valores\
+    \ distintos de cada grupo\"}}, {\"key\": \"stddev\", \"value\": \"Standard deviation\"\
+    , \"help\": {\"en\": \"Returns the standard deviation of each group for one attribute\"\
+    , \"pt\": \"Retorna o desvio-padr\xE3o de cada grupo\"}}, {\"key\": \"stddev_pop\"\
+    , \"value\": \"Standard deviation (pop)\", \"help\": {\"en\": \"Returns the population\
+    \ standard deviation of each group for one attribute\", \"pt\": \"Retorna o desvio-padr\xE3\
+    o populacional de cada grupo\"}}, {\"key\": \"variance\", \"value\": \"Variance\"\
+    , \"help\": {\"en\": \"Returns the variance of each group for one attribute\"\
+    , \"pt\": \"Retorna a vari\xE2ncia de cada grupo\"}}, {\"key\": \"var_pop\", \"\
+    value\": \"Variance (pop)\", \"help\": {\"en\": \"Returns the populational variance\
+    \ of each group for one attribute\", \"pt\": \"Retorna a vari\xE2ncia populacional\
+    \ de cada grupo\"}}, {\"key\": \"skewness\", \"value\": \"Skewness\", \"help\"\
+    : {\"en\": \"Returns the skewness each group for one attribute\", \"pt\": \"Retorna\
+    \ a distor\xE7\xE3o (skewness) cada grupo\"}}, {\"key\": \"kurtosis\", \"value\"\
+    : \"Kurtosis\", \"help\": {\"en\": \"Returns the kurtosis of each group for one\
+    \ attribute\", \"pt\": \"Retorna a curtose (kurtosis) de cada grupo\"}}], \"options\"\
+    : {\"title\": \"Aggregate operation\", \"description\": \"Add one of more lines\
+    \ with attribute to be used, function and alias to compute aggregate function\
+    \ over groups.\", \"show_alias\": true, \"pt\": {\"title\": \"Fun\xE7\xE3o de\
+    \ agrupamento\", \"description\": \"Realiza o agrupamento de dados por um conjunto\
+    \ de atributos.\"}}}"
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fun\xE7\xE3o de agrupamento"
+      help: "Fun\xE7\xE3o a ser aplicada aos dados agrupados."
+  - en:
+      locale: en
+      label: Aggregation functions
+      help: Aggregation functions
+- id: 359
+  name: pivot
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo usado como piv\xF4"
+      help: "Atributo usado como piv\xF4. Cada valor para o atributo ir\xE1 gerar\
+        \ um novo atributo."
+  - en:
+      locale: en
+      label: Attribute used as pivot
+      help: Attribute used as pivot. Each attribute value will generate a new attribute
+- id: 360
+  name: pivot_values
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: textarea
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Valores do piv\xF4 (recomendado, se piv\xF4 for usado)"
+      help: "Valores do piv\xF4. Recomendado, se piv\xF4 for usado (melhora desempenho)."
+  - en:
+      locale: en
+      label: Pivot values (recommended if pivot is used)
+      help: Pivot values. Recommended if pivot is used (better performance).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

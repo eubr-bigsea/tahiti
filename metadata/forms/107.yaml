@@ -1,0 +1,88 @@
+id: 107
+enabled: true
+order: 0
+category: execution
+fields:
+- id: 283
+  name: family_link
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Binomial / logit", "key": "binomial:logit", "pt": "Binomial /
+    logit"}, {"en": "Binomial / probit", "key": "binomial:probit", "pt": "Binomial
+    / probit"}, {"en": "Binomial / cloglog", "key": "binomial:cloglog", "pt": "Binomial
+    / cloglog"}, {"en": "Gamma / inverse", "key": "gamma:inverse", "pt": "Gama / inversa"},
+    {"en": "Gamma / identity", "key": "gamma:identity", "pt": "Gama / identidade"},
+    {"en": "Gamma / log", "key": "gamma:log", "pt": "Gama / log"}, {"en": "Gaussian
+    / Identity", "key": "gaussian:identity", "pt": "Gaussiana / Identidade"}, {"en":
+    "Gaussian / log", "key": "gaussian:log", "pt": "Gaussiana / log"}, {"en": "Gaussian
+    / inverse", "key": "gaussian:inverse", "pt": "Gaussiana / inversa"}, {"en": "Poisson
+    / log", "key": "poisson:log", "pt": "Poisson / log (Poisson)"}, {"en": "Poisson
+    / identity", "key": "poisson:identity", "pt": "Poisson / identidade"}, {"en":
+    "Poisson / sqrt", "key": "poisson:sqrt", "pt": "Poisson / sqrt (raiz quadrada)"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fam\xEDlia/predi\xE7\xE3o de link"
+      help: "Fam\xEDlia/predi\xE7\xE3o de link"
+  - en:
+      locale: en
+      label: Family/link prediction
+      help: Family/link prediction
+- id: 285
+  name: solver
+  type: TEXT
+  required: false
+  order: 6
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "IRLS (Iteratively reweighted least squares)", "key": "irls", "pt":
+    "M\u00ednimos quadrados reponderados iterativamente (IRLS)"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Solver
+      help: Solver
+  - en:
+      locale: en
+      label: Solver
+      help: Solver
+- id: 284
+  name: reg_param
+  type: DECIMAL
+  required: false
+  order: 7
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Regularization
+      help: Regularization
+  - en:
+      locale: en
+      label: Regularization
+      help: Regularization
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,53 @@
+id: 3027
+slug: save-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-cloud-upload-alt
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3055
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 8
+    name: IListOfMachineLearningModels
+  - id: 2
+    name: ClassificationModel
+  - id: 18
+    name: IRegressionModel
+  - id: 7
+    name: ModelWithEvaluation
+  - id: 4
+    name: IndexerModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo a ser salvo
+  - en:
+      locale: en
+      name: model
+      description: Model to be saved
+translations:
+  pt:
+    locale: pt
+    name: Salvar modelo
+    description: "Salva um modelo de aprendizado de m\xE1quina(COMPSs)."
+    label_format: None
+  en:
+    locale: en
+    name: Save model
+    description: Save a machine learning model (COMPSs).
+    label_format: None
+platforms: []
+categories:
+- id: 6
+  type: group
+- id: 3001
+  type: technology
+

@@ -1,0 +1,63 @@
+id: 5124
+slug: sequence-generator
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5403
+  slug: sequence data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 26
+    name: SequenceData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: sequence data
+      description: Sequence data
+- id: 5404
+  slug: generator
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 23
+    name: Generator
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: generator
+      description: Generator
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Sequence generator
+    description: Takes any type of data and generates batches of tensor data.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5064
+  type: group
+

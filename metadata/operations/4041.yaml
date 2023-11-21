@@ -1,0 +1,71 @@
+id: 4041
+slug: k-fold
+enabled: true
+type: ACTION
+icon: ''
+css_class: None
+doc_link: None
+scripts:
+- id: 4004
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddField(task, 'alias', false, 'fold');
+ports:
+- id: 4088
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4089
+  slug: output data
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "Divis\xE3o dos dados em K parti\xE7\xF5es"
+    description: "Esta opera\xE7\xE3o realiza a divis\xE3o do conjunto de dados em\
+      \ k parti\xE7\xF5es ou grupos de tamanho aproximadamente igual"
+    label_format: None
+  en:
+    locale: en
+    name: Split data into K Fold
+    description: This operation involves dividing the dataset into k folds or partitions
+      of approximately equal size
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 32
+  type: group
+- id: 38
+  type: subgroup
+

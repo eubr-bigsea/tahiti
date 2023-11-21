@@ -1,0 +1,28 @@
+id: 2146
+slug: format-date
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Datetime
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Formatar data
+    description: "Formata uma data segundo um par\xE2metro."
+    label_format: <b>Formatar a data em</b> <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i>
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

@@ -1,0 +1,16 @@
+id: 100000
+slug: demo
+enabled: true
+icon: ''
+version: '1.0'
+plugin: true
+translations:
+  pt:
+    locale: pt
+    name: "Demonstra\xE7\xE3o plugin"
+    description: "Demonstra\xE7\xE3o plugin"
+  en:
+    locale: en
+    name: Plugin Demo
+    description: Plugin Demo
+

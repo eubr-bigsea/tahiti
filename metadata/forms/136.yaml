@@ -1,0 +1,55 @@
+id: 136
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 502
+  name: quantity_input_ports
+  type: INTEGER
+  required: true
+  order: 1
+  default: '2'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Portas de entrada
+      help: "N\xFAmero de portas de entrada para a meta-opera\xE7\xE3o [0:N]."
+  - en:
+      locale: en
+      label: Input ports
+      help: Number of input ports for the meta-operation [0:N].
+- id: 503
+  name: quantity_output_ports
+  type: INTEGER
+  required: true
+  order: 2
+  default: '2'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Portas de sa\xEDda"
+      help: "N\xFAmero de portas de sa\xEDda para a meta-opera\xE7\xE3o [0:N]."
+  - en:
+      locale: en
+      label: Output ports
+      help: Number of output ports for the meta-operation [0:N].
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

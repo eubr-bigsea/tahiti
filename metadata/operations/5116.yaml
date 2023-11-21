@@ -1,0 +1,64 @@
+id: 5116
+slug: image-generator
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5233
+  slug: image data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 24
+    name: ImageData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: image data
+      description: Image Data
+- id: 5314
+  slug: generator
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 23
+    name: Generator
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: generator
+      description: Generator
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Image generator
+    description: Takes the dataset of images and generates batches of tensor image
+      data with real-time data augmentation.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5064
+  type: group
+

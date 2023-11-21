@@ -1,0 +1,34 @@
+id: 2196
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2169
+  name: format
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Formato
+      help: "Formato. Deve ser compat\xEDvel com o formato da linguagem Java."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,16 @@
+id: 1000
+slug: meta
+enabled: true
+icon: ' '
+version: None
+plugin: false
+translations:
+  pt:
+    locale: pt
+    name: Platforma Meta
+    description: "Plataforma que gera c\xF3digo para outras plataformas"
+  en:
+    locale: en
+    name: Meta Platform
+    description: Generates code to other platforms
+

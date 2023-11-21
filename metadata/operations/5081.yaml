@@ -1,0 +1,82 @@
+id: 5081
+slug: cropping-2d
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5181
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5281
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5358
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Cropping2D
+    description: Cropping layer for 2D input (e.g. picture). It crops along spatial
+      dimensions, i.e. height and width.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5020
+  type: group
+

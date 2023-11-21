@@ -1,0 +1,153 @@
+id: 129
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 470
+  name: attributes
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributos sens\xEDveis (sujeitos a injusti\xE7a/discrimina\xE7\xE3o)"
+      help: "Atributos sens\xEDveis (sujeitos a injusti\xE7a/discrimina\xE7\xE3o)."
+  - en:
+      locale: en
+      label: Sensitive feature attribute(s)
+      help: Sensitive attribute(s)
+- id: 471
+  name: type
+  type: TEXT
+  required: false
+  order: 1
+  default: EP
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "EP", "value": "Equal parity", "en": "Equal parity", "pt": "Paridade
+    equalitu00e1ria"}, {"key": "PP", "value": "Proportional parity", "en": "Proportional
+    parity", "pt": "Paridade proporcional"}, {"key": "FPRP", "value": "False-positive
+    rate parity", "en": "False-positive rate parity", "pt": "Paridade da taxa de falsos-positivos"},
+    {"key": "FDRP", "value": "False-discovery rate parity", "en": "False-discovery
+    rate parity", "pt": "Paridade da taxa de falsas-descobertas"}, {"key": "FORP",
+    "value": "False-omission rate parity", "en": "False-omission rate parity", "pt":
+    "Paridade da taxa de falsas-omissu00f5es"}, {"key": "FNRP", "value": "False-negative
+    rate parity", "en": "False-negative rate parity", "pt": "Paridade da taxa de falsos-negativos"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tipo de avalia\xE7\xE3o de justi\xE7a"
+      help: "Tipo de avalia\xE7\xE3o de justi\xE7a."
+  - en:
+      locale: en
+      label: Type of fairness evaluation
+      help: Type of fairness evaluation.
+- id: 472
+  name: tau
+  type: FLOAT
+  required: true
+  order: 2
+  default: '0.8'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Valor para c\xE1lculo dos limites de c\xE1lculo"
+      help: "Valor para c\xE1lculo dos limites de c\xE1lculo. O valor v da m\xE9trica\n\
+        \         dever\xE1 estar na faixa v < metrica < 1/v para a m\xE9trica ser\
+        \ justa."
+  - en:
+      locale: en
+      label: Value for boundaries calculation
+      help: "Value for boundaries calculation. The value v for the metric should\n\
+        \         be in the range v < metric < 1/v to the metric be fair."
+- id: 473
+  name: label
+  type: TEXT
+  required: false
+  order: 3
+  default: label
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo para r\xF3tulo com o valor real"
+      help: "Atributo para r\xF3tulo com o valor real."
+  - en:
+      locale: en
+      label: Label attribute with the real value
+      help: Label attribute with the real value.
+- id: 474
+  name: score
+  type: TEXT
+  required: false
+  order: 4
+  default: score
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o score com o resultado atribu\xEDdo (predi\xE7\xE3o)"
+      help: "Atributo com o score com o resultado atribu\xEDdo (predi\xE7\xE3o)."
+  - en:
+      locale: en
+      label: Score attribute with assigned result (prediction)
+      help: Score attribute with assigned result (prediction).
+- id: 475
+  name: baseline
+  type: TEXT
+  required: true
+  order: 5
+  default: None
+  suggested_widget: textarea
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Valor de refer\xEAncia usado para contrastar com os outros valores\n\
+        \         (mesma ordem do par\xE2metro atributos sens\xEDveis, separado por\
+        \ v\xEDrgula\n         )"
+      help: "Valor de refer\xEAncia usado para contrastar com os outros valores."
+  - en:
+      locale: en
+      label: "Baseline value(s) used to contrast other values against\n          \
+        \  (same order as sensitive parameter, comma separated)"
+      help: Baseline value used to contrast other values against.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

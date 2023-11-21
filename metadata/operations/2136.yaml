@@ -1,0 +1,28 @@
+id: 2136
+slug: concat-array
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Array
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Concatenar elementos
+    description: Permite concatenar os elementos de um arranjo na forma de uma string.
+    label_format: <b>Concatenar os valores em</b> <i>${this.attributes.value.map(a=>a).join(",
+      ")}</i> <b> usando separador</b>.
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

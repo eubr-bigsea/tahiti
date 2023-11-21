@@ -1,0 +1,100 @@
+id: 4014
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4070
+  name: attribute
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) previsor(es)
+      help: Atributo(s) previsor(es)
+  - en:
+      locale: en
+      label: Features
+      help: Features
+- id: 4071
+  name: alias
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nome do(s) novo(s) attributo(s)
+      help: "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo original\
+        \ com um sufixo ser\xE1 usado."
+  - en:
+      locale: en
+      label: Name(s) for new attribute(s)
+      help: Name(s) for new attribute(s). If omitted, the name of original attribute
+        with a suffix will be used.
+- id: 4072
+  name: n_quantiles
+  type: INTEGER
+  required: false
+  order: 3
+  default: '5'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "N\xFAmero de bins"
+      help: "N\xFAmero de bin para ser transformado. n_bins > 2"
+  - en:
+      locale: en
+      label: The number of bins to produce
+      help: The number of bins to produce. n_bins > 2
+- id: 4372
+  name: output_distribution
+  type: TEXT
+  required: false
+  order: 4
+  default: uniform
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "quantile", "value": "quantile"}, {"key": "uniform", "value":
+    "uniform"}, {"key": "kmeans", "value": "kmeans"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estrat\xE9gia"
+      help: "Estrat\xE9gia utilizada para definir o range dos bins."
+  - en:
+      locale: en
+      label: Strategy
+      help: Strategy used to define the widths of the bins.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

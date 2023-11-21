@@ -1,13 +1,4 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
-# noinspection PyBroadException
-try:
-    #import eventlet
-
-    #eventlet.monkey_patch(all=True, thread=False)
-    pass
-except:
-    pass
 from flask import request, g
 from flask_babel import get_locale
 
@@ -22,7 +13,10 @@ def get_locale_from_query():
     try:
         return g.user.locale
     except:
-        return request.args.get('lang', 'en')[:2]
+        try:
+            return request.args.get('lang', 'en')[:2]
+        except:
+            return 'en'
 
 
 @app.route('/static/<path:path>')

@@ -1,0 +1,63 @@
+id: 3029
+slug: clean-missing
+enabled: true
+type: ACTION
+icon: fa-check
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3058
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input Data
+- id: 3059
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+translations:
+  pt:
+    locale: pt
+    name: Limpar dados ausentes
+    description: Limpa ou substitui dados ausentes.
+    label_format: None
+  en:
+    locale: en
+    name: Clean missing
+    description: Cleans or replaces missing values from fields
+    label_format: None
+platforms: []
+categories:
+- id: 7
+  type: group
+- id: 3001
+  type: technology
+

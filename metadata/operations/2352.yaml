@@ -1,0 +1,27 @@
+id: 2352
+slug: features-reduction
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Redu\xE7\xE3o de atributos preditivos"
+    description: "Permite reduzir o n\xFAmero de atributros preditivos."
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2113
+  type: model-builder
+

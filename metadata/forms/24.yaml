@@ -1,0 +1,78 @@
+id: 24
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 22
+  name: comment
+  type: TEXT
+  required: false
+  order: 0
+  default: None
+  suggested_widget: textarea
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Comment
+      help: Comment
+  - en:
+      locale: en
+      label: Comment
+      help: Comment
+- id: 103
+  name: fold_count
+  type: INTEGER
+  required: true
+  order: 3
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Folds
+      help: How many folds will be generated. Data will be distributed as equaly as
+        possible among folds.
+- id: 104
+  name: fold_size
+  type: INTEGER
+  required: true
+  order: 4
+  default: '1000'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Fold size
+      help: How many records will be distributed among folds. The number of folds
+        will depend on the number of records.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

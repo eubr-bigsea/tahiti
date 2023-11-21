@@ -1,0 +1,97 @@
+id: 115
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 352
+  name: attribute
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) previsor(es)
+      help: Atributo(s) previsor(es)
+  - en:
+      locale: en
+      label: Features
+      help: Features
+- id: 353
+  name: alias
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nome do novo atributo
+      help: "Nome do novo atributo com as caracter\xEDsticas (features) transformadas."
+  - en:
+      locale: en
+      label: New attribute name
+      help: Name of the new attribute with transformed features.
+- id: 354
+  name: min
+  type: FLOAT
+  required: false
+  order: 3
+  default: '0.0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Limite inferior para a faixa
+      help: "Limite inferior para a faixa (valor padr\xE3o: 0.0)."
+  - en:
+      locale: en
+      label: Lower bound of the output feature range
+      help: 'Lower bound of the output feature range (default: 0.0).'
+- id: 355
+  name: max
+  type: FLOAT
+  required: false
+  order: 4
+  default: '1.0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Limite superior para a faixa
+      help: "Limite superior para a faixa (valor padr\xE3o: 1.0)."
+  - en:
+      locale: en
+      label: Upper bound of the output feature range
+      help: 'Upper bound of the output feature range (default: 1.0).'
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

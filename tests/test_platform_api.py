@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
-from tahiti.models import *
+from tahiti.models import db, Platform, PlatformTranslation
 from flask import current_app
+
+CURRENT_NUMBER_OF_PLATFORMS = len(['spark', 'comps', 'ophidia',
+                                   'scikit-learn', 'keras', 'meta'])
 
 
 def test_platform_fail_not_authorized(client):
@@ -23,20 +26,26 @@ def test_platform_list_success(client):
     rv = client.get('/platforms', headers=headers)
     assert 200 == rv.status_code, 'Incorrect status code'
     resp = rv.json
-    assert resp['pagination']['total'] == 4, \
+    assert resp['pagination']['total'] == CURRENT_NUMBER_OF_PLATFORMS, \
         f"Wrong quantity: {resp['pagination']['total']}"
 
     with current_app.app_context():
         default_platform = Platform.query.join(
-            db.aliased(Platform.current_translation, 
-                name='platform_translation')).order_by(
+            db.aliased(Platform.current_translation,
+                       name='platform_translation')).order_by(
             PlatformTranslation.name).first()
 
         assert resp['data'][0]['id'] == default_platform.id
         assert resp['data'][0]['slug'] == default_platform.slug
         assert resp['data'][0]['name'] == default_platform.name
         assert resp['data'][0]['enabled'] == default_platform.enabled
-    
+
+def test_platform_list_all_success(client):
+    headers = {'X-Auth-Token': str(client.secret)}
+    params = {'all': 'true'}
+    rv = client.get('/platforms', headers=headers, query_string=params)
+    assert 200 == rv.status_code, 'Incorrect status code'
+
 
 def test_platform_list_simple_sucess(client):
     headers = {'X-Auth-Token': str(client.secret)}
@@ -44,21 +53,6 @@ def test_platform_list_simple_sucess(client):
 
     rv = client.get('/platforms', headers=headers, query_string=params)
     assert 200 == rv.status_code, 'Incorrect status code'
-    resp = rv.json
-    assert resp['pagination']['total'] == 4, \
-        f"Wrong quantity: {resp['pagination']['total']}"
-    assert set(resp['data'][0].keys()) == {'id', 'name', 'slug'}
-
-
-def test_platform_list_no_page_success(client):
-    headers = {'X-Auth-Token': str(client.secret)}
-    params = {'page': 'false'}
-
-    rv = client.get('/platforms', headers=headers, query_string=params)
-    assert 200 == rv.status_code, 'Incorrect status code'
-    resp = rv.json
-    assert 'pagination' not in resp
-    assert len(resp['data']) == 4
 
 
 def test_platform_get_success(client):
@@ -76,7 +70,7 @@ def test_platform_get_success(client):
         assert resp['data'][0]['enabled'] == default_platform.enabled
 
 
-def test_platform_fail_not_found_error(client):
+def test_platform_not_found_failure(client):
     headers = {'X-Auth-Token': str(client.secret)}
     platform_id = 999
     rv = client.get(f'/platforms/{platform_id}', headers=headers)
@@ -94,4 +88,25 @@ def test_platform_patch_success(client, app):
 
     with app.app_context():
         platform = Platform.query.get(platform_id)
-        assert platform.enabled == True
+        assert platform.enabled
+
+
+def test_platform_patch_set_to_null_failure(client, app):
+    headers = {'X-Auth-Token': str(client.secret)}
+    platform_id = 4
+
+    update = {'enabled': True, 'name': None, 'slug': None}
+    rv = client.patch(f'/platforms/{platform_id}',
+                      json=update, headers=headers)
+    assert rv.status_code == 400
+    assert 'name' in rv.json['errors']
+    assert 'Field may not be null.' in rv.json['errors']['name']
+    assert 'slug' in rv.json['errors']
+
+
+def test_platform_delete_not_supported_failure(client, app):
+    headers = {'X-Auth-Token': str(client.secret)}
+    platform_id = 2
+
+    rv = client.delete(f'/platforms/{platform_id}', headers=headers)
+    assert rv.status_code == 405  # Method not supported

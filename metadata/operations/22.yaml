@@ -1,0 +1,49 @@
+id: 22
+slug: load-model
+enabled: true
+type: ACTION
+icon: fa-cloud-download-alt
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 46
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 4
+    name: IndexerModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo carregado
+  - en:
+      locale: en
+      name: model
+      description: Loaded model
+translations:
+  pt:
+    locale: pt
+    name: Carregar modelo
+    description: Carrega um modelo (Spark) salvo anteriormente.
+    label_format: None
+  en:
+    locale: en
+    name: Load model
+    description: Loads a previously saved model (Spark)
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 6
+  type: group
+- id: 1
+  type: technology
+

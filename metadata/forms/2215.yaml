@@ -1,0 +1,55 @@
+id: 2215
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2233
+  name: regex
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Express\xE3o regular"
+      help: "Express\xE3o regular para a busca."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2234
+  name: replace
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Substituir por
+      help: Novo valor que substitui o valor encontrado.
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

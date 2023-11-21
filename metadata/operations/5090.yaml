@@ -1,0 +1,65 @@
+id: 5090
+slug: python-code
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5190
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+- id: 5290
+  slug: python code
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: PythonCode
+    description: Add Python code to workflow. It enables the creation of functions,
+      classes and/or simple lines of code to promote transformations in the data or
+      addition of new layers.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5061
+  type: group
+

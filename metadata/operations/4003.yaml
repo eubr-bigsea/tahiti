@@ -1,0 +1,54 @@
+id: 4003
+slug: gbt-classifier
+enabled: false
+type: TRANSFORMATION
+icon: fa-tree
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4003
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 5
+    name: ClassificationAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
+  - en:
+      locale: en
+      name: algorithm
+      description: Untrained classification model
+translations:
+  pt:
+    locale: pt
+    name: Classificador GBT
+    description: "Algoritmo de aprendizado para classifica\xE7\xE3o Gradient-Boosted\
+      \ Trees (GBTs). Suporta r\xF3tulos bin\xE1rios e features cont\xEDnuas e categ\xF3\
+      ricas."
+    label_format: None
+  en:
+    locale: en
+    name: GBT Classifier
+    description: Gradient-Boosted Trees (GBTs) learning algorithm for classification.
+      It supports binary labels, as well as both continuous and categorical features.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 8
+  type: group
+- id: 18
+  type: subgroup
+- id: 4001
+  type: technology
+- id: 1500
+  type: classification
+

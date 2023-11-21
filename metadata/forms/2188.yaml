@@ -1,0 +1,49 @@
+id: 2188
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2167
+  name: new_type
+  type: TEXT
+  required: true
+  order: 3
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Float32", "key": "Float32", "pt": "Float32", "value": "Float32"},
+    {"en": "Float64", "key": "Float64", "pt": "Float64", "value": "Float64"}, {"en":
+    "Int8", "key": "Int8", "pt": "Int8", "value": "Int8"}, {"en": "Int16", "key":
+    "Int16", "pt": "Int16", "value": "Int16"}, {"en": "Int32", "key": "Int32", "pt":
+    "Int32", "value": "Int32"}, {"en": "Int64", "key": "Int64", "pt": "Int64", "value":
+    "Int64"}, {"en": "UInt8", "key": "UInt8", "pt": "UInt8", "value": "UInt8"}, {"en":
+    "UInt16", "key": "UInt16", "pt": "UInt16", "value": "UInt16"}, {"en": "UInt32",
+    "key": "UInt32", "pt": "UInt32", "value": "UInt32"}, {"en": "UInt64", "key": "UInt64",
+    "pt": "UInt64", "value": "UInt64"}, {"en": "Date", "key": "Date", "pt": "Date",
+    "value": "Date"}, {"en": "Datetime", "key": "Datetime", "pt": "Datetime", "value":
+    "Datetime"}, {"en": "Duration", "key": "Duration", "pt": "Duration", "value":
+    "Duration"}, {"en": "Time", "key": "Time", "pt": "Time", "value": "Time"}, {"en":
+    "Boolean", "key": "Boolean", "pt": "Boolean", "value": "Boolean"}, {"en": "List",
+    "key": "List", "pt": "List", "value": "List"}, {"en": "Utf8", "key": "Utf8", "pt":
+    "Utf8", "value": "Utf8"}, {"en": "Categorical", "key": "Categorical", "pt": "Categorical",
+    "value": "Categorical"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tipo de dado
+      help: Novo tipo de dado para os elementos do arrajo.
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

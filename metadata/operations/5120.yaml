@@ -1,0 +1,81 @@
+id: 5120
+slug: video-reader
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5388
+  slug: train-video
+  type: OUTPUT
+  tags: ''
+  order: 3
+  multiplicity: MANY
+  interfaces:
+  - id: 29
+    name: VideoData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: train video data
+      description: Video Data
+- id: 5389
+  slug: validation-video
+  type: OUTPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 29
+    name: VideoData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: validation video data
+      description: Video Data
+- id: 5392
+  slug: test-video
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 29
+    name: VideoData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: test video data
+      description: Video Data
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Video reader
+    description: Reads videos from a data source.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5065
+  type: group
+

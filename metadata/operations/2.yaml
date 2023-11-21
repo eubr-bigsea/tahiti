@@ -1,0 +1,105 @@
+id: 2
+slug: topic-report
+enabled: true
+type: TRANSFORMATION
+icon: fa-book
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 16
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 120
+  slug: vocabulary
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 13
+    name: IVocabulary
+  translations:
+  - pt:
+      locale: pt
+      name: "vocabul\xE1rio"
+      description: "Vocabul\xE1rio"
+  - en:
+      locale: en
+      name: vocabulary
+      description: Vocabulary
+- id: 121
+  slug: model
+  type: INPUT
+  tags: None
+  order: 3
+  multiplicity: ONE
+  interfaces:
+  - id: 14
+    name: IClusteringModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Modelo
+- id: 122
+  slug: topics
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: "Processar t\xF3picos do LDA"
+    description: "Relat\xF3rio de t\xF3picos"
+    label_format: None
+  en:
+    locale: en
+    name: Process LDA topics
+    description: Topic report
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 18
+  type: subgroup
+- id: 32
+  type: group
+- id: 37
+  type: subgroup
+

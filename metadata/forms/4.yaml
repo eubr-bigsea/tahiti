@@ -1,0 +1,34 @@
+id: 4
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4144
+  name: label
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo usado como r\xF3tulo (label)"
+      help: "Atributo usado como r\xF3tulo (label)."
+  - en:
+      locale: en
+      label: Label
+      help: Label.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

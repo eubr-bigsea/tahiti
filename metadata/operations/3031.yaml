@@ -1,0 +1,49 @@
+id: 3031
+slug: read-shapefile
+enabled: true
+type: TRANSFORMATION
+icon: fa-file
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3063
+  slug: geo data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados geo
+      description: Dados geospaciais
+  - en:
+      locale: en
+      name: geo data
+      description: Geospatial data
+translations:
+  pt:
+    locale: pt
+    name: Ler shapefile
+    description: "L\xEA um arquivo no formato shapefile"
+    label_format: None
+  en:
+    locale: en
+    name: Read shapefile
+    description: Read a shapefile
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 41
+  type: group
+- id: 42
+  type: subgroup
+- id: 3001
+  type: technology
+

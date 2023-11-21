@@ -1,0 +1,101 @@
+id: 5123
+slug: predict
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5397
+  slug: model
+  type: INPUT
+  tags: ''
+  order: 3
+  multiplicity: ONE
+  interfaces:
+  - id: 22
+    name: Model
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 5398
+  slug: generator
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 23
+    name: Generator
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: generator
+      description: Generator
+- id: 5400
+  slug: examples
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 24
+    name: ImageData
+  - id: 29
+    name: VideoData
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: image data
+      description: Examples to classify
+- id: 5406
+  slug: python code
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: Predict
+    description: Generates predictions for the input samples from a data generator.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5063
+  type: group
+

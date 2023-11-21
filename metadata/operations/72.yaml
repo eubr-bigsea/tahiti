@@ -1,0 +1,83 @@
+id: 72
+slug: index-to-string
+enabled: true
+type: TRANSFORMATION
+icon: fa-keyboard-o
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 153
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 154
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 167
+  slug: indexer models
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 4
+    name: IndexerModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelos do indexador
+      description: Modelo do indexador
+  - en:
+      locale: en
+      name: indexer models
+      description: Indexer model
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms: []
+categories:
+- id: 1
+  type: technology
+- id: 23
+  type: subgroup
+- id: 8
+  type: group
+

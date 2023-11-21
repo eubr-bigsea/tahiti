@@ -1,0 +1,90 @@
+id: 100
+slug: bucketizer
+enabled: true
+type: TRANSFORMATION
+icon: fa-box-open
+css_class: None
+doc_link: None
+scripts:
+- id: 100002
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddAttributesSplitAlias(task, "attributes", "aliases", "_bucketed")
+ports:
+- id: 229
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 230
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 231
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 20
+    name: TransformationModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+translations:
+  pt:
+    locale: pt
+    name: Intervalar
+    description: Mapeia um atributo em buckets.
+    label_format: None
+  en:
+    locale: en
+    name: Bucket discretizer
+    description: Bucketizer maps an attribute of continuous features to an attribute
+      of feature buckets.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 35
+  type: subgroup
+

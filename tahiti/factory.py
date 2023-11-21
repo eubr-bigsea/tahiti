@@ -1,8 +1,10 @@
+from gettext import gettext
+from http.client import HTTPException
 import logging
 import logging.config
 import os
 
-import jinja2
+from marshmallow import ValidationError
 import sqlalchemy_utils
 from flask import Flask
 from flask_babel import Babel
@@ -22,6 +24,8 @@ from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
 from tahiti.pipeline_api import PipelineApi, PipelineDetailApi, PipelineStepApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.template_pipeline_api import TemplatePipelineApi, TemplatePipelineDetailApi, TemplatePipelineStepApi
+from tahiti.schema import translate_validation
+from tahiti.source_code_api import SourceCodeDetailApi, SourceCodeListApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowListApi
 from tahiti.workflow_from_template_api import WorkflowFromTemplateApi
@@ -30,11 +34,14 @@ from tahiti.import_workflow_api import ImportWorkflowApi
 from tahiti.workflow_history_api import  WorkflowHistoryApi
 from flask_swagger_ui import get_swaggerui_blueprint
 
+log = logging.getLogger(__name__)
+
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     if config_file:
         os.environ['TAHITI_CONFIG'] = config_file
 
     from tahiti.configuration import tahiti_configuration
+
 
     os.chdir(os.environ.get('TAHITI_HOME', '.'))
 
@@ -102,6 +109,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/pipeline/<int:pipeline_id>/<int:step_id>': PipelineStepApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
+        '/source_codes': SourceCodeListApi,
+        '/source_codes/<int:source_code_id>': SourceCodeDetailApi,
         '/subsets': OperationSubsetListApi,
         '/subsets/<int:subset_id>': OperationSubsetDetailApi,
         '/subsets/<int:subset_id>/<int:operation_id>': OperationSubsetOperationApi,
@@ -117,7 +126,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in list(mappings.items()):
-        api.add_resource(view, path)
+        api.add_resource(view, path, endpoint=view.__name__)
 
     # Cache configuration for API
     app.config['CACHE_TYPE'] = 'simple'
@@ -127,6 +136,29 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         # admin.add_view(OperationModelView(Operation, db.session))
         #admin.add_view(
         #     OperationCategoryModelView(OperationCategory, db.session))
+    
+    # Error handlers
+    @app.errorhandler(ValidationError)
+    def register_validation_error(e):
+        result = {'status': 'ERROR',
+                  'message': gettext("Validation error"),
+                  'errors': translate_validation(e.messages)}
+        db.session.rollback()
+        return result, 400
+
+    @app.errorhandler(Exception)
+    def handle_exception(e):
+        # pass through HTTP errors
+        if isinstance(e, HTTPException):
+            return e
+        result = {'status': 'ERROR',
+                  'message': gettext("Internal error")}
+        if app.debug:
+            result['debug_detail'] = str(e)
+        log.exception(e)
+        import pdb; pdb.set_trace()
+        db.session.rollback()
+        return result, 500        
     return app
 
 

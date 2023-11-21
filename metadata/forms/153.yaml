@@ -1,0 +1,34 @@
+id: 153
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 153
+  name: data_source
+  type: INTEGER
+  required: true
+  order: 0
+  default: None
+  suggested_widget: lookup
+  values_url: '`${LIMONERO_URL}/datasources?uiw=1&simple=true&list=true&enabled=1`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: false
+  translations:
+  - pt:
+      locale: pt
+      label: Fonte de dados
+      help: Fonte de dados.
+  - en:
+      locale: en
+      label: Data source
+      help: Data source.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

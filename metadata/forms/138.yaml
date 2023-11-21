@@ -1,0 +1,120 @@
+id: 138
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 515
+  name: attribute
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo
+      help: Atributo usado como vetor para a janela deslizante.
+  - en:
+      locale: en
+      label: Attribute
+      help: Attribute used as a vector for the sliding window.
+- id: 516
+  name: window_size
+  type: INTEGER
+  required: false
+  order: 2
+  default: '10'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tamanho da janela
+      help: Tamanho da janela (>=0).
+  - en:
+      locale: en
+      label: Window size
+      help: Window size (>=0).
+- id: 517
+  name: window_pass
+  type: INTEGER
+  required: false
+  order: 3
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Deslocamento (tamanho do passo)
+      help: "Deslocamento (>0) determina o pr\xF3ximo in\xEDcio da janela."
+  - en:
+      locale: en
+      label: Gap
+      help: Gap (> 0) defines the next start of window.
+- id: 519
+  name: window_gap
+  type: INTEGER
+  required: false
+  order: 4
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tamanho da Janela de Previs\xE3o"
+      help: "Define o tamanho da janela (> 0) entre os dados de treinamento e a vari\xE1\
+        vel a ser predita."
+  - en:
+      locale: en
+      label: Forecast Window
+      help: Defines the size of the window (> 0) between the training data and the
+        variable to be predicted.
+- id: 518
+  name: alias
+  type: TEXT
+  required: false
+  order: 5
+  default: attr_
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Prefixo para nome dos atributos
+      help: Prefixo usado para formar o nome dos novos atributos.
+  - en:
+      locale: en
+      label: Name prefix for new attributes
+      help: Name for new attributes (optional).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

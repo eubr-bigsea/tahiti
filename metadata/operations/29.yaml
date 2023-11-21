@@ -1,0 +1,49 @@
+id: 29
+slug: k-means-clustering
+enabled: true
+type: TRANSFORMATION
+icon: fa-lemon
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 57
+  slug: algorithm
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 11
+    name: IClusteringAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Untrained clustering model
+  - en:
+      locale: en
+      name: algorithm
+      description: Untrained clustering model
+translations:
+  pt:
+    locale: pt
+    name: K-means
+    description: Usa o algoritmo K-Means para agrupamento
+    label_format: None
+  en:
+    locale: en
+    name: K-means
+    description: Uses K-Means algorithm for clustering
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 1
+  type: technology
+- id: 19
+  type: subgroup
+- id: 8
+  type: group
+

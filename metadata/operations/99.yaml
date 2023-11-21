@@ -1,0 +1,71 @@
+id: 99
+slug: window-transformation
+enabled: true
+type: TRANSFORMATION
+icon: fa-image
+css_class: None
+doc_link: None
+scripts:
+- id: 48
+  type: JS_CLIENT
+  enabled: true
+  body: copyAddExpressionAlias(task, "expressions", "alias");
+ports:
+- id: 227
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 228
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+translations:
+  pt:
+    locale: pt
+    name: Transformar em janela (deslizante)
+    description: "Transforma\xE7\xE3o em janela"
+    label_format: None
+  en:
+    locale: en
+    name: Transform by sliding window
+    description: Window transformation
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 2
+  type: service
+- id: 7
+  type: group
+- id: 30
+  type: subgroup
+

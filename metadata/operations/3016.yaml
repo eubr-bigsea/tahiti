@@ -1,0 +1,121 @@
+id: 3016
+slug: clustering-model
+enabled: true
+type: TRANSFORMATION
+icon: fa-users
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 3027
+  slug: train input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de treino de entrada
+      description: Dados de treino de entrada
+  - en:
+      locale: en
+      name: train input data
+      description: Train input data
+- id: 3028
+  slug: algorithm
+  type: INPUT
+  tags: None
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 11
+    name: IClusteringAlgorithm
+  translations:
+  - pt:
+      locale: pt
+      name: algoritmo
+      description: Algoritmo
+  - en:
+      locale: en
+      name: algorithm
+      description: Algorithm
+- id: 3029
+  slug: model
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 18
+    name: IRegressionModel
+  translations:
+  - pt:
+      locale: pt
+      name: modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+- id: 3033
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output Data
+- id: 3069
+  slug: cluster centroids
+  type: OUTPUT
+  tags: None
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: centroids do agrupamento
+      description: Centroids do agrupamento
+  - en:
+      locale: en
+      name: cluster centroids
+      description: Cluster centroids
+translations:
+  pt:
+    locale: pt
+    name: Modelo de Agrupamento
+    description: Modelo de Agrupamento
+    label_format: None
+  en:
+    locale: en
+    name: Clustering Model
+    description: Clustering Model
+    label_format: None
+platforms: []
+categories:
+- id: 8
+  type: group
+- id: 19
+  type: subgroup
+- id: 3001
+  type: technology
+- id: 1504
+  type: clustering
+

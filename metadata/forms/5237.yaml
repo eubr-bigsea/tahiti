@@ -1,0 +1,616 @@
+id: 5237
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5487
+  name: featurewise_center
+  type: INTEGER
+  required: false
+  order: 1
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Featurewise center
+      help: Set input mean to 0 over the dataset, feature-wise.
+- id: 5488
+  name: samplewise_center
+  type: INTEGER
+  required: false
+  order: 2
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Samplewise center
+      help: Set each sample mean to 0.
+- id: 5489
+  name: featurewise_std_normalization
+  type: INTEGER
+  required: false
+  order: 3
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Featurewise std normalization
+      help: Divide inputs by std of the dataset, feature-wise.
+- id: 5490
+  name: samplewise_std_normalization
+  type: INTEGER
+  required: false
+  order: 4
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Samplewise std normalization
+      help: Divide each input by its std.
+- id: 5491
+  name: zca_epsilon
+  type: DECIMAL
+  required: false
+  order: 5
+  default: '0.000001'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: ZCA epsilon
+      help: Epsilon for ZCA whitening. Default is 1e-6.
+- id: 5492
+  name: zca_whitening
+  type: INTEGER
+  required: false
+  order: 6
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: ZCA whitening
+      help: Apply ZCA whitening.
+- id: 5493
+  name: rotation_range
+  type: INTEGER
+  required: false
+  order: 7
+  default: '0'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Rotation range
+      help: Degree range for random rotations.
+- id: 5494
+  name: width_shift_range
+  type: TEXT
+  required: false
+  order: 8
+  default: '0.0'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Width shift range
+      help: 'Float, 1-D array-like or int float: fraction of total width, if < 1,
+        or pixels if >= 1. 1-D array-like: random elements from the array. int: integer
+        number of pixels from interval (-width_shift_range, +width_shift_range) With
+        width_shift_range=2 possible values are integers [-1, 0, +1], same as with
+        width_shift_range=[-1, 0, +1], while with width_shift_range=1.0 possible values
+        are floats in the half-open interval [-1.0, +1.0[.'
+- id: 5495
+  name: height_shift_range
+  type: TEXT
+  required: false
+  order: 9
+  default: '0.0'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Height shift range
+      help: 'Float, 1-D array-like or int float: fraction of total height, if < 1,
+        or pixels if >= 1. 1-D array-like: random elements from the array. int: integer
+        number of pixels from interval (-height_shift_range, +height_shift_range)
+        With height_shift_range=2 possible values are integers [-1, 0, +1], same as
+        with height_shift_range=[-1, 0, +1], while with height_shift_range=1.0 possible
+        values are floats in the half-open interval [-1.0, +1.0[.'
+- id: 5496
+  name: brightness_range
+  type: TEXT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Brightness range
+      help: Tuple or list of two floats. Range for picking a brightness shift value
+        from.
+- id: 5497
+  name: shear_range
+  type: DECIMAL
+  required: false
+  order: 11
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shear range
+      help: Float. Shear Intensity (Shear angle in counter-clockwise direction in
+        degrees)
+- id: 5498
+  name: zoom_range
+  type: DECIMAL
+  required: false
+  order: 12
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Zoom range
+      help: Float or [lower, upper]. Range for random zoom. If a float, [lower, upper]
+        = [1-zoom_range, 1+zoom_range].
+- id: 5499
+  name: channel_shift_range
+  type: DECIMAL
+  required: false
+  order: 13
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Channel shift range
+      help: Float. Range for random channel shifts.
+- id: 5500
+  name: fill_mode
+  type: TEXT
+  required: false
+  order: 14
+  default: nearest
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "constant", "key": "constant"}, {"value": "nearest", "key":
+    "nearest"}, {"value": "reflect", "key": "reflect"}, {"value": "wrap", "key": "wrap"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Fill mode
+      help: 'One of {"constant", "nearest", "reflect" or "wrap"}. Default is "nearest".
+        Points outside the boundaries of the input are filled according to the given
+        mode: "constant": kkkkkkkk|abcd|kkkkkkkk (cval=k) "nearest": aaaaaaaa|abcd|dddddddd
+        "reflect": abcddcba|abcd|dcbaabcd "wrap": abcdabcd|abcd|abcdabcd'
+- id: 5501
+  name: cval
+  type: DECIMAL
+  required: false
+  order: 15
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Cval
+      help: Float or Int. Value used for points outside the boundaries when fill_mode
+        = "constant".
+- id: 5502
+  name: horizontal_flip
+  type: INTEGER
+  required: false
+  order: 16
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Horizontal flip
+      help: Randomly flip inputs horizontally.
+- id: 5503
+  name: vertical_flip
+  type: INTEGER
+  required: false
+  order: 17
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Vertical flip
+      help: Randomly flip inputs vertically.
+- id: 5504
+  name: rescale
+  type: TEXT
+  required: false
+  order: 18
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Rescale
+      help: Rescaling factor. Defaults to None. If None or 0, no rescaling is applied,
+        otherwise we multiply the data by the value provided (after applying all other
+        transformations).
+- id: 5505
+  name: preprocessing_function
+  type: TEXT
+  required: false
+  order: 19
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Preprocessing function
+      help: 'function that will be implied on each input. The function will run after
+        the image is resized and augmented. The function should take one argument:
+        one image (Numpy tensor with rank 3), and should output a Numpy tensor with
+        the same shape.'
+- id: 5506
+  name: data_format
+  type: TEXT
+  required: false
+  order: 20
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
+    "key": "channels_first"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data format
+      help: Image data format, either "channels_first" or "channels_last". "channels_last"
+        mode means that the images should have shape (samples, height, width, channels),
+        "channels_first" mode means that the images should have shape  (samples, channels,
+        height, width). It defaults to the image_data_format value found in your Keras
+        config file at ~/.keras/keras.json. If you never set it, then it will be "channels_last".
+- id: 5507
+  name: validation_split
+  type: DECIMAL
+  required: false
+  order: 21
+  default: '0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Validation split
+      help: Float. Fraction of images reserved for validation (strictly between 0
+        and 1).
+- id: 5508
+  name: dtype
+  type: TEXT
+  required: false
+  order: 22
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Dtype
+      help: Data type to use for the generated arrays.
+- id: 5515
+  name: target_size
+  type: TEXT
+  required: true
+  order: 23
+  default: (256, 256)
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Target size
+      help: 'Tuple of integers (height, width), default: (256, 256). The dimensions
+        to which all images found will be resized.'
+- id: 5516
+  name: color_mode
+  type: TEXT
+  required: false
+  order: 24
+  default: rgb
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "grayscale", "key": "grayscale"}, {"value": "rgb", "key": "rgb"},
+    {"value": "rgba", "key": "rgba"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Color mode
+      help: One of "grayscale", "rgb", "rgba". Whether the images will be converted
+        to have 1, 3, or 4 channels.
+- id: 5518
+  name: batch_size
+  type: INTEGER
+  required: true
+  order: 26
+  default: '32'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Batch size
+      help: 'Size of the batches of data (default: 32).'
+- id: 5519
+  name: shuffle
+  type: INTEGER
+  required: false
+  order: 27
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shuffle
+      help: 'Whether to shuffle the data (default: True) If set to False, sorts the
+        data in alphanumeric order.'
+- id: 5522
+  name: interpolation
+  type: TEXT
+  required: false
+  order: 30
+  default: nearest
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "bicubic", "key": "bicubic"}, {"value": "bilinear", "key": "bilinear"},
+    {"value": "nearest", "key": "nearest"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Interpolation
+      help: 'Interpolation method used to resample the image if the target size is
+        different from that of the loaded image. Supported methods are "nearest",
+        "bilinear", and "bicubic". '
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

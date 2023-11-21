@@ -1,0 +1,16 @@
+id: 1
+slug: spark
+enabled: true
+icon: /static/spark.png
+version: None
+plugin: false
+translations:
+  pt:
+    locale: pt
+    name: Spark
+    description: "Apache Spark 2.0 - Plataforma de execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Spark
+    description: Apache Spark 2.0 - Execution platform
+

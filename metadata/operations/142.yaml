@@ -1,0 +1,63 @@
+id: 142
+slug: validation
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: ''
+doc_link: ''
+scripts: []
+ports:
+- id: 328
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: input data
+- id: 329
+  slug: output results
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 30
+    name: ValidationResult
+  translations:
+  - pt:
+      locale: pt
+      name: "resultado valida\xE7\xE3o"
+      description: "Resultado valida\xE7\xE3o"
+  - en:
+      locale: en
+      name: validation result
+      description: validation result
+translations:
+  pt:
+    locale: pt
+    name: "Valida\xE7\xE3o de dados"
+    description: Valida os dados segundo regras.
+    label_format: None
+  en:
+    locale: en
+    name: Data validation
+    description: Validates data against rules.
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+categories:
+- id: 46
+  type: algorithm
+

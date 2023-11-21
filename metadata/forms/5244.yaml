@@ -1,0 +1,264 @@
+id: 5244
+enabled: true
+order: 1
+category: transformation
+fields:
+- id: 5559
+  name: apply_transformations
+  type: INTEGER
+  required: false
+  order: 0
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Apply transformations
+      help: Turn on to apply transformations to the video data set.
+- id: 5550
+  name: cropping_strategy
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "random", "value": "random"}, {"key": "center", "value": "center"}]'
+  scope: EXECUTION
+  enable_conditions: this.apply_transformations.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Cropping strategy
+      help: ''
+- id: 5551
+  name: random_frames
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Frames
+      help: 'Number of frames to apply the cropping. It is necessary to inform a interval
+        containing the range: initial and final value, for example [0: 1]. After this
+        transformation the video size will change. It is important to inform in the
+        various dimension fields the new dimension after cropping. If this field is
+        empty the cropping transformation will be applied to all channels.'
+- id: 5552
+  name: random_height
+  type: TEXT
+  required: false
+  order: 4
+  default: (0, 16)
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Random height
+      help: 'Height in number of pixels. It is necessary to inform a tuple containing
+        the range: initial and final value for the random function, for example (0,
+        59). After this transformation the video size will change. It is important
+        to inform in the various dimension fields the new dimension after cropping.
+        If this field is empty the cropping transformation will be applied to all
+        channels.'
+- id: 5553
+  name: random_width
+  type: TEXT
+  required: false
+  order: 4
+  default: (0, 59)
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Random width
+      help: 'It is necessary to inform a tuple containing the range: initial and final
+        value for the random function, for example  (0, 59). After this transformation
+        the video size  will change. It is important to inform in the various dimension
+        fields the new dimension after  cropping. If this field is empty the cropping  transformation
+        will be applied to all  channels.'
+- id: 5554
+  name: random_channel
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "random" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Channel
+      help: 'Number of channels to apply the crop. It is necessary to inform a tuple
+        containing the range: initial and final value, for example [0: 1]. After this
+        transformation the video size will change. It is important to inform in the
+        various dimension fields the new dimension after cropping. If this field is
+        empty the cropping transformation will be applied to all channels.'
+- id: 5555
+  name: video_frames
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Frames
+      help: 'Number of frames to apply the cropping. It is necessary to inform a interval
+        containing the range: initial and final value, for example [0: 1]. After this
+        transformation the video size will change. It is important to inform in the
+        various dimension fields the new dimension after cropping. If this field is
+        empty the cropping transformation will be applied to all channels.'
+- id: 5556
+  name: video_height
+  type: TEXT
+  required: false
+  order: 4
+  default: '[8:120]'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Height
+      help: 'Height in number of pixels. It is necessary to inform a interval containing
+        the range: initial and final value, for example [0: 1]. After this transformation
+        the video size will change. It is important to inform in the various dimension
+        fields the new dimension after cropping. If this field is empty the cropping
+        transformation will be applied to all channels.'
+- id: 5557
+  name: video_width
+  type: TEXT
+  required: false
+  order: 4
+  default: '[30:142]'
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Width
+      help: 'Width in number of pixels. It is necessary to inform a interval containing
+        the range: initial and final value, for example [0: 1]. After this transformation
+        the video size will change. It is important to inform in the various dimension
+        fields the new dimension after cropping. If this field is empty the cropping
+        transformation will be applied to all channels.'
+- id: 5558
+  name: video_channel
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.cropping_strategy.internalValue === "center" && this.apply_transformations.internalValue
+    === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Channel
+      help: 'Number of channels to apply the crop. It is necessary to inform a interval
+        containing the range: initial and final value, for example [0: 1]. After this
+        transformation the video size will change. It is important to inform in the
+        various dimension fields the new dimension after cropping. If this field is
+        empty the cropping transformation will be applied to all channels.'
+translations:
+  pt:
+    locale: pt
+    name: "Transforma\xE7\xF5es"
+  en:
+    locale: en
+    name: Transformations
+

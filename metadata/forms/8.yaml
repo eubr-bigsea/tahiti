@@ -1,0 +1,210 @@
+id: 8
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 240
+  name: loss
+  type: TEXT
+  required: false
+  order: 1
+  default: squaredError
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Squared error", "key": "squaredError", "pt": "Erro quadrado (squared
+    error)"}, {"en": "Huber method", "key": "huber", "pt": "M\u00e9todo de Huber"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Fun\xE7\xE3o de perda"
+      help: "Fun\xE7\xE3o de perda a ser otimizada."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 245
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Itera\xE7\xF5es m\xE1ximas"
+      help: "Itera\xE7\xF5es m\xE1ximas."
+  - en:
+      locale: en
+      label: Max. iterations
+      help: Max. iterations
+- id: 210
+  name: solver
+  type: TEXT
+  required: false
+  order: 7
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Auto (selected automatically)", "value": "Automatically selected",
+    "key": "auto", "pt": "Selecionado automaticamente"}, {"en": "Normal Equation",
+    "value": "Normal Equation", "key": "normal", "pt": "Equa\u00e7\u00e3o normal"},
+    {"en": "Limited-memory BFGS", "value": "Limited-memory BFGS", "key": "l-bfgs",
+    "pt": "BFGS com mem\u00f3ria limitada"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Solucionador (Solver)
+      help: Solucionador (Solver)
+  - en:
+      locale: en
+      label: Solver
+      help: Solver
+- id: 248
+  name: elastic_net
+  type: DECIMAL
+  required: false
+  order: 7
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Mix para ElasticNet (0<=\u03B1<=1)"
+      help: Mix. para ElasticNet na faixa [0, 1].
+  - en:
+      locale: en
+      label: "ElasticNet mix (0<=\u03B1<=1)"
+      help: ElasticNet mixing
+- id: 241
+  name: reg_param
+  type: FLOAT
+  required: false
+  order: 8
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Par\xE2metro de regulariza\xE7\xE3o (\u03BB >= 0)"
+      help: "Par\xE2metro de regulariza\xE7\xE3o (\u03BB)"
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 183
+  name: epsilon
+  type: FLOAT
+  required: false
+  order: 9
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.loss.internalValue === "hubber"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Epsilon (usado se fun\xE7\xE3o de perda Huber)"
+      help: "Par\xE2metro que controla a robustez. Deve ser maior que 1.0."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 184
+  name: tolerance
+  type: FLOAT
+  required: false
+  order: 10
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Toler\xE2ncia"
+      help: "Toler\xE2ncia de converg\xEAncia para algoritmo iterativo. Deve ser maior\
+        \ ou igual a 0.0."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 185
+  name: standardization
+  type: INTEGER
+  required: false
+  order: 11
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Padroniza\xE7\xE3o (standardization)"
+      help: "Indica se \xE9 para padronizar os atributos preditivos antes de realizar\
+        \ o treino."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 175
+  name: fit_intercept
+  type: INTEGER
+  required: false
+  order: 12
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Fit intercept
+      help: "Se desligado, define y-intercept igual a 0. Se ligado, y-intercept \xE9\
+        \ determinado pela lina de melhor ajuste."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

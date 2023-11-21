@@ -1,0 +1,27 @@
+id: 2111
+slug: limit
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: separator
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: Limitar
+    description: Permite limitar a quantidade de dados.
+    label_format: ''
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2102
+  type: menu/always/fa fa-database
+

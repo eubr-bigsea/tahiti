@@ -1,0 +1,29 @@
+id: 2128
+slug: trim
+enabled: true
+type: TRANSFORMATION
+icon: ''
+css_class: Text
+doc_link: ''
+scripts: []
+ports: []
+translations:
+  pt:
+    locale: pt
+    name: "Remover espa\xE7os em branco"
+    description: "Permite remover espa\xE7os em branco de um texto, no in\xEDcio,\
+      \ no fim ou ambos."
+    label_format: "<b>Remover espa\xE7os em branco em </b> <i>${this.attributes.value.map(a=>a).join(\"\
+      , \")}</i>"
+  en:
+    locale: en
+    name: None
+    description: None
+    label_format: None
+platforms:
+- id: 1000
+  slug: meta
+categories:
+- id: 2103
+  type: menu/selected/fa fa-magic
+

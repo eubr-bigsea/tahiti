@@ -1,0 +1,122 @@
+id: 68
+enabled: true
+order: 0
+category: execution
+fields:
+- id: 379
+  name: block_size
+  type: INTEGER
+  required: false
+  order: 1
+  default: '128'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Tamanho do bloco
+      help: Tamanho do bloco
+  - en:
+      locale: en
+      label: Block size
+      help: Block size
+- id: 476
+  name: layers
+  type: TEXT
+  required: true
+  order: 1
+  default: 2,2,2
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Camadas (informe os tamanhos separados por v\xEDrgula)"
+      help: "Tamanho das camadas da camada de  entrada para a camada de sa\xEDda.Ex.:\
+        \ \"780, 100, 10\" (sem aspas) significa 780 entradas, uma camada oculta com\
+        \ 100 neur\xF4nios e uma camada de sa\xEDda com 10 neur\xF4nios."
+  - en:
+      locale: en
+      label: Layers (inform sizes separated by commas)
+      help: Sizes of layers from input layer to output layer E.g., "780, 100, 10"
+        (without quotes) means 780 inputs, one hidden layer with 100 neurons and output
+        layer of 10 neurons.
+- id: 380
+  name: max_iter
+  type: INTEGER
+  required: false
+  order: 2
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Itera\xE7\xF5es m\xE1ximas"
+      help: "Itera\xE7\xF5es m\xE1ximas"
+  - en:
+      locale: en
+      label: Max iterations
+      help: Max iterations
+- id: 381
+  name: seed
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Semente (para gera\xE7\xE3o de n\xFAmeros aleat\xF3rios)"
+      help: "Semente (para gera\xE7\xE3o de n\xFAmeros aleat\xF3rios)"
+  - en:
+      locale: en
+      label: Seed (random number generation)
+      help: Seed (random number generation)
+- id: 382
+  name: solver
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"value": "l-bfgs", "key": "l-bfgs"}, {"value": "gd", "key": "gd"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Solucionador
+      help: Solucionador
+  - en:
+      locale: en
+      label: Solver
+      help: Solver
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

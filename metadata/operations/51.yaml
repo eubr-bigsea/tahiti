@@ -1,0 +1,74 @@
+id: 51
+slug: generate-n-grams
+enabled: true
+type: TRANSFORMATION
+icon: fa-ellipsis-h
+css_class: None
+doc_link: None
+scripts:
+- id: 20
+  type: JS_CLIENT
+  enabled: true
+  body: copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_ngram');
+ports:
+- id: 112
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Output data
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 113
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Gerar N-Gramas
+    description: Converte texto em um vetor de n-gramas
+    label_format: None
+  en:
+    locale: en
+    name: Generate N-Grams
+    description: 'A feature transformer that converts the input array of strings into
+      an array of n-grams. '
+    label_format: None
+platforms:
+- id: 1
+  slug: spark
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 1
+  type: technology
+- id: 32
+  type: group
+- id: 37
+  type: subgroup
+

@@ -1,0 +1,102 @@
+id: 2194
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2227
+  name: type
+  type: INTEGER
+  required: true
+  order: 3
+  default: constant
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "attribute", "pt": "Um atributo (inteiro)", "en": "An (integer)
+    attribute"}, {"key": "constant", "pt": "Valor constante", "en": "Constant value"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Origem do valor
+      help: "De onde ser\xE1 obtido o valor a ser incrementado ou decrementado."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2174
+  name: value
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "constant"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Valor
+      help: Valor a ser incrementado ou decrementado, se negativo.
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2228
+  name: value_attribute
+  type: INTEGER
+  required: false
+  order: 4
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "attribute"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo com o valor
+      help: "De qual atributo ser\xE1 obtido o valor a ser incrementado ou decrementado."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 2175
+  name: period
+  type: TEXT
+  required: true
+  order: 5
+  default: day
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "second", "en": "Second", "pt": "Segundo"}, {"key": "minute",
+    "en": "Minute", "pt": "Minuto"}, {"key": "hour", "en": "Hour", "pt": "Hora"},
+    {"key": "day", "en": "Day", "pt": "Dia"}, {"key": "week", "en": "Week", "pt":
+    "Semana"}, {"key": "month", "en": "Month", "pt": "M\u00eas"}, {"key": "year",
+    "en": "Year", "pt": "Ano"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Per\xEDodo"
+      help: "Per\xEDodo a ser incrementado ou decrementado."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

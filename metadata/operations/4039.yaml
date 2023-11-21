@@ -1,0 +1,84 @@
+id: 4039
+slug: locality-sensitive-hashing
+enabled: false
+type: ACTION
+icon: ''
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4083
+  slug: input data
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4084
+  slug: output data
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+- id: 4085
+  slug: output model
+  type: OUTPUT
+  tags: ''
+  order: 2
+  multiplicity: MANY
+  interfaces:
+  - id: 2
+    name: ClassificationModel
+  translations:
+  - pt:
+      locale: pt
+      name: Modelo
+      description: Modelo
+  - en:
+      locale: en
+      name: model
+      description: Model
+translations:
+  pt:
+    locale: pt
+    name: "Hash Sens\xEDvel \xE0 Localidade (LSH)"
+    description: ''
+    label_format: None
+  en:
+    locale: en
+    name: Locality Sensitive Hashing (LSH)
+    description: Locality Sensitive Hashing is an alternative method for vanilla approximate
+      nearest neighbor search methods
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 32
+  type: group
+- id: 36
+  type: subgroup
+

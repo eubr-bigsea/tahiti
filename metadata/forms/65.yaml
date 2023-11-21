@@ -1,0 +1,254 @@
+id: 65
+enabled: true
+order: 0
+category: execution
+fields:
+- id: 149
+  name: impurity
+  type: TEXT
+  required: true
+  order: 1
+  default: gini
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Gini impurity", "key": "gini", "value": "Gini impurity", "pt":
+    "Inpureza Gini"}, {"en": "Entropy", "key": "entropy", "value": "Entropy", "pt":
+    "Entropia"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Impureza
+      help: "Impureza \xE9 a medida na qual o algoritmo se base para escolher a condi\xE7\
+        \xE3o \xF3tima local"
+  - en:
+      locale: en
+      label: Impurity
+      help: Impurity is the measure based on which the (locally) optimal condition
+        is chosen.
+- id: 402
+  name: cache_node_ids
+  type: INTEGER
+  required: false
+  order: 1
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Manter identificadores dos n\xF3s em cache"
+      help: "Manter identificadores dos n\xF3s em cache"
+  - en:
+      locale: en
+      label: Cache node ids.
+      help: Cache node ids.
+- id: 403
+  name: check_point_interval
+  type: INTEGER
+  required: false
+  order: 2
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Intervalo para checkpoint (cache)
+      help: Intervalo para checkpoint (cache)
+  - en:
+      locale: en
+      label: Check point interval (cache)
+      help: Check point interval (cache)
+- id: 404
+  name: feature_subset_strategy
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: select2
+  values_url: None
+  values: '[{"en": "Auto", "value": "Auto", "key": "auto", "pt": "Autom\u00e1tico"},
+    {"en": "All", "value": "All", "key": "all", "pt": "Tudo"}, {"en": "One third",
+    "value": "One third", "key": "onethird", "pt": "Um ter\u00e7o"}, {"en": "SQRT",
+    "value": "SQRT", "key": "sqrt", "pt": "SQRT (raiz quadrada)"}, {"en": "LOG2",
+    "value": "LOG2", "key": "log2", "pt": "LOG2 (log base 2)"}, {"en": "(0.0-1.0]",
+    "value": "(0.0-1.0]", "key": "(0.0-1.0]", "pt": "(0.0-1.0]"}, {"en": "[1-n]",
+    "value": "[1-n]", "key": "[1-n]", "pt": "[1-n]"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Estrat\xE9gia para subconjunto de features"
+      help: "Estrat\xE9gia para subconjunto de features"
+  - en:
+      locale: en
+      label: Feature subset strategy
+      help: Feature subset strategy
+- id: 406
+  name: max_bins
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "No. m\xE1ximo de bins"
+      help: "No. m\xE1ximo de bins"
+  - en:
+      locale: en
+      label: Max bins
+      help: Max bins
+- id: 407
+  name: max_depth
+  type: INTEGER
+  required: false
+  order: 6
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Profundidade m\xE1xima"
+      help: "Profundidade m\xE1xima"
+  - en:
+      locale: en
+      label: Max depth
+      help: Max depth
+- id: 408
+  name: min_info_gain
+  type: FLOAT
+  required: false
+  order: 7
+  default: None
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Ganho m\xEDnimo de informa\xE7\xE3o"
+      help: "Ganho m\xEDnimo de informa\xE7\xE3o"
+  - en:
+      locale: en
+      label: Min info gain
+      help: Min info gain
+- id: 409
+  name: min_instances_per_node
+  type: INTEGER
+  required: false
+  order: 8
+  default: '1'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xEDnimo de inst\xE2ncias por n\xF3"
+      help: "M\xEDnimo de inst\xE2ncias por n\xF3"
+  - en:
+      locale: en
+      label: Min instances per node
+      help: Min instances per node
+- id: 410
+  name: num_trees
+  type: INTEGER
+  required: false
+  order: 9
+  default: '20'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Impureza
+      help: Impureza
+  - en:
+      locale: en
+      label: Number of trees
+      help: Number of trees
+- id: 405
+  name: seed
+  type: INTEGER
+  required: false
+  order: 10
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Semente (seed)
+      help: "Semente para a gera\xE7\xE3o de n\xFAmeros aleat\xF3rios."
+  - en:
+      locale: en
+      label: None
+      help: None
+- id: 411
+  name: subsampling_rate
+  type: FLOAT
+  required: false
+  order: 10
+  default: '1.0'
+  suggested_widget: decimal
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Taxa de subamostragem
+      help: Taxa de subamostragem
+  - en:
+      locale: en
+      label: Subsampling rate
+      help: Subsampling rate
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

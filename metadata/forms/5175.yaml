@@ -1,0 +1,122 @@
+id: 5175
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5565
+  name: advanced_options
+  type: INTEGER
+  required: false
+  order: 0
+  default: '1'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Op\xE7\xF5es avan\xE7adas"
+      help: "Habilita as op\xE7\xF5es avan\xE7adas."
+  - en:
+      locale: en
+      label: Advanced options
+      help: Enable advanced options.
+- id: 5419
+  name: shape
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Shape
+      help: A shape tuple (integer), not including the batch size. For instance, shape=(32,)
+        indicates that the expected input will be batches of 32-dimensional vectors.
+- id: 5420
+  name: batch_shape
+  type: TEXT
+  required: false
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Batch shape
+      help: A shape tuple (integer), including the batch size. For instance, batch_shape=(10,
+        32) indicates that the expected input will be batches of 10 32-dimensional
+        vectors. batch_shape=(None, 32) indicates batches of an arbitrary number of
+        32-dimensional vectors.
+- id: 5421
+  name: dtype
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Data type
+      help: The data type expected by the input, as a string (float32, float64, int32...)
+- id: 5422
+  name: sparse
+  type: INTEGER
+  required: false
+  order: 4
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.advanced_options.internalValue === "1"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Sparse
+      help: A boolean specifying whether the placeholder to be created is sparse.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

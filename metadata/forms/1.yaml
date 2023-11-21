@@ -1,0 +1,97 @@
+id: 1
+enabled: true
+order: 0
+category: execution
+fields:
+- id: 130
+  name: features
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Atributo(s) previsor(es)
+      help: Atributo(s) previsor(es)
+  - en:
+      locale: en
+      label: Features
+      help: Features
+- id: 131
+  name: label
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: attribute-selector
+  values_url: None
+  values: '{"multiple": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o r\xF3tulo"
+      help: "Atributo com o r\xF3tulo"
+  - en:
+      locale: en
+      label: Label attribute
+      help: Label attribute
+- id: 239
+  name: prediction
+  type: TEXT
+  required: false
+  order: 3
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com a predi\xE7\xE3o (novo)"
+      help: "Atributo com a predi\xE7\xE3o (novo)"
+  - en:
+      locale: en
+      label: Prediction attribute (new)
+      help: Prediction attribute (new)
+- id: 236
+  name: weights
+  type: TEXT
+  required: false
+  order: 4
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Pesos (separados por v\xEDrgula, usados em ensembles)"
+      help: "Pesos (separados por v\xEDrgula, usados em ensembles)"
+  - en:
+      locale: en
+      label: Weights (comma-separated, used in ensembles)
+      help: Weights (comma-separated, used in ensembles).
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

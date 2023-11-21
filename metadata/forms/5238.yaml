@@ -1,0 +1,76 @@
+id: 5238
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 5509
+  name: train_images
+  type: INTEGER
+  required: false
+  order: 1
+  default: None
+  suggested_widget: lookup
+  values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1&formats=TAR_IMAGE_FOLDER,HAR_IMAGE_FOLDER,IMAGE_FOLDER`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Train images
+      help: ''
+- id: 5510
+  name: validation_images
+  type: INTEGER
+  required: false
+  order: 2
+  default: None
+  suggested_widget: lookup
+  values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1&formats=TAR_IMAGE_FOLDER,HAR_IMAGE_FOLDER,IMAGE_FOLDER`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Validation images
+      help: ''
+- id: 5609
+  name: test_images
+  type: INTEGER
+  required: false
+  order: 3
+  default: None
+  suggested_widget: lookup
+  values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1&formats=TAR_IMAGE_FOLDER,HAR_IMAGE_FOLDER,IMAGE_FOLDER`'
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: None
+      help: None
+  - en:
+      locale: en
+      label: Test images
+      help: ''
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

@@ -1,0 +1,81 @@
+id: 4046
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 4377
+  name: apply_cross_validation
+  type: INTEGER
+  required: false
+  order: 20
+  default: '0'
+  suggested_widget: checkbox
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Realizar a valida\xE7\xE3o cruzada"
+      help: "Realizar a valida\xE7\xE3o cruzada"
+  - en:
+      locale: en
+      label: Perform cross-validation
+      help: Perform cross-validation
+- id: 4378
+  name: metric_cross_validation
+  type: INTEGER
+  required: false
+  order: 21
+  default: f1_weighted
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"key": "balanced_accuracy", "value": "Balanced accuracy"}, {"key": "f1_weighted",
+    "value": "F1 weighted"}, {"key": "precision_weighted", "value": "Weighted Precision"},
+    {"key": "recall_weighted", "value": "Weighted Recall"}, {"key": "jaccard_weighted",
+    "value": "Weighted Jaccard"}, {"key": "roc_auc", "value": "Area Under ROC (if
+    binary)"}]'
+  scope: EXECUTION
+  enable_conditions: this.apply_cross_validation.internalValue === '1'
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "M\xE9trica para valida\xE7\xE3o cruzada"
+      help: "Se informada, essa m\xE9trica ser\xE1 usada e a valida\xE7\xE3o cruzada\
+        \ ser\xE1 executada"
+  - en:
+      locale: en
+      label: Metric for applying cross-validation
+      help: If informed, this metric will be used and cross-validation will be executed.
+- id: 4379
+  name: folds
+  type: INTEGER
+  required: false
+  order: 22
+  default: '3'
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.apply_cross_validation.internalValue === '1'
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Atributo com o n\xFAmero da parti\xE7\xE3o (fold)"
+      help: "Cont\xE9m o n\xFAmero da parti\xE7\xE3o para a linha"
+  - en:
+      locale: en
+      label: Attribute with fold number
+      help: Contains the fold number for the row
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

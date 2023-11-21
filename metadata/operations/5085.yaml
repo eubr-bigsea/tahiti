@@ -1,0 +1,82 @@
+id: 5085
+slug: up-sampling-3d
+enabled: true
+type: ACTION
+icon: ''
+css_class: circle-layout
+doc_link: None
+scripts: []
+ports:
+- id: 5185
+  slug: input layer
+  type: INPUT
+  tags: ''
+  order: 2
+  multiplicity: ONE
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: input layer
+      description: Input layer
+- id: 5285
+  slug: output layer
+  type: OUTPUT
+  tags: ''
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 27
+    name: Layer
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: output layer
+      description: Output layer
+- id: 5362
+  slug: python code
+  type: INPUT
+  tags: ''
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 28
+    name: PythonCode
+  translations:
+  - pt:
+      locale: pt
+      name: None
+      description: None
+  - en:
+      locale: en
+      name: python code
+      description: Python code
+translations:
+  pt:
+    locale: pt
+    name: None
+    description: None
+    label_format: None
+  en:
+    locale: en
+    name: UpSampling3D
+    description: Upsampling layer for 3D inputs. Repeats the 1st, 2nd and 3rd dimensions
+      of the data by size[0], size[1] and size[2] respectively.
+    label_format: None
+platforms:
+- id: 5
+  slug: keras
+categories:
+- id: 5020
+  type: group
+

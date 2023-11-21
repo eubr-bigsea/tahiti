@@ -1,0 +1,71 @@
+id: 4015
+slug: agglomerative-clustering
+enabled: true
+type: TRANSFORMATION
+icon: fa-ruler-horizontal
+css_class: None
+doc_link: None
+scripts: []
+ports:
+- id: 4017
+  slug: input data
+  type: INPUT
+  tags: None
+  order: 1
+  multiplicity: ONE
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: dados de entrada
+      description: Dados de entrada
+  - en:
+      locale: en
+      name: input data
+      description: Input data
+- id: 4018
+  slug: output data
+  type: OUTPUT
+  tags: None
+  order: 1
+  multiplicity: MANY
+  interfaces:
+  - id: 1
+    name: Data
+  translations:
+  - pt:
+      locale: pt
+      name: "dados de sa\xEDda"
+      description: "Dados de sa\xEDda"
+  - en:
+      locale: en
+      name: output data
+      description: Output data
+translations:
+  pt:
+    locale: pt
+    name: Agrupamento Aglomerativo
+    description: "Recursivamente mescla o par de clusters que aumenta minimamente\
+      \ uma dada dist\xE2ncia de ligamento."
+    label_format: None
+  en:
+    locale: en
+    name: Agglomerative Clustering
+    description: Recursively merges the pair of clusters that minimally increases
+      a given linkage distance.
+    label_format: None
+platforms:
+- id: 4
+  slug: scikit-learn
+categories:
+- id: 8
+  type: group
+- id: 19
+  type: subgroup
+- id: 4001
+  type: technology
+- id: 1504
+  type: clustering
+

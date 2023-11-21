@@ -1,0 +1,34 @@
+id: 2100
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2100
+  name: comment
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: textarea
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Coment\xE1rio"
+      help: "Coment\xE1rio sobre a tarefa."
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

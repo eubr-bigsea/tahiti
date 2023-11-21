@@ -1,0 +1,67 @@
+id: 5
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2
+  name: expression
+  type: TEXT
+  required: true
+  order: 0
+  default: None
+  suggested_widget: expression
+  values_url: None
+  values: '{"alias": false}'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Express\xE3o para filtro (avan\xE7ado)."
+      help: "Permite especificar uma express\xE3o para filtrar os dados."
+  - en:
+      locale: en
+      label: Filter expression (advanced)
+      help: Filter expression (advanced).
+- id: 90
+  name: filter
+  type: TEXT
+  required: true
+  order: 1
+  default: None
+  suggested_widget: attribute-function
+  values_url: None
+  values: "{\r\n\t\"functions\": [\r\n            {\r\n\t\t\"key\": \">\",\r\n\t\t\
+    \"value\": \"Greater than (>)\",\r\n\t\t\"help\": \"Greater than (>)\"\r\n\t \
+    \   },\r\n            {\r\n\t\t\"key\": \">=\",\r\n\t\t\"value\": \"Greater or\
+    \ equals to (>=)\",\r\n\t\t\"help\": \"Greater or equals to (>=)\"\r\n\t    },\r\
+    \n            {\r\n\t\t\"key\": \"<\",\r\n\t\t\"value\": \"Less than (<)\",\r\n\
+    \t\t\"help\": \"Less than (<)\"\r\n\t    },\r\n            {\r\n\t\t\"key\": \"\
+    <=\",\r\n\t\t\"value\": \"Less or equals to (<=)\",\r\n\t\t\"help\": \"Less or\
+    \ equals to (<=)\"\r\n\t    },\r\n            {\r\n\t\t\"key\": \"==\",\r\n\t\t\
+    \"value\": \"Equals to (=)\",\r\n\t\t\"help\": \"Equals to (=)\"\r\n\t    },\r\
+    \n            {\r\n\t\t\"key\": \"!=\",\r\n\t\t\"value\": \"Different (!=)\",\r\
+    \n\t\t\"help\": \"Different (!=)\"\r\n\t    }\r\n        ],\r\n\t\"options\":\
+    \ {\r\n\t\t\"title\": \"Filter operation\",\r\n\t\t\"show_alias\": false,\r\n\
+    \                \"show_value\": true\r\n\t}\r\n}"
+  scope: EXECUTION
+  enable_conditions: 'false'
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Filtro
+      help: Filtro
+  - en:
+      locale: en
+      label: Filter
+      help: Filter
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

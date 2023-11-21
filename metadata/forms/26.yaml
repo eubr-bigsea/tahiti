@@ -1,0 +1,103 @@
+id: 26
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 102
+  name: type
+  type: TEXT
+  required: true
+  order: 1
+  default: percent
+  suggested_widget: dropdown
+  values_url: None
+  values: "[{\"en\": \"Sample a random percentage of data\", \"key\": \"percent\"\
+    , \"value\": \"Sample a random percentage of data\", \"pt\": \"Amostrar um percentual\
+    \ aleat\\u00f3rio dos dados\"}, {\"en\": \"Sample N random records from data\"\
+    , \"key\": \"value\", \"value\": \"Sample N random records from data\", \"pt\"\
+    : \"Amostrar N registros aleat\xF3rios a partir dos dados\"}, {\"en\": \"Extract\
+    \ top N records from data\", \"key\": \"head\", \"value\": \"Extract top N records\
+    \ from data\", \"pt\": \"Extrair os primeiros N registros dos dados\"}]"
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Tipo de amostragem ou parti\xE7\xE3o"
+      help: "Tipo de amostragem ou parti\xE7\xE3o."
+  - en:
+      locale: en
+      label: Type of sampling or partition
+      help: Type of sampling or partition
+- id: 105
+  name: value
+  type: INTEGER
+  required: true
+  order: 1
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue !== "percent"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Total de registros
+      help: Total de registros.
+  - en:
+      locale: en
+      label: Total of records
+      help: Total of records to be retrieved
+- id: 74
+  name: fraction
+  type: FLOAT
+  required: true
+  order: 2
+  default: '1'
+  suggested_widget: percentage
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: this.type.internalValue === "percent"
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Percentual
+      help: Percentual dos dados a ser amostrado
+  - en:
+      locale: en
+      label: Percentage
+      help: Percentage of data to be sampled
+- id: 73
+  name: seed
+  type: INTEGER
+  required: false
+  order: 5
+  default: None
+  suggested_widget: integer
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "Semente para num. aleat\xF3rio"
+      help: "Semente para a gera\xE7\xE3o do n\xFAmero aleat\xF3rio"
+  - en:
+      locale: en
+      label: Seed
+      help: Seed used to initialize the random number generator.
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

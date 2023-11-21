@@ -1,0 +1,56 @@
+id: 3027
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 3089
+  name: name
+  type: TEXT
+  required: true
+  order: 2
+  default: None
+  suggested_widget: text
+  values_url: None
+  values: None
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Nome do modelo
+      help: Nome do modelo
+  - en:
+      locale: en
+      label: Model name
+      help: Model name
+- id: 3090
+  name: write_mode
+  type: TEXT
+  required: true
+  order: 3
+  default: ERROR
+  suggested_widget: dropdown
+  values_url: None
+  values: '[{"en": "Overwrite", "value": "Overwrite", "key": "OVERWRITE", "pt": "Sobrescrever"},
+    {"en": "Raise error", "value": "Raise error", "key": "ERROR", "pt": "Gerar erro"}]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: "A\xE7\xE3o caso modelo j\xE1 exista"
+      help: "A\xE7\xE3o caso modelo j\xE1 exista"
+  - en:
+      locale: en
+      label: Action if model exists
+      help: Action if model exists
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+

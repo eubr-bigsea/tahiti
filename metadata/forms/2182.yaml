@@ -1,0 +1,36 @@
+id: 2182
+enabled: true
+order: 1
+category: execution
+fields:
+- id: 2157
+  name: format
+  type: TEXT
+  required: true
+  order: 4
+  default: yyyy-MM-dd
+  suggested_widget: single-tag
+  values_url: None
+  values: '["dd-MM-yyyy", "dd/MM/yyyy", "dd.MM.yyyy", "MM-dd-yyyy", "MM/dd/yyyy",
+    "MM.dd.yyyy", "yyyy-MM-dd", "yyyy/MM/dd", "yyyy.MM.dd", "yyyy-MM-dd HH:mm:ss",
+    "yyyy-MM-dd hh:mm:ss", "yyyy-MM-dd\"T\"HH:mm:ss", "yyyy-MM-dd\"T\"HH:mm:ss. SSSXXX"]'
+  scope: EXECUTION
+  enable_conditions: None
+  editable: true
+  translations:
+  - pt:
+      locale: pt
+      label: Formato
+      help: Escolha um formato ou informe um (usando sintaxe de formato Java).
+  - en:
+      locale: en
+      label: None
+      help: None
+translations:
+  pt:
+    locale: pt
+    name: "Execu\xE7\xE3o"
+  en:
+    locale: en
+    name: Execution
+
