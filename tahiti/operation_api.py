@@ -8,7 +8,7 @@ from functools import reduce, cmp_to_key
 from flask import request, current_app, g
 from flask_restful import Resource
 from sqlalchemy import select
-from sqlalchemy.orm import joinedload
+from sqlalchemy.orm import selectinload, joinedload
 from sqlalchemy.sql.expression import text #, bindparam
 
 from tahiti.app_auth import requires_auth, requires_permission
@@ -52,24 +52,28 @@ def optimize_operation_query(operations, only_translation=False):
     # fallback_translation = db.aliased(Operation.fallback_translation)
     #op = operations \
     #    .join(current_translation).options(joinedload('current_translation'))
+    optimization_opt = selectinload #joinedload subqueryload 
 
+    # Must be joinedload
     op = operations.options(joinedload(Operation.current_translation))
 
     # .options(db.contains_eager(Operation.current_translation,
     #                           alias=current_translation))
     if not only_translation:
-        op = op.options(joinedload('forms.current_translation')) \
-            .options(joinedload('ports.current_translation')) \
-            .options(joinedload('ports.interfaces.current_translation')) \
-            .options(joinedload('forms.fields.current_translation')) \
-            .options(joinedload('categories.current_translation')) \
-            .options(joinedload('forms')) \
-            .options(joinedload('platforms')) \
-            .options(joinedload('platforms.current_translation')) \
-            .options(joinedload('ports')) \
-            .options(joinedload('ports.interfaces')) \
-            .options(joinedload('forms.fields')) \
-            .options(joinedload('categories'))
+        op = op.options(optimization_opt('forms.current_translation')) \
+            .options(optimization_opt('ports.current_translation')) \
+            .options(optimization_opt('ports.interfaces.current_translation')) \
+            .options(optimization_opt('forms.fields.current_translation')) \
+            .options(optimization_opt('categories.current_translation')) \
+            .options(optimization_opt('categories')) \
+            .options(optimization_opt('forms')) \
+            .options(optimization_opt('platforms')) \
+            .options(optimization_opt('platforms.subsets')) \
+            .options(optimization_opt('platforms.current_translation')) \
+            .options(optimization_opt('ports')) \
+            .options(optimization_opt('ports.interfaces')) \
+            .options(optimization_opt('forms.fields')) \
+            .options(optimization_opt('categories'))
     return op
 
 
@@ -96,11 +100,11 @@ class OperationListApi(Resource):
             if simple:
                 operations = Operation.query
                 operations = operations.options(
-                    joinedload('current_translation'))
+                    selectinload('current_translation'))
             elif request.args.get('partial') in ('true', 1, '1'):
                 operations = optimize_operation_query(Operation.query, True)\
-                    .options(joinedload('categories.current_translation')) \
-                    .options(joinedload('categories'))
+                    .options(selectinload('categories.current_translation')) \
+                    .options(selectinload('categories'))
 
                 exclude = ['forms', 'ports', 'platforms']
             else:
@@ -345,8 +349,8 @@ class OperationTreeApi(Resource):
             .join(current_translation) \
             .options(db.contains_eager(Operation.current_translation,
                                        alias=current_translation)) \
-            .options(joinedload('categories.current_translation')) \
-            .options(joinedload('categories'))
+            .options(selectinload('categories.current_translation')) \
+            .options(selectinload('categories'))
 
         def extract_group(c): return {
             'id': c.id, 'name': c.name, 'order': c.order or c.default_order}
