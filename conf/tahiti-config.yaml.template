@@ -1,0 +1,6 @@
+# Tahiti configuration file
+tahiti:
+    debug: true
+    secret: 2023
+    servers:
+        database_url: mysql://user:secret@server:3306/tahiti
