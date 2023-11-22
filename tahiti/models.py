@@ -7,7 +7,7 @@ from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
 make_translatable(options={'locales': ['pt', 'en'],
                            'auto_create_locales': False,
-                           'fallback_locale': 'pt'})
+                           'fallback_locale': 'en'})
 
 db = SQLAlchemy()
 
@@ -361,6 +361,8 @@ class Operation(db.Model, Translatable):
     scripts = relationship("OperationScript",
                            cascade="all, delete-orphan")
 
+    translations2= relationship("OperationTranslation",
+                           cascade="all, delete-orphan")
     def __str__(self):
         return self.name
 

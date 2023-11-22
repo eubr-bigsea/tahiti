@@ -35,10 +35,13 @@ from tahiti.workflow_permission_api import WorkflowPermissionApi
 from tahiti.import_workflow_api import ImportWorkflowApi
 from tahiti.workflow_history_api import  WorkflowHistoryApi
 from flask_swagger_ui import get_swaggerui_blueprint
+from dotenv import load_dotenv
+
 
 log = logging.getLogger(__name__)
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
+    load_dotenv()
     if config_file:
         os.environ['TAHITI_CONFIG'] = config_file
 

@@ -1,4 +1,5 @@
 coverage==5.5
+python-dotenv==1.0.0
 eventlet==0.31.0
 Flask==2.2.5
 Flask-Babel==2.0.0
@@ -14,6 +15,7 @@ marshmallow==3.12.1
 pyaml==20.4.0
 pytest==6.2.4
 PyMySQL==1.0.2
+psycopg2-binary==2.9.9
 requests==2.31.0
 SQLAlchemy==1.4.23
 SQLAlchemy-i18n==1.1.0

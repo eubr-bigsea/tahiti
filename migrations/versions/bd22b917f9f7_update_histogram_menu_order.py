@@ -168,7 +168,10 @@ def upgrade():
             "pt": { "title": "Função de agrupamento", "description": "Realiza o agrupamento de dados por um conjunto de atributos." }
         }
     }
-    op.execute(text("UPDATE operation_form_field SET required = true, values = '{}' WHERE (id = 71);".format(json.dumps(function_list, ensure_ascii=False))))
+    if is_psql():
+        op.execute(text("UPDATE operation_form_field SET required = true, \"values\" = '{}' WHERE (id = 71);".format(json.dumps(function_list, ensure_ascii=False))))
+    else:
+        op.execute(text("UPDATE operation_form_field SET required = true, `values` = '{}' WHERE (id = 71);".format(json.dumps(function_list, ensure_ascii=False))))
     
     op.execute(text("UPDATE operation_form_field SET required = false WHERE id=70;"))
     op.execute(text("""
