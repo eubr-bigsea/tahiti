@@ -187,29 +187,6 @@ class PluginStatus:
                 if n[0] != '_' and n != 'values']
 
 
-class ExecutionStatus:
-    FAILURE = 'FAILURE'
-    PARTIAL_SUCCESS = 'PARTIAL_SUCCESS'
-    SUCCESS = 'SUCCESS'
-    CANCELLED = 'CANCELLED'
-    REJECTED = 'REJECTED'
-    CREATED = 'CREATED'
-
-    @staticmethod
-    def values():
-        return [n for n in list(ExecutionStatus.__dict__.keys())
-                if n[0] != '_' and n != 'values']
-
-
-class AccessStatus:
-    ENABLED = 'ENABLED'
-    DISABLED = 'DISABLED'
-
-    @staticmethod
-    def values():
-        return [n for n in list(AccessStatus.__dict__.keys())
-                if n[0] != '_' and n != 'values']
-
 # Association tables definition
     # noinspection PyUnresolvedReferences
 operation_category_operation = db.Table(
@@ -649,6 +626,126 @@ class OperationSubset(db.Model):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
+class Pipeline(db.Model):
+    """ Pipeline """
+    __tablename__ = 'pipeline'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(50), nullable=False)
+    user_name = Column(String(200), nullable=False)
+    created = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False)
+    updated = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False,
+                     onupdate=datetime.datetime.utcnow)
+    version = Column(Integer, nullable=False)
+
+    # Associations
+    steps = relationship("PipelineStep",
+                         cascade="all, delete-orphan")
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineStep(db.Model):
+    """ Pipeline step """
+    __tablename__ = 'pipeline_step'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    order = Column(Integer, nullable=False)
+    scheduling = Column(String(200))
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+    workflow_type = Column(Enum(*list(WorkflowType.values()),
+                                name='WorkflowTypeEnumType'))
+
+    # Associations
+    template_id = Column(Integer,
+                         ForeignKey("pipeline.id",
+                                    name="fk_pipeline_step_template_id"),
+                         nullable=False,
+                         index=True)
+    template = relationship(
+        "Pipeline",
+        overlaps='template',
+        foreign_keys=[template_id])
+    workflow_id = Column(Integer,
+                         ForeignKey("workflow.id",
+                                    name="fk_pipeline_step_workflow_id"),
+                         index=True)
+    workflow = relationship(
+        "Workflow",
+        overlaps='workflow',
+        foreign_keys=[workflow_id])
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineTemplate(db.Model):
+    """ Pipeline template """
+    __tablename__ = 'pipeline_template'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+
+    # Associations
+    steps = relationship("PipelineTemplateStep",
+                         cascade="all, delete-orphan")
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineTemplateStep(db.Model):
+    """ Pipeline template step """
+    __tablename__ = 'pipeline_template_step'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    order = Column(Integer, nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+
+    # Associations
+    template_id = Column(Integer,
+                         ForeignKey("pipeline_template.id",
+                                    name="fk_pipeline_template_step_template_id"),
+                         nullable=False,
+                         index=True)
+    template = relationship(
+        "PipelineTemplate",
+        overlaps='template',
+        foreign_keys=[template_id])
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
 class Platform(db.Model, Translatable):
     """ Execution platform """
     __tablename__ = 'platform'
@@ -1039,143 +1136,4 @@ class WorkflowVariable(db.Model):
 
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
-    
-class TemplatePipeline(db.Model):
-    __tablename__ = 'template_pipeline'
 
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=True)
-    description = Column(String(200), nullable=True)
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
-    user_id = Column(Integer, nullable=False)
-    user_login = Column(String(50), nullable=False)
-    user_name = Column(String(200), nullable=False)
-    created = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False)
-    updated = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False,
-                    onupdate=datetime.datetime.utcnow)
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
-
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-
-class TemplatePipelineStep(db.Model):
-    __tablename__ = 'template_pipeline_step'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=True)
-    order = Column(Integer, nullable=False)
-    description = Column(String(200), nullable=True)
-    scheduling = Column(String(300), nullable=True)
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
-    status = Column(Enum(*list(ExecutionStatus.values()),
-                    name='ExecutionStatus'), nullable=False, default=ExecutionStatus.CREATED)
-
-    created = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False)
-    updated = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False,
-                    onupdate=datetime.datetime.utcnow)
-
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
-
-    # Associations
-    templatepipeline_id = Column(Integer,
-                        ForeignKey("template_pipeline.id",
-                                    name="fk_template_pipeline_step_template_pipeline_id"),
-                        nullable=False,
-                        index=True)
-    templatepipeline = relationship(
-        "TemplatePipeline",
-        overlaps='templatepipelines',
-        foreign_keys=[templatepipeline_id],
-        backref=backref("templatepipelines",
-                        cascade="all, delete-orphan"))
-
-    def __str__(self):
-        return self.name
-
-    def __repr__(self):
-        return '<Instance {}: {}>'.format(self.__class__, self.id)
-
-class Pipeline(db.Model):
-    __tablename__ = 'pipeline'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=True)
-    description = Column(String(200), nullable=True)
-
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
-    
-    user_id = Column(Integer, nullable=False)
-    user_login = Column(String(50), nullable=False)
-    user_name = Column(String(200), nullable=False)
-
-    created = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False)
-    updated = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False,
-                    onupdate=datetime.datetime.utcnow)
-
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
-
-class PipelineStep(db.Model):
-    __tablename__ = 'pipeline_step'
-
-    # Fields
-    id = Column(Integer, primary_key=True)
-    name = Column(String(200), nullable=True)
-    description = Column(String(200), nullable=True)
-    order = Column(Integer, nullable=False)
-
-    scheduling = Column(String(300), nullable=True)
-
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
-    
-    status = Column(Enum(*list(ExecutionStatus.values()),
-                    name='ExecutionStatus'), nullable=False, default=ExecutionStatus.CREATED)
-
-    created = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False)
-    updated = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False,
-                    onupdate=datetime.datetime.utcnow)
-
-    # Associations
-    pipeline_id = Column(Integer,
-                        ForeignKey("pipeline.id",
-                                    name="fk_pipeline_step_pipeline_id"),
-                        nullable=False,
-                        index=True)
-    pipeline = relationship(
-        "Pipeline",
-        overlaps='pipelines',
-        foreign_keys=[pipeline_id],
-        backref=backref("pipelines_pipelineStep",
-                        cascade="all, delete-orphan"))
-
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
