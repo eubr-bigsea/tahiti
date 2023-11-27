@@ -671,15 +671,15 @@ class PipelineStep(db.Model):
                                 name='WorkflowTypeEnumType'))
 
     # Associations
-    template_id = Column(Integer,
+    pipeline_id = Column(Integer,
                          ForeignKey("pipeline.id",
-                                    name="fk_pipeline_step_template_id"),
+                                    name="fk_pipeline_step_pipeline_id"),
                          nullable=False,
                          index=True)
-    template = relationship(
+    pipeline = relationship(
         "Pipeline",
-        overlaps='template',
-        foreign_keys=[template_id])
+        overlaps='steps',
+        foreign_keys=[pipeline_id])
     workflow_id = Column(Integer,
                          ForeignKey("workflow.id",
                                     name="fk_pipeline_step_workflow_id"),
@@ -736,7 +736,7 @@ class PipelineTemplateStep(db.Model):
                          index=True)
     template = relationship(
         "PipelineTemplate",
-        overlaps='template',
+        overlaps='steps',
         foreign_keys=[template_id])
 
     def __str__(self):

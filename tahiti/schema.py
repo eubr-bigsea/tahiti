@@ -1050,9 +1050,6 @@ class PipelineStepCreateRequestSchema(BaseSchema):
     enabled = fields.Boolean(required=True)
     workflow_type = fields.String(required=False, allow_none=True,
                                   validate=[OneOf(list(WorkflowType.__dict__.keys()))])
-    template = fields.Nested(
-        'tahiti.schema.PipelineCreateRequestSchema',
-        required=True)
     workflow = fields.Nested(
         'tahiti.schema.WorkflowCreateRequestSchema',
         allow_none=True)
@@ -1078,9 +1075,6 @@ class PipelineStepItemResponseSchema(BaseSchema):
     enabled = fields.Boolean(required=True)
     workflow_type = fields.String(required=False, allow_none=True,
                                   validate=[OneOf(list(WorkflowType.__dict__.keys()))])
-    template = fields.Nested(
-        'tahiti.schema.PipelineItemResponseSchema',
-        required=True)
     workflow = fields.Nested(
         'tahiti.schema.WorkflowItemResponseSchema',
         allow_none=True)
@@ -1106,9 +1100,6 @@ class PipelineStepListResponseSchema(BaseSchema):
     enabled = fields.Boolean(required=True)
     workflow_type = fields.String(required=False, allow_none=True,
                                   validate=[OneOf(list(WorkflowType.__dict__.keys()))])
-    template = fields.Nested(
-        'tahiti.schema.PipelineListResponseSchema',
-        required=True)
     workflow = fields.Nested(
         'tahiti.schema.WorkflowListResponseSchema',
         allow_none=True)
@@ -1197,9 +1188,6 @@ class PipelineTemplateStepCreateRequestSchema(BaseSchema):
     order = fields.Integer(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True)
-    template = fields.Nested(
-        'tahiti.schema.PipelineTemplateCreateRequestSchema',
-        required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1219,9 +1207,6 @@ class PipelineTemplateStepItemResponseSchema(BaseSchema):
     order = fields.Integer(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True)
-    template = fields.Nested(
-        'tahiti.schema.PipelineTemplateItemResponseSchema',
-        required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1241,9 +1226,6 @@ class PipelineTemplateStepListResponseSchema(BaseSchema):
     order = fields.Integer(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True)
-    template = fields.Nested(
-        'tahiti.schema.PipelineTemplateListResponseSchema',
-        required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load

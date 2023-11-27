@@ -3,6 +3,7 @@ from http.client import HTTPException
 import logging
 import logging.config
 import os
+import sys
 
 from marshmallow import ValidationError
 import sqlalchemy_utils
@@ -21,11 +22,12 @@ from tahiti.operation_api import OperationListApi, OperationTreeApi
 from tahiti.operation_subset_api import (OperationSubsetDetailApi,
         OperationSubsetListApi)
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
-from tahiti.pipeline_api import PipelineApi, PipelineDetailApi, PipelineStepApi
+from tahiti.pipeline_api import PipelineListApi, PipelineDetailApi
+from tahiti.pipeline_template_api import (
+    PipelineTemplateListApi, PipelineTemplateDetailApi)
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.schema import translate_validation
 from tahiti.source_code_api import SourceCodeDetailApi, SourceCodeListApi
-from tahiti.template_pipeline_api import TemplatePipelineApi, TemplatePipelineDetailApi, TemplatePipelineStepApi
 from tahiti.views import AttributeSuggestionView
 from tahiti.workflow_api import WorkflowDetailApi, WorkflowListApi
 from tahiti.workflow_from_template_api import WorkflowFromTemplateApi
@@ -104,13 +106,12 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/clear-cache': OperationClearCacheApi,
         '/operations/tree/<int:platform_id>': OperationTreeApi,
         '/operations/<int:operation_id>': OperationDetailApi,
-        '/pipeline': PipelineApi,
-        '/pipeline/<int:pipeline_id>': PipelineDetailApi,
-        '/pipeline/<int:pipeline_id>/<int:step_id>': PipelineStepApi,
+        '/pipelines': PipelineListApi,
+        '/pipelines/<int:pipeline_id>': PipelineDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
-        '/source_codes': SourceCodeListApi,
-        '/source_codes/<int:source_code_id>': SourceCodeDetailApi,
+        '/source-codes': SourceCodeListApi,
+        '/source-codes/<int:source_code_id>': SourceCodeDetailApi,
         '/subsets': OperationSubsetListApi,
         '/subsets/<int:subset_id>': OperationSubsetDetailApi,
         '/subsets/<int:subset_id>/<int:operation_id>': OperationSubsetOperationApi,
@@ -120,9 +121,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows/import': ImportWorkflowApi,
         '/workflows/from-template': WorkflowFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
-        '/template-pipeline': TemplatePipelineApi,
-        '/template-pipeline/<int:template_pipeline_id>': TemplatePipelineDetailApi,
-        '/template-pipeline/<int:template_pipeline_id>/<int:step_id>': TemplatePipelineStepApi,
+        '/pipeline-templates': PipelineTemplateListApi,
+        '/pipeline-templates/<int:pipeline_template_id>': PipelineTemplateDetailApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in list(mappings.items()):
@@ -156,7 +156,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         if app.debug:
             result['debug_detail'] = str(e)
         log.exception(e)
-        import pdb; pdb.set_trace()
+        print(e, file=sys.stderr)
         db.session.rollback()
         return result, 500        
     return app
