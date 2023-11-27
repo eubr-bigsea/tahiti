@@ -3,7 +3,7 @@ import logging
 
 from tahiti.app_auth import requires_auth, requires_permission
 
-from flask import request
+from flask import request, g as flask_g
 from flask_restful import Resource
 from http import HTTPStatus
 
@@ -86,6 +86,11 @@ class PipelineListApi(Resource):
         if request.json is not None:
             request_schema = PipelineCreateRequestSchema()
             response_schema = PipelineItemResponseSchema()
+            data = request.json
+            data['user_id'] = flask_g.user.id
+            data['user_login'] = flask_g.user.login
+            data['user_name'] = flask_g.user.name
+            data['version'] = 1
             pipeline = request_schema.load(request.json)
 
             if log.isEnabledFor(logging.DEBUG):
@@ -192,9 +197,17 @@ class PipelineDetailApi(Resource):
                 PipelineCreateRequestSchema)
             response_schema = PipelineItemResponseSchema()
             # Ignore missing fields to allow partial updates
-            pipeline = request_schema.load(request.json, partial=True)
+
+            data = request.json
+            data['user_id'] = flask_g.user.id
+            data['user_login'] = flask_g.user.login
+            data['user_name'] = flask_g.user.name
+
+            pipeline = request_schema.load(data, partial=True)
             pipeline.id = pipeline_id
             pipeline = db.session.merge(pipeline)
+            pipeline.version = (pipeline.version or 1) + 1
+
             db.session.commit()
 
             if pipeline is not None:

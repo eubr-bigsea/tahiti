@@ -89,6 +89,8 @@ class PipelineTemplateListApi(Resource):
         if request.json is not None:
             request_schema = PipelineTemplateCreateRequestSchema()
             response_schema = PipelineTemplateItemResponseSchema()
+            data = request.json
+            data['version'] = 1
             pipeline_template = request_schema.load(request.json)
 
             if log.isEnabledFor(logging.DEBUG):
@@ -197,9 +199,13 @@ class PipelineTemplateDetailApi(Resource):
                 PipelineTemplateCreateRequestSchema)
             response_schema = PipelineTemplateItemResponseSchema()
             # Ignore missing fields to allow partial updates
-            pipeline_template = request_schema.load(request.json, partial=True)
+
+            data = request.json
+
+            pipeline_template = request_schema.load(data, partial=True)
             pipeline_template.id = pipeline_template_id
             pipeline_template = db.session.merge(pipeline_template)
+
             db.session.commit()
 
             if pipeline_template is not None:

@@ -7,7 +7,8 @@ Create Date: 2023-11-24 10:11:52.244924
 """
 from alembic import op
 import sqlalchemy as sa
-
+from tahiti.migration_utils import is_psql
+from sqlalchemy.dialects import postgresql as sa_psql
 
 # revision identifiers, used by Alembic.
 revision = 'cf0607926635'
@@ -56,7 +57,10 @@ def upgrade():
     sa.Column('scheduling', sa.String(length=200), nullable=True),
     sa.Column('description', sa.String(length=200), nullable=True),
     sa.Column('enabled', sa.Boolean(), nullable=False),
-    sa.Column('workflow_type', sa.Enum('WORKFLOW', 'USER_TEMPLATE', 'SYSTEM_TEMPLATE', 'SUB_FLOW', 'DATA_EXPLORER', 'MODEL_BUILDER', 'VIS_BUILDER', name='WorkflowTypeEnumType'), nullable=True),
+    sa.Column('workflow_type', sa.Enum('WORKFLOW', 'USER_TEMPLATE', 'SYSTEM_TEMPLATE', 'SUB_FLOW', 'DATA_EXPLORER', 'MODEL_BUILDER', 'VIS_BUILDER', name='WorkflowTypeEnumType'), nullable=True) if not is_psql() 
+        else 
+    sa.Column('workflow_type', sa_psql.ENUM(name='WorkflowTypeEnumType', create_type=False), nullable=True)
+    , 
     sa.Column('pipeline_id', sa.Integer(), nullable=False),
     sa.Column('workflow_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['pipeline_id'], ['pipeline.id'], name='fk_pipeline_step_pipeline_id'),
