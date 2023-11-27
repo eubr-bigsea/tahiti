@@ -1,3 +1,4 @@
+import datetime
 import os
 import sys
 
@@ -5,7 +6,8 @@ import flask_migrate
 import pytest
 
 from tahiti.app import create_app
-from tahiti.models import Platform, SourceCode, Task, Workflow, db
+from tahiti.models import (PipelineStep, PipelineTemplate, PipelineTemplateStep, Platform, SourceCode, Task, Workflow, db, 
+                           WorkflowType, Pipeline)
 
 sys.path.append(os.path.dirname(os.path.curdir))
 
@@ -98,7 +100,108 @@ def _get_source_codes() -> list:
             code="ctx = {}",
         )
     ]
+def _get_pipeline_templates() -> list:
+    return [
+        {
+            'id': 1,
+            'name': 'Pipeline template test #1',
+            'description': 'Pipeline template used in tests',
+            'enabled': True,
+            'steps': [
+                PipelineTemplateStep(**{
+                    'id': 1,
+                    'name': 'First stage',
+                    'order': 1,
+                    'description': 'Stage',
+                    'enabled': True,
+                }),
+                PipelineTemplateStep(**{
+                    'id': 3,
+                    'name': 'Second stage',
+                    'order': 2,
+                    'description': 'Stage',
+                    'enabled': True,
+                })
+            ]
+        },
+        {
+            'id': 2,
+            'name': 'Pipeline template test #2',
+            'description': 'Pipeline used in tests',
+            'enabled': True,
+            'steps': [
+                PipelineTemplateStep(**{
+                    'id': 2,
+                    'name': 'First stage',
+                    'order': 1,
+                    'description': 'Stage',
+                    'enabled': True,
+                })
+            ]
+        },
+    ]
 
+def _get_pipelines() -> list:
+    return [
+        {
+            'id': 1,
+            'name': 'Pipeline test #1',
+            'description': 'Pipeline used in tests',
+            'enabled': True,
+            'user_id': 1,
+            'user_login': 'admin',
+            'user_name': 'Admin',
+            'created': datetime.datetime.now(),
+            'updated': datetime.datetime.now(),
+            'version': 1,
+            'steps': [
+                PipelineStep(**{
+                    'id': 1,
+                    'name': 'First stage',
+                    'order': 1,
+                    'scheduling': '{}',
+                    'description': 'Stage',
+                    'enabled': True,
+                    'workflow_type': WorkflowType.WORKFLOW,
+                    'workflow_id': 1,
+                }),
+                PipelineStep(**{
+                    'id': 3,
+                    'name': 'Second stage',
+                    'order': 2,
+                    'scheduling': '{}',
+                    'description': 'Stage',
+                    'enabled': True,
+                    'workflow_type': WorkflowType.WORKFLOW,
+                    'workflow_id': 1,
+                })
+            ]
+        },
+        {
+            'id': 2,
+            'name': 'Pipeline test #1',
+            'description': 'Pipeline used in tests',
+            'enabled': True,
+            'user_id': 1,
+            'user_login': 'admin',
+            'user_name': 'Admin',
+            'created': datetime.datetime.now(),
+            'updated': datetime.datetime.now(),
+            'version': 1,
+            'steps': [
+                PipelineStep(**{
+                    'id': 2,
+                    'name': 'First stage',
+                    'order': 1,
+                    'scheduling': '{}',
+                    'description': 'Stage',
+                    'enabled': True,
+                    'workflow_type': WorkflowType.WORKFLOW,
+                    'workflow_id': 1,
+                })
+            ]
+        },
+    ]
 
 @pytest.fixture(scope="session")
 def app():
@@ -129,6 +232,10 @@ def client(app):
                 db.session.add(Workflow(**wf))
             for sc in _get_source_codes():
                 db.session.add(SourceCode(**sc))
+            for pipe in _get_pipelines():
+                db.session.add(Pipeline(**pipe))
+            for pipe in _get_pipeline_templates():
+                db.session.add(PipelineTemplate(**pipe))
             db.create_all()
             db.session.commit()
         client.secret = app.config["TAHITI_CONFIG"]["secret"]

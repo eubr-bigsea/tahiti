@@ -626,6 +626,126 @@ class OperationSubset(db.Model):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
 
+class Pipeline(db.Model):
+    """ Pipeline """
+    __tablename__ = 'pipeline'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(50), nullable=False)
+    user_name = Column(String(200), nullable=False)
+    created = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False)
+    updated = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False,
+                     onupdate=datetime.datetime.utcnow)
+    version = Column(Integer, nullable=False)
+
+    # Associations
+    steps = relationship("PipelineStep",
+                         cascade="all, delete-orphan")
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineStep(db.Model):
+    """ Pipeline step """
+    __tablename__ = 'pipeline_step'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    order = Column(Integer, nullable=False)
+    scheduling = Column(String(200))
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+    workflow_type = Column(Enum(*list(WorkflowType.values()),
+                                name='WorkflowTypeEnumType'))
+
+    # Associations
+    pipeline_id = Column(Integer,
+                         ForeignKey("pipeline.id",
+                                    name="fk_pipeline_step_pipeline_id"),
+                         nullable=False,
+                         index=True)
+    pipeline = relationship(
+        "Pipeline",
+        overlaps='steps',
+        foreign_keys=[pipeline_id])
+    workflow_id = Column(Integer,
+                         ForeignKey("workflow.id",
+                                    name="fk_pipeline_step_workflow_id"),
+                         index=True)
+    workflow = relationship(
+        "Workflow",
+        overlaps='workflow',
+        foreign_keys=[workflow_id])
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineTemplate(db.Model):
+    """ Pipeline template """
+    __tablename__ = 'pipeline_template'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+
+    # Associations
+    steps = relationship("PipelineTemplateStep",
+                         cascade="all, delete-orphan")
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineTemplateStep(db.Model):
+    """ Pipeline template step """
+    __tablename__ = 'pipeline_template_step'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    order = Column(Integer, nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+
+    # Associations
+    template_id = Column(Integer,
+                         ForeignKey("pipeline_template.id",
+                                    name="fk_pipeline_template_step_template_id"),
+                         nullable=False,
+                         index=True)
+    template = relationship(
+        "PipelineTemplate",
+        overlaps='steps',
+        foreign_keys=[template_id])
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
 class Platform(db.Model, Translatable):
     """ Execution platform """
     __tablename__ = 'platform'
