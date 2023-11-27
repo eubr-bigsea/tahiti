@@ -128,14 +128,14 @@ paths:
             type: array
             items:
               $ref: '#/definitions/PlatformItemResponseSchema'
-  /operationsubsets/{id}:
+  /operation-subsets/{id}:
         
     get: 
       summary: 'Retrieves an instance of OperationSubset'
       description: |
         Retrieves an instance of OperationSubset by using its identifier.
       tags:
-        - /operationsubsets/{id}
+        - /operation-subsets/{id}
       parameters:
         - name: id
           in: path
@@ -165,7 +165,7 @@ paths:
           required: true
           type: integer  
       tags:
-        - /operationsubsets/{id}
+        - /operation-subsets/{id}
       responses:
         204:
           description: Instance was removed with success.
@@ -188,7 +188,7 @@ paths:
           schema:
             $ref: '#/definitions/OperationSubsetCreateRequestSchema'
       tags:
-        - /operationsubsets/{id}
+        - /operation-subsets/{id}
       responses:
         200:
           description: An array of OperationSubset with a single instance.
@@ -196,7 +196,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/OperationSubsetItemResponseSchema'
-  /operationsubsets:
+  /operation-subsets:
     get:
       summary: 'Retrieves the list of OperationSubset'
       description: |
@@ -220,7 +220,7 @@ paths:
           required: false
           type: integer
       tags:
-        - /operationsubsets
+        - /operation-subsets
       responses:
         200:
           description: An array of OperationSubset
@@ -242,7 +242,7 @@ paths:
           schema:
             $ref: '#/definitions/OperationSubsetCreateRequestSchema'
       tags:
-        - /operationsubsets
+        - /operation-subsets
       responses:
         200:
           description: Successfuly created the instance
@@ -525,14 +525,14 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/DefaultErrorSchema'
-  /sourcecodes/{id}:
+  /source-codes/{id}:
         
     get: 
       summary: 'Retrieves an instance of SourceCode'
       description: |
         Retrieves an instance of SourceCode by using its identifier.
       tags:
-        - /sourcecodes/{id}
+        - /source-codes/{id}
       parameters:
         - name: id
           in: path
@@ -562,7 +562,7 @@ paths:
           required: true
           type: integer  
       tags:
-        - /sourcecodes/{id}
+        - /source-codes/{id}
       responses:
         204:
           description: Instance was removed with success.
@@ -585,7 +585,7 @@ paths:
           schema:
             $ref: '#/definitions/SourceCodeCreateRequestSchema'
       tags:
-        - /sourcecodes/{id}
+        - /source-codes/{id}
       responses:
         200:
           description: An array of SourceCode with a single instance.
@@ -593,7 +593,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/SourceCodeItemResponseSchema'
-  /sourcecodes:
+  /source-codes:
     get:
       summary: 'Retrieves the list of SourceCode'
       description: |
@@ -632,7 +632,7 @@ paths:
           required: false
           type: boolean
       tags:
-        - /sourcecodes
+        - /source-codes
       responses:
         200:
           description: An array of SourceCode
@@ -654,7 +654,7 @@ paths:
           schema:
             $ref: '#/definitions/SourceCodeCreateRequestSchema'
       tags:
-        - /sourcecodes
+        - /source-codes
       responses:
         200:
           description: Successfuly created the instance
@@ -669,14 +669,14 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/DefaultErrorSchema'
-  /pipelinetemplates/{id}:
+  /pipeline-templates/{id}:
         
     get: 
       summary: 'Retrieves an instance of PipelineTemplate'
       description: |
         Retrieves an instance of PipelineTemplate by using its identifier.
       tags:
-        - /pipelinetemplates/{id}
+        - /pipeline-templates/{id}
       parameters:
         - name: id
           in: path
@@ -706,7 +706,7 @@ paths:
           required: true
           type: integer  
       tags:
-        - /pipelinetemplates/{id}
+        - /pipeline-templates/{id}
       responses:
         204:
           description: Instance was removed with success.
@@ -729,7 +729,7 @@ paths:
           schema:
             $ref: '#/definitions/PipelineTemplateCreateRequestSchema'
       tags:
-        - /pipelinetemplates/{id}
+        - /pipeline-templates/{id}
       responses:
         200:
           description: An array of PipelineTemplate with a single instance.
@@ -737,7 +737,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/PipelineTemplateItemResponseSchema'
-  /pipelinetemplates:
+  /pipeline-templates:
     get:
       summary: 'Retrieves the list of PipelineTemplate'
       description: |
@@ -776,7 +776,7 @@ paths:
           required: false
           type: boolean
       tags:
-        - /pipelinetemplates
+        - /pipeline-templates
       responses:
         200:
           description: An array of PipelineTemplate
@@ -798,7 +798,7 @@ paths:
           schema:
             $ref: '#/definitions/PipelineTemplateCreateRequestSchema'
       tags:
-        - /pipelinetemplates
+        - /pipeline-templates
       responses:
         200:
           description: Successfuly created the instance
@@ -3539,7 +3539,7 @@ definitions:
         description: "Workflow type"
         required: false
         enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
-      template:
+      pipeline:
         type: array
         items:
           $ref: '#/definitions/PipelineCreateRequestSchema'
@@ -3578,7 +3578,7 @@ definitions:
         description: "Workflow type"
         required: false
         enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
-      template:
+      pipeline:
         type: array
         items:
           $ref: '#/definitions/PipelineItemResponseSchema'
@@ -3617,7 +3617,7 @@ definitions:
         description: "Workflow type"
         required: false
         enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
-      template:
+      pipeline:
         type: array
         items:
           $ref: '#/definitions/PipelineListResponseSchema'

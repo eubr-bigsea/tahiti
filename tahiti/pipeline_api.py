@@ -72,7 +72,6 @@ class PipelineListApi(Resource):
         return result
 
     @requires_auth
-    @requires_permission('ADMINISTRATOR',)
     def post(self):
         """
         Add a single instance of class Pipeline.
@@ -140,7 +139,6 @@ class PipelineDetailApi(Resource):
         return result, return_code
 
     @requires_auth
-    @requires_permission('ADMINISTRATOR',)
     def delete(self, pipeline_id):
         """
         Delete a single instance of class Pipeline.
@@ -174,7 +172,6 @@ class PipelineDetailApi(Resource):
         return result, return_code
 
     @requires_auth
-    @requires_permission('ADMINISTRATOR',)
     def patch(self, pipeline_id):
         """
         Update a single instance of class Pipeline.

@@ -5,7 +5,7 @@ import logging.config
 import os
 import sys
 
-from marshmallow import ValidationError
+from marshmallow.exceptions import ValidationError
 import sqlalchemy_utils
 from flask import Flask
 from flask_babel import Babel
