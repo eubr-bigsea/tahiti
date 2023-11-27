@@ -228,6 +228,8 @@ class OperationListApi(Resource):
                 except Exception as e:
                     raise
             else:
+                operations = operations.options(
+                    joinedload(Operation.current_translation))
                 operations = operations.order_by(
                     text('operation_translation_1.name'))
                 items = operations
