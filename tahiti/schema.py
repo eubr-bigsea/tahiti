@@ -970,7 +970,6 @@ class PipelineCreateRequestSchema(BaseSchema):
 
 class PipelineItemResponseSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(required=False, allow_none=True)
     enabled = fields.Boolean(required=True)
@@ -1202,7 +1201,6 @@ class PipelineTemplateStepCreateRequestSchema(BaseSchema):
 
 class PipelineTemplateStepItemResponseSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
     name = fields.String(required=True)
     order = fields.Integer(required=True)
     description = fields.String(required=False, allow_none=True)
