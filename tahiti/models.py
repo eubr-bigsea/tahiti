@@ -1,8 +1,7 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Enum, \
-    DateTime, Unicode, UnicodeText
-from sqlalchemy.dialects.mysql import LONGTEXT
+    DateTime, Text, Unicode, UnicodeText
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
@@ -256,7 +255,7 @@ class Application(db.Model):
                      default=True, nullable=False)
     type = Column(Enum(*list(ApplicationType.values()),
                        name='ApplicationTypeEnumType'), nullable=False)
-    execution_parameters = Column(LONGTEXT)
+    execution_parameters = Column(Text(4294000000))
 
     def __str__(self):
         return self.name
@@ -452,10 +451,10 @@ class OperationFormField(db.Model, Translatable):
     required = Column(Boolean, nullable=False)
     order = Column(Integer,
                    default=0, nullable=False)
-    default = Column(LONGTEXT)
+    default = Column(Text(4294000000))
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
-    values = Column(LONGTEXT)
+    values = Column(Text(4294000000))
     scope = Column(Enum(*list(OperationFieldScope.values()),
                         name='OperationFieldScopeEnumType'),
                    default='BOTH', nullable=False)
@@ -499,7 +498,7 @@ class OperationPort(db.Model, Translatable):
     slug = Column(String(50), nullable=False)
     type = Column(Enum(*list(OperationPortType.values()),
                        name='OperationPortTypeEnumType'), nullable=False)
-    tags = Column(LONGTEXT)
+    tags = Column(Text(4294000000))
     order = Column(Integer)
     multiplicity = Column(Enum(*list(OperationPortMultiplicity.values()),
                                name='OperationPortMultiplicityEnumType'),
@@ -570,7 +569,7 @@ class OperationScript(db.Model):
     type = Column(Enum(*list(ScriptType.values()),
                        name='ScriptTypeEnumType'), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    body = Column(LONGTEXT, nullable=False)
+    body = Column(Text(4294000000), nullable=False)
 
     # Associations
     operation_id = Column(Integer,
@@ -802,8 +801,8 @@ class PlatformPlugin(db.Model):
     copyright = Column(String(200))
     status = Column(Enum(*list(PluginStatus.values()),
                          name='PluginStatusEnumType'))
-    message = Column(LONGTEXT)
-    manifest = Column(LONGTEXT)
+    message = Column(Text(4294000000))
+    manifest = Column(Text(4294000000))
     ids_offset = Column(Integer, nullable=False)
     uuid = Column(String(200), nullable=False)
     url = Column(String(200))
@@ -893,7 +892,7 @@ class Task(db.Model):
     left = Column(Integer, nullable=False)
     top = Column(Integer, nullable=False)
     z_index = Column(Integer, nullable=False)
-    forms = Column(LONGTEXT, nullable=False)
+    forms = Column(Text(4294000000), nullable=False)
     version = Column(Integer, nullable=False)
     environment = Column(Enum(*list(DiagramEnvironment.values()),
                               name='DiagramEnvironmentEnumType'),
@@ -965,7 +964,7 @@ class Workflow(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    description = Column(LONGTEXT)
+    description = Column(Text(4294000000))
     enabled = Column(Boolean,
                      default=True, nullable=False)
     user_id = Column(Integer, nullable=False)
@@ -984,8 +983,8 @@ class Workflow(db.Model):
                                 default=False, nullable=False)
     is_public = Column(Boolean,
                        default=False, nullable=False)
-    template_code = Column(LONGTEXT)
-    forms = Column(LONGTEXT)
+    template_code = Column(Text(4294000000))
+    forms = Column(Text(4294000000))
     deployment_enabled = Column(Boolean,
                                 default=False, nullable=False)
     publishing_enabled = Column(Boolean,
@@ -1047,7 +1046,7 @@ class WorkflowHistory(db.Model):
     user_name = Column(String(200), nullable=False)
     date = Column(DateTime,
                   default=datetime.datetime.utcnow, nullable=False)
-    content = Column(LONGTEXT, nullable=False)
+    content = Column(Text(4294000000), nullable=False)
 
     # Associations
     workflow_id = Column(Integer,
@@ -1109,14 +1108,14 @@ class WorkflowVariable(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
     label = Column(String(200))
-    description = Column(LONGTEXT)
+    description = Column(Text(4294000000))
     type = Column(Enum(*list(DataType.values()),
                        name='DataTypeEnumType'), nullable=False)
     multiplicity = Column(Integer,
                           default=1, nullable=False)
     suggested_widget = Column(String(200))
-    default_value = Column(LONGTEXT)
-    parameters = Column(LONGTEXT)
+    default_value = Column(Text(4294000000))
+    parameters = Column(Text(4294000000))
 
     # Associations
     workflow_id = Column(Integer,
