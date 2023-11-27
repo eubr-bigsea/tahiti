@@ -68,6 +68,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     server_config = config['tahiti'].get('servers', {})
     app.config['SQLALCHEMY_DATABASE_URI'] = server_config.get('database_url')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['PROPAGATE_EXCEPTIONS'] = True
     app.config.update(config.get('config', {}))
     app.debug = config['tahiti'].get('debug', False)
 
