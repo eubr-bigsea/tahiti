@@ -1,4 +1,4 @@
-from gettext import gettext
+from flask_babel import gettext
 from http.client import HTTPException
 import logging
 import logging.config
@@ -64,6 +64,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     app.secret_key = 'l3m0n4d1'
     config = tahiti_configuration
     app.config['TAHITI_CONFIG'] = config['tahiti']
+    app.config['BABEL_TRANSLATION_DIRECTORIES'] = os.path.abspath(
+           'tahiti/i18n/locales')
 
     server_config = config['tahiti'].get('servers', {})
     app.config['SQLALCHEMY_DATABASE_URI'] = server_config.get('database_url')
