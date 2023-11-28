@@ -3,8 +3,6 @@ slug: classification-model
 enabled: false
 type: TRANSFORMATION
 icon: fa-tags
-css_class: None
-doc_link: None
 scripts:
 - id: 24
   type: JS_CLIENT
@@ -14,72 +12,68 @@ ports:
 - id: 18
   slug: algorithm
   type: INPUT
-  tags: None
   order: 2
   multiplicity: ONE
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Classification algorithm to be trained
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Classification algorithm to be trained
 - id: 19
   slug: train input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: entrada do treino
       description: Train input data
-  - en:
+    en:
       locale: en
       name: train input data
       description: Train input data
 - id: 20
   slug: model
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Output model
-  - en:
+    en:
       locale: en
       name: model
       description: Output model
 - id: 200
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -88,12 +82,10 @@ translations:
     locale: pt
     name: "Modelo de classifica\xE7\xE3o"
     description: "Treina e aplica um modelo de classifica\xE7\xE3o"
-    label_format: None
   en:
     locale: en
     name: Classification model
     description: Trains and applies a classification model
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -108,4 +100,8 @@ categories:
   type: group
 - id: 1500
   type: classification
+forms:
+- 41
+- 1
+- 110
 

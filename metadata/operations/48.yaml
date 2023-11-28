@@ -3,25 +3,22 @@ slug: lda-clustering
 enabled: true
 type: TRANSFORMATION
 icon: fa-file-alt
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 107
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 11
     name: IClusteringAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Algoritmo
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Algorithm
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: Latent Dirichlet Allocation (LDA)
     description: Agrupamento LDA
-    label_format: None
   en:
     locale: en
     name: Latent Dirichlet Allocation (LDA)
     description: LDA Clustering
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -46,4 +41,7 @@ categories:
   type: group
 - id: 37
   type: subgroup
+forms:
+- 41
+- 58
 

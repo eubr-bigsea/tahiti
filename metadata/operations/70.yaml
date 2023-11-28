@@ -3,43 +3,39 @@ slug: pie-chart
 enabled: true
 type: VISUALIZATION
 icon: fa-chart-pie
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 150
   slug: visualization
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 19
     name: Visualization
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "visualiza\xE7\xE3o"
       description: "Visualiza\xE7\xE3o"
-  - en:
+    en:
       locale: en
       name: visualization
       description: Visualization
 - id: 158
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
@@ -48,12 +44,10 @@ translations:
     locale: pt
     name: "Gr\xE1fico de pizza"
     description: "Gr\xE1fico de pizza"
-    label_format: None
   en:
     locale: en
     name: Pie chart
     description: Pie chart
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -64,4 +58,9 @@ categories:
   type: technology
 - id: 15
   type: group
+forms:
+- 41
+- 85
+- 142
+- 141
 

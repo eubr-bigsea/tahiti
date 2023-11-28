@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) usado(s) como feature(s)
       help: Atributo(s) usado(s) como feature(s).
-  - en:
+    en:
       locale: en
       label: Feature(s)
       help: Feature(s).
@@ -31,7 +27,6 @@ fields:
   order: 2
   default: minkowski
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "cityblock", "value": "cityblock"}, {"key": "cosine", "value":
     "cosine"}, {"key": "euclidean", "value": "euclidean"}, {"key": "manhattan", "value":
     "manhattan"}, {"key": "braycurtis", "value": "braycurtis"}, {"key": "canberra",
@@ -45,14 +40,13 @@ fields:
     "sokalsneath"}, {"key": "sqeuclidean", "value": "sqeuclidean"}, {"key": "yule",
     "value": "yule"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9trica"
       help: "M\xE9trica usada para computar a dist\xE2ncia."
-  - en:
+    en:
       locale: en
       label: Metric
       help: Metric used for the distance computation.
@@ -61,19 +55,15 @@ fields:
   type: INTEGER
   required: true
   order: 3
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Novidade
       help: "Usar ou n\xE3o LocalOutlierFactor para detec\xE7\xE3o de novidade."
-  - en:
+    en:
       locale: en
       label: Novelty
       help: Use or not LocalOutlierFactor for novelty detection.
@@ -84,17 +74,14 @@ fields:
   order: 4
   default: outlier
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do novo atributo
       help: Nome do novo atributo.
-  - en:
+    en:
       locale: en
       label: Name of the new attribute
       help: Name of the new attribute.
@@ -105,18 +92,16 @@ fields:
   order: 5
   default: auto
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "ball_tree", "value": "ball_tree"}, {"key": "kd_tree", "value":
     "kd_tree"}, {"key": "brute", "value": "brute"}, {"key": "auto", "value": "auto"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Algoritmo
       help: "Algoritmo usado para computar os vizinhos mais pr\xF3ximos."
-  - en:
+    en:
       locale: en
       label: Algorithm
       help: Algorithm used to compute the nearest neighbors.
@@ -127,18 +112,15 @@ fields:
   order: 6
   default: '0.22'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Contamina\xE7\xE3o"
       help: "A quantidade de contamina\xE7\xE3o do conjunto de dados, ou seja, a propor\xE7\
         \xE3o de outliers."
-  - en:
+    en:
       locale: en
       label: Contamination
       help: The amount of contamination of the data set, i.e. the proportion of outliers
@@ -150,17 +132,14 @@ fields:
   order: 7
   default: '30'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho da folha
       help: Tamanho da folha.
-  - en:
+    en:
       locale: en
       label: Leaf size
       help: Leaf size.
@@ -171,17 +150,15 @@ fields:
   order: 8
   default: '2'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.metric.internalValue === "minkowski"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metro para Minkowski"
       help: "Par\xE2metro para a m\xE9trica de Minkowski."
-  - en:
+    en:
       locale: en
       label: Minkowski parameter
       help: Parameter for the Minkowski metric.
@@ -192,17 +169,14 @@ fields:
   order: 9
   default: '20'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de vizinhos"
       help: "N\xFAmero de vizinhos"
-  - en:
+    en:
       locale: en
       label: Number of neighbors
       help: Number of neighbors.
@@ -211,19 +185,15 @@ fields:
   type: TEXT
   required: false
   order: 11
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metros da m\xE9trica"
       help: "Palvras-chave adicoinais para a fun\xE7\xE3o de m\xE9trica."
-  - en:
+    en:
       locale: en
       label: Metric parameters
       help: Additional keyword arguments for the metric function.

@@ -8,22 +8,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: features
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos preditivos
       help: Atributos preditivos.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

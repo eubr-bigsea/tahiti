@@ -10,17 +10,14 @@ fields:
   order: 0
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Op\xE7\xF5es avan\xE7adas"
       help: "Habilita as op\xE7\xF5es avan\xE7adas."
-  - en:
+    en:
       locale: en
       label: Advanced options
       help: Enable advanced options.
@@ -31,17 +28,12 @@ fields:
   order: 1
   default: (2, 2, 2)
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Pool size
       help: Tuple of 3 integers, factors by which to downscale (dim1, dim2, dim3).
@@ -53,17 +45,12 @@ fields:
   order: 1
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Trainable
       help: Indicates whether the layer in the model is trainable.
@@ -72,19 +59,14 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Strides
       help: Tuple of 3 integers, or None. Strides values.
@@ -93,19 +75,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "valid", "key": "valid"}, {"value": "same", "key": "same"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Padding
       help: One of "valid" or "same" (case-insensitive).
@@ -114,20 +92,16 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
     "key": "channels_first"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Data format
       help: A string, one of channels_last (default) or channels_first. The ordering
@@ -140,19 +114,14 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Kwargs
       help: Standard layer keyword arguments.

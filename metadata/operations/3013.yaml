@@ -3,25 +3,22 @@ slug: naive-bayes-classifier
 enabled: true
 type: TRANSFORMATION
 icon: fa-tag
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 3021
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Untrained classification model
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: Classificador Naive Bayes
     description: Usa um classificador Naive Bayes
-    label_format: None
   en:
     locale: en
     name: Naive Bayes classifier
     description: Naive Bayes Classifiers
-    label_format: None
 platforms: []
 categories:
 - id: 8
@@ -46,4 +41,7 @@ categories:
   type: technology
 - id: 1500
   type: classification
+forms:
+- 3013
+- 41
 

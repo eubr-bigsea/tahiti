@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Nome da coluna para ser agrupada.
-  - en:
+    en:
       locale: en
       label: Feature
       help: Column name to be clusterized.
@@ -31,17 +27,14 @@ fields:
   order: 2
   default: clusters
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atrbuto com a predi\xE7\xE3o (novo)"
       help: Nome para a nova coluna.
-  - en:
+    en:
       locale: en
       label: Alias
       help: Alias to the new feature
@@ -52,17 +45,14 @@ fields:
   order: 3
   default: '2'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de Clusters"
       help: "O n\xFAmero de clusters para serem encontrados."
-  - en:
+    en:
       locale: en
       label: Number of Clusters
       help: The number of clusters to find.
@@ -73,19 +63,17 @@ fields:
   order: 4
   default: ward
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "ward", "value": "ward"}, {"key": "complete", "value": "complete"},
     {"key": "average", "value": "average"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Liga\xE7\xE3o"
       help: "O crit\xE9rio de liga\xE7\xE3o determina qual dist\xE2ncia usar entre\
         \ conjuntos de observa\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Linkage
       help: The linkage criterion determines which distance to use between sets of
@@ -97,19 +85,17 @@ fields:
   order: 5
   default: euclidean
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "euclidean", "value": "euclidean"}, {"key": "l1", "value": "l1"},
     {"key": "l2", "value": "l2"}, {"key": "manhattan", "value": "manhattan"}, {"key":
     "cosine", "value": "cosine"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Afinidade
       help: "M\xE9trica usada para calcular a liga\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Affinity
       help: Metric used to compute the linkage.

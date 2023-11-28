@@ -10,18 +10,16 @@ fields:
   order: 0
   default: ''
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Geospatial Data - Bulma", "key": "BULMA", "value": "Geospatial
     Data - Bulma", "pt": "Geospatial Data - Bulma"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Algoritmo
       help: Algoritmo
-  - en:
+    en:
       locale: en
       label: Algorithm
       help: Algorithm

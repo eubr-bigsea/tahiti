@@ -10,7 +10,6 @@ fields:
   order: 2
   default: max_abs
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Max/Abs", "key": "max_abs", "pt": "M\u00e1ximo-Absoluto", "help":
     {"pt": "Transforma a entrada (linhas com vetores), reescalando cada caracteristica(feature)
     para a faixa [-1, 1], atrav\u00e9s da divis\u00e3o pelo valor absoluto m\u00e1ximo
@@ -22,17 +21,14 @@ fields:
     de forma que cada caracteristica (feature) tenha desvio-padr\u00e3o unit\u00e1rio
     e/ou m\u00e9dia zero."}}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de escala
       help: "Qual tipo de escala ser\xE1 usada."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2159
   name: min
   type: FLOAT
@@ -40,20 +36,16 @@ fields:
   order: 3
   default: '0.0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "min_max"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limite inferior para a faixa
       help: "Limite inferior para a faixa (valor padr\xE3o: 0.0)."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2160
   name: max
   type: FLOAT
@@ -61,20 +53,16 @@ fields:
   order: 4
   default: '1.0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "min_max"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limite superior para a faixa
       help: "Limite superior para a faixa (valor padr\xE3o: 1.0)."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2231
   name: with_mean
   type: INTEGER
@@ -82,20 +70,16 @@ fields:
   order: 4
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "z_score"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Centralizar os dados com a m\xE9dia"
       help: "Centralizar os dados com a m\xE9dia."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2232
   name: with_std
   type: INTEGER
@@ -103,20 +87,16 @@ fields:
   order: 4
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.type.internalValue === "z_score"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Escalar os dados para desvio-padr\xE3o unit\xE1rio"
       help: "Escalar os dados para desvio-padr\xE3o unit\xE1rio."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

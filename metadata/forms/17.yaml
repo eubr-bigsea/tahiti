@@ -10,17 +10,15 @@ fields:
   order: 0
   default: '50'
   suggested_widget: range
-  values_url: None
   values: '{"en": ["1st part", "2nd part"], "pt": ["1a parte", "2a parte"]}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Percentual
       help: Percentual usado para dividir os dados
-  - en:
+    en:
       locale: en
       label: Percentage
       help: Percentage used to split the data
@@ -29,19 +27,15 @@ fields:
   type: INTEGER
   required: false
   order: 0
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Semente (seed)
       help: "Semente (seed) usada para iniciar o gerador de n\xFAmeros aleat\xF3rios."
-  - en:
+    en:
       locale: en
       label: Seed
       help: Seed used to initialize the random number generator.

@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Manter identificadores dos n\xF3s em cache"
       help: "Manter identificadores dos n\xF3s em cache"
-  - en:
+    en:
       locale: en
       label: Cache node ids.
       help: Cache node ids.
@@ -29,19 +26,15 @@ fields:
   type: INTEGER
   required: false
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Intervalo para checkpoint (cache)
       help: Intervalo para checkpoint (cache)
-  - en:
+    en:
       locale: en
       label: Check point interval (cache)
       help: Check point interval (cache)
@@ -52,17 +45,15 @@ fields:
   order: 3
   default: logistic
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Logistic", "value": "Logistic", "key": "logistic", "pt": "Logistic"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de perda
       help: Tipo de perda
-  - en:
+    en:
       locale: en
       label: Loss type
       help: Loss type
@@ -71,19 +62,15 @@ fields:
   type: INTEGER
   required: false
   order: 4
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "No. m\xE1ximo de bins"
       help: "No. m\xE1ximo de bins"
-  - en:
+    en:
       locale: en
       label: Max bins
       help: Max bins
@@ -92,19 +79,15 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima"
-  - en:
+    en:
       locale: en
       label: Max depth
       help: Max depth
@@ -113,19 +96,15 @@ fields:
   type: FLOAT
   required: false
   order: 5
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Taxa de subamostragem
       help: Taxa de subamostragem
-  - en:
+    en:
       locale: en
       label: Subsampling rate
       help: Subsampling rate
@@ -134,19 +113,15 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Itera\xE7\xF5es m\xE1ximas"
       help: "Itera\xE7\xF5es m\xE1ximas"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Max iterations
@@ -155,19 +130,15 @@ fields:
   type: FLOAT
   required: false
   order: 7
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ganho m\xEDnimo de informa\xE7\xE3o"
       help: "Ganho m\xEDnimo de informa\xE7\xE3o"
-  - en:
+    en:
       locale: en
       label: Min info gain
       help: Min info gain
@@ -178,17 +149,14 @@ fields:
   order: 8
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xEDnimo de inst\xE2ncias por n\xF3"
       help: "M\xEDnimo de inst\xE2ncias por n\xF3"
-  - en:
+    en:
       locale: en
       label: Min instances per node
       help: Min instances per node
@@ -197,19 +165,15 @@ fields:
   type: INTEGER
   required: false
   order: 9
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho do passo
       help: Tamanho do passo
-  - en:
+    en:
       locale: en
       label: Step size
       help: Step size
@@ -218,22 +182,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Semente (seed)
       help: "Semente para a gera\xE7\xE3o de n\xFAmeros aleat\xF3rios."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

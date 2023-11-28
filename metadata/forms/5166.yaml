@@ -8,20 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
     "key": "channels_first"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Data format
       help: A string, one of channels_last (default) or channels_first. The ordering

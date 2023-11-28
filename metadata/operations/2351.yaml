@@ -1,27 +1,49 @@
-id: 2351
-slug: evaluator
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2351: null
+slug: !!set
+  evaluator: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Avaliar modelo
-    description: "Avalia um modelo segundo alguma m\xE9trica."
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Avaliar modelo: null
+    description: !!set
+      "Avalia um modelo segundo alguma m\xE9trica.": null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2113
   type: model-builder
+forms:
+- 41
+- 2401
 

@@ -1,45 +1,76 @@
-id: 3002
-slug: data-writer
-enabled: true
-type: ACTION
-icon: fa-save
-css_class: None
-doc_link: None
+id: !!set
+  3002: null
+slug: !!set
+  data-writer: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  fa-save: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3002
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3002: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Escrita de dados
-  - en:
-      locale: en
-      name: input data
-      description: Write data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Escrita de dados: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Write data: null
 translations:
   pt:
-    locale: pt
-    name: Escritor de dados
-    description: Escreve uma nova fonte de dados
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Escritor de dados: null
+    description: !!set
+      Escreve uma nova fonte de dados: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Data writer
-    description: Writes a new data set
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Data writer: null
+    description: !!set
+      Writes a new data set: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 6
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 3002
 

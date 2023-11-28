@@ -18,13 +18,14 @@ translations:
       )}</i> <b>usando n\xFAmeros</b>."
   en:
     locale: en
-    name: None
-    description: None
-    label_format: None
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 2202
+- 41
+- 2102
 

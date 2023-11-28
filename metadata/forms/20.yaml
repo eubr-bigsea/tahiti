@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s)
       help: Selecione um ou mais atributos a ser(em) limpos.
-  - en:
+    en:
       locale: en
       label: Attribute(s)
       help: Select one or more attributes to be cleaned
@@ -29,9 +25,7 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Replace with mean", "key": "MEAN", "value": "Replace with mean",
     "pt": "Substituir com a m\u00e9dia"}, {"en": "Replace with value", "key": "VALUE",
     "value": "Replace with value", "pt": "Substituir por valor"}, {"en": "Replace
@@ -43,14 +37,13 @@ fields:
     "pt": "Remover toda a linha"}, {"en": "Remove entire column", "key": "REMOVE_COLUMN",
     "value": "Remove entire column", "pt": "Remover toda a coluna"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de limpeza
       help: Tipo de limpeza a ser realizada.
-  - en:
+    en:
       locale: en
       label: Cleaning mode
       help: Type of cleaning to be performed.
@@ -59,19 +52,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Valor
       help: Valor a ser usado para substituir os valores ausentes.
-  - en:
+    en:
       locale: en
       label: Value
       help: Value used to replace missing values.
@@ -80,20 +69,16 @@ fields:
   type: FLOAT
   required: false
   order: 3
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Raz\xE3o m\xEDnima de valores ausentes"
       help: "Raz\xE3o m\xEDnima entre o total de valores ausentes e o total de registros\
         \ a ser considerada para que a opera\xE7\xE3o seja executada"
-  - en:
+    en:
       locale: en
       label: Minimum missing value ratio
       help: Minimum number of missing values required for the operation to be performed
@@ -102,20 +87,16 @@ fields:
   type: FLOAT
   required: false
   order: 4
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Raz\xE3o m\xE1xima de valores ausentes"
       help: "Raz\xE3o m\xE1xima entre o total de valores ausentes e o total de registros\
         \ a ser considerada para que a opera\xE7\xE3o seja executada"
-  - en:
+    en:
       locale: en
       label: Maximum missing value ratio
       help: Maximum number of missing values that can be present for the operation

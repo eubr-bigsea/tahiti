@@ -3,8 +3,9 @@ from http.client import HTTPException
 import logging
 import logging.config
 import os
+import sys
 
-from marshmallow import ValidationError
+from marshmallow.exceptions import ValidationError
 import sqlalchemy_utils
 from flask import Flask
 from flask_babel import Babel
@@ -66,6 +67,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     server_config = config['tahiti'].get('servers', {})
     app.config['SQLALCHEMY_DATABASE_URI'] = server_config.get('database_url')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['PROPAGATE_EXCEPTIONS'] = True
     app.config.update(config.get('config', {}))
     app.debug = config['tahiti'].get('debug', False)
 
@@ -110,8 +112,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/pipeline-template/<int:pipeline_template_id>': PipelineTemplateDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
-        '/source_codes': SourceCodeListApi,
-        '/source_codes/<int:source_code_id>': SourceCodeDetailApi,
+        '/source-codes': SourceCodeListApi,
+        '/source-codes/<int:source_code_id>': SourceCodeDetailApi,
         '/subsets': OperationSubsetListApi,
         '/subsets/<int:subset_id>': OperationSubsetDetailApi,
         '/subsets/<int:subset_id>/<int:operation_id>': OperationSubsetOperationApi,
@@ -121,6 +123,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows/import': ImportWorkflowApi,
         '/workflows/from-template': WorkflowFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
+        '/pipeline-templates': PipelineTemplateListApi,
+        '/pipeline-templates/<int:pipeline_template_id>': PipelineTemplateDetailApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in list(mappings.items()):
@@ -154,7 +158,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         if app.debug:
             result['debug_detail'] = str(e)
         log.exception(e)
-        import pdb; pdb.set_trace()
+        print(e, file=sys.stderr)
         db.session.rollback()
         return result, 500        
     return app

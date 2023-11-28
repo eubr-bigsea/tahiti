@@ -1,102 +1,175 @@
-id: 5122
-slug: fit-generator
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5122: null
+slug: !!set
+  fit-generator: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5229
-  slug: train-generator
-  type: INPUT
-  tags: ''
-  order: 2
-  multiplicity: ONE
+- id: !!set
+    5229: null
+  slug: !!set
+    train-generator: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 23
     name: Generator
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: train generator
-      description: Generator
-- id: 5235
-  slug: validation-generator
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train generator: null
+      description: !!set
+        Generator: null
+- id: !!set
+    5235: null
+  slug: !!set
+    validation-generator: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 23
     name: Generator
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: validation generator
-      description: Generator
-- id: 5394
-  slug: model
-  type: INPUT
-  tags: ''
-  order: 3
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        validation generator: null
+      description: !!set
+        Generator: null
+- id: !!set
+    5394: null
+  slug: !!set
+    model: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    3: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 22
     name: Model
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 5399
-  slug: model
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    5399: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 22
     name: Model
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: model
-      description: Model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Fit generator
-    description: Trains the model on data generated batch-by-batch by a Python generator
-      (or an instance of Sequence). The generator is run in parallel to the model,
-      for efficiency. For instance, this allows you to do real-time data augmentation
-      on images on CPU in parallel to training your model on GPU.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Fit generator: null
+    description: !!set
+      ? Trains the model on data generated batch-by-batch by a Python generator (or
+        an instance of Sequence). The generator is run in parallel to the model, for
+        efficiency. For instance, this allows you to do real-time data augmentation
+        on images on CPU in parallel to training your model on GPU.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5063
   type: group
+forms:
+- 41
+- 5245
+- 5241
 

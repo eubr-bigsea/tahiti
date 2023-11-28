@@ -10,17 +10,14 @@ fields:
   order: 0
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Op\xE7\xF5es avan\xE7adas"
       help: "Habilita as op\xE7\xF5es avan\xE7adas."
-  - en:
+    en:
       locale: en
       label: Advanced options
       help: Enable advanced options.
@@ -31,17 +28,12 @@ fields:
   order: 1
   default: '0'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Kernel size
       help: An integer or tuple/list of a single integer, specifying the length of
@@ -53,17 +45,13 @@ fields:
   order: 2
   default: (1, 1)
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Strides
       help: An integer or tuple/list of 2 integers, specifying the strides of the
@@ -75,19 +63,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "valid", "key": "valid"}, {"value": "same", "key": "same"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Padding
       help: One of "valid" or "same" (case-insensitive).
@@ -98,17 +82,13 @@ fields:
   order: 4
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Depth multiplier
       help: The number of depthwise convolution output channels for each input channel.
@@ -119,20 +99,16 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
     "key": "channels_first"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Data format
       help: A string, one of "channels_last" (default) or "channels_first". The ordering
@@ -145,19 +121,14 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Input shape
       help: '4D tensor with shape: (batch, channels, rows, cols) if data_format is
@@ -168,9 +139,7 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
     {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
     {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
@@ -181,11 +150,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Activation
       help: 'Activation function to use. If you don''t specify anything, no activation
@@ -197,17 +164,13 @@ fields:
   order: 7
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Use bias
       help: Boolean, whether the layer uses a bias vector.
@@ -216,9 +179,7 @@ fields:
   type: TEXT
   required: false
   order: 8
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
     "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
     "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
@@ -233,11 +194,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Depthwise initializer
       help: Initializer for the depthwise kernel matrix.
@@ -246,9 +205,7 @@ fields:
   type: TEXT
   required: false
   order: 9
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
     "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
     "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
@@ -263,11 +220,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Bias initializer
       help: Initializer for the bias vector.
@@ -276,20 +231,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
     "l1_l2", "key": "l1_l2"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Depthwise regularizer
       help: Regularizer function applied to the depthwise kernel matrix.
@@ -298,20 +249,16 @@ fields:
   type: TEXT
   required: false
   order: 11
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
     "l1_l2", "key": "l1_l2"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Bias regularizer
       help: Regularizer function applied to the bias vector.
@@ -320,20 +267,16 @@ fields:
   type: TEXT
   required: false
   order: 12
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
     "l1_l2", "key": "l1_l2"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Activity regularizer
       help: Regularizer function applied to the output of the layer (its "activation").
@@ -342,9 +285,7 @@ fields:
   type: TEXT
   required: false
   order: 13
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
     "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
     "key": "unit_norm"}]'
@@ -352,11 +293,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Depthwise constraint
       help: Constraint function applied to the depthwise kernel matrix.
@@ -365,9 +304,7 @@ fields:
   type: TEXT
   required: false
   order: 14
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
     "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
     "key": "unit_norm"}]'
@@ -375,11 +312,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Bias constraint
       help: Constraint function applied to the bias vector.

@@ -8,19 +8,16 @@ fields:
   type: INTEGER
   required: true
   order: 1
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/datasources?format=SHAPEFILE&simple=true&list=true&enabled=1`'
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Shapefile
       help: Shapefile
-  - en:
+    en:
       locale: en
       label: Shapefile
       help: Shapefile
@@ -31,17 +28,14 @@ fields:
   order: 2
   default: points
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Nome para o campo do pol\xEDgono"
       help: "Nome para o campo do pol\xEDgono."
-  - en:
+    en:
       locale: en
       label: Alias to the polygon field
       help: Alias to the polygon field
@@ -52,17 +46,14 @@ fields:
   order: 3
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Os pontos s\xE3o expressos como (LAT,LON):"
       help: "Se os pontos s\xE3o expressos com (LAT,LON) ou (LON,LAT)."
-  - en:
+    en:
       locale: en
       label: 'The points are expressed as (LAT, LON):'
       help: Whether the points are expressed as (LAT,LON) or (LON,LAT).
@@ -71,19 +62,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: Lista dos atributos para selecionar do shapefile.
-  - en:
+    en:
       locale: en
       label: Attributes
       help: List of selected shapefile attributes (without polygon field).

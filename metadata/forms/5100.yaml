@@ -10,17 +10,14 @@ fields:
   order: 0
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Op\xE7\xF5es avan\xE7adas"
       help: "Habilita as op\xE7\xF5es avan\xE7adas."
-  - en:
+    en:
       locale: en
       label: Advanced options
       help: Enable advanced options.
@@ -29,19 +26,13 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Output dimensions
       help: Positive integer, dimensionality of the output space.
@@ -52,17 +43,12 @@ fields:
   order: 1
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Trainable
       help: Indicates whether the layer in the model is trainable.
@@ -73,7 +59,6 @@ fields:
   order: 2
   default: linear
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
     {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
     {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
@@ -84,11 +69,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Activation function
       help: 'Activation function to use. If you do not specify anything, no activation
@@ -98,19 +81,14 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Use bias
       help: Boolean (True|False), whether the layer uses a bias vector.
@@ -119,9 +97,7 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
     "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
     "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
@@ -136,11 +112,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Weight initialization function
       help: ' Initializer for the kernel weights matrix.'
@@ -149,9 +123,7 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "constant", "key": "constant"}, {"value": "glorot_normal", "key":
     "glorot_normal"}, {"value": "glorot_uniform", "key": "glorot_uniform"}, {"value":
     "he_normal", "key": "he_normal"}, {"value": "he_uniform", "key": "he_uniform"},
@@ -166,11 +138,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Bias initialization function
       help: Initializer for the bias vector.
@@ -179,20 +149,16 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
     "l1_l2", "key": "l1_l2"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Regularizer for input weight
       help: Regularizer function applied to the kernel weights matrix
@@ -201,20 +167,16 @@ fields:
   type: TEXT
   required: false
   order: 7
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
     "l1_l2", "key": "l1_l2"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Bias regularizer
       help: Regularizer function applied to the bias vector.
@@ -223,20 +185,16 @@ fields:
   type: TEXT
   required: false
   order: 8
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "l1", "key": "l1"}, {"value": "l2", "key": "l2"}, {"value":
     "l1_l2", "key": "l1_l2"}]'
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Activity regularizer
       help: Regularizer function applied to the output of the layer (its "activation").
@@ -245,9 +203,7 @@ fields:
   type: TEXT
   required: false
   order: 9
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
     "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
     "key": "unit_norm"}]'
@@ -255,11 +211,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Weight constraint
       help: Constraint function applied to the kernel weights matrix.
@@ -268,9 +222,7 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "max_norm", "key": "max_norm"}, {"value": "min_max_norm", "key":
     "min_max_norm"}, {"value": "non_neg", "key": "non_neg"}, {"value": "unit_norm",
     "key": "unit_norm"}]'
@@ -278,11 +230,9 @@ fields:
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Bias constraint
       help: Constraint function applied to the bias vector.

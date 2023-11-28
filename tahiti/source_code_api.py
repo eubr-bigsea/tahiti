@@ -89,6 +89,7 @@ class SourceCodeListApi(Resource):
         if request.json is not None:
             request_schema = SourceCodeCreateRequestSchema()
             response_schema = SourceCodeItemResponseSchema()
+            data = request.json
             source_code = request_schema.load(request.json)
 
             if log.isEnabledFor(logging.DEBUG):
@@ -195,11 +196,15 @@ class SourceCodeDetailApi(Resource):
         if request.json:
             request_schema = partial_schema_factory(
                 SourceCodeCreateRequestSchema)
-            # Ignore missing fields to allow partial updates
-            source_code = request_schema.load(request.json, partial=True)
             response_schema = SourceCodeItemResponseSchema()
+            # Ignore missing fields to allow partial updates
+
+            data = request.json
+
+            source_code = request_schema.load(data, partial=True)
             source_code.id = source_code_id
             source_code = db.session.merge(source_code)
+
             db.session.commit()
 
             if source_code is not None:

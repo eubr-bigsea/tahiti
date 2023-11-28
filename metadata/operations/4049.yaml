@@ -1,85 +1,141 @@
-id: 4049
-slug: max-abs-scaler
-enabled: true
-type: TRANSFORMATION
-icon: fa-lemon
-css_class: None
-doc_link: None
+id: !!set
+  4049: null
+slug: !!set
+  max-abs-scaler: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-lemon: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts:
-- id: 4002
-  type: JS_CLIENT
-  enabled: true
-  body: copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_norm');
+- id: !!set
+    4002: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_norm');: null
 ports:
-- id: 4109
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4109: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4110
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4110: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
-- id: 4111
-  slug: transformation model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
+- id: !!set
+    4111: null
+  slug: !!set
+    transformation model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 20
     name: TransformationModel
   translations:
-  - pt:
-      locale: pt
-      name: "modelo de transforma\xE7\xE3o"
-      description: "Modelo de transforma\xE7\xE3o"
-  - en:
-      locale: en
-      name: transformation model
-      description: Transformation model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "modelo de transforma\xE7\xE3o": null
+      description: !!set
+        "Modelo de transforma\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        transformation model: null
+      description: !!set
+        Transformation model: null
 translations:
   pt:
-    locale: pt
-    name: "M\xE1ximo-Absoluto"
-    description: "Transforma a entrada (linhas com vetores), reescalando cada caracteristica(feature)\
-      \ para a faixa [-1, 1], atrav\xE9s da divis\xE3o pelo valor absoluto m\xE1ximo\
-      \ de cada caracteristica"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "M\xE1ximo-Absoluto": null
+    description: !!set
+      ? "Transforma a entrada (linhas com vetores), reescalando cada caracteristica(feature)\
+        \ para a faixa [-1, 1], atrav\xE9s da divis\xE3o pelo valor absoluto m\xE1\
+        ximo de cada caracteristica"
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Max-Abs
-    description: Transforms the input (vector rows), rescaling each value (feature)
-      to range [-1, 1] by dividing through the maximum absolute value in each value
-      (feature).
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Max-Abs: null
+    description: !!set
+      ? Transforms the input (vector rows), rescaling each value (feature) to range
+        [-1, 1] by dividing through the maximum absolute value in each value (feature).
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -90,4 +146,8 @@ categories:
   type: subgroup
 - id: 4001
   type: technology
+forms:
+- 41
+- 110
+- 4050
 

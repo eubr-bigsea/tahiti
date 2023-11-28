@@ -1,63 +1,106 @@
-id: 3017
-slug: page-rank
-enabled: true
-type: TRANSFORMATION
-icon: fa-share-alt
-css_class: None
-doc_link: None
+id: !!set
+  3017: null
+slug: !!set
+  page-rank: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-share-alt: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3030
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3030: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input Data
-- id: 3031
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input Data: null
+- id: !!set
+    3031: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: PageRank
-    description: Aplica o algoritmo PageRank
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      PageRank: null
+    description: !!set
+      Aplica o algoritmo PageRank: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: PageRank
-    description: Applies a PageRank algorithm
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      PageRank: null
+    description: !!set
+      Applies a PageRank algorithm: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 3002
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 3017
 

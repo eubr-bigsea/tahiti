@@ -8,19 +8,15 @@ fields:
   type: FLOAT
   required: false
   order: 0
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Quantidade (em MB) m\xE1xima de mem\xF3ria reservada"
       help: "Quantidade (em MB) m\xE1xima de mem\xF3ria reservada"
-  - en:
+    en:
       locale: en
       label: Max. execution memory (in MB)
       help: Max execution memory in megabytes. This is just a recommendation.
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 0
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Tempo m\xE1ximo de execu\xE7\xE3o (em segundos) "
       help: "Tempo m\xE1ximo de execu\xE7\xE3o (em segundos) "
-  - en:
+    en:
       locale: en
       label: Max. execution time (seconds)
       help: Max execution time in seconds. This is just a recommendation.
@@ -50,19 +42,15 @@ fields:
   type: INTEGER
   required: false
   order: 0
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de CPUs"
       help: "N\xFAmero m\xE1ximo de CPUs"
-  - en:
+    en:
       locale: en
       label: Max. number of CPUs
       help: Max number of CPUs. This is just a recommendation.

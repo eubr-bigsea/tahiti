@@ -1,28 +1,48 @@
-id: 2132
-slug: parse-to-date
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Text separator
-doc_link: ''
+id: !!set
+  2132: null
+slug: !!set
+  parse-to-date: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Text separator: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Converter para data
-    description: Permite converter um texto em uma data.
-    label_format: <b>Converter</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>
-      <b>para data</b>
+    locale: !!set
+      pt: null
+    name: !!set
+      Converter para data: null
+    description: !!set
+      Permite converter um texto em uma data.: null
+    label_format: !!set
+      <b>Converter</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> <b>para data</b>: null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2102
+- 2182
 

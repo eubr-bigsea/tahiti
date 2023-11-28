@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s)
       help: Selecione um ou mais atributos.
-  - en:
+    en:
       locale: en
       label: Attribute(s)
       help: Select one or more attributes.
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Novo nome
       help: "Novo nome. Se usado com v\xE1rios atributos, o nome ser\xE1 o sufixo."
-  - en:
+    en:
       locale: en
       label: New name
       help: "New name. If used with multiple attributes, a numerical suffix will be\
@@ -53,9 +45,7 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Do not change", "key": "keep", "value": "Do not change", "pt":
     "N\u00e3o alterar"}, {"en": "Integer", "key": "integer", "value": "Integer", "pt":
     "Integer"}, {"en": "String", "key": "string", "value": "String", "pt": "String"},
@@ -63,14 +53,13 @@ fields:
     "key": "Date", "value": "Date", "pt": "Date"}, {"en": "Date/time", "key": "Date/time",
     "value": "Date/time", "pt": "Date/time"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Novo tipo de dados
       help: "Novo tipo dos dados. Nenhuma convers\xE3o \xE9 realizada."
-  - en:
+    en:
       locale: en
       label: New data type
       help: New data type. A conversion is not performed and if you incorrectly change
@@ -80,21 +69,18 @@ fields:
   type: INTEGER
   required: false
   order: 4
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Do not change", "key": "keep", "value": "Do not change", "pt":
     "N\u00e3o alterar"}, {"en": "Yes", "key": "true", "value": "Yes", "pt": "Sim"},
     {"en": "No", "key": "false", "value": "No", "pt": "N\u00e3o"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Marcar como podendo ser nulo
       help: Atributo pode ser nulo
-  - en:
+    en:
       locale: en
       label: Mark as nullable
       help: Is attribute Noneable?
@@ -103,21 +89,18 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Do not change", "key": "keep", "value": "Do not change", "pt":
     "N\u00e3o alterar"}, {"en": "Yes", "key": "true", "value": "Yes", "pt": "Sim"},
     {"en": "No", "key": "false", "value": "No", "pt": "N\u00e3o"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Marcar como feature
       help: "Atributos s\xE3o features (caracter\xEDsticas)"
-  - en:
+    en:
       locale: en
       label: Mark as feature
       help: Attributes are feature
@@ -126,21 +109,18 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Do not change", "key": "keep", "value": "Do not change", "pt":
     "N\u00e3o alterar"}, {"en": "Yes", "key": "true", "value": "Yes", "pt": "Sim"},
     {"en": "No", "key": "false", "value": "No", "pt": "N\u00e3o"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Marcar como r\xF3tulo"
       help: "Atributos s\xE3o r\xF3tulos (labels)"
-  - en:
+    en:
       locale: en
       label: Mark as label
       help: Attributes are label

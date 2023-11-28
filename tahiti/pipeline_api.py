@@ -95,7 +95,7 @@ class PipelineApi(Resource):
                     'data': response_schema.dump(pipeline)
                 }
                 return_code = HTTPStatus.OK
-
+                
         return result, return_code
 
 

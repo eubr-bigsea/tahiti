@@ -8,20 +8,17 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: expression
-  values_url: None
   values: ''
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Express\xE3o"
       help: "Express\xE3o a ser aplicada a um atributo para gerar outro atributo.\
         \ Veja a ajuda para saber as fun\xE7\xF5es suportadas e a sintaxe."
-  - en:
+    en:
       locale: en
       label: Expression
       help: Expression to apply to an attribute in order to generate another attribute.

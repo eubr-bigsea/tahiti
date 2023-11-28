@@ -8,9 +8,7 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Binomial / logit", "key": "binomial:logit", "pt": "Binomial /
     logit"}, {"en": "Binomial / probit", "key": "binomial:probit", "pt": "Binomial
     / probit"}, {"en": "Binomial / cloglog", "key": "binomial:cloglog", "pt": "Binomial
@@ -24,14 +22,13 @@ fields:
     / identity", "key": "poisson:identity", "pt": "Poisson / identidade"}, {"en":
     "Poisson / sqrt", "key": "poisson:sqrt", "pt": "Poisson / sqrt (raiz quadrada)"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fam\xEDlia/predi\xE7\xE3o de link"
       help: "Fam\xEDlia/predi\xE7\xE3o de link"
-  - en:
+    en:
       locale: en
       label: Family/link prediction
       help: Family/link prediction
@@ -40,20 +37,17 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "IRLS (Iteratively reweighted least squares)", "key": "irls", "pt":
     "M\u00ednimos quadrados reponderados iterativamente (IRLS)"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Solver
       help: Solver
-  - en:
+    en:
       locale: en
       label: Solver
       help: Solver
@@ -62,19 +56,15 @@ fields:
   type: DECIMAL
   required: false
   order: 7
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Regularization
       help: Regularization
-  - en:
+    en:
       locale: en
       label: Regularization
       help: Regularization

@@ -8,22 +8,16 @@ fields:
   type: TEXT
   required: false
   order: 20
-  default: None
   suggested_widget: tag
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Novos nomes
       help: Novos nomes para os atributos resultantes.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

@@ -1,88 +1,147 @@
-id: 5078
-slug: convolution-3d
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5078: null
+slug: !!set
+  convolution-3d: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5178
-  slug: input layer
-  type: INPUT
-  tags: ''
-  order: 2
-  multiplicity: ONE
+- id: !!set
+    5178: null
+  slug: !!set
+    input layer: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: input layer
-      description: Input layer
-- id: 5278
-  slug: output layer
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input layer: null
+      description: !!set
+        Input layer: null
+- id: !!set
+    5278: null
+  slug: !!set
+    output layer: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: output layer
-      description: Output layer
-- id: 5355
-  slug: python code
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output layer: null
+      description: !!set
+        Output layer: null
+- id: !!set
+    5355: null
+  slug: !!set
+    python code: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Convolution3D
-    description: 3D convolution layer (e.g. spatial convolution over volumes). This
-      layer creates a convolution kernel that is convolved with the layer input to
-      produce a tensor of outputs. If use_bias is True, a bias vector is created and
-      added to the outputs. Finally, if activation is not None, it is applied to the
-      outputs as well. When using this layer as the first layer in a model, provide
-      the keyword argument input_shape (tuple of integers, does not include the batch
-      axis), e.g. input_shape=(128, 128, 128, 1) for 128x128x128 volumes with a single
-      channel, in data_format="channels_last".
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Convolution3D: null
+    description: !!set
+      ? 3D convolution layer (e.g. spatial convolution over volumes). This layer creates
+        a convolution kernel that is convolved with the layer input to produce a tensor
+        of outputs. If use_bias is True, a bias vector is created and added to the
+        outputs. Finally, if activation is not None, it is applied to the outputs
+        as well. When using this layer as the first layer in a model, provide the
+        keyword argument input_shape (tuple of integers, does not include the batch
+        axis), e.g. input_shape=(128, 128, 128, 1) for 128x128x128 volumes with a
+        single channel, in data_format="channels_last".
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5020
   type: group
+forms:
+- 41
+- 5150
 

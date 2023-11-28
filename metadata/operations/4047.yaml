@@ -1,84 +1,139 @@
-id: 4047
-slug: standard-scaler
-enabled: true
-type: TRANSFORMATION
-icon: fa-balance-scale
-css_class: None
-doc_link: None
+id: !!set
+  4047: null
+slug: !!set
+  standard-scaler: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-balance-scale: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts:
-- id: 4000
-  type: JS_CLIENT
-  enabled: true
-  body: copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_norm');
+- id: !!set
+    4000: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    copyInputAddAttributesSplitAlias(task, 'attributes', 'alias', '_norm');: null
 ports:
-- id: 4103
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4103: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4104
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4104: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
-- id: 4105
-  slug: transformation model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
+- id: !!set
+    4105: null
+  slug: !!set
+    transformation model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 20
     name: TransformationModel
   translations:
-  - pt:
-      locale: pt
-      name: "modelo de transforma\xE7\xE3o"
-      description: "Modelo de transforma\xE7\xE3o"
-  - en:
-      locale: en
-      name: transformation model
-      description: Transformation model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "modelo de transforma\xE7\xE3o": null
+      description: !!set
+        "Modelo de transforma\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        transformation model: null
+      description: !!set
+        Transformation model: null
 translations:
   pt:
-    locale: pt
-    name: "Padr\xE3o (Z-score)"
-    description: "Transforma a entrada (linhas com vetores), normalizando-os de forma\
-      \ que cada caracteristica (feature) tenha desvio-padr\xE3o unit\xE1rio e/ou\
-      \ m\xE9dia zero."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Padr\xE3o (Z-score)": null
+    description: !!set
+      ? "Transforma a entrada (linhas com vetores), normalizando-os de forma que cada\
+        \ caracteristica (feature) tenha desvio-padr\xE3o unit\xE1rio e/ou m\xE9dia\
+        \ zero."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Standard (Z-score)
-    description: Transforms the input (vector rows), normalizing each feature to have
-      unit standard deviation and/or zero mean.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Standard (Z-score): null
+    description: !!set
+      Transforms the input (vector rows), normalizing each feature to have unit standard deviation and/or zero mean.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -89,4 +144,8 @@ categories:
   type: subgroup
 - id: 4001
   type: technology
+forms:
+- 41
+- 110
+- 4048
 

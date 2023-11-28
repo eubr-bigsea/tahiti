@@ -3,61 +3,56 @@ slug: multiplexer
 enabled: false
 type: TRANSFORMATION
 icon: fa-puzzle-piece
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 126
   slug: input data 1
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 1
       description: Dados de entrada 1
-  - en:
+    en:
       locale: en
       name: input data 1
       description: Input data 1
 - id: 127
   slug: input data 2
   type: INPUT
-  tags: None
   order: 2
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 2
       description: Dados de entrada 2
-  - en:
+    en:
       locale: en
       name: input data 2
       description: Input data 2
 - id: 128
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -66,12 +61,10 @@ translations:
     locale: pt
     name: Multiplexador
     description: Seleciona uma entrada de acordo com um conjunto de regras
-    label_format: None
   en:
     locale: en
     name: Data multiplexer
     description: Selects an input according to a set of rules
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -80,4 +73,8 @@ categories:
   type: technology
 - id: 9
   type: group
+forms:
+- 41
+- 72
+- 110
 

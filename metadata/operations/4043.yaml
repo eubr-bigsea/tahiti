@@ -1,59 +1,101 @@
-id: 4043
-slug: dbscan-clustering
-enabled: true
-type: ACTION
-icon: ''
-css_class: None
-doc_link: None
+id: !!set
+  4043: null
+slug: !!set
+  dbscan-clustering: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4093
-  slug: train input data
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4093: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4094
-  slug: output data
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4094: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: Agrupamento DBSCAN
-    description: Usa o algoritmo DBSCAN para agrupamento.
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Agrupamento DBSCAN: null
+    description: !!set
+      Usa o algoritmo DBSCAN para agrupamento.: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: DBSCAN Clustering
-    description: Uses DBSCAN algorithm for clustering.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      DBSCAN Clustering: null
+    description: !!set
+      Uses DBSCAN algorithm for clustering.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -64,4 +106,8 @@ categories:
   type: subgroup
 - id: 1504
   type: clustering
+forms:
+- 41
+- 4032
+- 110
 

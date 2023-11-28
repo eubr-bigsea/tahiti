@@ -1,95 +1,158 @@
-id: 4016
-slug: word-to-vector
-enabled: true
-type: TRANSFORMATION
-icon: fa-list-ol
-css_class: None
-doc_link: None
+id: !!set
+  4016: null
+slug: !!set
+  word-to-vector: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-list-ol: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4019
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4019: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4020
-  slug: vocabulary
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4020: null
+  slug: !!set
+    vocabulary: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 13
     name: IVocabulary
   translations:
-  - pt:
-      locale: pt
-      name: "vocabul\xE1rio"
-      description: "Vocabul\xE1rio gerado"
-  - en:
-      locale: en
-      name: vocabulary
-      description: Vocabulary produced
-- id: 4021
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "vocabul\xE1rio": null
+      description: !!set
+        "Vocabul\xE1rio gerado": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        vocabulary: null
+      description: !!set
+        Vocabulary produced: null
+- id: !!set
+    4021: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
-- id: 4022
-  slug: vector-model
-  type: OUTPUT
-  tags: None
-  order: 3
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
+- id: !!set
+    4022: null
+  slug: !!set
+    vector-model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    3: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 20
     name: TransformationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo de vetores
-      description: Modelo de vetores
-  - en:
-      locale: en
-      name: vector model
-      description: Vector model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo de vetores: null
+      description: !!set
+        Modelo de vetores: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        vector model: null
+      description: !!set
+        Vector model: null
 translations:
   pt:
-    locale: pt
-    name: Converter palavras em vetor
-    description: Converter palavras em vetor.
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Converter palavras em vetor: null
+    description: !!set
+      Converter palavras em vetor.: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Convert words to vector
-    description: Convert words to vector.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Convert words to vector: null
+    description: !!set
+      Convert words to vector.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -100,4 +163,8 @@ categories:
   type: subgroup
 - id: 4001
   type: technology
+forms:
+- 41
+- 110
+- 4016
 

@@ -8,9 +8,7 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Float32", "key": "Float32", "pt": "Float32", "value": "Float32"},
     {"en": "Float64", "key": "Float64", "pt": "Float64", "value": "Float64"}, {"en":
     "Int8", "key": "Int8", "pt": "Int8", "value": "Int8"}, {"en": "Int16", "key":
@@ -28,17 +26,14 @@ fields:
     "Utf8", "value": "Utf8"}, {"en": "Categorical", "key": "Categorical", "pt": "Categorical",
     "value": "Categorical"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de dado
       help: Novo tipo de dado para os elementos do arrajo.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

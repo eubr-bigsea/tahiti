@@ -1,64 +1,107 @@
-id: 135
-slug: force-direct
-enabled: true
-type: VISUALIZATION
-icon: ' '
-css_class: None
-doc_link: None
+id: !!set
+  135: null
+slug: !!set
+  force-direct: null
+enabled: !!set
+  true: null
+type: !!set
+  VISUALIZATION: null
+icon: !!set
+  ' ': null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 317
-  slug: visualization
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    317: null
+  slug: !!set
+    visualization: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 19
     name: Visualization
   translations:
-  - pt:
-      locale: pt
-      name: "visualiza\xE7\xE3o"
-      description: "Visualiza\xE7\xE3o"
-  - en:
-      locale: en
-      name: visualization
-      description: Visualization
-- id: 318
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "visualiza\xE7\xE3o": null
+      description: !!set
+        "Visualiza\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        visualization: null
+      description: !!set
+        Visualization: null
+- id: !!set
+    318: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
 translations:
   pt:
-    locale: pt
-    name: "Gr\xE1fico de rede"
-    description: "Exibe grafos (n\xF3s e arestas) usando um algortimo de for\xE7a\
-      \ direta (repuls\xE3o e atra\xE7\xE3o)."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Gr\xE1fico de rede": null
+    description: !!set
+      "Exibe grafos (n\xF3s e arestas) usando um algortimo de for\xE7a direta (repuls\xE3o e atra\xE7\xE3o).": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Network graphs
-    description: Displays graphs (nodes and edges) using force direct algorithm.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Network graphs: null
+    description: !!set
+      Displays graphs (nodes and edges) using force direct algorithm.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
 categories:
 - id: 15
   type: group
+forms:
+- 41
+- 148
+- 142
+- 141
 

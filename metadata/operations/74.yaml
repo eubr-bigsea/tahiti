@@ -3,25 +3,22 @@ slug: isotonic-regression
 enabled: true
 type: TRANSFORMATION
 icon: fa-battery-quarter
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 164
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 17
     name: IRegressionAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Algoritmo
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Algorithm
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: "Regress\xE3o isot\xF4nica"
     description: "Regress\xE3o Isot\xF4nica"
-    label_format: None
   en:
     locale: en
     name: Isotonic regression
     description: Isotonic Regression
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -46,4 +41,7 @@ categories:
   type: subgroup
 - id: 8
   type: group
+forms:
+- 41
+- 103
 

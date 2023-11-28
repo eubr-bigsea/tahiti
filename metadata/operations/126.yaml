@@ -1,81 +1,134 @@
-id: 126
-slug: chi-sq-selector
-enabled: true
-type: TRANSFORMATION
-icon: fa-chart
-css_class: None
-doc_link: None
+id: !!set
+  126: null
+slug: !!set
+  chi-sq-selector: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-chart: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 299
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    299: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 20
     name: TransformationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 300
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    300: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
-- id: 301
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
+- id: !!set
+    301: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
 translations:
   pt:
-    locale: pt
-    name: Seletor chi-square
-    description: "Seleciona features categ\xF3rias para serem usadas para predizer\
-      \ um r\xF3tulo categ\xF3rico. Mas as features devem ser convertidas para uma\
-      \ representa\xE7\xE3o num\xE9rica antes de usar esta opera\xE7\xE3o."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Seletor chi-square: null
+    description: !!set
+      ? "Seleciona features categ\xF3rias para serem usadas para predizer um r\xF3\
+        tulo categ\xF3rico. Mas as features devem ser convertidas para uma representa\xE7\
+        \xE3o num\xE9rica antes de usar esta opera\xE7\xE3o."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Chi-square selector
-    description: Selects categorical features to use for predicting a categorical
-      label. But features must be converted to a numerical representation before using
-      this operation.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Chi-square selector: null
+    description: !!set
+      ? Selects categorical features to use for predicting a categorical label. But
+        features must be converted to a numerical representation before using this
+        operation.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
@@ -86,4 +139,8 @@ categories:
   type: subgroup
 - id: 32
   type: group
+forms:
+- 41
+- 137
+- 110
 

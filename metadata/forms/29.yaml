@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: false
   order: 7
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima."
-  - en:
+    en:
       locale: en
       label: Max. depth
       help: Max. depth.
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 8
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xEDnimo de inst\xE2ncias por n\xF3"
       help: "M\xEDnimo de inst\xE2ncias por n\xF3."
-  - en:
+    en:
       locale: en
       label: Min instances per node
       help: Min instances per node.
@@ -50,19 +42,15 @@ fields:
   type: FLOAT
   required: false
   order: 9
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ganho de informa\xE7\xE3o (info gain) m\xEDnimo"
       help: "Ganho de informa\xE7\xE3o (info gain) m\xEDnimo."
-  - en:
+    en:
       locale: en
       label: Min. info gain
       help: Min. info gain.

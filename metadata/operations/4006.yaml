@@ -1,41 +1,68 @@
-id: 4006
-slug: gbt-regressor
-enabled: false
-type: TRANSFORMATION
-icon: fa-id-card
-css_class: None
-doc_link: None
+id: !!set
+  4006: null
+slug: !!set
+  gbt-regressor: null
+enabled: !!set
+  false: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-id-card: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4006
-  slug: algorithm
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    4006: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 17
     name: IRegressionAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: "Modelo de regress\xE3o n\xE3o treinado"
-  - en:
-      locale: en
-      name: algorithm
-      description: Untrained regressor model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        "Modelo de regress\xE3o n\xE3o treinado": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Untrained regressor model: null
 translations:
   pt:
-    locale: pt
-    name: Regressor Gradient Boosting
-    description: "Regress\xE3o por Gradient Boosting"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Regressor Gradient Boosting: null
+    description: !!set
+      "Regress\xE3o por Gradient Boosting": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Gradient Boosting Regressor
-    description: Gradient Boosting for regression
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Gradient Boosting Regressor: null
+    description: !!set
+      Gradient Boosting for regression: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -48,4 +75,7 @@ categories:
   type: technology
 - id: 1501
   type: regression
+forms:
+- 41
+- 4006
 

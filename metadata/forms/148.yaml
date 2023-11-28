@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo para a visualiza\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Title
       help: Title for the visualization.
@@ -29,19 +25,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o n\xF3 de origem"
       help: "Atributo com o n\xF3 de origem."
-  - en:
+    en:
       locale: en
       label: Source attribute
       help: Source attribute (source node).
@@ -50,19 +43,16 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o n\xF3 de destino"
       help: "Atributo com o n\xF3 de destino."
-  - en:
+    en:
       locale: en
       label: Target attribute
       help: Target attribute (target node).
@@ -71,19 +61,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o r\xF3tulo da aresta"
       help: "Atributo com o r\xF3tulo da aresta."
-  - en:
+    en:
       locale: en
       label: Edge label attribute
       help: Edge label attribute.
@@ -92,19 +79,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com o tamanho da aresta
       help: Atributo com o tamanho da aresta.
-  - en:
+    en:
       locale: en
       label: Edge size attribute
       help: Edge size attribute.
@@ -113,19 +97,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o r\xF3tulo do n\xF3 de origem"
       help: "Atributo com o r\xF3tulo do n\xF3 de origem."
-  - en:
+    en:
       locale: en
       label: Source label attribute
       help: Source node label attribute.
@@ -134,19 +115,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o r\xF3tulo do n\xF3 de destino"
       help: "Atributo com o r\xF3tulo do n\xF3 de destino."
-  - en:
+    en:
       locale: en
       label: Target label attribute
       help: Target node label attribute.

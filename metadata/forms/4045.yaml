@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -29,19 +25,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo usado como r\xF3tulo (label)"
       help: "Atributo usado como r\xF3tulo (label)"
-  - en:
+    en:
       locale: en
       label: Label
       help: Label
@@ -50,19 +43,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Nome do atributo usado como predi\xE7\xE3o"
       help: "Nome do atributo usado como predi\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Prediction
       help: Prediction
@@ -71,19 +60,15 @@ fields:
   type: FLOAT
   required: false
   order: 3
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Y min
       help: Y min.
-  - en:
+    en:
       locale: en
       label: Y min
       help: Y min.
@@ -92,19 +77,15 @@ fields:
   type: FLOAT
   required: false
   order: 3
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Y max
       help: Y max.
-  - en:
+    en:
       locale: en
       label: Y max
       help: Y max.
@@ -115,18 +96,16 @@ fields:
   order: 3
   default: nan
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "nan", "value": "nan"}, {"key": "clip", "value": "clip"}, {"key":
     "raise", "value": "raise"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Out of bounds
       help: Out of bounds.
-  - en:
+    en:
       locale: en
       label: Out of bounds
       help: Out of bounds.
@@ -135,20 +114,17 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "true", "value": "Isotonic/increasing", "pt": "Isot\\u00f4nica/crescente"},
     {"value": "Antitonic/decreasing", "key": "false", "pt": "Antit\\u00f4nica/decrescente"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Isotonic
       help: Isotonic
-  - en:
+    en:
       locale: en
       label: Isotonic
       help: Isotonic

@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de \xE1rvores"
       help: "N\xFAmero de \xE1rvores na floresta."
-  - en:
+    en:
       locale: en
       label: Number of trees
       help: The number of trees in the forest.
@@ -29,19 +26,15 @@ fields:
   type: INTEGER
   required: false
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima na \xE1rvore."
-  - en:
+    en:
       locale: en
       label: Maximum depth
       help: The maximum depth of the tree.
@@ -52,18 +45,15 @@ fields:
   order: 3
   default: '2'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xF3 interno m\xEDnimo"
       help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para dividir\
         \ um n\xF3 interno."
-  - en:
+    en:
       locale: en
       label: Minimum internal node
       help: Percentage of the minimum number of samples required to split an internal
@@ -75,18 +65,15 @@ fields:
   order: 4
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xF3 de folha m\xEDnima"
       help: "Porcentagem do n\xFAmero m\xEDnimo de amostras necess\xE1rias para estar\
         \ em um n\xF3 folha."
-  - en:
+    en:
       locale: en
       label: Minimum leaf node
       help: Percentage of the minimum number of samples required to be at a leaf node.
@@ -95,20 +82,16 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.
@@ -119,17 +102,15 @@ fields:
   order: 6
   default: gini
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "gini", "value": "gini"}, {"key": "entropy", "value": "entropy"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Crit\xE9rio"
       help: "Fun\xE7\xE3o utilizada na medi\xE7\xE3o da qualidade do particionamento."
-  - en:
+    en:
       locale: en
       label: Criterion
       help: The function to measure the quality of a split.
@@ -140,18 +121,15 @@ fields:
   order: 8
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fra\xE7\xE3o ponderada m\xEDnima de folhas"
       help: "A fra\xE7\xE3o ponderada m\xEDnima da soma total de pesos (de todas as\
         \ amostras de entrada) necess\xE1ria para estar em um n\xF3 folha."
-  - en:
+    en:
       locale: en
       label: Minimum weighted fraction leaf
       help: The minimum weighted fraction of the sum total of weights (of all the
@@ -161,19 +139,15 @@ fields:
   type: INTEGER
   required: false
   order: 9
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Quantidade m\xE1xima de atributos"
       help: "Quantidade m\xE1xima de atributos a se considerar no particionamento."
-  - en:
+    en:
       locale: en
       label: Max Features
       help: The number of features to consider when looking for the best split.
@@ -182,19 +156,15 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Quantidade m\xE1xima de n\xF3s folha"
       help: "Controle de crescimento da \xE1rvore."
-  - en:
+    en:
       locale: en
       label: Max leaf nodes
       help: Trees growth control.
@@ -205,18 +175,15 @@ fields:
   order: 11
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Diminui\xE7\xE3o m\xEDnima de impureza"
       help: "Um n\xF3 ser\xE1 particionado caso isso resulte na diminui\xE7\xE3o da\
         \ impureza maior ou igual o valor do atributo."
-  - en:
+    en:
       locale: en
       label: Min impurity decrease
       help: A node will be split if this split induces a decrease of the impurity
@@ -228,18 +195,15 @@ fields:
   order: 16
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metro de complexidade alpha"
       help: "Par\xE2metro de complexidade usado para a poda m\xEDnima de complexidade\
         \ de custo."
-  - en:
+    en:
       locale: en
       label: Alpha complexity parameter
       help: Complexity parameter used for Minimal Cost-Complexity Pruning.
@@ -248,20 +212,16 @@ fields:
   type: DECIMAL
   required: false
   order: 17
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Percentual m\xE1ximo de amostras"
       help: "Quando o par\xE2metro \"Bootstrap\" estiver habilitado, utilize esse\
         \ n\xFAmero para obter um conjunto X de treinamento para cada base."
-  - en:
+    en:
       locale: en
       label: Percuntal of max samples
       help: If bootstrap is True, the number of samples to draw from X to train each

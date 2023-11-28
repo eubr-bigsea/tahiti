@@ -3,25 +3,22 @@ slug: read-shapefile
 enabled: true
 type: TRANSFORMATION
 icon: fa-file
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 118
   slug: geodata
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados geo
       description: Dados geospaciais
-  - en:
+    en:
       locale: en
       name: geodata
       description: Geospatial data
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: Ler arquivo shapefile
     description: "L\xEA um arquivo no formato shapefile"
-    label_format: None
   en:
     locale: en
     name: Read shapefile
     description: Read a shapefile
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -46,4 +41,8 @@ categories:
   type: group
 - id: 42
   type: subgroup
+forms:
+- 41
+- 63
+- 110
 

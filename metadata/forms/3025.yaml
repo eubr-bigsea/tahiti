@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Selecione o(s) atributos para agrega\xE7\xE3o"
       help: "Escola um ou mais atributos para a agrega\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Select attribute(s) for aggregation
       help: Choose one or more attributes to aggregate data with
@@ -29,9 +25,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-function
-  values_url: None
   values: '{"functions": [{"value": "Average (AVG)", "key": "avg", "help": "Computes
     the average of each group"}, {"value": "Collect List", "key": "collect_list",
     "help": "Aggregate function: returns a list of objects with duplicates."}, {"value":
@@ -47,14 +41,13 @@ fields:
     "description": "Add one of more lines with attribute to be used, function and
     alias to compute aggregate function over groups.", "title": "Aggregate operation"}}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fun\xE7\xE3o de agrega\xE7\xE3o"
       help: "Fun\xE7\xE3o a ser aplicada aos dados agregados"
-  - en:
+    en:
       locale: en
       label: Aggregation function
       help: Function applied to aggregated data

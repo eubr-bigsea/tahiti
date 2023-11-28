@@ -17,13 +17,14 @@ translations:
       : (this?.cast_attributes?.value?.length || 0) + " atributos"}'
   en:
     locale: en
-    name: None
-    description: None
-    label_format: None
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2101
   type: menu/selected/fa fa-edit
+forms:
+- 2151
+- 41
+- 154
 

@@ -1,81 +1,136 @@
-id: 3004
-slug: word-to-vector
-enabled: true
-type: TRANSFORMATION
-icon: fa-list-ol
-css_class: None
-doc_link: None
+id: !!set
+  3004: null
+slug: !!set
+  word-to-vector: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-list-ol: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3005
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3005: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input Data
-- id: 3006
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input Data: null
+- id: !!set
+    3006: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
-- id: 3007
-  slug: vocabulary
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
+- id: !!set
+    3007: null
+  slug: !!set
+    vocabulary: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "vocabul\xE1rio"
-      description: "Vocabul\xE1rio"
-  - en:
-      locale: en
-      name: vocabulary
-      description: Vocabulary
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "vocabul\xE1rio": null
+      description: !!set
+        "Vocabul\xE1rio": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        vocabulary: null
+      description: !!set
+        Vocabulary: null
 translations:
   pt:
-    locale: pt
-    name: Converter palavras em vetor
-    description: Converter palavras em vetor
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Converter palavras em vetor: null
+    description: !!set
+      Converter palavras em vetor: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Convert words to vector
-    description: Convert words to vector
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Convert words to vector: null
+    description: !!set
+      Convert words to vector: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 16
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 3004
+- 110
 

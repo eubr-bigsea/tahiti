@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: true
   order: 1
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de agrupamentos (K)"
       help: "N\xFAmero de agrupamentos (K)"
-  - en:
+    en:
       locale: en
       label: Number of clusters (K)
       help: Number of clusters (K)
@@ -31,18 +27,15 @@ fields:
   order: 1
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: " Toler\xE2ncia de converg\xEAncia para as somas das dist\xE2ncias intra-cluster\
         \ do ponto ao centroide."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Convergency tolerance for the within-cluster sums of point-to-centroid
@@ -52,19 +45,15 @@ fields:
   type: INTEGER
   required: true
   order: 4
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Max iterations

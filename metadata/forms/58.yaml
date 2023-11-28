@@ -10,20 +10,18 @@ fields:
   order: 1
   default: em
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "EM optimizer (Expectation Maximization)", "key": "em", "value":
     "EM optimizer (Expectation Maximization)", "pt": "Otimizador EM (Expectation Maximization)"},
     {"en": "Online optimizer", "key": "online", "value": "Online optimizer", "pt":
     "Otimizador online"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Otimizador
       help: Otimizador
-  - en:
+    en:
       locale: en
       label: Optimizer
       help: Optimizer
@@ -34,17 +32,14 @@ fields:
   order: 2
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de t\xF3picos (K)"
       help: "N\xFAmero de t\xF3picos (K)"
-  - en:
+    en:
       locale: en
       label: Number of topics (K)
       help: Number of topics (K) to be generated
@@ -55,17 +50,14 @@ fields:
   order: 3
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max. iterations
       help: Max. iterations
@@ -74,19 +66,15 @@ fields:
   type: FLOAT
   required: false
   order: 4
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Concentra\xE7\xE3o de documentos (alfa)"
       help: "Concentra\xE7\xE3o de documentos (alfa)"
-  - en:
+    en:
       locale: en
       label: Document concentration (alpha)
       help: Document concentration (alpha)
@@ -95,19 +83,15 @@ fields:
   type: FLOAT
   required: false
   order: 5
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Concentra\xE7\xE3o de t\xF3picos (beta)"
       help: "Concentra\xE7\xE3o de t\xF3picos (beta)"
-  - en:
+    en:
       locale: en
       label: Topic concentration (beta)
       help: Topic concentration (beta)
