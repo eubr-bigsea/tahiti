@@ -1041,7 +1041,7 @@ class PipelineListResponseSchema(BaseSchema):
 
 class PipelineStepCreateRequestSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
+    id = fields.Integer(allow_none=True)
     name = fields.String(required=True)
     order = fields.Integer(required=True)
     scheduling = fields.String(required=False, allow_none=True)
@@ -1181,7 +1181,7 @@ class PipelineTemplateListResponseSchema(BaseSchema):
 
 class PipelineTemplateStepCreateRequestSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
+    id = fields.Integer(allow_none=True)
     name = fields.String(required=True)
     order = fields.Integer(required=True)
     description = fields.String(required=False, allow_none=True)
