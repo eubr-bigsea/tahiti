@@ -21,9 +21,9 @@ from tahiti.operation_api import OperationListApi, OperationTreeApi
 from tahiti.operation_subset_api import (OperationSubsetDetailApi,
         OperationSubsetListApi)
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
-from tahiti.pipeline_api import PipelineApi, PipelineDetailApi, PipelineStepApi
+from tahiti.pipeline_api import PipelineApi, PipelineDetailApi
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
-from tahiti.template_pipeline_api import TemplatePipelineApi, TemplatePipelineDetailApi, TemplatePipelineStepApi
+from tahiti.pipeline_template_api import PipelineTemplateApi, PipelineTemplateDetailApi
 from tahiti.schema import translate_validation
 from tahiti.source_code_api import SourceCodeDetailApi, SourceCodeListApi
 from tahiti.views import AttributeSuggestionView
@@ -106,7 +106,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/<int:operation_id>': OperationDetailApi,
         '/pipeline': PipelineApi,
         '/pipeline/<int:pipeline_id>': PipelineDetailApi,
-        '/pipeline/<int:pipeline_id>/<int:step_id>': PipelineStepApi,
+        '/pipeline-template': PipelineTemplateApi,
+        '/pipeline-template/<int:pipeline_template_id>': PipelineTemplateDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
         '/source_codes': SourceCodeListApi,
@@ -120,9 +121,6 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows/import': ImportWorkflowApi,
         '/workflows/from-template': WorkflowFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
-        '/template-pipeline': TemplatePipelineApi,
-        '/template-pipeline/<int:template_pipeline_id>': TemplatePipelineDetailApi,
-        '/template-pipeline/<int:template_pipeline_id>/<int:step_id>': TemplatePipelineStepApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in list(mappings.items()):

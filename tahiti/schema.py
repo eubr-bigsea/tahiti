@@ -1934,125 +1934,106 @@ class WorkflowVariableCreateRequestSchema(BaseSchema):
         ordered = True
         unknown = EXCLUDE
 
-# Template Pipeline Step schemas
+# Pipeline Template Step schemas
 
-class TemplatePipelineStepCreateRequestSchema(BaseSchema):
+class PipelineTemplateStepCreateRequestSchema(BaseSchema):
     name = fields.String(required=False)
     description = fields.String(required=False)
-    enabled = fields.String(required=False,
-                         validate=[OneOf(list(AccessStatus.values()))])
-    scheduling = fields.String(required=False)
+    enabled = fields.Boolean(required=False)
 
     @post_load
     def make_object(self, data, **kwargs):
-        """ Deserialize data into an instance of TemplatePipelineStep """
-        return TemplatePipelineStep(**data)
+        """ Deserialize data into an instance of PipelineTemplateStep """
+        return PipelineTemplateStep(**data)
 
     class Meta:
         ordered = True
         unknown = EXCLUDE
 
-class TemplatePipelineStepUpdateRequestSchema(TemplatePipelineStepCreateRequestSchema):
+class PipelineTemplateStepUpdateRequestSchema(PipelineTemplateStepCreateRequestSchema):
     id = fields.Integer(required=False)
 
-
-class TemplatePipelineStepPrivateCreateRequestSchema(TemplatePipelineStepCreateRequestSchema):
-    order = fields.Integer(required=True)
-    templatepipeline_id = fields.Integer(required=True)
-
-class TemplatePipelineStepItemResponseSchema(Schema):
+class PipelineTemplateStepItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
-    description = fields.String(required=True)
     order = fields.Integer(required=True)
-    scheduling = fields.String(required=True)
-    enabled = fields.String(required=True,
-                         validate=[OneOf(list(AccessStatus.values()))])
-    status = fields.String(required=True,
-                         validate=[OneOf(list(ExecutionStatus.values()))])
-
-    created = fields.DateTime(
-        required=False,
-        allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
-    updated = fields.DateTime(
-        required=False,
-        allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
-    
-    version = fields.Integer(required=True)
-
-        # noinspection PyUnresolvedReferences
-    @post_load
-    def make_object(self, data, **kwargs):
-        """ Deserialize data into an instance of TemplatePipelineStep"""
-        return TemplatePipelineStep(**data)
-
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE
-
-# Template Pipeline schemas
-
-class TemplatePipelineCreateRequestSchema(BaseSchema):
-    """ JSON serialization schema """
-    name = fields.String(required=False)
-    description = fields.String(required=False)
-    enabled = fields.String(required=False,
-                         validate=[OneOf(list(AccessStatus.values()))])
-    
-    steps = fields.Nested('tahiti.schema.TemplatePipelineStepCreateRequestSchema', required=False, many=True)
-
-    user_id = fields.Integer(required=True)
-    user_login = fields.String(required=True)
-    user_name = fields.String(required=True)
-
-    @post_load
-    def make_object(self, data, **kwargs):
-        """ Deserialize data into an instance of TemplatePipeline """
-        return TemplatePipeline(**data)
-
-    class Meta:
-        ordered = True
-        unknown = EXCLUDE
-
-class TemplatePipelineUpdateRequestSchema(TemplatePipelineCreateRequestSchema):
-    steps = fields.Nested('tahiti.schema.TemplatePipelineStepUpdateRequestSchema', required=False, many=True)
-
-class TemplatePipelineItemResponseSchema(Schema):
-    """ JSON serialization schema """
-    id = fields.Integer(required=True)
-    name = fields.String(required=True)
     description = fields.String(required=True)
-    enabled = fields.String(required=True)
-
-    steps = fields.Nested('tahiti.schema.TemplatePipelineStepItemResponseSchema', required=True, many=True)
-
-    user_id = fields.Integer(required=True)
-    user_login = fields.String(required=True)
-    user_name = fields.String(required=True)
-
-    created = fields.DateTime(
-        required=False,
-        allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
-    updated = fields.DateTime(
-        required=False,
-        allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
-    
-    version = fields.Integer(required=True)
+    enabled = fields.Boolean(required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data, **kwargs):
-        """ Deserialize data into an instance of TemplatePipeline"""
-        return TemplatePipeline(**data)
+        """ Deserialize data into an instance of PipelineTemplateStep"""
+        return PipelineTemplateStep(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+# Pipeline Template schemas
+
+class PipelineTemplateCreateRequestSchema(BaseSchema):
+    """ JSON serialization schema """
+    name = fields.String(required=False)
+    description = fields.String(required=False)
+    scheduling = fields.String(required=False)
+    enabled = fields.Boolean(required=False)
+    
+    steps = fields.Nested('tahiti.schema.PipelineTemplateStepCreateRequestSchema', required=False, many=True)
+
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+
+    @post_load
+    def make_object(self, data, **kwargs):
+        
+        if 'steps' in data.keys():
+            for index, step in enumerate(data['steps']):
+                step.order = index+1
+        
+        """ Deserialize data into an instance of PipelineTemplate """
+        return PipelineTemplate(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+class PipelineTemplateUpdateRequestSchema(PipelineTemplateCreateRequestSchema):
+    id = fields.Integer(required=True)
+    steps = fields.Nested('tahiti.schema.PipelineTemplateStepUpdateRequestSchema', required=False, many=True)
+
+class PipelineTemplateItemResponseSchema(Schema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=True)
+    scheduling = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
+
+    steps = fields.Nested('tahiti.schema.PipelineTemplateStepItemResponseSchema', required=True, many=True)
+
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+
+    created = fields.DateTime(
+        required=False,
+        allow_none=True,
+        missing=datetime.datetime.utcnow,
+        default=datetime.datetime.utcnow)
+    updated = fields.DateTime(
+        required=False,
+        allow_none=True,
+        missing=datetime.datetime.utcnow,
+        default=datetime.datetime.utcnow)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of PipelineTemplate"""
+        return PipelineTemplate(**data)
 
     class Meta:
         ordered = True
@@ -2061,11 +2042,13 @@ class TemplatePipelineItemResponseSchema(Schema):
 # Pipeline Step schemas
 
 class PipelineStepCreateRequestSchema(BaseSchema):
-    name = fields.String(required=False)
-    description = fields.String(required=False)
-    enabled = fields.String(required=False,
-                         validate=[OneOf(list(AccessStatus.values()))])
-    scheduling = fields.String(required=False)
+    name = fields.String(required=False, allow_none=True)
+    description = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=False)
+
+    workflow_type = fields.String(required=False,
+                         validate=[OneOf(list(WorkflowType.values()))])
+    workflow_id = fields.Integer(required=False)
 
     @post_load
     def make_object(self, data, **kwargs):
@@ -2080,36 +2063,19 @@ class PipelineStepUpdateRequestSchema(PipelineStepCreateRequestSchema):
     id = fields.Integer(required=False)
 
 
-class PipelineStepPrivateCreateRequestSchema(PipelineStepCreateRequestSchema):
-    order = fields.Integer(required=True)
-    pipeline_id = fields.Integer(required=True)
-
 class PipelineStepItemResponseSchema(Schema):
     """ JSON serialization schema """
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(required=True)
     order = fields.Integer(required=True)
-    scheduling = fields.String(required=True)
-    enabled = fields.String(required=True,
-                         validate=[OneOf(list(AccessStatus.values()))])
-    status = fields.String(required=True,
-                         validate=[OneOf(list(ExecutionStatus.values()))])
-
-    created = fields.DateTime(
-        required=False,
-        allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
-    updated = fields.DateTime(
-        required=False,
-        allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+    enabled = fields.Boolean(required=True)
     
-    version = fields.Integer(required=True)
+    workflow_type = fields.String(required=False,
+                         validate=[OneOf(list(WorkflowType.values()))])
+    workflow_id = fields.Integer(required=False)
 
-        # noinspection PyUnresolvedReferences
+    # noinspection PyUnresolvedReferences
     @post_load
     def make_object(self, data, **kwargs):
         """ Deserialize data into an instance of PipelineStep"""
@@ -2123,20 +2089,25 @@ class PipelineStepItemResponseSchema(Schema):
 
 class PipelineCreateRequestSchema(BaseSchema):
     """ JSON serialization schema """
-    name = fields.String(required=False)
-    description = fields.String(required=False)
-    enabled = fields.String(required=False,
-                         validate=[OneOf(list(AccessStatus.values()))])
-    templatepipeline_id = fields.Integer(required=False)
-    
-    steps = fields.Nested('tahiti.schema.PipelineStepCreateRequestSchema', required=False, many=True)
+    name = fields.String(required=False, allow_none=True)
+    description = fields.String(required=False, allow_none=True)
+    scheduling = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=False)
 
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
 
+    pipelinetemplate_id = fields.Integer(required=False)
+    
+    steps = fields.Nested('tahiti.schema.PipelineStepCreateRequestSchema', required=False, many=True)
+
     @post_load
     def make_object(self, data, **kwargs):
+        
+        if 'steps' in data.keys():
+            for index, step in enumerate(data['steps']):
+                step.order = index+1
         """ Deserialize data into an instance of Pipeline """
         return Pipeline(**data)
 
@@ -2145,6 +2116,7 @@ class PipelineCreateRequestSchema(BaseSchema):
         unknown = EXCLUDE
 
 class PipelineUpdateRequestSchema(PipelineCreateRequestSchema):
+    id = fields.Integer(required=True)
     steps = fields.Nested('tahiti.schema.PipelineStepUpdateRequestSchema', required=False, many=True)
 
 class PipelineItemResponseSchema(Schema):
@@ -2152,11 +2124,10 @@ class PipelineItemResponseSchema(Schema):
     id = fields.Integer(required=True)
     name = fields.String(required=True)
     description = fields.String(required=True)
-    enabled = fields.String(required=True)
-    templatepipeline = fields.Nested('tahiti.schema.TemplatePipelineItemResponseSchema',
-                                      required=True)
+    scheduling = fields.String(required=True)
+    enabled = fields.Boolean(required=True)
 
-    steps = fields.Nested('tahiti.schema.PipelineStepItemResponseSchema', required=True, many=True)
+    steps = fields.List(fields.Nested('tahiti.schema.PipelineStepItemResponseSchema'), required=True)
 
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
@@ -2172,8 +2143,6 @@ class PipelineItemResponseSchema(Schema):
         allow_none=True,
         missing=datetime.datetime.utcnow,
         default=datetime.datetime.utcnow)
-    
-    version = fields.Integer(required=True)
 
     # noinspection PyUnresolvedReferences
     @post_load

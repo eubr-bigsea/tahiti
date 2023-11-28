@@ -5,6 +5,7 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Enum, \
 from sqlalchemy.dialects.mysql import LONGTEXT
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
+from sqlalchemy.schema import Sequence
 
 make_translatable(options={'locales': ['pt', 'en'],
                            'auto_create_locales': False,
@@ -184,30 +185,6 @@ class PluginStatus:
     @staticmethod
     def values():
         return [n for n in list(PluginStatus.__dict__.keys())
-                if n[0] != '_' and n != 'values']
-
-
-class ExecutionStatus:
-    FAILURE = 'FAILURE'
-    PARTIAL_SUCCESS = 'PARTIAL_SUCCESS'
-    SUCCESS = 'SUCCESS'
-    CANCELLED = 'CANCELLED'
-    REJECTED = 'REJECTED'
-    CREATED = 'CREATED'
-
-    @staticmethod
-    def values():
-        return [n for n in list(ExecutionStatus.__dict__.keys())
-                if n[0] != '_' and n != 'values']
-
-
-class AccessStatus:
-    ENABLED = 'ENABLED'
-    DISABLED = 'DISABLED'
-
-    @staticmethod
-    def values():
-        return [n for n in list(AccessStatus.__dict__.keys())
                 if n[0] != '_' and n != 'values']
 
 # Association tables definition
@@ -1040,27 +1017,26 @@ class WorkflowVariable(db.Model):
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
     
-class TemplatePipeline(db.Model):
-    __tablename__ = 'template_pipeline'
+class PipelineTemplate(db.Model):
+    __tablename__ = 'pipeline_template'
 
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=True)
     description = Column(String(200), nullable=True)
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
+    scheduling = Column(String(300), nullable=True)
+    
+    enabled = Column(Boolean, nullable=False, default=True)
+
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
     user_name = Column(String(200), nullable=False)
+
     created = Column(DateTime,
                     default=datetime.datetime.utcnow, nullable=False)
     updated = Column(DateTime,
                     default=datetime.datetime.utcnow, nullable=False,
                     onupdate=datetime.datetime.utcnow)
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
 
     def __str__(self):
         return self.name
@@ -1068,43 +1044,27 @@ class TemplatePipeline(db.Model):
     def __repr__(self):
         return '<Instance {}: {}>'.format(self.__class__, self.id)
 
-
-class TemplatePipelineStep(db.Model):
-    __tablename__ = 'template_pipeline_step'
+class PipelineTemplateStep(db.Model):
+    __tablename__ = 'pipeline_template_step'
 
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=True)
     order = Column(Integer, nullable=False)
     description = Column(String(200), nullable=True)
-    scheduling = Column(String(300), nullable=True)
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
-    status = Column(Enum(*list(ExecutionStatus.values()),
-                    name='ExecutionStatus'), nullable=False, default=ExecutionStatus.CREATED)
-
-    created = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False)
-    updated = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False,
-                    onupdate=datetime.datetime.utcnow)
-
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
+    enabled = Column(Boolean, nullable=False, default=True)
 
     # Associations
-    templatepipeline_id = Column(Integer,
-                        ForeignKey("template_pipeline.id",
-                                    name="fk_template_pipeline_step_template_pipeline_id"),
+    pipelinetemplate_id = Column(Integer,
+                        ForeignKey("pipeline_template.id",
+                                    name="fk_pipeline_template_step_template_pipeline_id"),
                         nullable=False,
                         index=True)
-    templatepipeline = relationship(
-        "TemplatePipeline",
-        overlaps='templatepipelines',
-        foreign_keys=[templatepipeline_id],
-        backref=backref("templatepipelines",
+    pipelinetemplate = relationship(
+        "PipelineTemplate",
+        overlaps='steps',
+        foreign_keys=[pipelinetemplate_id],
+        backref=backref("steps",
                         cascade="all, delete-orphan"))
 
     def __str__(self):
@@ -1120,9 +1080,8 @@ class Pipeline(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=True)
     description = Column(String(200), nullable=True)
-
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
+    scheduling = Column(String(300), nullable=True)
+    enabled = Column(Boolean, nullable=False, default=True)
     
     user_id = Column(Integer, nullable=False)
     user_login = Column(String(50), nullable=False)
@@ -1134,11 +1093,6 @@ class Pipeline(db.Model):
                     default=datetime.datetime.utcnow, nullable=False,
                     onupdate=datetime.datetime.utcnow)
 
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
-
 class PipelineStep(db.Model):
     __tablename__ = 'pipeline_step'
 
@@ -1146,36 +1100,38 @@ class PipelineStep(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=True)
     description = Column(String(200), nullable=True)
+
     order = Column(Integer, nullable=False)
 
-    scheduling = Column(String(300), nullable=True)
+    enabled = Column(Boolean, nullable=False, default=True)
 
-    enabled = Column(Enum(*list(AccessStatus.values()),
-                    name='AccessStatus'), nullable=False, default=AccessStatus.ENABLED)
-    
-    status = Column(Enum(*list(ExecutionStatus.values()),
-                    name='ExecutionStatus'), nullable=False, default=ExecutionStatus.CREATED)
-
-    created = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False)
-    updated = Column(DateTime,
-                    default=datetime.datetime.utcnow, nullable=False,
-                    onupdate=datetime.datetime.utcnow)
+    workflow_type = Column(Enum(*list(WorkflowType.values()),
+                    name='WorkflowType'), nullable=True)
 
     # Associations
+
+    workflow_id = Column(Integer,
+                         ForeignKey("workflow.id",
+                                    name="fk_pipeline_step_workflow_id"),
+                         nullable=True,
+                         index=True)
+    
+    workflow = relationship(
+        "Workflow",
+        overlaps='pipeline_step_workflows',
+        foreign_keys=[workflow_id],
+        backref=backref("pipeline_step_workflows",
+                        cascade="all, delete-orphan"))
+
     pipeline_id = Column(Integer,
                         ForeignKey("pipeline.id",
                                     name="fk_pipeline_step_pipeline_id"),
                         nullable=False,
                         index=True)
+    
     pipeline = relationship(
         "Pipeline",
-        overlaps='pipelines',
+        overlaps='steps',
         foreign_keys=[pipeline_id],
-        backref=backref("pipelines_pipelineStep",
+        backref=backref("steps",
                         cascade="all, delete-orphan"))
-
-    version = Column(Integer, nullable=False)
-    __mapper_args__ = {
-        'version_id_col': version,
-    }
