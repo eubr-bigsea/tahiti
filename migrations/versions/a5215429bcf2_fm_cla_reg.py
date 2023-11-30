@@ -1,7 +1,7 @@
 """fm_cla_reg
 
 Revision ID: a5215429bcf2 
-Revises: a237518ec5e1
+Revises: c1bbd1bb8f85
 """
 import json
 from alembic import context
@@ -15,7 +15,7 @@ from tahiti.migration_utils import is_sqlite
 
 # revision identifiers, used by Alembic.
 revision = 'a5215429bcf2'
-down_revision = 'a237518ec5e1'
+down_revision = 'c1bbd1bb8f85'
 branch_labels = None
 depends_on = None
 
@@ -245,7 +245,27 @@ def _insert_operation_form_field(conn):
                 column('editable', Boolean), 
                 column('form_id', Integer))
     columns = [c.name for c in tb.columns]
-    data = []
+
+    loss = [
+            {"en": "Squared error", "key": "squaredError", "pt": "Erro quadrado (squared error)"}, 
+            {"en": "Huber method", "key": "huber", "pt": "Método de Huber"}, 
+    ]
+
+    data = [
+                
+        [BASE_FORM_FIELD + 1, 'factor_size', 'INTEGER', False,  0,  None, 'integer',  None,  None,  'EXECUTION',  100,  None,  True],
+        [BASE_FORM_FIELD + 2, 'fit_linear', 'INTEGER', False, 1, None, 'checkbox',  None, None, 'EXECUTION', 75, None, True],
+        [BASE_FORM_FIELD + 3, 'reg_param', 'FLOAT', False, 6, None, 'decimal', None, None, 'EXECUTION', 75, None, True],
+        [BASE_FORM_FIELD + 4, 'min_batch', 'FLOAT', False, 2, None, 'decimal', None, None, 'EXECUTION', 76, None, True],
+        [BASE_FORM_FIELD + 5, 'init_std', 'FLOAT', False, 3, None, 'decimal', None, None, 'EXECUTION', 77, None, True],
+        [BASE_FORM_FIELD + 6,'max_iter', 'INTEGER', False, 3, '10', 'integer', None, None, 'EXECUTION', None, None, True],
+        [BASE_FORM_FIELD + 7, 'step_size', 'INTEGER', False, 5, None, 'integer', None, None, 'EXECUTION', 69, None, True],
+        [BASE_FORM_FIELD + 8, 'tolerance', 'FLOAT', False, 1, '0.0001', 'decimal', None, None, 'EXECUTION', 71, None, True],
+        [BASE_FORM_FIELD + 9, 'solver', 'TEXT', False, 4, None, 'dropdown', None, '[{"key": "adamW", "value": "adamW"}, {"key": "gd", "value": "gd"}]', 'EXECUTION', 68, None, True],
+        #[BASE_FORM_FIELD + 10, 'seed', 'INTEGER', False, 0, None, 'integer', None, None, 'EXECUTION', 17, None, True]
+        [BASE_FORM_FIELD + 11, 'threshold', 'FLOAT', False, 3, None, 'decimal', None, None, 'EXECUTION', 9, None, True]
+    ]
+    data.append([405, 'seed', 'INTEGER', 0, 10, None, 'integer', None, None, 'EXECUTION', None, 1, 65])
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
@@ -253,7 +273,7 @@ def _insert_operation_form_field(conn):
 def _delete_operation_form_field(conn):
     conn.execute(
         'DELETE from operation_form_field WHERE form_id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 2)
+        BASE_FORM_FIELD, BASE_FORM_FIELD + 11)
 
 def _insert_operation_form_field_translation(conn):
     tb = table('operation_form_field_translation',
@@ -262,14 +282,48 @@ def _insert_operation_form_field_translation(conn):
                 column('label', String), 
                 column('help', UnicodeText))
     columns = [c.name for c in tb.columns]
-    data = []
+    data = [
+        [BASE_FORM_FIELD + 1, 'en', 'Factor Size', 'Size of the factorization'],
+        [BASE_FORM_FIELD + 1, 'pt', 'Tamanho do Fator (factor size)', 'Tamanho da fatoração'],
+    
+        [BASE_FORM_FIELD + 2, 'en', 'Fit Linear', 'Whether to fit a linear term'],
+        [BASE_FORM_FIELD + 2, 'pt', 'Ajustar Linear (fit linear)', 'Se deve ajustar um termo linear'],
+
+        [BASE_FORM_FIELD + 3, 'en', 'Regularization Parameter', 'Regularization parameter (λ >= 0)'],
+        [BASE_FORM_FIELD + 3, 'pt', 'Parâmetro de Regularização', 'Parâmetro de regularização (λ >= 0)'],
+
+        [BASE_FORM_FIELD + 4, 'en', 'Mini-Batch Fraction', 'Fraction of data to be used for each SGD iteration'],
+        [BASE_FORM_FIELD + 4, 'pt', 'Fração do Mini-Batch (mini-batch fraction)', 'Fração dos dados a ser usada para cada iteração SGD'],
+
+        [BASE_FORM_FIELD + 5, 'en', 'Initialization Standard Deviation', 'Standard deviation for weight initialization'],
+        [BASE_FORM_FIELD + 5, 'pt', 'Desvio Padrão da Inicialização', 'Desvio padrão para a inicialização dos pesos'],
+
+        [BASE_FORM_FIELD + 6, 'en', 'Maximum Iterations', 'Maximum number of iterations'],
+        [BASE_FORM_FIELD + 6, 'pt', 'Número Máximo de Iterações', 'Número máximo de iterações'],
+
+        [BASE_FORM_FIELD + 7, 'en', 'Step Size', 'Step size for optimization'],
+        [BASE_FORM_FIELD + 7, 'pt', 'Tamanho do Passo (step size)', 'Tamanho do passo para otimização'],
+
+        [BASE_FORM_FIELD + 8, 'en', 'Tolerance', 'Convergence tolerance'],
+        [BASE_FORM_FIELD + 8, 'pt', 'Tolerância (Tolerance)', 'Tolerância de convergência'],
+
+        [BASE_FORM_FIELD + 9, 'en', 'Solver', 'Optimization solver'],
+        [BASE_FORM_FIELD + 9, 'pt', 'Solver', 'Solver de otimização'],
+
+        [405, 'en', 'Seed', 'Random seed'],
+        [405, 'pt', 'Semente (seed)', 'Semente aleatória'],
+
+        [BASE_FORM_FIELD + 11, 'en', 'Threshold', 'Threshold for binary classification'],
+        [BASE_FORM_FIELD + 11, 'pt', 'Limiar (threshold)', 'Limiar para classificação binária']
+
+    ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field_translation(conn):
     conn.execute(
         'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 2)
+        BASE_FORM_FIELD, BASE_FORM_FIELD + 11)
 
 def _insert_operation_category_operation(conn):
     tb = table('operation_category_operation',
