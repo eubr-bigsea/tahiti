@@ -1,7 +1,7 @@
 """fm_cla_reg
 
 Revision ID: a5215429bcf2 
-Revises: a237518ec5e1
+Revises: c1bbd1bb8f85
 """
 import json
 from alembic import context
@@ -15,7 +15,7 @@ from tahiti.migration_utils import is_sqlite
 
 # revision identifiers, used by Alembic.
 revision = 'a5215429bcf2'
-down_revision = 'a237518ec5e1'
+down_revision = 'c1bbd1bb8f85'
 branch_labels = None
 depends_on = None
 
