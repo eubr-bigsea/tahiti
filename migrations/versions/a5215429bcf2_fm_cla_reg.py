@@ -32,35 +32,20 @@ APPEARANCE_FORM_ID=41
 
 BASE_PLATFORM = 2236
 BASE_OP = 2236
-BASE_CATEGORY = 2236
 BASE_FORM = 2236
 BASE_FORM_FIELD = 2236
 
-# Data
-SAVE = BASE_OP + 1
-SAMPLE = BASE_OP + 2
-
-# Fix data
-CLEAN_MISSING = BASE_OP + 3
-
 # Model builder
 # Uses READ_DATA, SAMPLE
-SPLIT = BASE_OP + 4
-EVALUATOR = BASE_OP + 5
-FEATURES_REDUCTION = BASE_OP + 6
-GRID = BASE_OP + 7
-FEATURES  = BASE_OP + 8
 
 FM_CLASSIFIER = BASE_OP + 9
 
 FM_REGRESSION = BASE_OP + 10
 
-# Categories
-CAT_MODEL_BUILDER = BASE_CATEGORY + 1
-
 CAT_CLASSIFICATION = 4
-CAT_REGRESSION = 45
+CAT_REGRESSION = 47
 CAT_CLUSTERING = 46
+CAT_MODEL_BUILDER = 2113
 
 ORIGINAL_SAVE_FORM = 28
 
@@ -127,41 +112,6 @@ def _delete_operation_translation(conn):
         'DELETE from operation_translation WHERE id BETWEEN %s AND %s',
         BASE_OP, max(ALL_OPS))
 
-def _insert_operation_category(conn):
-    tb = table('operation_category',
-                column('id', Integer),
-                column('type', String),
-                column('order', Integer),
-                column('default_order', Integer))
-    columns = [c.name for c in tb.columns]
-    data = [
-      [CAT_MODEL_BUILDER, 'model-builder', 1, 1],
-    ]
-    rows = [dict(zip(columns, row)) for row in data]
-    op.bulk_insert(tb, rows)
-
-def _delete_operation_category(conn):
-    conn.execute(
-        'DELETE from operation_category WHERE id BETWEEN %s AND %s', 
-        BASE_CATEGORY + 1, BASE_CATEGORY + 1)
-
-def _insert_operation_category_translation(conn):
-    tb = table('operation_category_translation',
-                column('id', Integer),
-                column('locale', String),
-                column('name', String))
-    columns = [c.name for c in tb.columns]
-    data = [
-      [CAT_MODEL_BUILDER, 'pt', 'Construtor de modelos']
-    ]
-    rows = [dict(zip(columns, row)) for row in data]
-    op.bulk_insert(tb, rows)
-
-def _delete_operation_category_translation(conn):
-    conn.execute(
-        'DELETE from operation_category_translation WHERE id BETWEEN %s AND %s', 
-        BASE_CATEGORY + 1, BASE_CATEGORY + 1)
-
 def _insert_operation_form(conn):
     tb = table('operation_form',
                 column('id', Integer),
@@ -172,11 +122,6 @@ def _insert_operation_form(conn):
     data = [
       [BASE_FORM + 0, 1, 1, 'execution'], # Comment
       [BASE_FORM + 1, 1, 1, 'execution'], # ReadData
-      [ATTRIBUTES_FORM, 1, 1, 'execution'], # Attributes (common)
-      [ALIASES_FORM, 1, 1, 'execution'], # Aliases (common)
-      [KEEP_ATTRIBUTE_FORM, 1, 1, 'execution'], # Keep attribute (common)
-      [ATTRIBUTE_FORM, 1, 1, 'execution'], # Attribute (multiple = false) (common)
-      [ALIAS_FORM, 1, 1, 'execution'], # Alias (common)
     ]
     exclusions = set([FM_CLASSIFIER,FM_REGRESSION])
 
@@ -189,7 +134,7 @@ def _insert_operation_form(conn):
 def _delete_operation_form(conn):
     execute(conn, 
         'DELETE from operation_form WHERE id BETWEEN %s AND %s',
-        BASE_FORM, max(ALL_OPS) + 50)
+        BASE_FORM, BASE_FORM+1)
 
 def _insert_operation_form_translation(conn):
     tb = table('operation_form_translation',
@@ -200,19 +145,9 @@ def _insert_operation_form_translation(conn):
     data = [
       [BASE_FORM, 'pt', 'Execução'], # Common form to all ops
       [BASE_FORM + 1, 'pt', 'Execução'],
-      [ATTRIBUTES_FORM, 'pt', 'Execução'],
-      [ALIASES_FORM, 'pt', 'Execução'],
-      [KEEP_ATTRIBUTE_FORM, 'pt', 'Execução'],
-      [ATTRIBUTE_FORM, 'pt', 'Execução'],
-      [ALIAS_FORM, 'pt', 'Execução'],
 
       [BASE_FORM, 'en', 'Execution'],
       [BASE_FORM + 1, 'en', 'Execution'],
-      [ATTRIBUTES_FORM, 'en', 'Execution'],
-      [ALIASES_FORM, 'en', 'Execution'],
-      [KEEP_ATTRIBUTE_FORM, 'en', 'Execution'],
-      [ATTRIBUTE_FORM, 'en', 'Execution'],
-      [ALIAS_FORM, 'en', 'Execution'],
     ]
     exclusions = set([FM_REGRESSION, FM_CLASSIFIER])
 
@@ -226,9 +161,8 @@ def _insert_operation_form_translation(conn):
 def _delete_operation_form_translation(conn):
     execute(conn, 
         'DELETE from operation_form_translation WHERE id BETWEEN %s AND %s',
-        BASE_FORM, max(ALL_OPS) + 50)
+        BASE_FORM, BASE_FORM + 1)
     
-#Verificar a necessidade de adicionar mais campos para os novos algoritmos 
 def _insert_operation_form_field(conn):
     tb = table('operation_form_field',
                 column('id', Integer), 
@@ -278,11 +212,10 @@ def _insert_operation_category_operation(conn):
     columns = [c.name for c in tb.columns]
     data = [
       [FM_CLASSIFIER, CAT_MODEL_BUILDER],
+      [FM_CLASSIFIER, CAT_CLASSIFICATION],
       [FM_REGRESSION, CAT_MODEL_BUILDER],
+      [FM_REGRESSION, CAT_REGRESSION],
     ]
-    for op_id in [FM_CLASSIFIER]:
-        data.append([op_id, CAT_CLASSIFICATION])
-
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
@@ -292,70 +225,26 @@ def _delete_operation_category_operation(conn):
             WHERE operation_id BETWEEN %s and %s ''',
         BASE_OP, MAX_OP)
 #corrigir
-'''
 def _insert_operation_operation_form(conn):
     tb = table('operation_operation_form',
                 column('operation_id', Integer),
                 column('operation_form_id', Integer))
     columns = [c.name for c in tb.columns]
-    data = []
+    data = [
+        [FM_CLASSIFIER, BASE_FORM],
+        [FM_REGRESSION, BASE_FORM + 1]
+    ]
     
-    ops_without_attributes_field = {
-        FM_CLASSIFIER,FM_REGRESSION
-    }
-
-    exclusions = set([FM_CLASSIFIER,FM_REGRESSION])
-
-
-    for op_id in set(ALL_OPS) - exclusions:
-    
-        if op_id not in ops_without_attributes_field:
-            data.append([op_id,  ATTRIBUTES_FORM])
-
-        data.append([op_id, APPEARANCE_FORM_ID])
-
-    # import pdb; pdb.set_trace()
-    # Each op form
-    for op_id in set(ALL_OPS) - exclusions:
-        data.append([op_id,  op_id + 50])
-    
-    # Associate form 26 (with Sample Op fields) to the Meta operation
-    data.append([SAMPLE, 26])
-    # Associate form 20 (with CleanMissing Op fields) to the Meta operation
-    data.append([CLEAN_MISSING, 20])
-    # Associate form 6 (with Save Op fields) to the Meta operation
-    data.append([SAVE, ORIGINAL_SAVE_FORM])
-    
-    # Model builder
-    model_builder_items = {FM_CLASSIFIER:[70], FM_REGRESSION:[110]}
-
-    for op_id, forms in model_builder_items.items():
-        for form_id in forms:
-            data.append([op_id, form_id])
-
     rows = [dict(list(zip(columns, row))) for row in data]
 
-    rows.append({'operation_id': 2350, 'operation_form_id': 120})
-    
-
     op.bulk_insert(tb, rows)
-'''
-#vefificar o campo dos id's dessa função
-def _insert_operation_operation_form(conn):
-    tb = table('operation_operation_form',
-                column('operation_id', Integer), 
-                column('operation_form_id', Integer))
 
-    columns = [c.name for c in tb.columns]
-    data = []
-    rows = [dict(list(zip(columns, row))) for row in data]
-    op.bulk_insert(tb, rows)
 
 def _delete_operation_operation_form(conn):
     execute(conn, 
         '''DELETE FROM operation_operation_form
             WHERE operation_id BETWEEN %s and %s''',
-        BASE_OP, max(ALL_OPS))
+        BASE_OP, BASE_FORM + 1)
 
 def _insert_operation_platform(conn):
     tb = table('operation_platform',
@@ -395,8 +284,6 @@ def upgrade():
     commands = [
         _insert_operation,
         _insert_operation_translation,
-        _insert_operation_category,
-        _insert_operation_category_translation,
         _insert_operation_form,
         _insert_operation_form_translation,
         _insert_operation_form_field,
@@ -424,8 +311,6 @@ def downgrade():
     commands = [
         _delete_operation,
         _delete_operation_translation,
-        _delete_operation_category,
-        _delete_operation_category_translation,
         _delete_operation_form,
         _delete_operation_form_translation,
         _delete_operation_form_field,
