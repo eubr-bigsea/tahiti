@@ -3,7 +3,7 @@ import logging
 
 from tahiti.app_auth import requires_auth, requires_permission
 
-from flask import request
+from flask import request, g as flask_g
 from flask_restful import Resource
 from http import HTTPStatus
 
@@ -12,22 +12,20 @@ from tahiti.models import *
 from flask_babel import gettext
 
 log = logging.getLogger(__name__)
-# region Protected\s*
-# endregion
 
 
-class SourceCodeListApi(Resource):
-    """ REST API for listing class SourceCode """
+class PipelineListApi(Resource):
+    """ REST API for listing class Pipeline """
 
     def __init__(self):
-        self.human_name = gettext('SourceCode')
+        self.human_name = gettext('Pipeline')
 
     @requires_auth
     def get(self):
         """
-        Retrieve a list of instances of class SourceCode.
+        Retrieve a list of instances of class Pipeline.
 
-        :return: A JSON object containing the list of SourceCode instances data.
+        :return: A JSON object containing the list of Pipeline instances data.
         :rtype: dict
         """
         if request.args.get('fields'):
@@ -37,26 +35,26 @@ class SourceCodeListApi(Resource):
                 'simple', 'false') == 'true' else None
         enabled_filter = request.args.get('enabled')
         if enabled_filter:
-            source_codes = SourceCode.query.filter(
-                SourceCode.enabled == (enabled_filter != 'false'))
+            pipelines = Pipeline.query.filter(
+                Pipeline.enabled == (enabled_filter != 'false'))
         else:
-            source_codes = SourceCode.query
+            pipelines = Pipeline.query
 
         sort = request.args.get('sort', 'name')
         if sort not in ['name']:
             sort = 'name'
-        sort_option = getattr(SourceCode, sort)
+        sort_option = getattr(Pipeline, sort)
         if request.args.get('asc', 'true') == 'false':
             sort_option = sort_option.desc()
-        source_codes = source_codes.order_by(sort_option)
+        pipelines = pipelines.order_by(sort_option)
 
         page = request.args.get('page') or '1'
         if page is not None and page.isdigit():
             page_size = int(request.args.get('size', 20))
             page = int(page)
-            pagination = source_codes.paginate(page, page_size, True)
+            pagination = pipelines.paginate(page, page_size, True)
             result = {
-                'data': SourceCodeListResponseSchema(
+                'data': PipelineListResponseSchema(
                     many=True, only=only).dump(pagination.items),
                 'pagination': {
                     'page': page, 'size': page_size,
@@ -65,19 +63,18 @@ class SourceCodeListApi(Resource):
             }
         else:
             result = {
-                'data': SourceCodeListResponseSchema(
+                'data': PipelineListResponseSchema(
                     many=True, only=only).dump(
-                    source_codes)}
+                    pipelines)}
 
         if log.isEnabledFor(logging.DEBUG):
             log.debug(gettext('Listing %(name)s', name=self.human_name))
         return result
 
     @requires_auth
-    @requires_permission('ADMINISTRATOR',)
     def post(self):
         """
-        Add a single instance of class SourceCode.
+        Add a single instance of class Pipeline.
 
         :return: A JSON object containing a success message.
         :rtype: dict
@@ -87,49 +84,53 @@ class SourceCodeListApi(Resource):
         return_code = HTTPStatus.BAD_REQUEST
 
         if request.json is not None:
-            request_schema = SourceCodeCreateRequestSchema()
-            response_schema = SourceCodeItemResponseSchema()
+            request_schema = PipelineCreateRequestSchema()
+            response_schema = PipelineItemResponseSchema()
             data = request.json
-            source_code = request_schema.load(request.json)
+            data['user_id'] = flask_g.user.id
+            data['user_login'] = flask_g.user.login
+            data['user_name'] = flask_g.user.name
+            data['version'] = 1
+            pipeline = request_schema.load(request.json)
 
             if log.isEnabledFor(logging.DEBUG):
                 log.debug(gettext('Adding %s'), self.human_name)
-            source_code = source_code
-            db.session.add(source_code)
+            pipeline = pipeline
+            db.session.add(pipeline)
             db.session.commit()
-            result = response_schema.dump(source_code)
+            result = response_schema.dump(pipeline)
             return_code = HTTPStatus.CREATED
         return result, return_code
 
 
-class SourceCodeDetailApi(Resource):
-    """ REST API for a single instance of class SourceCode """
+class PipelineDetailApi(Resource):
+    """ REST API for a single instance of class Pipeline """
 
     def __init__(self):
-        self.human_name = gettext('SourceCode')
+        self.human_name = gettext('Pipeline')
 
     @requires_auth
-    def get(self, source_code_id):
+    def get(self, pipeline_id):
         """
-        Retrieve a single instance of class SourceCode.
+        Retrieve a single instance of class Pipeline.
 
-        :param source_code_id: The ID of the SourceCode instance to retrieve.
-        :type source_code_id: int
-        :return: A JSON object containing the SourceCode instance data.
+        :param pipeline_id: The ID of the Pipeline instance to retrieve.
+        :type pipeline_id: int
+        :return: A JSON object containing the Pipeline instance data.
         :rtype: dict
         """
 
         if log.isEnabledFor(logging.DEBUG):
             log.debug(gettext('Retrieving %s (id=%s)'), self.human_name,
-                      source_code_id)
+                      pipeline_id)
 
-        source_code = SourceCode.query.get(source_code_id)
+        pipeline = Pipeline.query.get(pipeline_id)
         return_code = HTTPStatus.OK
-        if source_code is not None:
+        if pipeline is not None:
             result = {
                 'status': 'OK',
-                'data': [SourceCodeItemResponseSchema().dump(
-                    source_code)]
+                'data': [PipelineItemResponseSchema().dump(
+                    pipeline)]
             }
         else:
             return_code = HTTPStatus.NOT_FOUND
@@ -137,19 +138,18 @@ class SourceCodeDetailApi(Resource):
                 'status': 'ERROR',
                 'message': gettext(
                     '%(name)s not found (id=%(id)s)',
-                    name=self.human_name, id=source_code_id)
+                    name=self.human_name, id=pipeline_id)
             }
 
         return result, return_code
 
     @requires_auth
-    @requires_permission('ADMINISTRATOR',)
-    def delete(self, source_code_id):
+    def delete(self, pipeline_id):
         """
-        Delete a single instance of class SourceCode.
+        Delete a single instance of class Pipeline.
 
-        :param source_code_id: The ID of the SourceCode instance to delete.
-        :type source_code_id: int
+        :param pipeline_id: The ID of the Pipeline instance to delete.
+        :type pipeline_id: int
         :return: A JSON object containing a success message.
         :rtype: dict
         """
@@ -157,10 +157,10 @@ class SourceCodeDetailApi(Resource):
         return_code = HTTPStatus.NO_CONTENT
         if log.isEnabledFor(logging.DEBUG):
             log.debug(gettext('Deleting %s (id=%s)'), self.human_name,
-                      source_code_id)
-        source_code = SourceCode.query.get(source_code_id)
-        if source_code is not None:
-            db.session.delete(source_code)
+                      pipeline_id)
+        pipeline = Pipeline.query.get(pipeline_id)
+        if pipeline is not None:
+            db.session.delete(pipeline)
             db.session.commit()
             result = {
                 'status': 'OK',
@@ -172,18 +172,17 @@ class SourceCodeDetailApi(Resource):
             result = {
                 'status': 'ERROR',
                 'message': gettext('%(name)s not found (id=%(id)s).',
-                                   name=self.human_name, id=source_code_id)
+                                   name=self.human_name, id=pipeline_id)
             }
         return result, return_code
 
     @requires_auth
-    @requires_permission('ADMINISTRATOR',)
-    def patch(self, source_code_id):
+    def patch(self, pipeline_id):
         """
-        Update a single instance of class SourceCode.
+        Update a single instance of class Pipeline.
 
-        :param source_code_id: The ID of the SourceCode instance to update.
-        :type source_code_id: int
+        :param pipeline_id: The ID of the Pipeline instance to update.
+        :type pipeline_id: int
         :return: A JSON object containing a success message.
         :rtype: dict
         """
@@ -192,31 +191,35 @@ class SourceCodeDetailApi(Resource):
 
         if log.isEnabledFor(logging.DEBUG):
             log.debug(gettext('Updating %s (id=%s)'), self.human_name,
-                      source_code_id)
+                      pipeline_id)
         if request.json:
             request_schema = partial_schema_factory(
-                SourceCodeCreateRequestSchema)
-            response_schema = SourceCodeItemResponseSchema()
+                PipelineCreateRequestSchema)
+            response_schema = PipelineItemResponseSchema()
             # Ignore missing fields to allow partial updates
 
             data = request.json
+            data['user_id'] = flask_g.user.id
+            data['user_login'] = flask_g.user.login
+            data['user_name'] = flask_g.user.name
 
-            source_code = request_schema.load(data, partial=True)
-            source_code.id = source_code_id
-            source_code = db.session.merge(source_code)
+            pipeline = request_schema.load(data, partial=True)
+            pipeline.id = pipeline_id
+            pipeline = db.session.merge(pipeline)
+            pipeline.version = (pipeline.version or 1) + 1
 
             db.session.commit()
 
-            if source_code is not None:
+            if pipeline is not None:
                 return_code = HTTPStatus.OK
                 result = {
                     'status': 'OK',
                     'message': gettext(
                         '%(n)s (id=%(id)s) was updated with success!',
                         n=self.human_name,
-                        id=source_code_id),
+                        id=pipeline_id),
                     'data': [response_schema.dump(
-                        source_code)]
+                        pipeline)]
                 }
         return result, return_code
 

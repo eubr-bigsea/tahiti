@@ -128,14 +128,14 @@ paths:
             type: array
             items:
               $ref: '#/definitions/PlatformItemResponseSchema'
-  /operationsubsets/{id}:
+  /operation-subsets/{id}:
         
     get: 
       summary: 'Retrieves an instance of OperationSubset'
       description: |
         Retrieves an instance of OperationSubset by using its identifier.
       tags:
-        - /operationsubsets/{id}
+        - /operation-subsets/{id}
       parameters:
         - name: id
           in: path
@@ -165,7 +165,7 @@ paths:
           required: true
           type: integer  
       tags:
-        - /operationsubsets/{id}
+        - /operation-subsets/{id}
       responses:
         204:
           description: Instance was removed with success.
@@ -188,7 +188,7 @@ paths:
           schema:
             $ref: '#/definitions/OperationSubsetCreateRequestSchema'
       tags:
-        - /operationsubsets/{id}
+        - /operation-subsets/{id}
       responses:
         200:
           description: An array of OperationSubset with a single instance.
@@ -196,7 +196,7 @@ paths:
             type: array
             items:
               $ref: '#/definitions/OperationSubsetItemResponseSchema'
-  /operationsubsets:
+  /operation-subsets:
     get:
       summary: 'Retrieves the list of OperationSubset'
       description: |
@@ -220,7 +220,7 @@ paths:
           required: false
           type: integer
       tags:
-        - /operationsubsets
+        - /operation-subsets
       responses:
         200:
           description: An array of OperationSubset
@@ -242,7 +242,7 @@ paths:
           schema:
             $ref: '#/definitions/OperationSubsetCreateRequestSchema'
       tags:
-        - /operationsubsets
+        - /operation-subsets
       responses:
         200:
           description: Successfuly created the instance
@@ -391,196 +391,6 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/DefaultErrorSchema'
-  /operationcategorys/{id}:
-        
-    get: 
-      summary: 'Retrieves an instance of OperationCategory'
-      description: |
-        Retrieves an instance of OperationCategory by using its identifier.
-      tags:
-        - /operationcategorys/{id}
-      parameters:
-        - name: id
-          in: path
-          description: ID of OperationCategory to fetch
-          required: true
-          type: integer  
-      security:
-        - Bearer: []
-      responses:
-        200:
-          description: An array of OperationCategory with a single instance.
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/OperationCategoryItemResponseSchema'        
-  
-  /operationcategorys:
-    get:
-      summary: 'Retrieves the list of OperationCategory'
-      description: |
-        A The /operationcategory endpoint returns informationabout the *OperationCategory*. The response includes the display nameand other details about each instance, listing them in the proper display order.
-      security:
-        - Bearer: []
-      parameters:
-        - name: only
-          in: query
-          description: Fields to be selected.
-          required: false
-          type: string
-        - name: page
-          in: query
-          description: Page number.
-          required: false
-          type: integer
-        - name: size
-          in: query
-          description: Page size.
-          required: false
-          type: integer
-      tags:
-        - /operationcategorys
-      responses:
-        200:
-          description: An array of OperationCategory
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/OperationCategoryItemResponseSchema'
-  /applications/{id}:
-        
-    get: 
-      summary: 'Retrieves an instance of Application'
-      description: |
-        Retrieves an instance of Application by using its identifier.
-      tags:
-        - /applications/{id}
-      parameters:
-        - name: id
-          in: path
-          description: ID of Application to fetch
-          required: true
-          type: integer  
-      security:
-        - Bearer: []
-      responses:
-        200:
-          description: An array of Application with a single instance.
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ApplicationItemResponseSchema'        
-  
-    delete:
-      summary: 'Removes an instance of Application'
-      description: |
-        Removes Application identified by {id}.
-      security:
-        - Bearer: []
-      parameters:
-        - name: id
-          in: path
-          description: ID of Application to delete
-          required: true
-          type: integer  
-      tags:
-        - /applications/{id}
-      responses:
-        204:
-          description: Instance was removed with success.
-    patch:
-      summary: 'Updates an instance of Application'
-      description: |
-        Updates Application identified by {id}.
-      security:
-        - Bearer: []
-      parameters:
-        - name: id
-          in: path
-          description: ID of Application to delete
-          required: true
-          type: integer  
-        - name: application
-          in: body
-          description: Update
-          required: true
-          schema:
-            $ref: '#/definitions/ApplicationCreateRequestSchema'
-      tags:
-        - /applications/{id}
-      responses:
-        200:
-          description: An array of Application with a single instance.
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ApplicationItemResponseSchema'
-  /applications:
-    get:
-      summary: 'Retrieves the list of Application'
-      description: |
-        A The /application endpoint returns informationabout the *Application*. The response includes the display nameand other details about each instance, listing them in the proper display order.
-      security:
-        - Bearer: []
-      parameters:
-        - name: only
-          in: query
-          description: Fields to be selected.
-          required: false
-          type: string
-        - name: page
-          in: query
-          description: Page number.
-          required: false
-          type: integer
-        - name: size
-          in: query
-          description: Page size.
-          required: false
-          type: integer
-        - name: enabled
-          in: query
-          description: Returns only records where enabled equals to parameter.
-          required: false
-          type: boolean
-      tags:
-        - /applications
-      responses:
-        200:
-          description: An array of Application
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/ApplicationItemResponseSchema'
-    post:
-      summary: 'Creates a new instance of Application'
-      description: |
-        Creates a new instance of Application
-      security:
-        - Bearer: []
-      parameters:
-        - name: application
-          in: body
-          description: New item to add to the collection
-          required: true
-          schema:
-            $ref: '#/definitions/ApplicationCreateRequestSchema'
-      tags:
-        - /applications
-      responses:
-        200:
-          description: Successfuly created the instance
-          schema:
-            $ref: '#/definitions/ApplicationListResponseSchema'
-        401:
-          description: Validation error
-          schema:
-            $ref: '#/definitions/ValidationErrorSchema'
-
-        500:
-          description: Internal server error
-          schema:
-            $ref: '#/definitions/DefaultErrorSchema'
   /workflows/{id}:
         
     get: 
@@ -715,6 +525,438 @@ paths:
           description: Internal server error
           schema:
             $ref: '#/definitions/DefaultErrorSchema'
+  /source-codes/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of SourceCode'
+      description: |
+        Retrieves an instance of SourceCode by using its identifier.
+      tags:
+        - /source-codes/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of SourceCode to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of SourceCode with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SourceCodeItemResponseSchema'        
+  
+    delete:
+      summary: 'Removes an instance of SourceCode'
+      description: |
+        Removes SourceCode identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of SourceCode to delete
+          required: true
+          type: integer  
+      tags:
+        - /source-codes/{id}
+      responses:
+        204:
+          description: Instance was removed with success.
+    patch:
+      summary: 'Updates an instance of SourceCode'
+      description: |
+        Updates SourceCode identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of SourceCode to delete
+          required: true
+          type: integer  
+        - name: sourcecode
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/SourceCodeCreateRequestSchema'
+      tags:
+        - /source-codes/{id}
+      responses:
+        200:
+          description: An array of SourceCode with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SourceCodeItemResponseSchema'
+  /source-codes:
+    get:
+      summary: 'Retrieves the list of SourceCode'
+      description: |
+        A The /sourcecode endpoint returns informationabout the *SourceCode*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+        - name: enabled
+          in: query
+          description: Returns only records where enabled equals to parameter.
+          required: false
+          type: boolean
+        - name: sort
+          in: query
+          description: Sort attribute.
+          required: false
+          type: string
+        - name: asc
+          in: query
+          description: Sort ascending.
+          required: false
+          type: boolean
+      tags:
+        - /source-codes
+      responses:
+        200:
+          description: An array of SourceCode
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/SourceCodeItemResponseSchema'
+    post:
+      summary: 'Creates a new instance of SourceCode'
+      description: |
+        Creates a new instance of SourceCode
+      security:
+        - Bearer: []
+      parameters:
+        - name: sourcecode
+          in: body
+          description: New item to add to the collection
+          required: true
+          schema:
+            $ref: '#/definitions/SourceCodeCreateRequestSchema'
+      tags:
+        - /source-codes
+      responses:
+        200:
+          description: Successfuly created the instance
+          schema:
+            $ref: '#/definitions/SourceCodeListResponseSchema'
+        401:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/ValidationErrorSchema'
+
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/DefaultErrorSchema'
+  /pipeline-templates/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of PipelineTemplate'
+      description: |
+        Retrieves an instance of PipelineTemplate by using its identifier.
+      tags:
+        - /pipeline-templates/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of PipelineTemplate to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of PipelineTemplate with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineTemplateItemResponseSchema'        
+  
+    delete:
+      summary: 'Removes an instance of PipelineTemplate'
+      description: |
+        Removes PipelineTemplate identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of PipelineTemplate to delete
+          required: true
+          type: integer  
+      tags:
+        - /pipeline-templates/{id}
+      responses:
+        204:
+          description: Instance was removed with success.
+    patch:
+      summary: 'Updates an instance of PipelineTemplate'
+      description: |
+        Updates PipelineTemplate identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of PipelineTemplate to delete
+          required: true
+          type: integer  
+        - name: pipelinetemplate
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/PipelineTemplateCreateRequestSchema'
+      tags:
+        - /pipeline-templates/{id}
+      responses:
+        200:
+          description: An array of PipelineTemplate with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineTemplateItemResponseSchema'
+  /pipeline-templates:
+    get:
+      summary: 'Retrieves the list of PipelineTemplate'
+      description: |
+        A The /pipelinetemplate endpoint returns informationabout the *PipelineTemplate*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+        - name: enabled
+          in: query
+          description: Returns only records where enabled equals to parameter.
+          required: false
+          type: boolean
+        - name: sort
+          in: query
+          description: Sort attribute.
+          required: false
+          type: string
+        - name: asc
+          in: query
+          description: Sort ascending.
+          required: false
+          type: boolean
+      tags:
+        - /pipeline-templates
+      responses:
+        200:
+          description: An array of PipelineTemplate
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineTemplateItemResponseSchema'
+    post:
+      summary: 'Creates a new instance of PipelineTemplate'
+      description: |
+        Creates a new instance of PipelineTemplate
+      security:
+        - Bearer: []
+      parameters:
+        - name: pipelinetemplate
+          in: body
+          description: New item to add to the collection
+          required: true
+          schema:
+            $ref: '#/definitions/PipelineTemplateCreateRequestSchema'
+      tags:
+        - /pipeline-templates
+      responses:
+        200:
+          description: Successfuly created the instance
+          schema:
+            $ref: '#/definitions/PipelineTemplateListResponseSchema'
+        401:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/ValidationErrorSchema'
+
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/DefaultErrorSchema'
+  /pipelines/{id}:
+        
+    get: 
+      summary: 'Retrieves an instance of Pipeline'
+      description: |
+        Retrieves an instance of Pipeline by using its identifier.
+      tags:
+        - /pipelines/{id}
+      parameters:
+        - name: id
+          in: path
+          description: ID of Pipeline to fetch
+          required: true
+          type: integer  
+      security:
+        - Bearer: []
+      responses:
+        200:
+          description: An array of Pipeline with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineItemResponseSchema'        
+  
+    delete:
+      summary: 'Removes an instance of Pipeline'
+      description: |
+        Removes Pipeline identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Pipeline to delete
+          required: true
+          type: integer  
+      tags:
+        - /pipelines/{id}
+      responses:
+        204:
+          description: Instance was removed with success.
+    patch:
+      summary: 'Updates an instance of Pipeline'
+      description: |
+        Updates Pipeline identified by {id}.
+      security:
+        - Bearer: []
+      parameters:
+        - name: id
+          in: path
+          description: ID of Pipeline to delete
+          required: true
+          type: integer  
+        - name: pipeline
+          in: body
+          description: Update
+          required: true
+          schema:
+            $ref: '#/definitions/PipelineCreateRequestSchema'
+      tags:
+        - /pipelines/{id}
+      responses:
+        200:
+          description: An array of Pipeline with a single instance.
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineItemResponseSchema'
+  /pipelines:
+    get:
+      summary: 'Retrieves the list of Pipeline'
+      description: |
+        A The /pipeline endpoint returns informationabout the *Pipeline*. The response includes the display nameand other details about each instance, listing them in the proper display order.
+      security:
+        - Bearer: []
+      parameters:
+        - name: only
+          in: query
+          description: Fields to be selected.
+          required: false
+          type: string
+        - name: page
+          in: query
+          description: Page number.
+          required: false
+          type: integer
+        - name: size
+          in: query
+          description: Page size.
+          required: false
+          type: integer
+        - name: enabled
+          in: query
+          description: Returns only records where enabled equals to parameter.
+          required: false
+          type: boolean
+        - name: sort
+          in: query
+          description: Sort attribute.
+          required: false
+          type: string
+        - name: asc
+          in: query
+          description: Sort ascending.
+          required: false
+          type: boolean
+      tags:
+        - /pipelines
+      responses:
+        200:
+          description: An array of Pipeline
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PipelineItemResponseSchema'
+    post:
+      summary: 'Creates a new instance of Pipeline'
+      description: |
+        Creates a new instance of Pipeline
+      security:
+        - Bearer: []
+      parameters:
+        - name: pipeline
+          in: body
+          description: New item to add to the collection
+          required: true
+          schema:
+            $ref: '#/definitions/PipelineCreateRequestSchema'
+      tags:
+        - /pipelines
+      responses:
+        200:
+          description: Successfuly created the instance
+          schema:
+            $ref: '#/definitions/PipelineListResponseSchema'
+        401:
+          description: Validation error
+          schema:
+            $ref: '#/definitions/ValidationErrorSchema'
+
+        500:
+          description: Internal server error
+          schema:
+            $ref: '#/definitions/DefaultErrorSchema'
 definitions:
   DefaultErrorSchema:
     type: object
@@ -777,15 +1019,7 @@ definitions:
         type: boolean
         description: "Platform is a external plugin"
         required: true
-      forms:
-        type: array
-        items:
-          $ref: '#/definitions/OperationFormListResponseSchema'
-      plugins:
-        type: array
-        items:
-          $ref: '#/definitions/PlatformPluginListResponseSchema'
-      operation_subsets:
+      subsets:
         type: array
         items:
           $ref: '#/definitions/OperationSubsetListResponseSchema'
@@ -819,11 +1053,7 @@ definitions:
         type: string
         description: "Platform version"
         required: false
-      forms:
-        type: array
-        items:
-          $ref: '#/definitions/OperationFormCreateRequestSchema'
-      operation_subsets:
+      subsets:
         type: array
         items:
           $ref: '#/definitions/OperationSubsetCreateRequestSchema'
@@ -861,15 +1091,7 @@ definitions:
         type: boolean
         description: "Platform is a external plugin"
         required: true
-      forms:
-        type: array
-        items:
-          $ref: '#/definitions/OperationFormItemResponseSchema'
-      plugins:
-        type: array
-        items:
-          $ref: '#/definitions/PlatformPluginItemResponseSchema'
-      operation_subsets:
+      subsets:
         type: array
         items:
           $ref: '#/definitions/OperationSubsetItemResponseSchema'
@@ -1016,14 +1238,14 @@ definitions:
         type: string
         description: "Link to documentation"
         required: false
+      label_format:
+        type: string
+        description: "Label format"
+        required: false
       categories:
         type: array
         items:
           $ref: '#/definitions/OperationCategoryListResponseSchema'
-      subsets:
-        type: array
-        items:
-          $ref: '#/definitions/OperationSubsetListResponseSchema'
       platforms:
         type: array
         items:
@@ -1075,14 +1297,14 @@ definitions:
         type: string
         description: "Link to documentation"
         required: false
+      label_format:
+        type: string
+        description: "Label format"
+        required: false
       categories:
         type: array
         items:
           $ref: '#/definitions/OperationCategoryCreateRequestSchema'
-      subsets:
-        type: array
-        items:
-          $ref: '#/definitions/OperationSubsetCreateRequestSchema'
       platforms:
         type: array
         items:
@@ -1138,14 +1360,14 @@ definitions:
         type: string
         description: "Link to documentation"
         required: false
+      label_format:
+        type: string
+        description: "Label format"
+        required: false
       categories:
         type: array
         items:
           $ref: '#/definitions/OperationCategoryItemResponseSchema'
-      subsets:
-        type: array
-        items:
-          $ref: '#/definitions/OperationSubsetItemResponseSchema'
       platforms:
         type: array
         items:
@@ -1197,6 +1419,10 @@ definitions:
       doc_link:
         type: string
         description: "Link to documentation"
+        required: false
+      label_format:
+        type: string
+        description: "Label format"
         required: false
       categories:
         type: array
@@ -1388,6 +1614,10 @@ definitions:
         type: string
         description: "Type of category, used to filter"
         required: true
+      subtype:
+        type: string
+        description: "Subtype of category, used to filter"
+        required: false
       order:
         type: integer
         description: "Order to display"
@@ -1410,6 +1640,10 @@ definitions:
         type: string
         description: "Type of category, used to filter"
         required: true
+      subtype:
+        type: string
+        description: "Subtype of category, used to filter"
+        required: false
       order:
         type: integer
         description: "Order to display"
@@ -1429,6 +1663,10 @@ definitions:
         type: string
         description: "Type of category, used to filter"
         required: true
+      subtype:
+        type: string
+        description: "Subtype of category, used to filter"
+        required: false
       order:
         type: integer
         description: "Order to display"
@@ -2025,7 +2263,7 @@ definitions:
         type: string
         description: "Workflow type"
         required: true
-        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
       preferred_cluster_id:
         type: integer
         description: "Preferred cluster used to run the workflow"
@@ -2115,7 +2353,7 @@ definitions:
         type: string
         description: "Workflow type"
         required: true
-        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
       preferred_cluster_id:
         type: integer
         description: "Preferred cluster used to run the workflow"
@@ -2204,7 +2442,7 @@ definitions:
         type: string
         description: "Workflow type"
         required: true
-        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
       preferred_cluster_id:
         type: integer
         description: "Preferred cluster used to run the workflow"
@@ -2296,7 +2534,7 @@ definitions:
         type: string
         description: "Workflow type"
         required: true
-        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW"]
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
       preferred_cluster_id:
         type: integer
         description: "Preferred cluster used to run the workflow"
@@ -2880,3 +3118,510 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ExecuteRequestSchema'
+  SourceCodeCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "SourceCode identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      suspicious:
+        type: boolean
+        description: "Code is marked as suspicious"
+        required: true
+      requirements:
+        type: string
+        description: "Requirements"
+        required: false
+      imports:
+        type: string
+        description: "Imports"
+        required: false
+      help:
+        type: string
+        description: "Help"
+        required: false
+      code:
+        type: string
+        description: "Source code"
+        required: true
+  SourceCodeItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "SourceCode identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      suspicious:
+        type: boolean
+        description: "Code is marked as suspicious"
+        required: true
+      requirements:
+        type: string
+        description: "Requirements"
+        required: false
+      imports:
+        type: string
+        description: "Imports"
+        required: false
+      help:
+        type: string
+        description: "Help"
+        required: false
+      code:
+        type: string
+        description: "Source code"
+        required: true
+  SourceCodeListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "SourceCode identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      suspicious:
+        type: boolean
+        description: "Code is marked as suspicious"
+        required: true
+      requirements:
+        type: string
+        description: "Requirements"
+        required: false
+      imports:
+        type: string
+        description: "Imports"
+        required: false
+      help:
+        type: string
+        description: "Help"
+        required: false
+      code:
+        type: string
+        description: "Source code"
+        required: true
+  PipelineTemplateCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineTemplate identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      steps:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineTemplateStepCreateRequestSchema'
+  PipelineTemplateItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineTemplate identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      steps:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineTemplateStepItemResponseSchema'
+  PipelineTemplateListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineTemplate identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      steps:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineTemplateStepListResponseSchema'
+  PipelineTemplateStepCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineTemplateStep identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      order:
+        type: integer
+        description: "Order"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      template:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineTemplateCreateRequestSchema'
+  PipelineTemplateStepItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineTemplateStep identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      order:
+        type: integer
+        description: "Order"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      template:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineTemplateItemResponseSchema'
+  PipelineTemplateStepListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineTemplateStep identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      order:
+        type: integer
+        description: "Order"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      template:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineTemplateListResponseSchema'
+  PipelineCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Pipeline identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      user_id:
+        type: integer
+        description: "User id"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+      created:
+        type: string
+        description: "Creation date and time"
+        required: true
+        format: 'date-time'
+      updated:
+        type: string
+        description: "Updating date and time"
+        required: true
+        format: 'date-time'
+      version:
+        type: integer
+        description: "Version of workflow"
+        required: true
+      steps:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineStepCreateRequestSchema'
+  PipelineItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Pipeline identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      user_id:
+        type: integer
+        description: "User id"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+      created:
+        type: string
+        description: "Creation date and time"
+        required: true
+        format: 'date-time'
+      updated:
+        type: string
+        description: "Updating date and time"
+        required: true
+        format: 'date-time'
+      version:
+        type: integer
+        description: "Version of workflow"
+        required: true
+      steps:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineStepItemResponseSchema'
+  PipelineListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "Pipeline identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      user_id:
+        type: integer
+        description: "User id"
+        required: true
+      user_login:
+        type: string
+        description: "User login"
+        required: true
+      user_name:
+        type: string
+        description: "User name"
+        required: true
+      created:
+        type: string
+        description: "Creation date and time"
+        required: true
+        format: 'date-time'
+      updated:
+        type: string
+        description: "Updating date and time"
+        required: true
+        format: 'date-time'
+      version:
+        type: integer
+        description: "Version of workflow"
+        required: true
+      steps:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineStepListResponseSchema'
+  PipelineStepCreateRequestSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineStep identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      order:
+        type: integer
+        description: "Order"
+        required: true
+      scheduling:
+        type: string
+        description: "Scheduling"
+        required: false
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      workflow_type:
+        type: string
+        description: "Workflow type"
+        required: false
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
+      pipeline:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineCreateRequestSchema'
+      workflow:
+        type: array
+        items:
+          $ref: '#/definitions/WorkflowCreateRequestSchema'
+  PipelineStepItemResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineStep identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      order:
+        type: integer
+        description: "Order"
+        required: true
+      scheduling:
+        type: string
+        description: "Scheduling"
+        required: false
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      workflow_type:
+        type: string
+        description: "Workflow type"
+        required: false
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
+      pipeline:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineItemResponseSchema'
+      workflow:
+        type: array
+        items:
+          $ref: '#/definitions/WorkflowItemResponseSchema'
+  PipelineStepListResponseSchema:
+    type: object
+    properties:
+      id:
+        type: integer
+        description: "PipelineStep identifier"
+      name:
+        type: string
+        description: "Name"
+        required: true
+      order:
+        type: integer
+        description: "Order"
+        required: true
+      scheduling:
+        type: string
+        description: "Scheduling"
+        required: false
+      description:
+        type: string
+        description: "Description"
+        required: false
+      enabled:
+        type: boolean
+        description: "Enabled"
+        required: true
+      workflow_type:
+        type: string
+        description: "Workflow type"
+        required: false
+        enum: ["WORKFLOW", "USER_TEMPLATE", "SYSTEM_TEMPLATE", "SUB_FLOW", "DATA_EXPLORER", "MODEL_BUILDER", "VIS_BUILDER"]
+      pipeline:
+        type: array
+        items:
+          $ref: '#/definitions/PipelineListResponseSchema'
+      workflow:
+        type: array
+        items:
+          $ref: '#/definitions/WorkflowListResponseSchema'
