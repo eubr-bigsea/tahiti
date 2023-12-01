@@ -33,7 +33,7 @@ APPEARANCE_FORM_ID=41
 BASE_PLATFORM = 2236
 BASE_OP = 2236
 BASE_FORM = 2236
-BASE_FORM_FIELD = 2236
+BASE_FORM_FIELD = 2237
 
 # Model builder
 # Uses READ_DATA, SAMPLE
@@ -41,6 +41,9 @@ BASE_FORM_FIELD = 2236
 FM_CLASSIFIER = BASE_OP + 9
 
 FM_REGRESSION = BASE_OP + 10
+
+FM_CLASSIFIER_FORM = 2236
+FM_REGRESSION_FORM = 2237
 
 CAT_CLASSIFICATION = 4
 CAT_REGRESSION = 47
@@ -179,15 +182,40 @@ def _insert_operation_form_field(conn):
                 column('editable', Boolean), 
                 column('form_id', Integer))
     columns = [c.name for c in tb.columns]
-    data = []
+    data = [
+	[BASE_FORM_FIELD + 1, 'factor_size', 'INTEGER', False,  0,  None, 'integer',  None,  None,  'EXECUTION',  None,  True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 2, 'fit_linear', 'INTEGER', False, 1, None, 'checkbox',  None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 3, 'reg_param', 'FLOAT', False, 6, None, 'decimal', None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 4, 'min_batch', 'FLOAT', False, 2, None, 'decimal', None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 5, 'init_std', 'FLOAT', False, 3, None, 'decimal', None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 6,'max_iter', 'INTEGER', False, 3, '10', 'integer', None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 7, 'step_size', 'INTEGER', False, 5, None, 'integer', None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 8, 'tolerance', 'FLOAT', False, 1, '0.0001', 'decimal', None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 9, 'solver', 'TEXT', False, 4, None, 'dropdown', None, '[{"key": "adamW", "value": "adamW"}, {"key": "gd", "value": "gd"}]', 'EXECUTION', None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 10, 'seed', 'INTEGER', False, 0, None, 'integer', None, None, 'EXECUTION',  None, True, FM_CLASSIFIER_FORM],
+        [BASE_FORM_FIELD + 11, 'threshold', 'FLOAT', False, 3, None, 'decimal', None, None, 'EXECUTION', None, True, FM_CLASSIFIER_FORM] ,
+
+        [BASE_FORM_FIELD + 12, 'factor_size', 'INTEGER', False,  0,  None, 'integer',  None,  None,  'EXECUTION',  None,  True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 13, 'fit_linear', 'INTEGER', False, 1, None, 'checkbox',  None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 14, 'reg_param', 'FLOAT', False, 6, None, 'decimal', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 15, 'min_batch', 'FLOAT', False, 2, None, 'decimal', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 16, 'init_std', 'FLOAT', False, 3, None, 'decimal', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 17,'max_iter', 'INTEGER', False, 3, '10', 'integer', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 18, 'step_size', 'INTEGER', False, 5, None, 'integer', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 19, 'tolerance', 'FLOAT', False, 1, '0.0001', 'decimal', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 20, 'solver', 'TEXT', False, 4, None, 'dropdown', None, '[{"key": "adamW", "value": "adamW"}, {"key": "gd", "value": "gd"}]', 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 21, 'seed', 'INTEGER', False, 0, None, 'integer', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+        [BASE_FORM_FIELD + 22, 'threshold', 'FLOAT', False, 3, None, 'decimal', None, None, 'EXECUTION', None, True, FM_REGRESSION_FORM],
+
+    ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
 def _delete_operation_form_field(conn):
     conn.execute(
-        'DELETE from operation_form_field WHERE form_id BETWEEN %s AND %s', 
-        BASE_FORM + 1, BASE_FORM + 2)
+        'DELETE from operation_form_field WHERE id BETWEEN %s AND %s', 
+        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 22)
 
 def _insert_operation_form_field_translation(conn):
     tb = table('operation_form_field_translation',
@@ -196,14 +224,81 @@ def _insert_operation_form_field_translation(conn):
                 column('label', String), 
                 column('help', UnicodeText))
     columns = [c.name for c in tb.columns]
-    data = []
+    data = [
+        [BASE_FORM_FIELD + 1, 'en', 'Factor Size', 'Size of the factorization'],
+        [BASE_FORM_FIELD + 1, 'pt', 'Tamanho do Fator (factor size)', 'Tamanho da fatoração'],
+    
+        [BASE_FORM_FIELD + 2, 'en', 'Fit Linear', 'Whether to fit a linear term'],
+        [BASE_FORM_FIELD + 2, 'pt', 'Ajustar Linear (fit linear)', 'Se deve ajustar um termo linear'],
+
+        [BASE_FORM_FIELD + 3, 'en', 'Regularization Parameter', 'Regularization parameter (λ >= 0)'],
+        [BASE_FORM_FIELD + 3, 'pt', 'Parâmetro de Regularização', 'Parâmetro de regularização (λ >= 0)'],
+
+        [BASE_FORM_FIELD + 4, 'en', 'Mini-Batch Fraction', 'Fraction of data to be used for each SGD iteration'],
+        [BASE_FORM_FIELD + 4, 'pt', 'Fração do Mini-Batch (mini-batch fraction)', 'Fração dos dados a ser usada para cada iteração SGD'],
+
+        [BASE_FORM_FIELD + 5, 'en', 'Initialization Standard Deviation', 'Standard deviation for weight initialization'],
+        [BASE_FORM_FIELD + 5, 'pt', 'Desvio Padrão da Inicialização', 'Desvio padrão para a inicialização dos pesos'],
+
+        [BASE_FORM_FIELD + 6, 'en', 'Maximum Iterations', 'Maximum number of iterations'],
+        [BASE_FORM_FIELD + 6, 'pt', 'Número Máximo de Iterações', 'Número máximo de iterações'],
+
+        [BASE_FORM_FIELD + 7, 'en', 'Step Size', 'Step size for optimization'],
+        [BASE_FORM_FIELD + 7, 'pt', 'Tamanho do Passo (step size)', 'Tamanho do passo para otimização'],
+
+        [BASE_FORM_FIELD + 8, 'en', 'Tolerance', 'Convergence tolerance'],
+        [BASE_FORM_FIELD + 8, 'pt', 'Tolerância (Tolerance)', 'Tolerância de convergência'],
+
+        [BASE_FORM_FIELD + 9, 'en', 'Solver', 'Optimization solver'],
+        [BASE_FORM_FIELD + 9, 'pt', 'Solver', 'Solver de otimização'],
+
+        [BASE_FORM_FIELD + 10, 'en', 'Seed for random numbers', 'Seed for random numbers'],
+        [BASE_FORM_FIELD + 10, 'pt', 'Semente para números aleatórios', 'Semente para números aleatórios'],
+
+        [BASE_FORM_FIELD + 11, 'en', 'Threshold', 'Threshold for binary classification'],
+        [BASE_FORM_FIELD + 11, 'pt', 'Limiar (threshold)', 'Limiar para classificação binária'],
+
+        [BASE_FORM_FIELD + 12, 'en', 'Factor Size', 'Size of the factorization'],
+        [BASE_FORM_FIELD + 12, 'pt', 'Tamanho do Fator (factor size)', 'Tamanho da fatoração'],
+    
+        [BASE_FORM_FIELD + 13, 'en', 'Fit Linear', 'Whether to fit a linear term'],
+        [BASE_FORM_FIELD + 13, 'pt', 'Ajustar Linear (fit linear)', 'Se deve ajustar um termo linear'],
+
+        [BASE_FORM_FIELD + 14, 'en', 'Regularization Parameter', 'Regularization parameter (λ >= 0)'],
+        [BASE_FORM_FIELD + 14, 'pt', 'Parâmetro de Regularização', 'Parâmetro de regularização (λ >= 0)'],
+
+        [BASE_FORM_FIELD + 15, 'en', 'Mini-Batch Fraction', 'Fraction of data to be used for each SGD iteration'],
+        [BASE_FORM_FIELD + 15, 'pt', 'Fração do Mini-Batch (mini-batch fraction)', 'Fração dos dados a ser usada para cada iteração SGD'],
+
+        [BASE_FORM_FIELD + 16, 'en', 'Initialization Standard Deviation', 'Standard deviation for weight initialization'],
+        [BASE_FORM_FIELD + 16, 'pt', 'Desvio Padrão da Inicialização', 'Desvio padrão para a inicialização dos pesos'],
+
+        [BASE_FORM_FIELD + 17, 'en', 'Maximum Iterations', 'Maximum number of iterations'],
+        [BASE_FORM_FIELD + 17, 'pt', 'Número Máximo de Iterações', 'Número máximo de iterações'],
+
+        [BASE_FORM_FIELD + 18, 'en', 'Step Size', 'Step size for optimization'],
+        [BASE_FORM_FIELD + 18, 'pt', 'Tamanho do Passo (step size)', 'Tamanho do passo para otimização'],
+
+        [BASE_FORM_FIELD + 19, 'en', 'Tolerance', 'Convergence tolerance'],
+        [BASE_FORM_FIELD + 19, 'pt', 'Tolerância (Tolerance)', 'Tolerância de convergência'],
+
+        [BASE_FORM_FIELD + 20, 'en', 'Solver', 'Optimization solver'],
+        [BASE_FORM_FIELD + 20, 'pt', 'Solver', 'Solver de otimização'],
+
+        [BASE_FORM_FIELD + 21, 'en', 'Seed for random numbers', 'Seed for random numbers'],
+        [BASE_FORM_FIELD + 21, 'pt', 'Semente para números aleatórios', 'Semente para números aleatórios'],
+
+        [BASE_FORM_FIELD + 22, 'en', 'Threshold', 'Threshold for binary classification'],
+        [BASE_FORM_FIELD + 22, 'pt', 'Limiar (threshold)', 'Limiar para classificação binária']
+
+    ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field_translation(conn):
     conn.execute(
         'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 2)
+        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 22)
 
 def _insert_operation_category_operation(conn):
     tb = table('operation_category_operation',
@@ -243,8 +338,8 @@ def _insert_operation_operation_form(conn):
 def _delete_operation_operation_form(conn):
     execute(conn, 
         '''DELETE FROM operation_operation_form
-            WHERE operation_id BETWEEN %s and %s''',
-        BASE_OP, BASE_FORM + 1)
+            WHERE operation_form_id IN (%s, %s)''',
+        FM_CLASSIFIER_FORM, FM_REGRESSION_FORM)
 
 def _insert_operation_platform(conn):
     tb = table('operation_platform',
