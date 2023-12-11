@@ -154,6 +154,9 @@ def _get_pipelines() -> list:
             'created': datetime.datetime.now(),
             'updated': datetime.datetime.now(),
             'version': 1,
+            'execution_window': 30,
+            'variables': '',
+            'preferred_cluster_id': 1,
             'steps': [
                 PipelineStep(**{
                     'id': 1,

@@ -141,6 +141,7 @@ class WorkflowType:
     DATA_EXPLORER = 'DATA_EXPLORER'
     MODEL_BUILDER = 'MODEL_BUILDER'
     VIS_BUILDER = 'VIS_BUILDER'
+    SQL = 'SQL'
 
     @staticmethod
     def values():
@@ -645,6 +646,9 @@ class Pipeline(db.Model):
                      default=datetime.datetime.utcnow, nullable=False,
                      onupdate=datetime.datetime.utcnow)
     version = Column(Integer, nullable=False)
+    execution_window = Column(Integer)
+    variables = Column(String(1000))
+    preferred_cluster_id = Column(Integer)
 
     # Associations
     steps = relationship("PipelineStep",
@@ -1019,6 +1023,14 @@ class Workflow(db.Model):
         "OperationSubset",
         overlaps='subset',
         foreign_keys=[subset_id])
+    pipeline_id = Column(Integer,
+                         ForeignKey("pipeline.id",
+                                    name="fk_workflow_pipeline_id"),
+                         index=True)
+    pipeline = relationship(
+        "Pipeline",
+        overlaps='pipeline',
+        foreign_keys=[pipeline_id])
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
                                     name="fk_workflow_platform_id"),

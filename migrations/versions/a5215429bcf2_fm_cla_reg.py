@@ -10,7 +10,7 @@ from sqlalchemy import Integer, String, Text, Boolean, UnicodeText
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 from sqlalchemy.sql.sqltypes import UnicodeText
-from tahiti.migration_utils import is_sqlite
+from tahiti.migration_utils import is_sqlite, is_mysql
 
 
 # revision identifiers, used by Alembic.
@@ -213,7 +213,7 @@ def _insert_operation_form_field(conn):
 
 
 def _delete_operation_form_field(conn):
-    conn.execute(
+    execute(conn,
         'DELETE from operation_form_field WHERE id BETWEEN %s AND %s', 
         BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 22)
 
@@ -296,7 +296,7 @@ def _insert_operation_form_field_translation(conn):
     op.bulk_insert(tb, rows)
 
 def _delete_operation_form_field_translation(conn):
-    conn.execute(
+    execute(conn,
         'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
         BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 22)
 
@@ -402,7 +402,8 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+    if is_mysql():
+        conn.execute('SET FOREIGN_KEY_CHECKS=0;')
     commands = [
         _delete_operation,
         _delete_operation_translation,
@@ -422,5 +423,6 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute('SET FOREIGN_KEY_CHECKS=1;')
+    if is_mysql():
+        conn.execute('SET FOREIGN_KEY_CHECKS=1;')
     session.commit()

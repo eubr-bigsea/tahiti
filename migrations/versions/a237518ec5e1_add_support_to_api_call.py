@@ -10,7 +10,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 from sqlalchemy.sql.sqltypes import UnicodeText
 import json
-from tahiti.migration_utils import is_psql
+from tahiti.migration_utils import (is_psql, is_mysql, is_sqlite,
+        handle_params, get_enable_disable_fk_command)
 
 # revision identifiers, used by Alembic.
 revision = 'a237518ec5e1'
@@ -48,7 +49,7 @@ def _insert_operation(conn):
 
 def _delete_operation(conn):
     conn.execute(
-        'DELETE from operation WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation WHERE id BETWEEN %s AND %s'), 
         BASE_OP + 1, BASE_OP + 1)
 
 def _insert_operation_translation(conn):
@@ -67,7 +68,7 @@ def _insert_operation_translation(conn):
 
 def _delete_operation_translation(conn):
     conn.execute(
-        'DELETE from operation_translation WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_translation WHERE id BETWEEN %s AND %s'), 
         BASE_OP + 1, BASE_OP + 1)
 
 def _insert_operation_script(conn):
@@ -86,7 +87,7 @@ def _insert_operation_script(conn):
 
 def _delete_operation_script(conn):
     conn.execute(
-        'DELETE from operation_script WHERE operation_id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_script WHERE operation_id BETWEEN %s AND %s'), 
         BASE_OP + 1, BASE_OP + 1)
 
 def _insert_operation_form(conn):
@@ -104,7 +105,7 @@ def _insert_operation_form(conn):
 
 def _delete_operation_form(conn):
     conn.execute(
-        'DELETE from operation_form WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_form WHERE id BETWEEN %s AND %s'), 
         BASE_FORM + 1, BASE_FORM + 1)
 
 def _insert_operation_form_translation(conn):
@@ -122,7 +123,7 @@ def _insert_operation_form_translation(conn):
 
 def _delete_operation_form_translation(conn):
     conn.execute(
-        'DELETE from operation_form_translation WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_form_translation WHERE id BETWEEN %s AND %s'), 
         BASE_FORM + 1, BASE_FORM + 1)
 
 def _insert_operation_form_field(conn):
@@ -169,7 +170,7 @@ def _insert_operation_form_field(conn):
 
 def _delete_operation_form_field(conn):
     conn.execute(
-        'DELETE from operation_form_field WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_form_field WHERE id BETWEEN %s AND %s'), 
         BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 10)
 
 def _insert_operation_form_field_translation(conn):
@@ -207,7 +208,7 @@ def _insert_operation_form_field_translation(conn):
 
 def _delete_operation_form_field_translation(conn):
     conn.execute(
-        'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s'), 
         BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 10)
 
 def _insert_operation_port(conn):
@@ -229,7 +230,7 @@ def _insert_operation_port(conn):
 
 def _delete_operation_port(conn):
     conn.execute(
-        'DELETE from operation_port WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_port WHERE id BETWEEN %s AND %s'), 
         BASE_PORT + 1, BASE_PORT + 2)
 
 def _insert_operation_port_translation(conn):
@@ -248,7 +249,7 @@ def _insert_operation_port_translation(conn):
 
 def _delete_operation_port_translation(conn):
     conn.execute(
-        'DELETE from operation_port_translation WHERE id BETWEEN %s AND %s', 
+        handle_params('DELETE from operation_port_translation WHERE id BETWEEN %s AND %s'), 
         BASE_PORT + 1, BASE_PORT + 2)
 
 def _insert_operation_category_operation(conn):
@@ -384,10 +385,8 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    if is_psql():
-        conn.execute('SET CONSTRAINTS ALL DEFERRED')
-    else:
-        conn.execute('SET FOREIGN_KEY_CHECKS=0;')
+    conn.execute(get_enable_disable_fk_command(false))
+
     commands = [
         _delete_operation,
         _delete_operation_translation,
@@ -412,8 +411,5 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    if is_psql():
-        conn.execute('SET CONSTRAINTS ALL IMMEDIATE')
-    else:
-        conn.execute('SET FOREIGN_KEY_CHECKS=1;')
+    conn.execute(get_enable_disable_fk_command(true))
     session.commit()

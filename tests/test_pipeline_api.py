@@ -40,6 +40,9 @@ def test_pipeline_list_success(client):
         assert resp['data'][0]['created'] == pipeline.created.isoformat()
         assert resp['data'][0]['updated'] == pipeline.updated.isoformat()
         assert resp['data'][0]['version'] == pipeline.version
+        assert resp['data'][0]['execution_window'] == pipeline.execution_window
+        assert resp['data'][0]['variables'] == pipeline.variables
+        assert resp['data'][0]['preferred_cluster_id'] == pipeline.preferred_cluster_id
 
 
 def test_pipeline_list_all_success(client):
@@ -76,6 +79,9 @@ def test_pipeline_get_success(client):
         assert resp['data'][0]['created'] == pipeline.created.isoformat()
         assert resp['data'][0]['updated'] == pipeline.updated.isoformat()
         assert resp['data'][0]['version'] == pipeline.version
+        assert resp['data'][0]['execution_window'] == pipeline.execution_window
+        assert resp['data'][0]['variables'] == pipeline.variables
+        assert resp['data'][0]['preferred_cluster_id'] == pipeline.preferred_cluster_id
 
 
 def test_pipeline_not_found_failure(client):
