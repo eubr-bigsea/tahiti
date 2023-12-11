@@ -963,6 +963,9 @@ class PipelineCreateRequestSchema(BaseSchema):
         missing=datetime.datetime.utcnow,
         default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
+    execution_window = fields.Integer(required=False, allow_none=True)
+    variables = fields.String(required=False, allow_none=True)
+    preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     steps = fields.Nested(
         'tahiti.schema.PipelineStepCreateRequestSchema',
         allow_none=True,
@@ -999,6 +1002,9 @@ class PipelineItemResponseSchema(BaseSchema):
         missing=datetime.datetime.utcnow,
         default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
+    execution_window = fields.Integer(required=False, allow_none=True)
+    variables = fields.String(required=False, allow_none=True)
+    preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     steps = fields.Nested(
         'tahiti.schema.PipelineStepItemResponseSchema',
         allow_none=True,
@@ -1035,6 +1041,9 @@ class PipelineListResponseSchema(BaseSchema):
         missing=datetime.datetime.utcnow,
         default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
+    execution_window = fields.Integer(required=False, allow_none=True)
+    variables = fields.String(required=False, allow_none=True)
+    preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     steps = fields.Nested(
         'tahiti.schema.PipelineStepListResponseSchema',
         allow_none=True,
@@ -1078,7 +1087,7 @@ class PipelineStepCreateRequestSchema(BaseSchema):
 
 class PipelineStepItemResponseSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
+    id = fields.Integer(allow_none=True)
     name = fields.String(required=True)
     order = fields.Integer(required=True)
     scheduling = fields.String(required=False, allow_none=True)
@@ -1103,7 +1112,7 @@ class PipelineStepItemResponseSchema(BaseSchema):
 
 class PipelineStepListResponseSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
+    id = fields.Integer(allow_none=True)
     name = fields.String(required=True)
     order = fields.Integer(required=True)
     scheduling = fields.String(required=False, allow_none=True)
@@ -1193,7 +1202,7 @@ class PipelineTemplateListResponseSchema(BaseSchema):
 
 class PipelineTemplateStepCreateRequestSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(allow_none=True)
+    id = fields.Integer(required=True)
     name = fields.String(required=True)
     order = fields.Integer(required=True)
     description = fields.String(required=False, allow_none=True)
@@ -1792,6 +1801,9 @@ class WorkflowExecuteRequestSchema(BaseSchema):
     subset = fields.Nested(
         'tahiti.schema.OperationSubsetExecuteRequestSchema',
         allow_none=True)
+    pipeline = fields.Nested(
+        'tahiti.schema.PipelineExecuteRequestSchema',
+        allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1874,6 +1886,9 @@ class WorkflowListResponseSchema(BaseSchema):
     subset = fields.Nested(
         'tahiti.schema.OperationSubsetListResponseSchema',
         allow_none=True)
+    pipeline = fields.Nested(
+        'tahiti.schema.PipelineListResponseSchema',
+        allow_none=True)
     user = fields.Function(
         lambda x: {
             "id": x.user_id,
@@ -1952,6 +1967,7 @@ class WorkflowCreateRequestSchema(BaseSchema):
         many=True)
     platform_id = fields.Integer(required=True)
     subset_id = fields.Integer(required=False, allow_none=True)
+    pipeline_id = fields.Integer(required=False, allow_none=True)
     user = fields.Nested(
         'tahiti.schema.UserCreateRequestSchema',
         allow_none=True)
@@ -2040,6 +2056,9 @@ class WorkflowItemResponseSchema(BaseSchema):
         'tahiti.schema.OperationSubsetItemResponseSchema',
         allow_none=True,
         only=['id', 'name'])
+    pipeline = fields.Nested(
+        'tahiti.schema.PipelineItemResponseSchema',
+        allow_none=True)
     user = fields.Function(
         lambda x: {
             "id": x.user_id,
