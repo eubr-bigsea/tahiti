@@ -2,7 +2,7 @@
 tahiti:
     debug: true
     servers:
-        database_url: mysql://user:secret@server:3306/tahiti
+    database_url: mysql://luiz:lemon@localhost:3306/tahiti
     services:
     config:
         SQLALCHEMY_POOL_SIZE: 10
