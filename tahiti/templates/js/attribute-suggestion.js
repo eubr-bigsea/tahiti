@@ -334,6 +334,8 @@ var TahitiAttributeSuggester = (function () {
 					{{script.body}}
 					break;
 					{%- endfor %}
+                    default:
+                        copyInput(task);
 				}
 				// Update next tasks' inputs with current output
 				topological.info[k].targets.forEach(function(follow){
