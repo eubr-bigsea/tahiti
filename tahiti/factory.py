@@ -23,6 +23,7 @@ from tahiti.operation_subset_api import (OperationSubsetDetailApi,
         OperationSubsetListApi)
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
 from tahiti.pipeline_api import PipelineListApi, PipelineDetailApi
+from tahiti.pipeline_step_api import PipelineStepListApi, PipelineStepDetailApi
 from tahiti.pipeline_template_api import (
     PipelineTemplateListApi, PipelineTemplateDetailApi)
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
@@ -114,6 +115,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/<int:operation_id>': OperationDetailApi,
         '/pipelines': PipelineListApi,
         '/pipelines/<int:pipeline_id>': PipelineDetailApi,
+        '/pipelines/steps': PipelineStepListApi,
+        '/pipelines/steps/<int:pipeline_step_id>': PipelineStepDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
         '/source-codes': SourceCodeListApi,

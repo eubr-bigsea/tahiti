@@ -6,7 +6,7 @@ from copy import deepcopy
 from marshmallow import Schema, fields, post_load, post_dump, EXCLUDE, INCLUDE
 from marshmallow.validate import OneOf
 from flask_babel import gettext
-from tahiti.models import *
+from .models import *
 
 
 def partial_schema_factory(schema_cls):
@@ -81,8 +81,8 @@ class ApplicationCreateRequestSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     type = fields.String(required=True,
                          validate=[OneOf(ApplicationType.values())])
     execution_parameters = fields.String(required=False, allow_none=True)
@@ -106,8 +106,8 @@ class ApplicationListResponseSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     type = fields.String(required=True,
                          validate=[OneOf(ApplicationType.values())])
     execution_parameters = fields.Function(
@@ -132,8 +132,8 @@ class ApplicationItemResponseSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     type = fields.String(required=True,
                          validate=[OneOf(ApplicationType.values())])
     execution_parameters = fields.Function(
@@ -156,7 +156,7 @@ class FlowListResponseSchema(BaseSchema):
     target_port = fields.Integer(required=True)
     source_port_name = fields.String(required=False, allow_none=True)
     target_port_name = fields.String(required=False, allow_none=True)
-    environment = fields.String(required=False, allow_none=True, missing=DiagramEnvironment.DESIGN, default=DiagramEnvironment.DESIGN,
+    environment = fields.String(required=False, allow_none=True, load_default=DiagramEnvironment.DESIGN, dump_default=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.values())])
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
@@ -178,7 +178,7 @@ class FlowItemResponseSchema(BaseSchema):
     target_port = fields.Integer(required=True)
     source_port_name = fields.String(required=False, allow_none=True)
     target_port_name = fields.String(required=False, allow_none=True)
-    environment = fields.String(required=False, allow_none=True, missing=DiagramEnvironment.DESIGN, default=DiagramEnvironment.DESIGN,
+    environment = fields.String(required=False, allow_none=True, load_default=DiagramEnvironment.DESIGN, dump_default=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.values())])
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
@@ -200,7 +200,7 @@ class FlowCreateRequestSchema(BaseSchema):
     target_port = fields.Integer(required=True)
     source_port_name = fields.String(required=False, allow_none=True)
     target_port_name = fields.String(required=False, allow_none=True)
-    environment = fields.String(required=False, allow_none=True, missing=DiagramEnvironment.DESIGN, default=DiagramEnvironment.DESIGN,
+    environment = fields.String(required=False, allow_none=True, load_default=DiagramEnvironment.DESIGN, dump_default=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.values())])
     source_id = fields.String(required=True)
     target_id = fields.String(required=True)
@@ -378,23 +378,23 @@ class OperationUpdateRequestSchema(BaseSchema):
     label_format = fields.String(required=False, allow_none=True)
     categories = fields.Nested(
         'tahiti.schema.OperationCategoryUpdateRequestSchema',
-        required=True,
+        allow_none=True,
         many=True)
     platforms = fields.Nested(
         'tahiti.schema.PlatformUpdateRequestSchema',
-        required=True,
+        allow_none=True,
         many=True)
     forms = fields.Nested(
         'tahiti.schema.OperationFormUpdateRequestSchema',
-        required=True,
+        allow_none=True,
         many=True)
     ports = fields.Nested(
         'tahiti.schema.OperationPortUpdateRequestSchema',
-        required=True,
+        allow_none=True,
         many=True)
     scripts = fields.Nested(
         'tahiti.schema.OperationScriptUpdateRequestSchema',
-        required=True,
+        allow_none=True,
         many=True)
 
     # noinspection PyUnresolvedReferences
@@ -417,13 +417,13 @@ class OperationCategoryCreateRequestSchema(BaseSchema):
     order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
     default_order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -445,13 +445,13 @@ class OperationCategoryListResponseSchema(BaseSchema):
     order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
     default_order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -472,13 +472,13 @@ class OperationCategoryItemResponseSchema(BaseSchema):
     order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
     default_order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -497,8 +497,8 @@ class OperationFormListResponseSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     order = fields.Integer(required=True)
     category = fields.String(required=True)
     fields = fields.Nested(
@@ -523,8 +523,8 @@ class OperationFormCreateRequestSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     order = fields.Integer(required=True)
     category = fields.String(required=True)
     fields = fields.Nested(
@@ -549,8 +549,8 @@ class OperationFormItemResponseSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     order = fields.Integer(required=True)
     category = fields.String(required=True)
     fields = fields.Nested(
@@ -580,20 +580,20 @@ class OperationFormFieldListResponseSchema(BaseSchema):
     order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     default = fields.String(required=False, allow_none=True)
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=False, allow_none=True, missing='BOTH', default='BOTH',
+    scope = fields.String(required=False, allow_none=True, load_default='BOTH', dump_default='BOTH',
                           validate=[OneOf(OperationFieldScope.values())])
     enable_conditions = fields.String(required=False, allow_none=True)
     editable = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -617,20 +617,20 @@ class OperationFormFieldCreateRequestSchema(BaseSchema):
     order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     default = fields.String(required=False, allow_none=True)
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=False, allow_none=True, missing='BOTH', default='BOTH',
+    scope = fields.String(required=False, allow_none=True, load_default='BOTH', dump_default='BOTH',
                           validate=[OneOf(OperationFieldScope.values())])
     enable_conditions = fields.String(required=False, allow_none=True)
     editable = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -654,20 +654,20 @@ class OperationFormFieldItemResponseSchema(BaseSchema):
     order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     default = fields.String(required=False, allow_none=True)
     suggested_widget = fields.String(required=False, allow_none=True)
     values_url = fields.String(required=False, allow_none=True)
     values = fields.String(required=False, allow_none=True)
-    scope = fields.String(required=False, allow_none=True, missing='BOTH', default='BOTH',
+    scope = fields.String(required=False, allow_none=True, load_default='BOTH', dump_default='BOTH',
                           validate=[OneOf(OperationFieldScope.values())])
     enable_conditions = fields.String(required=False, allow_none=True)
     editable = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -690,7 +690,7 @@ class OperationPortListResponseSchema(BaseSchema):
     description = fields.String(required=True)
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
-    multiplicity = fields.String(required=False, allow_none=True, missing=1, default=1,
+    multiplicity = fields.String(required=False, allow_none=True, load_default=1, dump_default=1,
                                  validate=[OneOf(OperationPortMultiplicity.values())])
     interfaces = fields.Nested(
         'tahiti.schema.OperationPortInterfaceListResponseSchema',
@@ -718,7 +718,7 @@ class OperationPortCreateRequestSchema(BaseSchema):
     description = fields.String(required=True)
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
-    multiplicity = fields.String(required=False, allow_none=True, missing=1, default=1,
+    multiplicity = fields.String(required=False, allow_none=True, load_default=1, dump_default=1,
                                  validate=[OneOf(OperationPortMultiplicity.values())])
     interfaces = fields.Nested(
         'tahiti.schema.OperationPortInterfaceCreateRequestSchema',
@@ -746,7 +746,7 @@ class OperationPortItemResponseSchema(BaseSchema):
     description = fields.String(required=True)
     tags = fields.String(required=False, allow_none=True)
     order = fields.Integer(required=False, allow_none=True)
-    multiplicity = fields.String(required=False, allow_none=True, missing=1, default=1,
+    multiplicity = fields.String(required=False, allow_none=True, load_default=1, dump_default=1,
                                  validate=[OneOf(OperationPortMultiplicity.values())])
     interfaces = fields.Nested(
         'tahiti.schema.OperationPortInterfaceItemResponseSchema',
@@ -955,13 +955,13 @@ class PipelineCreateRequestSchema(BaseSchema):
     created = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     updated = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     execution_window = fields.Integer(required=False, allow_none=True)
     variables = fields.String(required=False, allow_none=True)
@@ -994,13 +994,13 @@ class PipelineItemResponseSchema(BaseSchema):
     created = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     updated = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     execution_window = fields.Integer(required=False, allow_none=True)
     variables = fields.String(required=False, allow_none=True)
@@ -1033,13 +1033,13 @@ class PipelineListResponseSchema(BaseSchema):
     created = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     updated = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     execution_window = fields.Integer(required=False, allow_none=True)
     variables = fields.String(required=False, allow_none=True)
@@ -1070,9 +1070,7 @@ class PipelineStepCreateRequestSchema(BaseSchema):
     enabled = fields.Boolean(required=True)
     workflow_type = fields.String(required=False, allow_none=True,
                                   validate=[OneOf(WorkflowType.values())])
-    workflow = fields.Nested(
-        'tahiti.schema.WorkflowCreateRequestSchema',
-        allow_none=True)
+    workflow_id = fields.Integer(required=False, allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1097,7 +1095,8 @@ class PipelineStepItemResponseSchema(BaseSchema):
                                   validate=[OneOf(WorkflowType.values())])
     workflow = fields.Nested(
         'tahiti.schema.WorkflowItemResponseSchema',
-        allow_none=True)
+        allow_none=True,
+        only=['id', 'name', 'type'])
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1122,7 +1121,8 @@ class PipelineStepListResponseSchema(BaseSchema):
                                   validate=[OneOf(WorkflowType.values())])
     workflow = fields.Nested(
         'tahiti.schema.WorkflowListResponseSchema',
-        allow_none=True)
+        allow_none=True,
+        only=['id', 'name', 'type'])
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1268,13 +1268,13 @@ class PlatformListResponseSchema(BaseSchema):
     version = fields.String(
         required=False,
         allow_none=True,
-        missing=1.0,
-        default=1.0)
+        load_default=1.0,
+        dump_default=1.0)
     plugin = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetListResponseSchema',
         allow_none=True,
@@ -1303,8 +1303,8 @@ class PlatformCreateRequestSchema(BaseSchema):
     version = fields.String(
         required=False,
         allow_none=True,
-        missing=1.0,
-        default=1.0)
+        load_default=1.0,
+        dump_default=1.0)
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetCreateRequestSchema',
         allow_none=True,
@@ -1333,13 +1333,13 @@ class PlatformItemResponseSchema(BaseSchema):
     version = fields.String(
         required=False,
         allow_none=True,
-        missing=1.0,
-        default=1.0)
+        load_default=1.0,
+        dump_default=1.0)
     plugin = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     subsets = fields.Nested(
         'tahiti.schema.OperationSubsetItemResponseSchema',
         allow_none=True,
@@ -1374,13 +1374,13 @@ class PlatformPluginItemResponseSchema(BaseSchema):
     use_compiler = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     use_executor = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1410,13 +1410,13 @@ class PlatformPluginListResponseSchema(BaseSchema):
     use_compiler = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     use_executor = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1544,28 +1544,28 @@ class TaskListResponseSchema(BaseSchema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
-    environment = fields.String(required=False, allow_none=True, missing=DiagramEnvironment.DESIGN, default=DiagramEnvironment.DESIGN,
+    environment = fields.String(required=False, allow_none=True, load_default=DiagramEnvironment.DESIGN, dump_default=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.values())])
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     width = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     height = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     display_order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     group_id = fields.String(required=False, allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
@@ -1590,28 +1590,28 @@ class TaskCreateRequestSchema(BaseSchema):
     top = fields.Integer(required=True)
     z_index = fields.Integer(required=True)
     forms = fields.Dict(required=True)
-    environment = fields.String(required=False, allow_none=True, missing=DiagramEnvironment.DESIGN, default=DiagramEnvironment.DESIGN,
+    environment = fields.String(required=False, allow_none=True, load_default=DiagramEnvironment.DESIGN, dump_default=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.values())])
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     width = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     height = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     display_order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     group_id = fields.String(required=False, allow_none=True)
     operation_id = fields.Integer(required=True)
 
@@ -1636,28 +1636,28 @@ class TaskItemResponseSchema(BaseSchema):
     z_index = fields.Integer(required=True)
     forms = fields.Function(lambda x: load_json(x.forms))
     version = fields.Integer(required=True)
-    environment = fields.String(required=False, allow_none=True, missing=DiagramEnvironment.DESIGN, default=DiagramEnvironment.DESIGN,
+    environment = fields.String(required=False, allow_none=True, load_default=DiagramEnvironment.DESIGN, dump_default=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.values())])
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     width = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     height = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     display_order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     group_id = fields.String(required=False, allow_none=True)
     operation = fields.Nested(
         'tahiti.schema.OperationSimpleListResponseSchema',
@@ -1683,28 +1683,28 @@ class TaskExecuteRequestSchema(BaseSchema):
     z_index = fields.Integer(required=True)
     forms = fields.String(required=True)
     version = fields.Integer(required=True)
-    environment = fields.String(required=False, allow_none=True, missing=DiagramEnvironment.DESIGN, default=DiagramEnvironment.DESIGN,
+    environment = fields.String(required=False, allow_none=True, load_default=DiagramEnvironment.DESIGN, dump_default=DiagramEnvironment.DESIGN,
                                 validate=[OneOf(DiagramEnvironment.values())])
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     width = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     height = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     display_order = fields.Integer(
         required=False,
         allow_none=True,
-        missing=0,
-        default=0)
+        load_default=0,
+        dump_default=0)
     group_id = fields.String(required=False, allow_none=True)
     next_task_id = fields.String(allow_none=True)
     operation = fields.Nested(
@@ -1734,53 +1734,53 @@ class WorkflowExecuteRequestSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
     created = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     updated = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
     is_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_system_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_public = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     template_code = fields.String(required=False, allow_none=True)
     forms = fields.String(required=False, allow_none=True)
     deployment_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_status = fields.String(required=False, allow_none=True,
                                       validate=[OneOf(PublishingStatus.values())])
-    type = fields.String(required=False, allow_none=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
+    type = fields.String(required=False, allow_none=True, load_default=WorkflowType.WORKFLOW, dump_default=WorkflowType.WORKFLOW,
                          validate=[OneOf(WorkflowType.values())])
     preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
@@ -1824,48 +1824,48 @@ class WorkflowListResponseSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     created = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     updated = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
     is_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_system_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_public = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     deployment_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_status = fields.String(required=False, allow_none=True,
                                       validate=[OneOf(PublishingStatus.values())])
-    type = fields.String(required=False, allow_none=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
+    type = fields.String(required=False, allow_none=True, load_default=WorkflowType.WORKFLOW, dump_default=WorkflowType.WORKFLOW,
                          validate=[OneOf(WorkflowType.values())])
     preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
@@ -1916,8 +1916,8 @@ class WorkflowCreateRequestSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     user_id = fields.Integer(required=True)
     user_login = fields.String(required=True)
     user_name = fields.String(required=True)
@@ -1925,32 +1925,32 @@ class WorkflowCreateRequestSchema(BaseSchema):
     is_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_system_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_public = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     forms = fields.Function(lambda x: load_json(x.forms))
     deployment_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_status = fields.String(required=False, allow_none=True,
                                       validate=[OneOf(PublishingStatus.values())])
-    type = fields.String(required=False, allow_none=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
+    type = fields.String(required=False, allow_none=True, load_default=WorkflowType.WORKFLOW, dump_default=WorkflowType.WORKFLOW,
                          validate=[OneOf(WorkflowType.values())])
     preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
@@ -1991,49 +1991,49 @@ class WorkflowItemResponseSchema(BaseSchema):
     enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=True,
-        default=True)
+        load_default=True,
+        dump_default=True)
     created = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     updated = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     version = fields.Integer(required=True)
     image = fields.String(required=False, allow_none=True)
     is_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_system_template = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     is_public = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     forms = fields.Function(lambda x: load_json(x.forms))
     deployment_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_enabled = fields.Boolean(
         required=False,
         allow_none=True,
-        missing=False,
-        default=False)
+        load_default=False,
+        dump_default=False)
     publishing_status = fields.String(required=False, allow_none=True,
                                       validate=[OneOf(PublishingStatus.values())])
-    type = fields.String(required=False, allow_none=True, missing=WorkflowType.WORKFLOW, default=WorkflowType.WORKFLOW,
+    type = fields.String(required=False, allow_none=True, load_default=WorkflowType.WORKFLOW, dump_default=WorkflowType.WORKFLOW,
                          validate=[OneOf(WorkflowType.values())])
     preferred_cluster_id = fields.Integer(required=False, allow_none=True)
     tasks = fields.Nested(
@@ -2089,8 +2089,8 @@ class WorkflowHistoryListResponseSchema(BaseSchema):
     date = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     content = fields.String(required=True)
 
     # noinspection PyUnresolvedReferences
@@ -2114,8 +2114,8 @@ class WorkflowHistoryItemResponseSchema(BaseSchema):
     date = fields.DateTime(
         required=False,
         allow_none=True,
-        missing=datetime.datetime.utcnow,
-        default=datetime.datetime.utcnow)
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
     content = fields.String(required=True)
 
     # noinspection PyUnresolvedReferences
@@ -2199,8 +2199,8 @@ class WorkflowVariableListResponseSchema(BaseSchema):
     multiplicity = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
     parameters = fields.String(required=False, allow_none=True)
@@ -2226,8 +2226,8 @@ class WorkflowVariableItemResponseSchema(BaseSchema):
     multiplicity = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
     parameters = fields.String(required=False, allow_none=True)
@@ -2253,8 +2253,8 @@ class WorkflowVariableCreateRequestSchema(BaseSchema):
     multiplicity = fields.Integer(
         required=False,
         allow_none=True,
-        missing=1,
-        default=1)
+        load_default=1,
+        dump_default=1)
     suggested_widget = fields.String(required=False, allow_none=True)
     default_value = fields.String(required=False, allow_none=True)
     parameters = fields.String(required=False, allow_none=True)
