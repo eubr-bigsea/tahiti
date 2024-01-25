@@ -1,27 +1,49 @@
-id: 2350
-slug: split
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2350: null
+slug: !!set
+  split: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Dividir dados
-    description: Divide os dados de entrada entre treino e teste.
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Dividir dados: null
+    description: !!set
+      Divide os dados de entrada entre treino e teste.: null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2113
   type: model-builder
+forms:
+- 41
+- 2400
 

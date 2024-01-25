@@ -1,28 +1,48 @@
-id: 2120
-slug: force-range
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Integer|Decimal
-doc_link: ''
+id: !!set
+  2120: null
+slug: !!set
+  force-range: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Integer|Decimal: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "For\xE7ar faixa"
-    description: "Permite for\xE7ar um n\xFAmero a uma faixa."
-    label_format: "<b>For\xE7ar faixa</b> <i>${this.attributes.value.map(a=>a).join(\"\
-      , \")}</i>"
+    locale: !!set
+      pt: null
+    name: !!set
+      "For\xE7ar faixa": null
+    description: !!set
+      "Permite for\xE7ar um n\xFAmero a uma faixa.": null
+    label_format: !!set
+      "<b>For\xE7ar faixa</b> <i>${this.attributes.value.map(a=>a).join(\", \")}</i>": null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2102
+- 2170
 

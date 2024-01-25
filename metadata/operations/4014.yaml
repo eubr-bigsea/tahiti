@@ -1,81 +1,136 @@
-id: 4014
-slug: kbins-discretizer
-enabled: true
-type: TRANSFORMATION
-icon: fa-ruler-horizontal
-css_class: None
-doc_link: None
+id: !!set
+  4014: null
+slug: !!set
+  kbins-discretizer: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-ruler-horizontal: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts:
-- id: 4003
-  type: JS_CLIENT
-  enabled: true
-  body: copyInputAddAttributesSplitAlias(task, 'attribute', 'alias', '_disc');
+- id: !!set
+    4003: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    copyInputAddAttributesSplitAlias(task, 'attribute', 'alias', '_disc');: null
 ports:
-- id: 4014
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4014: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4015
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4015: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
-- id: 4016
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
+- id: !!set
+    4016: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 20
     name: TransformationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
 translations:
   pt:
-    locale: pt
-    name: Discretizador KBins
-    description: "Divide dados cont\xEDnuos em intervalos."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Discretizador KBins: null
+    description: !!set
+      "Divide dados cont\xEDnuos em intervalos.": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: KBins discretizer
-    description: Bin continuous data into intervals.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      KBins discretizer: null
+    description: !!set
+      Bin continuous data into intervals.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -86,4 +141,8 @@ categories:
   type: subgroup
 - id: 4001
   type: technology
+forms:
+- 41
+- 110
+- 4014
 

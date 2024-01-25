@@ -1,63 +1,107 @@
-id: 132
-slug: word-cloud
-enabled: true
-type: VISUALIZATION
-icon: ' '
-css_class: None
-doc_link: None
+id: !!set
+  132: null
+slug: !!set
+  word-cloud: null
+enabled: !!set
+  true: null
+type: !!set
+  VISUALIZATION: null
+icon: !!set
+  ' ': null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 311
-  slug: visualization
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    311: null
+  slug: !!set
+    visualization: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 19
     name: Visualization
   translations:
-  - pt:
-      locale: pt
-      name: "visualiza\xE7\xE3o"
-      description: "Visualiza\xE7\xE3o"
-  - en:
-      locale: en
-      name: visualization
-      description: Visualization
-- id: 312
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "visualiza\xE7\xE3o": null
+      description: !!set
+        "Visualiza\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        visualization: null
+      description: !!set
+        Visualization: null
+- id: !!set
+    312: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
 translations:
   pt:
-    locale: pt
-    name: Nuvem de palavras
-    description: Gera uma nuvem de palavras a partir de um atributo textual.
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Nuvem de palavras: null
+    description: !!set
+      Gera uma nuvem de palavras a partir de um atributo textual.: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Word cloud
-    description: Generates a word cloud from a textual attribute.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Word cloud: null
+    description: !!set
+      Generates a word cloud from a textual attribute.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
 categories:
 - id: 15
   type: group
+forms:
+- 41
+- 145
+- 142
+- 141
 

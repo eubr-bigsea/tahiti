@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima."
-  - en:
+    en:
       locale: en
       label: Max. depth
       help: Max. depth
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Inst\xE2ncias m\xEDnimas"
       help: "Inst\xE2ncias m\xEDnimas."
-  - en:
+    en:
       locale: en
       label: Min. instance
       help: Min. instance
@@ -50,19 +42,15 @@ fields:
   type: DECIMAL
   required: false
   order: 7
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ganho de informa\xE7\xE3o m\xEDnimo"
       help: "Ganho de informa\xE7\xE3o m\xEDnimo."
-  - en:
+    en:
       locale: en
       label: Min. info gain
       help: Min. info gain
@@ -71,19 +59,15 @@ fields:
   type: INTEGER
   required: false
   order: 8
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Semente (seed)
       help: Semente (seed).
-  - en:
+    en:
       locale: en
       label: Seed
       help: Seed

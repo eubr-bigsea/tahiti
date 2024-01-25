@@ -1,41 +1,74 @@
-id: 5062
-slug: optimizer
-enabled: true
-type: ACTION
-icon: ''
-css_class: None
-doc_link: None
+id: !!set
+  5062: null
+slug: !!set
+  optimizer: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5349
-  slug: python code
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    5349: null
+  slug: !!set
+    python code: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Optimizer
-    description: ''
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Optimizer: null
+    description: !!set
+      ? ''
+      : null
+    label_format: !!set
+      None: null
 platforms: []
 categories: []
+forms:
+- 41
+- 5162
 

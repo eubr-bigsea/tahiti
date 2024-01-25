@@ -10,20 +10,18 @@ fields:
   order: 1
   default: gini
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Gini impurity", "key": "gini", "value": "Gini impurity", "pt":
     "Inpureza Gini"}, {"en": "Entropy", "key": "entropy", "value": "Entropy", "pt":
     "Entropia"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Impureza
       help: "Impureza \xE9 a medida na qual o algoritmo se base para escolher a condi\xE7\
         \xE3o \xF3tima local"
-  - en:
+    en:
       locale: en
       label: Impurity
       help: Impurity is the measure based on which the (locally) optimal condition
@@ -35,17 +33,14 @@ fields:
   order: 1
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Manter identificadores dos n\xF3s em cache"
       help: "Manter identificadores dos n\xF3s em cache"
-  - en:
+    en:
       locale: en
       label: Cache node ids.
       help: Cache node ids.
@@ -54,19 +49,15 @@ fields:
   type: INTEGER
   required: false
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Intervalo para checkpoint (cache)
       help: Intervalo para checkpoint (cache)
-  - en:
+    en:
       locale: en
       label: Check point interval (cache)
       help: Check point interval (cache)
@@ -75,9 +66,7 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: select2
-  values_url: None
   values: '[{"en": "Auto", "value": "Auto", "key": "auto", "pt": "Autom\u00e1tico"},
     {"en": "All", "value": "All", "key": "all", "pt": "Tudo"}, {"en": "One third",
     "value": "One third", "key": "onethird", "pt": "Um ter\u00e7o"}, {"en": "SQRT",
@@ -86,14 +75,13 @@ fields:
     "value": "(0.0-1.0]", "key": "(0.0-1.0]", "pt": "(0.0-1.0]"}, {"en": "[1-n]",
     "value": "[1-n]", "key": "[1-n]", "pt": "[1-n]"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estrat\xE9gia para subconjunto de features"
       help: "Estrat\xE9gia para subconjunto de features"
-  - en:
+    en:
       locale: en
       label: Feature subset strategy
       help: Feature subset strategy
@@ -102,19 +90,15 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "No. m\xE1ximo de bins"
       help: "No. m\xE1ximo de bins"
-  - en:
+    en:
       locale: en
       label: Max bins
       help: Max bins
@@ -123,19 +107,15 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima"
-  - en:
+    en:
       locale: en
       label: Max depth
       help: Max depth
@@ -144,19 +124,15 @@ fields:
   type: FLOAT
   required: false
   order: 7
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ganho m\xEDnimo de informa\xE7\xE3o"
       help: "Ganho m\xEDnimo de informa\xE7\xE3o"
-  - en:
+    en:
       locale: en
       label: Min info gain
       help: Min info gain
@@ -167,17 +143,14 @@ fields:
   order: 8
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xEDnimo de inst\xE2ncias por n\xF3"
       help: "M\xEDnimo de inst\xE2ncias por n\xF3"
-  - en:
+    en:
       locale: en
       label: Min instances per node
       help: Min instances per node
@@ -188,17 +161,14 @@ fields:
   order: 9
   default: '20'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Impureza
       help: Impureza
-  - en:
+    en:
       locale: en
       label: Number of trees
       help: Number of trees
@@ -207,22 +177,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Semente (seed)
       help: "Semente para a gera\xE7\xE3o de n\xFAmeros aleat\xF3rios."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 411
   name: subsampling_rate
   type: FLOAT
@@ -230,17 +194,14 @@ fields:
   order: 10
   default: '1.0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Taxa de subamostragem
       help: Taxa de subamostragem
-  - en:
+    en:
       locale: en
       label: Subsampling rate
       help: Subsampling rate

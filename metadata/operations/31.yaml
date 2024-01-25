@@ -3,25 +3,22 @@ slug: logistic-regression
 enabled: false
 type: TRANSFORMATION
 icon: fa-exchange-alt
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 60
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Algoritmo
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Algorithm
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: "Regress\xE3o log\xEDstica"
     description: "Realiza regress\xE3o log\xEDstica"
-    label_format: None
   en:
     locale: en
     name: Logistic regression
     description: Performs logistic regression
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -48,4 +43,7 @@ categories:
   type: group
 - id: 1500
   type: classification
+forms:
+- 41
+- 34
 

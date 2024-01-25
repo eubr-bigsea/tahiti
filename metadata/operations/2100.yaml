@@ -15,9 +15,6 @@ translations:
     label_format: '${data_source.label}: ${data_source.labelValue}'
   en:
     locale: en
-    name: None
-    description: None
-    label_format: None
 platforms:
 - id: 1000
   slug: meta
@@ -28,4 +25,8 @@ categories:
   type: model-builder
 - id: 2114
   type: visualization-builder
+forms:
+- 2150
+- 41
+- 2101
 

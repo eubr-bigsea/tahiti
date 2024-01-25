@@ -10,21 +10,19 @@ fields:
   order: 0
   default: points
   suggested_widget: dropdown
-  values_url: None
   values: "[{\"en\": \"Points\", \"key\": \"points\", \"value\": \"Points\", \"pt\"\
     : \"Pontos\"},  {\"en\": \"Heatmap\", \"key\": \"heatmap\", \"value\": \"Heatmap\"\
     , \"pt\": \"Mapa de calor (heatmap)\"}, {\"en\": \"Polygon (Geo JSON)\", \"key\"\
     : \"polygon\", \"value\": \"Polygon (Geo JSON)\", \"pt\": \"Pol\xEDgono (Geo JSON)\"\
     }]"
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de mapa
       help: Tipo de mapa
-  - en:
+    en:
       locale: en
       label: Map type
       help: Map type
@@ -33,19 +31,15 @@ fields:
   type: TEXT
   required: false
   order: 0
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo"
-  - en:
+    en:
       locale: en
       label: Title
       help: Title
@@ -54,19 +48,16 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com a latitude
       help: Atributo com a latitude
-  - en:
+    en:
       locale: en
       label: Attribute with the latitude
       help: Attribute with the latitude
@@ -75,19 +66,16 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com a longitude
       help: Atributo com a longitude
-  - en:
+    en:
       locale: en
       label: Attribute with the longitude
       help: Attribute with the longitude
@@ -96,19 +84,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo usado para o valor (opcional, obrigat\xF3rio se Geo JSON)"
       help: "Atributo usado para o valor (opcional, obrigat\xF3rio se Geo JSON)"
-  - en:
+    en:
       locale: en
       label: Attribute for the value (optional, required if Geo JSON)
       help: Attribute for the value (optional, required if Geo JSON).
@@ -117,21 +102,18 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo usado para r\xF3tulo (exceto Geo JSON) ou identificador do\
         \ pol\xEDgono (se Geo JSON)"
       help: "Atributo usado para r\xF3tulo (exceto Geo JSON) ou identificador do pol\xED\
         gono (se Geo JSON)."
-  - en:
+    en:
       locale: en
       label: Label attribute (except Geo JSON) or polygons' identifier(Geo JSON)
       help: Label attribute (except Geo JSON) or polygons' identifier(Geo JSON).
@@ -140,19 +122,16 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/datasources?format=GEO_JSON&simple=true&list=true&enabled=1`'
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Limites do pol\xEDgono(s) (Geo JSON)"
       help: "Limite do pol\xEDgono(s) (Geo JSON)"
-  - en:
+    en:
       locale: en
       label: Polygons boundaries (Geo JSON)
       help: Polygons boundaries (Geo JSON)
@@ -163,17 +142,14 @@ fields:
   order: 6
   default: id
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome da propriedade no Geo JSON usada para relacionar os dados
       help: Nome da propriedade no Geo JSON usada para relacionar os dados.
-  - en:
+    en:
       locale: en
       label: Name of the property in Geo JSON used to relate data
       help: Name of the property in Geo JSON used to relate data.
@@ -182,19 +158,15 @@ fields:
   type: TEXT
   required: false
   order: 7
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Dados extras (Geo JSON)
       help: Dados extras (Geo JSON)
-  - en:
+    en:
       locale: en
       label: Extra data (Geo JSON)
       help: Extra data (Geo JSON)

@@ -3,8 +3,6 @@ slug: add-rows
 enabled: true
 type: TRANSFORMATION
 icon: fa-plus-square
-css_class: None
-doc_link: None
 scripts:
 - id: 16
   type: JS_CLIENT
@@ -15,54 +13,51 @@ ports:
 - id: 5
   slug: input data 1
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 1
       description: Input data 1
-  - en:
+    en:
       locale: en
       name: input data 1
       description: Input data 1
 - id: 6
   slug: input data 2
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 2
       description: Input data 2
-  - en:
+    en:
       locale: en
       name: input data 2
       description: Input data 2
 - id: 7
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -71,12 +66,10 @@ translations:
     locale: pt
     name: Adicionar nova(s) linha(s)
     description: Concatena duas fontes de dados
-    label_format: None
   en:
     locale: en
     name: Add new row(s)
     description: 'Concates two data sources '
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -89,4 +82,7 @@ categories:
   type: group
 - id: 29
   type: subgroup
+forms:
+- 41
+- 110
 

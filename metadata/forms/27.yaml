@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: true
   order: 1
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Quantidade de agrupamentos (K)
       help: Quantidade de agrupamentos (K)
-  - en:
+    en:
       locale: en
       label: Number of clusters (K)
       help: Number of clusters (K)
@@ -31,18 +27,15 @@ fields:
   order: 1
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: "Toler\xE2ncia de converg\xEAncia para as somas das dist\xE2ncias intra-cluster\
         \ do ponto ao centroide."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Convergency tolerance for the within-cluster sums of point-to-centroid
@@ -54,19 +47,17 @@ fields:
   order: 2
   default: kmeans
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Traditional K-Means", "key": "kmeans", "value": "Traditional K-Means",
     "pt": "K-Means traditional"}, {"en": "Bisecting K-Means", "key": "bisecting",
     "value": "Bisecting K-Means", "pt": "Bisecting K-Means"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo
       help: Tipo
-  - en:
+    en:
       locale: en
       label: Type
       help: Type
@@ -77,19 +68,17 @@ fields:
   order: 3
   default: k-means||
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "kmeans|| (kmeans++ variant)", "key": "k-means||", "value": "kmeans||
     (kmeans++ variant)", "pt": "kmeans|| (kmeans++ variant)"}, {"en": "random", "key":
     "random", "value": "random", "pt": "aleat\u00f3rio"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Gera\xE7\xE3o dos centroids iniciais"
       help: "Gera\xE7\xE3o dos centroids iniciais"
-  - en:
+    en:
       locale: en
       label: Init mode
       help: How to generate initial centroids
@@ -98,19 +87,15 @@ fields:
   type: INTEGER
   required: true
   order: 4
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Max iterations
@@ -119,19 +104,15 @@ fields:
   type: INTEGER
   required: false
   order: 8
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Semente
       help: "Semente aleat\xF3ria"
-  - en:
+    en:
       locale: en
       label: Seed
       help: Seed
@@ -142,18 +123,16 @@ fields:
   order: 9
   default: euclidean
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "euclidean", "value": "Euclidean"}, {"key": "cosine", "value":
     "Cosine"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Medida de dist\xE2ncia"
       help: "A medida de dist\xE2ncia"
-  - en:
+    en:
       locale: en
       label: Distance Measure
       help: The distance measure

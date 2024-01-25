@@ -8,236 +8,174 @@ fields:
   type: INTEGER
   required: true
   order: 0
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: '{"multiple": false}'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo
       help: "Tipo da visualiza\xE7\xE3o."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2218
   name: palette
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: color-palette
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Paleta de cores
       help: "Paleta de cores usada para as s\xE9ries do gr\xE1fico."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2219
   name: direction
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "vertical", "pt": "Vertical", "en": "Vertical"}, {"key": "horizontal",
     "pt": "Horizontal", "en": "Horizontal"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Dire\xE7\xE3o"
       help: "Dire\xE7\xE3o do gr\xE1fico de barras."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2220
   name: stacked
   type: INTEGER
   required: true
   order: 0
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Empilhado
       help: "Indica se o gr\xE1fico ter\xE1 suas s\xE9ries empilhadas."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2221
   name: hole
   type: FLOAT
   required: true
   order: 0
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Preenchimento
       help: "Preenchimento do gr\xE1fico de pizza se 100%, sen\xE3o donut."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2222
   name: line_stroke
   type: INTEGER
   required: true
   order: 0
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Largura da linha
       help: Largura da linha.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2223
   name: line_type
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "solid", "pt": "S\u00f3lida", "en": "Solid"}, {"key": "dot", "pt":
     "Ponto", "en": "Dot"}, {"key": "dashed", "pt": "Tracejado", "en": "Dashed"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo da linha
       help: Tipo da linha.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2224
   name: mode
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "lines", "pt": "Linhas", "en": "Lines"}, {"key": "marks", "pt":
     "Marcas", "en": "Marks"}, {"key": "lines+markers", "pt": "Linhas e marcas", "en":
     "Lines and marks"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Modo para s\xE9ries"
       help: "Modo para s\xE9ries."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2215
   name: x_axis
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: atribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Eixo X
       help: Atributo usado no eixo X.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2216
   name: y_axis
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: atribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Eixo Y
       help: Atributo usado no eixo Y.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2217
   name: display_legend
   type: INTEGER
   required: true
   order: 1
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Exibir leganda
       help: "Indica se \xE9 para exibir a legenda do gr\xE1fico."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

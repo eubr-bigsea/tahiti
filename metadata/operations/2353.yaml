@@ -1,27 +1,49 @@
-id: 2353
-slug: grid
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2353: null
+slug: !!set
+  grid: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "Grade de par\xE2metros"
-    description: "Permite definir uma grade de par\xE2metros."
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      "Grade de par\xE2metros": null
+    description: !!set
+      "Permite definir uma grade de par\xE2metros.": null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2113
   type: model-builder
+forms:
+- 41
+- 2403
 

@@ -3,8 +3,6 @@ slug: gbt-regressor-model
 enabled: true
 type: TRANSFORMATION
 icon: fa-id-card
-css_class: None
-doc_link: None
 scripts:
 - id: 59
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 269
   slug: train input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: entrada do treino
       description: Train input data
-  - en:
+    en:
       locale: en
       name: train input data
       description: Train input data
 - id: 270
   slug: model
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Output model
-  - en:
+    en:
       locale: en
       name: model
       description: Output model
 - id: 271
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -71,13 +66,11 @@ translations:
     name: Gradient Boosted Tree Regressor
     description: Gradient-Boosted Trees (GBTs) learning algorithm for regression.
       It supports both continuous and categorical feature
-    label_format: None
   en:
     locale: en
     name: Gradient Boosted Tree Regressor
     description: Gradient-Boosted Trees (GBTs) learning algorithm for regression.
       It supports both continuous and categorical featur
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -90,4 +83,10 @@ categories:
   type: group
 - id: 1501
   type: regression
+forms:
+- 41
+- 102
+- 110
+- 105
+- 132
 

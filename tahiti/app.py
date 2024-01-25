@@ -13,10 +13,9 @@ def get_locale_from_query():
     try:
         return g.user.locale
     except:
-        try:
-            return request.args.get('lang', 'en')[:2]
-        except:
-            return 'en'
+        return request.args.get(
+            'lang', 
+                request.accept_languages.best_match(['en', 'pt', 'es']))
 
 
 @app.route('/static/<path:path>')

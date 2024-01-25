@@ -3,8 +3,6 @@ slug: within
 enabled: true
 type: TRANSFORMATION
 icon: fa-globe
-css_class: None
-doc_link: None
 scripts:
 - id: 26
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 123
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
 - id: 124
   slug: geo data
   type: INPUT
-  tags: None
   order: 2
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados geo
       description: Dados geo
-  - en:
+    en:
       locale: en
       name: geo data
       description: Geo data
 - id: 125
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -70,12 +65,10 @@ translations:
     locale: pt
     name: Localizar ponto
     description: "Localiza um ponto em um pol\xEDgono"
-    label_format: None
   en:
     locale: en
     name: Find shapefile points
     description: Locates a point in a shape
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -86,4 +79,8 @@ categories:
   type: group
 - id: 42
   type: subgroup
+forms:
+- 41
+- 70
+- 110
 

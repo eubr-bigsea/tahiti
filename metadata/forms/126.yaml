@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: "Lista de atributos usados na transforma\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Attribute(s)
       help: List of attributes used in the transformation.
@@ -29,20 +25,16 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do(s) novo(s) attributo(s)
       help: "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo original\
         \ com um sufixo ser\xE1 usado."
-  - en:
+    en:
       locale: en
       label: Name(s) for new attribute(s)
       help: Name(s) for new attribute(s). If omitted, the name of original attribute
@@ -52,22 +44,18 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Divisores (lista de valores com no m\xEDnimo de 3 elementos, usado para\
         \ definir as faixas, separados por v\xEDrgula, -INF e INF s\xE3o valores v\xE1\
         lidos)."
       help: "Divisores (lista de valores com no m\xEDnimo de 3 elementos, usado para\
         \ definir as faixas, separados por v\xEDrgula)."
-  - en:
+    en:
       locale: en
       label: Splits (list of values with the minimum of 3 elements, used to define
         the ranges, separated by comma)
@@ -80,19 +68,17 @@ fields:
   order: 3
   default: skip
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Skip", "value": "Skip", "key": "skip", "pt": "Ignorar"}, {"en":
     "Keep", "value": "Keep", "key": "keep", "pt": "Manter"}, {"en": "Raise error",
     "value": "Raise error", "key": "error", "pt": "Gerar erro"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Como tratar dados inv\xE1lidos?"
       help: "Como tratar dados inv\xE1lidos?"
-  - en:
+    en:
       locale: en
       label: How to handle invalid data?
       help: How to handle invalid data?

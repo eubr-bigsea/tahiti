@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Exibir amostra(s) da(s) sa\xEDda(s) (m\xE1x. 50 registros)"
       help: "Exibir amostra(s) da(s) sa\xEDda(s) (m\xE1x. 50 registros)"
-  - en:
+    en:
       locale: en
       label: Display sample(s) of output(s) (max. 50 records)
       help: Display sample(s) of output(s) (max. 50 records)
@@ -31,17 +28,14 @@ fields:
   order: 2
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Exibir esquema/dicion\xE1rio da(s) sa\xEDda(s)"
       help: "Exibir esquema/dicion\xE1rio da(s) sa\xEDda(s)"
-  - en:
+    en:
       locale: en
       label: Display output(s) schema(s)
       help: Display output(s) schema(s)
@@ -52,17 +46,14 @@ fields:
   order: 3
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Exibir relat\xF3rios textuais (se dispon\xEDveis)"
       help: "Exibir relat\xF3rios textuais (se dispon\xEDveis)"
-  - en:
+    en:
       locale: en
       label: Display text reports (if available)
       help: Display text reports (if available)
@@ -73,17 +64,14 @@ fields:
   order: 4
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Exibir imagens e gr\xE1ficos (se dispon\xEDveis)"
       help: "Exibir imagens e gr\xE1ficos (se dispon\xEDveis)"
-  - en:
+    en:
       locale: en
       label: Display images and charts (if available)
       help: Display images and charts (if available)

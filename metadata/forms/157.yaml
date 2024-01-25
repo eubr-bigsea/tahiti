@@ -10,7 +10,6 @@ fields:
   order: 1
   default: GET
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "GET", "pt": "GET", "en": "GET"}, {"key": "POST", "pt": "POST",
     "en": "POST"}, {"key": "PUT", "pt": "PUT", "en": "PUT"}, {"key": "DELETE", "pt":
     "DELETE", "en": "DELETE"}, {"key": "HEAD", "pt": "HEAD", "en": "HEAD"}, {"key":
@@ -18,14 +17,13 @@ fields:
     "en": "CONNECT"}, {"key": "TRACE", "pt": "TRACE", "en": "TRACE"}, {"key": "PATCH",
     "pt": "PATCH", "en": "PATCH"}]'
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9todo"
       help: "M\xE9todo HTTP para a chamada \xE0 API."
-  - en:
+    en:
       locale: en
       label: Method
       help: HTTP method used in API call.
@@ -34,19 +32,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: URL
       help: "URL para a chamada \xE0 API."
-  - en:
+    en:
       locale: en
       label: URL
       help: URL used in API call.
@@ -57,17 +51,14 @@ fields:
   order: 3
   default: '{}'
   suggested_widget: textare
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metros"
       help: "Par\xE2metros para a chamada \xE0 API."
-  - en:
+    en:
       locale: en
       label: Parameters
       help: API call parameters.
@@ -78,17 +69,14 @@ fields:
   order: 4
   default: '{}'
   suggested_widget: textare
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Cabe\xE7alhos"
       help: "Cabe\xE7alhos para a chamada \xE0 API."
-  - en:
+    en:
       locale: en
       label: Headers
       help: API call HTTP headers.
@@ -99,17 +87,14 @@ fields:
   order: 5
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Converter resultado em dados
       help: Converter resultado em dados.
-  - en:
+    en:
       locale: en
       label: Convert result to data
       help: Convert result to data.
@@ -120,17 +105,14 @@ fields:
   order: 6
   default: '200'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Status de sucesso
       help: Status HTTP indicativo de sucesso.
-  - en:
+    en:
       locale: en
       label: Success status code
       help: HTTP status code indicating success.
@@ -139,19 +121,15 @@ fields:
   type: TEXT
   required: false
   order: 7
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Usu\xE1rio"
       help: "Usu\xE1rio usado para autentica\xE7\xE3o b\xE1sica (se aplic\xE1vel)."
-  - en:
+    en:
       locale: en
       label: User
       help: Basic authentication username (if applicable).

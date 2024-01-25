@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo de entrada com dados indexados
       help: Input attribute with indexed data
-  - en:
+    en:
       locale: en
       label: Input attribute with indexed data
       help: Input attribute with indexed data
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) original(ais)
       help: Atributo original
-  - en:
+    en:
       locale: en
       label: Original attribute(s)
       help: Original attribute
@@ -50,27 +42,21 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo(s) de sa\xEDda"
       help: "Atributo de sa\xEDda"
-  - en:
+    en:
       locale: en
       label: Output attribute(s)
       help: Output attribute
 translations:
   pt:
     locale: pt
-    name: None
   en:
     locale: en
-    name: None
 

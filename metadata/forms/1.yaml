@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -29,19 +25,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o r\xF3tulo"
       help: "Atributo com o r\xF3tulo"
-  - en:
+    en:
       locale: en
       label: Label attribute
       help: Label attribute
@@ -50,19 +43,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com a predi\xE7\xE3o (novo)"
       help: "Atributo com a predi\xE7\xE3o (novo)"
-  - en:
+    en:
       locale: en
       label: Prediction attribute (new)
       help: Prediction attribute (new)
@@ -71,19 +60,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Pesos (separados por v\xEDrgula, usados em ensembles)"
       help: "Pesos (separados por v\xEDrgula, usados em ensembles)"
-  - en:
+    en:
       locale: en
       label: Weights (comma-separated, used in ensembles)
       help: Weights (comma-separated, used in ensembles).

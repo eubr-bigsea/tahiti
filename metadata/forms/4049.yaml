@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -29,20 +25,16 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do(s) novo(s) attributo(s)
       help: "Nome do(s) novo(s) atributo(s). Se omitido, o nome do atributo original\
         \ com um sufixo ser\xE1 usado."
-  - en:
+    en:
       locale: en
       label: Name(s) for new attribute(s)
       help: Name(s) for new attribute(s). If omitted, the name of original attribute
@@ -54,17 +46,14 @@ fields:
   order: 3
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limite inferior para a faixa
       help: "Limite inferior para a faixa (valor padr\xE3o: 0.0)."
-  - en:
+    en:
       locale: en
       label: Lower bound of the output feature range
       help: 'Lower bound of the output feature range (default: 0.0).'
@@ -75,17 +64,14 @@ fields:
   order: 4
   default: '1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limite superior para a faixa
       help: "Limite superior para a faixa (valor padr\xE3o: 1.0)."
-  - en:
+    en:
       locale: en
       label: Upper bound of the output feature range
       help: 'Upper bound of the output feature range (default: 1.0).'

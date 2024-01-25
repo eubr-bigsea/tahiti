@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s)
       help: Selecione um ou mais atributos a ser(em) limpos.
-  - en:
+    en:
       locale: en
       label: Attribute(s)
       help: Select one or more attributes to be cleaned
@@ -29,23 +25,20 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Replace with mean", "key": "MEAN", "value": "Replace with mean",
     "pt": "Substituir pela m\u00e9dia"}, {"en": "Replace with value", "key": "VALUE",
     "value": "Replace with value", "pt": "Substituir por valor"}, {"en": "Replace
     with approx. median", "pt": "Substituir com a mediana aproximada", "value": "Replace
     with app"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de limpeza
       help: Tipo de limpeza a ser realizada.
-  - en:
+    en:
       locale: en
       label: Cleaning mode
       help: Type of cleaning to be performed.
@@ -54,19 +47,15 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Valor
       help: Valor a ser usado para substituir os valores ausentes.
-  - en:
+    en:
       locale: en
       label: Value
       help: Value used to replace missing values.

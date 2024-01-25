@@ -10,17 +10,14 @@ fields:
   order: 0
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Op\xE7\xF5es avan\xE7adas"
       help: "Habilita as op\xE7\xF5es avan\xE7adas."
-  - en:
+    en:
       locale: en
       label: Advanced options
       help: Enable advanced options.
@@ -31,17 +28,12 @@ fields:
   order: 1
   default: (1, 1)
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Cropping
       help: Int or tuple of int (length 2) How many units should be trimmed off at
@@ -52,19 +44,14 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Input shape
       help: 3D tensor with shape (batch, axis_to_crop, features)

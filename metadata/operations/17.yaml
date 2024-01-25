@@ -3,8 +3,6 @@ slug: split
 enabled: true
 type: TRANSFORMATION
 icon: fa-code-branch
-css_class: None
-doc_link: None
 scripts:
 - id: 8
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 26
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Input data to be splitted
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data to be splitted
 - id: 27
   slug: split 1
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: 1a. parte
       description: Primeira parte dos dados divididos
-  - en:
+    en:
       locale: en
       name: 1st part
       description: First part of split data
 - id: 28
   slug: split 2
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: 2a. parte
       description: Segunda parte dos dados divididos
-  - en:
+    en:
       locale: en
       name: 2nd part
       description: Second part of split data
@@ -72,14 +67,12 @@ translations:
     description: Divide os dados em 2 conjutos diferentes, distribuindo de acordo
       com o percentual. Usa um algoritmo aproximado, portanto os percentuais podem
       ser um pouco diferentes no resultado
-    label_format: None
   en:
     locale: en
     name: Percentual splitting
     description: Splits dataset into 2 different data sets using percentage. Uses
       an approximate algorithm to split data, so the percentages may be slightly different
       in results
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -92,4 +85,8 @@ categories:
   type: group
 - id: 38
   type: subgroup
+forms:
+- 17
+- 41
+- 110
 

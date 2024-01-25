@@ -6,8 +6,6 @@ fields: []
 translations:
   pt:
     locale: pt
-    name: None
   en:
     locale: en
-    name: None
 

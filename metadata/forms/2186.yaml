@@ -10,20 +10,15 @@ fields:
   order: 3
   default: ','
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Delimitador
       help: Delimitador usado para unir os valores.
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

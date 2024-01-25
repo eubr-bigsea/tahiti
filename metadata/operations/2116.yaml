@@ -1,28 +1,48 @@
-id: 2116
-slug: rescale
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Integer|Decimal
-doc_link: ''
+id: !!set
+  2116: null
+slug: !!set
+  rescale: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Integer|Decimal: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Redefinir escala
-    description: "Permite rescalar um valor num\xE9rico."
-    label_format: <b>Redefinir escala</b> <i>${this.attributes.value.map(a=>a).join(",
-      ")}</i>
+    locale: !!set
+      pt: null
+    name: !!set
+      Redefinir escala: null
+    description: !!set
+      "Permite rescalar um valor num\xE9rico.": null
+    label_format: !!set
+      <b>Redefinir escala</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>: null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2102
+- 2166
 

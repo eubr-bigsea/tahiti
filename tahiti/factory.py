@@ -1,10 +1,11 @@
-from gettext import gettext
+from flask_babel import gettext
 from http.client import HTTPException
 import logging
 import logging.config
 import os
+import sys
 
-from marshmallow import ValidationError
+from marshmallow.exceptions import ValidationError
 import sqlalchemy_utils
 from flask import Flask
 from flask_babel import Babel
@@ -21,6 +22,9 @@ from tahiti.operation_api import OperationListApi, OperationTreeApi
 from tahiti.operation_subset_api import (OperationSubsetDetailApi,
         OperationSubsetListApi)
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
+from tahiti.pipeline_api import PipelineListApi, PipelineDetailApi
+from tahiti.pipeline_template_api import (
+    PipelineTemplateListApi, PipelineTemplateDetailApi)
 from tahiti.platform_api import PlatformListApi, PlatformDetailApi
 from tahiti.schema import translate_validation
 from tahiti.source_code_api import SourceCodeDetailApi, SourceCodeListApi
@@ -31,10 +35,13 @@ from tahiti.workflow_permission_api import WorkflowPermissionApi
 from tahiti.import_workflow_api import ImportWorkflowApi
 from tahiti.workflow_history_api import  WorkflowHistoryApi
 from flask_swagger_ui import get_swaggerui_blueprint
+from dotenv import load_dotenv
+
 
 log = logging.getLogger(__name__)
 
 def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
+    load_dotenv()
     if config_file:
         os.environ['TAHITI_CONFIG'] = config_file
 
@@ -60,10 +67,13 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     app.secret_key = 'l3m0n4d1'
     config = tahiti_configuration
     app.config['TAHITI_CONFIG'] = config['tahiti']
+    app.config['BABEL_TRANSLATION_DIRECTORIES'] = os.path.abspath(
+           'tahiti/i18n/locales')
 
     server_config = config['tahiti'].get('servers', {})
     app.config['SQLALCHEMY_DATABASE_URI'] = server_config.get('database_url')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config['PROPAGATE_EXCEPTIONS'] = True
     app.config.update(config.get('config', {}))
     app.debug = config['tahiti'].get('debug', False)
 
@@ -102,10 +112,12 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/clear-cache': OperationClearCacheApi,
         '/operations/tree/<int:platform_id>': OperationTreeApi,
         '/operations/<int:operation_id>': OperationDetailApi,
+        '/pipelines': PipelineListApi,
+        '/pipelines/<int:pipeline_id>': PipelineDetailApi,
         '/platforms': PlatformListApi,
         '/platforms/<int:platform_id>': PlatformDetailApi,
-        '/source_codes': SourceCodeListApi,
-        '/source_codes/<int:source_code_id>': SourceCodeDetailApi,
+        '/source-codes': SourceCodeListApi,
+        '/source-codes/<int:source_code_id>': SourceCodeDetailApi,
         '/subsets': OperationSubsetListApi,
         '/subsets/<int:subset_id>': OperationSubsetDetailApi,
         '/subsets/<int:subset_id>/<int:operation_id>': OperationSubsetOperationApi,
@@ -115,6 +127,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/workflows/import': ImportWorkflowApi,
         '/workflows/from-template': WorkflowFromTemplateApi,
         '/workflows/history/<int:workflow_id>': WorkflowHistoryApi,
+        '/pipeline-templates': PipelineTemplateListApi,
+        '/pipeline-templates/<int:pipeline_template_id>': PipelineTemplateDetailApi,
         '/public/js/tahiti.js': AttributeSuggestionView,
     }
     for path, view in list(mappings.items()):
@@ -148,7 +162,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         if app.debug:
             result['debug_detail'] = str(e)
         log.exception(e)
-        import pdb; pdb.set_trace()
+        print(e, file=sys.stderr)
         db.session.rollback()
         return result, 500        
     return app

@@ -10,17 +10,14 @@ fields:
   order: 1
   default: ''
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo"
-  - en:
+    en:
       locale: en
       label: Title
       help: Title
@@ -31,17 +28,14 @@ fields:
   order: 2
   default: ''
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos (vazio=todos)
       help: Atributos
-  - en:
+    en:
       locale: en
       label: Attributes (empty=all)
       help: Attributes
@@ -50,19 +44,15 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Correla\xE7\xE3o"
       help: "Calcular a correla\xE7\xE3o entre cada par de colunas."
-  - en:
+    en:
       locale: en
       label: Correlation
       help: Calculate the correlation between each pair of columns.

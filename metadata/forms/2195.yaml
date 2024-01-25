@@ -10,24 +10,20 @@ fields:
   order: 3
   default: day
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "second", "en": "Second", "pt": "Segundo"}, {"key": "minute",
     "en": "Minute", "pt": "Minuto"}, {"key": "hour", "en": "Hour", "pt": "Hora"},
     {"key": "day", "en": "Day", "pt": "Dia"}, {"key": "week", "en": "Week", "pt":
     "Semana"}, {"key": "month", "en": "Month", "pt": "M\u00eas"}, {"key": "year",
     "en": "Year", "pt": "Ano"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Parte a ser extra\xEDda"
       help: "Parte a ser extra\xEDda da data."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

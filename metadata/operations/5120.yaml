@@ -1,81 +1,139 @@
-id: 5120
-slug: video-reader
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5120: null
+slug: !!set
+  video-reader: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5388
-  slug: train-video
-  type: OUTPUT
-  tags: ''
-  order: 3
-  multiplicity: MANY
+- id: !!set
+    5388: null
+  slug: !!set
+    train-video: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    3: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 29
     name: VideoData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: train video data
-      description: Video Data
-- id: 5389
-  slug: validation-video
-  type: OUTPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train video data: null
+      description: !!set
+        Video Data: null
+- id: !!set
+    5389: null
+  slug: !!set
+    validation-video: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 29
     name: VideoData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: validation video data
-      description: Video Data
-- id: 5392
-  slug: test-video
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        validation video data: null
+      description: !!set
+        Video Data: null
+- id: !!set
+    5392: null
+  slug: !!set
+    test-video: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 29
     name: VideoData
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: test video data
-      description: Video Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        test video data: null
+      description: !!set
+        Video Data: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Video reader
-    description: Reads videos from a data source.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Video reader: null
+    description: !!set
+      Reads videos from a data source.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5065
   type: group
+forms:
+- 41
+- 5242
 

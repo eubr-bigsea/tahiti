@@ -10,17 +10,12 @@ fields:
   order: 2
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Mask value
       help: Masks a sequence by using a mask_value to skip timesteps.

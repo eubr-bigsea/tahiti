@@ -3,8 +3,6 @@ slug: clustering-model
 enabled: true
 type: TRANSFORMATION
 icon: fa-users
-css_class: None
-doc_link: None
 scripts:
 - id: 38
   type: JS_CLIENT
@@ -26,90 +24,85 @@ ports:
 - id: 22
   slug: algorithm
   type: INPUT
-  tags: None
   order: 2
   multiplicity: ONE
   interfaces:
   - id: 11
     name: IClusteringAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Clustering algorithm to be trained
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Clustering algorithm to be trained
 - id: 23
   slug: train input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: entrada do treino
       description: Train input data
-  - en:
+    en:
       locale: en
       name: train input data
       description: Train input data
 - id: 24
   slug: model
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 14
     name: IClusteringModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Clustering output model
-  - en:
+    en:
       locale: en
       name: model
       description: Clustering output model
 - id: 25
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: Clustered data
-  - en:
+    en:
       locale: en
       name: output data
       description: Clustered data
 - id: 202
   slug: cluster centroids
   type: OUTPUT
-  tags: None
   order: 3
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: centroides do agrupamento
       description: Centroides do agrupamento
-  - en:
+    en:
       locale: en
       name: cluster centroids
       description: Cluster centroids
@@ -118,12 +111,10 @@ translations:
     locale: pt
     name: Modelo de agrupamento
     description: Treina e aplica um modelo de agrupamento
-    label_format: None
   en:
     locale: en
     name: Clustering model
     description: Trains and applies a clustering model
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -134,4 +125,8 @@ categories:
   type: subgroup
 - id: 8
   type: group
+forms:
+- 41
+- 10
+- 110
 

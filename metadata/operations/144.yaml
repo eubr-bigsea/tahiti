@@ -1,135 +1,271 @@
-id: 144
-slug: api-call
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  144: null
+slug: !!set
+  api-call: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts:
-- id: 100182
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100184
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100185
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100186
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100187
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100188
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100189
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100190
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100191
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100192
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100193
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100194
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100195
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100196
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100197
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100198
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100199
-  type: JS_CLIENT
-  enabled: true
-  body: ''
-- id: 100200
-  type: JS_CLIENT
-  enabled: true
-  body: ''
+- id: !!set
+    100182: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100184: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100185: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100186: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100187: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100188: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100189: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100190: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100191: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100192: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100193: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100194: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100195: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100196: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100197: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100198: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100199: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
+- id: !!set
+    100200: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    ? ''
+    : null
 ports:
-- id: 352
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    352: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: None
-      description: None
-- id: 353
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+- id: !!set
+    353: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: None
-      description: None
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
 translations:
   pt:
-    locale: pt
-    name: "Chamada \xE0 API"
-    description: Permite realizar uma chamada a uma API do tipo REST.
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Chamada \xE0 API": null
+    description: !!set
+      Permite realizar uma chamada a uma API do tipo REST.: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: API call
-    description: Allows call a REST compatible API.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      API call: null
+    description: !!set
+      Allows call a REST compatible API.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
 categories:
 - id: 41
   type: group
+forms:
+- 41
+- 158
+- 110
 

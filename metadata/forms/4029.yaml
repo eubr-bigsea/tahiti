@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '5'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de vizinhos"
       help: "N\xFAmero de vizinhos a serem usados por padr\xE3o para consultas kneighbors."
-  - en:
+    en:
       locale: en
       label: Number of neighbors
       help: Number of neighbors to use by default for kneighbors queries.
@@ -31,17 +28,15 @@ fields:
   order: 2
   default: uniform
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "uniform", "value": "uniform"}, {"key": "distance", "value": "distance"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Pesos
       help: "Fun\xE7\xE3o de peso usada na previs\xE3o."
-  - en:
+    en:
       locale: en
       label: Weights
       help: Weight function used in prediction.
@@ -52,18 +47,16 @@ fields:
   order: 3
   default: auto
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "auto", "value": "auto"}, {"key": "ball_tree", "value": "ball_tree"},
     {"key": "kd_tree", "value": "kd_tree"}, {"key": "brute", "value": "brute"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Algoritmo
       help: "Algoritmo usado para calcular os vizinhos mais pr\xF3ximos."
-  - en:
+    en:
       locale: en
       label: Algorithm
       help: Algorithm used to compute the nearest neighbors.
@@ -74,17 +67,14 @@ fields:
   order: 4
   default: '30'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho da folha
       help: Tamanho da folha passado para o BallTree ou KDTree.
-  - en:
+    en:
       locale: en
       label: Leaf size
       help: Leaf size passed to BallTree or KDTree.
@@ -95,17 +85,14 @@ fields:
   order: 5
   default: '2'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Pot\xEAncia"
       help: "Par\xE2metro de pot\xEAncia para a m\xE9trica de Minkowski."
-  - en:
+    en:
       locale: en
       label: Power
       help: Power parameter for the Minkowski metric.
@@ -116,20 +103,18 @@ fields:
   order: 6
   default: minkowski
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "minkowski", "value": "minkowski"}, {"key": "euclidean", "value":
     "euclidean"}, {"key": "manhattan", "value": "manhattan"}, {"key": "chebyshev",
     "value": "chebyshev"}, {"key": "wminkowski", "value": "wminkowski"}, {"key": "seuclidean",
     "value": "seuclidean"}, {"key": "mahalanobis", "value": "mahalanobis"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9trica"
       help: "A m\xE9trica de dist\xE2ncia a ser usada na \xE1rvore."
-  - en:
+    en:
       locale: en
       label: Metric
       help: The distance metric to use for the tree.
@@ -138,20 +123,16 @@ fields:
   type: TEXT
   required: false
   order: 7
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metros da m\xE9trica"
       help: "Argumentos de palavras-chave adicionais para a fun\xE7\xE3o m\xE9trica\
         \ (dicion\xE1rio)."
-  - en:
+    en:
       locale: en
       label: Metric parameters
       help: Additional keyword arguments for the metric function (dictionary).

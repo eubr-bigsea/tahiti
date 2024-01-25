@@ -1,29 +1,49 @@
-id: 2162
-slug: duplicate
-enabled: true
-type: TRANSFORMATION
-icon: fa fa-copy
-css_class: separator
-doc_link: ''
+id: !!set
+  2162: null
+slug: !!set
+  duplicate: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa fa-copy: null
+css_class: !!set
+  separator: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Duplicar atributo
-    description: Duplica o atributo.
-    label_format: '<b>Duplicar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length
-      + " atributos" : this.attributes.value.map(a=>a.attribute + " como " + a.alias).join(",
-      ")}</i>'
+    locale: !!set
+      pt: null
+    name: !!set
+      Duplicar atributo: null
+    description: !!set
+      Duplica o atributo.: null
+    label_format: !!set
+      ? '<b>Duplicar</b> <i>${this.attributes.value.length > 3? this.attributes.value.length
+        + " atributos" : this.attributes.value.map(a=>a.attribute + " como " + a.alias).join(",
+        ")}</i>'
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2101
   type: menu/selected/fa fa-edit
+forms:
+- 41
+- 2212
 

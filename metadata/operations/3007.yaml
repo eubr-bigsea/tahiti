@@ -1,41 +1,68 @@
-id: 3007
-slug: linear-regression
-enabled: true
-type: TRANSFORMATION
-icon: fa-chart-line
-css_class: None
-doc_link: None
+id: !!set
+  3007: null
+slug: !!set
+  linear-regression: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-chart-line: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3010
-  slug: algorithm
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    3010: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 17
     name: IRegressionAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: "Modelo de regress\xE3o"
-  - en:
-      locale: en
-      name: algorithm
-      description: Regression model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        "Modelo de regress\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Regression model: null
 translations:
   pt:
-    locale: pt
-    name: "Regress\xE3o linear"
-    description: "Aplica a regress\xE3o linear"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regress\xE3o linear": null
+    description: !!set
+      "Aplica a regress\xE3o linear": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Linear regression
-    description: Applies a linear regression algorithm
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Linear regression: null
+    description: !!set
+      Applies a linear regression algorithm: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -46,4 +73,7 @@ categories:
   type: technology
 - id: 1501
   type: regression
+forms:
+- 41
+- 3007
 

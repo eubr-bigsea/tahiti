@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo usado como r\xF3tulo (label)"
       help: "Atributo usado como r\xF3tulo (label)."
-  - en:
+    en:
       locale: en
       label: Label
       help: Label.
@@ -31,17 +27,14 @@ fields:
   order: 1
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de \xE1rvores"
       help: "N\xFAmero de \xE1rvores na floresta LSH."
-  - en:
+    en:
       locale: en
       label: Number of trees
       help: Number of trees in the LSH Forest.
@@ -52,18 +45,15 @@ fields:
   order: 1
   default: '4'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Menor tamanho de hash
       help: "Menor tamanho do hash a ser pesquisado quando a sele\xE7\xE3o do candidato\
         \ \xE9 realizada para os vizinhos mais pr\xF3ximos."
-  - en:
+    en:
       locale: en
       label: Lowest hash length
       help: Lowest hash length to be searched when candidate selection is performed
@@ -75,18 +65,15 @@ fields:
   order: 1
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xEDnimo de candidatos"
       help: "N\xFAmero m\xEDnimo de candidatos avaliados por estimador, assumindo\
         \ que itens suficientes atendem \xE0 restri\xE7\xE3o min_hash_match."
-  - en:
+    en:
       locale: en
       label: Minimum number of candidates
       help: Minimum number of candidates evaluated per estimator, assuming enough
@@ -98,18 +85,15 @@ fields:
   order: 1
   default: '5'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de vizinho"
       help: "N\xFAmero de vizinhos a serem retornados da fun\xE7\xE3o de consulta\
         \ quando ela n\xE3o \xE9 fornecida ao m\xE9todo kneighbors."
-  - en:
+    en:
       locale: en
       label: Number of neighbors
       help: Number of neighbors to be returned from query function when it is not
@@ -119,22 +103,18 @@ fields:
   type: INTEGER
   required: false
   order: 1
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado aleat\xF3rio"
       help: "Se int, random_state \xE9 a semente usada pelo gerador de n\xFAmeros\
         \ aleat\xF3rios; Se a inst\xE2ncia RandomState, random_state for o gerador\
         \ de n\xFAmeros aleat\xF3rios; Se Nenhum, o gerador de n\xFAmeros aleat\xF3\
         rios \xE9 a inst\xE2ncia RandomState usada pelo np.random."
-  - en:
+    en:
       locale: en
       label: Random state
       help: If int, random_state is the seed used by the random number generator;
@@ -147,17 +127,14 @@ fields:
   order: 1
   default: '1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Raio
       help: Raio do ponto de dados para seus vizinhos.
-  - en:
+    en:
       locale: en
       label: Radius
       help: Radius from the data point to its neighbors.
@@ -168,20 +145,17 @@ fields:
   order: 1
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Propor\xE7\xE3o de corte do raio"
       help: "Os vizinhos de raio ser\xE3o pesquisados at\xE9 que a propor\xE7\xE3\
         o entre o total de vizinhos dentro do raio e o total de candidatos se torne\
         \ menor que esse valor, a menos que seja finalizada pelo comprimento do hash\
         \ atingindo min_hash_match."
-  - en:
+    en:
       locale: en
       label: Radius cutoff ratio
       help: Radius neighbors will be searched until the ratio between total neighbors

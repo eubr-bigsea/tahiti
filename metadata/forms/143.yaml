@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 0
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ti\xEDtulo"
       help: "T\xEDtulo do indicador."
-  - en:
+    en:
       locale: en
       label: Title
       help: Title for the indicator.
@@ -31,17 +27,14 @@ fields:
   order: 1
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Exibir valor
       help: Exibe o valor no indicador.
-  - en:
+    en:
       locale: en
       label: Display value
       help: Displays the value in the indicator.
@@ -50,20 +43,17 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: 'this.display_value.internalValue && this.display_value.internalValue
     == 1 '
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Valor
       help: Atributo usado para o valor.
-  - en:
+    en:
       locale: en
       label: Value
       help: Attribute used for the value.
@@ -74,17 +64,14 @@ fields:
   order: 2
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Exibir delta
       help: "Exibe o delta (varia\xE7\xE3o) no indicador."
-  - en:
+    en:
       locale: en
       label: Display delta
       help: Displays delta variation in the indicator.
@@ -93,20 +80,17 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.display_delta.internalValue && this.display_delta.internalValue
     == 1
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valor de refer\xEAncia (para o delta)"
       help: "Atributo usado para calcular o delta (varia\xE7\xE3o)."
-  - en:
+    en:
       locale: en
       label: Reference value (for delta)
       help: Attribute used for calculating the delta value.
@@ -115,21 +99,18 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.display_delta.internalValue && this.display_delta.internalValue
     == 1
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Delta relativo (%)
       help: "Usa um valor relativo para o delta (percentual do valor). Se falso, delta\
         \ \xE9 calculado usando a diferen\xE7a.."
-  - en:
+    en:
       locale: en
       label: Relative (%) delta
       help: Uses a relative value for delta (percentage of value). If false, delta
@@ -139,19 +120,15 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Rodap\xE9"
       help: Texto exibido na parte de baixo do indicador.
-  - en:
+    en:
       locale: en
       label: Footer
       help: Text to be displayed in the footer of the indicator.
@@ -162,17 +139,14 @@ fields:
   order: 5
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Exibir medidor
       help: Exibe um meditor no indicador.
-  - en:
+    en:
       locale: en
       label: Display gauge
       help: Displays a gauge in the indicator.

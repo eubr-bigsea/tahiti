@@ -10,17 +10,12 @@ fields:
   order: 1
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Save model
       help: Enable saving model
@@ -29,19 +24,15 @@ fields:
   type: INTEGER
   required: true
   order: 2
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/storages`'
-  values: None
   scope: EXECUTION
   enable_conditions: this.save_enabled.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Storage
       help: Where the model will be stored
@@ -50,19 +41,14 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.save_enabled.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Name
       help: The name for the model
@@ -73,18 +59,15 @@ fields:
   order: 4
   default: '0'
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "OVERWRITE", "en": "Overwrite", "value": "Overwrite", "pt": "Sobrescrever"},
     {"key": "ERROR", "en": "Raise error", "value": "Raise error", "pt": "Gerar erro"}]'
   scope: EXECUTION
   enable_conditions: this.save_enabled.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Action if model exists
       help: Action if model exists
@@ -95,17 +78,13 @@ fields:
   order: 5
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.save_enabled.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Save only weights
       help: Save only weights
@@ -114,9 +93,7 @@ fields:
   type: TEXT
   required: true
   order: 6
-  default: None
   suggested_widget: select2
-  values_url: None
   values: '[{"key": "binary_accuracy", "value": "Binary accuracy"}, {"key": "categorical_accuracy",
     "value": "Categorical accuracy"}, {"key": "loss", "value": "Loss"}, {"key": "sparse_categorical_accuracy",
     "value": "Sparse categorical accuracy"}]'
@@ -124,11 +101,9 @@ fields:
   enable_conditions: this.save_enabled.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Metric to be monitored
       help: Metric to be monitored
@@ -139,7 +114,6 @@ fields:
   order: 7
   default: validation
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "validation", "en": "Validation", "value": "Validation", "pt":
     "Valida\u00e7\u00e3o"}, {"key": "training", "en": "Training", "value": "Training",
     "pt": "Treino"}, {"key": "both", "en": "Both", "value": "Both", "pt": "Ambos"}]'
@@ -147,18 +121,15 @@ fields:
   enable_conditions: this.save_enabled.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Subset to be monitored
       help: Subset to be monitored
 translations:
   pt:
     locale: pt
-    name: None
   en:
     locale: en
     name: Save model

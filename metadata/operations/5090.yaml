@@ -1,65 +1,111 @@
-id: 5090
-slug: python-code
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5090: null
+slug: !!set
+  python-code: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5190
-  slug: input layer
-  type: INPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+- id: !!set
+    5190: null
+  slug: !!set
+    input layer: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
-- id: 5290
-  slug: python code
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
+- id: !!set
+    5290: null
+  slug: !!set
+    python code: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: PythonCode
-    description: Add Python code to workflow. It enables the creation of functions,
-      classes and/or simple lines of code to promote transformations in the data or
-      addition of new layers.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      PythonCode: null
+    description: !!set
+      ? Add Python code to workflow. It enables the creation of functions, classes
+        and/or simple lines of code to promote transformations in the data or addition
+        of new layers.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5061
   type: group
+forms:
+- 41
+- 5165
 

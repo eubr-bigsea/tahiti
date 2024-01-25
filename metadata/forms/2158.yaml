@@ -8,23 +8,18 @@ fields:
   type: INTEGER
   required: true
   order: 0
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`'
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Fonte de dados
       help: "Permite juntar (join) registros de duas fontes de dados a partir de condi\xE7\
         \xF5es."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

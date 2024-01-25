@@ -1,99 +1,170 @@
-id: 5115
-slug: load
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5115: null
+slug: !!set
+  load: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5313
-  slug: model
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    5313: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 22
     name: Model
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 5396
-  slug: model
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    5396: null
+  slug: !!set
+    model: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 22
     name: Model
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 5401
-  slug: python code
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    5401: null
+  slug: !!set
+    python code: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
-- id: 5402
-  slug: python code
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
+- id: !!set
+    5402: null
+  slug: !!set
+    python code: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Load
-    description: Load a pre existing model or weights.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Load: null
+    description: !!set
+      Load a pre existing model or weights.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5063
   type: group
+forms:
+- 41
+- 5246
 

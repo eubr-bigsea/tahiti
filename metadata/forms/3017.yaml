@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo do v\xE9rtice sa\xEDda"
       help: "Atributo do v\xE9rtice sa\xEDda"
-  - en:
+    en:
       locale: en
       label: Out-links attribute
       help: Out-links attribute
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo do v\xE9rtice entrada"
       help: "Atributo do v\xE9rtice entrada"
-  - en:
+    en:
       locale: en
       label: In-links attribute
       help: In-links attribute
@@ -52,17 +44,14 @@ fields:
   order: 3
   default: '100'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Max iterations
@@ -73,17 +62,14 @@ fields:
   order: 4
   default: '0.85'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Fator de Amortecimento
       help: Fator de Amortecimento
-  - en:
+    en:
       locale: en
       label: Damping Factor
       help: Damping Factor

@@ -1,27 +1,50 @@
-id: 2370
-slug: visualization
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2370: null
+slug: !!set
+  visualization: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "Visualiza\xE7\xE3o de dados"
-    description: "Visualiza\xE7\xE3o de dados."
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      "Visualiza\xE7\xE3o de dados": null
+    description: !!set
+      "Visualiza\xE7\xE3o de dados.": null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2114
   type: visualization-builder
+forms:
+- 41
+- 2420
+- 2102
 

@@ -1,66 +1,107 @@
-id: 124
-slug: histogram
-enabled: true
-type: VISUALIZATION
-icon: fa-chart
-css_class: None
-doc_link: None
+id: !!set
+  124: null
+slug: !!set
+  histogram: null
+enabled: !!set
+  true: null
+type: !!set
+  VISUALIZATION: null
+icon: !!set
+  fa-chart: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 297
-  slug: visualization
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    297: null
+  slug: !!set
+    visualization: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 19
     name: Visualization
   translations:
-  - pt:
-      locale: pt
-      name: visualization
-      description: "Visualiza\xE7\xE3o"
-  - en:
-      locale: en
-      name: visualization
-      description: Visualization
-- id: 298
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        visualization: null
+      description: !!set
+        "Visualiza\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        visualization: null
+      description: !!set
+        Visualization: null
+- id: !!set
+    298: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
 translations:
   pt:
-    locale: pt
-    name: Histograma
-    description: "Um histograma \xE9 um gr\xE1fico que permite descobrir e mostrar\
-      \ a distribui\xE7\xE3o de frequ\xEAncia subjacente (forma) de um conjunto de\
-      \ dados cont\xEDnuos. Isso permite a inspe\xE7\xE3o dos dados para sua distribui\xE7\
-      \xE3o subjacente (por exemplo, distribui\xE7\xE3o normal), outliers, assimetria,\
-      \ etc."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Histograma: null
+    description: !!set
+      ? "Um histograma \xE9 um gr\xE1fico que permite descobrir e mostrar a distribui\xE7\
+        \xE3o de frequ\xEAncia subjacente (forma) de um conjunto de dados cont\xED\
+        nuos. Isso permite a inspe\xE7\xE3o dos dados para sua distribui\xE7\xE3o\
+        \ subjacente (por exemplo, distribui\xE7\xE3o normal), outliers, assimetria,\
+        \ etc."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Histogram
-    description: A histogram is a plot that lets you discover, and show, the underlying
-      frequency distribution (shape) of a set of continuous data. This allows the
-      inspection of the data for its underlying distribution (e.g., normal distribution),
-      outliers, skewness, etc.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Histogram: null
+    description: !!set
+      ? A histogram is a plot that lets you discover, and show, the underlying frequency
+        distribution (shape) of a set of continuous data. This allows the inspection
+        of the data for its underlying distribution (e.g., normal distribution), outliers,
+        skewness, etc.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
@@ -69,4 +110,9 @@ categories:
   type: technology
 - id: 15
   type: group
+forms:
+- 41
+- 135
+- 110
+- 142
 

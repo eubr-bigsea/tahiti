@@ -1,59 +1,98 @@
-id: 4045
-slug: cartographic-projection
-enabled: true
-type: TRANSFORMATION
-icon: fa-globe-stand
-css_class: None
-doc_link: None
+id: !!set
+  4045: null
+slug: !!set
+  cartographic-projection: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-globe-stand: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4098
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4098: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4099
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4099: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: "Conversor de proje\xE7\xF5es cartogr\xE1ficas"
-    description: "Converte diferentes proje\xE7\xF5es cartograficas entre si."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Conversor de proje\xE7\xF5es cartogr\xE1ficas": null
+    description: !!set
+      "Converte diferentes proje\xE7\xF5es cartograficas entre si.": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Cartographic projections converter
-    description: Converts different cartographic projections to each other.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Cartographic projections converter: null
+    description: !!set
+      Converts different cartographic projections to each other.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -64,4 +103,8 @@ categories:
   type: group
 - id: 42
   type: subgroup
+forms:
+- 41
+- 110
+- 4044
 

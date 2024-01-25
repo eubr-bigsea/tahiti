@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo para o gr\xE1fico de bolhas."
-  - en:
+    en:
       locale: en
       label: Title
       help: Title for the bubble chart.
@@ -29,19 +25,16 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo para o eixo X
       help: Atributo usado para o eixo X.
-  - en:
+    en:
       locale: en
       label: x-axis attribute
       help: Attribute used for the x-axis.
@@ -50,19 +43,16 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos para o eixo Y
       help: "Atributos usados para o eixo Y (cada um cria uma s\xE9rie)."
-  - en:
+    en:
       locale: en
       label: y-axis attributes
       help: Attributes used for the y-axis (each one creates a serie).
@@ -71,19 +61,16 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo para o tamanho
       help: Atributo usado para o tamanho da bolha.
-  - en:
+    en:
       locale: en
       label: Size attribute
       help: Attribute used for the bubble size.
@@ -92,19 +79,16 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo para a cor
       help: Atributo usado para a cor da bolha.
-  - en:
+    en:
       locale: en
       label: Color attribute
       help: Attribute used for the bubble color.
@@ -113,19 +97,15 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo para o eixo x"
       help: "T\xEDtulo para o eixo x."
-  - en:
+    en:
       locale: en
       label: Title for x-axis
       help: Title for the x-axis.
@@ -134,19 +114,15 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo para o eixo y"
       help: "T\xEDtulo para o eixo y."
-  - en:
+    en:
       locale: en
       label: Title for y-axis
       help: Title for the y-axis.

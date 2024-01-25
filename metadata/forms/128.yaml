@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) usado(s) como feature(s)
       help: Atributo(s) usado(s) como feature(s)
-  - en:
+    en:
       locale: en
       label: Feature attribute(s)
       help: Feature attribute(s)
@@ -31,17 +27,14 @@ fields:
   order: 1
   default: outlier
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome para o novo atributo
       help: Nome para o novo atributo.
-  - en:
+    en:
       locale: en
       label: Name for the new attribute
       help: Name for the new attribute.
@@ -50,19 +43,15 @@ fields:
   type: INTEGER
   required: true
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xEDnimo de pontos"
       help: "N\xFAmero m\xEDnimo de pontos."
-  - en:
+    en:
       locale: en
       label: Minimum number of points
       help: Minimum number of points.

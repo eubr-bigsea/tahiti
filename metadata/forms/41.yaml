@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 0
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Coment\xE1rio"
       help: "Coment\xE1rio"
-  - en:
+    en:
       locale: en
       label: Comment
       help: Comment
@@ -31,7 +27,6 @@ fields:
   order: 1
   default: rgb(255, 255, 165)
   suggested_widget: color
-  values_url: None
   values: "[\r\n{\"background\": \"transparent\", \"foreground\": \"#222222\"},\r\n\
     {\"background\": \"#FF1417\", \"foreground\": \"#FFFFFF\"},\r\n{\"background\"\
     : \"#FF6611\", \"foreground\": \"#FFFFFF\"},\r\n{\"background\": \"#FF8844\",\
@@ -51,14 +46,13 @@ fields:
     : \"#FFFFFF\"},\r\n{\"background\": \"#767676\", \"foreground\": \"#FFFFFF\"},\r\
     \n{\"background\": \"#FFFFFF\", \"foreground\": \"#222222\"}\r\n]\r\n"
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Cor
       help: Cor
-  - en:
+    en:
       locale: en
       label: Color
       help: Color

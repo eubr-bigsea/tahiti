@@ -3,25 +3,22 @@ slug: naive-bayes-classifier
 enabled: false
 type: TRANSFORMATION
 icon: fa-tag
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 21
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Algorithm to classify data
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Algorithm to classify data
@@ -30,14 +27,12 @@ translations:
     locale: pt
     name: "Na\xEFve Bayes"
     description: Usa um classificador
-    label_format: None
   en:
     locale: en
     name: "Na\xEFve Bayes"
     description: 'Naive Bayes Classifiers. It supports both Multinomial and Bernoulli
       NB. Multinomial NB can handle finitely supported discrete data. For example,
       by converting documents into TF-IDF vectors, it can be '
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -52,4 +47,7 @@ categories:
   type: group
 - id: 1500
   type: classification
+forms:
+- 41
+- 64
 

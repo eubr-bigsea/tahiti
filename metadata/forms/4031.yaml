@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es).
-  - en:
+    en:
       locale: en
       label: Features
       help: Features.
@@ -31,17 +27,14 @@ fields:
   order: 2
   default: clusters
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com a predi\xE7\xE3o (novo)"
       help: "Atributo com a predi\xE7\xE3o (novo)."
-  - en:
+    en:
       locale: en
       label: Prediction (new attribute)
       help: Prediction (new attribute).
@@ -52,17 +45,14 @@ fields:
   order: 3
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de agrupamentos (K)"
       help: "N\xFAmero de agrupamentos (K)."
-  - en:
+    en:
       locale: en
       label: Number of components
       help: The number of mixture components.
@@ -73,17 +63,14 @@ fields:
   order: 4
   default: '100'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max. number of iterations
       help: The number of EM iterations to perform.
@@ -94,18 +81,15 @@ fields:
   order: 5
   default: '0.001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: " Toler\xE2ncia de converg\xEAncia para as somas das dist\xE2ncias intra-cluster\
         \ do ponto ao centroide."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: The convergence threshold.
@@ -116,18 +100,15 @@ fields:
   order: 6
   default: '0.000001'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Regulariza\xE7\xE3o da covari\xE2ncia"
       help: "Regulariza\xE7\xE3o n\xE3o negativa adicionada \xE0 diagonal da covari\xE2\
         ncia."
-  - en:
+    en:
       locale: en
       label: Regularization of covariance
       help: Non-negative regularization added to the diagonal of covariance.
@@ -138,19 +119,17 @@ fields:
   order: 7
   default: full
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "tied", "value": "tied"}, {"key": "full", "value": "full"}, {"key":
     "diag", "value": "diag"}, {"key": "spherical", "value": "spherical"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Tipo de covari\xE2ncia"
       help: "String descrevendo o tipo de par\xE2metros de covari\xE2ncia a serem\
         \ usados."
-  - en:
+    en:
       locale: en
       label: Covariance type
       help: String describing the type of covariance parameters to use.
@@ -161,17 +140,14 @@ fields:
   order: 8
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de inicializa\xE7\xF5es"
       help: "O n\xFAmero de inicializa\xE7\xF5es a serem executadas."
-  - en:
+    en:
       locale: en
       label: Number of initializations
       help: The number of initializations to perform.
@@ -180,20 +156,16 @@ fields:
   type: INTEGER
   required: false
   order: 13
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.

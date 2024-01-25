@@ -4,7 +4,6 @@ enabled: false
 type: ACTION
 icon: ''
 css_class: circle-layout
-doc_link: None
 scripts: []
 ports:
 - id: 5230
@@ -17,29 +16,26 @@ ports:
   - id: 22
     name: Model
   translations:
-  - pt:
+    pt:
       locale: pt
-      name: None
-      description: None
-  - en:
+    en:
       locale: en
       name: model
       description: Model
 translations:
   pt:
     locale: pt
-    name: None
-    description: None
-    label_format: None
   en:
     locale: en
     name: Save model
     description: Saves the model.
-    label_format: None
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5063
   type: group
+forms:
+- 5234
+- 41
 

@@ -1,63 +1,106 @@
-id: 3023
-slug: change-attribute
-enabled: true
-type: TRANSFORMATION
-icon: fa-edit
-css_class: None
-doc_link: None
+id: !!set
+  3023: null
+slug: !!set
+  change-attribute: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-edit: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3046
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3046: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input Data
-- id: 3047
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input Data: null
+- id: !!set
+    3047: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: Modificar atributos
-    description: Altera metadados associados a um ou mais atributos
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Modificar atributos: null
+    description: !!set
+      Altera metadados associados a um ou mais atributos: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Change attributes
-    description: Change metadata information associated to attributes
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Change attributes: null
+    description: !!set
+      Change metadata information associated to attributes: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 10
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 3023
 

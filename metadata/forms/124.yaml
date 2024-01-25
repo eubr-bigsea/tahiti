@@ -8,19 +8,16 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo Y
       help: Atributo com o valores para eixo Y.
-  - en:
+    en:
       locale: en
       label: Y attribute
       help: Attribute with Y-axis values.
@@ -29,19 +26,16 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo Temporal
       help: Atributo com o valores temporais.
-  - en:
+    en:
       locale: en
       label: Time attribute
       help: Attribute with time values.
@@ -50,19 +44,16 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: "Atributos usados para a an\xE1lise."
-  - en:
+    en:
       locale: en
       label: Attributes
       help: Attributes used for the analysis

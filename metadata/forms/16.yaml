@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: join
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metros para a jun\xE7\xE3o"
       help: "Permite especificar par\xE2metros para a jun\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Join parameters
       help: Allows to define parameters for the join.
@@ -29,20 +25,16 @@ fields:
   type: INTEGER
   required: false
   order: 1
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Manter chaves da segunda fonte de dados
       help: "Chaves usads na jun\xE7\xE3o podem ser ignoradas porque elas j\xE1 est\xE3\
         o presentes na primeira fonte de dados."
-  - en:
+    en:
       locale: en
       label: Keep keys from second data source
       help: Keys columns used in the join could be ignored because they are already
@@ -54,18 +46,15 @@ fields:
   order: 1
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Diferenciar mai\xFAsculas e min\xFAsculas quando comparar chaves"
       help: "Se marcado, ir\xE1 diferenciar mai\xFAsculas e min\xFAsculas quando estiver\
         \ comparando as chaves."
-  - en:
+    en:
       locale: en
       label: Match case when comparing keys
       help: If checked, a case sensitive matching will be performed when comparing

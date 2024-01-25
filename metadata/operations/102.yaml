@@ -3,43 +3,39 @@ slug: outlier-detection
 enabled: true
 type: TRANSFORMATION
 icon: fa-user-secret
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 235
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
 - id: 236
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -49,12 +45,10 @@ translations:
     name: Local Outlier Factor (LOF)
     description: "Determina se uma observa\xE7\xE3o deve ser considerada an\xF4mala\
       \ ou n\xE3o."
-    label_format: None
   en:
     locale: en
     name: Local Outlier Factor (LOF)
     description: Outlier detection.
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -63,4 +57,8 @@ categories:
   type: group
 - id: 39
   type: subgroup
+forms:
+- 128
+- 41
+- 110
 

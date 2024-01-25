@@ -1,79 +1,136 @@
-id: 4038
-slug: generalized-linear-regression
-enabled: true
-type: ACTION
-icon: ''
-css_class: None
-doc_link: None
+id: !!set
+  4038: null
+slug: !!set
+  generalized-linear-regression: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4080
-  slug: input data
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4080: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4081
-  slug: output data
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4081: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
-- id: 4082
-  slug: model
-  type: OUTPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
+- id: !!set
+    4082: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
-      locale: pt
-      name: Modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        Modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
 translations:
   pt:
-    locale: pt
-    name: "Regress\xE3o Linear Generalizada"
-    description: ''
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regress\xE3o Linear Generalizada": null
+    description: !!set
+      ? ''
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Generalized Linear Regression
-    description: Generalized Linear Regression fits a linear model with coefficients  to
-      minimize the residual sum of squares between the observed targets in the dataset,
-      and the targets predicted by the linear approximation.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Generalized Linear Regression: null
+    description: !!set
+      ? Generalized Linear Regression fits a linear model with coefficients  to minimize
+        the residual sum of squares between the observed targets in the dataset, and
+        the targets predicted by the linear approximation.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -84,4 +141,10 @@ categories:
   type: subgroup
 - id: 1501
   type: regression
+forms:
+- 41
+- 110
+- 4021
+- 4025
+- 4047
 

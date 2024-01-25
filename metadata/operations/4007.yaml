@@ -1,42 +1,68 @@
-id: 4007
-slug: linear-regression
-enabled: false
-type: TRANSFORMATION
-icon: fa-chart-line
-css_class: None
-doc_link: None
+id: !!set
+  4007: null
+slug: !!set
+  linear-regression: null
+enabled: !!set
+  false: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-chart-line: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4007
-  slug: algorithm
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    4007: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 17
     name: IRegressionAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: "Modelo de regress\xE3o n\xE3o treinado"
-  - en:
-      locale: en
-      name: algorithm
-      description: Untrained regressor model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        "Modelo de regress\xE3o n\xE3o treinado": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Untrained regressor model: null
 translations:
   pt:
-    locale: pt
-    name: "Regress\xE3o Linear"
-    description: "Regress\xE3o linear com combina\xE7\xF5es de regularizadores L1\
-      \ e L2 (ElasticNet)."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regress\xE3o Linear": null
+    description: !!set
+      "Regress\xE3o linear com combina\xE7\xF5es de regularizadores L1 e L2 (ElasticNet).": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Linear Regression
-    description: Linear regression with combined L1 and L2 priors as regularizer (ElasticNet).
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Linear Regression: null
+    description: !!set
+      Linear regression with combined L1 and L2 priors as regularizer (ElasticNet).: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -49,4 +75,7 @@ categories:
   type: technology
 - id: 1501
   type: regression
+forms:
+- 41
+- 4007
 

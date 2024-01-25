@@ -1,97 +1,160 @@
-id: 3015
-slug: regression-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-shield-alt
-css_class: None
-doc_link: None
+id: !!set
+  3015: null
+slug: !!set
+  regression-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-shield-alt: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3024
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3024: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   - id: 6
     name: MachineLearningModel
   translations:
-  - pt:
-      locale: pt
-      name: dados de treino de entrada
-      description: Dados de treino de entrada
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 3025
-  slug: algorithm
-  type: INPUT
-  tags: None
-  order: 2
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de treino de entrada: null
+      description: !!set
+        Dados de treino de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    3025: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 17
     name: IRegressionAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: Algoritmo
-  - en:
-      locale: en
-      name: algorithm
-      description: Algorithm
-- id: 3026
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        Algoritmo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Algorithm: null
+- id: !!set
+    3026: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 18
     name: IRegressionModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 3032
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    3032: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: "Modelo de Regress\xE3o"
-    description: "Modelo de Regress\xE3o"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Modelo de Regress\xE3o": null
+    description: !!set
+      "Modelo de Regress\xE3o": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Regression Model
-    description: Regression Model
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Regression Model: null
+    description: !!set
+      Regression Model: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -102,4 +165,8 @@ categories:
   type: technology
 - id: 1501
   type: regression
+forms:
+- 41
+- 110
+- 3015
 

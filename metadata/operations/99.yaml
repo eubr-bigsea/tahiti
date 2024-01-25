@@ -3,8 +3,6 @@ slug: window-transformation
 enabled: true
 type: TRANSFORMATION
 icon: fa-image
-css_class: None
-doc_link: None
 scripts:
 - id: 48
   type: JS_CLIENT
@@ -14,36 +12,34 @@ ports:
 - id: 227
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
 - id: 228
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
@@ -52,12 +48,10 @@ translations:
     locale: pt
     name: Transformar em janela (deslizante)
     description: "Transforma\xE7\xE3o em janela"
-    label_format: None
   en:
     locale: en
     name: Transform by sliding window
     description: Window transformation
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -68,4 +62,8 @@ categories:
   type: group
 - id: 30
   type: subgroup
+forms:
+- 125
+- 41
+- 110
 

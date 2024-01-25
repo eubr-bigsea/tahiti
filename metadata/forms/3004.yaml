@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Attributos
       help: Colunas para serem consideradas
-  - en:
+    en:
       locale: en
       label: Attributes
       help: Attributes
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Alias
       help: Nome para a nova coluna criada
-  - en:
+    en:
       locale: en
       label: Alias
       help: Name of the new column
@@ -52,19 +44,17 @@ fields:
   order: 2
   default: count
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Count term frequency", "key": "count", "value": "Count term frequency",
     "pt": "Contar a frequ\u00eancia do termo"}, {"en": "Use Bag of Words", "key":
     "BoW", "value": "Use bag of words", "pt": "Usar bag of words"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo
       help: Tipo
-  - en:
+    en:
       locale: en
       label: Type
       help: Type
@@ -73,19 +63,15 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Tamanho do vocabul\xE1rio"
       help: "Tamanho do vocabul\xE1rio"
-  - en:
+    en:
       locale: en
       label: Vocabulary size
       help: Vocabulary size
@@ -94,19 +80,15 @@ fields:
   type: INTEGER
   required: false
   order: 4
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Frequ\xEAncia m\xEDnima de documentos (DF)"
       help: "Frequ\xEAncia m\xEDnima de documentos (DF)"
-  - en:
+    en:
       locale: en
       label: Minimum frequency in docs (DF)
       help: Minimum frequency in docs (DF)
@@ -115,19 +97,15 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Frequ\xEAncia m\xEDnima do termo (TF)"
       help: "Frequ\xEAncia m\xEDnima do termo (TF)"
-  - en:
+    en:
       locale: en
       label: Minimum term frequency (TF)
       help: Minimum term frequency (TF)

@@ -3,8 +3,6 @@ slug: aggregation
 enabled: true
 type: TRANSFORMATION
 icon: fa-cube
-css_class: None
-doc_link: None
 scripts:
 - id: 14
   type: JS_CLIENT
@@ -17,36 +15,34 @@ ports:
 - id: 31
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Input data to be aggregated
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data to be aggregated
 - id: 32
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: Aggregated output data
-  - en:
+    en:
       locale: en
       name: output data
       description: Aggregated output data
@@ -56,12 +52,10 @@ translations:
     name: "Agrupar linhas por fun\xE7\xE3o"
     description: "Realiza a agrega\xE7\xE3o de dados agrupados por um conjunto de\
       \ atributos"
-    label_format: None
   en:
     locale: en
     name: Group by function
     description: Performs aggregation of data grouped by a set of fields
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -74,4 +68,8 @@ categories:
   type: group
 - id: 29
   type: subgroup
+forms:
+- 41
+- 15
+- 110
 

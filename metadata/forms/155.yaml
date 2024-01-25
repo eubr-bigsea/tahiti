@@ -8,9 +8,7 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "SHAPE", "en": "Table (data or structure)", "pt": "Tabela (dados
     ou estrutura)"}, {"key": "DOMAIN", "en": "Missing values, unique values, and types",
     "pt": "Valores ausentes, \u00fanicos e tipos de dados"}, {"key": "SET_RANGE",
@@ -21,14 +19,13 @@ fields:
     "MULTI_COLUMN", "en": "Multi-column", "pt": "Multicolunas"}, {"key": "DISTRIBUTION",
     "en": "Distributional functions", "pt": "Distribui\u00e7\u00e3o"}]'
   scope: DESIGN
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Categoria
       help: "Categoria da valida\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Category
       help: Validation category
@@ -37,9 +34,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_to_exist", "en": "Columns to exist", "pt":
     "Colunas existem"}, {"key": "table_columns_to_match_ordered_list", "en": "Table
     columns to match ordered list", "pt": "Colunas est\u00e3o em ordem"}, {"key":
@@ -55,11 +50,11 @@ fields:
   enable_conditions: this.category.internalValue === "SHAPE"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -68,9 +63,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_values_to_be_unique", "en": "Column values
     to be unique", "pt": "Valores da coluna s\u00e3o \u00fanicos"}, {"key": "column_values_to_not_be_null",
     "en": "Column values to not be null", "pt": "Valores da coluna n\u00e3o s\u00e3o
@@ -83,11 +76,11 @@ fields:
   enable_conditions: this.category.internalValue === "DOMAIN"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -96,9 +89,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_values_to_be_in_set", "en": "Column values
     to be in set", "pt": "Valores da coluna est\u00e3o no conjunto"}, {"key": "column_values_to_not_be_in_set",
     "en": "Column values to not be in set", "pt": "Valores da coluna n\u00e3o est\u00e3o
@@ -111,11 +102,11 @@ fields:
   enable_conditions: this.category.internalValue === "SET_RANGE"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -124,9 +115,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_value_lengths_to_be_between", "en": "Column
     value lengths to be between", "pt": "Tamanho do valor da coluna est\u00e1 entre"},
     {"key": "column_value_lengths_to_equal", "en": "Column value lengths to equal",
@@ -151,11 +140,11 @@ fields:
   enable_conditions: this.category.internalValue === "STRING"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -164,9 +153,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_values_to_match_strftime_format", "en": "Column
     values to match strftime format", "pt": "Valores da coluna casam com formato (Python)"},
     {"key": "column_values_to_be_dateutil_parseable", "en": "Column values to be dateutil
@@ -179,11 +166,11 @@ fields:
   enable_conditions: this.category.internalValue === "DATE_AND_JSON"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -192,9 +179,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_distinct_values_to_be_in_set", "en": "Column
     distinct values to be in set", "pt": "Lista de valores distintos da coluna est\u00e3o
     no conjunto"}, {"key": "column_distinct_values_to_equal_set", "en": "Column distinct
@@ -222,11 +207,11 @@ fields:
   enable_conditions: this.category.internalValue === "AGGREGATE"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -235,9 +220,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_parameterized_distribution_ks_test_p_value_to_be_greater_than",
     "en": "Column values \u200b\u200bare in accordance to a continuous distribution
     with a parametric Kolmogorov-Smirnov test.", "pt": "Valores da coluna est\u00e3o
@@ -259,11 +242,11 @@ fields:
   enable_conditions: this.category.internalValue === "DISTRIBUTION"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -272,9 +255,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '{"values": [{"key": "column_pair_cramers_phi_value_to_be_less_than", "en":
     "Expect the values in column_A to be independent of those in column_B.", "pt":
     "Os valores em coluna_A devem ser independentes daqueles em coluna_B."}, {"key":
@@ -295,11 +276,11 @@ fields:
   enable_conditions: this.category.internalValue === "MULTI_COLUMN"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valida\xE7\xE3o"
       help: "Valida\xE7\xE3o a ser realizada."
-  - en:
+    en:
       locale: en
       label: Validation
       help: Validation to be performed.
@@ -308,19 +289,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_between","column_pair_values_A_to_be_greater_than_B"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Permitir compara\xE7\xF5es entre tipos diferentes"
       help: ''
-  - en:
+    en:
       locale: en
       label: Allow cross type comparisons
       help: ''
@@ -329,19 +307,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_quantile_values_to_be_between"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Permitir erro relativo
       help: ''
-  - en:
+    en:
       locale: en
       label: Allow relative error
       help: ''
@@ -350,19 +325,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_cramers_phi_value_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Bins A
       help: ''
-  - en:
+    en:
       locale: en
       label: Bins A
       help: ''
@@ -371,19 +343,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_cramers_phi_value_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Bins B
       help: ''
-  - en:
+    en:
       locale: en
       label: Bins B
       help: ''
@@ -392,19 +361,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_bootstrapped_ks_test_p_value_to_be_greater_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho da amostra (bootstrap)
       help: ''
-  - en:
+    en:
       locale: en
       label: Bootstrap sample size
       help: ''
@@ -413,19 +379,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_bootstrapped_ks_test_p_value_to_be_greater_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Amostras (bootstrap)
       help: ''
-  - en:
+    en:
       locale: en
       label: Bootstrap samples
       help: ''
@@ -434,19 +397,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_kl_divergence_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Dividir dados em buckets
       help: ''
-  - en:
+    en:
       locale: en
       label: Bucketize data
       help: ''
@@ -455,21 +415,18 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '! [undefined, null, "", "table_column_count_to_be_between",
     "table_column_count_to_equal", "table_row_count_to_be_between", "table_columns_to_match_set",
     "table_columns_to_match_ordered_list", "table_row_count_to_equal"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Colunas
       help: ''
-  - en:
+    en:
       locale: en
       label: Columns
       help: ''
@@ -478,19 +435,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_cramers_phi_value_to_be_less_than","column_pair_values_to_be_equal","column_pair_values_A_to_be_greater_than_B","column_pair_values_to_be_in_set"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Coluna A
       help: ''
-  - en:
+    en:
       locale: en
       label: Column A
       help: ''
@@ -499,19 +453,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_cramers_phi_value_to_be_less_than","column_pair_values_to_be_equal","column_pair_values_A_to_be_greater_than_B","column_pair_values_to_be_in_set"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Coluna B
       help: ''
-  - en:
+    en:
       locale: en
       label: Column B
       help: ''
@@ -520,19 +471,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_to_exist"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Indices das colunas (testa ordem)
       help: ''
-  - en:
+    en:
       locale: en
       label: Columns indexes (test order)
       help: ''
@@ -541,19 +489,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["table_columns_to_match_ordered_list","multicolumn_values_to_be_unique","select_column_values_to_be_unique_within_record","compound_columns_to_be_unique","multicolumn_sum_to_equal"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Lista de colunas, separadas por v\xEDrgula"
       help: ''
-  - en:
+    en:
       locale: en
       label: Columns list, separated by commas
       help: ''
@@ -562,19 +507,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["table_columns_to_match_set"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Conjunto de colunas, separadas por v\xEDrgula"
       help: ''
-  - en:
+    en:
       locale: en
       label: Columns set, separated by commas
       help: ''
@@ -583,19 +525,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_parameterized_distribution_ks_test_p_value_to_be_greater_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Distribui\xE7\xE3o"
       help: ''
-  - en:
+    en:
       locale: en
       label: Distribution
       help: ''
@@ -604,19 +543,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["table_columns_to_match_set"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Casamento exato
       help: ''
-  - en:
+    en:
       locale: en
       label: Exact match
       help: ''
@@ -625,19 +561,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_values_to_be_equal","column_pair_values_A_to_be_greater_than_B","column_pair_values_to_be_in_set","multicolumn_values_to_be_unique","select_column_values_to_be_unique_within_record","compound_columns_to_be_unique"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Ignorar registro se
       help: ''
-  - en:
+    en:
       locale: en
       label: Ignore row if
       help: ''
@@ -646,19 +579,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_kl_divergence_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Internal weight holdout
       help: ''
-  - en:
+    en:
       locale: en
       label: Internal weight holdout
       help: ''
@@ -667,19 +597,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_match_json_schema"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Json schema
       help: ''
-  - en:
+    en:
       locale: en
       label: Json schema
       help: ''
@@ -688,19 +615,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_match_regex_list"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Case com (match on)
       help: ''
-  - en:
+    en:
       locale: en
       label: Match on
       help: ''
@@ -709,19 +633,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["table_column_count_to_be_between","table_row_count_to_be_between","column_values_to_be_between","column_value_lengths_to_be_between","column_mean_to_be_between","column_median_to_be_between","column_stdev_to_be_between","column_unique_value_count_to_be_between","column_proportion_of_unique_values_to_be_between","column_sum_to_be_between","column_min_to_be_between","column_max_to_be_between"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valor m\xE1ximo"
       help: ''
-  - en:
+    en:
       locale: en
       label: Max value
       help: ''
@@ -730,19 +651,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["table_column_count_to_be_between","table_row_count_to_be_between","column_values_to_be_between","column_value_lengths_to_be_between","column_mean_to_be_between","column_median_to_be_between","column_stdev_to_be_between","column_unique_value_count_to_be_between","column_proportion_of_unique_values_to_be_between","column_sum_to_be_between","column_min_to_be_between","column_max_to_be_between"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valor m\xEDnimo"
       help: ''
-  - en:
+    en:
       locale: en
       label: Min value
       help: ''
@@ -751,19 +669,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_unique","column_values_to_not_be_null","column_values_to_be_null","column_values_to_be_of_type","column_values_to_be_in_type_list","column_values_to_be_in_set","column_values_to_not_be_in_set","column_values_to_be_between","column_values_to_be_increasing","column_values_to_be_decreasing","column_value_lengths_to_be_between","column_value_lengths_to_equal","column_values_to_match_regex","column_values_to_not_match_regex","column_values_to_match_regex_list","column_values_to_not_match_regex_list","column_values_to_match_strftime_format","column_values_to_be_dateutil_parseable","column_values_to_be_json_parseable","column_values_to_match_json_schema"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Sucesso se majoritariamente v\xE1lido (% entre 0.0 e 1.0)"
       help: ''
-  - en:
+    en:
       locale: en
       label: Mostly % of rows evaluate to success (between 0.0 and 1.0)
       help: ''
@@ -772,19 +687,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_cramers_phi_value_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: N bins A
       help: ''
-  - en:
+    en:
       locale: en
       label: N bins A
       help: ''
@@ -793,19 +705,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_cramers_phi_value_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: N bins B
       help: ''
-  - en:
+    en:
       locale: en
       label: N bins B
       help: ''
@@ -814,19 +723,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_values_A_to_be_greater_than_B"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Ou igual
       help: ''
-  - en:
+    en:
       locale: en
       label: Or equal
       help: ''
@@ -835,19 +741,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_between","column_min_to_be_between","column_max_to_be_between"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Usar formato strftime (Python) para converter datas
       help: ''
-  - en:
+    en:
       locale: en
       label: Output strftime format
       help: ''
@@ -856,19 +759,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_chisquare_test_p_value_to_be_greater_than","column_bootstrapped_ks_test_p_value_to_be_greater_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: P
       help: ''
-  - en:
+    en:
       locale: en
       label: P
       help: ''
@@ -877,19 +777,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_parameterized_distribution_ks_test_p_value_to_be_greater_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: P-value
       help: ''
-  - en:
+    en:
       locale: en
       label: P value
       help: ''
@@ -898,19 +795,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_parameterized_distribution_ks_test_p_value_to_be_greater_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Par\xE2metros"
       help: ''
-  - en:
+    en:
       locale: en
       label: Params
       help: ''
@@ -919,19 +813,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_in_set","column_values_to_not_be_in_set","column_values_to_be_between","column_values_to_be_increasing","column_values_to_be_decreasing","column_distinct_values_to_be_in_set","column_distinct_values_to_equal_set","column_distinct_values_to_contain_set","column_min_to_be_between","column_max_to_be_between","column_pair_values_A_to_be_greater_than_B"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Converter texto para datas
       help: ''
-  - en:
+    en:
       locale: en
       label: Parse strings as datetimes
       help: ''
@@ -940,19 +831,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_chisquare_test_p_value_to_be_greater_than","column_bootstrapped_ks_test_p_value_to_be_greater_than","column_kl_divergence_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Objeto particionador
       help: ''
-  - en:
+    en:
       locale: en
       label: Partition object
       help: ''
@@ -961,19 +849,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_quantile_values_to_be_between"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Faixas para quantis
       help: ''
-  - en:
+    en:
       locale: en
       label: Quantile ranges
       help: ''
@@ -982,19 +867,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_match_regex","column_values_to_not_match_regex"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Express\xE3o regular"
       help: ''
-  - en:
+    en:
       locale: en
       label: Regex
       help: ''
@@ -1003,19 +885,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_match_regex_list","column_values_to_not_match_regex_list"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Lista de express\xF5es regulares (uma por linha)"
       help: ''
-  - en:
+    en:
       locale: en
       label: Regex list (one per line)
       help: ''
@@ -1024,19 +903,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_match_strftime_format"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Formato strftime (Python)
       help: ''
-  - en:
+    en:
       locale: en
       label: Strftime format
       help: ''
@@ -1045,19 +921,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_between","column_mean_to_be_between","column_median_to_be_between","column_stdev_to_be_between","column_proportion_of_unique_values_to_be_between","column_sum_to_be_between","column_min_to_be_between","column_max_to_be_between"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE1ximo estrito"
       help: ''
-  - en:
+    en:
       locale: en
       label: Strict max
       help: ''
@@ -1066,19 +939,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_between","column_mean_to_be_between","column_median_to_be_between","column_stdev_to_be_between","column_proportion_of_unique_values_to_be_between","column_sum_to_be_between","column_min_to_be_between","column_max_to_be_between"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xEDnimo estrito"
       help: ''
-  - en:
+    en:
       locale: en
       label: Strict min
       help: ''
@@ -1087,19 +957,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_increasing","column_values_to_be_decreasing"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Estritamente
       help: ''
-  - en:
+    en:
       locale: en
       label: Strictly
       help: ''
@@ -1108,19 +975,16 @@ fields:
   type: DECIMAL
   required: false
   order: 10
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["multicolumn_sum_to_equal"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Soma total
       help: ''
-  - en:
+    en:
       locale: en
       label: Sum total
       help: ''
@@ -1129,19 +993,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_chisquare_test_p_value_to_be_greater_than","column_kl_divergence_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tail weight holdout
       help: ''
-  - en:
+    en:
       locale: en
       label: Tail weight holdout
       help: ''
@@ -1150,19 +1011,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_kl_divergence_to_be_less_than","column_pair_cramers_phi_value_to_be_less_than"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limiar
       help: ''
-  - en:
+    en:
       locale: en
       label: Threshold
       help: ''
@@ -1171,19 +1029,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_most_common_value_to_be_in_set"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Empates s\xE3o OK"
       help: ''
-  - en:
+    en:
       locale: en
       label: Ties okay
       help: ''
@@ -1192,19 +1047,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_of_type"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo
       help: ''
-  - en:
+    en:
       locale: en
       label: 'Type '
       help: ''
@@ -1213,19 +1065,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_in_type_list"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Lista de tipos
       help: ''
-  - en:
+    en:
       locale: en
       label: Type list
       help: ''
@@ -1234,19 +1083,16 @@ fields:
   type: INTEGER
   required: false
   order: 10
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["table_column_count_to_equal","table_row_count_to_equal","column_value_lengths_to_equal"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Valor
       help: ''
-  - en:
+    en:
       locale: en
       label: Value
       help: ''
@@ -1255,19 +1101,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_pair_values_to_be_in_set"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Conjunto de pares de valores
       help: ''
-  - en:
+    en:
       locale: en
       label: Value pairs set
       help: ''
@@ -1276,19 +1119,16 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: DESIGN
   enable_conditions: '["column_values_to_be_in_set","column_values_to_not_be_in_set","column_distinct_values_to_be_in_set","column_distinct_values_to_equal_set","column_distinct_values_to_contain_set","column_most_common_value_to_be_in_set"].includes(this.validation.internalValue)'
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Conjunto de valores (um item por linha)
       help: ''
-  - en:
+    en:
       locale: en
       label: Value set (one item per line)
       help: en

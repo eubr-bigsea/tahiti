@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: false
   order: 8
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Profundidade m\xE1xima"
       help: "Profundidade m\xE1xima"
-  - en:
+    en:
       locale: en
       label: Max. depth
       help: Max. depth
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 9
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE1ximo de bins"
       help: "M\xE1ximo de bins"
-  - en:
+    en:
       locale: en
       label: Max. bins
       help: Max. bins
@@ -50,19 +42,15 @@ fields:
   type: DECIMAL
   required: false
   order: 10
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ganho de informa\xE7\xE3o (info gain) m\xEDnimo"
       help: "Ganho de informa\xE7\xE3o (info gain) m\xEDnimo"
-  - en:
+    en:
       locale: en
       label: Min. info gain
       help: Min. info gain
@@ -71,19 +59,15 @@ fields:
   type: INTEGER
   required: false
   order: 11
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de \xE1rvores"
       help: "N\xFAmero de \xE1rvores"
-  - en:
+    en:
       locale: en
       label: Number of trees
       help: Number of trees
@@ -92,23 +76,20 @@ fields:
   type: TEXT
   required: false
   order: 12
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "auto", "value": "auto", "key": "auto", "pt": "autom\u00e1tico"},
     {"en": "all", "value": "all", "key": "all", "pt": "todos"}, {"en": "onethird",
     "value": "onethird", "key": "onethird", "pt": "um ter\u00e7o"}, {"en": "sqrt",
     "value": "sqrt", "key": "sqrt", "pt": "raiz quadrada"}, {"en": "log2", "value":
     "log2", "key": "log2", "pt": "log2 (logaritmo na base 2)"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estrat\xE9gia para subconjuto de features"
       help: "Estrat\xE9gia para subconjuto de features"
-  - en:
+    en:
       locale: en
       label: Feature subset strategy
       help: Feature subset strategy

@@ -8,20 +8,17 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: "[{\r\n  \"key\": \"l2\", \"value\": \"l2\"},  { \"key\": \"l1\", \"value\"\
     : \"l1\"}]"
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Penalty
       help: "A penalidade (termo de regulariza\xE7\xE3o) a ser usada."
-  - en:
+    en:
       locale: en
       label: Penalty
       help: The penalty (aka regularization term) to be used.
@@ -32,18 +29,15 @@ fields:
   order: 2
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Alpha
       help: "Constante que multiplica o prazo de regulariza\xE7\xE3o se a regulariza\xE7\
         \xE3o \xE9 usada."
-  - en:
+    en:
       locale: en
       label: Alpha
       help: Constant that multiplies the regularization term if regularization is
@@ -55,18 +49,15 @@ fields:
   order: 3
   default: '1000'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
       help: "O n\xFAmero m\xE1ximo de passes nos dados de treinamento (tamb\xE9m conhecidos\
         \ como epochs)."
-  - en:
+    en:
       locale: en
       label: Maximum number of iterations
       help: The maximum number of passes over the training data (aka epochs).
@@ -77,17 +68,14 @@ fields:
   order: 4
   default: '5'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: "Toler\xE2ncia para crit\xE9rios de parada."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: The stopping criterion. If it is not None, the iterations will stop when
@@ -97,20 +85,16 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Shuffle
       help: "Se os dados de treinamento devem ou n\xE3o ser embaralhados ap\xF3s cada\
         \ \xE9poca."
-  - en:
+    en:
       locale: en
       label: Shuffle
       help: Whether or not the training data should be shuffled after each epoch.
@@ -119,20 +103,16 @@ fields:
   type: INTEGER
   required: false
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.
@@ -143,17 +123,14 @@ fields:
   order: 7
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fit intercepta\xE7\xE3o"
       help: "Se a intercepta\xE7\xE3o deve ser estimada ou n\xE3o."
-  - en:
+    en:
       locale: en
       label: Fit intercept
       help: Whether the intercept should be estimated or not.
@@ -164,17 +141,14 @@ fields:
   order: 9
   default: '1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Eta
       help: "Constante pela qual as atualiza\xE7\xF5es s\xE3o multiplicadas."
-  - en:
+    en:
       locale: en
       label: Eta
       help: Constant by which the updates are multiplied.
@@ -185,18 +159,15 @@ fields:
   order: 11
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Parada antecipada
       help: "Se a parada antecipada deve ser usada para encerrar o treinamento quando\
         \ a pontua\xE7\xE3o de valida\xE7\xE3o n\xE3o est\xE1 melhorando."
-  - en:
+    en:
       locale: en
       label: Early stopping
       help: Whether to use early stopping to terminate training when validation score
@@ -208,18 +179,16 @@ fields:
   order: 12
   default: '0.1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.early_stopping.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fra\xE7\xE3o de valida\xE7\xE3o"
       help: "A propor\xE7\xE3o de dados de treinamento a serem retirados como valida\xE7\
         \xE3o definida para parada antecipada."
-  - en:
+    en:
       locale: en
       label: Validation fraction
       help: The proportion of training data to set aside as validation set for early
@@ -231,18 +200,15 @@ fields:
   order: 13
   default: '5'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de itera\xE7\xF5es sem melhoria"
       help: "N\xFAmero de itera\xE7\xF5es sem melhoria a aguardar antes da parada\
         \ precoce."
-  - en:
+    en:
       locale: en
       label: Number of iterations with no change
       help: Number of iterations with no improvement to wait before early stopping.
@@ -251,20 +217,16 @@ fields:
   type: TEXT
   required: false
   order: 14
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Peso da classe
       help: "Predefini\xE7\xE3o para o par\xE2metro de ajuste class_weight (dicion\xE1\
         rio)."
-  - en:
+    en:
       locale: en
       label: Class weight
       help: Preset for the class_weight fit parameter (dictionary).

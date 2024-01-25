@@ -1,62 +1,106 @@
-id: 4037
-slug: local-outlier-factor
-enabled: true
-type: ACTION
-icon: ''
-css_class: None
-doc_link: None
+id: !!set
+  4037: null
+slug: !!set
+  local-outlier-factor: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4078
-  slug: input data
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4078: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4079
-  slug: output data
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4079: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: Local Outlier Factor (LOF)
-    description: ''
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Local Outlier Factor (LOF): null
+    description: !!set
+      ? ''
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Local Outlier Factor (LOF)
-    description: 'The Local Outlier Factor (LOF) algorithm is an unsupervised anomaly
-      detection method which computes the local density deviation of a given data
-      point with respect to its neighbors. It considers as outliers the samples that
-      have a substantially lower density than their neighbors. '
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Local Outlier Factor (LOF): null
+    description: !!set
+      ? 'The Local Outlier Factor (LOF) algorithm is an unsupervised anomaly detection
+        method which computes the local density deviation of a given data point with
+        respect to its neighbors. It considers as outliers the samples that have a
+        substantially lower density than their neighbors. '
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -65,4 +109,8 @@ categories:
   type: group
 - id: 4002
   type: subgroup
+forms:
+- 41
+- 4024
+- 110
 

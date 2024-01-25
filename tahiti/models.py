@@ -1,14 +1,13 @@
 import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Enum, \
-    DateTime, Unicode, UnicodeText
-from sqlalchemy.dialects.mysql import LONGTEXT
+    DateTime, Text, Unicode, UnicodeText
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
 
 make_translatable(options={'locales': ['pt', 'en'],
                            'auto_create_locales': False,
-                           'fallback_locale': 'pt'})
+                           'fallback_locale': 'en'})
 
 db = SQLAlchemy()
 
@@ -142,6 +141,7 @@ class WorkflowType:
     DATA_EXPLORER = 'DATA_EXPLORER'
     MODEL_BUILDER = 'MODEL_BUILDER'
     VIS_BUILDER = 'VIS_BUILDER'
+    SQL = 'SQL'
 
     @staticmethod
     def values():
@@ -256,7 +256,7 @@ class Application(db.Model):
                      default=True, nullable=False)
     type = Column(Enum(*list(ApplicationType.values()),
                        name='ApplicationTypeEnumType'), nullable=False)
-    execution_parameters = Column(LONGTEXT)
+    execution_parameters = Column(Text(4294000000))
 
     def __str__(self):
         return self.name
@@ -362,6 +362,8 @@ class Operation(db.Model, Translatable):
     scripts = relationship("OperationScript",
                            cascade="all, delete-orphan")
 
+    translations2= relationship("OperationTranslation",
+                           cascade="all, delete-orphan")
     def __str__(self):
         return self.name
 
@@ -452,10 +454,10 @@ class OperationFormField(db.Model, Translatable):
     required = Column(Boolean, nullable=False)
     order = Column(Integer,
                    default=0, nullable=False)
-    default = Column(LONGTEXT)
+    default = Column(Text(4294000000))
     suggested_widget = Column(String(200))
     values_url = Column(String(200))
-    values = Column(LONGTEXT)
+    values = Column(Text(4294000000))
     scope = Column(Enum(*list(OperationFieldScope.values()),
                         name='OperationFieldScopeEnumType'),
                    default='BOTH', nullable=False)
@@ -499,7 +501,7 @@ class OperationPort(db.Model, Translatable):
     slug = Column(String(50), nullable=False)
     type = Column(Enum(*list(OperationPortType.values()),
                        name='OperationPortTypeEnumType'), nullable=False)
-    tags = Column(LONGTEXT)
+    tags = Column(Text(4294000000))
     order = Column(Integer)
     multiplicity = Column(Enum(*list(OperationPortMultiplicity.values()),
                                name='OperationPortMultiplicityEnumType'),
@@ -570,7 +572,7 @@ class OperationScript(db.Model):
     type = Column(Enum(*list(ScriptType.values()),
                        name='ScriptTypeEnumType'), nullable=False)
     enabled = Column(Boolean, nullable=False)
-    body = Column(LONGTEXT, nullable=False)
+    body = Column(Text(4294000000), nullable=False)
 
     # Associations
     operation_id = Column(Integer,
@@ -618,6 +620,129 @@ class OperationSubset(db.Model):
             "and_("
             "Operation.id==operation_subset_operation.c.operation_id,"
             "Operation.enabled==1)"))
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class Pipeline(db.Model):
+    """ Pipeline """
+    __tablename__ = 'pipeline'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(50), nullable=False)
+    user_name = Column(String(200), nullable=False)
+    created = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False)
+    updated = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False,
+                     onupdate=datetime.datetime.utcnow)
+    version = Column(Integer, nullable=False)
+    execution_window = Column(Integer)
+    variables = Column(String(1000))
+    preferred_cluster_id = Column(Integer)
+
+    # Associations
+    steps = relationship("PipelineStep",
+                         cascade="all, delete-orphan")
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineStep(db.Model):
+    """ Pipeline step """
+    __tablename__ = 'pipeline_step'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    order = Column(Integer, nullable=False)
+    scheduling = Column(String(200))
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+    workflow_type = Column(Enum(*list(WorkflowType.values()),
+                                name='WorkflowTypeEnumType'))
+
+    # Associations
+    pipeline_id = Column(Integer,
+                         ForeignKey("pipeline.id",
+                                    name="fk_pipeline_step_pipeline_id"),
+                         nullable=False,
+                         index=True)
+    pipeline = relationship(
+        "Pipeline",
+        overlaps='steps',
+        foreign_keys=[pipeline_id])
+    workflow_id = Column(Integer,
+                         ForeignKey("workflow.id",
+                                    name="fk_pipeline_step_workflow_id"),
+                         index=True)
+    workflow = relationship(
+        "Workflow",
+        overlaps='workflow',
+        foreign_keys=[workflow_id])
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineTemplate(db.Model):
+    """ Pipeline template """
+    __tablename__ = 'pipeline_template'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+
+    # Associations
+    steps = relationship("PipelineTemplateStep",
+                         cascade="all, delete-orphan")
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class PipelineTemplateStep(db.Model):
+    """ Pipeline template step """
+    __tablename__ = 'pipeline_template_step'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    order = Column(Integer, nullable=False)
+    description = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+
+    # Associations
+    template_id = Column(Integer,
+                         ForeignKey("pipeline_template.id",
+                                    name="fk_pipeline_template_step_template_id"),
+                         nullable=False,
+                         index=True)
+    template = relationship(
+        "PipelineTemplate",
+        overlaps='steps',
+        foreign_keys=[template_id])
 
     def __str__(self):
         return self.name
@@ -682,8 +807,8 @@ class PlatformPlugin(db.Model):
     copyright = Column(String(200))
     status = Column(Enum(*list(PluginStatus.values()),
                          name='PluginStatusEnumType'))
-    message = Column(LONGTEXT)
-    manifest = Column(LONGTEXT)
+    message = Column(Text(4294000000))
+    manifest = Column(Text(4294000000))
     ids_offset = Column(Integer, nullable=False)
     uuid = Column(String(200), nullable=False)
     url = Column(String(200))
@@ -773,7 +898,7 @@ class Task(db.Model):
     left = Column(Integer, nullable=False)
     top = Column(Integer, nullable=False)
     z_index = Column(Integer, nullable=False)
-    forms = Column(LONGTEXT, nullable=False)
+    forms = Column(Text(4294000000), nullable=False)
     version = Column(Integer, nullable=False)
     environment = Column(Enum(*list(DiagramEnvironment.values()),
                               name='DiagramEnvironmentEnumType'),
@@ -845,7 +970,7 @@ class Workflow(db.Model):
     # Fields
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
-    description = Column(LONGTEXT)
+    description = Column(Text(4294000000))
     enabled = Column(Boolean,
                      default=True, nullable=False)
     user_id = Column(Integer, nullable=False)
@@ -864,8 +989,8 @@ class Workflow(db.Model):
                                 default=False, nullable=False)
     is_public = Column(Boolean,
                        default=False, nullable=False)
-    template_code = Column(LONGTEXT)
-    forms = Column(LONGTEXT)
+    template_code = Column(Text(4294000000))
+    forms = Column(Text(4294000000))
     deployment_enabled = Column(Boolean,
                                 default=False, nullable=False)
     publishing_enabled = Column(Boolean,
@@ -898,6 +1023,14 @@ class Workflow(db.Model):
         "OperationSubset",
         overlaps='subset',
         foreign_keys=[subset_id])
+    pipeline_id = Column(Integer,
+                         ForeignKey("pipeline.id",
+                                    name="fk_workflow_pipeline_id"),
+                         index=True)
+    pipeline = relationship(
+        "Pipeline",
+        overlaps='pipeline',
+        foreign_keys=[pipeline_id])
     platform_id = Column(Integer,
                          ForeignKey("platform.id",
                                     name="fk_workflow_platform_id"),
@@ -927,7 +1060,7 @@ class WorkflowHistory(db.Model):
     user_name = Column(String(200), nullable=False)
     date = Column(DateTime,
                   default=datetime.datetime.utcnow, nullable=False)
-    content = Column(LONGTEXT, nullable=False)
+    content = Column(Text(4294000000), nullable=False)
 
     # Associations
     workflow_id = Column(Integer,
@@ -989,14 +1122,14 @@ class WorkflowVariable(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(200), nullable=False)
     label = Column(String(200))
-    description = Column(LONGTEXT)
+    description = Column(Text(4294000000))
     type = Column(Enum(*list(DataType.values()),
                        name='DataTypeEnumType'), nullable=False)
     multiplicity = Column(Integer,
                           default=1, nullable=False)
     suggested_widget = Column(String(200))
-    default_value = Column(LONGTEXT)
-    parameters = Column(LONGTEXT)
+    default_value = Column(Text(4294000000))
+    parameters = Column(Text(4294000000))
 
     # Associations
     workflow_id = Column(Integer,

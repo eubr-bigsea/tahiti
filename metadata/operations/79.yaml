@@ -3,25 +3,22 @@ slug: generalized-linear-regressor
 enabled: true
 type: TRANSFORMATION
 icon: fa-plus-square
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 171
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 17
     name: IRegressionAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: Algoritmo
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Algorithm
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: "Regress\xE3o linear generalizada"
     description: Regressor Linear Generalizado
-    label_format: None
   en:
     locale: en
     name: Generalized linear regression
     description: Generalized Linear Regressor
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -46,4 +41,7 @@ categories:
   type: subgroup
 - id: 8
   type: group
+forms:
+- 41
+- 107
 

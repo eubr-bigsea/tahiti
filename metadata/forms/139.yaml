@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo
       help: Coluna utilizada para extrair o vetor de atributos
-  - en:
+    en:
       locale: en
       label: Attribute
       help: Attribute to extract the features.
@@ -31,18 +27,15 @@ fields:
   order: 2
   default: '0'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Top N
       help: "Top n (> 0) restringe a extra\xE7\xE3o dos primeiros n \xEDndices do\
         \ vetor."
-  - en:
+    en:
       locale: en
       label: Top N
       help: Top n (> 0) restricts to first n index in vector.
@@ -53,17 +46,14 @@ fields:
   order: 3
   default: vector_
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Prefixo para nome dos atributos
       help: Prefixo usado para formar o nome dos novos atributos.
-  - en:
+    en:
       locale: en
       label: Name prefix for new attributes
       help: Name for new attributes (optional).

@@ -1,27 +1,50 @@
-id: 2108
-slug: join
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2108: null
+slug: !!set
+  join: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Juntar com outra fonte de dados
-    description: Permite juntar com outra fonte de dados (JOIN).
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Juntar com outra fonte de dados: null
+    description: !!set
+      Permite juntar com outra fonte de dados (JOIN).: null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2102
   type: menu/always/fa fa-database
+forms:
+- 41
+- 2158
+- 16
 

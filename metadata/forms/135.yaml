@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo"
       help: "T\xEDtulo para o gr\xE1fico"
-  - en:
+    en:
       locale: en
       label: Chart Title
       help: Title for the chart
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) de entrada
       help: Gera um histograma para cada um destes atributos.
-  - en:
+    en:
       locale: en
       label: Input attribute(s)
       help: Generate a histogram for each one of these attributes.
@@ -52,17 +44,14 @@ fields:
   order: 3
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Quantidade de intervalos (bins)
       help: "Em quantos intervalos os dados ser\xE3o divididos."
-  - en:
+    en:
       locale: en
       label: Number of bins
       help: How many intervals data is split.
@@ -71,19 +60,15 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo para o eixo X"
       help: "T\xEDtulo para o eixo X."
-  - en:
+    en:
       locale: en
       label: X-axis title
       help: X-axis title.
@@ -92,19 +77,15 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "T\xEDtulo para o eixo Y"
       help: "T\xEDtulo para o eixo Y."
-  - en:
+    en:
       locale: en
       label: Y-axis title
       help: Y-axis title.

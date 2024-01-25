@@ -1,27 +1,49 @@
-id: 2104
-slug: find-replace
-enabled: true
-type: TRANSFORMATION
-icon: fa fa-search
-css_class: ''
-doc_link: ''
+id: !!set
+  2104: null
+slug: !!set
+  find-replace: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa fa-search: null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Localizar e substituir (exato)
-    description: "Localiza valores no atributo e permite a substitui\xE7\xE3o."
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Localizar e substituir (exato): null
+    description: !!set
+      "Localiza valores no atributo e permite a substitui\xE7\xE3o.": null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2101
   type: menu/selected/fa fa-edit
+forms:
+- 41
+- 2102
+- 2154
 

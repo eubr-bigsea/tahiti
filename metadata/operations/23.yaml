@@ -3,8 +3,6 @@ slug: remove-duplicated-rows
 enabled: true
 type: ACTION
 icon: fa-bars
-css_class: None
-doc_link: None
 scripts:
 - id: 10
   type: JS_CLIENT
@@ -14,36 +12,34 @@ ports:
 - id: 48
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
 - id: 49
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: model
-  - en:
+    en:
       locale: en
       name: input data
       description: model
@@ -52,12 +48,10 @@ translations:
     locale: pt
     name: Remover linhas duplicadas
     description: Remove linhas duplicadas de uma fonte de dados
-    label_format: None
   en:
     locale: en
     name: Remove duplicated rows
     description: Remove duplicated rows from data source
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -68,4 +62,8 @@ categories:
   type: group
 - id: 29
   type: subgroup
+forms:
+- 41
+- 22
+- 110
 

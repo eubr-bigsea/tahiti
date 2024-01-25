@@ -10,17 +10,12 @@ fields:
   order: 1
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: L1
       help: ' L1 regularization factor (positive float).'

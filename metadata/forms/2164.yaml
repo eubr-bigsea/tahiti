@@ -8,22 +8,17 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: expression
-  values_url: None
   values: '{"alias": true}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "F\xF3rmula(s)"
       help: "F\xF3rmula(s)"
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

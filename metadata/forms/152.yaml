@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: true
   order: 3
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Quantidade de agrupamentos (K)
       help: Quantidade de agrupamentos (K)
-  - en:
+    en:
       locale: en
       label: Number of clusters (K)
       help: Number of clusters (K)
@@ -31,17 +27,14 @@ fields:
   order: 4
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
       help: "N\xFAmero m\xE1x. de itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Max iterations
@@ -52,19 +45,17 @@ fields:
   order: 5
   default: hamming
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "frequency", "value": "Frequency-based dissimilarity"}, {"key":
     "hamming", "value": "Hamming distance"}, {"key": "all_frequency", "value": "All
     Frequency-based dissimilarity for modes."}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fun\xE7\xE3o de dissimilaridade"
       help: "Fun\xE7\xE3o de dissimilaridade"
-  - en:
+    en:
       locale: en
       label: Dissimilarity function
       help: Distance function
@@ -75,19 +66,17 @@ fields:
   order: 6
   default: hamming
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "frequency", "value": "Frequency-based dissimilarity"}, {"key":
     "hamming", "value": "Hamming distance"}, {"key": "all_frequency", "value": "All
     Frequency-based dissimilarity for modes."}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fun\xE7\xE3o de dissimilaridade para os Metamodes"
       help: "Fun\xE7\xE3o de dissimilaridade para os metamodes"
-  - en:
+    en:
       locale: en
       label: Dissimilarity function for Metamodes
       help: Distance function for Metamodes
@@ -98,18 +87,15 @@ fields:
   order: 7
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1x. de itera\xE7\xF5es na gera\xE7\xE3o de Metamodes"
       help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es na segunda etapa (gera\xE7\xE3\
         o de Metamodes)"
-  - en:
+    en:
       locale: en
       label: Max iterations in Metamodes generation
       help: Maximum iterations in second step (Metamodes generation)
@@ -118,19 +104,15 @@ fields:
   type: INTEGER
   required: false
   order: 8
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Semente
       help: "Semente aleat\xF3ria"
-  - en:
+    en:
       locale: en
       label: Seed
       help: Seed
@@ -139,20 +121,16 @@ fields:
   type: INTEGER
   required: false
   order: 9
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Reduzir a fragmenta\xE7\xE3o"
       help: "Se ativado, ir\xE1 reduzir a paraleliza\xE7\xE3o em favor da capacidade\
         \ de lidar com pequenas bases"
-  - en:
+    en:
       locale: en
       label: Reduce fragmentation
       help: If enabled, it will reduce the parallelization in favor of the ability

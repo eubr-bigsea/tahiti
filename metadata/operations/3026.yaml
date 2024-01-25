@@ -1,18 +1,31 @@
-id: 3026
-slug: load-model
-enabled: true
-type: ACTION
-icon: fa-cloud-download-alt
-css_class: None
-doc_link: None
+id: !!set
+  3026: null
+slug: !!set
+  load-model: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  fa-cloud-download-alt: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3054
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    3054: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 2
     name: ClassificationModel
@@ -27,29 +40,46 @@ ports:
   - id: 18
     name: IRegressionModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo carregado
-  - en:
-      locale: en
-      name: model
-      description: Loaded model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo carregado: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Loaded model: null
 translations:
   pt:
-    locale: pt
-    name: Carregar modelo
-    description: Carrega um modelo (COMPSs) salvo anteriormente.
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Carregar modelo: null
+    description: !!set
+      Carrega um modelo (COMPSs) salvo anteriormente.: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Load model
-    description: Loads a previously saved model (COMPSs).
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Load model: null
+    description: !!set
+      Loads a previously saved model (COMPSs).: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 6
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 3026
 

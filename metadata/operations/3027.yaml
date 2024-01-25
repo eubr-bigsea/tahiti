@@ -1,18 +1,31 @@
-id: 3027
-slug: save-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-cloud-upload-alt
-css_class: None
-doc_link: None
+id: !!set
+  3027: null
+slug: !!set
+  save-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-cloud-upload-alt: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3055
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3055: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 8
     name: IListOfMachineLearningModels
@@ -25,29 +38,46 @@ ports:
   - id: 4
     name: IndexerModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Modelo a ser salvo
-  - en:
-      locale: en
-      name: model
-      description: Model to be saved
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Modelo a ser salvo: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model to be saved: null
 translations:
   pt:
-    locale: pt
-    name: Salvar modelo
-    description: "Salva um modelo de aprendizado de m\xE1quina(COMPSs)."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Salvar modelo: null
+    description: !!set
+      "Salva um modelo de aprendizado de m\xE1quina(COMPSs).": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Save model
-    description: Save a machine learning model (COMPSs).
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Save model: null
+    description: !!set
+      Save a machine learning model (COMPSs).: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 6
   type: group
 - id: 3001
   type: technology
+forms:
+- 41
+- 3027
 

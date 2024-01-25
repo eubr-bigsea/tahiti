@@ -10,20 +10,18 @@ fields:
   order: 1
   default: NEVER
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Never choose input 2", "key": "NEVER", "value": "Never choose
     input 2", "pt": "Nunca usar a entrada 2"}, {"en": "Workflow is running as a web
     service", "key": "WEB_SERVICE", "value": "Workflow is running as a web service",
     "pt": "Workflow est\u00e1 executando como um web service"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Escolha entrada 2 se condi\xE7\xE3o verdadeira"
       help: "Escolha entrada 2 se condi\xE7\xE3o verdadeira"
-  - en:
+    en:
       locale: en
       label: Choose input 2 if condition true
       help: Choose input 2 if condition true

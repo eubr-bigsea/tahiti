@@ -1,23 +1,42 @@
-id: 2361
-slug: random-forest-classifier
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2361: null
+slug: !!set
+  random-forest-classifier: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Classificador Random Forest
-    description: Classificador Random Forest.
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Classificador Random Forest: null
+    description: !!set
+      Classificador Random Forest.: null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
@@ -26,4 +45,6 @@ categories:
   type: model-builder
 - id: 4
   type: algorithm
+forms:
+- 65
 

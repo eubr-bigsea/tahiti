@@ -1,84 +1,143 @@
-id: 5099
-slug: dot
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5099: null
+slug: !!set
+  dot: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5200
-  slug: input layer
-  type: INPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+- id: !!set
+    5200: null
+  slug: !!set
+    input layer: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: input layer
-      description: Input layer
-- id: 5299
-  slug: output layer
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input layer: null
+      description: !!set
+        Input layer: null
+- id: !!set
+    5299: null
+  slug: !!set
+    output layer: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: output layer
-      description: Output layer
-- id: 5375
-  slug: python code
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output layer: null
+      description: !!set
+        Output layer: null
+- id: !!set
+    5375: null
+  slug: !!set
+    python code: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 28
     name: PythonCode
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: python code
-      description: Python code
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        python code: null
+      description: !!set
+        Python code: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Dot
-    description: Layer that computes a dot product between samples in two tensors.
-      E.g. if applied to a list of two tensors a and b of shape (batch_size, n), the
-      output will be a tensor of shape (batch_size, 1) where each entry i will be
-      the dot product between a[i] and b[i].
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Dot: null
+    description: !!set
+      ? Layer that computes a dot product between samples in two tensors. E.g. if
+        applied to a list of two tensors a and b of shape (batch_size, n), the output
+        will be a tensor of shape (batch_size, 1) where each entry i will be the dot
+        product between a[i] and b[i].
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5062
   type: group
+forms:
+- 41
+- 5174
 

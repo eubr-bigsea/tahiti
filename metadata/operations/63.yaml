@@ -3,43 +3,39 @@ slug: graph
 enabled: false
 type: TRANSFORMATION
 icon: fa-circle-o
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 138
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
 - id: 139
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -48,12 +44,13 @@ translations:
     locale: pt
     name: Grafo
     description: Grafo
-    label_format: None
   en:
     locale: en
     name: Graph
     description: Graph
-    label_format: None
 platforms: []
 categories: []
+forms:
+- 78
+- 41
 

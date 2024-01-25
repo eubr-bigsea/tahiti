@@ -3,8 +3,6 @@ slug: one-vs-rest-classifier-model
 enabled: false
 type: TRANSFORMATION
 icon: fa-window-close
-css_class: None
-doc_link: None
 scripts:
 - id: 56
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 260
   slug: train input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: entrada do treino
       description: Train input data
-  - en:
+    en:
       locale: en
       name: train input data
       description: Train input data
 - id: 261
   slug: model
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Output model
-  - en:
+    en:
       locale: en
       name: model
       description: Output model
 - id: 262
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -71,12 +66,10 @@ translations:
     name: Classificador 1 vs. resto
     description: "Redu\xE7\xE3o da classifica\xE7\xE3o multiclasse para a classifica\xE7\
       \xE3o bin\xE1ria."
-    label_format: None
   en:
     locale: en
     name: One vs. rest classifier
     description: Reduction of multiclass classification to binary classification.
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -91,4 +84,9 @@ categories:
   type: group
 - id: 1500
   type: classification
+forms:
+- 119
+- 41
+- 1
+- 110
 

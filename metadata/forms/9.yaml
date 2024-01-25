@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: false
   order: 1
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Itera\xE7\xF5es m\xE1ximas"
       help: "N\xFAmero m\xE1ximo de itera\xE7\xF5es (>=0)."
-  - en:
+    en:
       locale: en
       label: Max. iterations
       help: Max number of iterations (>=0).
@@ -31,18 +27,15 @@ fields:
   order: 2
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Aplicar padroniza\xE7\xE3o"
       help: "Indica se \xE9 para padronizar as features de treinamento antes de ajustar\
         \ o model."
-  - en:
+    en:
       locale: en
       label: Apply standardization
       help: Whether to standardize the training features before fitting the model.
@@ -51,20 +44,16 @@ fields:
   type: FLOAT
   required: false
   order: 3
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Limiar para a classifica\xE7\xE3o bin\xE1ria"
       help: "Limiar na classifica\xE7\xE3o bin\xE1ria aplicada ao modelo de predi\xE7\
         \xE3o linear"
-  - en:
+    en:
       locale: en
       label: Threshold for binary classification
       help: The threshold in binary classification applied to the linear model prediction
@@ -73,19 +62,15 @@ fields:
   type: FLOAT
   required: false
   order: 4
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia para a converg\xEAncia"
       help: "Toler\xE2ncia de converg\xEAncia para algoritmos iterativos  (>= 0)."
-  - en:
+    en:
       locale: en
       label: Convergence tolerance
       help: The convergence tolerance for iterative algorithms (>= 0).
@@ -94,20 +79,17 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com pesos
       help: "Atributo com pesos. Se n\xE3o informado, todas as inst\xE2ncias t\xEA\
         m o mesmopeso (1.0)."
-  - en:
+    en:
       locale: en
       label: Weight attribute
       help: Attribute with weights. If empty, all instances have the same weight (1.0);

@@ -3,8 +3,6 @@ slug: apply-model
 enabled: true
 type: TRANSFORMATION
 icon: fa-lightbulb
-css_class: None
-doc_link: None
 scripts:
 - id: 1
   type: JS_CLIENT
@@ -14,25 +12,23 @@ ports:
 - id: 92
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
 - id: 93
   slug: model
   type: INPUT
-  tags: None
   order: 2
   multiplicity: ONE
   interfaces:
@@ -49,29 +45,28 @@ ports:
   - id: 15
     name: IRecommendationModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Aplica esse modelo aos dados
-  - en:
+    en:
       locale: en
       name: model
       description: Input model to be applied
 - id: 94
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -80,12 +75,10 @@ translations:
     locale: pt
     name: Aplicar modelo
     description: "Aplica um modelo de aprendizado de m\xE1quina aos dados"
-    label_format: None
   en:
     locale: en
     name: Apply model
     description: Apply a machine learning model to data
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -96,4 +89,8 @@ categories:
   type: technology
 - id: 40
   type: group
+forms:
+- 41
+- 52
+- 110
 

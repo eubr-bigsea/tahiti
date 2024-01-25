@@ -1,59 +1,98 @@
-id: 3028
-slug: association-rules
-enabled: true
-type: TRANSFORMATION
-icon: fa-list-ol
-css_class: None
-doc_link: None
+id: !!set
+  3028: null
+slug: !!set
+  association-rules: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-list-ol: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 3056
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    3056: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input Data
-- id: 3057
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input Data: null
+- id: !!set
+    3057: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output Data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output Data: null
 translations:
   pt:
-    locale: pt
-    name: "Regras de associa\xE7\xE3o"
-    description: "Regras de associa\xE7\xE3o"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regras de associa\xE7\xE3o": null
+    description: !!set
+      "Regras de associa\xE7\xE3o": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Association rules
-    description: Association rules
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Association rules: null
+    description: !!set
+      Association rules: null
+    label_format: !!set
+      None: null
 platforms: []
 categories:
 - id: 8
@@ -62,4 +101,9 @@ categories:
   type: subgroup
 - id: 3001
   type: technology
+forms:
+- 41
+- 110
+- 108
+- 3028
 

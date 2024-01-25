@@ -10,20 +10,15 @@ fields:
   order: 4
   default: '2'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho (N)
       help: Tamanho do N-Gram (valor de N)
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

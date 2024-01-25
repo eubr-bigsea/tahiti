@@ -3,8 +3,6 @@ slug: join
 enabled: true
 type: TRANSFORMATION
 icon: fa-link
-css_class: None
-doc_link: None
 scripts:
 - id: 18
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 11
   slug: input data 1
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 1
       description: Input data 1
-  - en:
+    en:
       locale: en
       name: input data 1
       description: Input data 1
 - id: 12
   slug: input data 2
   type: INPUT
-  tags: None
   order: 2
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada 2
       description: Input data 2
-  - en:
+    en:
       locale: en
       name: input data 2
       description: Input data 2
 - id: 13
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -71,12 +66,10 @@ translations:
     name: "Jun\xE7\xE3o"
     description: "Realiza a jun\xE7\xE3o de fontes de dados usando um conjunto de\
       \ atributos (chaves)"
-    label_format: None
   en:
     locale: en
     name: Join
     description: Joins two data sets using a set of fields (keys)
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -87,4 +80,8 @@ categories:
   type: group
 - id: 31
   type: subgroup
+forms:
+- 16
+- 41
+- 110
 

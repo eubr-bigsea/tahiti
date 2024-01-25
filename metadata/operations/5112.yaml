@@ -1,101 +1,173 @@
-id: 5112
-slug: model
-enabled: true
-type: ACTION
-icon: ''
-css_class: circle-layout
-doc_link: None
+id: !!set
+  5112: null
+slug: !!set
+  model: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  circle-layout: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 5236
-  slug: input layer
-  type: INPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+- id: !!set
+    5236: null
+  slug: !!set
+    input layer: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: input layers
-      description: Input layer
-- id: 5237
-  slug: output layer
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input layers: null
+      description: !!set
+        Input layer: null
+- id: !!set
+    5237: null
+  slug: !!set
+    output layer: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: output layers
-      description: Input layer
-- id: 5312
-  slug: model
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output layers: null
+      description: !!set
+        Input layer: null
+- id: !!set
+    5312: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 22
     name: Model
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: model
-      description: Model
-- id: 5322
-  slug: output layer
-  type: OUTPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model: null
+- id: !!set
+    5322: null
+  slug: !!set
+    output layer: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 27
     name: Layer
   translations:
-  - pt:
-      locale: pt
-      name: None
-      description: None
-  - en:
-      locale: en
-      name: output layer
-      description: Output layer
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        None: null
+      description: !!set
+        None: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output layer: null
+      description: !!set
+        Output layer: null
 translations:
   pt:
-    locale: pt
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Model
-    description: Given some input tensor(s) and output tensor(s), you can instantiate
-      a Model. This model will include all layers required in the computation and
-      trains the model on data generated batch-by-batch by
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Model: null
+    description: !!set
+      ? Given some input tensor(s) and output tensor(s), you can instantiate a Model.
+        This model will include all layers required in the computation and trains
+        the model on data generated batch-by-batch by
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 5
   slug: keras
 categories:
 - id: 5063
   type: group
+forms:
+- 41
+- 5233
 

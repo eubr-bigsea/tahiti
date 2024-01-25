@@ -1,44 +1,73 @@
-id: 4003
-slug: gbt-classifier
-enabled: false
-type: TRANSFORMATION
-icon: fa-tree
-css_class: None
-doc_link: None
+id: !!set
+  4003: null
+slug: !!set
+  gbt-classifier: null
+enabled: !!set
+  false: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-tree: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4003
-  slug: algorithm
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    4003: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
-  - en:
-      locale: en
-      name: algorithm
-      description: Untrained classification model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        "Modelo de classifica\xE7\xE3o n\xE3o treinado": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Untrained classification model: null
 translations:
   pt:
-    locale: pt
-    name: Classificador GBT
-    description: "Algoritmo de aprendizado para classifica\xE7\xE3o Gradient-Boosted\
-      \ Trees (GBTs). Suporta r\xF3tulos bin\xE1rios e features cont\xEDnuas e categ\xF3\
-      ricas."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Classificador GBT: null
+    description: !!set
+      ? "Algoritmo de aprendizado para classifica\xE7\xE3o Gradient-Boosted Trees\
+        \ (GBTs). Suporta r\xF3tulos bin\xE1rios e features cont\xEDnuas e categ\xF3\
+        ricas."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: GBT Classifier
-    description: Gradient-Boosted Trees (GBTs) learning algorithm for classification.
-      It supports binary labels, as well as both continuous and categorical features.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      GBT Classifier: null
+    description: !!set
+      ? Gradient-Boosted Trees (GBTs) learning algorithm for classification. It supports
+        binary labels, as well as both continuous and categorical features.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -51,4 +80,7 @@ categories:
   type: technology
 - id: 1500
   type: classification
+forms:
+- 41
+- 4003
 

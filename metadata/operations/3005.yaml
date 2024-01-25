@@ -3,25 +3,22 @@ slug: knn-classifier
 enabled: true
 type: TRANSFORMATION
 icon: fa-lemon
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 3008
   slug: algorithm
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
+    pt:
       locale: pt
       name: algoritmo
       description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
-  - en:
+    en:
       locale: en
       name: algorithm
       description: Untrained classification model
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: Classificador KNN
     description: Usa um classificador KNN
-    label_format: None
   en:
     locale: en
     name: KNN Classification
     description: Uses a KNN Classifier
-    label_format: None
 platforms: []
 categories:
 - id: 8
@@ -46,4 +41,7 @@ categories:
   type: technology
 - id: 1500
   type: classification
+forms:
+- 3005
+- 41
 

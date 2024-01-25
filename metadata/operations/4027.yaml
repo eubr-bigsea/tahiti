@@ -1,78 +1,128 @@
-id: 4027
-slug: linear-regression-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-chart-line
-css_class: None
-doc_link: None
+id: !!set
+  4027: null
+slug: !!set
+  linear-regression-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-chart-line: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4048
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4048: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: entrada do treino
-      description: Train input data
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 4049
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        entrada do treino: null
+      description: !!set
+        Train input data: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    4049: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Output model
-  - en:
-      locale: en
-      name: model
-      description: Output model
-- id: 4050
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Output model: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Output model: null
+- id: !!set
+    4050: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: "Regress\xE3o Linear"
-    description: "Regress\xE3o linear com combina\xE7\xF5es de regularizadores L1\
-      \ e L2 (ElasticNet)."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regress\xE3o Linear": null
+    description: !!set
+      "Regress\xE3o linear com combina\xE7\xF5es de regularizadores L1 e L2 (ElasticNet).": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Linear Regression
-    description: Linear regression with combined L1 and L2 priors as regularizer (ElasticNet).
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Linear Regression: null
+    description: !!set
+      Linear regression with combined L1 and L2 priors as regularizer (ElasticNet).: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -85,4 +135,10 @@ categories:
   type: group
 - id: 1501
   type: regression
+forms:
+- 41
+- 110
+- 4021
+- 4007
+- 4047
 

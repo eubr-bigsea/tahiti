@@ -3,8 +3,6 @@ slug: lsh
 enabled: true
 type: TRANSFORMATION
 icon: fa-hashtag
-css_class: None
-doc_link: None
 scripts:
 - id: 44
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 219
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
 - id: 220
   slug: input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: dados de entrada
       description: Dados de entrada
-  - en:
+    en:
       locale: en
       name: input data
       description: Input data
 - id: 221
   slug: model
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 21
     name: LSHModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: model
       description: Modelo
-  - en:
+    en:
       locale: en
       name: model
       description: Model
@@ -76,7 +71,6 @@ translations:
       \ universo de poss\xEDveis itens). LSH difere das fun\xE7\xF5es tradicionais\
       \ de hash convencionais e daquelas usadas para criptografiahash porque busca\
       \ maximizar a probabilidade de uma \"colis\xE3o\" para itens similares."
-    label_format: None
   en:
     locale: en
     name: Locality-sensitive hashing
@@ -86,7 +80,6 @@ translations:
       \ than the universe of possible input items). LSH differs from conventional\
       \ and cryptographic hash functions because it aims to maximize the probability\
       \ of a \"collision\" for similar items."
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -97,4 +90,8 @@ categories:
   type: group
 - id: 36
   type: subgroup
+forms:
+- 41
+- 121
+- 110
 

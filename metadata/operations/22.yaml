@@ -3,25 +3,22 @@ slug: load-model
 enabled: true
 type: ACTION
 icon: fa-cloud-download-alt
-css_class: None
-doc_link: None
 scripts: []
 ports:
 - id: 46
   slug: model
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 4
     name: IndexerModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Modelo carregado
-  - en:
+    en:
       locale: en
       name: model
       description: Loaded model
@@ -30,12 +27,10 @@ translations:
     locale: pt
     name: Carregar modelo
     description: Carrega um modelo (Spark) salvo anteriormente.
-    label_format: None
   en:
     locale: en
     name: Load model
     description: Loads a previously saved model (Spark)
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -46,4 +41,7 @@ categories:
   type: group
 - id: 1
   type: technology
+forms:
+- 41
+- 21
 

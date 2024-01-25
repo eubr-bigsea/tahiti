@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 1
-  default: None
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Isot\xF4nica/crescente"
       help: "Isot\xF4nica/crescente"
-  - en:
+    en:
       locale: en
       label: Isotonic/increasing
       help: Isotonic/increasing
@@ -50,19 +42,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com r\xF3tulo"
       help: "Atributo com r\xF3tulo"
-  - en:
+    en:
       locale: en
       label: Label attribute
       help: Label attribute
@@ -71,19 +59,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo para predi\xE7\xE3o"
       help: "Atributo para predi\xE7\xE3o"
-  - en:
+    en:
       locale: en
       label: Prediction attribute
       help: Prediction attribute
@@ -92,27 +76,21 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com os pesos
       help: Atributo com os pesos
-  - en:
+    en:
       locale: en
       label: Weight attribute
       help: Weight attribute
 translations:
   pt:
     locale: pt
-    name: None
   en:
     locale: en
-    name: None
 

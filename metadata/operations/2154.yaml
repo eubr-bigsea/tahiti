@@ -1,27 +1,50 @@
-id: 2154
-slug: flag-in-range
-enabled: false
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2154: null
+slug: !!set
+  flag-in-range: null
+enabled: !!set
+  false: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Sinalizar registros em faixa
-    description: Sinaliza registros em faixa.
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Sinalizar registros em faixa: null
+    description: !!set
+      Sinaliza registros em faixa.: null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2105
   type: menu/selected/fa fa-flag
+forms:
+- 41
+- 2102
+- 2204
 

@@ -10,19 +10,16 @@ fields:
   order: 1
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de tabelas hash"
       help: "N\xFAmero de tabelas hash. Aumentar o n\xFAmero de tabelas hash diminui\
         \ a taxa de falsos positivos e decrement\xE1-lo melhora o tempo de execu\xE7\
         \xE3o"
-  - en:
+    en:
       locale: en
       label: Number of hash tables
       help: Number of hash tables. Increasing number of hash tables lowers the false
@@ -32,19 +29,16 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo(s) previsor(es)
       help: Atributo(s) previsor(es)
-  - en:
+    en:
       locale: en
       label: Features
       help: Features
@@ -55,17 +49,14 @@ fields:
   order: 3
   default: hashes
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo para sa\xEDda"
       help: "Atributo para sa\xEDda."
-  - en:
+    en:
       locale: en
       label: Output attribute
       help: Output attribute.
@@ -76,21 +67,19 @@ fields:
   order: 4
   default: min-hash-lsh
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Min hash LSH for Jackard distance", "value": "Min hash LSH for
     Jackard distance", "key": "min-hash-lsh", "pt": "Min hash LSH para dist\u00e2ncia
     de Jackard"}, {"en": "Bucketed random projection for Euclidean distance", "value":
     "Bucketed random projection for Euclidean distance", "key": "bucketed-random",
     "pt": "Proje\u00e7\u00e3o aleat\u00f3ria em buckets para a dist\u00e2ncia euclidiana"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo do LSH
       help: Tipo do LSH.
-  - en:
+    en:
       locale: en
       label: LSH type
       help: LSH type.
@@ -99,20 +88,16 @@ fields:
   type: INTEGER
   required: true
   order: 5
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho do bucket (apenas para Bucketd Random Projection LSH)
       help: Tamanho do bucket (apenas para Bucketd Random Projection LSH). Um tamanho
         de bucket maior diminui a taxa de falsos negativos.
-  - en:
+    en:
       locale: en
       label: Bucket length (only for type Bucketed Random Projection LSH
       help: Bucket length (only for type Bucketed Random Projection LSH. A larger
@@ -122,19 +107,15 @@ fields:
   type: INTEGER
   required: true
   order: 6
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Semente para n\xFAmeros aleat\xF3rios"
       help: "Semente para n\xFAmeros aleat\xF3rios."
-  - en:
+    en:
       locale: en
       label: Seed for random numbers
       help: Seed for random numbers.

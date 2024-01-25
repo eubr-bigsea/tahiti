@@ -10,17 +10,14 @@ fields:
   order: 3
   default: (1,100,1)
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanhos das Camadas
       help: "O elemento de ordem i representa o n\xFAmero de neur\xF3nios."
-  - en:
+    en:
       locale: en
       label: Layer sizes
       help: The ith element represents the number of neurons.
@@ -31,18 +28,15 @@ fields:
   order: 5
   default: '200'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de itera\xE7\xF5es"
       help: "O solucionador itera at\xE9 a converg\xEAncia ou esse n\xFAmero de itera\xE7\
         \xF5es."
-  - en:
+    en:
       locale: en
       label: Maximum number of iterations
       help: The solver iterates until convergence or this number of iterations.
@@ -53,17 +47,14 @@ fields:
   order: 6
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Toler\xE2ncia"
       help: "Toler\xE2ncia para a otimiza\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Tolerance
       help: Tolerance for the optimization.
@@ -72,20 +63,16 @@ fields:
   type: INTEGER
   required: false
   order: 7
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.
@@ -96,18 +83,16 @@ fields:
   order: 9
   default: relu
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "identity", "value": "identity"}, {"key": "logistic", "value":
     "logistic"}, {"key": "tanh", "value": "tanh"}, {"key": "relu", "value": "relu"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Ativa\xE7\xE3o"
       help: "Fun\xE7\xE3o de ativa\xE7\xE3o para a camada oculta."
-  - en:
+    en:
       locale: en
       label: Activation
       help: Activation function for the hidden layer.
@@ -118,18 +103,16 @@ fields:
   order: 10
   default: adam
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "lbfgs", "value": "lbfgs"}, {"key": "sgd", "value": "sgd"}, {"key":
     "adam", "value": "adam"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Solver
       help: "O solucionador para otimiza\xE7\xE3o de peso."
-  - en:
+    en:
       locale: en
       label: Solver
       help: The solver for weight optimization.
@@ -140,17 +123,15 @@ fields:
   order: 11
   default: '0.5'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "sgd"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Expoente
       help: O expoente da taxa de aprendizado de escala inversa.
-  - en:
+    en:
       locale: en
       label: Power
       help: The exponent for inverse scaling learning rate.
@@ -161,18 +142,16 @@ fields:
   order: 12
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "sgd" || this.solver.internalValue
     === "adam"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Shuffle
       help: "Se as amostras devem ser embaralhadas em cada itera\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Shuffle
       help: Whether to shuffle samples in each iteration.
@@ -183,18 +162,16 @@ fields:
   order: 13
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "sgd" || this.solver.internalValue
     === "adam"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero m\xE1ximo de epochs"
       help: "N\xFAmero m\xE1ximo de epochs para n\xE3o"
-  - en:
+    en:
       locale: en
       label: Maximum number of epochs
       help: Maximum number of epochs to not meet tol improvement.
@@ -205,17 +182,15 @@ fields:
   order: 15
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "sgd"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Momentum
       help: "Momentum para atualiza\xE7\xE3o de descida de gradiente."
-  - en:
+    en:
       locale: en
       label: Momentum
       help: Momentum for gradient descent update.
@@ -226,18 +201,16 @@ fields:
   order: 16
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: "this.solver.internalValue === \"sgd\" && \n        this.momentum.internalValue\
     \ > \"0\""
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Nesterovs\u2019s momentum"
       help: "Se deve usar o Nesterov\u2019s momentum ."
-  - en:
+    en:
       locale: en
       label: "Nesterov\u2019s momentum"
       help: "Whether to use Nesterov\u2019s momentum."
@@ -248,19 +221,17 @@ fields:
   order: 17
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "sgd" || this.solver.internalValue
     === "adam"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Parada antecipada
       help: "Se a parada precoce deve ser usada para encerrar o treinamento quando\
         \ a pontua\xE7\xE3o de valida\xE7\xE3o n\xE3o est\xE1 melhorando."
-  - en:
+    en:
       locale: en
       label: Early stopping
       help: Whether to use early stopping to terminate training when validation score
@@ -272,18 +243,16 @@ fields:
   order: 18
   default: '0.1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.early_stopping.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fra\xE7\xE3o de valida\xE7\xE3o"
       help: "A propor\xE7\xE3o de dados de treinamento a serem retirados como valida\xE7\
         \xE3o definida para parada antecipada."
-  - en:
+    en:
       locale: en
       label: Validation fraction
       help: The proportion of training data to set aside as validation set for early
@@ -295,18 +264,16 @@ fields:
   order: 19
   default: '0.9'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "adam"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Beta 1
       help: A taxa de decaimento exponencial para estimativas do vetor de primeiro
         momento em adam, deve estar em [0, 1).
-  - en:
+    en:
       locale: en
       label: Beta 1
       help: Exponential decay rate for estimates of first moment vector in adam, should
@@ -318,18 +285,16 @@ fields:
   order: 20
   default: '0.999'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "adam"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Beta 2
       help: A taxa de decaimento exponencial para estimativas do vetor de segundo
         momento em adam, deve estar em [0, 1).
-  - en:
+    en:
       locale: en
       label: Beta 2
       help: Exponential decay rate for estimates of second moment vector in adam,
@@ -341,17 +306,15 @@ fields:
   order: 21
   default: '0.00000001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "adam"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Epsilon
       help: "Valor para a estabilidade num\xE9rica em ad\xE3o."
-  - en:
+    en:
       locale: en
       label: Epsilon
       help: Value for numerical stability in adam.
@@ -362,17 +325,14 @@ fields:
   order: 22
   default: auto
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Taxa de aprendizado
       help: "Programa\xE7\xE3o da taxa de aprendizado para atualiza\xE7\xF5es de peso."
-  - en:
+    en:
       locale: en
       label: Learning rate
       help: Learning rate schedule for weight updates.
@@ -383,20 +343,19 @@ fields:
   order: 23
   default: constant
   suggested_widget: dropdown
-  values_url: None
   values: '[{"key": "constant", "value": "constant"}, {"key": "invscaling", "value":
     "invscaling"}, {"key": "adaptive", "value": "adaptive"}]'
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "sgd"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho do batch
       help: "Tamanho de mini batches para otimizadores estoc\xE1sticos. Se o solucionador\
         \ for \"lbfgs\", o classificador n\xE3o usar\xE1 minibatch. Quando definido\
         \ como \"auto\", batch_size = min (200, n_samples)"
-  - en:
+    en:
       locale: en
       label: Batch size
       help: "Size of minibatches for stochastic optimizers. If the solver is \u2018\
@@ -409,19 +368,17 @@ fields:
   order: 24
   default: '0.001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.solver.internalValue === "sgd" || this.solver.internalValue
     === "adam"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Taxa de aprendizado inicial
       help: "A taxa de aprendizado inicial usada. Controla o tamanho da etapa na atualiza\xE7\
         \xE3o dos pesos."
-  - en:
+    en:
       locale: en
       label: Learning rate init
       help: The initial learning rate used. It controls the step-size in updating
@@ -433,17 +390,14 @@ fields:
   order: 25
   default: '0.0001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Alpha
       help: "Par\xE2metro de penalidade L2 (termo de regulariza\xE7\xE3o)."
-  - en:
+    en:
       locale: en
       label: Alpha
       help: L2 penalty (regularization term) parameter.

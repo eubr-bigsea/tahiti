@@ -8,19 +8,16 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/models?simple=true&list=true&enabled=1`'
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Modelo
       help: Modelo anteriormente salvo a ser carregado
-  - en:
+    en:
       locale: en
       label: Model
       help: Model to be loaded (previously saved).

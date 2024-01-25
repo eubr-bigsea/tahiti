@@ -10,7 +10,6 @@ fields:
   order: 1
   default: linear
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "elu", "key": "elu"}, {"value": "exponential", "key": "exponential"},
     {"value": "hard_sigmoid", "key": "hard_sigmoid"}, {"value": "linear", "key": "linear"},
     {"value": "relu", "key": "relu"}, {"value": "selu", "key": "selu"}, {"value":
@@ -18,14 +17,11 @@ fields:
     "softplus", "key": "softplus"}, {"value": "softsign", "key": "softsign"}, {"value":
     "tanh", "key": "tanh"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Activation function
       help: 'Activation function to use. If you do not specify anything, no activation

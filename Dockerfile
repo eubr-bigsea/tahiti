@@ -21,5 +21,6 @@ COPY . $TAHITI_HOME
 ENV FLASK_APP=tahiti.app
 
 COPY bin/entrypoint /usr/local/bin/
+RUN pybabel compile -d $TAHITI_HOME/tahiti/i18n/locales
 ENTRYPOINT ["/usr/bin/dumb-init", "--", "/usr/local/bin/entrypoint"]
 CMD ["server"]

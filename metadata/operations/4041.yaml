@@ -1,65 +1,109 @@
-id: 4041
-slug: k-fold
-enabled: true
-type: ACTION
-icon: ''
-css_class: None
-doc_link: None
+id: !!set
+  4041: null
+slug: !!set
+  k-fold: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts:
-- id: 4004
-  type: JS_CLIENT
-  enabled: true
-  body: copyInputAddField(task, 'alias', false, 'fold');
+- id: !!set
+    4004: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    copyInputAddField(task, 'alias', false, 'fold');: null
 ports:
-- id: 4088
-  slug: input data
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4088: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4089
-  slug: output data
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4089: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: "Divis\xE3o dos dados em K parti\xE7\xF5es"
-    description: "Esta opera\xE7\xE3o realiza a divis\xE3o do conjunto de dados em\
-      \ k parti\xE7\xF5es ou grupos de tamanho aproximadamente igual"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Divis\xE3o dos dados em K parti\xE7\xF5es": null
+    description: !!set
+      "Esta opera\xE7\xE3o realiza a divis\xE3o do conjunto de dados em k parti\xE7\xF5es ou grupos de tamanho aproximadamente igual": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Split data into K Fold
-    description: This operation involves dividing the dataset into k folds or partitions
-      of approximately equal size
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Split data into K Fold: null
+    description: !!set
+      This operation involves dividing the dataset into k folds or partitions of approximately equal size: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -68,4 +112,8 @@ categories:
   type: group
 - id: 38
   type: subgroup
+forms:
+- 41
+- 110
+- 4028
 

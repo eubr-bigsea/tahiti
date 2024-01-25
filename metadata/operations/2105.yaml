@@ -1,24 +1,40 @@
-id: 2105
-slug: sort
-enabled: true
-type: TRANSFORMATION
-icon: fa fa-sort text-secondary
-css_class: ''
-doc_link: ''
+id: !!set
+  2105: null
+slug: !!set
+  sort: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa fa-sort text-secondary: null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Ordenar
-    description: "Permite definir as op\xE7\xF5es de ordena\xE7\xE3o."
-    label_format: <b>Ordenar por</b> <i>${this.order_by.value.map(v => v.f+ "(" +
-      v.attribute +")").join(", ")}</i>
+    locale: !!set
+      pt: null
+    name: !!set
+      Ordenar: null
+    description: !!set
+      "Permite definir as op\xE7\xF5es de ordena\xE7\xE3o.": null
+    label_format: !!set
+      <b>Ordenar por</b> <i>${this.order_by.value.map(v => v.f+ "(" + v.attribute +")").join(", ")}</i>: null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
@@ -27,4 +43,7 @@ categories:
   type: menu/always/fa fa-database
 - id: 2114
   type: visualization-builder
+forms:
+- 41
+- 2155
 

@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '128'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tamanho do bloco
       help: Tamanho do bloco
-  - en:
+    en:
       locale: en
       label: Block size
       help: Block size
@@ -31,19 +28,16 @@ fields:
   order: 1
   default: 2,2,2
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Camadas (informe os tamanhos separados por v\xEDrgula)"
       help: "Tamanho das camadas da camada de  entrada para a camada de sa\xEDda.Ex.:\
         \ \"780, 100, 10\" (sem aspas) significa 780 entradas, uma camada oculta com\
         \ 100 neur\xF4nios e uma camada de sa\xEDda com 10 neur\xF4nios."
-  - en:
+    en:
       locale: en
       label: Layers (inform sizes separated by commas)
       help: Sizes of layers from input layer to output layer E.g., "780, 100, 10"
@@ -54,19 +48,15 @@ fields:
   type: INTEGER
   required: false
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Itera\xE7\xF5es m\xE1ximas"
       help: "Itera\xE7\xF5es m\xE1ximas"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Max iterations
@@ -75,19 +65,15 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Semente (para gera\xE7\xE3o de n\xFAmeros aleat\xF3rios)"
       help: "Semente (para gera\xE7\xE3o de n\xFAmeros aleat\xF3rios)"
-  - en:
+    en:
       locale: en
       label: Seed (random number generation)
       help: Seed (random number generation)
@@ -96,19 +82,16 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "l-bfgs", "key": "l-bfgs"}, {"value": "gd", "key": "gd"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Solucionador
       help: Solucionador
-  - en:
+    en:
       locale: en
       label: Solver
       help: Solver

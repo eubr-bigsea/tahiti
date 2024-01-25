@@ -1,17 +1,19 @@
-from tahiti.models import *
-from tahiti.app import app
-from itertools import chain
-import yaml
-from sqlalchemy.orm.collections import InstrumentedList
 import argparse
-import sys
-from sqlalchemy.orm import joinedload
-from difflib import Differ
-from pprint import pprint
-from copy import deepcopy
 import logging
-from tahiti.schema import PlatformCreateRequestSchema, partial_schema_factory
+import sys
+from copy import deepcopy
+from difflib import Differ
+from itertools import chain
+from pprint import pprint
 from typing import List
+
+import yaml
+from sqlalchemy.orm import joinedload
+from sqlalchemy.orm.collections import InstrumentedList
+
+from tahiti.app import app
+from tahiti.models import *
+
 # logging.getLogger('sqlalchemy.engine.Engine').setLevel(logging.WARN)
 
 
@@ -42,15 +44,21 @@ def deep_diff(x, y, parent_key=None, exclude_keys=[], epsilon_keys=[]):
             if k in exclude_keys:
                 continue
             if k in x:
-                d[k] = (deepcopy(x[k]), None)
+                left = deepcopy(x[k])
+                if left is not None:
+                    d[k] = (left, None)
             else:
-                d[k] = (None, deepcopy(y[k]))
+                right = deepcopy(y[k])
+                if right is not None:
+                    d[k] = (None, right)
 
         for k in x.keys() & y.keys():
             if k in exclude_keys:
                 continue
 
-            next_d = deep_diff(x[k], y[k], parent_key=k, exclude_keys=exclude_keys, epsilon_keys=epsilon_keys)
+            next_d = deep_diff(x[k], y[k], parent_key=k, 
+                               exclude_keys=exclude_keys, 
+                               epsilon_keys=epsilon_keys)
             if next_d is None:
                 continue
 
@@ -66,7 +74,10 @@ def deep_diff(x, y, parent_key=None, exclude_keys=[], epsilon_keys=[]):
         x, y = y, x
 
     for i, x_val in enumerate(x):
-        d[i] = deep_diff(y[i], x_val, parent_key=i, exclude_keys=exclude_keys, epsilon_keys=epsilon_keys) if flipped else deep_diff(x_val, y[i], parent_key=i, exclude_keys=exclude_keys, epsilon_keys=epsilon_keys)
+        d[i] = deep_diff(y[i], x_val, parent_key=i, exclude_keys=exclude_keys, 
+                         epsilon_keys=epsilon_keys) if flipped else \
+        deep_diff(x_val, y[i], parent_key=i, exclude_keys=exclude_keys, 
+                  epsilon_keys=epsilon_keys)
 
     for i in range(len(x), len(y)):
         d[i] = (y[i], None) if flipped else (None, y[i])
@@ -87,10 +98,20 @@ def quoted_presenter(dumper, data):
 def sa_vars(row, translation=False):
     if isinstance(row, InstrumentedList):
         row = row[0]
+    def _get_t_value(col, r):
+        v = col.type.python_type(getattr(r, col.name))
+        if translation:
+            # import pdb; pdb.set_trace()
+            return v if (v and v != 'None') else 'null'
+        else:
+            return v
     return {
-        column.name: column.type.python_type(getattr(row, column.name))
+        column.name: _get_t_value(column, row)
         for column in row.__table__.columns
-        if not column.foreign_keys
+        if (not column.foreign_keys and 
+            column.type.python_type(getattr(row, column.name)) is not None and
+            'None' != column.type.python_type(getattr(row, column.name)))
+
     }
 def get_interfaces(p):
     result = []
@@ -132,7 +153,48 @@ def compare_platforms():
             dump = dump_platform(platform)
             with open(f'metadata/platforms/{platform.id}.yaml') as f:
                 source = yaml.load(f, Loader=yaml.FullLoader)
-            pprint(deep_diff(dump, source))
+
+            diff = deep_diff(dump, source)
+            if diff is not None:
+                print('*' * 20)
+                #print(platform.id)
+                #print('*' * 20)
+                pprint(diff)
+                #print(dump)
+                print('*' * 20)
+
+def compare_operations():
+    with app.app_context():
+        ops = (Operation
+            .query
+            .options(joinedload('forms.current_translation')) 
+            .options(joinedload('ports.current_translation')) 
+            .options(joinedload('ports.interfaces.current_translation')) 
+            .options(joinedload('forms.fields.current_translation')) 
+            .options(joinedload('categories.current_translation')) 
+            .options(joinedload('forms')) 
+            .options(joinedload('platforms')) 
+            .options(joinedload('platforms.current_translation')) 
+            .options(joinedload('ports')) 
+            .options(joinedload('ports.interfaces')) 
+            .options(joinedload('forms.fields')) 
+            .options(joinedload('categories'))
+            .options(joinedload('scripts'))
+            .options(joinedload('translations')))
+        for op in ops:
+            dump = dump_op(op)
+            with open(f'metadata/operations/{op.id}.yaml') as f:
+                source = yaml.load(f, Loader=yaml.FullLoader)
+
+            diff = deep_diff(dump, source)
+            if diff is not None:
+                print('*' * 20)
+                #print(platform.id)
+                #print('*' * 20)
+                pprint(diff)
+                #print(dump)
+                print('*' * 20)
+            
  
 
 def dump_form(form: OperationForm):
@@ -156,7 +218,7 @@ def dump_form(form: OperationForm):
     }
     return d
    
-def dump_forms(out=sys.stdout):
+def dump_forms(out=sys.stdout, ids=None):
     with app.app_context():
         forms = (OperationForm
             .query
@@ -164,7 +226,9 @@ def dump_forms(out=sys.stdout):
             .options(joinedload('fields.current_translation'))
             .options(joinedload('fields.fallback_translation'))
             .options(joinedload('translations'))
-            .limit(1000))
+            )
+        if ids:
+            forms = forms.filter(OperationForm.id.in_(ids))
         dd = []
         for form in forms:
             dump = dump_form(form)
@@ -182,8 +246,8 @@ def dump_op(op):
                 sa_vars(p), 
                 {'interfaces': get_interfaces(p)},
                 {'translations': {
-                   'pt': sa_vars(p.translations['pt']),
-                   'en': sa_vars(p.translations['en']),
+                   'pt': sa_vars(p.translations['pt'], True),
+                   'en': sa_vars(p.translations['en'], True),
                 }
              }
             )
@@ -196,11 +260,30 @@ def dump_op(op):
     }
     d['platforms'] = [{'id': p.id, 'slug': p.slug} for p in op.platforms]
     d['categories'] = [{'id': p.id, 'type': p.type} for p in op.categories]
+    d['forms'] = [f.id for f in op.forms]
     return d
 
-def dump_ops(out=sys.stdout):
+def dump_ops(out=sys.stdout, ids=None):
     with app.app_context():
-        ops = Operation.query.limit(1000)
+        ops = Operation.query #.limit(1000)
+        ops = ops.options(joinedload(Operation.current_translation))
+
+        # .options(db.contains_eager(Operation.current_translation,
+        #                           alias=current_translation))
+        ops = ops.options(joinedload('forms.current_translation')) \
+            .options(joinedload('ports.current_translation')) \
+            .options(joinedload('ports.interfaces.current_translation')) \
+            .options(joinedload('forms.fields.current_translation')) \
+            .options(joinedload('categories.current_translation')) \
+            .options(joinedload('forms')) \
+            .options(joinedload('platforms')) \
+            .options(joinedload('platforms.current_translation')) \
+            .options(joinedload('ports')) \
+            .options(joinedload('ports.interfaces')) \
+            .options(joinedload('forms.fields')) \
+            .options(joinedload('categories'))
+        if ids:
+            ops = ops.filter(Operation.id.in_(ids))
         for op in ops:
             dump = dump_op(op)
             with open(f'metadata/operations/{op.id}.yaml', 'w') as f:
@@ -246,7 +329,7 @@ def sync_ops(ops: List[int]):
             OperationCategory(**s) for s in d.get('categories', [])
         ]
         d['forms'] = [
-            OperationForm(**s) for s in d.get('forms', [])
+            OperationForm(id=s) for s in d.get('forms', [])
         ]
         op = Operation(**d)
         db.session.merge(op)
@@ -266,10 +349,14 @@ def sync_forms(forms: List[int]):
             for k, v in d.get('translations', {}).items()}
 
         def get_fields(s):
+            # translations = {k: v for item in s.get('translations', []) for k, v in item.items()}
+            #s['translations'] = {k: OperationFormFieldTranslation(**v)
+            #    for k, v in translations.items()}
             s['translations'] = {k: OperationFormFieldTranslation(**v)
                 for k, v in s.get('translations', {}).items()}
             field = OperationFormField(**s)
             return field
+        # import pdb; pdb.set_trace()
         d['fields'] = [get_fields(s) for s in d.get('fields', [])]
         form = OperationForm(**d)
         db.session.merge(form)
@@ -289,11 +376,12 @@ if __name__ == '__main__':
         help='list of ids of forms, space-separated')
     args = parser.parse_args()
     if args.action == 'dump':
-        # dump_ops()
-        dump_platforms()
-        # dump_forms()
+        #dump_ops(ids=args.ops)
+        #dump_platforms()
+        dump_forms(ids=args.forms)
     elif args.action == 'compare':
-        compare_platforms()
+        #compare_platforms()
+        compare_operations()
     elif args.action == 'sync':
         with app.app_context():
             sync(args.forms, args.ops)

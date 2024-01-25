@@ -10,17 +10,14 @@ fields:
   order: 1
   default: '2'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Portas de entrada
       help: "N\xFAmero de portas de entrada para a meta-opera\xE7\xE3o [0:N]."
-  - en:
+    en:
       locale: en
       label: Input ports
       help: Number of input ports for the meta-operation [0:N].
@@ -31,17 +28,14 @@ fields:
   order: 2
   default: '2'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Portas de sa\xEDda"
       help: "N\xFAmero de portas de sa\xEDda para a meta-opera\xE7\xE3o [0:N]."
-  - en:
+    en:
       locale: en
       label: Output ports
       help: Number of output ports for the meta-operation [0:N].

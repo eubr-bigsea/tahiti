@@ -1,23 +1,42 @@
-id: 2357
-slug: decision-tree-classifier
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  2357: null
+slug: !!set
+  decision-tree-classifier: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "Classificador \xC1rvore de Decis\xE3o"
-    description: "Classificador \xE1rvore de decis\xE3o."
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      "Classificador \xC1rvore de Decis\xE3o": null
+    description: !!set
+      "Classificador \xE1rvore de decis\xE3o.": null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
@@ -26,4 +45,6 @@ categories:
   type: model-builder
 - id: 4
   type: algorithm
+forms:
+- 66
 

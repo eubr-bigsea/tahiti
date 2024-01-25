@@ -8,21 +8,18 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Multinomial (default)", "value": "Multinomial (default)", "key":
     "multinomial", "pt": "Multinomial (padr\u00e3o)"}, {"en": "Bernoulli", "value":
     "Bernoulli", "key": "bernoulli", "pt": "Bernoulli"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de modelo
       help: Tipo de modelo
-  - en:
+    en:
       locale: en
       label: Model type
       help: Model type
@@ -31,20 +28,16 @@ fields:
   type: FLOAT
   required: false
   order: 3
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Suaviza\xE7\xE3o"
       help: "Par\xE2metro de suaviza\xE7\xE3o Laplace (0 para n\xE3o suaviza\xE7\xE3\
         o)."
-  - en:
+    en:
       locale: en
       label: Smoothing
       help: The Laplace smoothing parameter (0 for no smoothing).
@@ -53,21 +46,17 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limiares
       help: "Limiar na classifica\xE7\xE3o de v\xE1rias classes para ajustar a probabilidade\
         \ de prever cada classe. A lista deve ter comprimento igual ao n\xFAmero de\
         \ classes."
-  - en:
+    en:
       locale: en
       label: Thresholds
       help: Thresholds in multi-class classification to adjust the probability of
@@ -77,19 +66,16 @@ fields:
   type: TEXT
   required: false
   order: 5
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com os pesos
       help: Atributo com os pesos
-  - en:
+    en:
       locale: en
       label: Weight attribute
       help: Weight attribute

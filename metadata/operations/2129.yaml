@@ -1,28 +1,48 @@
-id: 2129
-slug: truncate-text
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Text
-doc_link: ''
+id: !!set
+  2129: null
+slug: !!set
+  truncate-text: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Text: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Truncar texto
-    description: "Trunca um texto at\xE9 um limite especificado de caracteres."
-    label_format: <b>Truncar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>
-      para tamanho ${this.characters.value}
+    locale: !!set
+      pt: null
+    name: !!set
+      Truncar texto: null
+    description: !!set
+      "Trunca um texto at\xE9 um limite especificado de caracteres.": null
+    label_format: !!set
+      <b>Truncar</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i> para tamanho ${this.characters.value}: null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2102
+- 2179
 

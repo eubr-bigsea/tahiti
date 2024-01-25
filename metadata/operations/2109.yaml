@@ -1,28 +1,47 @@
-id: 2109
-slug: concat-rows
-enabled: true
-type: TRANSFORMATION
-icon: fa fa-plus text-secondary
-css_class: separator
-doc_link: ''
+id: !!set
+  2109: null
+slug: !!set
+  concat-rows: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa fa-plus text-secondary: null
+css_class: !!set
+  separator: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Adicionar registros ao fim
-    description: Permite adicionar registros ao fim dos dados a partir de outra fonte
-      de dados.
-    label_format: ''
+    locale: !!set
+      pt: null
+    name: !!set
+      Adicionar registros ao fim: null
+    description: !!set
+      Permite adicionar registros ao fim dos dados a partir de outra fonte de dados.: null
+    label_format: !!set
+      ? ''
+      : null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2102
   type: menu/always/fa fa-database
+forms:
+- 41
+- 2159
 

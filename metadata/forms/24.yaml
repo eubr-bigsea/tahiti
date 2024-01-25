@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 0
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Comment
       help: Comment
-  - en:
+    en:
       locale: en
       label: Comment
       help: Comment
@@ -31,17 +27,12 @@ fields:
   order: 3
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Folds
       help: How many folds will be generated. Data will be distributed as equaly as
@@ -53,17 +44,12 @@ fields:
   order: 4
   default: '1000'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Fold size
       help: How many records will be distributed among folds. The number of folds

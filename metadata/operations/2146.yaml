@@ -1,28 +1,48 @@
-id: 2146
-slug: format-date
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: Datetime
-doc_link: ''
+id: !!set
+  2146: null
+slug: !!set
+  format-date: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  Datetime: null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: Formatar data
-    description: "Formata uma data segundo um par\xE2metro."
-    label_format: <b>Formatar a data em</b> <i>${this.attributes.value.map(a=>a).join(",
-      ")}</i>
+    locale: !!set
+      pt: null
+    name: !!set
+      Formatar data: null
+    description: !!set
+      "Formata uma data segundo um par\xE2metro.": null
+    label_format: !!set
+      <b>Formatar a data em</b> <i>${this.attributes.value.map(a=>a).join(", ")}</i>: null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2103
   type: menu/selected/fa fa-magic
+forms:
+- 41
+- 2102
+- 2196
 

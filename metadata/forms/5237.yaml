@@ -10,17 +10,12 @@ fields:
   order: 1
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Featurewise center
       help: Set input mean to 0 over the dataset, feature-wise.
@@ -31,17 +26,12 @@ fields:
   order: 2
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Samplewise center
       help: Set each sample mean to 0.
@@ -52,17 +42,12 @@ fields:
   order: 3
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Featurewise std normalization
       help: Divide inputs by std of the dataset, feature-wise.
@@ -73,17 +58,12 @@ fields:
   order: 4
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Samplewise std normalization
       help: Divide each input by its std.
@@ -94,17 +74,12 @@ fields:
   order: 5
   default: '0.000001'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: ZCA epsilon
       help: Epsilon for ZCA whitening. Default is 1e-6.
@@ -115,17 +90,12 @@ fields:
   order: 6
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: ZCA whitening
       help: Apply ZCA whitening.
@@ -136,17 +106,12 @@ fields:
   order: 7
   default: '0'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Rotation range
       help: Degree range for random rotations.
@@ -157,17 +122,12 @@ fields:
   order: 8
   default: '0.0'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Width shift range
       help: 'Float, 1-D array-like or int float: fraction of total width, if < 1,
@@ -183,17 +143,12 @@ fields:
   order: 9
   default: '0.0'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Height shift range
       help: 'Float, 1-D array-like or int float: fraction of total height, if < 1,
@@ -207,19 +162,13 @@ fields:
   type: TEXT
   required: false
   order: 10
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Brightness range
       help: Tuple or list of two floats. Range for picking a brightness shift value
@@ -231,17 +180,12 @@ fields:
   order: 11
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Shear range
       help: Float. Shear Intensity (Shear angle in counter-clockwise direction in
@@ -253,17 +197,12 @@ fields:
   order: 12
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Zoom range
       help: Float or [lower, upper]. Range for random zoom. If a float, [lower, upper]
@@ -275,17 +214,12 @@ fields:
   order: 13
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Channel shift range
       help: Float. Range for random channel shifts.
@@ -296,18 +230,14 @@ fields:
   order: 14
   default: nearest
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "constant", "key": "constant"}, {"value": "nearest", "key":
     "nearest"}, {"value": "reflect", "key": "reflect"}, {"value": "wrap", "key": "wrap"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Fill mode
       help: 'One of {"constant", "nearest", "reflect" or "wrap"}. Default is "nearest".
@@ -321,17 +251,12 @@ fields:
   order: 15
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Cval
       help: Float or Int. Value used for points outside the boundaries when fill_mode
@@ -343,17 +268,12 @@ fields:
   order: 16
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Horizontal flip
       help: Randomly flip inputs horizontally.
@@ -364,17 +284,12 @@ fields:
   order: 17
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Vertical flip
       help: Randomly flip inputs vertically.
@@ -383,19 +298,13 @@ fields:
   type: TEXT
   required: false
   order: 18
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Rescale
       help: Rescaling factor. Defaults to None. If None or 0, no rescaling is applied,
@@ -406,19 +315,13 @@ fields:
   type: TEXT
   required: false
   order: 19
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Preprocessing function
       help: 'function that will be implied on each input. The function will run after
@@ -430,20 +333,15 @@ fields:
   type: TEXT
   required: false
   order: 20
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "channels_last", "key": "channels_last"}, {"value": "channels_first",
     "key": "channels_first"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Data format
       help: Image data format, either "channels_first" or "channels_last". "channels_last"
@@ -458,17 +356,12 @@ fields:
   order: 21
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Validation split
       help: Float. Fraction of images reserved for validation (strictly between 0
@@ -478,19 +371,13 @@ fields:
   type: TEXT
   required: false
   order: 22
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Dtype
       help: Data type to use for the generated arrays.
@@ -501,17 +388,12 @@ fields:
   order: 23
   default: (256, 256)
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Target size
       help: 'Tuple of integers (height, width), default: (256, 256). The dimensions
@@ -523,18 +405,14 @@ fields:
   order: 24
   default: rgb
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "grayscale", "key": "grayscale"}, {"value": "rgb", "key": "rgb"},
     {"value": "rgba", "key": "rgba"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Color mode
       help: One of "grayscale", "rgb", "rgba". Whether the images will be converted
@@ -546,17 +424,12 @@ fields:
   order: 26
   default: '32'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Batch size
       help: 'Size of the batches of data (default: 32).'
@@ -567,17 +440,12 @@ fields:
   order: 27
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Shuffle
       help: 'Whether to shuffle the data (default: True) If set to False, sorts the
@@ -589,18 +457,14 @@ fields:
   order: 30
   default: nearest
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "bicubic", "key": "bicubic"}, {"value": "bilinear", "key": "bilinear"},
     {"value": "nearest", "key": "nearest"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Interpolation
       help: 'Interpolation method used to resample the image if the target size is

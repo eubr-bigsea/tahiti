@@ -1,81 +1,136 @@
-id: 119
-slug: lda-clustering-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-file-alt
-css_class: None
-doc_link: None
+id: !!set
+  119: null
+slug: !!set
+  lda-clustering-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-file-alt: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts:
-- id: 64
-  type: JS_CLIENT
-  enabled: true
-  body: copyInputAddField(task, "prediction", false, null);
+- id: !!set
+    64: null
+  type: !!set
+    JS_CLIENT: null
+  enabled: !!set
+    true: null
+  body: !!set
+    copyInputAddField(task, "prediction", false, null);: null
 ports:
-- id: 284
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    284: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: entrada do treino
-      description: Train input data
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 285
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        entrada do treino: null
+      description: !!set
+        Train input data: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    285: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 14
     name: IClusteringModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Output model
-  - en:
-      locale: en
-      name: model
-      description: Output model
-- id: 286
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Output model: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Output model: null
+- id: !!set
+    286: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
 translations:
   pt:
-    locale: pt
-    name: Latent Dirichlet Allocation (LDA)
-    description: Agrupamento LDA
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Latent Dirichlet Allocation (LDA): null
+    description: !!set
+      Agrupamento LDA: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Latent Dirichlet Allocation (LDA)
-    description: LDA Clustering
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Latent Dirichlet Allocation (LDA): null
+    description: !!set
+      LDA Clustering: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
@@ -86,4 +141,10 @@ categories:
   type: group
 - id: 37
   type: subgroup
+forms:
+- 41
+- 10
+- 110
+- 58
+- 132
 

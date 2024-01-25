@@ -1,77 +1,128 @@
-id: 4046
-slug: isotonic-regression-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-battery-quarter
-css_class: None
-doc_link: None
+id: !!set
+  4046: null
+slug: !!set
+  isotonic-regression-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-battery-quarter: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4100
-  slug: train input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4100: null
+  slug: !!set
+    train input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: entrada do treino
-      description: Train input data
-  - en:
-      locale: en
-      name: train input data
-      description: Train input data
-- id: 4101
-  slug: output data
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        entrada do treino: null
+      description: !!set
+        Train input data: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        train input data: null
+      description: !!set
+        Train input data: null
+- id: !!set
+    4101: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda"
-  - en:
-      locale: en
-      name: output data
-      description: Output data
-- id: 4102
-  slug: model
-  type: OUTPUT
-  tags: None
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data: null
+- id: !!set
+    4102: null
+  slug: !!set
+    model: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Output model
-  - en:
-      locale: en
-      name: model
-      description: Output model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Output model: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Output model: null
 translations:
   pt:
-    locale: pt
-    name: "Regress\xE3o Isot\xF4nica"
-    description: "Regress\xE3o Isot\xF4nica"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Regress\xE3o Isot\xF4nica": null
+    description: !!set
+      "Regress\xE3o Isot\xF4nica": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Isotonic Regression
-    description: Isotonic Regression
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Isotonic Regression: null
+    description: !!set
+      Isotonic Regression: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -84,4 +135,9 @@ categories:
   type: group
 - id: 1501
   type: regression
+forms:
+- 41
+- 4045
+- 110
+- 4047
 

@@ -3,8 +3,6 @@ slug: isotonic-regression-model
 enabled: true
 type: TRANSFORMATION
 icon: fa-battery-quarter
-css_class: None
-doc_link: None
 scripts:
 - id: 57
   type: JS_CLIENT
@@ -14,54 +12,51 @@ ports:
 - id: 263
   slug: train input data
   type: INPUT
-  tags: None
   order: 1
   multiplicity: ONE
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: entrada do treino
       description: Train input data
-  - en:
+    en:
       locale: en
       name: train input data
       description: Train input data
 - id: 264
   slug: model
   type: OUTPUT
-  tags: None
   order: 2
   multiplicity: MANY
   interfaces:
   - id: 2
     name: ClassificationModel
   translations:
-  - pt:
+    pt:
       locale: pt
       name: modelo
       description: Output model
-  - en:
+    en:
       locale: en
       name: model
       description: Output model
 - id: 265
   slug: output data
   type: OUTPUT
-  tags: None
   order: 1
   multiplicity: MANY
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
+    pt:
       locale: pt
       name: "dados de sa\xEDda"
       description: "Dados de sa\xEDda"
-  - en:
+    en:
       locale: en
       name: output data
       description: Output data
@@ -70,12 +65,10 @@ translations:
     locale: pt
     name: "Regress\xE3o Isot\xF4nica"
     description: "Regress\xE3o Isot\xF4nica"
-    label_format: None
   en:
     locale: en
     name: Isotonic Regression
     description: Isotonic Regression
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -88,4 +81,10 @@ categories:
   type: group
 - id: 1501
   type: regression
+forms:
+- 41
+- 102
+- 110
+- 103
+- 132
 

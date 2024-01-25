@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do modelo
       help: Nome do modelo
-  - en:
+    en:
       locale: en
       label: Model name
       help: Model name
@@ -31,18 +27,16 @@ fields:
   order: 3
   default: ERROR
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "Overwrite", "value": "Overwrite", "key": "OVERWRITE", "pt": "Sobrescrever"},
     {"en": "Raise error", "value": "Raise error", "key": "ERROR", "pt": "Gerar erro"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "A\xE7\xE3o caso modelo j\xE1 exista"
       help: "A\xE7\xE3o caso modelo j\xE1 exista"
-  - en:
+    en:
       locale: en
       label: Action if model exists
       help: Action if model exists

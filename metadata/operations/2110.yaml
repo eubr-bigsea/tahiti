@@ -12,12 +12,9 @@ translations:
     locale: pt
     name: Amostrar ou limitar
     description: Permite definir a amostragem dos dados.
-    label_format: ''
+    label_format: 'null'
   en:
     locale: en
-    name: None
-    description: None
-    label_format: None
 platforms:
 - id: 1000
   slug: meta
@@ -28,4 +25,8 @@ categories:
   type: model-builder
 - id: 2114
   type: visualization-builder
+forms:
+- 2160
+- 41
+- 26
 

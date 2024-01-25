@@ -8,19 +8,15 @@ fields:
   type: INTEGER
   required: true
   order: 1
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de fatoriza\xE7\xE3o (rank)"
       help: "N\xFAmero de fatoriza\xE7\xE3o (rank)"
-  - en:
+    en:
       locale: en
       label: Factorization number (rank)
       help: Factorization number (rank)
@@ -29,19 +25,15 @@ fields:
   type: INTEGER
   required: false
   order: 2
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Itera\xE7\xF5es"
       help: "Itera\xE7\xF5es"
-  - en:
+    en:
       locale: en
       label: Max iterations
       help: Max iterations
@@ -50,19 +42,16 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com id do usu\xE1rio"
       help: "Atributo com id do usu\xE1rio"
-  - en:
+    en:
       locale: en
       label: User id attribute
       help: User id attribute
@@ -71,19 +60,16 @@ fields:
   type: TEXT
   required: true
   order: 4
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributo com id do item avaliado
       help: Atributo com id do item avaliado
-  - en:
+    en:
       locale: en
       label: Evaluated item id attribute
       help: Evaluated item id attribute
@@ -92,19 +78,16 @@ fields:
   type: TEXT
   required: true
   order: 5
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com a avalia\xE7\xE3o"
       help: "Atributo com a avalia\xE7\xE3o"
-  - en:
+    en:
       locale: en
       label: Attribute with evaluation
       help: Attribute with evaluation
@@ -113,19 +96,15 @@ fields:
   type: FLOAT
   required: false
   order: 6
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Regulariza\xE7\xE3o do experimento"
       help: "Regulariza\xE7\xE3o do experimento"
-  - en:
+    en:
       locale: en
       label: Experiment regularization
       help: Experiment regularization

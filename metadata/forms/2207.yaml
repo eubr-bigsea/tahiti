@@ -8,22 +8,16 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: expression
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Value
       help: Value
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

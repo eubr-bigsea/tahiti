@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: url
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Link para a p\xE1gina"
       help: "Link para a p\xE1gina exibida no iframe."
-  - en:
+    en:
       locale: en
       label: Link for the page
       help: Link for the page displayed in the iframe element.

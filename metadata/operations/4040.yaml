@@ -1,65 +1,114 @@
-id: 4040
-slug: box-plot
-enabled: true
-type: VISUALIZATION
-icon: ''
-css_class: None
-doc_link: None
+id: !!set
+  4040: null
+slug: !!set
+  box-plot: null
+enabled: !!set
+  true: null
+type: !!set
+  VISUALIZATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4086
-  slug: input data
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4086: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Dados de entrada
-  - en:
-      locale: en
-      name: input data
-      description: Input data
-- id: 4087
-  slug: input data
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Dados de entrada: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data: null
+- id: !!set
+    4087: null
+  slug: !!set
+    input data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "visualiza\xE7\xE3o"
-      description: "Visualiza\xE7\xE3o"
-  - en:
-      locale: en
-      name: visualization
-      description: Visualization
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "visualiza\xE7\xE3o": null
+      description: !!set
+        "Visualiza\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        visualization: null
+      description: !!set
+        Visualization: null
 translations:
   pt:
-    locale: pt
-    name: Box Plot
-    description: "Diagrama de caixa, diagrama de extremos e quartis, boxplot ou box\
-      \ plot \xE9 uma ferramenta gr\xE1fica para representar a varia\xE7\xE3o de dados\
-      \ observados de uma vari\xE1vel num\xE9rica por meio de quartis."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Box Plot: null
+    description: !!set
+      ? "Diagrama de caixa, diagrama de extremos e quartis, boxplot ou box plot \xE9\
+        \ uma ferramenta gr\xE1fica para representar a varia\xE7\xE3o de dados observados\
+        \ de uma vari\xE1vel num\xE9rica por meio de quartis."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Box Plot
-    description: ''
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Box Plot: null
+    description: !!set
+      ? ''
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
 categories:
 - id: 15
   type: group
+forms:
+- 41
+- 4027
+- 110
+- 142
 

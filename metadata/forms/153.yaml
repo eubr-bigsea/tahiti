@@ -8,19 +8,16 @@ fields:
   type: INTEGER
   required: true
   order: 0
-  default: None
   suggested_widget: lookup
   values_url: '`${LIMONERO_URL}/datasources?uiw=1&simple=true&list=true&enabled=1`'
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: false
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Fonte de dados
       help: Fonte de dados.
-  - en:
+    en:
       locale: en
       label: Data source
       help: Data source.

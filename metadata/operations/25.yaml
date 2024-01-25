@@ -3,8 +3,6 @@ slug: comment
 enabled: true
 type: ACTION
 icon: fa-comment-alt
-css_class: None
-doc_link: None
 scripts: []
 ports: []
 translations:
@@ -12,12 +10,10 @@ translations:
     locale: pt
     name: "Coment\xE1rio"
     description: "Coment\xE1rio"
-    label_format: None
   en:
     locale: en
     name: Comment
     description: Comment
-    label_format: None
 platforms:
 - id: 1
   slug: spark
@@ -26,4 +22,6 @@ platforms:
 categories:
 - id: 6
   type: group
+forms:
+- 41
 

@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Features
       help: "Features (Devem ter sido convertidas para num\xE9rico)."
-  - en:
+    en:
       locale: en
       label: Features
       help: Features (must have been converted to numeric).
@@ -29,19 +25,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo com o r\xF3tulo"
       help: "Atributo com o r\xF3tulo."
-  - en:
+    en:
       locale: en
       label: Label attribute
       help: Label attribute.
@@ -52,17 +44,14 @@ fields:
   order: 3
   default: chi_output
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo de sa\xEDda"
       help: "Atributo de sa\xEDda."
-  - en:
+    en:
       locale: en
       label: Output attribute
       help: Output attribute.
@@ -73,7 +62,6 @@ fields:
   order: 4
   default: numTopFeatures
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "Number of top features", "en": "Number of top features", "key":
     "numTopFeatures", "pt": "N\u00famero de top features"}, {"value": "Percentile",
     "en": "Percentile", "key": "percentile", "pt": "Percentil"}, {"value": "Highest
@@ -84,14 +72,13 @@ fields:
     "Family-wise error (FWE)", "en": "Family-wise error (FWE)", "key": "fwe", "pt":
     "Taxa do erro conjunto (FWE)"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Tipo de sele\xE7\xE3o"
       help: "Tipo de sele\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Selection type
       help: Selection type.
@@ -102,18 +89,16 @@ fields:
   order: 5
   default: '50'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.selector_type.internalValue === "numTopFeatures"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Quantidade de top features
       help: "Quantidade de features que ser\xE3o selecionadas, ordenadas de forma\
         \ ascendente pelo p-value."
-  - en:
+    en:
       locale: en
       label: Number of top features
       help: Number of features that will be selected, ordered by ascendin4 p-value.
@@ -124,18 +109,16 @@ fields:
   order: 6
   default: '0.1'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.selector_type.internalValue === "percentile"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Percentil na faixa (0,1] (valor >0 e <=1)
       help: "Percentil das features que ser\xE3o selecionadas, ordenadas pelo p-value\
         \ de forma ascendente."
-  - en:
+    en:
       locale: en
       label: Percentile in range (0,1] (value >0 and <=1)
       help: Percentile of features that will be selected, ordered by ascending p-value.
@@ -146,17 +129,15 @@ fields:
   order: 7
   default: '0.05'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.selector_type.internalValue === "fpr"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Maior valor de p-value para feature ser mantida (FPR).
       help: Maior valor de p-value para feature ser mantida (FPR).
-  - en:
+    en:
       locale: en
       label: Highest p-value for features to be kept (FPR)
       help: Highest p-value for features to be kept (FPR).
@@ -167,17 +148,15 @@ fields:
   order: 8
   default: '0.05'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.selector_type.internalValue === "fdr"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limite superior da taxa de falsa descoberta (FDR)
       help: Limite superior da taxa de falsa descoberta (FDR).
-  - en:
+    en:
       locale: en
       label: Upper bound of the expected false discovery rate
       help: The upper bound of the expected false discovery rate.
@@ -188,17 +167,15 @@ fields:
   order: 9
   default: '0.05'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.selector_type.internalValue === "fwe"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Limite superior da taxa de erro conjunto (FWE)
       help: Limite superior da taxa de erro conjunto (FWE).
-  - en:
+    en:
       locale: en
       label: Upper bound of the expected family-wise error rate (FWE)
       help: The upper bound of the expected family-wise error rate (FWE).

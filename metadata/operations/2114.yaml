@@ -1,28 +1,47 @@
-id: 2114
-slug: add-by-formula
-enabled: true
-type: TRANSFORMATION
-icon: fa fa-equals
-css_class: ''
-doc_link: ''
+id: !!set
+  2114: null
+slug: !!set
+  add-by-formula: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa fa-equals: null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports: []
 translations:
   pt:
-    locale: pt
-    name: "Adicionar atributos usando f\xF3rmula"
-    description: "Permite adicionar novos atributos usando uma f\xF3rmula."
-    label_format: "<b>Atributo(s)</b> <i>${this.formula.value.map(e=>e.alias).join(\"\
-      , \")}</i> <b>usando f\xF3rmula</b>"
+    locale: !!set
+      pt: null
+    name: !!set
+      "Adicionar atributos usando f\xF3rmula": null
+    description: !!set
+      "Permite adicionar novos atributos usando uma f\xF3rmula.": null
+    label_format: !!set
+      "<b>Atributo(s)</b> <i>${this.formula.value.map(e=>e.alias).join(\", \")}</i> <b>usando f\xF3rmula</b>": null
   en:
-    locale: en
-    name: None
-    description: None
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      None: null
+    description: !!set
+      None: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1000
   slug: meta
 categories:
 - id: 2102
   type: menu/always/fa fa-database
+forms:
+- 41
+- 2164
 

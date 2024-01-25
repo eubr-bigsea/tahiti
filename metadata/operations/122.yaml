@@ -1,77 +1,132 @@
-id: 122
-slug: vector-indexer
-enabled: true
-type: ACTION
-icon: ''
-css_class: None
-doc_link: None
+id: !!set
+  122: null
+slug: !!set
+  vector-indexer: null
+enabled: !!set
+  true: null
+type: !!set
+  ACTION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 292
-  slug: input data
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    292: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Conjunto de dados com atributos a serem indexados
-  - en:
-      locale: en
-      name: input data
-      description: Data set with feature columns to be indexed
-- id: 293
-  slug: output data
-  type: OUTPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Conjunto de dados com atributos a serem indexados: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Data set with feature columns to be indexed: null
+- id: !!set
+    293: null
+  slug: !!set
+    output data: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: "dados de sa\xEDda"
-      description: "Dados de sa\xEDda com nova coluna indexada"
-  - en:
-      locale: en
-      name: output data
-      description: Output data with new indexed column
-- id: 294
-  slug: indexer models
-  type: OUTPUT
-  tags: ''
-  order: 2
-  multiplicity: MANY
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "dados de sa\xEDda": null
+      description: !!set
+        "Dados de sa\xEDda com nova coluna indexada": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        output data: null
+      description: !!set
+        Output data with new indexed column: null
+- id: !!set
+    294: null
+  slug: !!set
+    indexer models: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 4
     name: IndexerModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: "Modelo de indexa\xE7\xE3o gerado"
-  - en:
-      locale: en
-      name: model
-      description: Indexer model generated
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        "Modelo de indexa\xE7\xE3o gerado": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Indexer model generated: null
 translations:
   pt:
-    locale: pt
-    name: Indexador de vetor
-    description: Indexa categorical features representadas por um vetor.
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Indexador de vetor: null
+    description: !!set
+      Indexa categorical features representadas por um vetor.: null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Vector indexer
-    description: Indexing categorical features represented in a Vector.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Vector indexer: null
+    description: !!set
+      Indexing categorical features represented in a Vector.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
@@ -80,4 +135,8 @@ categories:
   type: group
 - id: 33
   type: subgroup
+forms:
+- 41
+- 131
+- 110
 

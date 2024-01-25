@@ -1,45 +1,79 @@
-id: 143
-slug: validation-report
-enabled: true
-type: TRANSFORMATION
-icon: ''
-css_class: ''
-doc_link: ''
+id: !!set
+  143: null
+slug: !!set
+  validation-report: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  ? ''
+  : null
+css_class: !!set
+  ? ''
+  : null
+doc_link: !!set
+  ? ''
+  : null
 scripts: []
 ports:
-- id: 330
-  slug: input results
-  type: INPUT
-  tags: ''
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    330: null
+  slug: !!set
+    input results: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    ? ''
+    : null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 30
     name: ValidationResult
   translations:
-  - pt:
-      locale: pt
-      name: "resultado valida\xE7\xE3o"
-      description: "Resultado valida\xE7\xE3o"
-  - en:
-      locale: en
-      name: validation result
-      description: validation result
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        "resultado valida\xE7\xE3o": null
+      description: !!set
+        "Resultado valida\xE7\xE3o": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        validation result: null
+      description: !!set
+        validation result: null
 translations:
   pt:
-    locale: pt
-    name: "Relat\xF3rio de valida\xE7\xE3o"
-    description: "Gera um relat\xF3rio de valida\xE7\xE3o."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Relat\xF3rio de valida\xE7\xE3o": null
+    description: !!set
+      "Gera um relat\xF3rio de valida\xE7\xE3o.": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Data validation report
-    description: Generates a report for data validation.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Data validation report: null
+    description: !!set
+      Generates a report for data validation.: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 1
   slug: spark
 categories:
 - id: 46
   type: algorithm
+forms:
+- 41
+- 110
 

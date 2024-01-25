@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: rich-text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Texto (Markdown)
       help: Text formatado na linguagem Markdown.
-  - en:
+    en:
       locale: en
       label: Text (Markdown)
       help: Rich text encoded in Markdown language.

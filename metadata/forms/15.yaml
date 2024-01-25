@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Selecione o(s) atributos para agrupar
       help: Escolha um ou mais atributos para agrupar.
-  - en:
+    en:
       locale: en
       label: Select attribute(s) for grouping
       help: Choose one or more attributes to aggregate data with
@@ -29,9 +25,7 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: attribute-function
-  values_url: None
   values: "{\"functions\": [{\"key\": \"avg\", \"value\": \"Average (AVG)\", \"label\"\
     : {\"pt\": \"M\xE9dia (AVG)\", \"en\": \"Average (AVG)\"}, \"help\": {\"en\":\
     \ \"Computes the average of each group\", \"pt\": \"Computa a m\xE9dia de cada\
@@ -87,14 +81,13 @@ fields:
     \ agrupamento\", \"description\": \"Realiza o agrupamento de dados por um conjunto\
     \ de atributos.\"}}}"
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Fun\xE7\xE3o de agrupamento"
       help: "Fun\xE7\xE3o a ser aplicada aos dados agrupados."
-  - en:
+    en:
       locale: en
       label: Aggregation functions
       help: Aggregation functions
@@ -103,20 +96,17 @@ fields:
   type: TEXT
   required: false
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo usado como piv\xF4"
       help: "Atributo usado como piv\xF4. Cada valor para o atributo ir\xE1 gerar\
         \ um novo atributo."
-  - en:
+    en:
       locale: en
       label: Attribute used as pivot
       help: Attribute used as pivot. Each attribute value will generate a new attribute
@@ -125,19 +115,15 @@ fields:
   type: TEXT
   required: false
   order: 4
-  default: None
   suggested_widget: textarea
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Valores do piv\xF4 (recomendado, se piv\xF4 for usado)"
       help: "Valores do piv\xF4. Recomendado, se piv\xF4 for usado (melhora desempenho)."
-  - en:
+    en:
       locale: en
       label: Pivot values (recommended if pivot is used)
       help: Pivot values. Recommended if pivot is used (better performance).

@@ -5,12 +5,20 @@ def get_engine_name():
     return op.get_bind().engine.name
 
 def get_enable_disable_fk_command(enable: bool):
-    if op.get_bind().engine.name == 'mysql':
+    if is_mysql():
         value = 1 if enable else 0
         return f'SET foreign_key_checks = {value};'
-    else:
+    elif is_psql():
         value = 'IMMEDIATE' if enable else 'DEFERRED'
         return f'SET CONSTRAINTS ALL {value};'
+    elif is_sqlite():
+        value = 'true' if enabled else 'false'
+        return 'PRAGMA ignore_check_constraints = {value}'
+
+def handle_params(cmd: str):
+    if is_sqlite():
+        return cmd.replace('%s', '?')
+    return cmd
 
 def is_sqlite():
     return get_engine_name() == 'sqlite'
@@ -37,7 +45,13 @@ def get_psql_enum_alter_commands(tables: list, columns: list, name: str,
 
     return result
 
-
+def xkpe(identifier: str) -> str:
+    """ Escape an identifier """
+    if is_psql:
+        return f'"{identifier}"'
+    else:
+        return f'`{identifier}`'
+    
 def upgrade_actions(all_commands):
     ctx = context.get_context()
     session = sessionmaker(bind=ctx.bind)()

@@ -8,19 +8,15 @@ fields:
   type: TEXT
   required: true
   order: 2
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Nome do novo atributo
       help: "Nome do novo atributo que indica a que parti\xE7\xE3o o objeto pertence."
-  - en:
+    en:
       locale: en
       label: New attribute name
       help: Name of the new attribute that indicates what fold the object belongs
@@ -32,17 +28,14 @@ fields:
   order: 3
   default: '3'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de parti\xE7\xF5es"
       help: "N\xFAmero de parti\xE7\xF5es."
-  - en:
+    en:
       locale: en
       label: Number of folds
       help: Number of folds.
@@ -53,17 +46,14 @@ fields:
   order: 4
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Shuffle
       help: Se deve embaralhar os dados antes de dividir em lotes.
-  - en:
+    en:
       locale: en
       label: Embaralhar
       help: Whether to shuffle the data before splitting into batches.
@@ -74,18 +64,16 @@ fields:
   order: 5
   default: '1000'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.shuffle.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Estado Aleat\xF3rio"
       help: "Semente utilizada pelo gerador de n\xFAmeros aleat\xF3rios. Tamb\xE9\
         m utilizada para reprodutibilidade."
-  - en:
+    en:
       locale: en
       label: Random State
       help: Seed used by the random number generator. Also used for reproducibility.
@@ -96,17 +84,14 @@ fields:
   order: 6
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: K Fold estratificado
       help: "Valida\xE7\xE3o cruzada com K Fold estratificado."
-  - en:
+    en:
       locale: en
       label: Stratified K Fold
       help: Stratified K-Folds cross-validator.
@@ -115,19 +100,17 @@ fields:
   type: TEXT
   required: false
   order: 7
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
   enable_conditions: this.stratified.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Label
       help: "Estratifica\xE7\xE3o \xE9 feita a partir de um r\xF3tulo"
-  - en:
+    en:
       locale: en
       label: Label
       help: Stratification is done based on a label.

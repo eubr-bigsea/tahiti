@@ -10,43 +10,34 @@ fields:
   order: 0
   default: disabled
   suggested_widget: lookup
-  values_url: None
   values: '[{"key": "disabled", "pt": "Sem redu\u00e7\u00e3o", "en": "Do not reduce"},
     {"key": "pca", "pt": "Principal Component Analysis - PCA", "en": "Principal Component
     Analysis - PCA"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "M\xE9todo de redu\xE7\xE3o"
       help: "M\xE9todo de redu\xE7\xE3o."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 - id: 2213
   name: k
   type: INTEGER
   required: true
   order: 0
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.method.internalValue === "pca"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero de componentes principais (k)"
       help: "N\xFAmero de componentes principais (k)."
-  - en:
+    en:
       locale: en
-      label: None
-      help: None
 translations:
   pt:
     locale: pt

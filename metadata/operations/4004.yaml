@@ -1,45 +1,72 @@
-id: 4004
-slug: decision-tree-classifier
-enabled: false
-type: TRANSFORMATION
-icon: fa-arrow-right
-css_class: None
-doc_link: None
+id: !!set
+  4004: null
+slug: !!set
+  decision-tree-classifier: null
+enabled: !!set
+  false: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-arrow-right: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4004
-  slug: algorithm
-  type: OUTPUT
-  tags: None
-  order: 1
-  multiplicity: MANY
+- id: !!set
+    4004: null
+  slug: !!set
+    algorithm: null
+  type: !!set
+    OUTPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    MANY: null
   interfaces:
   - id: 5
     name: ClassificationAlgorithm
   translations:
-  - pt:
-      locale: pt
-      name: algoritmo
-      description: "Modelo de classifica\xE7\xE3o n\xE3o treinado"
-  - en:
-      locale: en
-      name: algorithm
-      description: Untrained classification model
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        algoritmo: null
+      description: !!set
+        "Modelo de classifica\xE7\xE3o n\xE3o treinado": null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        algorithm: null
+      description: !!set
+        Untrained classification model: null
 translations:
   pt:
-    locale: pt
-    name: "Classif. \xC1rv. Decis\xE3o"
-    description: "Classificador baseado em \xE1rvores de decis\xE3o. Suporta tanto\
-      \ r\xF3tulos bin\xE1rios quanto multiclasses e features cont\xEDnuas e categ\xF3\
-      ricas."
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      "Classif. \xC1rv. Decis\xE3o": null
+    description: !!set
+      ? "Classificador baseado em \xE1rvores de decis\xE3o. Suporta tanto r\xF3tulos\
+        \ bin\xE1rios quanto multiclasses e features cont\xEDnuas e categ\xF3ricas."
+      : null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Decision tree classifier
-    description: Decision tree learning algorithm for classification. It supports
-      both binary and multiclass labels, as well as both continuous and categorical
-      features.
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Decision tree classifier: null
+    description: !!set
+      ? Decision tree learning algorithm for classification. It supports both binary
+        and multiclass labels, as well as both continuous and categorical features.
+      : null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -52,4 +79,7 @@ categories:
   type: technology
 - id: 1500
   type: classification
+forms:
+- 41
+- 4004
 

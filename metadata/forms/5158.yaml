@@ -10,17 +10,12 @@ fields:
   order: 1
   default: '1'
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Padding
       help: 'Int, or tuple of int (length 2), or dictionary. If int: How many zeros

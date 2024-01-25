@@ -12,17 +12,14 @@ fields:
 
     # Inputs are available as in1 and in2, outputs are out1 and out2'
   suggested_widget: code
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "C\xF3digo"
       help: "C\xF3digo"
-  - en:
+    en:
       locale: en
       label: Code
       help: Code

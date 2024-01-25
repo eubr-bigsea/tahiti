@@ -10,17 +10,14 @@ fields:
   order: 0
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Op\xE7\xF5es avan\xE7adas"
       help: "Habilita as op\xE7\xF5es avan\xE7adas."
-  - en:
+    en:
       locale: en
       label: Advanced options
       help: Enable advanced options.
@@ -31,17 +28,12 @@ fields:
   order: 1
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Epochs
       help: Number of epochs to train the model. An epoch is an iteration over the
@@ -56,17 +48,12 @@ fields:
   order: 2
   default: '1'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Classification report
       help: Show the classification report.
@@ -77,17 +64,13 @@ fields:
   order: 2
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.advanced_options.internalValue === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Early stopping
       help: Stop training when a monitored quantity has stopped improving.
@@ -98,7 +81,6 @@ fields:
   order: 2
   default: val_loss
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "Binary accuracy", "key": "binary_accuracy"}, {"value": "Categorical
     accuracy", "key": "categorical_accuracy"}, {"value": "Loss", "key": "loss"}, {"value":
     "Sparse categorical accuracy", "key": "sparse_categorical_accuracy"}, {"value":
@@ -109,11 +91,9 @@ fields:
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Monitor
       help: Quantity to be monitored.
@@ -124,18 +104,14 @@ fields:
   order: 2
   default: '0'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Minimum delta
       help: Minimum change in the monitored quantity to qualify as an improvement,
@@ -147,18 +123,14 @@ fields:
   order: 2
   default: '0'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Patience
       help: Number of epochs that produced the monitored quantity with no improvement
@@ -172,7 +144,6 @@ fields:
   order: 2
   default: auto
   suggested_widget: dropdown
-  values_url: None
   values: '[{"value": "Automatic", "key": "auto"}, {"value": "Minimum", "key": "min"},
     {"value": "Maximum", "key": "max"}]'
   scope: EXECUTION
@@ -180,11 +151,9 @@ fields:
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Mode
       help: One of {auto, min, max}. In min mode, training will stop when the quantity
@@ -196,20 +165,15 @@ fields:
   type: DECIMAL
   required: false
   order: 2
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Baseline
       help: Baseline value for the monitored quantity to reach. Training will stop
@@ -221,18 +185,14 @@ fields:
   order: 2
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
   enable_conditions: this.early_stopping.internalValue === "1" && this.advanced_options.internalValue
     === "1"
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Restore best weights
       help: Whether to restore model weights from the epoch with the best value of
@@ -243,19 +203,13 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Steps per epoch
       help: 'Total number of steps (batches of samples) to yield from generator before
@@ -267,19 +221,13 @@ fields:
   type: DECIMAL
   required: false
   order: 4
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Validation steps
       help: 'Only relevant if validation_data is a generator. Total number of steps
@@ -292,19 +240,13 @@ fields:
   type: INTEGER
   required: false
   order: 5
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Validation freq
       help: Only relevant if validation data is provided. Integer or collections.
@@ -318,19 +260,13 @@ fields:
   type: TEXT
   required: false
   order: 6
-  default: None
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Class weight
       help: Optional dictionary mapping class indices (integers) to a weight (float)
@@ -342,19 +278,13 @@ fields:
   type: INTEGER
   required: false
   order: 7
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Max queue size
       help: Maximum size for the generator queue. If unspecified, max_queue_size will
@@ -366,17 +296,12 @@ fields:
   order: 8
   default: '1'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Workers
       help: Maximum number of processes to spin up when using process-based threading.
@@ -389,17 +314,12 @@ fields:
   order: 9
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Use multiprocessing
       help: If True, use process-based threading. If unspecified, use_multiprocessing
@@ -413,17 +333,12 @@ fields:
   order: 10
   default: '0'
   suggested_widget: checkbox
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Shuffle
       help: Whether to shuffle the order of the batches at the beginning of each epoch.
@@ -434,19 +349,13 @@ fields:
   type: INTEGER
   required: false
   order: 11
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
-      label: None
-      help: None
-  - en:
+    en:
       locale: en
       label: Initial epoch
       help: Epoch at which to start training (useful for resuming a previous training

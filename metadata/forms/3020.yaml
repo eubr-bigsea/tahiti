@@ -10,18 +10,15 @@ fields:
   order: 1
   default: '0.5'
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Eps
       help: "A dist\xE2nca m\xE1xima entre dois pontos para serem considerados do\
         \ mesmo grupo."
-  - en:
+    en:
       locale: en
       label: Eps
       help: The maximum distance between two samples for them to be considered as
@@ -33,17 +30,14 @@ fields:
   order: 2
   default: '10'
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "N\xFAmero minimo da vizinhan\xE7a"
       help: "O n\xFAmero de pontos vizinhos para ser considerado um ponto central."
-  - en:
+    en:
       locale: en
       label: Minimum sample
       help: The number of samples in a neighborhood for a point to be considered as
@@ -53,19 +47,15 @@ fields:
   type: TEXT
   required: true
   order: 3
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Atributos
       help: Atributos
-  - en:
+    en:
       locale: en
       label: Features
       help: Feature
@@ -76,17 +66,14 @@ fields:
   order: 4
   default: prediction
   suggested_widget: text
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo para predi\xE7\xE3o"
       help: "Atributo para predi\xE7\xE3o"
-  - en:
+    en:
       locale: en
       label: Prediction attribute
       help: Prediction attribute

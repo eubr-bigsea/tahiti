@@ -8,19 +8,16 @@ fields:
   type: TEXT
   required: true
   order: 0
-  default: None
   suggested_widget: attribute-selector
-  values_url: None
   values: '{"multiple": false}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo de parti\xE7\xE3o"
       help: Atributo usado para particionar os dados nas janelas.
-  - en:
+    en:
       locale: en
       label: Partition attribute
       help: Attribute used to partition data in windows.
@@ -29,22 +26,19 @@ fields:
   type: TEXT
   required: false
   order: 1
-  default: None
   suggested_widget: attribute-function
-  values_url: None
   values: '{"functions": [{"value": "Ascending", "key": "asc", "help": "Ascending
     order"}, {"value": "Descending", "key": "desc", "help": "Descending order"}],
     "options": {"show_alias": false, "description": "Sort a data source by a set of
     attributes", "title": "Sort operation"}}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Atributo(s) para ordena\xE7\xE3o"
       help: Atributo(s) usado(s) para ordenar os dados nas janelas.
-  - en:
+    en:
       locale: en
       label: Order by attribute(s)
       help: Attribute(s) used to order rows in windows.
@@ -53,23 +47,20 @@ fields:
   type: TEXT
   required: false
   order: 2
-  default: None
   suggested_widget: dropdown
-  values_url: None
   values: '[{"en": "None", "value": "None", "key": "none", "pt": "Nenhum"}, {"en":
     "Rows", "value": "Rows", "key": "rows", "pt": "Linhas"}, {"en": "Range", "value":
     "Range", "key": "range", "pt": "Faixa"}]'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Tipo de janela
       help: "Tipo de janela. None = n\xE3o espeificado. Rows = use o n\xFAmero da\
         \ linha como limites. Range: use faixa de valores como limites (requer que\
         \ o atributo usado para ordena\xE7\xE3o seja apenas um e do tipo num\xE9rico."
-  - en:
+    en:
       locale: en
       label: Window type
       help: 'Window type. None = do not use a specification. Rows = use rows as limits.
@@ -80,20 +71,16 @@ fields:
   type: INTEGER
   required: false
   order: 3
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: Registros antes do atual (vazio = ilimitado)
       help: "Quantos registros antes do registro atual ser\xE3o suados. Vazio significa\
         \ que todos os anteriores s\xE3o usados."
-  - en:
+    en:
       locale: en
       label: Rows before current (empty = unbounded)
       help: How many rows before current row will be used. Empty means all previous
@@ -103,20 +90,16 @@ fields:
   type: INTEGER
   required: false
   order: 4
-  default: None
   suggested_widget: integer
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Registros ap\xF3s o atual (vazio = ilimitado)"
       help: "Quantos registros ap\xF3s o registro atual ser\xE3o suados. Vazio significa\
         \ que todos os posteriores s\xE3o usados."
-  - en:
+    en:
       locale: en
       label: Rows after current (empty = unbounded)
       help: How many rows after current row will be used. Empty means all following
@@ -126,19 +109,15 @@ fields:
   type: FLOAT
   required: false
   order: 5
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Deslocamento inicial para o valor do atributo de ordena\xE7\xE3o (vazio=ignorado)"
       help: "Deslocamento  inicial para o valor atributo de ordena\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Initial offset for sorting attribute value (empty = unbounded)
       help: Initial offset for sorting attribute.
@@ -147,19 +126,15 @@ fields:
   type: FLOAT
   required: false
   order: 6
-  default: None
   suggested_widget: decimal
-  values_url: None
-  values: None
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Deslocamento final para o valor do atributo de ordena\xE7\xE3o   (vazio=ignorado)"
       help: "Deslocamento final para o valor do atributo de ordena\xE7\xE3o."
-  - en:
+    en:
       locale: en
       label: Final offset for sorting attribute value (empty = unbounded)
       help: Initial offset for sorting attribute.
@@ -168,19 +143,16 @@ fields:
   type: TEXT
   required: true
   order: 7
-  default: None
   suggested_widget: expression
-  values_url: None
   values: '{"alias": true, "multiple": true}'
   scope: EXECUTION
-  enable_conditions: None
   editable: true
   translations:
-  - pt:
+    pt:
       locale: pt
       label: "Express\xF5es para novos atributos"
       help: "Express\xF5es gerar\xE3o novos atributos no resultado."
-  - en:
+    en:
       locale: en
       label: Expressions for new attributes
       help: Expressions will generate new attributes in resulting data.

@@ -1,36 +1,61 @@
-id: 4017
-slug: evaluate-model
-enabled: true
-type: TRANSFORMATION
-icon: fa-check
-css_class: None
-doc_link: None
+id: !!set
+  4017: null
+slug: !!set
+  evaluate-model: null
+enabled: !!set
+  true: null
+type: !!set
+  TRANSFORMATION: null
+icon: !!set
+  fa-check: null
+css_class: !!set
+  None: null
+doc_link: !!set
+  None: null
 scripts: []
 ports:
-- id: 4023
-  slug: input data
-  type: INPUT
-  tags: None
-  order: 1
-  multiplicity: ONE
+- id: !!set
+    4023: null
+  slug: !!set
+    input data: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    1: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 1
     name: Data
   translations:
-  - pt:
-      locale: pt
-      name: dados de entrada
-      description: Input data to be used during evaluation
-  - en:
-      locale: en
-      name: input data
-      description: Input data to be used during evaluation
-- id: 4024
-  slug: model
-  type: INPUT
-  tags: None
-  order: 2
-  multiplicity: ONE
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        dados de entrada: null
+      description: !!set
+        Input data to be used during evaluation: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        input data: null
+      description: !!set
+        Input data to be used during evaluation: null
+- id: !!set
+    4024: null
+  slug: !!set
+    model: null
+  type: !!set
+    INPUT: null
+  tags: !!set
+    None: null
+  order: !!set
+    2: null
+  multiplicity: !!set
+    ONE: null
   interfaces:
   - id: 2
     name: ClassificationModel
@@ -45,25 +70,39 @@ ports:
   - id: 20
     name: TransformationModel
   translations:
-  - pt:
-      locale: pt
-      name: modelo
-      description: Model to be evaluated
-  - en:
-      locale: en
-      name: model
-      description: Model to be evaluated
+    pt:
+      locale: !!set
+        pt: null
+      name: !!set
+        modelo: null
+      description: !!set
+        Model to be evaluated: null
+    en:
+      locale: !!set
+        en: null
+      name: !!set
+        model: null
+      description: !!set
+        Model to be evaluated: null
 translations:
   pt:
-    locale: pt
-    name: Avaliar modelo
-    description: "Avalia um modelo de aprendizado de m\xE1quina"
-    label_format: None
+    locale: !!set
+      pt: null
+    name: !!set
+      Avaliar modelo: null
+    description: !!set
+      "Avalia um modelo de aprendizado de m\xE1quina": null
+    label_format: !!set
+      None: null
   en:
-    locale: en
-    name: Evaluate model
-    description: Evaluates a machine learning model
-    label_format: None
+    locale: !!set
+      en: null
+    name: !!set
+      Evaluate model: null
+    description: !!set
+      Evaluates a machine learning model: null
+    label_format: !!set
+      None: null
 platforms:
 - id: 4
   slug: scikit-learn
@@ -72,4 +111,8 @@ categories:
   type: group
 - id: 4001
   type: technology
+forms:
+- 41
+- 110
+- 4017
 
