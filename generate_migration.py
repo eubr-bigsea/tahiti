@@ -179,7 +179,7 @@ def get_base_name(name):
     else:
         raise ValueError(f'Invalid entity: {name}')
     return name
- 
+'''
 def get_placeholder(value, loop, entity):
     counter = loop.index
     v = value.expression.type.__class__.__name__
@@ -196,6 +196,27 @@ def get_placeholder(value, loop, entity):
         return 1
     else:
         raise ValueError(f'Unknown type: {v}')
+'''
+def get_placeholder(value, loop, entity):
+    counter = loop.index
+    v = value.expression.type.__class__.__name__
+
+    if v == 'Text':
+        return "''"  # ou qualquer valor padrão desejado para Text
+    elif value.expression.name == 'id':
+        name = get_base_name(entity.__table__.name)
+        return f'BASE_{name} + {counter}'
+    elif v in ['Enum']:
+        return f"'{value.expression.type.enums[0]}'"
+    elif v in ['String', 'Unicode', 'LONGTEXT', 'UnicodeText']:
+        return f"'Text'"
+    elif v in ['Integer']:
+        return 0
+    elif v in ['Boolean']:
+        return 1
+    else:
+        raise ValueError(f'Unknown type: {v}')
+
 
 def rev_id():
     return 'a' + uuid.uuid4().hex[-11:]

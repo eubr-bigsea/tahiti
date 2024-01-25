@@ -37,13 +37,16 @@ BASE_FORM_FIELD = 2236
 # Uses READ_DATA, SAMPLE
 
 #Power Iteration Clustering(PIC)
-PC_CLUSTERING = BASE_OP + 9
+PIC_CLUSTERING = BASE_OP + 9
 #Latent Dirichlet allocation (LDA)
 LDA_CLUSTERING = BASE_OP + 10
+#Bisecting k-means (BKM)
+BKM_CLUSTERING = BASE_OP + 11
 
 
-PC_CLUSTERING_FORM = 2236
+PIC_CLUSTERING_FORM = 2236
 LDA_CLUSTERING_FORM = 2237
+BKM_CLUSTERING_FORM = 2238
 
 CAT_CLASSIFICATION = 4
 CAT_REGRESSION = 47
@@ -54,7 +57,7 @@ ORIGINAL_SAVE_FORM = 28
 
 ALL_OPS = [
     # New ML algorithms
-    PC_CLUSTERING, LDA_CLUSTERING_FORM,
+    PIC_CLUSTERING, LDA_CLUSTERING_FORM,
 ]
 
 ATTRIBUTES_FORM = BASE_FORM + 2
@@ -83,8 +86,9 @@ def _insert_operation(conn):
                 column('doc_link', String))
     columns = [c.name for c in tb.columns]
     data = [
-      [PC_CLUSTERING, 'pc_clustering', 1, 'TRANSFORMATION', '', '', ''],
+      [PIC_CLUSTERING, 'pic_clustering', 1, 'TRANSFORMATION', '', '', ''],
       [LDA_CLUSTERING, 'lda_clustering', 1, 'TRANSFORMATION', '', '', ''],
+      [BKM_CLUSTERING, 'bkm_clustering', 1, 'TRANSFORMATION', '', '', ''],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -104,8 +108,9 @@ def _insert_operation_translation(conn):
                 )
     columns = [c.name for c in tb.columns]
     data = [
-      [PC_CLUSTERING, 'pt', 'Power Iteration Clustering', 'Agrupamento de iteração de energia.', ''],
+      [PIC_CLUSTERING, 'pt', 'Power Iteration Clustering', 'Agrupamento de iteração de energia.', ''],
       [LDA_CLUSTERING, 'pt', 'Latent Dirichlet allocation', 'Alocação latente de Dirichlet.', ''],
+      [BKM_CLUSTERING, 'pt', 'Bisecting k-means', 'Bissecção Kmeans.', ''],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -126,7 +131,7 @@ def _insert_operation_form(conn):
       [BASE_FORM + 0, 1, 1, 'execution'], # Comment
       [BASE_FORM + 1, 1, 1, 'execution'], # ReadData
     ]
-    exclusions = set([PC_CLUSTERING ,LDA_CLUSTERING])
+    exclusions = set([PIC_CLUSTERING ,LDA_CLUSTERING, BKM_CLUSTERING])
 
     for op_id in set(ALL_OPS) - exclusions: # Operations' form
         data.append([op_id + 50, 1, 1, 'execution'])
@@ -152,7 +157,7 @@ def _insert_operation_form_translation(conn):
       [BASE_FORM, 'en', 'Execution'],
       [BASE_FORM + 1, 'en', 'Execution'],
     ]
-    exclusions = set([PC_CLUSTERING, LDA_CLUSTERING])
+    exclusions = set([PIC_CLUSTERING, LDA_CLUSTERING, BKM_CLUSTERING])
 
     for op_id in set(ALL_OPS) - exclusions: # Operations' form
         data.append([op_id + 50, 'pt', 'Execução'])
@@ -183,10 +188,10 @@ def _insert_operation_form_field(conn):
                 column('form_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-    	 [BASE_FORM_FIELD + 1, 'number_of_clusters', 'INTEGER', True, 1, None, 'integer', None, None, 'EXECUTION', None, True, PC_CLUSTERING_FORM],
+    	 [BASE_FORM_FIELD + 1, 'number_of_clusters', 'INTEGER', True, 1, None, 'integer', None, None, 'EXECUTION', None, True, PIC_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 2, 'init_mode', 'TEXT', False, 2, None, 'dropdown', None, '[{"key": "random", "value": "random"}, {"key": "degree", "value": "degree"}]', 'EXECUTION', None, True, PC_CLUSTERING_FORM],
-    [BASE_FORM_FIELD + 3, 'max_iterations', 'INTEGER', False, 3, None, 'integer', None, None, 'EXECUTION', None, True, PC_CLUSTERING_FORM],
-    [BASE_FORM_FIELD + 4, 'weight_col', 'TEXT', False, 4, None, 'text', None, None, 'EXECUTION', None, True, PC_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 3, 'max_iterations', 'INTEGER', False, 3, None, 'integer', None, None, 'EXECUTION', None, True, PIC_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 4, 'weight_col', 'TEXT', False, 4, None, 'text', None, None, 'EXECUTION', None, True, PIC_CLUSTERING_FORM],
     
     [BASE_FORM_FIELD + 5, 'number_of_clusters', 'INTEGER', True, 1, None, 'integer', None, None, 'EXECUTION', None, True, LDA_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 6, 'max_iterations', 'INTEGER', False, 2, None, 'integer', None, None, 'EXECUTION', None, True, LDA_CLUSTERING_FORM],
@@ -203,6 +208,13 @@ def _insert_operation_form_field(conn):
     [BASE_FORM_FIELD + 17, 'topic_concentration', 'FLOAT', False, 13, None, 'decimal', None, None, 'EXECUTION', None, True, LDA_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 18, 'topic_distribution_col', 'TEXT', False, 14, None, 'text', None, None, 'EXECUTION', None, True, LDA_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 19, 'keep_last_checkpoint', 'INTEGER', False, 15, None, 'checkbox', None, None, 'EXECUTION', None, True, LDA_CLUSTERING_FORM],
+    
+    [BASE_FORM_FIELD + 20, 'number_of_clusters', 'INTEGER', True, 16, None, 'integer', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 21, 'tolerance', 'FLOAT', 0, 17, None, 'decimal', None, None, 'EXECUTION', None, 1, BKM_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 22, 'max_iterations', 'INTEGER', False, 18, None, 'integer', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 23, 'seed', 'INTEGER', False, 19, None, 'integer', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 24, 'min_divisible_clusterSize', 'FLOAT', 0, 20, None, 'decimal', None, None, 'EXECUTION', None, 1, BKM_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 25, 'distance', 'TEXT', False, 21, 'euclidean', 'dropdown', None, '[{"key": "euclidean", "value": "Euclidean"},', 'EXECUTION', 27, None, BKM_CLUSTERING_FORM],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -211,7 +223,7 @@ def _insert_operation_form_field(conn):
 def _delete_operation_form_field(conn):
     execute(conn,
         'DELETE from operation_form_field WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 19)
+        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 25)
 
 def _insert_operation_form_field_translation(conn):
     tb = table('operation_form_field_translation',
@@ -278,6 +290,24 @@ def _insert_operation_form_field_translation(conn):
     [BASE_FORM_FIELD + 19, 'en', 'Keep Last Checkpoint', 'Keep the last checkpoint for the LDA clustering model'],
     [BASE_FORM_FIELD + 19, 'pt', 'Manter Último Ponto de Verificação', 'Manter o último ponto de verificação para o modelo de agrupamento LDA']
 
+
+    [BASE_FORM_FIELD + 20, 'en', 'Number of Clusters', 'Number of clusters in the Bisecting k-means model'],
+    [BASE_FORM_FIELD + 20, 'pt', 'Número de Clusters', 'Número de clusters no modelo Bisecting k-means '],
+
+    [BASE_FORM_FIELD + 21, 'en', 'Tolerance', 'Convergency tolerance for the within-cluster sums of point-to-centroid distances.'],
+    [BASE_FORM_FIELD + 21, 'pt', 'Tolerância', 'Tolerância de convergência para as somas das distâncias intra-cluster do ponto ao centroide.'],
+    
+    [BASE_FORM_FIELD + 22, 'en', 'Max Iterations', 'Max iterations'],
+    [BASE_FORM_FIELD + 22, 'pt', 'Número Máximo de Iterações', 'Número máx. de iterações'],
+
+    [BASE_FORM_FIELD + 23, 'en', 'Seed', 'Seed'],
+    [BASE_FORM_FIELD + 23, 'pt', 'Semente (seed)', 'Semente (seed).'],
+
+    [BASE_FORM_FIELD + 24, 'en', 'Min Divisible Cluster Size', 'Minimum size allowed for a cluster to be split during the hierarchical partitioning process.'],
+    [BASE_FORM_FIELD + 24, 'pt', 'Tamanho mínimo do cluster divisível', 'Tamanho mínimo permitido para um cluster ser dividido durante o processo de particionamento hierárquico.'],
+    
+    [BASE_FORM_FIELD + 25, 'en', 'Distance Measure', 'The distance measure'],
+    [BASE_FORM_FIELD + 25, 'pt', 'Medida de distância', 'A medida de distância'],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -285,7 +315,7 @@ def _insert_operation_form_field_translation(conn):
 def _delete_operation_form_field_translation(conn):
     execute(conn,
         'DELETE from operation_form_field_translation WHERE id BETWEEN %s AND %s', 
-        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 19)
+        BASE_FORM_FIELD + 1, BASE_FORM_FIELD + 25)
 
 def _insert_operation_category_operation(conn):
     tb = table('operation_category_operation',
@@ -293,10 +323,12 @@ def _insert_operation_category_operation(conn):
                 column('operation_category_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-      [FM_CLASSIFIER, CAT_MODEL_BUILDER],
-      [FM_CLASSIFIER, CAT_CLASSIFICATION],
-      [FM_REGRESSION, CAT_MODEL_BUILDER],
-      [FM_REGRESSION, CAT_REGRESSION],
+      [PIC_CLUSTERING, CAT_MODEL_BUILDER],
+      [PIC_CLUSTERING, CAT_CLUSTERING],
+      [LDA_CLUSTERING, CAT_MODEL_BUILDER],
+      [LDA_CLUSTERING, CAT_CLUSTERING],
+      [BKM_CLUSTERING, CAT_MODEL_BUILDER],
+      [BKM_CLUSTERING, CAT_CLUSTERING],
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -313,8 +345,9 @@ def _insert_operation_operation_form(conn):
                 column('operation_form_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [FM_CLASSIFIER, BASE_FORM],
-        [FM_REGRESSION, BASE_FORM + 1]
+        [PIC_CLUSTERING, BASE_FORM],
+        [LDA_CLUSTERING, BASE_FORM + 1],
+        [BKM_CLUSTERING, BASE_FORM + 2]
     ]
     
     rows = [dict(list(zip(columns, row))) for row in data]
@@ -326,7 +359,7 @@ def _delete_operation_operation_form(conn):
     execute(conn, 
         '''DELETE FROM operation_operation_form
             WHERE operation_form_id IN (%s, %s)''',
-        FM_CLASSIFIER_FORM, FM_REGRESSION_FORM)
+        PIC_CLUSTERING_FORM, LDA_CLUSTERING_FORM, BKM_CLUSTERING_FORM)
 
 def _insert_operation_platform(conn):
     tb = table('operation_platform',
