@@ -100,12 +100,11 @@ def _insert_operation_translation(conn):
                 column('locale', String),
                 column('name', String),
                 column('description', String),
-                column('label_format', String),
                 )
     columns = [c.name for c in tb.columns]
     data = [
-      [FM_CLASSIFIER, 'pt', 'Classificador Factorization Machines', 'Classificador Factorization machines.', ''],
-      [FM_REGRESSION, 'pt', 'Regressão Factorization Machines', 'Regressão Factorization machines.', ''],
+      [FM_CLASSIFIER, 'pt', 'Classificador Factorization Machines', 'Classificador Factorization machines.',],
+      [FM_REGRESSION, 'pt', 'Regressão Factorization Machines', 'Regressão Factorization machines.',],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)

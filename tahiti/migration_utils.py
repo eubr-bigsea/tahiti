@@ -47,7 +47,7 @@ def get_psql_enum_alter_commands(tables: list, columns: list, name: str,
 
 def xkpe(identifier: str) -> str:
     """ Escape an identifier """
-    if is_psql:
+    if is_psql():
         return f'"{identifier}"'
     else:
         return f'`{identifier}`'

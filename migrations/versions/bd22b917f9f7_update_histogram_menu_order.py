@@ -10,7 +10,7 @@ from sqlalchemy.sql import text
 import sqlalchemy as sa
 import json
 from tahiti.migration_utils import (downgrade_actions, upgrade_actions,
-        is_mysql, is_psql, is_sqlite, get_psql_enum_alter_commands)
+        is_mysql, is_psql, is_sqlite, get_psql_enum_alter_commands, xkpe)
 
 # revision identifiers, used by Alembic.
 revision = 'bd22b917f9f7'
@@ -197,7 +197,8 @@ def downgrade():
     else:
         op.execute(text('UPDATE "operation_form" SET "order" = 10 WHERE ("id" = 142);'))
     function_list = {"functions": [{"key": "avg", "value": "Average (AVG)", "help": "Computes the average of each group"}, {"key": "collect_list", "value": "Collect List", "help": "Aggregate function: returns a list of objects with duplicates."}, {"key": "collect_set", "value": "Collect Set", "help": "Aggregate function: returns a set of objects with duplicate elements eliminated."}, {"key": "count", "value": "Count", "help": "Counts the total of records of each group"}, {"key": "first", "value": "First", "help": "Returns the first element of group"}, {"key": "last", "value": "Last", "help": "Returns the last element of group"}, {"key": "max", "value": "Maximum (MAX)", "help": "Returns the max value of each group for one attribute"}, {"key": "min", "value": "Minimum (MIN)", "help": "Returns the min value of each group for one attribute"}, {"key": "sum", "value": "Sum", "help": "Returns the sum of values of each group for one attribute"}], "options": {"title": "Aggregate operation", "description": "Add one of more lines with attribute to be used, function and alias to compute aggregate function over groups.", "show_alias": True}}
-    op.execute(text("UPDATE operation_form_field SET required=true, values = '{}' WHERE (id = 71);".format(json.dumps(function_list, ensure_ascii=False))))
+    functions = json.dumps(function_list, ensure_ascii=False)
+    op.execute(text(f"UPDATE operation_form_field SET required=true, {xkpe('values')} = '{functions}' WHERE (id = 71);"))
 
     op.execute(text("UPDATE operation_form_field SET required =true WHERE id=70;"))
     op.execute(text("""

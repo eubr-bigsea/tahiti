@@ -385,7 +385,7 @@ def downgrade():
     conn = session.connection()
 
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute(get_enable_disable_fk_command(false))
+    conn.execute(get_enable_disable_fk_command(False))
 
     commands = [
         _delete_operation,
@@ -411,5 +411,5 @@ def downgrade():
         session.rollback()
         raise
     # Remove it if your DB doesn't support disabling FK checks
-    conn.execute(get_enable_disable_fk_command(true))
+    conn.execute(get_enable_disable_fk_command(True))
     session.commit()

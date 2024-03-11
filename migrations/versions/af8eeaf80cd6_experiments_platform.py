@@ -1674,7 +1674,7 @@ def upgrade():
         import traceback
         traceback.print_exc()
         session.rollback()
-        # raise
+        raise
     session.commit()
 
 
