@@ -362,8 +362,6 @@ class Operation(db.Model, Translatable):
     scripts = relationship("OperationScript",
                            cascade="all, delete-orphan")
 
-    translations2= relationship("OperationTranslation",
-                           cascade="all, delete-orphan")
     def __str__(self):
         return self.name
 
