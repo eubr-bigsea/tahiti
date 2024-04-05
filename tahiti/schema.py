@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import datetime
 import json
 import re
@@ -18,6 +17,8 @@ def partial_schema_factory(schema_cls):
             schema.fields[field_name] = new_field
     return schema
 
+
+enum_re = re.compile(r'(Must be one of:) (.+)')
 
 enum_re = re.compile(r'(Must be one of:) (.+)')
 
@@ -1202,7 +1203,7 @@ class PipelineTemplateListResponseSchema(BaseSchema):
 
 class PipelineTemplateStepCreateRequestSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
+    id = fields.Integer(allow_none=True)
     name = fields.String(required=True)
     order = fields.Integer(required=True)
     description = fields.String(required=False, allow_none=True)
