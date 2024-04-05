@@ -25,11 +25,8 @@ depends_on = None
 
 META_PLATFORM = 1000
 
-APPEARANCE_FORM_ID=41
-
 BASE_PLATFORM = 2236
 BASE_OP = 2252
-BASE_CATEGORY = 2236
 BASE_FORM_FIELD = 2259
 
 # Model builder
@@ -47,12 +44,8 @@ PIC_CLUSTERING_FORM = 2243
 LDA_CLUSTERING_FORM = 2244
 BKM_CLUSTERING_FORM = 2245
 
-CAT_CLASSIFICATION = 4
-CAT_REGRESSION = 47
-CAT_CLUSTERING = 46
+CAT_CLUSTERING = 48
 CAT_MODEL_BUILDER = 2113
-
-ORIGINAL_SAVE_FORM = 28
 
 ALL_OPS = [
     # New ML algorithms
@@ -205,7 +198,7 @@ def _insert_operation_form_field(conn):
     [BASE_FORM_FIELD + 22, 'max_iterations', 'INTEGER', False, 18, None, 'integer', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 23, 'seed', 'INTEGER', False, 19, None, 'integer', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 24, 'min_divisible_clusterSize', 'FLOAT', 0, 20, None, 'decimal', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
-    [BASE_FORM_FIELD + 25, 'distance', 'TEXT', False, 21, 'euclidean', 'dropdown', None, '[{"key": "euclidean", "value": "Euclidean"},', 'EXECUTION', 27, True, BKM_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 25, 'distance', 'TEXT', False, 21, 'euclidean', 'dropdown', None, '[{"key": "euclidean", "value": "Euclidean", "en": "Euclidean", "pt": "Euclidiana"},{"key": "cosine", "value": "Cosine", "pt": "Cosseno", "en": "Cosine"}]', 'EXECUTION', 27, True, BKM_CLUSTERING_FORM],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
