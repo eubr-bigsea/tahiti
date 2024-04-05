@@ -28,7 +28,7 @@ META_PLATFORM = 1000
 APPEARANCE_FORM_ID=41
 
 BASE_PLATFORM = 2236
-BASE_OP = 2235
+BASE_OP = 2252
 BASE_CATEGORY = 2236
 BASE_FORM_FIELD = 2259
 
@@ -56,7 +56,7 @@ ORIGINAL_SAVE_FORM = 28
 
 ALL_OPS = [
     # New ML algorithms
-    PIC_CLUSTERING, LDA_CLUSTERING_FORM,
+    PIC_CLUSTERING, LDA_CLUSTERING,
     BKM_CLUSTERING
 ]
 
@@ -368,7 +368,7 @@ def _delete_operation_platform(conn):
     execute(conn, 
         '''DELETE FROM operation_platform
             WHERE operation_id BETWEEN %s and %s''',
-        BASE_OP, MAX_OP)
+        PIC_CLUSTERING, BKM_CLUSTERING)
 
 # -------------------------------------------------------
 
