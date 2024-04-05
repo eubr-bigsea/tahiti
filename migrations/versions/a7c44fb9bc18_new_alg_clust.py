@@ -1,7 +1,7 @@
 """new_alg_clust
 
 Revision ID: a7c44fb9bc18 
-Revises: a5215429bcf2
+Revises: 843451bc6ee4
 """
 from alembic import context
 from alembic import op
@@ -12,7 +12,7 @@ from sqlalchemy.sql.sqltypes import UnicodeText
 
 # revision identifiers, used by Alembic.
 revision = 'a7c44fb9bc18'
-down_revision = 'a5215429bcf2'
+down_revision = '843451bc6ee4'
 branch_labels = None
 depends_on = None
 
