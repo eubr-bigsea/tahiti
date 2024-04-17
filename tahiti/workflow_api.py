@@ -223,7 +223,7 @@ class WorkflowListApi(Resource):
             if pagination.total < (page - 1) * page_size and page != 1:
                 # Nothing in that specified page, return to page 1
                 pagination = workflows.paginate(1, page_size, False)
-            schema = WorkflowListResponseSchema(many=True, only=['specification'] + only)
+            schema = WorkflowListResponseSchema(many=True, only=['specification'] + list(only))
             schema.context = {'specification': WORKFLOW_SPECIFICATION}
             result = {
                 'data': schema.dump(
