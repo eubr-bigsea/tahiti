@@ -1,14 +1,17 @@
 import math
 import logging
 
-from tahiti.app_auth import requires_auth, requires_permission
+from tahiti.app_auth import requires_auth
 
 from flask import request, g as flask_g
 from flask_restful import Resource
 from http import HTTPStatus
 
-from tahiti.schema import *
-from tahiti.models import *
+from tahiti.schema import (PipelineCreateRequestSchema,
+                           PipelineItemResponseSchema,
+                           PipelineListResponseSchema,
+                           partial_schema_factory)
+from tahiti.models import (db, Pipeline)
 from flask_babel import gettext
 
 log = logging.getLogger(__name__)
@@ -40,8 +43,13 @@ class PipelineListApi(Resource):
         else:
             pipelines = Pipeline.query
 
+        # Filters
+        name = request.args.get('name')
+        if name:
+            pipelines = pipelines.filter(Pipeline.name.ilike(f'%{name}%'))
+        # Sorting
         sort = request.args.get('sort', 'name')
-        if sort not in ['name']:
+        if sort not in ['name', 'updated', 'id', 'created']:
             sort = 'name'
         sort_option = getattr(Pipeline, sort)
         if request.args.get('asc', 'true') == 'false':
