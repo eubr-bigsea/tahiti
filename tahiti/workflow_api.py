@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-}
 import logging
+import math
 import os
 import uuid
 
@@ -230,7 +230,7 @@ class WorkflowListApi(Resource):
                     pagination.items),
                 'pagination': {'page': page, 'size': page_size,
                                'total': pagination.total,
-                               'pages': pagination.total / page_size + 1}}
+                               'pages': math.floor(pagination.total / page_size) + 1}}
             return result
 
         except Exception as e:
