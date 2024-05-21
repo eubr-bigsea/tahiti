@@ -7,7 +7,7 @@ import pytest
 
 from tahiti.app import create_app
 from tahiti.models import (PipelineStep, PipelineTemplate, PipelineTemplateStep, Platform, SourceCode, Task, Workflow, db, 
-                           WorkflowType, Pipeline)
+                           WorkflowType, Pipeline, VerticeType, VerticeTypeProperty)
 
 sys.path.append(os.path.dirname(os.path.curdir))
 
@@ -140,6 +140,81 @@ def _get_pipeline_templates() -> list:
             ]
         },
     ]
+def _get_vertice_types() -> list:
+    return [
+        {
+            'id': 1,
+            'name': 'Person',
+            'description': 'Person',
+            'enabled': True,
+            'user_id': 1,
+            'user_login': 'admin',
+            'user_name': 'Admin',
+            'created': datetime.datetime.now(),
+            'updated': datetime.datetime.now(),
+            'display_name': 'Person',
+            'plural': 'People',
+            'category': 'Human',
+            'icon': 'people.png',
+            'small_icon': 'people.png',
+            'large_icon': 'people.png',
+            'parent_id': None,
+            'properties': [
+                VerticeTypeProperty(**{
+                    'id': 1,
+                    'name': 'name',
+                    'order': 1,
+                    'display_name': 'Name',
+                    'description': 'Name',
+                    'data_type': 'String'
+                }),
+                VerticeTypeProperty(**{
+                    'id': 3,
+                    'name': 'age',
+                    'display_name': 'Age',
+                    'order': 2,
+                    'description': 'Age',
+                    'data_type': 'integer',
+                })
+            ]
+        },
+        {
+            'id': 2,
+            'name': 'Professor',
+            'description': 'Professor',
+            'enabled': True,
+            'user_id': 1,
+            'user_login': 'admin',
+            'user_name': 'Admin',
+            'created': datetime.datetime.now(),
+            'updated': datetime.datetime.now(),
+            'display_name': 'Professor',
+            'plural': 'Professors',
+            'category': 'Human',
+            'icon': 'people.png',
+            'small_icon': 'people.png',
+            'large_icon': 'people.png',
+            'parent_id': 1,
+            'properties': [
+                VerticeTypeProperty(**{
+                    'id': 2,
+                    'name': 'formation',
+                    'order': 1,
+                    'display_name': 'formation',
+                    'description': 'formation',
+                    'data_type': 'String'
+                }),
+                VerticeTypeProperty(**{
+                    'id': 4,
+                    'name': 'hours',
+                    'display_name': 'Hours',
+                    'order': 2,
+                    'data_type': 'integer',
+                    'description': 'Hours',
+                })
+            ]
+        }
+   ]
 
 def _get_pipelines() -> list:
     return [
@@ -239,6 +314,9 @@ def client(app):
                 db.session.add(Pipeline(**pipe))
             for pipe in _get_pipeline_templates():
                 db.session.add(PipelineTemplate(**pipe))
+
+            for vt in _get_vertice_types():
+                db.session.add(VerticeType(**vt))
             db.create_all()
             db.session.commit()
         client.secret = app.config["TAHITI_CONFIG"]["secret"]

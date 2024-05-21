@@ -23,6 +23,7 @@ from tahiti.operation_subset_api import (OperationSubsetDetailApi,
         OperationSubsetListApi)
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
 from tahiti.pipeline_api import PipelineListApi, PipelineDetailApi
+from tahiti.vertice_type_api import VerticeTypeListApi, VerticeTypeDetailApi 
 from tahiti.pipeline_step_api import PipelineStepListApi, PipelineStepDetailApi
 from tahiti.pipeline_template_api import (
     PipelineTemplateListApi, PipelineTemplateDetailApi)
@@ -113,6 +114,8 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/operations/clear-cache': OperationClearCacheApi,
         '/operations/tree/<int:platform_id>': OperationTreeApi,
         '/operations/<int:operation_id>': OperationDetailApi,
+        '/vertice-types': VerticeTypeListApi,
+        '/vertice-types/<int:vertice_type_id>': VerticeTypeDetailApi,
         '/pipelines': PipelineListApi,
         '/pipelines/<int:pipeline_id>': PipelineDetailApi,
         '/pipelines/steps': PipelineStepListApi,
@@ -157,6 +160,9 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
 
     @app.errorhandler(Exception)
     def handle_exception(e):
+        breakpoint()
+        import traceback
+        tb = traceback.format_exc()
         # pass through HTTP errors
         if isinstance(e, HTTPException):
             return e

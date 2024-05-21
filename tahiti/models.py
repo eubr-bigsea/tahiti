@@ -4,10 +4,9 @@ from sqlalchemy import Column, Integer, String, Boolean, ForeignKey, Enum, \
     DateTime, Text, Unicode, UnicodeText
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy_i18n import make_translatable, translation_base, Translatable
-
 make_translatable(options={'locales': ['pt', 'en'],
                            'auto_create_locales': False,
-                           'fallback_locale': 'en'})
+                           'fallback_locale': 'pt'})
 
 db = SQLAlchemy()
 
@@ -280,33 +279,36 @@ class Flow(db.Model):
                          default=DiagramEnvironment.DESIGN, nullable=False)
 
     # Associations
-    source_id = Column(String(250),
-                       ForeignKey("task.id",
-                                  name="fk_flow_source_id"),
-                       nullable=False,
-                       index=True)
+    source_id = Column(
+        String(250),
+        ForeignKey("task.id",
+                   name="fk_flow_source_id"),
+        nullable=False,
+        index=True)
     source = relationship(
         "Task",
         overlaps='sources',
         foreign_keys=[source_id],
         backref=backref("sources",
                         cascade="all, delete-orphan"))
-    target_id = Column(String(250),
-                       ForeignKey("task.id",
-                                  name="fk_flow_target_id"),
-                       nullable=False,
-                       index=True)
+    target_id = Column(
+        String(250),
+        ForeignKey("task.id",
+                   name="fk_flow_target_id"),
+        nullable=False,
+        index=True)
     target = relationship(
         "Task",
         overlaps='targets',
         foreign_keys=[target_id],
         backref=backref("targets",
                         cascade="all, delete-orphan"))
-    workflow_id = Column(Integer,
-                         ForeignKey("workflow.id",
-                                    name="fk_flow_workflow_id"),
-                         nullable=False,
-                         index=True)
+    workflow_id = Column(
+        Integer,
+        ForeignKey("workflow.id",
+                   name="fk_flow_workflow_id"),
+        nullable=False,
+        index=True)
     workflow = relationship(
         "Workflow",
         overlaps='flows',
@@ -464,10 +466,11 @@ class OperationFormField(db.Model, Translatable):
                       default=True, nullable=False)
 
     # Associations
-    form_id = Column(Integer,
-                     ForeignKey("operation_form.id",
-                                name="fk_operation_form_field_form_id"),
-                     index=True)
+    form_id = Column(
+        Integer,
+        ForeignKey("operation_form.id",
+                   name="fk_operation_form_field_form_id"),
+        index=True)
     form = relationship(
         "OperationForm",
         overlaps='fields',
@@ -510,11 +513,12 @@ class OperationPort(db.Model, Translatable):
         "OperationPortInterface",
         overlaps="operation_ports",
         secondary=operation_port_interface_operation_port)
-    operation_id = Column(Integer,
-                          ForeignKey("operation.id",
-                                     name="fk_operation_port_operation_id"),
-                          nullable=False,
-                          index=True)
+    operation_id = Column(
+        Integer,
+        ForeignKey("operation.id",
+                   name="fk_operation_port_operation_id"),
+        nullable=False,
+        index=True)
     operation = relationship(
         "Operation",
         overlaps='ports',
@@ -573,11 +577,12 @@ class OperationScript(db.Model):
     body = Column(Text(4294000000), nullable=False)
 
     # Associations
-    operation_id = Column(Integer,
-                          ForeignKey("operation.id",
-                                     name="fk_operation_script_operation_id"),
-                          nullable=False,
-                          index=True)
+    operation_id = Column(
+        Integer,
+        ForeignKey("operation.id",
+                   name="fk_operation_script_operation_id"),
+        nullable=False,
+        index=True)
     operation = relationship(
         "Operation",
         overlaps='scripts',
@@ -599,11 +604,12 @@ class OperationSubset(db.Model):
     name = Column(String(50), nullable=False)
 
     # Associations
-    platform_id = Column(Integer,
-                         ForeignKey("platform.id",
-                                    name="fk_operation_subset_platform_id"),
-                         nullable=False,
-                         index=True)
+    platform_id = Column(
+        Integer,
+        ForeignKey("platform.id",
+                   name="fk_operation_subset_platform_id"),
+        nullable=False,
+        index=True)
     platform = relationship(
         "Platform",
         overlaps='subsets',
@@ -674,19 +680,21 @@ class PipelineStep(db.Model):
                                 name='WorkflowTypeEnumType'))
 
     # Associations
-    pipeline_id = Column(Integer,
-                         ForeignKey("pipeline.id",
-                                    name="fk_pipeline_step_pipeline_id"),
-                         nullable=False,
-                         index=True)
+    pipeline_id = Column(
+        Integer,
+        ForeignKey("pipeline.id",
+                   name="fk_pipeline_step_pipeline_id"),
+        nullable=False,
+        index=True)
     pipeline = relationship(
         "Pipeline",
         overlaps='steps',
         foreign_keys=[pipeline_id])
-    workflow_id = Column(Integer,
-                         ForeignKey("workflow.id",
-                                    name="fk_pipeline_step_workflow_id"),
-                         index=True)
+    workflow_id = Column(
+        Integer,
+        ForeignKey("workflow.id",
+                   name="fk_pipeline_step_workflow_id"),
+        index=True)
     workflow = relationship(
         "Workflow",
         overlaps='workflow',
@@ -732,11 +740,12 @@ class PipelineTemplateStep(db.Model):
     enabled = Column(Boolean, nullable=False)
 
     # Associations
-    template_id = Column(Integer,
-                         ForeignKey("pipeline_template.id",
-                                    name="fk_pipeline_template_step_template_id"),
-                         nullable=False,
-                         index=True)
+    template_id = Column(
+        Integer,
+        ForeignKey("pipeline_template.id",
+                   name="fk_pipeline_template_step_template_id"),
+        nullable=False,
+        index=True)
     template = relationship(
         "PipelineTemplate",
         overlaps='steps',
@@ -816,11 +825,12 @@ class PlatformPlugin(db.Model):
                           default=False, nullable=False)
 
     # Associations
-    platform_id = Column(Integer,
-                         ForeignKey("platform.id",
-                                    name="fk_platform_plugin_platform_id"),
-                         nullable=False,
-                         index=True)
+    platform_id = Column(
+        Integer,
+        ForeignKey("platform.id",
+                   name="fk_platform_plugin_platform_id"),
+        nullable=False,
+        index=True)
     platform = relationship(
         "Platform",
         overlaps='plugins',
@@ -845,11 +855,12 @@ class RoleOperationSubset(db.Model):
     role_id = Column(Integer, nullable=False)
 
     # Associations
-    subset_id = Column(Integer,
-                       ForeignKey("operation_subset.id",
-                                  name="fk_role_operation_subset_subset_id"),
-                       nullable=False,
-                       index=True)
+    subset_id = Column(
+        Integer,
+        ForeignKey("operation_subset.id",
+                   name="fk_role_operation_subset_subset_id"),
+        nullable=False,
+        index=True)
     subset = relationship(
         "OperationSubset",
         overlaps='roles',
@@ -915,22 +926,24 @@ class Task(db.Model):
     }
 
     # Associations
-    workflow_id = Column(Integer,
-                         ForeignKey("workflow.id",
-                                    name="fk_task_workflow_id"),
-                         nullable=False,
-                         index=True)
+    workflow_id = Column(
+        Integer,
+        ForeignKey("workflow.id",
+                   name="fk_task_workflow_id"),
+        nullable=False,
+        index=True)
     workflow = relationship(
         "Workflow",
         overlaps='tasks',
         foreign_keys=[workflow_id],
         backref=backref("tasks",
                         cascade="all, delete-orphan"))
-    operation_id = Column(Integer,
-                          ForeignKey("operation.id",
-                                     name="fk_task_operation_id"),
-                          nullable=False,
-                          index=True)
+    operation_id = Column(
+        Integer,
+        ForeignKey("operation.id",
+                   name="fk_task_operation_id"),
+        nullable=False,
+        index=True)
     operation = relationship(
         "Operation",
         overlaps='operation',
@@ -953,6 +966,84 @@ class TaskGroup(db.Model):
     type = Column(Enum(*list(TaskGroupType.values()),
                        name='TaskGroupTypeEnumType'), nullable=False)
     color = Column(String(200))
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class VerticeType(db.Model):
+    """ VerticeType """
+    __tablename__ = 'vertice_type'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    display_name = Column(String(200))
+    namespace = Column(String(200))
+    small_icon = Column(String(200))
+    icon = Column(String(200))
+    large_icon = Column(String(200))
+    display_property = Column(String(200))
+    plural = Column(String(200))
+    category = Column(String(200))
+    enabled = Column(Boolean, nullable=False)
+    user_id = Column(Integer, nullable=False)
+    user_login = Column(String(50), nullable=False)
+    user_name = Column(String(200), nullable=False)
+    created = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False)
+    updated = Column(DateTime,
+                     default=datetime.datetime.utcnow, nullable=False,
+                     onupdate=datetime.datetime.utcnow)
+
+    # Associations
+    properties = relationship("VerticeTypeProperty",
+                              cascade="all, delete-orphan")
+    parent_id = Column(
+        Integer,
+        ForeignKey("vertice_type.id",
+                   name="fk_vertice_type_parent_id"),
+        index=True)
+    parent = relationship(
+        "VerticeType",
+        overlaps='parent',
+        foreign_keys=[parent_id])
+
+    def __str__(self):
+        return self.name
+
+    def __repr__(self):
+        return '<Instance {}: {}>'.format(self.__class__, self.id)
+
+
+class VerticeTypeProperty(db.Model):
+    """ VerticeTypeProperty """
+    __tablename__ = 'vertice_type_property'
+
+    # Fields
+    id = Column(Integer, primary_key=True)
+    name = Column(String(200), nullable=False)
+    description = Column(String(200))
+    display_name = Column(String(200))
+    data_type = Column(String(200), nullable=False)
+    order = Column(Integer, nullable=False)
+    is_main = Column(Boolean,
+                     default=False, nullable=False)
+
+    # Associations
+    vertice_type_id = Column(
+        Integer,
+        ForeignKey("vertice_type.id",
+                   name="fk_vertice_type_property_vertice_type_id"),
+        index=True)
+    vertice_type = relationship(
+        "VerticeType",
+        overlaps='properties',
+        foreign_keys=[vertice_type_id])
 
     def __str__(self):
         return self.name
@@ -1004,36 +1095,40 @@ class Workflow(db.Model):
     }
 
     # Associations
-    platform_id = Column(Integer,
-                         ForeignKey("platform.id",
-                                    name="fk_workflow_platform_id"),
-                         nullable=False,
-                         index=True)
+    platform_id = Column(
+        Integer,
+        ForeignKey("platform.id",
+                   name="fk_workflow_platform_id"),
+        nullable=False,
+        index=True)
     platform = relationship(
         "Platform",
         overlaps='platform',
         foreign_keys=[platform_id])
-    subset_id = Column(Integer,
-                       ForeignKey("operation_subset.id",
-                                  name="fk_workflow_subset_id"),
-                       index=True)
+    subset_id = Column(
+        Integer,
+        ForeignKey("operation_subset.id",
+                   name="fk_workflow_subset_id"),
+        index=True)
     subset = relationship(
         "OperationSubset",
         overlaps='subset',
         foreign_keys=[subset_id])
-    pipeline_id = Column(Integer,
-                         ForeignKey("pipeline.id",
-                                    name="fk_workflow_pipeline_id"),
-                         index=True)
+    pipeline_id = Column(
+        Integer,
+        ForeignKey("pipeline.id",
+                   name="fk_workflow_pipeline_id"),
+        index=True)
     pipeline = relationship(
         "Pipeline",
         overlaps='pipeline',
         foreign_keys=[pipeline_id])
-    platform_id = Column(Integer,
-                         ForeignKey("platform.id",
-                                    name="fk_workflow_platform_id"),
-                         nullable=False,
-                         index=True)
+    platform_id = Column(
+        Integer,
+        ForeignKey("platform.id",
+                   name="fk_workflow_platform_id"),
+        nullable=False,
+        index=True)
     platform = relationship(
         "Platform",
         overlaps='platform',
@@ -1061,11 +1156,12 @@ class WorkflowHistory(db.Model):
     content = Column(Text(4294000000), nullable=False)
 
     # Associations
-    workflow_id = Column(Integer,
-                         ForeignKey("workflow.id",
-                                    name="fk_workflow_history_workflow_id"),
-                         nullable=False,
-                         index=True)
+    workflow_id = Column(
+        Integer,
+        ForeignKey("workflow.id",
+                   name="fk_workflow_history_workflow_id"),
+        nullable=False,
+        index=True)
     workflow = relationship(
         "Workflow",
         overlaps='versions',
@@ -1093,11 +1189,12 @@ class WorkflowPermission(db.Model):
     user_name = Column(String(200), nullable=False)
 
     # Associations
-    workflow_id = Column(Integer,
-                         ForeignKey("workflow.id",
-                                    name="fk_workflow_permission_workflow_id"),
-                         nullable=False,
-                         index=True)
+    workflow_id = Column(
+        Integer,
+        ForeignKey("workflow.id",
+                   name="fk_workflow_permission_workflow_id"),
+        nullable=False,
+        index=True)
     workflow = relationship(
         "Workflow",
         overlaps='permissions',
@@ -1130,11 +1227,12 @@ class WorkflowVariable(db.Model):
     parameters = Column(Text(4294000000))
 
     # Associations
-    workflow_id = Column(Integer,
-                         ForeignKey("workflow.id",
-                                    name="fk_workflow_variable_workflow_id"),
-                         nullable=False,
-                         index=True)
+    workflow_id = Column(
+        Integer,
+        ForeignKey("workflow.id",
+                   name="fk_workflow_variable_workflow_id"),
+        nullable=False,
+        index=True)
     workflow = relationship(
         "Workflow",
         overlaps='variables',

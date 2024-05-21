@@ -1727,6 +1727,217 @@ class TaskExecuteRequestSchema(BaseSchema):
         unknown = EXCLUDE
 
 
+class VerticeTypeCreateRequestSchema(BaseSchema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    display_name = fields.String(required=False, allow_none=True)
+    namespace = fields.String(required=False, allow_none=True)
+    small_icon = fields.String(required=False, allow_none=True)
+    icon = fields.String(required=False, allow_none=True)
+    large_icon = fields.String(required=False, allow_none=True)
+    display_property = fields.String(required=False, allow_none=True)
+    plural = fields.String(required=False, allow_none=True)
+    category = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    created = fields.DateTime(
+        required=False,
+        allow_none=True,
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
+    updated = fields.DateTime(
+        required=False,
+        allow_none=True,
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
+    properties = fields.Nested(
+        'tahiti.schema.VerticeTypePropertyCreateRequestSchema',
+        allow_none=True,
+        many=True)
+    parent = fields.Nested(
+        'tahiti.schema.VerticeTypeCreateRequestSchema',
+        allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of VerticeType"""
+        return VerticeType(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class VerticeTypeItemResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    display_name = fields.String(required=False, allow_none=True)
+    namespace = fields.String(required=False, allow_none=True)
+    small_icon = fields.String(required=False, allow_none=True)
+    icon = fields.String(required=False, allow_none=True)
+    large_icon = fields.String(required=False, allow_none=True)
+    display_property = fields.String(required=False, allow_none=True)
+    plural = fields.String(required=False, allow_none=True)
+    category = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    created = fields.DateTime(
+        required=False,
+        allow_none=True,
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
+    updated = fields.DateTime(
+        required=False,
+        allow_none=True,
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
+    properties = fields.Nested(
+        'tahiti.schema.VerticeTypePropertyItemResponseSchema',
+        allow_none=True,
+        many=True)
+    parent = fields.Nested(
+        'tahiti.schema.VerticeTypeItemResponseSchema',
+        allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of VerticeType"""
+        return VerticeType(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class VerticeTypeListResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    display_name = fields.String(required=False, allow_none=True)
+    namespace = fields.String(required=False, allow_none=True)
+    small_icon = fields.String(required=False, allow_none=True)
+    icon = fields.String(required=False, allow_none=True)
+    large_icon = fields.String(required=False, allow_none=True)
+    display_property = fields.String(required=False, allow_none=True)
+    plural = fields.String(required=False, allow_none=True)
+    category = fields.String(required=False, allow_none=True)
+    enabled = fields.Boolean(required=True)
+    user_id = fields.Integer(required=True)
+    user_login = fields.String(required=True)
+    user_name = fields.String(required=True)
+    created = fields.DateTime(
+        required=False,
+        allow_none=True,
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
+    updated = fields.DateTime(
+        required=False,
+        allow_none=True,
+        load_default=datetime.datetime.utcnow,
+        dump_default=datetime.datetime.utcnow)
+    properties = fields.Nested(
+        'tahiti.schema.VerticeTypePropertyListResponseSchema',
+        allow_none=True,
+        many=True)
+    parent = fields.Nested(
+        'tahiti.schema.VerticeTypeListResponseSchema',
+        allow_none=True)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of VerticeType"""
+        return VerticeType(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class VerticeTypePropertyCreateRequestSchema(BaseSchema):
+    """ JSON serialization schema """
+    name = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    display_name = fields.String(required=False, allow_none=True)
+    data_type = fields.String(required=True)
+    order = fields.Integer(required=True)
+    is_main = fields.Boolean(
+        required=False,
+        allow_none=True,
+        load_default=False,
+        dump_default=False)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of VerticeTypeProperty"""
+        return VerticeTypeProperty(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class VerticeTypePropertyItemResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    display_name = fields.String(required=False, allow_none=True)
+    data_type = fields.String(required=True)
+    order = fields.Integer(required=True)
+    is_main = fields.Boolean(
+        required=False,
+        allow_none=True,
+        load_default=False,
+        dump_default=False)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of VerticeTypeProperty"""
+        return VerticeTypeProperty(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
+class VerticeTypePropertyListResponseSchema(BaseSchema):
+    """ JSON serialization schema """
+    id = fields.Integer(required=True)
+    name = fields.String(required=True)
+    description = fields.String(required=False, allow_none=True)
+    display_name = fields.String(required=False, allow_none=True)
+    data_type = fields.String(required=True)
+    order = fields.Integer(required=True)
+    is_main = fields.Boolean(
+        required=False,
+        allow_none=True,
+        load_default=False,
+        dump_default=False)
+
+    # noinspection PyUnresolvedReferences
+    @post_load
+    def make_object(self, data, **kwargs):
+        """ Deserialize data into an instance of VerticeTypeProperty"""
+        return VerticeTypeProperty(**data)
+
+    class Meta:
+        ordered = True
+        unknown = EXCLUDE
+
+
 class WorkflowExecuteRequestSchema(BaseSchema):
     """ JSON schema for executing workflow """
     id = fields.Integer(required=True)
