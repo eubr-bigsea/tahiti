@@ -160,7 +160,6 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
 
     @app.errorhandler(Exception)
     def handle_exception(e):
-        breakpoint()
         import traceback
         tb = traceback.format_exc()
         # pass through HTTP errors

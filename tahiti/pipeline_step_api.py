@@ -13,7 +13,7 @@ from flask_babel import gettext
 
 log = logging.getLogger(__name__)
 # region Protected\s*
-# endregion\w*
+# endregion
 
 
 class PipelineStepListApi(Resource):

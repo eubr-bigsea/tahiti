@@ -6,7 +6,7 @@ import flask_migrate
 import pytest
 
 from tahiti.app import create_app
-from tahiti.models import (PipelineStep, PipelineTemplate, PipelineTemplateStep, Platform, SourceCode, Task, Workflow, db, 
+from tahiti.models import (PipelineStep, PipelineTemplate, PipelineTemplateStep, Platform, SourceCode, Task, Workflow, db,
                            WorkflowType, Pipeline, VerticeType, VerticeTypeProperty)
 
 sys.path.append(os.path.dirname(os.path.curdir))
@@ -179,17 +179,17 @@ def _get_vertice_types() -> list:
             ]
         },
         {
-            'id': 2,
-            'name': 'Professor',
-            'description': 'Professor',
+            'id': 3,
+            'name': 'Driver',
+            'description': 'Driver',
             'enabled': True,
             'user_id': 1,
             'user_login': 'admin',
             'user_name': 'Admin',
             'created': datetime.datetime.now(),
             'updated': datetime.datetime.now(),
-            'display_name': 'Professor',
-            'plural': 'Professors',
+            'display_name': 'Driver',
+            'plural': 'Drivers',
             'category': 'Human',
             'icon': 'people.png',
             'small_icon': 'people.png',
@@ -197,20 +197,20 @@ def _get_vertice_types() -> list:
             'parent_id': 1,
             'properties': [
                 VerticeTypeProperty(**{
-                    'id': 2,
-                    'name': 'formation',
+                    'id': 10,
+                    'name': 'license',
                     'order': 1,
-                    'display_name': 'formation',
-                    'description': 'formation',
+                    'display_name': 'license',
+                    'description': 'license',
                     'data_type': 'String'
                 }),
                 VerticeTypeProperty(**{
-                    'id': 4,
-                    'name': 'hours',
-                    'display_name': 'Hours',
+                    'id': 11,
+                    'name': 'plate',
+                    'display_name': 'Plate',
                     'order': 2,
-                    'data_type': 'integer',
-                    'description': 'Hours',
+                    'data_type': 'string',
+                    'description': 'Plate number',
                 })
             ]
         }

@@ -1757,9 +1757,6 @@ class VerticeTypeCreateRequestSchema(BaseSchema):
         'tahiti.schema.VerticeTypePropertyCreateRequestSchema',
         allow_none=True,
         many=True)
-    parent = fields.Nested(
-        'tahiti.schema.VerticeTypeCreateRequestSchema',
-        allow_none=True)
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1805,7 +1802,8 @@ class VerticeTypeItemResponseSchema(BaseSchema):
         many=True)
     parent = fields.Nested(
         'tahiti.schema.VerticeTypeItemResponseSchema',
-        allow_none=True)
+        allow_none=True,
+        only=['id', 'name'])
 
     # noinspection PyUnresolvedReferences
     @post_load
@@ -1851,7 +1849,8 @@ class VerticeTypeListResponseSchema(BaseSchema):
         many=True)
     parent = fields.Nested(
         'tahiti.schema.VerticeTypeListResponseSchema',
-        allow_none=True)
+        allow_none=True,
+        only=['id', 'name'])
 
     # noinspection PyUnresolvedReferences
     @post_load

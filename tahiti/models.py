@@ -1010,8 +1010,7 @@ class VerticeType(db.Model):
         index=True)
     parent = relationship(
         "VerticeType",
-        overlaps='parent',
-        foreign_keys=[parent_id])
+        remote_side=[id], uselist=False)
 
     def __str__(self):
         return self.name
