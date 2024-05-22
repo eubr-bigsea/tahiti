@@ -50,9 +50,14 @@ class VerticeTypeListApi(Resource):
             )
         else:
             vertice_types = VerticeType.query
+        name_filter = request.args.get('name')
+        if name_filter:
+            vertice_types = vertice_types.filter(
+                     VerticeType.name.like(
+                         '%%{}%%'.format(name_filter)))
 
         sort = request.args.get("sort", "name")
-        if sort not in ["name"]:
+        if sort not in ["name", "id"]:
             sort = "name"
         sort_option = getattr(VerticeType, sort)
         if request.args.get("asc", "true") == "false":
