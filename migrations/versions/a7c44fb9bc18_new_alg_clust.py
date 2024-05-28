@@ -198,7 +198,8 @@ def _insert_operation_form_field(conn):
     [BASE_FORM_FIELD + 22, 'max_iterations', 'INTEGER', False, 18, None, 'integer', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 23, 'seed', 'INTEGER', False, 19, None, 'integer', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
     [BASE_FORM_FIELD + 24, 'min_divisible_clusterSize', 'FLOAT', 0, 20, None, 'decimal', None, None, 'EXECUTION', None, True, BKM_CLUSTERING_FORM],
-    [BASE_FORM_FIELD + 25, 'distance', 'TEXT', False, 21, 'euclidean', 'dropdown', None, '[{"key": "euclidean", "value": "Euclidean", "en": "Euclidean", "pt": "Euclidiana"},{"key": "cosine", "value": "Cosine", "pt": "Cosseno", "en": "Cosine"}]', 'EXECUTION', 27, True, BKM_CLUSTERING_FORM],
+    [BASE_FORM_FIELD + 25, 'distance', 'TEXT', False, 21, 'euclidean', 'dropdown', None, '[{"key": "euclidean", "value": "Euclidean", "en": "Euclidean", "pt": "Euclidiana"},{"key": "cosine", "value": "Cosine", "pt": "Cosseno", "en": "Cosine"}]', 'EXECUTION', 
+        None, True, BKM_CLUSTERING_FORM],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
