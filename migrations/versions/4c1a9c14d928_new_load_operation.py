@@ -15,7 +15,7 @@ from sqlalchemy.sql.sqltypes import UnicodeText
 
 # revision identifiers, used by Alembic.
 revision = '4c1a9c14d928'
-down_revision = 'a245d1ca5643'
+down_revision = 'a237518ec5e1'
 branch_labels = None
 depends_on = None
 
