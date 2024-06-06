@@ -1472,7 +1472,6 @@ class RoleOperationSubsetItemResponseSchema(BaseSchema):
 
 class SourceCodeCreateRequestSchema(BaseSchema):
     """ JSON serialization schema """
-    id = fields.Integer(required=True)
     name = fields.String(required=True)
     enabled = fields.Boolean(required=True)
     suspicious = fields.Boolean(required=True)
