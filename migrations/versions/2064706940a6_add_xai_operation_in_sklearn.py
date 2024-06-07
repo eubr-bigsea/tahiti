@@ -30,14 +30,14 @@ def _insert_operation(conn):
                column('doc_link', String))
     columns = [c.name for c in tb.columns]
     data = [
-        [10006, 'xai', True, 'ACTION', 'fa-cloud-download-alt', None, None]
+        [4206, 'xai', True, 'ACTION', 'fa-cloud-download-alt', None, None]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
 def _delete_operation(conn):
-    conn.execute('DELETE from operation WHERE id = %s', 10006)
+    conn.execute('DELETE from operation WHERE id = %s', 4206)
 
 
 def _insert_operation_translation(conn):
@@ -49,8 +49,8 @@ def _insert_operation_translation(conn):
                column('label_format', String))
     columns = [c.name for c in tb.columns]
     data = [
-        [10006, 'pt', 'XAI', 'XAI'],
-        [10006, 'en', 'XAI', 'XAI']
+        [4206, 'pt', 'XAI', 'XAI'],
+        [4206, 'en', 'XAI', 'XAI']
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
@@ -58,7 +58,7 @@ def _insert_operation_translation(conn):
 
 def _delete_operation_translation(conn):
     conn.execute(
-        'DELETE from operation_translation WHERE id = %s', 10006)
+        'DELETE from operation_translation WHERE id = %s', 4206)
 
 
 def _insert_operation_script(conn):
@@ -70,14 +70,14 @@ def _insert_operation_script(conn):
                column('operation_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [None, 'JS_CLIENT', 1, 'copyInput(task)', 10006]
+        [None, 'JS_CLIENT', 1, 'copyInput(task)', 4206]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
 def _delete_operation_script(conn):
-    conn.execute('DELETE from operation_script WHERE id = %s', 10006)
+    conn.execute('DELETE from operation_script WHERE id = %s', 4206)
 
 def _insert_operation_category(conn):
     tb = table('operation_category',
@@ -88,14 +88,14 @@ def _insert_operation_category(conn):
                column('default_order', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [10003, 'group', None, 0, 0]
+        [4203, 'group', None, 0, 0]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_category(conn):
     conn.execute(
-        'DELETE from operation_category WHERE id = 10003')
+        'DELETE from operation_category WHERE id = 4203')
 
 def _insert_operation_category_translation(conn):
     tb = table('operation_category_translation',
@@ -104,15 +104,15 @@ def _insert_operation_category_translation(conn):
                column('name', String))
     columns = [c.name for c in tb.columns]
     data = [
-        [10003, 'pt', 'Explicabilidade'],
-        [10003, 'en', 'Explainability']
+        [4203, 'pt', 'Explicabilidade'],
+        [4203, 'en', 'Explainability']
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_category_translation(conn):
     conn.execute(
-        'DELETE from operation_category_translation WHERE id = 10003')
+        'DELETE from operation_category_translation WHERE id = 4203')
 
 def _insert_operation_category_operation(conn):
     tb = table('operation_category_operation',
@@ -120,14 +120,14 @@ def _insert_operation_category_operation(conn):
                column('operation_category_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [10006, 10003]
+        [4206, 4203]
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 
 def _delete_operation_category_operation(conn):
-    conn.execute('DELETE from operation_category_operation WHERE operation_id = %s', 10006)
+    conn.execute('DELETE from operation_category_operation WHERE operation_id = %s', 4206)
 
 
 # def _insert_operation_form(conn):
@@ -226,13 +226,13 @@ def _insert_operation_port(conn):
                column('operation_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [10011, 'xai_in', 'INPUT', None, 1, 'ONE', 10006],
+        [4200, 'xai_in', 'INPUT', None, 1, 'ONE', 4206],
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_port(conn):
-    conn.execute('DELETE from operation_port WHERE id = %s', 10011)
+    conn.execute('DELETE from operation_port WHERE id = %s', 4200)
 
 
 def _insert_operation_port_translation(conn):
@@ -243,15 +243,15 @@ def _insert_operation_port_translation(conn):
                column('description', String))
     columns = [c.name for c in tb.columns]
     data = [
-        [10011, 'pt', 'modelo', 'Saída do Modelo.'],
-        [10011, 'en', 'model', 'Output Model.']
+        [4200, 'pt', 'modelo', 'Saída do Modelo.'],
+        [4200, 'en', 'model', 'Output Model.']
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
 def _delete_operation_port_translation(conn):
-    conn.execute('DELETE from operation_port_translation WHERE id = %s', 10011)
+    conn.execute('DELETE from operation_port_translation WHERE id = %s', 4200)
 
 
 
@@ -280,7 +280,7 @@ def _insert_operation_platform(conn):
                column('platform_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [10006, 4]
+        [4206, 4]
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
@@ -288,7 +288,7 @@ def _insert_operation_platform(conn):
 
 def _delete_operation_platform(conn):
     conn.execute(
-        'DELETE from operation_platform WHERE operation_id = %s', 10006)
+        'DELETE from operation_platform WHERE operation_id = %s', 4206)
 
 
 # def _insert_operation_port_interface_operation_port(conn):

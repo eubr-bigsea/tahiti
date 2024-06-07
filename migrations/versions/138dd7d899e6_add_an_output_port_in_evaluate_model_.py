@@ -1,7 +1,7 @@
 """add an output port in evaluate model operation
 
 Revision ID: 138dd7d899e6
-Revises: aaaf89e5e02a
+Revises: 5a2676b63d2d
 Create Date: 2023-02-07 20:04:26.046267
 
 """
@@ -14,7 +14,7 @@ from sqlalchemy.sql.sqltypes import UnicodeText
 
 # revision identifiers, used by Alembic.
 revision = '138dd7d899e6'
-down_revision = 'aaaf89e5e02a'
+down_revision = '5a2676b63d2d'
 branch_labels = None
 depends_on = None
 
@@ -30,14 +30,14 @@ def _insert_operation_port(conn):
                column('operation_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [10010, 'model_out_port', 'OUTPUT', None, 4, 'MANY', 4017]
+        [4210, 'model_out_port', 'OUTPUT', None, 4, 'MANY', 4017]
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
 def _delete_operation_port(conn):
-    conn.execute('DELETE from operation_port WHERE id = %s', 10010)
+    conn.execute('DELETE from operation_port WHERE id = %s', 4210)
 
 
 def _insert_operation_port_translation(conn):
@@ -48,15 +48,15 @@ def _insert_operation_port_translation(conn):
                column('description', String))
     columns = [c.name for c in tb.columns]
     data = [
-        [10010, 'pt', 'modelo', 'Saída do Modelo.'],
-        [10010, 'en', 'model', 'Model Output.']
+        [4210, 'pt', 'modelo', 'Saída do Modelo.'],
+        [4210, 'en', 'model', 'Model Output.']
     ]
     rows = [dict(zip(columns, row)) for row in data]
     op.bulk_insert(tb, rows)
 
 
 def _delete_operation_port_translation(conn):
-    conn.execute('DELETE from operation_port_translation WHERE id = %s', 10010)
+    conn.execute('DELETE from operation_port_translation WHERE id = %s', 4210)
 
 
 def _insert_operation_port_interface_operation_port(conn):
@@ -65,14 +65,14 @@ def _insert_operation_port_interface_operation_port(conn):
                column('operation_port_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
-        [10010, 1]
+        [4210, 1]
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
     op.bulk_insert(tb, rows)
 
 def _delete_operation_port_interface_operation_port(conn):
     conn.execute(
-        'DELETE from operation_port_interface_operation_port WHERE operation_port_id = %s', 10010)
+        'DELETE from operation_port_interface_operation_port WHERE operation_port_id = %s', 4210)
 
 
     # -------------------------------------------------------

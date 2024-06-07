@@ -1,7 +1,7 @@
 """new load operation
 
 Revision ID: 4c1a9c14d928
-Revises: a245d1ca5643
+Revises: 48352bbe32be
 Create Date: 2022-12-08 00:52:58.805408
 
 """
@@ -15,16 +15,16 @@ from sqlalchemy.sql.sqltypes import UnicodeText
 
 # revision identifiers, used by Alembic.
 revision = '4c1a9c14d928'
-down_revision = 'a237518ec5e1'
+down_revision = '48352bbe32be'
 branch_labels = None
 depends_on = None
 
-BASE_PLATFORM = 10000
-BASE_OP = 10004
-BASE_CATEGORY = 10000
-BASE_FORM = 10004
-BASE_FORM_FIELD = 10002
-BASE_PORT = 10008
+BASE_PLATFORM = 6000
+BASE_OP = 6005
+BASE_CATEGORY = 6000
+BASE_FORM = 6005
+BASE_FORM_FIELD = 6020
+BASE_PORT = 6010
 
 
 def _insert_operation(conn):
