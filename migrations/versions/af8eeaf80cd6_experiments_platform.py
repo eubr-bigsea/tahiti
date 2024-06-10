@@ -974,7 +974,7 @@ def _insert_operation_form_field(conn):
     data = [
       [BASE_FORM_FIELD + 0, 'comment', 'TEXT', 1, 1, None, 'textarea', None, None, 'EXECUTION', None, 1, BASE_FORM + 0],
       [BASE_FORM_FIELD + 1, 'data_source', 'TEXT', 1, 1, None, 'lookup',
-        '`${LIMONERO_URL}/datasources%s&simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, BASE_FORM + 1],
+        '`${LIMONERO_URL}/datasources?&simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, BASE_FORM + 1],
       [BASE_FORM_FIELD + 2, 'attributes', 'TEXT', 1, 1, None, 'attribute-selector', None, None, 'EXECUTION', None, 1, ATTRIBUTES_FORM],
       [BASE_FORM_FIELD + 3, 'overwrite', 'INTEGER', 0, 2, '1', 'checkbox', None, None, 'EXECUTION', None, 1, KEEP_ATTRIBUTE_FORM],
       [BASE_FORM_FIELD + 4, 'aliases', 'TEXT', 0, 20, None, 'tag', None, None, 'EXECUTION', None, 1, ALIASES_FORM],
@@ -1070,9 +1070,9 @@ def _insert_operation_form_field(conn):
       
       [BASE_FORM_FIELD + 93, 'indexes', 'TEXT', 1, 1, None, 'text', None, None, 'EXECUTION', None, 1, EXTRACT_FROM_ARRAY + 50],
       
-      [BASE_FORM_FIELD + 94, 'data_source', 'INTEGER', 1, 1, None, 'lookup', '`${LIMONERO_URL}/datasources%ssimple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, CONCAT_ROWS + 50],
+      [BASE_FORM_FIELD + 94, 'data_source', 'INTEGER', 1, 1, None, 'lookup', '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, CONCAT_ROWS + 50],
       
-      [BASE_FORM_FIELD + 95, 'data_source', 'INTEGER', 1, 0, None, 'lookup', '`${LIMONERO_URL}/datasources%ssimple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, JOIN + 50],
+      [BASE_FORM_FIELD + 95, 'data_source', 'INTEGER', 1, 0, None, 'lookup', '`${LIMONERO_URL}/datasources?simple=true&list=true&enabled=1`', None, 'EXECUTION', None, 1, JOIN + 50],
 
       # Model builder
       [BASE_FORM_FIELD + 96, 'strategy', 'INTEGER', 1, 0, 'split', 'lookup', None, json.dumps(split_strategy), 
