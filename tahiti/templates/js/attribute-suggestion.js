@@ -327,6 +327,7 @@ var TahitiAttributeSuggester = (function () {
 			const result = {};
 			topological.order.forEach(function(k){
 				var task = topological.info[k].task;
+			    var isDataSource = [18, 53, 139, 2100, 2108].includes(parseInt(task.operation.id));
 				result[task.id] = task;
 				switch(idToSlug[task.operation.id]){
 					{%- for op, script in operations %}
@@ -335,7 +336,8 @@ var TahitiAttributeSuggester = (function () {
 					break;
 					{%- endfor %}
                     default:
-                        copyInput(task);
+                        if (! isDataSource)
+                            copyInput(task);
 				}
 				// Update next tasks' inputs with current output
 				topological.info[k].targets.forEach(function(follow){
