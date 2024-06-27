@@ -7,8 +7,10 @@ from flask import request
 from flask_restful import Resource
 from http import HTTPStatus
 
-from tahiti.schema import *
-from tahiti.models import *
+from tahiti.schema import (SourceCodeCreateRequestSchema, partial_schema_factory,
+                           SourceCodeItemResponseSchema,
+                           SourceCodeListResponseSchema)
+from tahiti.models import SourceCode, db
 from flask_babel import gettext
 
 log = logging.getLogger(__name__)
@@ -41,6 +43,11 @@ class SourceCodeListApi(Resource):
                 SourceCode.enabled == (enabled_filter != 'false'))
         else:
             source_codes = SourceCode.query
+
+        ids_filter = request.args.get('ids')
+        if ids_filter:
+            ids = [int(x) for x in ids_filter.split(',')]
+            source_codes = source_codes.filter(SourceCode.id.in_(ids))
 
         sort = request.args.get('sort', 'name')
         if sort not in ['name']:
@@ -89,7 +96,6 @@ class SourceCodeListApi(Resource):
         if request.json is not None:
             request_schema = SourceCodeCreateRequestSchema()
             response_schema = SourceCodeItemResponseSchema()
-            data = request.json
             source_code = request_schema.load(request.json)
 
             if log.isEnabledFor(logging.DEBUG):
