@@ -1,3 +1,4 @@
+import datetime
 import math
 import logging
 
@@ -47,6 +48,11 @@ class PipelineListApi(Resource):
         name = request.args.get('name')
         if name:
             pipelines = pipelines.filter(Pipeline.name.ilike(f'%{name}%'))
+        after = request.args.get('after')
+        if after:
+            pipelines = pipelines.filter(
+                Pipeline.updated >= datetime.datetime.strptime(
+                    after, '%Y-%m-%d'))
         # Sorting
         sort = request.args.get('sort', 'name')
         if sort not in ['name', 'updated', 'id', 'created']:
