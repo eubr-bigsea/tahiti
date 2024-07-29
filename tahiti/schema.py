@@ -967,7 +967,9 @@ class PipelineCreateRequestSchema(BaseSchema):
     execution_window = fields.Integer(required=False, allow_none=True)
     variables = fields.String(required=False, allow_none=True)
     preferred_cluster_id = fields.Integer(required=False, allow_none=True)
-    periodicity = fields.Function(lambda x: load_json(x.periodicity))
+    periodicity = fields.String(required=True)
+    periodicity_start = fields.Integer(required=True)
+    periodicity_interval = fields.Integer(required=False, allow_none=True)
     steps = fields.Nested(
         'tahiti.schema.PipelineStepCreateRequestSchema',
         allow_none=True,
@@ -1007,7 +1009,9 @@ class PipelineItemResponseSchema(BaseSchema):
     execution_window = fields.Integer(required=False, allow_none=True)
     variables = fields.String(required=False, allow_none=True)
     preferred_cluster_id = fields.Integer(required=False, allow_none=True)
-    periodicity = fields.Function(lambda x: load_json(x.periodicity))
+    periodicity = fields.String(required=True)
+    periodicity_start = fields.Integer(required=True)
+    periodicity_interval = fields.Integer(required=False, allow_none=True)
     steps = fields.Nested(
         'tahiti.schema.PipelineStepItemResponseSchema',
         allow_none=True,
@@ -1047,7 +1051,9 @@ class PipelineListResponseSchema(BaseSchema):
     execution_window = fields.Integer(required=False, allow_none=True)
     variables = fields.String(required=False, allow_none=True)
     preferred_cluster_id = fields.Integer(required=False, allow_none=True)
-    periodicity = fields.Function(lambda x: load_json(x.periodicity))
+    periodicity = fields.String(required=True)
+    periodicity_start = fields.Integer(required=True)
+    periodicity_interval = fields.Integer(required=False, allow_none=True)
     steps = fields.Nested(
         'tahiti.schema.PipelineStepListResponseSchema',
         allow_none=True,
