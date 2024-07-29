@@ -653,7 +653,7 @@ class Pipeline(db.Model):
     execution_window = Column(Integer)
     variables = Column(String(1000))
     preferred_cluster_id = Column(Integer)
-    periodicity = Column(String(2000))
+    periodicity = Column(Text(2000))
 
     # Associations
     steps = relationship("PipelineStep",
