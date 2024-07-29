@@ -424,7 +424,7 @@ class OperationForm(db.Model, Translatable):
 
     # Associations
     fields = relationship("OperationFormField",
-                          order_by="order")
+                          order_by="OperationFormField.order")
 
     def __str__(self):
         return self.name
@@ -785,7 +785,7 @@ class Platform(db.Model, Translatable):
             "OperationForm.enabled==1)"))
     subsets = relationship("OperationSubset",
                            cascade="all, delete-orphan",
-                           order_by="name")
+                           order_by="OperationSubset.name")
 
     def __str__(self):
         return self.name
