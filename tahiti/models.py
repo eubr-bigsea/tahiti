@@ -424,7 +424,7 @@ class OperationForm(db.Model, Translatable):
 
     # Associations
     fields = relationship("OperationFormField",
-                          order_by="OperationFormField.order")
+                          order_by="order")
 
     def __str__(self):
         return self.name
@@ -653,6 +653,7 @@ class Pipeline(db.Model):
     execution_window = Column(Integer)
     variables = Column(String(1000))
     preferred_cluster_id = Column(Integer)
+    periodicity = Column(String(2000))
 
     # Associations
     steps = relationship("PipelineStep",
@@ -784,7 +785,7 @@ class Platform(db.Model, Translatable):
             "OperationForm.enabled==1)"))
     subsets = relationship("OperationSubset",
                            cascade="all, delete-orphan",
-                           order_by="OperationSubset.name")
+                           order_by="name")
 
     def __str__(self):
         return self.name
@@ -1010,7 +1011,8 @@ class VerticeType(db.Model):
         index=True)
     parent = relationship(
         "VerticeType",
-        remote_side=[id], uselist=False)
+        overlaps='parent',
+        foreign_keys=[parent_id], uselist=False)
 
     def __str__(self):
         return self.name
