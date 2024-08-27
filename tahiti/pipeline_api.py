@@ -105,6 +105,8 @@ class PipelineListApi(Resource):
             data['user_login'] = flask_g.user.login
             data['user_name'] = flask_g.user.name
             data['version'] = 1
+            data['periodicity'] = ''
+            data['periodicity_start'] = 1
             pipeline = request_schema.load(request.json)
 
             if log.isEnabledFor(logging.DEBUG):
