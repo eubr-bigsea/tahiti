@@ -7,17 +7,32 @@ from tahiti.app_auth import requires_auth
 from flask import request, g as flask_g
 from flask_restful import Resource
 from http import HTTPStatus
+from sqlalchemy import update
 
 from tahiti.schema import (PipelineCreateRequestSchema,
                            PipelineItemResponseSchema,
                            PipelineListResponseSchema,
                            partial_schema_factory)
-from tahiti.models import (db, Pipeline)
+from tahiti.models import (db, Pipeline, Workflow)
 from flask_babel import gettext
 
 log = logging.getLogger(__name__)
 
-
+def _associate_pipeline_to_workflow(pipeline: Pipeline):
+    workflow_ids = [step.workflow_id for step in pipeline.steps]
+    # Remove associations that are now invalid
+    db.session.execute(
+        update(Workflow).
+        where(Workflow.id.not_in(workflow_ids), 
+            Workflow.pipeline_id==pipeline.id).
+        values(pipeline_id=None)
+    )
+    db.session.execute(
+        update(Workflow).
+        where(Workflow.id.in_(workflow_ids)).
+        values(pipeline_id=pipeline.id)
+    )
+        
 class PipelineListApi(Resource):
     """ REST API for listing class Pipeline """
 
@@ -112,7 +127,11 @@ class PipelineListApi(Resource):
             if log.isEnabledFor(logging.DEBUG):
                 log.debug(gettext('Adding %s'), self.human_name)
             pipeline = pipeline
+
             db.session.add(pipeline)
+            # Force insert in order to get new Ids
+            db.session.flush()
+            _associate_pipeline_to_workflow(pipeline)
             db.session.commit()
             result = response_schema.dump(pipeline)
             return_code = HTTPStatus.CREATED
@@ -224,6 +243,9 @@ class PipelineDetailApi(Resource):
             pipeline = db.session.merge(pipeline)
             pipeline.version = (pipeline.version or 1) + 1
 
+            # Force insert in order to get new Ids
+            db.session.flush()
+            _associate_pipeline_to_workflow(pipeline)
             db.session.commit()
 
             if pipeline is not None:
