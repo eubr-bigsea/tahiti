@@ -10,6 +10,8 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import table, column
 from sqlalchemy.sql.sqltypes import UnicodeText
 
+from tahiti.migration_utils import is_mysql, is_sqlite
+
 # revision identifiers, used by Alembic.
 revision = 'a7c44fb9bc18'
 down_revision = '843451bc6ee4'
@@ -343,7 +345,7 @@ def _insert_operation_operation_form(conn):
 def _delete_operation_operation_form(conn):
     execute(conn, 
         '''DELETE FROM operation_operation_form
-            WHERE operation_form_id IN (%s, %s)''',
+            WHERE operation_form_id IN (%s, %s, %s)''',
         PIC_CLUSTERING_FORM, LDA_CLUSTERING_FORM, BKM_CLUSTERING_FORM)
 
 def _insert_operation_platform(conn):

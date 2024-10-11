@@ -33,6 +33,7 @@ def get_psql_enum_alter_commands(tables: list, columns: list, name: str,
                                  values: list, default: str) -> list:
     formated_values = ','.join([f"'{x}'" for x in values])
     result = [
+           f'DROP TYPE IF EXISTS "{name}Old"',
            f'ALTER TYPE "{name}" RENAME TO "{name}Old"',
            f'CREATE TYPE "{name}" AS ENUM({formated_values})']
 
@@ -41,7 +42,7 @@ def get_psql_enum_alter_commands(tables: list, columns: list, name: str,
         result.append(f"ALTER TABLE {table} ADD {column} \"{name}\" NOT NULL DEFAULT '{default}'")
         result.append(f"UPDATE {table} SET {column} = {column}_old::text::\"{name}\"")
         result.append(f"ALTER TABLE {table} DROP COLUMN {column}_old")
-    result.append(f'DROP TYPE "{name}Old"')
+    result.append(f'DROP TYPE IF EXISTS "{name}Old"')
 
     return result
 
@@ -59,7 +60,9 @@ def upgrade_actions(all_commands):
 
     try:
         for cmd in all_commands:
-            if isinstance(cmd[0], str):
+            if isinstance(cmd, str):
+                connection.execute(cmd)
+            elif isinstance(cmd[0], str):
                 connection.execute(cmd[0])
             elif isinstance(cmd[0], list):
                 for row in cmd[0]:

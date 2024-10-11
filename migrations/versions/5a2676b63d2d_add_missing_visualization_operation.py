@@ -19,7 +19,7 @@ depends_on = None
 
 def upgrade():
     commands = [
-    "insert into operation values(145, 'visualization', 1, 'VISUALIZATION', 'fa-chart-line', null, null);",
+    "insert into operation values(145, 'visualization', true, 'VISUALIZATION', 'fa-chart-line', null, null);",
     "insert into operation_platform values(145, 1);",
     "insert into operation_platform values(145, 4);",
     "insert into operation_port values(354, 'visualization', 'OUTPUT', null, 1, 'MANY', 145);",

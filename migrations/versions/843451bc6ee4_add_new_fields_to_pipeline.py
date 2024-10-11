@@ -25,8 +25,12 @@ def add_workflow_types(conn):
     new_types = ['SQL']
     def get_psql_commands():
 
-        return get_psql_enum_alter_commands(['workflow'], ['type'],
-                       'StorageTypeEnumType', values, *new_types)
+        return get_psql_enum_alter_commands(
+                tables=['workflow', 'pipeline_step'], 
+                columns=['type', 'workflow_type'],
+                name='WorkflowTypeEnumType', 
+                values=values + new_types, 
+                default='WORKFLOW')
 
     types = [f"'{x}'" for x in (values + new_types)]
     if is_mysql():
@@ -36,16 +40,17 @@ def add_workflow_types(conn):
                  CHARSET utf8 COLLATE utf8_unicode_ci NOT NULL;"""
          ))
     elif is_psql():
-        upgrade_actions(get_commands())
+        upgrade_actions(get_psql_commands())
 
 def remove_workflow_types(conn):
     values = ['WORKFLOW','SYSTEM_TEMPLATE','SUB_FLOW','USER_TEMPLATE',
                 'DATA_EXPLORER', 'MODEL_BUILDER', 'VIS_BUILDER']
     def get_psql_commands():
-        return get_psql_enum_alter_commands(['workflow'], ['type'],
-                       'StorageTypeEnumType', values, 
-			'DATA_EXPLORER', 'MODEL_EXPLORER', 
-			'VIS_EXPLORER'),
+        return get_psql_enum_alter_commands(
+                tables=['workflow'], 
+                columns=['type'],
+                name='WorkflowTypeEnumType', 
+                values=values, default='WORKFLOW'),
     types = [f"'{x}'" for x in values]
     if is_mysql():
         conn.execute(text(f"""
@@ -54,7 +59,7 @@ def remove_workflow_types(conn):
                  CHARSET utf8 COLLATE utf8_unicode_ci NOT NULL;"""
          ))
     elif is_psql():
-        upgrade_actions(get_commands())
+        upgrade_actions(get_psql_commands())
 
 
 def upgrade():

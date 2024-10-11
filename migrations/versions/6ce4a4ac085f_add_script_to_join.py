@@ -31,9 +31,9 @@ def upgrade():
     commands = [
         '''
         INSERT INTO 
-            operation_script
+            operation_script(id, type, enabled, body, operation_id)
         VALUES 
-            (null, 'JS_CLIENT', 1, 
+            (82, 'JS_CLIENT', true, 
                 'task.uiPorts.inputs.push({attributes: task.uiPorts.output}); joinSuffixDuplicatedAttributes2(task);', 
                 2108);
         '''

@@ -1,5 +1,5 @@
 coverage==5.5
-python-dotenv==1.0.0
+python-dotenv==1.0.1
 eventlet==0.31.0
 Flask==2.2.5
 Flask-Babel==2.0.0
