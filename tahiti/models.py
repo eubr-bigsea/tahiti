@@ -656,7 +656,7 @@ class Pipeline(db.Model):
     periodicity = Column(String(50), nullable=False)
     periodicity_start = Column(Integer, nullable=False)
     periodicity_interval = Column(Integer)
-
+    run_creation_method = Column(String(50), default="scheduler", nullable=False)
     # Associations
     steps = relationship("PipelineStep",
                          cascade="all, delete-orphan")
