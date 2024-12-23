@@ -350,7 +350,7 @@ class Operation(db.Model, Translatable):
         secondaryjoin=(
             "and_("
             "Platform.id==operation_platform.c.platform_id,"
-            "Platform.enabled==1)"))
+            "Platform.enabled==True)"))
     forms = relationship(
         "OperationForm",
         overlaps="operations",
