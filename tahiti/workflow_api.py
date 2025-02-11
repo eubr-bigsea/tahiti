@@ -133,6 +133,18 @@ def update_port_id_in_flows(session, workflow_id):
 
     session.execute(sql, {'id': workflow_id})
 
+def can_edit_workflow(existing_workflow: Workflow) -> bool:
+    is_owner = existing_workflow.user_id == g.user.id
+    is_admin = 'ADMINISTRATOR' in g.user.permissions
+    edit_any_workflow = 'WORKFLOW_EDIT_ANY' in g.user.permissions
+    return is_owner or is_admin or edit_any_workflow
+
+def can_view_workflow(existing_workflow: Workflow) -> bool:
+    is_owner = existing_workflow.user_id == g.user.id
+    is_admin = 'ADMINISTRATOR' in g.user.permissions
+    edit_any_workflow = 'WORKFLOW_VIEW_ANY' in g.user.permissions
+    return is_owner or is_admin or edit_any_workflow
+
 def get_workflow(workflow_id):
     workflows = optimize_workflow_query(
         Workflow.query.filter_by(id=workflow_id).order_by(
@@ -398,6 +410,12 @@ class WorkflowDetailApi(Resource):
     @requires_auth
     def get(workflow_id):
         workflow = get_workflow(workflow_id)
+        if workflow is None:
+            return dict(status="ERROR", message="Not found"), result_code
+        else:
+            if not can_view_workflow(workflow):
+                return dict(status="ERROR", message="Forbidden"), 403
+
         if workflow is not None:
             schema = WorkflowItemResponseSchema()
             schema.context = {'specification': WORKFLOW_SPECIFICATION}
@@ -409,6 +427,13 @@ class WorkflowDetailApi(Resource):
     @requires_auth
     def delete(workflow_id):
         result, result_code = dict(status="ERROR", message="Not found"), 404
+
+        existing_workflow = Workflow.query.get(workflow_id)
+        if existing_workflow is None:
+            return dict(status="ERROR", message="Not found"), result_code
+        else:
+            if not can_edit_workflow(existing_workflow):
+                return dict(status="ERROR", message="Forbidden"), 403
 
         filtered = filter_by_permissions(
             Workflow.query, [PermissionType.WRITE])
@@ -439,13 +464,8 @@ class WorkflowDetailApi(Resource):
         if existing_workflow is None:
             return dict(status="ERROR", message="Not found"), result_code
         else:
-            is_owner = existing_workflow.user_id == g.user.id
-            is_admin = 'ADMINISTRATOR' in g.user.permissions
-            edit_any_workflow = (
-                'WORKFLOW_EDIT_ANY' in g.user.permissions
-            )
-            if not (is_owner or is_admin or edit_any_workflow):
-                return dict(status="ERROR", message="Not found"), 401
+            if not can_edit_workflow(existing_workflow):
+                return dict(status="ERROR", message="Forbidden"), 403
         try:
             if request.json:
                 data = request.json
