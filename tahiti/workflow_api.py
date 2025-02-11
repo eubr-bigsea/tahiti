@@ -435,6 +435,17 @@ class WorkflowDetailApi(Resource):
     def patch(workflow_id):
         result = dict(status="ERROR", message="Insufficient data")
         result_code = 404
+        existing_workflow = Workflow.query.get(workflow_id)
+        if existing_workflow is None:
+            return dict(status="ERROR", message="Not found"), result_code
+        else:
+            is_owner = existing_workflow.user_id == g.user.id
+            is_admin = 'ADMINISTRATOR' in g.user.permissions
+            edit_any_workflow = (
+                'WORKFLOW_EDIT_ANY' in g.user.permissions
+            )
+            if not (is_owner or is_admin or edit_any_workflow):
+                return dict(status="ERROR", message="Not found"), 401
         try:
             if request.json:
                 data = request.json
