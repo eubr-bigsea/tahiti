@@ -1,19 +1,21 @@
+import datetime
 import logging
 import math
-import os
 import uuid
-
-import requests
-from flask import request, current_app, g
+import json
+import typing
+from pprint import pprint
+from flask import current_app, g, request
 from flask_babel import gettext
 from flask_restful import Resource
+from marshmallow.exceptions import ValidationError
 from sqlalchemy import or_
 from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.elements import and_
 
-from marshmallow.exceptions import ValidationError
 from tahiti.app_auth import requires_auth
-from tahiti.schema import *
+from tahiti.models import (Platform, PublishingStatus, WorkflowHistory, WorkflowPermission, db, PermissionType, Workflow)
+from tahiti.schema import WorkflowCreateRequestSchema, WorkflowItemResponseSchema, WorkflowListResponseSchema, partial_schema_factory
 from tahiti.services.workflow_service import WorkflowService
 
 log = logging.getLogger(__name__)
@@ -162,7 +164,13 @@ def get_workflow(workflow_id):
 
 
 def filter_by_permissions(workflows, permissions, consider_public=True):
-    if g.user.id not in (0, 1):  # It is not a inter service call
+    print('=' * 40)
+    pprint(g.user)
+    print('=' * 40)
+    is_interservice_call = g.user.id in (0, 1)
+    has_view_any_permission = 'WORKFLOW_VIEW_ANY' in g.user.permissions
+    is_admin = 'ADMINISTRATOR' in g.user.permissions
+    if not (is_interservice_call or has_view_any_permission or is_admin):
         sub_query = WorkflowPermission.query.with_entities(
             WorkflowPermission.workflow_id).filter(
             WorkflowPermission.permission.in_(permissions),
@@ -195,7 +203,7 @@ class WorkflowListApi(Resource):
         try:
             if request.args.get('fields'):
                 only = [x.strip() for x in
-                        request.args.get('fields').split(',')]
+                        request.args.get('fields', '').split(',')]
             else:
                 only = ('id', 'name', 'platform.id', 'permissions')
 
@@ -298,7 +306,7 @@ class WorkflowListApi(Resource):
         result, result_code = dict(
             status="ERROR", message="Missing json in the request body"), 400
         if request.args.get('source'):
-            original = Workflow.query.get(int(request.args.get('source')))
+            original = Workflow.query.get(int(request.args.get('source', '')))
             response_schema = WorkflowItemResponseSchema()
             cloned = response_schema.dump(original)
             # User field is not present in constructor
@@ -327,7 +335,7 @@ class WorkflowListApi(Resource):
                 task['operation_id'] = task['operation']['id']
                 task['forms'] = {k: v for k, v in list(task['forms'].items())
                                  if v.get('value') is not None or
-                                 v.get('publishing_enabled') == True}
+                                 v.get('publishing_enabled') is True}
             params = {}
             params.update(data)
             params['user_id'] = g.user.id
@@ -455,7 +463,7 @@ class WorkflowDetailApi(Resource):
                     del params['user']
 
                 # Only with permission
-                if not ('ADMINISTRATOR' in g.user.permissions) and \
+                if ('ADMINISTRATOR' not in g.user.permissions) and \
                         'is_system_template' in params:
                     del params['is_system_template']
 
@@ -465,7 +473,7 @@ class WorkflowDetailApi(Resource):
                 # params['user_name'] = g.user.name
 
                 response_schema = WorkflowItemResponseSchema()
-                workflow  = request_schema.load(params, partial=True)
+                workflow: Workflow  = request_schema.load(params, partial=True) # type: ignore
 
                 if 'forms' in params and params['forms']:
                     workflow.forms = json.dumps(params['forms'])
@@ -483,6 +491,7 @@ class WorkflowDetailApi(Resource):
                     if (workflow.publishing_enabled and
                             workflow.publishing_status is None):
                         workflow.publishing_status = PublishingStatus.EDITING
+
                     db.session.flush()
                     update_port_name_in_flows(db.session, workflow.id)
                     db.session.commit()
