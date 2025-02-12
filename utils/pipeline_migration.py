@@ -333,6 +333,37 @@ def migrate_tahiti_pipeline_step(source_session, source_pipeline_id, target_sess
     if len(move_data) > 0:
         # pprint.pprint(move_data)
         return table.insert(), move_data
+
+
+def migrate_tahiti_source_code(source_session, source_source_code_id, target_session, target_metadata, target_source_code_id):
+    """
+    Recupera as informações da tabela tahiti.source_code, atualizando os ids para evitar conflito no alvo.
+    
+    Args:
+        source_session (Session): Sessão ativa do SQLAlchemy no db de origem.
+        source_source_code_id (int): Id do source_code original.
+        target_session (Session): Sessão ativa do SQLAlchemy no db de destino.
+        target_metadata (Metadata): Metadados do SQLAlchemy sobre o db de destino.
+        target_source_code_id (int): Id do source_code de destino.
+    
+    Returns:
+        list: dados a serem inseridos na tabela alvo.
+    """
+    
+    table = target_metadata.tables['source_code']
+    columns = [c.name for c in table.columns]  
+    
+    query = f"SELECT * FROM tahiti.source_code WHERE id = {source_source_code_id};"
+    move_data = [dict(zip(columns, row)) 
+                 for row in execute_custom_query(source_session, query)]
+
+    for row in move_data:
+        row['id'] = target_source_code_id
+
+
+    if len(move_data) > 0:
+        # pprint.pprint(move_data)
+        return table.insert(), move_data
     
 
 def main():
@@ -356,15 +387,15 @@ def main():
         "--type",
         type=str,
         required=True,
-        choices=['pipeline', 'workflow'],
-        help="Copy `pipeline` or `workflow`."
+        choices=['pipeline', 'workflow', 'source_code'],
+        help="Copy `pipeline`, `workflow` or `source_code`."
     )
     
     parser.add_argument(
         "--id",
         type=str,
         required=True,
-        help="ID of the pipeline or workflow to migrate. Supported options are: a specific id (e.g., `1`), a list of ids (e.g., `1,2,3`), or `all` to migrate all pipelines/workflows."
+        help="ID of the pipeline or workflow to migrate. Supported options are: a specific id (e.g., `1`), a list of ids (e.g., `1,2,3`), or `all` to migrate all pipelines/workflows/source_code."
     )
     
     parser.add_argument(
@@ -379,7 +410,7 @@ def main():
     print("Migration Configuration:")
     print(f"  Source Database: {args.source_db}")
     print(f"  Target Database: {args.target_db}")
-    print(f"  Pipeline/Workflow ID: {args.id}")
+    print(f"  Pipeline/Workflow/Source Code ID: {args.id}")
     print(f"  Type: {args.type}")
     print(f"  User login: {args.user_login}")
     
@@ -400,7 +431,14 @@ def main():
     print(f"{args.type.capitalize()}'s ids to copy: {ids_list}")
     
     values_to_copy = []
-    if args.type == "pipeline":
+    if args.type == "source_code":
+        current_source_code_id = get_current_id(target_session, "tahiti.source_code")
+        for source_source_code_id in ids_list:
+            current_source_code_id += 1
+            print(f"Cloning source_code from source {source_source_code_id} to {current_source_code_id} on target.")
+            result = migrate_tahiti_source_code(source_session, source_source_code_id, target_session, target_metadata, current_source_code_id)
+            values_to_copy.append(result)
+    elif args.type == "pipeline":
         for source_pipeline_id in ids_list:
 
             target_pipeline_id = get_current_id(target_session, "tahiti.pipeline") + 1   
