@@ -14,8 +14,11 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy.sql.elements import and_
 
 from tahiti.app_auth import requires_auth
-from tahiti.models import (Platform, PublishingStatus, WorkflowHistory, WorkflowPermission, db, PermissionType, Workflow)
-from tahiti.schema import WorkflowCreateRequestSchema, WorkflowItemResponseSchema, WorkflowListResponseSchema, partial_schema_factory
+from tahiti.models import (Platform, PublishingStatus, WorkflowHistory,
+    WorkflowPermission, WorkflowType, db, PermissionType, Workflow)
+from tahiti.schema import (WorkflowCreateRequestSchema,
+    WorkflowHistoryListResponseSchema, WorkflowItemResponseSchema,
+    WorkflowListResponseSchema, partial_schema_factory)
 from tahiti.services.workflow_service import WorkflowService
 
 log = logging.getLogger(__name__)
@@ -142,8 +145,9 @@ def can_edit_workflow(existing_workflow: Workflow) -> bool:
 def can_view_workflow(existing_workflow: Workflow) -> bool:
     is_owner = existing_workflow.user_id == g.user.id
     is_admin = 'ADMINISTRATOR' in g.user.permissions
-    edit_any_workflow = 'WORKFLOW_VIEW_ANY' in g.user.permissions
-    return is_owner or is_admin or edit_any_workflow
+    view_workflow = ('WORKFLOW_VIEW_ANY' in g.user.permissions
+        or 'WORKFLOW_EDIT_ANY' in g.user.permissions)
+    return is_owner or is_admin or view_workflow
 
 def get_workflow(workflow_id):
     workflows = optimize_workflow_query(
@@ -320,7 +324,7 @@ class WorkflowListApi(Resource):
         if request.args.get('source'):
             original = Workflow.query.get(int(request.args.get('source', '')))
             response_schema = WorkflowItemResponseSchema()
-            cloned = response_schema.dump(original)
+            cloned: typing.Dict[str, typing.Any] = response_schema.dump(original)
             # User field is not present in constructor
             platform = cloned.pop('platform')
             cloned['platform'] = Platform.query.get(platform['id'])
@@ -335,6 +339,8 @@ class WorkflowListApi(Resource):
 
             request_schema = WorkflowCreateRequestSchema()
             workflow = request_schema.load(cloned)
+            params = {}
+            meta = {}
         elif request.json:
             data = request.json
             meta = request.json.pop('$meta') if '$meta' in request.json else {}
@@ -357,7 +363,7 @@ class WorkflowListApi(Resource):
             params['platform_id'] = params.get('platform', {}).get(
                 'id') or params.get('platform_id')
             params['subset_id'] = params.get('subset_id')
-            workflow = request_schema.load(params)
+            workflow: Workflow = request_schema.load(params)
         else:
             return result, result_code
 
@@ -410,6 +416,7 @@ class WorkflowDetailApi(Resource):
     @requires_auth
     def get(workflow_id):
         workflow = get_workflow(workflow_id)
+        result_code = 404
         if workflow is None:
             return dict(status="ERROR", message="Not found"), result_code
         else:
@@ -477,7 +484,7 @@ class WorkflowDetailApi(Resource):
                     task['forms'] = {k: v for k, v in
                                      list(task['forms'].items())
                                      if v and (v.get('value') is not None or
-                                     v.get('publishing_enabled')) == True}
+                                     v.get('publishing_enabled')) is True}
                     task['operation_id'] = task['operation']['id']
                     task['environment'] = 'DESIGN'
 
@@ -571,7 +578,7 @@ class WorkflowHistoryApi(Resource):
     @requires_auth
     def post(workflow_id):
         result, result_code = dict(status="ERROR", message="Not found"), 404
-        params = request.json
+        params: typing.Dict[str, typing.Any] = request.json
 
         if 'version' in params:
             workflow = get_workflow(workflow_id)
@@ -722,7 +729,7 @@ class WorkflowPermissionApi(Resource):
                     break
             if not error:
                 try:
-                    filtered = _filter_by_permissions(
+                    filtered = filter_by_permissions(
                         Workflow.query, [PermissionType.WRITE])
                     workflow = filtered.filter(
                         Workflow.id == workflow_id).first()
@@ -773,7 +780,7 @@ class WorkflowPermissionApi(Resource):
                                                    type=gettext(
                                                        'Data source'))), 404
 
-        filtered = _filter_by_permissions(Workflow.query,
+        filtered = filter_by_permissions(Workflow.query,
                                           [PermissionType.WRITE])
         workflow = filtered.filter(Workflow.id == workflow_id).first()
         if workflow is not None:
