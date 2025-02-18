@@ -6,7 +6,7 @@ The script `pipeline_migration.py` provides mechanisms to migrate workflows and 
 
  * `--source-db`: Connection string for the source database (e.g., 'mysql://user:pass@host:port');
  * `--target-db`: Connection string for the target database (e.g., 'mysql://user:pass@host:port');
- * `--type`: Specification of the target, whether a `pipeline` or a `workflow`;
+ * `--type`: Specification of the target, whether a `pipeline` or a `workflow` (when copying a pipeline, it also copies code_libraries);
  * `--id`: ID of the pipeline or workflow to migrate. Supported options are: a specific ID (e.g., `1`), a list of IDs (e.g., `1,2,3`), or `all` to migrate all pipelines/workflows;
  * `--user-login`: (Optional) When set, it will change the current user owner of the workflow/pipeline.
 
