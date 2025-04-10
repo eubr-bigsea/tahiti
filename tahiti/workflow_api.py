@@ -488,9 +488,6 @@ class WorkflowDetailApi(Resource):
                     task['operation_id'] = task['operation']['id']
                     task['environment'] = 'DESIGN'
 
-                for variable in data.get('variables', []):
-                    variable['parameters'] = json.dumps(variable['parameters'])
-
                 # Ignore missing fields to allow partial updates
                 params = {}
                 params.update(data)
