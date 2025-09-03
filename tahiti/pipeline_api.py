@@ -23,7 +23,7 @@ def _associate_pipeline_to_workflow(pipeline: Pipeline):
     # Remove associations that are now invalid
     db.session.execute(
         update(Workflow).
-        where(Workflow.id.not_in(workflow_ids), 
+        where(Workflow.id.not_in(workflow_ids),
             Workflow.pipeline_id==pipeline.id).
         values(pipeline_id=None)
     )
@@ -32,7 +32,7 @@ def _associate_pipeline_to_workflow(pipeline: Pipeline):
         where(Workflow.id.in_(workflow_ids)).
         values(pipeline_id=pipeline.id)
     )
-        
+
 class PipelineListApi(Resource):
     """ REST API for listing class Pipeline """
 
@@ -159,7 +159,11 @@ class PipelineDetailApi(Resource):
             log.debug(gettext('Retrieving %s (id=%s)'), self.human_name,
                       pipeline_id)
 
-        pipeline = Pipeline.query.get(pipeline_id)
+        if pipeline_id.isdigit():
+           pipeline = Pipeline.query.get(pipeline_id)
+        else:
+           pipeline = Pipeline.query.filter(
+                   Pipeline.identifier==pipeline_id).one()
         return_code = HTTPStatus.OK
         if pipeline is not None:
             result = {

@@ -23,7 +23,7 @@ from tahiti.operation_subset_api import (OperationSubsetDetailApi,
         OperationSubsetListApi)
 from tahiti.operation_subset_operation_api import OperationSubsetOperationApi
 from tahiti.pipeline_api import PipelineListApi, PipelineDetailApi
-from tahiti.vertice_type_api import VerticeTypeListApi, VerticeTypeDetailApi 
+from tahiti.vertice_type_api import VerticeTypeListApi, VerticeTypeDetailApi
 from tahiti.pipeline_step_api import PipelineStepListApi, PipelineStepDetailApi
 from tahiti.pipeline_template_api import (
     PipelineTemplateListApi, PipelineTemplateDetailApi)
@@ -83,7 +83,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         app.config.update(settings_override)
 
     db.init_app(app)
-    
+
     migrate = Migrate(app, db)
     # Logging configuration
     logging.config.fileConfig('logging_config.ini')
@@ -91,18 +91,18 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     # CORS configuration
     CORS(app, resources={r"/*": {"origins": "*"}})
 
-    
+
     babel = Babel(app)
 
     # Swagger
     swaggerui_blueprint = get_swaggerui_blueprint(
-        '/api/docs',  
+        '/api/docs',
         '/static/swagger.yaml',
         config={
             'app_name': "Lemonade Tahiti"
         },
     )
-    
+
     app.register_blueprint(swaggerui_blueprint)
 
     # API configuration
@@ -117,7 +117,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         '/vertice-types': VerticeTypeListApi,
         '/vertice-types/<int:vertice_type_id>': VerticeTypeDetailApi,
         '/pipelines': PipelineListApi,
-        '/pipelines/<int:pipeline_id>': PipelineDetailApi,
+        '/pipelines/<pipeline_id>': PipelineDetailApi,
         '/pipelines/steps': PipelineStepListApi,
         '/pipelines/steps/<int:pipeline_step_id>': PipelineStepDetailApi,
         '/platforms': PlatformListApi,
@@ -148,7 +148,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         # admin.add_view(OperationModelView(Operation, db.session))
         #admin.add_view(
         #     OperationCategoryModelView(OperationCategory, db.session))
-    
+
     # Error handlers
     @app.errorhandler(ValidationError)
     def register_validation_error(e):
@@ -172,7 +172,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
         log.exception(e)
         print(e, file=sys.stderr)
         db.session.rollback()
-        return result, 500        
+        return result, 500
     return app
 
 
