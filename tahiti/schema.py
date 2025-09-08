@@ -1145,6 +1145,12 @@ class PipelineCreateRequestSchema(BaseSchema):
     periodicity = fields.String(required=True)
     periodicity_start = fields.Integer(required=True)
     periodicity_interval = fields.Integer(required=False, allow_none=True)
+    run_creation_method = fields.String(
+        required=False,
+        allow_none=True,
+        load_default="scheduler",
+        dump_default="scheduler",
+    )
     steps = fields.Nested(
         "tahiti.schema.PipelineStepCreateRequestSchema",
         allow_none=True,
@@ -1192,6 +1198,12 @@ class PipelineItemResponseSchema(BaseSchema):
     periodicity = fields.String(required=True)
     periodicity_start = fields.Integer(required=True)
     periodicity_interval = fields.Integer(required=False, allow_none=True)
+    run_creation_method = fields.String(
+        required=False,
+        allow_none=True,
+        load_default="scheduler",
+        dump_default="scheduler",
+    )
     steps = fields.Nested(
         "tahiti.schema.PipelineStepItemResponseSchema",
         allow_none=True,
@@ -1239,6 +1251,12 @@ class PipelineListResponseSchema(BaseSchema):
     periodicity = fields.String(required=True)
     periodicity_start = fields.Integer(required=True)
     periodicity_interval = fields.Integer(required=False, allow_none=True)
+    run_creation_method = fields.String(
+        required=False,
+        allow_none=True,
+        load_default="scheduler",
+        dump_default="scheduler",
+    )
     steps = fields.Nested(
         "tahiti.schema.PipelineStepListResponseSchema",
         allow_none=True,
