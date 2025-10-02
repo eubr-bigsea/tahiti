@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from sqlalchemy import create_engine, MetaData, Table
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.sql import text
@@ -58,6 +59,9 @@ def execute_custom_query(session, query, single_row=False):
             data = results.fetchone()
         else:
             data = results.fetchall()
+
+        if not data:
+            data = []
         return data
     except Exception as e:
         print(f"Erro ao executar a query: {e}")
@@ -141,22 +145,19 @@ def migrate_tahiti_workflow(source_session, source_workflow_id, target_session, 
     query = f"SELECT * FROM tahiti.workflow WHERE id = {source_workflow_id};"
     
     row = dict(zip(columns, execute_custom_query(source_session, query, single_row=True))) 
-    print(row)
+    
     row['id'] = mapping_info['workflow'][source_workflow_id]
-
-    target_pipeline_id = row['pipeline_id']
     if with_pipeline:
-        if target_pipeline_id:
-            target_pipeline_id = mapping_info['pipeline'][target_pipeline_id]
+        row['pipeline_id'] = mapping_info['pipeline'][row['pipeline_id']]
+    
     else:
-        target_pipeline_id = None
+        row['pipeline_id'] = None
 
-    row['pipeline_id'] = target_pipeline_id
     if user:
         row['user_id'] = user['user_id']
         row['user_login'] = user['user_login']
         row['user_name'] = user['user_name']
-        
+    
     forms = json.loads(row['forms'])
     new_codes = []
     if "code_libraries" in forms:
@@ -194,7 +195,7 @@ def migrate_tahiti_task(source_session, source_workflow_id, target_session, targ
     for row in move_data:
         row['workflow_id'] = target_workflow_id
 
-    print("migrate_tahiti_task: ", move_data)
+    #print("migrate_tahiti_task: ", move_data)
     return table.insert(), move_data
 
 def migrate_tahiti_flow(source_session, source_workflow_id, target_session, target_metadata, mapping_info):
@@ -225,7 +226,7 @@ def migrate_tahiti_flow(source_session, source_workflow_id, target_session, targ
         row['workflow_id'] = target_workflow_id
         row['id'] = mapping_info['current_flow']
 
-    print("migrate_tahiti_flow: ", move_data)
+    #print("migrate_tahiti_flow: ", move_data)
     return [table.insert(), move_data], mapping_info
     
 
@@ -257,7 +258,7 @@ def migrate_tahiti_workflow_variable(source_session, source_workflow_id, target_
         row['id'] = None
         row['workflow_id'] = target_workflow_id
 
-    print("migrate_tahiti_workflow_variable: ", move_data)
+    #print("migrate_tahiti_workflow_variable: ", move_data)
     return table.insert(), move_data
 
 
@@ -367,7 +368,7 @@ def migrate_tahiti_source_code(source_session, source_source_code_id, target_ses
     for row in move_data:
         row['id'] = target_source_code_id
 
-    print("migrate_tahiti_source_code: ", move_data)
+    #print("migrate_tahiti_source_code: ", move_data)
     return table.insert(), move_data
     
 def check_by_name(source_session, full_table_name, source_code_id, target_session):
@@ -375,7 +376,7 @@ def check_by_name(source_session, full_table_name, source_code_id, target_sessio
     name = execute_custom_query(source_session, query, single_row=True)[0]
     
     query = f"SELECT id FROM {full_table_name} WHERE name = '{name}';"
-    target_code_id = execute_custom_query(source_session, query, single_row=True)
+    target_code_id = execute_custom_query(target_session, query, single_row=True)
     if len(target_code_id) > 0:
         print(f"Source code {source_code_id} ('{name}') already found in target with id {target_code_id[0]}")
         return target_code_id[0]
@@ -466,52 +467,62 @@ def main():
         ids_list = [int(args.id)]
     print(f"{args.type.capitalize()}'s ids to copy: {ids_list}")
     
-    values_to_copy = []
+    values_to_copy = {'source_code': [], 'workflow': [], 'pipeline': [], 'task': [], 'flow': [], 'variable': [], 'pipeline_step': []}
     mapping_info = {"source_code": {}, "pipeline": {}, "workflow": {}}
+    workflows_ids = set()
     if args.type == "pipeline":
         
-        values_to_copy, mapping_info = copy_code_library(source_session, target_session, target_metadata, mapping_info)
+        result, mapping_info = copy_code_library(source_session, target_session, target_metadata, mapping_info)
+        values_to_copy['source_code'] = result
         target_pipeline_id = get_current_id(target_session, "tahiti.pipeline")
         for source_pipeline_id in ids_list:
-
             target_pipeline_id += 1   
             print(f"Cloning pipeline_id from source {source_pipeline_id} to {target_pipeline_id} on target.")
             mapping_info['pipeline'][source_pipeline_id] = target_pipeline_id
+
+        current_workflow_id = get_current_id(target_session, "tahiti.workflow") # last id on target
+
+        for source_pipeline_id in ids_list:
             result, mapping_info = migrate_tahiti_pipeline(source_session=source_session, source_pipeline_id=source_pipeline_id, target_session=target_session, 
-                                             target_metadata=target_metadata, mapping_info=mapping_info, user=user_info)
-            values_to_copy.append(result)
+                                                           target_metadata=target_metadata, mapping_info=mapping_info, user=user_info)
+            values_to_copy['pipeline'].append(result)
             
             workflow_ids = get_workflow_ids_from_pipeline_step(session=source_session, pipeline_id=source_pipeline_id) # ids on source
-            current_workflow_id = get_current_id(target_session, "tahiti.workflow") # last id on target
-
+            
             for source_workflow_id in workflow_ids:
-                current_workflow_id += 1
-                print(f"Cloning workflow_id from source {source_workflow_id} to {current_workflow_id} on target.")
-                mapping_info['workflow'][source_workflow_id] = current_workflow_id
-                
-                print("Cloning workflow ...")
-                result = migrate_tahiti_workflow(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
-                                                 target_metadata=target_metadata, mapping_info=mapping_info, user=user_info, with_pipeline=True)
-                values_to_copy.append(result)
-                print("Cloning workflow's task ...")
-                result = migrate_tahiti_task(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
-                                             target_metadata=target_metadata, target_workflow_id=current_workflow_id)
-                values_to_copy.append(result)
-                print("Cloning workflow's flow ...")
-                mapping_info['current_flow'] = int(get_current_id(target_session, "tahiti.flow"))
-                print(f"Current flow id:", mapping_info['current_flow'])
-                result, mapping_info = migrate_tahiti_flow(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
-                                                           target_metadata=target_metadata, mapping_info=mapping_info)
-                values_to_copy.append(result)
-                print("Cloning workflow's variable (if exists) ...")
-                result = migrate_tahiti_workflow_variable(source_session=source_session, source_workflow_id=source_workflow_id, 
-                                                          target_session=target_session, target_metadata=target_metadata, mapping_info=mapping_info)
-                values_to_copy.append(result)
+                if source_workflow_id not in workflows_ids:
+                    workflows_ids.add(source_workflow_id)
+                    current_workflow_id += 1
+                    print(f"Cloning workflow_id from source {source_workflow_id} to {current_workflow_id} on target.")
+                    mapping_info['workflow'][source_workflow_id] = current_workflow_id
+                      
+                    print("Cloning workflow ...")
+                    result = migrate_tahiti_workflow(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
+                                                     target_metadata=target_metadata, mapping_info=mapping_info, user=user_info, with_pipeline=True)
+                    values_to_copy['workflow'].append(result)
+
+                    print("Cloning workflow's task ...")
+                    result = migrate_tahiti_task(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
+                                                 target_metadata=target_metadata, target_workflow_id=current_workflow_id)
+                    values_to_copy['task'].append(result)
+
+                    print("Cloning workflow's flow ...")
+                    mapping_info['current_flow'] = int(get_current_id(target_session, "tahiti.flow"))
+                    print(f"Current flow id:", mapping_info['current_flow'])
+                    result, mapping_info = migrate_tahiti_flow(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
+                                                               target_metadata=target_metadata, mapping_info=mapping_info)
+                    values_to_copy['flow'].append(result)
+
+                    print("Cloning workflow's variable (if exists) ...")
+                    result = migrate_tahiti_workflow_variable(source_session=source_session, source_workflow_id=source_workflow_id, 
+                                                              target_session=target_session, target_metadata=target_metadata, mapping_info=mapping_info)
+                    values_to_copy['variable'].append(result)
 
             print("Cloning pipeline step ...")
             result = migrate_tahiti_pipeline_step(source_session=source_session, source_pipeline_id=source_pipeline_id, target_session=target_session, 
                                                   target_metadata=target_metadata, mapping_info=mapping_info)
-            values_to_copy.append(result)
+            values_to_copy['pipeline_step'].append(result)
+            print(mapping_info)
 
             
                 
@@ -527,33 +538,42 @@ def main():
             print("Cloning workflow ...")
             result = migrate_tahiti_workflow(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
                                              target_metadata=target_metadata, mapping_info=mapping_info, user=user_info, with_pipeline=False)
-            values_to_copy.append(result)
+            values_to_copy['workflow'].append(result)
+
             print("Cloning workflow's task ...")
             result = migrate_tahiti_task(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
                                          target_metadata=target_metadata, target_workflow_id=current_workflow_id)
-            values_to_copy.append(result)
+            values_to_copy['task'].append(result)
+
             print("Cloning workflow's flow ...")
             mapping_info['current_flow'] = int(get_current_id(target_session, "tahiti.flow"))
             print(f"Current flow id:", mapping_info['current_flow'])
             result, mapping_info = migrate_tahiti_flow(source_session=source_session, source_workflow_id=source_workflow_id, target_session=target_session, 
                                                        target_metadata=target_metadata, mapping_info=mapping_info)
-            values_to_copy.append(result)
+            values_to_copy['flow'].append(result)
+
             print("Cloning workflow's variable (if exists) ...")
             result = migrate_tahiti_workflow_variable(source_session=source_session, source_workflow_id=source_workflow_id, 
                                                       target_session=target_session, target_metadata=target_metadata, mapping_info=mapping_info)
-            values_to_copy.append(result)
+            values_to_copy['variable'].append(result)
 
 
     
     print("Starting migration process...")
 
     try:
-        for migration in values_to_copy:
-            if migration:
-                table_ob, data = migration
-                if len(data) > 0:
-                   target_session.execute(table_ob, data)
-                   target_session.flush()
+        for item in ['source_code', 'pipeline',  'workflow', 'task', 'flow', 'variable', 'pipeline_step']:
+            migrations = values_to_copy.get(item)
+            for migration in migrations:
+                if migration:
+                    table_ob, data = migration
+                    if len(data) > 0:
+                       #print("############")                   
+                       #print(table_ob)
+                       #print(data)
+                       #print("############")
+                       target_session.execute(table_ob, data)
+                       target_session.flush()
     except:
         target_session.rollback()
         source_session.close()
