@@ -1,5 +1,4 @@
-FROM python:3.9.5-alpine3.14 as base
-
+FROM python:3.9.25-alpine3.22 as base
 RUN apk add --no-cache bash
 
 FROM base as pip_builder
