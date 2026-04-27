@@ -107,6 +107,7 @@ def _insert_operation_platform(conn):
                 column('platform_id', Integer))
     columns = [c.name for c in tb.columns]
     data = [
+            [BASE_OP + 1,  1],
             [BASE_OP + 1,  1000]
     ]
     rows = [dict(list(zip(columns, row))) for row in data]
