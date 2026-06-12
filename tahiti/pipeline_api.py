@@ -241,6 +241,7 @@ class PipelineDetailApi(Resource):
             data['user_id'] = flask_g.user.id
             data['user_login'] = flask_g.user.login
             data['user_name'] = flask_g.user.name
+            data['steps'] = sorted(data['steps'], key=lambda s: s['order'])
 
             pipeline = request_schema.load(data, partial=True)
             pipeline.id = pipeline_id
