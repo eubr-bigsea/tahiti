@@ -871,6 +871,7 @@ class Pipeline(db.Model):
     run_creation_method = Column(
         String(200), default="scheduler", nullable=False
     )
+    tags = Column(String(200))
 
     # Associations
     steps = relationship("PipelineStep", cascade="all, delete-orphan")

@@ -1151,6 +1151,7 @@ class PipelineCreateRequestSchema(BaseSchema):
         load_default="scheduler",
         dump_default="scheduler",
     )
+    tags = fields.String(required=False, allow_none=True)
     steps = fields.Nested(
         "tahiti.schema.PipelineStepCreateRequestSchema",
         allow_none=True,
@@ -1204,6 +1205,7 @@ class PipelineItemResponseSchema(BaseSchema):
         load_default="scheduler",
         dump_default="scheduler",
     )
+    tags = fields.String(required=False, allow_none=True)
     steps = fields.Nested(
         "tahiti.schema.PipelineStepItemResponseSchema",
         allow_none=True,
@@ -1257,6 +1259,7 @@ class PipelineListResponseSchema(BaseSchema):
         load_default="scheduler",
         dump_default="scheduler",
     )
+    tags = fields.String(required=False, allow_none=True)
     steps = fields.Nested(
         "tahiti.schema.PipelineStepListResponseSchema",
         allow_none=True,
