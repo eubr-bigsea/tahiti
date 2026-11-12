@@ -97,7 +97,7 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     # Swagger
     swaggerui_blueprint = get_swaggerui_blueprint(
         '/api/docs',
-        '/static/swagger.yaml',
+        '/api/spec.json',
         config={
             'app_name': "Lemonade Tahiti"
         },
@@ -139,6 +139,11 @@ def create_app(settings_override=None, log_level=logging.DEBUG, config_file=''):
     }
     for path, view in list(mappings.items()):
         api.add_resource(view, path, endpoint=view.__name__)
+
+    @app.route('/api/spec.json')
+    def openapi_spec():
+        from tahiti.openapi import build_spec
+        return build_spec(mappings)
 
     # Cache configuration for API
     app.config['CACHE_TYPE'] = 'simple'

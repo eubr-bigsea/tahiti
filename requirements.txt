@@ -1,6 +1,7 @@
 coverage==5.5
 python-dotenv==1.0.1
 eventlet==0.31.0
+apispec==4.7.1
 Flask==2.2.5
 Flask-Babel==2.0.0
 flask-caching==1.10.1
