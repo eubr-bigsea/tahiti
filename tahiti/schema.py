@@ -1436,6 +1436,12 @@ class WorkflowListResponseSchema(BaseSchema):
     pipeline = fields.Nested(
         "tahiti.schema.PipelineListResponseSchema", allow_none=True
     )
+    permissions = fields.Nested(
+        "tahiti.schema.WorkflowPermissionListResponseSchema",
+        allow_none=True,
+        many=True,
+        dump_only=True,
+    )
     user = fields.Function(
         lambda x: {"id": x.user_id, "name": x.user_name, "login": x.user_login}
     )
