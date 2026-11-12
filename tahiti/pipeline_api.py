@@ -52,12 +52,12 @@ class PipelineListApi(Resource):
         else:
             only = ('id', ) if request.args.get(
                 'simple', 'false') == 'true' else None
-        enabled_filter = request.args.get('enabled')
-        if enabled_filter:
-            pipelines = Pipeline.query.filter(
+        # enabled=true (default) | false | all
+        enabled_filter = request.args.get('enabled', 'true').lower()
+        pipelines = Pipeline.query
+        if enabled_filter != 'all':
+            pipelines = pipelines.filter(
                 Pipeline.enabled == (enabled_filter != 'false'))
-        else:
-            pipelines = Pipeline.query
 
         # Filters
         name = request.args.get('name')
